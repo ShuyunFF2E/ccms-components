@@ -10,7 +10,7 @@ npm install --save ccms-components
 ccms模块产品请将组件库手动设置到webpack的externals中，避免重复打包
 
 ```js
-externals: {'ccms_components': '\'ccms.components\''}
+externals: {'ccms-components': '\'ccms.components\''}
 ```
 
 #### 开发规范
