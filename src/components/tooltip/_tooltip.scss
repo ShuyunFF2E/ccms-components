@@ -1,0 +1,70 @@
+@import "../styles/variables";
+@import "../styles/input";
+
+%float-tooltip {
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  font-size: $font-size-text;
+  border-radius: 2px;
+  padding: 4px 8px;
+  margin: 0;
+
+  min-height: 26px;
+  max-width: 250px;
+  line-height: 1.5;
+  box-shadow: none;
+  border: none;
+  background-color: #666666;
+  color: #f8f8f8;
+
+  &.tooltip-opened {
+    display: block;
+  }
+
+  &:after {
+    content: "";
+    border: 3px solid;
+    border-top-color: #666666;
+    border-bottom: none;
+    position: absolute;
+    bottom: -3px;
+    left: 4px;
+  }
+
+  &:before {
+    content: "";
+    border: none;
+  }
+}
+
+// 主要错误提示,用于空间足够的场景
+.error-major-tooltip {
+  display: none;
+  color: #ff867c;
+  margin-left: 12px;
+
+  &.tooltip-opened {
+    display: inline;
+  }
+}
+
+.normal-tooltip {
+  @extend %float-tooltip;
+}
+
+// 浮动错误提示,用于空间不足场景
+.error-minor-tooltip {
+  @extend %float-tooltip;
+  background-color: #ff867c;
+  color: #ffffff;
+  &:after {
+    border-top-color: #ff867c;
+  }
+}
+
+.error-minor-tooltip-attached {
+  border: 1px solid $input-error-border !important;
+}
+
+

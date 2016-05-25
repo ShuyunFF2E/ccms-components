@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单栏</title>
+</head>
+<body ng-app="componentsApp" ng-controller="ctrl as app">
+
+<div class="ccmsc-main-container" ng-class="{'ssss':app.menusOptions.unfold}">
+
+    <menu-bar options="app.menusOptions"></menu-bar>
+
+    <div class="center-container" ui-view></div>
+    <div class="right-container">
+    </div>
+</div>
+
+<script src="/node_modules/angular-resource/angular-resource.min.js"></script>
+<script src="/node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="/components.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>

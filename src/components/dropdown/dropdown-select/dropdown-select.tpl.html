@@ -1,0 +1,27 @@
+<div class="dropdown-select" ng-init="searchable = $ctrl.options.searchable">
+	<div class="dropdown-select-input-wrap"
+			ng-class="{active: $ctrl.isOpen}"
+			ng-click="$ctrl.toggleList()">
+		<input type="text" class="dropdown-select-input" placeholder="{{::$ctrl.options.placeholderText}}"
+				ng-readonly="!searchable"
+				ng-model="$ctrl.searchText" />
+		<div class="dropdown-select-icons"
+			><span class="dropdown-select-clear"
+				ng-if="searchable"
+				ng-show="$ctrl.searchText.length"
+				ng-click="$ctrl.searchText=''"></span
+			><span class="dropdown-select-down"></span>
+		</div>
+	</div>
+	<ul class="dropdown-list" ng-if="$ctrl.isOpen">
+		<li ng-repeat="item in $ctrl.datalist track by $index"
+				ng-mousedown="$ctrl.selectItem(item)"
+				ng-class="{focus: $index === $ctrl.focusIndex}">
+			<span
+					bind-html="item[$ctrl.options.displayField] | highlight: item.$highlightText || $ctrl.searchText"></span>
+		</li>
+		<li class="empty-list-item" ng-if="!$ctrl.datalist.length">
+			<span>没有匹配</span>
+		</li>
+	</ul>
+</div>

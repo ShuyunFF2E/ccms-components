@@ -1,0 +1,7 @@
+<!--带checkbox的表格头部-->
+<th class="checkbox" ng-click="$ctrl.selectAll(!$ctrl.$allSelected)">
+	<input type="checkbox" ng-checked="$ctrl.$allSelected" indeterminate="$ctrl.$partSelected">
+</th>
+
+<!--引入默认的表格头 html-loader -->
+${require('./default-header.tpl.html')}

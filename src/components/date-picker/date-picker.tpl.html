@@ -1,0 +1,91 @@
+<div class="date-picker-holder">
+	<form name="datePicker"
+				ng-class="{'date-picker': true, 'disabled': ctrl.disabled}"
+				ng-click="ctrl.toggleCalendar($event)">
+		<input class="date-picker-input date-picker-input-year"
+					 name="year"
+					 placeholder="YYYY"
+					 required
+					 maxlength="4"
+					 ng-model="ctrl.parts.year"
+					 ng-min="0"
+					 ng-max="9999"
+					 ng-disabled="ctrl.disabled"
+					 ng-keydown="ctrl.setInputLength($event)"
+					 ng-keyup="ctrl.validateValue($event)"
+					 ng-focus="ctrl.focusInput($event)"
+					 ng-blur="ctrl.updateValue($event)">/<input class="date-picker-input date-picker-input-month"
+					 name="month"
+					 placeholder="MM"
+					 maxlength="2"
+					 required
+					 ng-model="ctrl.parts.month"
+					 ng-min="1"
+					 ng-max="12"
+					 ng-disabled="ctrl.disabled"
+					 ng-keydown="ctrl.setInputLength($event)"
+					 ng-keyup="ctrl.validateValue($event)"
+					 ng-focus="ctrl.focusInput($event)"
+					 ng-blur="ctrl.updateValue($event)">/<input class="date-picker-input date-picker-input-date"
+					 name="date"
+					 placeholder="DD"
+					 maxlength="2"
+					 required
+					 ng-model="ctrl.parts.date"
+					 ng-min="1"
+					 ng-max="ctrl.calDateMax()"
+					 ng-disabled="ctrl.disabled"
+					 ng-keydown="ctrl.setInputLength($event)"
+					 ng-keyup="ctrl.validateValue($event)"
+					 ng-focus="ctrl.focusInput($event)"
+					 ng-blur="ctrl.updateValue($event)">
+
+		<span ng-show="!ctrl.dateOnly">
+			<input class="date-picker-input date-picker-input-hour"
+						 name="hour"
+						 placeholder="hh"
+						 required
+						 maxlength="2"
+						 ng-model="ctrl.parts.hour"
+						 ng-min="0"
+						 ng-max="23"
+						 ng-disabled="ctrl.disabled"
+						 ng-keydown="ctrl.setInputLength($event)"
+						 ng-keyup="ctrl.validateValue($event)"
+						 ng-focus="ctrl.focusInput($event)"
+						 ng-blur="ctrl.updateValue($event)">:<input class="date-picker-input date-picker-input-minute"
+						 name="minute"
+						 placeholder="mm"
+						 required
+						 maxlength="2"
+						 ng-model="ctrl.parts.minute"
+						 ng-min="0"
+						 ng-max="59"
+						 ng-disabled="ctrl.disabled"
+						 ng-keydown="ctrl.setInputLength($event)"
+						 ng-keyup="ctrl.validateValue($event)"
+						 ng-focus="ctrl.focusInput($event)"
+						 ng-blur="ctrl.updateValue($event)">:<input class="date-picker-input date-picker-input-second"
+						 name="second"
+						 placeholder="ss"
+						 required
+						 maxlength="2"
+						 ng-model="ctrl.parts.second"
+						 ng-min="0"
+						 ng-max="59"
+						 ng-disabled="ctrl.disabled"
+						 ng-keydown="ctrl.setInputLength($event)"
+						 ng-keyup="ctrl.validateValue($event)"
+						 ng-focus="ctrl.focusInput($event)"
+						 ng-blur="ctrl.updateValue($event)">
+		</span>
+
+		<span class="date-picker-clear iconfont icon-iconfont-clear"
+					ng-click="ctrl.clearValue($event)"></span>
+
+		<span class="date-picker-icon date-picker-icon-calendar iconfont icon-iconfontcalendar"></span>
+
+	</form>
+
+	<calendar />
+</div>

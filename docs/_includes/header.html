@@ -1,0 +1,19 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>
+  {% if page.layout == "home" %}
+    {{ page.title }}
+  {% else %}
+		{{ page.title }} &middot; {{ site.title }}
+  {% endif %}
+</title>
+
+<!-- Documentation extras -->
+<link href="{{ site.baseurl }}/assets/css/docs.css" rel="stylesheet">
+
+<script src="{{ site.baseurl }}/dist/js/angular.min.js"></script>
+<script src="{{ site.baseurl }}/dist/js/angular-resource.min.js"></script>
+<script src="{{ site.baseurl }}/dist/js/angular-ui-router.min.js"></script>
+<script src="{{ site.baseurl }}/dist/js/ccms_components.min.js"></script>

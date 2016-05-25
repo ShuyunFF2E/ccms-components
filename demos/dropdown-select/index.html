@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>下拉列表</title>
+<style>
+	[ng-app] {
+		margin: 1em;
+	}
+</style>
+
+<div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+	<dropdown-select model="ctrl.selectItem" options="ctrl.options"></dropdown-select>
+	<div style="line-height: 1.8em;font-size: 0.8em;"
+			ng-bind-template="{{ctrl.selectItem.value}}|{{ctrl.selectItem.title}}"
+			ng-show="ctrl.selectItem">
+	</div>
+</div>
+
+<script src="/components.js"></script>
+<script>
+	angular.module('demoApp', ['ccms.components'])
+		.controller('DemoCtrl', function($scope) {
+			this.options = {
+				placeholderText: '请选择',
+
+				valueField: 'value',
+				displayField: 'title',
+
+				searchable: true,
+
+				datalist: [
+					{title: '北京', value: 'bj'},
+					{title: '上海', value: 'sh'},
+					{title: '深圳', value: 'sz'},
+					{title: '广州', value: 'gz'}
+				]
+
+			};
+		});
+</script>

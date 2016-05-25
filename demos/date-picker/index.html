@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Date Picker</title>
+</head>
+<body ng-app="componentsApp" ng-controller="ctrl as app">
+
+<div>
+	<button type="button" ng-click="app.hideDates = !app.hideDates">显示 / 隐藏</button>
+</div>
+
+<p>日期时间选择器 ({{app.dateValue | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+<date-picker ng-if="!app.hideDates"
+						 ng-model="app.dateValue"
+						 min-date="app.minDate"
+						 max-date="app.maxDate"
+						 required="true"
+						 date-only="false"
+						 disabled="false"></date-picker>
+
+<p>日期时间选择器 ({{app.blankDate | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+<date-picker ng-model="app.blankDate"></date-picker>
+
+<pre>
+&lt;date-picker ng-model="app.dateValue"
+	min-date="app.minDate"
+	max-date="app.maxDate"
+	required="true"
+	date-only="false"
+	disabled="false">&lt;/date-picker>
+</pre>
+
+<p>日期时间区间选择器 ({{app.dateRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+<date-range ng-if="!app.hideDates"
+						opts="app.dateRange"></date-range>
+
+<pre>
+&lt;date-range opts="app.dateRange">&lt;/date-range>
+
+self.dateRange = {
+	start: new Date(2016, 2, 10),
+	end: new Date(2016, 2, 20),
+
+	minDate: new Date(2016, 2, 1),
+	maxDate: new Date(2016, 2, 31),
+
+	// 是否禁用 (false)
+	disabled: false,
+
+	// 是否显示时间 (true)
+	dateOnly: false
+};
+</pre>
+
+<script src="/components.js"></script>
+<script>
+	angular.module('componentsApp', ['ccms.components'])
+		.controller('ctrl', function ($scope) {
+			var self = this;
+
+			self.dateValue = new Date(2016, 1, 20);
+			self.minDate = new Date(2016, 1, 1);
+			self.maxDate = new Date(2016, 1, 28);
+
+			self.dateRange = {
+				start: new Date(2016, 2, 10),
+				end: new Date(2016, 2, 20),
+
+				minDate: new Date(2016, 2, 1),
+				maxDate: new Date(2016, 2, 31),
+
+				// 是否禁用 (false)
+				disabled: false,
+
+				// 是否显示时间 (true)
+				dateOnly: false
+			};
+		});
+</script>
+</body>
+</html>

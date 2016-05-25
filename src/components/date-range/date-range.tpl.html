@@ -1,0 +1,15 @@
+<div class="date-range">
+	<date-picker ng-model="ctrl.opts.start"
+							 min-date="ctrl.opts.minDate"
+							 max-date="ctrl.opts.end"
+	             date-only="ctrl.opts.dateOnly"
+							 disabled="ctrl.opts.disabled"
+							 range-start="true"></date-picker>
+	<span class="date-range-sep">-</span>
+	<date-picker ng-model="ctrl.opts.end"
+							 min-date="ctrl.opts.start"
+							 max-date="ctrl.opts.maxDate"
+	             date-only="ctrl.opts.dateOnly"
+							 disabled="ctrl.opts.disabled"
+							 range-end="true"></date-picker>
+</div>

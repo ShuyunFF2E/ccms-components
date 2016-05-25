@@ -1,0 +1,225 @@
+// font-family
+//$font-string: FZLTXHK--GBK1-0;
+$font-string: 'Microsoft Yahei';
+$font-number: Tahoma;
+$font-name-color: #145681;
+
+//font-size
+$size-icon-prefix-title: 3px;
+$font-size-h1: 18px;
+$font-size-h2: 14px;
+$font-size-h3: 12px;
+$font-size-text: 12px;
+
+
+// font-color
+$font-color-h1: #2d2d2d;
+$font-color-h2: $font-color-h1;
+$font-color-h3: $font-color-h1;
+$font-color-text: $font-color-h1;
+$font-color-title: #666666;
+$font-color-comment: #999999;
+$font-color-link: #0083ba;
+$font-color-link-hover: #00aaf1;
+$font-color-link-disabled: #d1d1d1;
+$font-color-link-disabled: #d1d1d1;
+$font-color-warning: #ff6642;
+$font-color-success: #22ac38;
+
+// z-index 1~1500
+$calendar-z-index: 1600;
+$modal-z-index: 1500;
+$mask-z-index:1400;
+$tips-z-index:1400;
+
+// a text decoration
+$a-text-decoration: none;
+
+
+// default font family
+$font-family-default: 'Microsoft Yahei';
+$font-family-number: Tahoma;
+
+// font-color
+$black-font-color: #333333;
+$gray-font-color: #666666;
+
+// font style for titile
+$font-size-title: 18px;
+$font-color-title: #2d2d2d;
+
+// title with prefix icon
+$size-icon-prefix-title: 3px;
+
+// font style for content
+$font-size-content: 12px;
+$font-color-content: #3d3d3d;
+
+// font color for link
+$link-default-color: #0083ba;
+$link-hover-color: #00aaf1;
+
+// special font color
+$price-font-color: #ff7815;
+$emphasize-font-color: #ff5500;
+$warning-font-color: red;
+
+
+
+// box-sizing
+$box-sizing-default: border-box;
+
+// Tab component  tab 1 style
+$font-size-tab: 12px;
+$font-color-tab: #3a3a3a;
+$font-color-tab-hover: #145681;
+$tab-border-hover-color: #33b5e5;
+
+// border color of active tab
+$tab-border-color: #d9d9d9;
+
+// border color of tab
+$tab-hover-background-color: #fbfbfb;
+
+// background color of active tab
+$tab-unactive-background-color: #f4f4f4;
+$tab-background-color: #f8f8f8;
+
+// background color of tab
+// Tab 2 style
+$tab-btn-font-color: #999;
+$tab-btn-border: 1px solid #eaeaea;
+$tab-btn-background-color: #f2f2f2;
+$tab-btn-hover-background-color: #f8f8f8;
+$tab-btn-active-font-color: #3b3b3b;
+$tab-btn-active-background-color: #f9f9f9;
+
+// pagination style
+$pagination-border: 1px solid #eaeaea;
+$pagination-font-color: #636363;
+$pagination-linear-color-start: #fafafa;
+$pagination-linear-color-end: #f3f3f3;
+
+
+
+//--comm-select
+$comm-select-border: 1px solid #d9d9d9;
+$comm-select-height: 24px;
+$comm-select-focus-border: 2px solid #aacbe1;
+
+
+// ----button-care
+$lnitial-button-care-startColor: #31B1EB;
+$lnitial-button-care-endColor: #2495C7;
+$hover-button-care-startColor: #47C1F8;
+$hover-button-care-endColor: #32B1EB;
+$active-button-care-startColor: #31B1EB;
+$active-button-care-endColor: #46C0F8;
+
+// ----button-careagain
+$lnitial-button-careagain-startColor: #f9f9f9;
+$lnitial-button-careagain-endColor: #f5f5f5;
+$hover-button-careagain-startColor: #FFFFFF;
+$hover-button-careagain-endColor: #fafafa;
+$active-button-careagain-startColor: #f5f5f5;
+$active-button-careagain-endColor: #f9f9f9;
+
+// ----button-hide
+$lnitial-button-hide-startColor: #f9f9f9;
+$lnitial-button-hide-endColor: #f5f5f5;
+$hover-button-hide-startColor: #FFFFFF;
+$hover-button-hide-endColor: #fafafa;
+$active-button-hide-startColor: #f5f5f5;
+$active-button-hide-endColor: #f9f9f9;
+
+// form
+// --input
+$input-font-size: 14px;
+$input-font-color: #c5c5c5;
+$input-background: #FFFFFF;
+$input-width: 206px;
+$input-height: 25px;
+$input-padding: 1px 1px 1px 6px;
+$input-border: 1px #9D9D9D solid;
+
+// ----input special
+$input-hover-font-color: #898989;
+$input-hover-border: 2px #aacbe1 solid;
+$input-error-border: 1px #ff5243 solid;
+$input-error-font-color: #ff5243;
+$input-disable-background: #EEEEEE;
+$input-disable-font-color: #999999;
+
+// ----smart search
+$smart-search-font-color: #083ba3;
+$smart-search-border: 2px solid #aacbe1;
+
+// choose shop
+$border-choose-shop: #e1e1e1;
+$background-choose-shop: #f4f4f4;
+$font-size-choose-shop: 13px;
+$font-color-choose-shop: #333333;
+$height-choose-shop: 22px;
+$padding-choose-shop: 7px;
+
+//--shop nav
+$font-size-choose-shop-nav: 12px;
+$font-color-choose-shop-nav: #666666;
+$background-shop-nav-hover: #f2f2f2;
+
+// filter box
+$padding-filter-box: 10px 20px;
+$border-filter-box: 1px solid #cccccc;
+$background-filter-box: #f9f9f9;
+$background-more-filter: #54c1e9;
+$size-filter-background: 18px;
+$size-filter-box: 10px;
+
+// table-box
+$border-table: 1px solid #e9e9e9;
+$background-thead: #f2f2f2;
+$background-tr-odd: #fcfcfc;
+$background-tr-even: #fafafa;
+$background-tr-hover: #eef8fc;
+
+$common-border: 1px solid #ededed;
+$tips-color: #a7a7a6;
+//$all-image
+$image-path: '/src/assets/images/';
+$all-image: url('#{$image-path}icons.png') no-repeat 0 0;
+
+// iconfont
+$iconfont-path: "";
+
+//area-select
+$font:MicrosoftYaHei;
+
+
+/* 颜色 */
+
+$color-text-dark:			#2d2d2d;
+$color-text:					#3d3d3d;
+$color-text-light:		#666;
+$color-disabled:			#d1d1d1;
+
+$color-primary:				#1182ba;
+$color-primary-light:	#18a8f0;
+
+$color-error:					#fc6143;
+$color-warning:				#f9ac2d;
+$color-success:				#f9ac2d;
+
+
+/* 字体 */
+
+$font-family: 			Tahoma, "Microsoft Yahei", sans-serif;
+$font-size-base:		12px;
+$font-size-large:		$font-size-base + 2;
+$font-size-larger:	$font-size-large + 4;
+$line-height:				1.5;
+
+
+/* 表单 */
+
+$control-height:				30px;
+$control-default-width:	250px;

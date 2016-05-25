@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>tooltip</title>
+</head>
+<body ng-app="app">
+
+<button type="button" tooltip="'hello world hello world hello world hello world hello world hello world'" style="margin-top: 50px">hover normal tooltip</button>
+
+<button type="button" tooltip="'hello world'" tooltip-type="error-minor" style="margin-top: 50px">hover error tooltip</button>
+
+<button type="button" tooltip="'hello world'" tooltip-opened="opened" ng-click="opened=!opened">toggle tooltip manual</button>
+
+<button type="button" tooltip="'click me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
+
+<script src="/components.js"></script>
+<script src="index.js"></script>
+
+</body>
+</html>

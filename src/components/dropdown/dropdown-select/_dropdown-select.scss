@@ -1,0 +1,100 @@
+@import "../../../assets/iconfont/iconfont";
+@import "../../styles/mixins";
+@import "../../styles/input";
+
+.dropdown-select {
+	display: inline-block;
+	position: relative;
+
+	.dropdown-select-input-wrap {
+		position: relative;
+		.dropdown-select-input {
+			min-width: 64px;
+			max-width: 280px;
+			padding-right: 48px;
+			line-height: $control-height;
+			vertical-align: top;
+			// TODO: input 字体大小应该在基础组件中写？
+			font-size: 12px;
+			&[readonly] {
+				user-select: none;
+			}
+			.active > & {
+				border-color: $input-active-border;
+			}
+		}
+
+		.dropdown-select-icons {
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+
+		%action-icon {
+			@extend .iconfont;
+			display: inline-block;
+			margin-left: 8px;
+			line-height: $control-height;
+			cursor: pointer;
+			color: #c9c9c9;
+			&:last-child {
+				margin-right: 8px;
+			}
+			&:hover, .active > & {
+				color: $input-active-border;
+			}
+		}
+
+		.dropdown-select-clear {
+			@extend %action-icon;
+			@extend .icon-iconfont-clear;
+			font-size: 12px;
+			display: none;
+			:hover > & {
+				display: inline-block;
+			}
+		}
+		.dropdown-select-down {
+			@extend %action-icon;
+			@extend .icon-iconfontarrowdropdown;
+			font-size: 12px;
+		}
+	}
+
+	.dropdown-list {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		z-index: 1;
+		box-sizing: border-box;
+		min-width: 100%;
+		max-width: 150%;
+		padding: 0;
+		list-style: none;
+		border: solid 1px $input-border;
+		background-color: #fff;
+		li {
+			@include cut-long-text;
+			box-sizing: border-box;
+			height: 30px;
+			line-height: 30px;
+			padding: 0 9px;
+			font-size: 12px;
+			background: #fff;
+			cursor: pointer;
+			&.focus, &:hover {
+				background-color: #f6f6f6;
+			}
+			&.empty-list-item {
+				cursor: default;
+				&:hover {
+					background-color: #fff;
+				}
+			}
+			.highlight {
+				color: #0083ba;
+			}
+		}
+	}
+}
+
