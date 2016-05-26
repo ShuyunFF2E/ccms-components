@@ -1,9 +1,18 @@
 # CCMS Components [![Build Status](https://img.shields.io/travis/ShuyunFF2E/ccms-components/master.svg?style=flat)](https://travis-ci.org/ShuyunFF2E/ccms-components) [![npm version](https://img.shields.io/npm/v/ccms-components.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
 
+开发指南[Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34)
+
 ## How To Use
 
 ```bash
 npm install --save ccms-components
+```
+
+```js
+import angular from 'angular';
+import ccmsComponents from 'ccms-components';
+
+angular.module('app', [ccmsComponents]);
 ```
 
 #### 友情提示
