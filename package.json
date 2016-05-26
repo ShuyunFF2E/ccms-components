@@ -13,7 +13,9 @@
     "build:dist": "NODE_ENV=production webpack --config webpack-build.config.js && git add dist",
     "build": "npm run build:dist",
     "codecheck": "NODE_EVN=test eslint src/components",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "npm run codecheck",
+    "test": "npm run lint"
   },
   "author": "shuyun FE2E",
   "devDependencies": {
