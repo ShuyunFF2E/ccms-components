@@ -124,6 +124,7 @@ grid {
 grid-cell {
 	display: flex;
 	justify-content: flex-start;
+	word-break: break-all;
 
 	&.left {
 		justify-content: flex-start;

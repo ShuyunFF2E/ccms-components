@@ -18,17 +18,17 @@ export default class TabContentTransclude {
 		scope.$watch('$tabsetCtrl.current', function() {
 			let tab = scope.$tabsetCtrl.current;
 
-			if (tab.templateUrl) {
+			if (tab && tab.templateUrl) {
 
 				element.html(`<ng-include src="'${tab.templateUrl}'"></ng-include>`);
 				tab.scope = angular.extend(scope, tab.scope || {});
 
 			} else {
 
-				element.html(tab.content || '');
+				element.html(tab && tab.content || '');
 			}
 
-			this.$compile(element.contents())(tab.scope || scope);
+			this.$compile(element.contents())(tab && tab.scope || scope);
 		}.bind(this));
 	}
 
