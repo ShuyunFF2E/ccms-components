@@ -5,7 +5,7 @@
  */
 
 function getStyle(el, cssprop) {
-	if (el.currentStyle) { //IE
+	if (el.currentStyle) { // IE
 		return el.currentStyle[cssprop];
 	} else if (window.getComputedStyle) {
 		return window.getComputedStyle(el)[cssprop];
@@ -34,12 +34,12 @@ function parentOffsetEl(element) {
 	return offsetParent || document;
 }
 
-export default class PositionService {
+export default {
 	/**
 	 * Provides read-only equivalent of jQuery's position function:
 	 * http://api.jquery.com/position/
 	 */
-	static position(element) {
+	position(element) {
 		let elBCR = this.offset(element);
 		let offsetParentBCR = {top: 0, left: 0};
 		let offsetParentEl = parentOffsetEl(element);
@@ -56,13 +56,13 @@ export default class PositionService {
 			top: elBCR.top - offsetParentBCR.top,
 			left: elBCR.left - offsetParentBCR.left
 		};
-	}
+	},
 
 	/**
 	 * Provides read-only equivalent of jQuery's offset function:
 	 * http://api.jquery.com/offset/
 	 */
-	static offset(element) {
+	offset(element) {
 		let boundingClientRect = element.getBoundingClientRect();
 		return {
 			width: boundingClientRect.width || element.offsetWidth,
@@ -71,5 +71,4 @@ export default class PositionService {
 			left: boundingClientRect.left + (window.pageXOffset || document.documentElement.scrollLeft)
 		};
 	}
-
-}
+};

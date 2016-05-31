@@ -7,7 +7,7 @@
 import injector from 'angular-es-utils/injector';
 
 function isPromiseLike(obj) {
-	return typeof obj.then === 'function';
+	return !!obj && typeof obj.then === 'function';
 }
 
 /**
@@ -45,7 +45,7 @@ export default {
 		gridOptions.loading = true;
 
 		// 如果不存在外部表格数据则请求接口拿数据
-		if (!gridOptions.externalData) {
+		if (!gridOptions.externalData && gridOptions.resource) {
 
 			const pageParams = {
 				pageNum: gridOptions.pager.pageNum,

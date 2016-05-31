@@ -38,13 +38,13 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
 		this.dataGridOptions = {
 
-			externalData: [{name: 'kuitos', age: 10, gender: '男'}, {name: 'xxx', age: 11, gender: '女'}],
+			externalData: null,
 			// externalData: Promise.resolve([{name: 'kuitos', age: 10, gender: '男'}, {
 			// 	name: 'xxx',
 			// 	age: 11,
 			// 	gender: '女'
 			// }]),
-			response: null,
+			// response: null,
 			columnsDef: [
 				{
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
