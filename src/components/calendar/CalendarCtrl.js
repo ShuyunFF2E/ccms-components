@@ -124,7 +124,7 @@ export default class DatePickerCtrl {
 			showDate.inRange = (this.datePicker.rangeStart && maxDate && (showDate <= maxDate) && (showDate >= this._realValue)) ||
 				(this.datePicker.rangeEnd && minDate && (showDate >= minDate) && (showDate <= this._realValue));
 
-			showDate.otherMonth = showDate.getMonth() !== this._realValue.getMonth();
+			showDate.otherMonth = showDate.getMonth() !== dateValue.getMonth();
 
 			showDate.disabled = (minDate && (showDate < minDate)) || (maxDate && (showDate > maxDate));
 
