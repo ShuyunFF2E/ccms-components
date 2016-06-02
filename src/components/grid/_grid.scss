@@ -21,6 +21,9 @@ grid {
 	width: 100%;
 	height: 100%;
 
+	.non-pager-grid .ccms-table-wrapper {
+		bottom: 0;
+	}
 }
 
 .ccms-table-wrapper {

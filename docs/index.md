@@ -18,6 +18,8 @@ title: Home &middot; CCMS 组件库
 
 2.在 `docs/components/` 中创建 `simple-component.md`，在此编写你的文档内容。你的 demo 相关的文件放置在 `docs/demos/` 目录下。
 
+3. [jsfiddle base](https://jsfiddle.net/Kuitos/to286j9d/) 
+
 3.常用的示例都已经写在 `docs/components/simple-component.md` 中，可以参考 [Sample component](http://localhost:3001/docs/components/sample-component/) 的效果。
 
 {% callout danger %}
