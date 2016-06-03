@@ -46,11 +46,8 @@ $shop-wrap-width: 344px;
     line-height: 14px;
     font-size: 12px;
     text-align: center;
-	& span:nth-child(1){
-	  margin-right: 5px;
-	}
 	& span:nth-child(2){
-	  margin-left: 5px;
+	  color: #999999;
 	}
   }
 }
