@@ -6,6 +6,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
+var CleanPlugin = require('clean-webpack-plugin');
 
 module.exports = {
 	devtool: 'source-map',
@@ -28,6 +29,7 @@ module.exports = {
 				NODE_ENV: JSON.stringify('production')
 			}
 		}),
+		new CleanPlugin(['dist']),
 		new webpack.optimize.UglifyJsPlugin({
 			include: /\.min\.js$/,
 			minimize: true
