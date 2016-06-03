@@ -1,6 +1,9 @@
 # CCMS Components [![Build Status](https://img.shields.io/travis/ShuyunFF2E/ccms-components/master.svg?style=flat)](https://travis-ci.org/ShuyunFF2E/ccms-components) [![npm version](https://img.shields.io/npm/v/ccms-components.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
 
-开发指南[Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34)
+开发指南 [Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34)
+
+## Document
+[组件API文档](http://114.215.169.170:8080/docs/)
 
 ## How To Use
 
@@ -56,10 +59,3 @@ jekyll serve
 [rvm]: https://github.com/rvm/rvm
 [nvm]: https://github.com/creationix/nvm
 [nodejs]: https://nodejs.org/
-
-[jekyll]: https://jekyllrb.com/
-[ruby]: https://www.ruby-lang.org/
-[rvm]: https://github.com/rvm/rvm
-[nvm]: https://github.com/creationix/nvm
-[nodejs]: https://nodejs.org/
-
