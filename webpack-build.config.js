@@ -9,7 +9,7 @@ var autoprefixer = require('autoprefixer');
 var CleanPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-	devtool: 'source-map',
+	devtool: 'cheap-source-map',
 	entry: {
 		'ccms-components': './src/index.js',
 		'ccms-components.min': './src/index.js'

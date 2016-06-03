@@ -20,7 +20,7 @@
 		<!--表格没数据的提示信息-->
 		<div ng-if="!$ctrl.opts.loading && !$ctrl.opts.data.length" bind-html="$ctrl.emptyTipsTemplate"></div>
 
-		<loading ng-show="$ctrl.opts.loading" type="layer" class="grid-loading"></loading>
+		<loading ng-show="$ctrl.opts.loading" class="grid-loading"></loading>
 
 	</div>
 
