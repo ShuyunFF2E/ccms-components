@@ -7,7 +7,6 @@
  */
 import {Inject} from 'angular-es-utils';
 import {$Menus} from './MenuService';
-//let show;
 
 @Inject('$menus', '$timeout', '$state', '$rootScope', '$document', '$scope')
 export default class MenusCtrl {

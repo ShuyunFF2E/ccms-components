@@ -44,7 +44,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			// 	age: 11,
 			// 	gender: '女'
 			// }]),
-			response: null,
+			// response: null,
 			columnsDef: [
 				{
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',

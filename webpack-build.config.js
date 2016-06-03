@@ -10,8 +10,8 @@ var autoprefixer = require('autoprefixer');
 module.exports = {
 	devtool: 'source-map',
 	entry: {
-		'ccms_components': './src/index.js',
-		'ccms_components.min': './src/index.js'
+		'ccms-components': './src/index.js',
+		'ccms-components.min': './src/index.js'
 	},
 	output: {
 		path: path.join(__dirname, 'dist'),

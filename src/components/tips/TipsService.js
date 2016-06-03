@@ -7,7 +7,7 @@
 import {Inject} from 'angular-es-utils';
 import angular from 'angular';
 
-import Position from '../position/PositionService';
+import Position from '../../common/utils/position';
 import throttle from '../../common/utils/performance/throttle';
 import Tips from './Tips';
 import tipsTpl from './float-tips.tpl.html';

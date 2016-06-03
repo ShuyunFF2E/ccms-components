@@ -8,7 +8,7 @@ import angular from 'angular';
 
 import Popup from '../../common/bases/Popup';
 import {chopStyle2Num} from '../../common/utils/style-helper';
-import Position from '../position/PositionService';
+import Position from '../../common/utils/position';
 
 import template from './tooltip.tpl.html';
 import {TOOLTIP_TYPE} from './Contants';

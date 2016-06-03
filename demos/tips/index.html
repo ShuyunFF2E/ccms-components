@@ -6,9 +6,9 @@
 </head>
 <body ng-app="app" ng-controller="ctrl">
 
-<tips msg="普通常显提示"></tips>
+<tips msg="普通常显<span style='color:red;display:inline-block'>提示</span>"></tips>
 
-<tips msg="普通常显提示,当提示文字多时,右侧需要出现展开icon,点击展开更多查看更多内容.普通常显提示,当提示文字多时,右侧需要出现展开icon,点击展开更多查看更多内容."></tips>
+<tips style="max-width: 300px" msg="普通常显提示,当提示文字多时,右侧需要出现展开icon,点击展开更多查看更多内容.普通常显提示,当提示文字多时,右侧需要出现展开icon,点击展开更多查看更多内容."></tips>
 
 <tips msg="重要常显提示" type="major"></tips>
 
@@ -19,9 +19,6 @@
 <button type="button" ng-click="showError()">show error</button>
 
 <button type="button" ng-click="showModal()">show modal</button>
-
-<loading type="layer"></loading>
-<loading></loading>
 
 <script src="/components.js"></script>
 

@@ -21,7 +21,6 @@ import datePicker from './date-picker';
 import dateRange from './date-range';
 import calendar from './calendar';
 import tips from './tips';
-import position from './position';
 import form from './form';
 import checkbox from './checkbox';
 import instantSearch from './instant-search';
@@ -34,7 +33,6 @@ export default angular
 		instantSearch,
 		checkbox,
 		form,
-		position,
 		grid,
 		pagination,
 		smsEditor,

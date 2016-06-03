@@ -24,7 +24,7 @@ export default class DatePickerCtrl {
 
 		// 当开始和结束日期变化时, 清除过期的报错信息
 		$scope.$watchGroup(['ctrl.minDate', 'ctrl.maxDate'], () => {
-			if (!this.ngModelCtrl.$viewValue && this._displayValue) {
+			if (this._displayValue) {
 				this.checkValidity(this._displayValue);
 			}
 		});

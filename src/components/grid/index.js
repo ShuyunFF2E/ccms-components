@@ -23,7 +23,6 @@ const
 		controller,
 		bindings: {
 			opts: '=',
-			onRowClick: '&?',
 			selectedItems: '=?',
 			type: '@?'
 		}
