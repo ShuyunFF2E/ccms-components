@@ -14,7 +14,8 @@
 		</div>
 		<div class="p-group">
         <span class="pcontrol">
-	        <input type="text" ng-enter="$ctrl.enterPageNum($event)" ng-dom-value="$ctrl.pageNum">
+	        <input type="text" ng-blur="$ctrl.changePageNumByInput($event)"
+	               ng-enter="$ctrl.changePageNumByInput($event)" ng-dom-value="$ctrl.pageNum">
 	        <span>/&nbsp;共<span ng-bind="$ctrl.totalPages" style="font-family: Tahoma"></span>页</span>
         </span>
 		</div>
@@ -25,7 +26,7 @@
 		<div class="p-group">
 			<select ng-options="pageSize for pageSize in ::$ctrl.pageSizeList track by pageSize"
 			        ng-model="$ctrl.pageSize"
-			        ng-change="$ctrl.changePager({pageNum:$ctrl.pageNum, pageSize:$ctrl.pageSize})">
+			        ng-change="$ctrl.changePageSize($ctrl.pageSize)">
 			</select>
 		</div>
 	</div>
