@@ -4,6 +4,8 @@
  * @since 2016-01-04
  */
 
+import injector from 'angular-es-utils/injector';
+
 function isPromiseLike(obj) {
 	return !!obj && typeof obj.then === 'function';
 }
@@ -52,7 +54,7 @@ export default {
 
 			const params = Object.assign({}, pageParams, gridOptions.queryParams, queryParams);
 
-			gridOptions.resource.get(params).$promise
+			return gridOptions.resource.get(params).$promise
 
 				.then(res => {
 
@@ -77,9 +79,9 @@ export default {
 			};
 
 			if (isPromiseLike(gridOptions.externalData)) {
-				gridOptions.externalData.then(finish);
+				return gridOptions.externalData.then(finish);
 			} else {
-				finish(gridOptions.externalData);
+				return injector.get('$q').resolve(finish(gridOptions.externalData));
 			}
 
 		}
