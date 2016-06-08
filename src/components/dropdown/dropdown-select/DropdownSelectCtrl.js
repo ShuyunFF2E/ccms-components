@@ -115,6 +115,7 @@ export default class DropdownSelectCtrl {
 		this.getInputElement().focus();
 		if (this.searchable && this.title.length) {
 			this._search(this.title);
+			this.focusAt(0);
 		}
 	}
 
