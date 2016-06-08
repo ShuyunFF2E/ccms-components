@@ -47,7 +47,7 @@
 
 		.dropdown-select-clear {
 			@extend %action-icon;
-			@extend .icon-iconfont-clear;
+			@extend .icon-clear;
 			font-size: 12px;
 			display: none;
 			:hover > & {
@@ -56,7 +56,7 @@
 		}
 		.dropdown-select-down {
 			@extend %action-icon;
-			@extend .icon-iconfontarrowdropdown;
+			@extend .icon-arrow;
 			font-size: 12px;
 		}
 	}
