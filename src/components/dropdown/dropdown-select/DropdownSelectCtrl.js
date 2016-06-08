@@ -185,7 +185,7 @@ export default class DropdownSelectCtrl {
 	}
 
 	highlight(content, hiText) {
-		if (!hiText) {
+		if (!this.searchable || !hiText) {
 			return content;
 		}
 		return content.replace(new RegExp(hiText, 'gi'), '<span class="highlight">$&</span>');
