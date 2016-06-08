@@ -115,7 +115,7 @@ grid {
 		&.warning {
 			font-size: 44px;
 			@extend .iconfont;
-			@extend .icon-iconfontwarning;
+			@extend .icon-caution;
 		}
 	}
 }

@@ -11,10 +11,10 @@ $font: MicrosoftYaHei;
 %list-icon {
   position: absolute;
   @extend .iconfont;
-  @extend .icon-iconfontarrowdropdown;
+  @extend .icon-arrow;
   width: 7px;
   height: 7px;
-  font-size: 12px;
+  font-size: 10px;
   transform: scale(0.8);
   color: #cbcbcb;
 }
@@ -99,6 +99,7 @@ $font: MicrosoftYaHei;
 //菜单展开时头部icon
 .menu-constract-icon {
   @extend %constract-icon;
+  font-size: 10px!important;
   top: 4px;
   left: calc(50% - 4px);
 }
@@ -145,7 +146,7 @@ $font: MicrosoftYaHei;
   display: none;
   span {
     @extend .iconfont;
-    @extend .icon-iconfontshop;
+    @extend .icon-shop;
     color: #ffffff;
     font-size: 20px;
     position: absolute;
