@@ -125,12 +125,10 @@ const dropdownPanelDDO = {
 	bindToController: true
 };
 
-const valueFn = value => () => value;
-
 export default angular
 	.module('ccms.components.dropdown', [])
-	.directive('dropdown', valueFn(dropdownDDO))
-	.directive('dropdownToggle', valueFn(dropdownToggleDDO))
-	.directive('dropdownPanel', valueFn(dropdownPanelDDO))
+	.directive('dropdown', () => dropdownDDO)
+	.directive('dropdownToggle', () => dropdownToggleDDO)
+	.directive('dropdownPanel', () => dropdownPanelDDO)
 	.name;
 

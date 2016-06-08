@@ -17,15 +17,14 @@ const dropdownSelectDDO = {
 		mapping: '<',
 		datalist: '<',
 		searchable: '<',
+		multiple: '<',
 		placeholder: '@'
 	},
 	bindToController: true
 };
 
-const valueFn = value => () => value;
-
 export default angular
 	.module('ccms.components.dropdownSelect', [bindHtml])
-	.directive('dropdownSelect', valueFn(dropdownSelectDDO))
+	.directive('dropdownSelect', () => dropdownSelectDDO)
 	.name;
 
