@@ -5,15 +5,16 @@ import dropdownService from '../DropdownService';
 
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
-	static DEFAULT_OPTIONS = {
+	// 选项 item 字段映射
+	static defaultMapping = {
 		valueField: 'value',
 		displayField: 'title'
 	};
 
 	constructor() {
-		this.options = {};
 		this.datalist = [];
 		this.items = [];
+		this.mapping = {};
 		this.title = '';
 		this.value = null;
 		this.placeholder = '';
@@ -29,7 +30,7 @@ export default class DropdownSelectCtrl {
 
 		scope.$watch(() => this.datalist, ::this.onDatalistChange);
 
-		this.options = Object.assign({}, DropdownSelectCtrl.DEFAULT_OPTIONS, this.options);
+		this.mapping = Object.assign({}, DropdownSelectCtrl.defaultMapping, this.mapping);
 		this.datalist = this.datalist || [];
 	}
 
@@ -148,8 +149,8 @@ export default class DropdownSelectCtrl {
 	selectItemAt(index) {
 		let item = this.items[index];
 		if (item) {
-			this.title = item[this.options.displayField];
-			this.value = item[this.options.valueField];
+			this.title = item[this.mapping.displayField];
+			this.value = item[this.mapping.valueField];
 			this.focusAt(index);
 			this.close();
 		}
@@ -198,8 +199,8 @@ export default class DropdownSelectCtrl {
 		return datalist.map(item => {
 			if (typeof item !== 'object') {
 				return {
-					[this.options.displayField]: item,
-					[this.options.valueField]: item
+					[this.mapping.displayField]: item,
+					[this.mapping.valueField]: item
 				};
 			} else {
 				return item;
@@ -209,8 +210,8 @@ export default class DropdownSelectCtrl {
 
 	_search(text) {
 		let datalist = this._getClampedDatalist(this.datalist);
-		let options = this.options;
-		let searchFields = [options.valueField, options.displayField];
+		let mapping = this.mapping;
+		let searchFields = [mapping.valueField, mapping.displayField];
 		let filteredItems = [];
 
 		searchFields.forEach(field => {

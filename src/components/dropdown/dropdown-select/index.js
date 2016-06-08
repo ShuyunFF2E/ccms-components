@@ -14,7 +14,7 @@ const dropdownSelectDDO = {
 	controllerAs: '$ctrl',
 	scope: {
 		value: '=',
-		options: '<',
+		mapping: '<',
 		datalist: '<',
 		searchable: '<',
 		placeholder: '@'

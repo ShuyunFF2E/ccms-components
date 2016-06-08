@@ -19,7 +19,7 @@
 			<li ng-repeat="item in $ctrl.items track by $index"
 					ng-click="$ctrl.selectItemAt($index);"
 					ng-class="{focus: $index === $ctrl.focusIndex}">
-				<span bind-html="$ctrl.highlight(item[$ctrl.options.displayField], item.hiText || $ctrl.title)"></span>
+				<span bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
 			</li>
 			<li class="empty-list-item"
 					ng-if="$ctrl.searchable" ng-show="!$ctrl.items.length && $ctrl.title.length">

@@ -11,16 +11,16 @@
 	<dropdown-select
 			placeholder="快，快选我。。啊！"
 			value="ctrl.value1"
-			datalist="ctrl.datalist"
+			datalist="ctrl.datalist1"
 			searchable="true"
-			options="ctrl.options">
+			mapping="ctrl.fieldsMap">
 	</dropdown-select>
 	<dropdown-select
 			placeholder="哈哈哈"
-			value="ctrl.value1"
-			datalist="ctrl.datalist"
+			value="ctrl.value2"
+			datalist="ctrl.datalist2"
 			searchable="false"
-			options="ctrl.options">
+			mapping="ctrl.fieldsMap">
 	</dropdown-select>
 </div>
 
@@ -28,15 +28,17 @@
 <script>
 	angular.module('demoApp', ['ccms.components'])
 		.controller('DemoCtrl', function($scope) {
-			this.datalist = [
+			this.datalist1 = ['北京', '上海', '深圳', '广州'];
+			this.datalist2 = [
 				{title: '北京', value: 'bj'},
 				{title: '上海', value: 'sh'},
 				{title: '深圳', value: 'sz'},
 				{title: '广州', value: 'gz'}
 			];
-			this.options = {
+			this.fieldsMap = {
 				valueField: 'value',
 				displayField: 'title'
 			};
 		});
 </script>
+

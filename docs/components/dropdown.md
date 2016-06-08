@@ -13,7 +13,7 @@ group: components
 
 * value `Array(item) | item` 选中值的输出变量
 * datalist `Array` (default: []) 数据源
-* options `Object` 额外的配置 (需要整理)
+* mapping `Object` 自定义数据字段映射
 	* valueField `String` (default: 'value') 数据源值字段映射
 	* displayField `String` (default: 'title') 数据源显示字段映射
 * placeholder `String` (default: '') 提示文本
