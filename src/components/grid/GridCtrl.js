@@ -36,11 +36,6 @@ export default class GridCtrl {
 		GridHelper.refresh(this.opts);
 	}
 
-	get $partSelected() {
-		// 部分选中标识
-		return !this.$allSelected && this.selectedItems.length > 0;
-	}
-
 	get $allSelected() {
 		// 全选标识
 		return !!this.selectedItems.length && !!this.opts.data && (this.opts.data.length === this.selectedItems.length);

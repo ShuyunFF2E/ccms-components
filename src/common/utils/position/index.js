@@ -4,6 +4,8 @@
  * @since 2016-03-16
  */
 
+import {isNumber} from 'angular-es-utils/type-auth';
+
 function getStyle(el, cssprop) {
 	if (el.currentStyle) { // IE
 		return el.currentStyle[cssprop];
@@ -40,7 +42,7 @@ export default {
 	 * http://api.jquery.com/position/
 	 */
 	position(element) {
-		let elBCR = this.offset(element);
+		let elemOffset = this.offset(element);
 		let offsetParentBCR = {top: 0, left: 0};
 		let offsetParentEl = parentOffsetEl(element);
 		if (offsetParentEl !== document) {
@@ -49,12 +51,11 @@ export default {
 			offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
 		}
 
-		let boundingClientRect = element.getBoundingClientRect();
 		return {
-			width: boundingClientRect.width || element.offsetWidth,
-			height: boundingClientRect.height || element.offsetHeight,
-			top: elBCR.top - offsetParentBCR.top,
-			left: elBCR.left - offsetParentBCR.left
+			width: Math.round(isNumber(elemOffset.width) ? elemOffset.width : element.offsetWidth),
+			height: Math.round(isNumber(elemOffset.height) ? elemOffset.height : element.offsetHeight),
+			top: Math.round(elemOffset.top - offsetParentBCR.top),
+			left: Math.round(elemOffset.left - offsetParentBCR.left)
 		};
 	},
 
@@ -63,12 +64,12 @@ export default {
 	 * http://api.jquery.com/offset/
 	 */
 	offset(element) {
-		let boundingClientRect = element.getBoundingClientRect();
+		const elemBCR = element.getBoundingClientRect();
 		return {
-			width: boundingClientRect.width || element.offsetWidth,
-			height: boundingClientRect.height || element.offsetHeight,
-			top: boundingClientRect.top + (window.pageYOffset || document.documentElement.scrollTop),
-			left: boundingClientRect.left + (window.pageXOffset || document.documentElement.scrollLeft)
+			width: Math.round(isNumber(elemBCR.width) ? elemBCR.width : element.offsetWidth),
+			height: Math.round(isNumber(elemBCR.height) ? elemBCR.height : element.offsetHeight),
+			top: Math.round(elemBCR.top + (window.pageYOffset || document.documentElement.scrollTop)),
+			left: Math.round(elemBCR.left + (window.pageXOffset || document.documentElement.scrollLeft))
 		};
 	}
 };
