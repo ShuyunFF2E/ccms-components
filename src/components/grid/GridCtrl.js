@@ -12,6 +12,20 @@ import TplReqHelper from '../../common/utils/tpl-req-helper';
 import GRID_TEMPLATES from './Constant';
 import GridHelper from './GridHelper';
 
+/**
+ * 容器是否包含另一个集合
+ */
+function contains(container, collection) {
+	return collection.every(item => findEntity(container, item) !== -1);
+}
+
+/**
+ * 从集合中获取entity的index,找不到返回-1
+ */
+function findEntity(collection, entity) {
+	return collection.findIndex(item => entity === item || angular.equals(item, entity));
+}
+
 const PLACEHOLDER = '{::cell-placeholder}';
 
 export default class GridCtrl {
@@ -38,7 +52,7 @@ export default class GridCtrl {
 
 	get $allSelected() {
 		// 全选标识
-		return !!this.selectedItems.length && !!this.opts.data && (this.opts.data.length === this.selectedItems.length);
+		return !!this.selectedItems.length && !!this.opts.data && contains(this.selectedItems, this.opts.data);
 	}
 
 	set $allSelected(value) {
@@ -48,19 +62,25 @@ export default class GridCtrl {
 	onPagerChange(pageNum, pageSize) {
 		// 每次页码更新重置全选状态
 		this.$allSelected = false;
-		this.selectedItems.length = 0;
 		GridHelper.refresh(this.opts, Object.assign(this.opts.queryParams || {}, {pageNum, pageSize}));
 	}
 
-	selectAll(allSelected) {
+	selectAll(allSelected, collection) {
 
-		if (allSelected) {
-			// 先清空,然后将所有表格数据存入选中数组
-			this.selectedItems.length = 0;
-			Array.prototype.push.apply(this.selectedItems, this.opts.data);
-		} else {
-			this.selectedItems.length = 0;
-		}
+		collection.forEach(entity => {
+
+			const index = findEntity(this.selectedItems, entity);
+
+			if (allSelected) {
+				if (index === -1) {
+					this.selectedItems.push(entity);
+				}
+			} else {
+				if (index !== -1) {
+					this.selectedItems.splice(index, 1);
+				}
+			}
+		});
 	}
 
 	selectItem(entity, $selected) {
@@ -68,12 +88,12 @@ export default class GridCtrl {
 		if ($selected) {
 			this.selectedItems.push(entity);
 		} else {
-			this.selectedItems.splice(this.selectedItems.indexOf(entity), 1);
+			this.selectedItems.splice(findEntity(this.selectedItems, entity), 1);
 		}
 	}
 
 	isEntitySelected(entity) {
-		return this.selectedItems.indexOf(entity) !== -1 || this.selectedItems.some(item => angular.equals(item, entity));
+		return findEntity(this.selectedItems, entity) !== -1;
 	}
 
 }

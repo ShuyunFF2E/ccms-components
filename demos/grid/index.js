@@ -6,13 +6,21 @@
 
 angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
-	.controller('ctrl', function ($scope, $resource, $timeout) {
+	.controller('ctrl', function ($scope, $resource, $grid) {
 
 		this.click = () => {
 			console.log(this);
 		};
 
 		this.selectedItems = [];
+
+		this.refreshGrid = function() {
+			$grid.refresh(this.pagerGridOptions).then(() => this.selectedItems.length = 0);
+		};
+
+		this.refreshDataGrid = function() {
+			$grid.refresh(this.dataGridOptions).then(() => console.log('data grid refreshed!'));
+		};
 
 		this.pagerGridOptions = {
 

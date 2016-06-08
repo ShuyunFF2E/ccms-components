@@ -34,10 +34,10 @@ redirect_from: "/components/"
 ### Grid配套服务
 
 * $grid
-	* refresh 手动刷新表格信息
+	* refresh 手动刷新表格信息 return`Promise`
 
 		```
-		$grid.refresh(gridOpts, externalQueryParams);
+		$grid.refresh(gridOpts, externalQueryParams).then(() => this.selectedItems.length = 0);
 		```
 
 ### examples
