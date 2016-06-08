@@ -49,20 +49,20 @@ $confirm-icon-margin: 15px;
 	.set-fullscreen {
 	  @extend %modal-icon;
 	  @extend .iconfont;
-	  @extend .icon-iconfontfullscreen;
+	  @extend .icon-fullscreen;
 	}
 
 	.cancel-fullscreen {
 	  @extend %modal-icon;
 	  @extend .iconfont;
-	  @extend .icon-iconfontnarrow;
+	  @extend .icon-narrow;
 	  display: none;
 	}
 
 	.close-modal {
 	  @extend %modal-icon;
 	  @extend .iconfont;
-	  @extend .icon-iconfontclose;
+	  @extend .icon-close;
 	  color: #cecece;
 	}
 

@@ -48,7 +48,7 @@
 
     .tab-close {
 			@extend .iconfont;
-      @extend .icon-iconfont-clear;
+      @extend .icon-clear;
       position: absolute;
       right: 2px;
       top: 1px;
@@ -94,11 +94,12 @@
 				background-color: #6AD0CE;
 			}
 			&.btn-back{
-				@extend .icon-iconfontarrowleft;
+			  	@extend .icon-rightarrow;
+			  	transform: rotate(180deg);
 				margin-right:-2px;
 			}
 			&.btn-forward{
-				@extend .icon-iconfontarrowright;
+				@extend .icon-rightarrow;
 			}
 		}
 

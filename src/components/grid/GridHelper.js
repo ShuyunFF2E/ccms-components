@@ -4,8 +4,6 @@
  * @since 2016-01-04
  */
 
-import injector from 'angular-es-utils/injector';
-
 function isPromiseLike(obj) {
 	return !!obj && typeof obj.then === 'function';
 }
