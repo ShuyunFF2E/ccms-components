@@ -37,7 +37,7 @@
 	<div class="pager-grid">
 
 		<strong style="display: block;">表格宽高由用户设定,默认继承自父容器</strong>
-
+		<button type="button" ng-click="app.refreshGrid()">refresh</button>
 		<grid opts="app.pagerGridOptions" selected-items="app.selectedItems" type="selectable" style="height: 400px;width: 600px;"></grid>
 
 		<div class="info">
@@ -54,6 +54,7 @@
 	<div class="data-grid">
 
 		<strong style="display: block;">无分页的表格</strong>
+		<button type="button" ng-click="app.refreshDataGrid()">refresh</button>
 		<grid opts="app.dataGridOptions" style="height: 400px;width: 600px;"></grid>
 
 	</div>

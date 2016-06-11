@@ -1,6 +1,8 @@
 - title: Components
   pages:
     - title: Date Picker
+    - title: Dropdown
     - title: Grid
     - title: Modal
+    - title: Tabset
     - title: Sample Component

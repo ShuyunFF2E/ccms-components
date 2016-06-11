@@ -64,7 +64,7 @@ export default class PaginationCtrl {
 	}
 
 	// todo controller中不应该出现dom
-	enterPageNum(event) {
+	changePageNumByInput(event) {
 
 		const inputDom = event.target;
 		const value = inputDom.value;
@@ -82,6 +82,10 @@ export default class PaginationCtrl {
 			this.changePager({pageNum, pageSize});
 		}
 
+	}
+
+	changePageSize(pageSize) {
+		this.changePager({pageNum: 1, pageSize});
 	}
 
 	@Debounce(200)

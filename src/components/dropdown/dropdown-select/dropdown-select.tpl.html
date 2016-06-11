@@ -1,27 +1,30 @@
-<div class="dropdown-select" ng-init="searchable = $ctrl.options.searchable">
-	<div class="dropdown-select-input-wrap"
-			ng-class="{active: $ctrl.isOpen}"
-			ng-click="$ctrl.toggleList()">
-		<input type="text" class="dropdown-select-input" placeholder="{{::$ctrl.options.placeholderText}}"
-				ng-readonly="!searchable"
-				ng-model="$ctrl.searchText" />
+<div class="dropdown-select" dropdown
+			on-dropdown-open="$ctrl.onDropdownOpen()"
+			on-dropdown-close="$ctrl.onDropdownClose()">
+	<div class="dropdown-select-input-wrap">
+		<input type="text" class="dropdown-select-input" placeholder="{{$ctrl.placeholder}}"
+				ng-readonly="!$ctrl.searchable"
+				ng-change="$ctrl.onSearchTextChange($ctrl.title, '{{$ctrl.title}}')"
+				ng-model="$ctrl.title">
 		<div class="dropdown-select-icons"
 			><span class="dropdown-select-clear"
-				ng-if="searchable"
-				ng-show="$ctrl.searchText.length"
-				ng-click="$ctrl.searchText=''"></span
-			><span class="dropdown-select-down"></span>
+				ng-if="$ctrl.searchable"
+				ng-show="$ctrl.title.length"
+				ng-click="$ctrl.clearDropdownSelectInput()"></span
+			><span class="dropdown-select-down" dropdown-toggle></span>
 		</div>
 	</div>
-	<ul class="dropdown-list" ng-if="$ctrl.isOpen">
-		<li ng-repeat="item in $ctrl.datalist track by $index"
-				ng-mousedown="$ctrl.selectItem(item)"
-				ng-class="{focus: $index === $ctrl.focusIndex}">
-			<span
-					bind-html="item[$ctrl.options.displayField] | highlight: item.$highlightText || $ctrl.searchText"></span>
-		</li>
-		<li class="empty-list-item" ng-if="!$ctrl.datalist.length">
-			<span>没有匹配</span>
-		</li>
-	</ul>
+	<div dropdown-panel ng-show="$ctrl.isVisible">
+		<ul class="dropdown-list">
+			<li ng-repeat="item in $ctrl.items track by $index"
+					ng-click="$ctrl.selectItemAt($index);"
+					ng-class="{focus: $index === $ctrl.focusIndex}">
+				<span bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
+			</li>
+			<li class="empty-list-item"
+					ng-if="$ctrl.searchable" ng-show="!$ctrl.items.length && $ctrl.title.length">
+				<span>没有匹配</span>
+			</li>
+		</ul>
+	</div>
 </div>

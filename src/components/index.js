@@ -24,11 +24,13 @@ import tips from './tips';
 import form from './form';
 import checkbox from './checkbox';
 import instantSearch from './instant-search';
+import dropdown from './dropdown/dropdown';
 import dropdownSelect from './dropdown/dropdown-select';
 import tabset from './tabset';
 
 export default angular
 	.module('ccms.components.ui', [
+		dropdown,
 		dropdownSelect,
 		instantSearch,
 		checkbox,

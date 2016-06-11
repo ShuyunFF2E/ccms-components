@@ -30,7 +30,7 @@ $shop-wrap-width: 344px;
     background: #D4DCE0;
     span {
       @extend .iconfont;
-      @extend .icon-iconfontshop;
+      @extend .icon-shop;
       color: #ffffff;
       font-size: 30px;
       position: absolute;
@@ -46,11 +46,8 @@ $shop-wrap-width: 344px;
     line-height: 14px;
     font-size: 12px;
     text-align: center;
-	& span:nth-child(1){
-	  margin-right: 5px;
-	}
 	& span:nth-child(2){
-	  margin-left: 5px;
+	  color: #999999;
 	}
   }
 }
@@ -93,14 +90,14 @@ $shop-wrap-width: 344px;
       right: 34px;
       color: #d8d8d8;
       @extend .iconfont;
-      @extend .icon-iconfont-clear;
+      @extend .icon-clear;
       font-size: 12px;
       cursor: pointer;
     }
     //搜索按钮
     .shop-search-icon {
       @extend .iconfont;
-      @extend .icon-iconfontsearch;
+      @extend .icon-search;
       color: #dbdbdb;
       font-size: 18px;
       position: absolute;
@@ -139,7 +136,7 @@ $shop-wrap-width: 344px;
           background: #f0f0f0;
           span {
             @extend .iconfont;
-            @extend .icon-iconfontsuccess;
+            @extend .icon-radiofill;
             color: #23B74A;
             font-size: 16px;
             float: right;
