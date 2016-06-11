@@ -3,20 +3,6 @@
 <title>tabset demo</title>
 
 <div ng-app="demoApp" ng-controller="TabsetCtrl as ctrl">
-	<!--
-		Directive Api
-			优先级：p0 > p1 > p2
-
-		<tabset> attributes:
-			tabs => [Array] 		| required  		| 数据源
-			small => [Boolean] 		| defalut:false 	| tab标题是否使用小版
-			active => [Number] 		| defalut:0(p1) 	| 第几个选中
-			removed => [Boolean] 	| defalut:false 	| 是否可以删除tab(会有删除按钮)
-			justified => [Boolean] 	| default:false 	| 等宽
-
-			<tab> attributes:
-				data => [object {title, content/template, event, active(p0), disabled}] required
-	-->
 
 	<h3>标准基础版</h3>
 	<tabset tabs="ctrl.tabs">
@@ -27,7 +13,7 @@
 	<br>
 
 	<h3>小版 + 删除功能</h3>
-	<tabset tabs="ctrl.tabsClone" removed="true" small="true">
+	<tabset tabs="ctrl.tabsClone" remove="true" small="true">
         <tab data="tab" ng-repeat="tab in ctrl.tabsClone"></tab>
     </tabset>
 </div>

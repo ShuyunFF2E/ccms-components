@@ -20,22 +20,45 @@ $remove-btn-size: 12px;
 
 // tab样式
 tabset {
+	position: relative;
 	display: block;
+	box-sizing: border-box;
 	overflow: hidden;
+
+	// 让内容继承外面高度
+	& > div,
+	.tabset-content,
+	.tabset-pane {
+		width: inherit;
+		height: inherit;
+	}
+	.tabset-content {
+		padding-top: 60px;
+		box-sizing: border-box;
+		&.small {
+			padding-top: 50px;
+		}
+	}
+	.tabset-pane {
+		height: 100%;
+		overflow: auto;
+	}
 
 	.tabset-tab.small ~ .tabset-dir-ctrl .dir-ctrl {
 		@include btn-ctrl-size(25px);
 	}
 	.tabset-header {
-		position: relative;
-		margin-bottom: 30px;
+		position: absolute;
+		width: 100%;
+		top: 0;
 		overflow: hidden;
+		z-index: 5;
 
-		&:before {
+		&::before {
 			position: absolute;
+			bottom: 0;
 			content: "";
 			width: 100%;
-			bottom: 0;
 			border-bottom: $border-style;
 		}
 
@@ -70,8 +93,8 @@ tabset {
 
 				&.btn-back {
 					@extend .iconfont;
-				  	@extend .icon-rightarrow;
-				  	transform: rotate(180deg);
+					@extend .icon-rightarrow;
+					transform: rotate(180deg);
 				}
 
 				&.btn-forward {
@@ -185,17 +208,8 @@ tabset {
 		}
 
 		&.remove {
-			a:hover .btn-remove {
+			div:hover .btn-remove {
 				display: block;
-			}
-		}
-
-		&.justified {
-			width: 100%;
-
-			& > li {
-				display: table-cell;
-				width: 1%;
 			}
 		}
 

@@ -1,5 +1,4 @@
 <div ng-class="{active: $tabCtrl.tab.active, disabled: $tabCtrl.tab.disabled}">
-	<a ng-click="$tabCtrl.select($event)">{{$tabCtrl.tab.title}}
-        <span class="btn-remove"></span>
-    </a>
+	<a ng-click="$tabCtrl.tabset.selectTab($tabCtrl.tab)">{{$tabCtrl.tab.title}}</a>
+	<span ng-if="$tabCtrl.tabset.remove" ng-click="$tabCtrl.tabset.removeTab($tabCtrl.tab)" class="btn-remove"></span>
 </div>
