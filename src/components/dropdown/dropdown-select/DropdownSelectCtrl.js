@@ -16,9 +16,9 @@ export default class DropdownSelectCtrl {
 		this.items = [];
 		this.mapping = {};
 		this.title = '';
-		this.value = null;
 		this.placeholder = '';
 		this.searchable = false;
+		this.model = null;
 		this.focusIndex = 0;
 
 		this._dropdownCtrl = null;
@@ -151,7 +151,7 @@ export default class DropdownSelectCtrl {
 		let item = this.items[index];
 		if (item) {
 			this.title = item[this.mapping.displayField];
-			this.value = item[this.mapping.valueField];
+			this.model = item[this.mapping.valueField];
 			this.focusAt(index);
 			this.close();
 		}
