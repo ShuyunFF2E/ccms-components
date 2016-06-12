@@ -14,8 +14,8 @@ redirect_from: "/components/"
 | 参数名 | 是否必填 | 说明 | 类型 |
 | --- | --- | --- | --- |
 | tabs | 是 | 数据源 | Array |
-| small | 否 | 版本 | Boolean |
-| removed | 否 | 删除按钮 | Boolean |
+| small | 否 | 大小设置 | Boolean |
+| remove | 否 | 是否可删除选项 | Boolean |
 
 指令： tab
 
@@ -36,4 +36,4 @@ data数据说明：
 | event | 否 | 选中后的事件 | Function | 选中该选项后的一个回调 |
 
 ## Examples
-<iframe width="100%" height="300" src="//jsfiddle.net/fawziwu/wbL4Lvef/4/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="300" src="//jsfiddle.net/fawziwu/wbL4Lvef/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
