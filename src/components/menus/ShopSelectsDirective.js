@@ -12,18 +12,14 @@ import ShopSelectsCtrl from './ShopSelectsCtrl';
 export default class ShopSelects {
 
 	constructor() {
-		Object.assign(this, {
-			restrict: 'E',
-			replace: true,
-			template,
-			controller: ShopSelectsCtrl,
-			controllerAs: 'shops',
-			bindToController: true,
-			scope: {
-				shops: '=',
-				active: '=',
-				animation: '='
-			}
-		});
+		this.template = template;
+		this.controller = ShopSelectsCtrl;
+		this.controllerAs = 'shops';
+		this.bindings = {
+			shops: '=',
+			active: '=',
+			animation: '=',
+			placeholder: '='
+		};
 	}
 }
