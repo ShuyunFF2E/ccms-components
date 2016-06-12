@@ -2,15 +2,20 @@
 @import "../../styles/mixins";
 @import "../../styles/input";
 
-.dropdown-select {
+dropdown-select {
 	display: inline-block;
+	vertical-align: middle;
+}
+.dropdown-select {
 	position: relative;
+	vertical-align: middle;
 
 	.dropdown-select-input-wrap {
 		position: relative;
 		.dropdown-select-input {
 			min-width: 64px;
 			max-width: 280px;
+			width: 100%;
 			padding-right: 48px;
 			line-height: $control-height;
 			vertical-align: top;
