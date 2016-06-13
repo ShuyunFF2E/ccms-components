@@ -1,6 +1,6 @@
 {
   "name": "ccms-components",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "shuyun ccms components",
   "keywords": [
     "angular",
@@ -53,9 +53,9 @@
     "webpack-hot-middleware": "^2.4.1"
   },
   "dependencies": {
-    "angular": "^1.5.0",
-    "angular-es-utils": "^1.2.23",
-    "angular-resource": "^1.5.0",
+    "angular": "^1.5.2",
+    "angular-es-utils": "^1.2.27",
+    "angular-resource": "^1.5.2",
     "angular-ui-router": "^0.2.18",
     "normalize.css": "^4.1.1"
   }
