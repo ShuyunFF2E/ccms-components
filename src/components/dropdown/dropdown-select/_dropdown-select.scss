@@ -8,17 +8,20 @@ dropdown-select {
 }
 .dropdown-select {
 	position: relative;
+	min-width: 64px;
+	max-width: 280px;
 	vertical-align: middle;
 
 	.dropdown-select-input-wrap {
-		position: relative;
+		display: flex;
+		border: solid 1px $input-border-color;
 		.dropdown-select-input {
-			min-width: 64px;
-			max-width: 280px;
+			flex: 1;
 			width: 100%;
-			padding-right: 48px;
+			padding-right: 0;
 			line-height: $control-height;
 			vertical-align: top;
+			border: none;
 			// TODO: input 字体大小应该在基础组件中写？
 			font-size: 12px;
 			&[readonly] {
@@ -30,9 +33,7 @@ dropdown-select {
 		}
 
 		.dropdown-select-icons {
-			position: absolute;
-			top: 0;
-			right: 0;
+			display: inline-block;
 		}
 
 		%action-icon {
@@ -54,9 +55,10 @@ dropdown-select {
 			@extend %action-icon;
 			@extend .icon-clear;
 			font-size: 12px;
-			display: none;
-			:hover > & {
-				display: inline-block;
+			display: inline-block;
+			visibility: hidden;
+			:hover > &.visible {
+				visibility: visible;
 			}
 		}
 		.dropdown-select-down {
