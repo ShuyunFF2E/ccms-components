@@ -9,9 +9,9 @@
 
 	angular
 		.module('app', ['ccms.components'])
-		.controller('ctrl', function ($scope, $Validator) {
+		.controller('appCtrl', function ($Validator) {
 
-			$scope.validators = {
+			this.validators = {
 
 				required: '要填东西哦亲!',
 
@@ -32,13 +32,21 @@
 
 			};
 
-			$scope.reset = function () {
-				$Validator.setPristine($scope.hhh);
+			this.reset = function () {
+				$Validator.setPristine(this.hhh);
 			};
 
-			$scope.validate = function () {
+			this.validateGay = function () {
+				$Validator.validate(this.gay).then(() => {
+					console.log('校验成功!');
+				}, () => {
+					console.log('校验失败!');
+				});
+			};
 
-				$Validator.validate($scope.guy).then(() => {
+			this.validate = function () {
+
+				$Validator.validate(this.guy).then(() => {
 					console.log('校验成功!');
 				}, () => {
 					console.log('校验失败!');
