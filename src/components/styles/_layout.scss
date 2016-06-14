@@ -11,7 +11,7 @@ $min-width: 30px;
 	top: 0;
 	bottom: 0;
 	& .left-container {
-		@include test-border;
+		//@include test-border;
 		position: absolute;
 		left: 0;
 		top: 0;
@@ -21,7 +21,7 @@ $min-width: 30px;
 		background: #E9EBEE;
 	}
 	& .center-container {
-		@include test-border;
+		//@include test-border;
 		position: absolute;
 		left: $left-width;
 		top: 0;
@@ -31,7 +31,7 @@ $min-width: 30px;
 	}
 
 	& .right-container {
-		@include test-border;
+		//@include test-border;
 		position: absolute;
 		top: 0;
 		bottom: 0;
