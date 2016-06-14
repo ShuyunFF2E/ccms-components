@@ -39,7 +39,9 @@ export default class TooltipCtrl {
 	}
 
 	close() {
-		this.tooltip.close();
+		if (this.tooltip) {
+			this.tooltip.close();
+		}
 		this.opened = false;
 	}
 
