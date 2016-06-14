@@ -1,6 +1,7 @@
 $left-width: 180px;
 $center-width: 200px;
 $right-width: 200px;
+$min-width: 30px;
 
 .ccmsc-main-container {
 	display: block;
@@ -10,6 +11,7 @@ $right-width: 200px;
 	top: 0;
 	bottom: 0;
 	& .left-container {
+		//@include test-border;
 		position: absolute;
 		left: 0;
 		top: 0;
@@ -17,7 +19,6 @@ $right-width: 200px;
 		z-index: 200;
 		width: $left-width;
 		background: #E9EBEE;
-
 	}
 	& .center-container {
 		//@include test-border;
@@ -37,10 +38,19 @@ $right-width: 200px;
 		padding: 20px;
 	}
 
+	&.contract-left {
+		& .left-container {
+			width: $min-width;
+		}
+		& .center-container {
+			left: $min-width;
+		}
+	}
+
 	&.type-two {
 		& .center-container {
 			//@include test-border;
-			right: $right-width;
+			right: $right-width + 40;
 		}
 
 		& .right-container {
@@ -57,8 +67,14 @@ $right-width: 200px;
 		}
 
 		& .right-container {
-			left: $center-width + $left-width;
+			left: $center-width + $left-width + 40;
 			right: 0;
+		}
+		&.contract-left {
+			& .right-container {
+				left: $center-width + $min-width + 40;
+				right: 0;
+			}
 		}
 	}
 }
