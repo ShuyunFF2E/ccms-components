@@ -32,8 +32,8 @@
 
 			};
 
-			this.reset = function () {
-				$Validator.setPristine(this.hhh);
+			this.reset = function (formCtrl) {
+				$Validator.setPristine(formCtrl);
 			};
 
 			this.validateGay = function () {
