@@ -19,14 +19,15 @@ const TOOLTIP_EL = angular.element(template)[0];
 
 export default class Tooltip extends Popup {
 
-	constructor(hostEl, type = TOOLTIP_TYPE.NORMAL) {
+	constructor(hostEl, type = TOOLTIP_TYPE.NORMAL, append2Body) {
 
 		let toolTipEl = TOOLTIP_EL.cloneNode(false);
 		toolTipEl.classList.add(`${type}-tooltip`);
-		super(toolTipEl, hostEl.parentNode, OPENED_CLASS);
+		super(toolTipEl, append2Body ? document.body : hostEl.parentNode, OPENED_CLASS);
 
 		this.hostEl = hostEl;
 		this.type = type;
+		this.append2Body = !!append2Body;
 	}
 
 	setContent(msg) {
@@ -39,9 +40,10 @@ export default class Tooltip extends Popup {
 	 */
 	open(msg) {
 
-		// lazy load
-		if (this !== this.hostEl.nextSibling) {
+		if (!this.append2Body) {
 			this.init(false, this.hostEl.nextSibling);
+		} else {
+			this.init(true);
 		}
 
 		if (msg) {
@@ -61,7 +63,7 @@ export default class Tooltip extends Popup {
 				/* ------------------为tooltip设置合适的位置------------------- */
 				let tooltipEl = this.element;
 
-				const hostPos = Position.position(this.hostEl);
+				const hostPos = this.append2Body ? Position.offset(this.hostEl) : Position.position(this.hostEl);
 
 				// 获取箭头的高度
 				const arrowHeight = chopStyle2Num(window.getComputedStyle(tooltipEl, ':after').getPropertyValue('border-top-width'));
@@ -84,7 +86,7 @@ export default class Tooltip extends Popup {
 
 	close() {
 		this.hostEl.classList.remove(`${this.type}-tooltip-attached`);
-		this.hide();
+		this.destroy();
 	}
 
 }

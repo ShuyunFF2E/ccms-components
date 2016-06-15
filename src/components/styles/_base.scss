@@ -1,12 +1,17 @@
 @import "../../../node_modules/normalize.css";
 @import "button";
-//@import "layout";
+@import "variables";
 @import "input";
 
-ul,li,p {
-  margin: 0;
-  padding: 0;
+body {
+	font-family: $font-family;
 }
+
+ul, li, p {
+	margin: 0;
+	padding: 0;
+}
+
 li {
-  list-style: none;
+	list-style: none;
 }
