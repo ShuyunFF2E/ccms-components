@@ -5,7 +5,7 @@
  * 分页组件控制器
  */
 
-import {Debounce} from 'angular-es-utils';
+import {Inject, Debounce} from 'angular-es-utils';
 
 const DEFAULT_PAGER = {
 	totals: 0,  // 总条数
@@ -15,13 +15,30 @@ const DEFAULT_PAGER = {
 	pageSizeList: [10, 15, 20, 30, 50]
 };
 
+@Inject('$element')
 export default class PaginationCtrl {
 
+	constructor() {
+		// 分页布局风格
+		// enum: 'normal', 'simple'
+		this.pageLayout = 'normal';
+
+		this.showPageSizeList = false;
+	}
+
 	$onInit() {
+		if (this.getElement().hasAttribute('page-size-list')) {
+			this.showPageSizeList = true;
+		}
+
 		// 初始化默认值
 		Object.keys(DEFAULT_PAGER).forEach(prop => {
 			this[prop] = this[prop] || DEFAULT_PAGER[prop];
 		});
+	}
+
+	getElement() {
+		return this._$element[0];
 	}
 
 	changePageNumByShortcut(type) {
@@ -95,3 +112,4 @@ export default class PaginationCtrl {
 	}
 
 }
+

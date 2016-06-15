@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>分页(pagination)</title>
+<style>
+	[ng-app] {
+		margin: 1em;
+	}
+	.demo grid {
+		width: 400px;
+		height: 240px;
+	}
+</style>
+
+<div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+	<div class="demo">
+		<grid opts="ctrl.gridOpts"></grid>
+	</div>
+</div>
+
+<script src="/components.js"></script>
+<script>
+	angular
+		.module('demoApp', ['ccms.components', 'ngResource'])
+		.controller('DemoCtrl', DemoCtrl);
+
+	DemoCtrl.$inject = ['$resource'];
+	function DemoCtrl($resource) {
+		this.gridOpts = {
+			resource: $resource('/pages/1'),
+			response: null,
+			queryParams: {
+				pageNum: 2
+			},
+			columnsDef: [
+				{
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name"></span>',
+					displayName: '姓名',
+					align: 'center',
+					width: '100px'
+				},
+				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'gender', displayName: '性别', align: 'right'}
+			]
+		};
+	}
+</script>
+
