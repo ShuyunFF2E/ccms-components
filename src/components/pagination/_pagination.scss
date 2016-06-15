@@ -97,7 +97,7 @@ pagination > div {
 	.p-reload {
 		@extend %p-button;
 		@extend .iconfont;
-		@extend .icon-iconfontrefresh;
+		@extend .icon-refresh;
 		width: 12px;
 		height: 12px;
 		top: -1px;
@@ -113,28 +113,30 @@ pagination > div {
 	.p-first {
 		@extend %p-button;
 		@extend .iconfont;
-		@extend .icon-iconfontpreviouspage;
+		@extend .icon-lastpage;
 		@include pagebtn;
+	  	transform: rotate(180deg);
 	}
 
 	.p-prev {
 		@extend %p-button;
 		@extend .iconfont;
-		@extend .icon-iconfontpageleft;
+	  	@extend .icon-nextpage;
 		@include pagebtn;
+	  	transform: rotate(180deg);
 		margin: 0 12px 0 10px;
 	}
 	.p-next {
 		@extend %p-button;
 		@extend .iconfont;
-		@extend .icon-iconfontpageright;
+		@extend .icon-nextpage;
 		@include pagebtn;
 		margin: 0 11px;
 	}
 	.p-last {
 		@extend %p-button;
 		@extend .iconfont;
-		@extend .icon-iconfontpagedown;
+		@extend .icon-lastpage;
 		@include pagebtn;
 		margin-right: 27px;
 	}

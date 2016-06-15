@@ -1,110 +1,238 @@
+import angular from 'angular';
 import { Inject } from 'angular-es-utils';
 
-@Inject('$scope', '$element', 'dropdownService')
-export default class DropdownSelectCtrl {
+import dropdownService from '../DropdownService';
 
-	constructor($scope, $element, dropdownService) {
-		this.$scope = $scope;
-		this.$element = $element;
-		this.dropdownService = dropdownService;
-		this.options = this.$scope.options;
-		this.options.searchable = Boolean(this.options.searchable);
-		this.searchText = '';
-		this.datalist = this.options.datalist || [];
-		this.isOpen = false;
-		this.focusIndex = this.options.searchable ? 0 : -1;
+@Inject('$scope', '$element')
+export default class DropdownSelectCtrl {
+	// 选项 item 字段映射
+	static defaultMapping = {
+		valueField: 'value',
+		displayField: 'title'
+	};
+
+	constructor() {
+		this.datalist = [];
+		this.items = [];
+		this.mapping = {};
+		this.title = '';
+		this.value = null;
+		this.placeholder = '';
+		this.searchable = false;
+		this.focusIndex = 0;
+
+		this._dropdownCtrl = null;
+		this._openFn = null;
 	}
 
 	$onInit() {
-		let options = this.options;
+		let scope = this.getScope();
 
-		options.valueField = options.valueField || 'value';
-		options.displayField = options.displayField || 'title';
+		scope.$watch(() => this.datalist, ::this.onDatalistChange);
 
-		// 即时搜索
-		options.searchable && this.$scope.$watch('$ctrl.searchText', searchText => {
-			searchText = searchText.trim();
-			if (searchText.length) {
-				this.search(searchText);
+		this.mapping = Object.assign({}, DropdownSelectCtrl.defaultMapping, this.mapping);
+		this.datalist = this.datalist || [];
+	}
+
+	$postLink() {
+		let inputElement = this.getInputElement();
+
+		this._dropdownCtrl = this._getDropdownCtrl();
+
+		this._openFn = this::(() => {
+			this.open();
+			inputElement.removeEventListener('click', this._openFn);
+		});
+
+		if (!this.searchable) {
+			inputElement.addEventListener('click', ::this.toggle);
+		} else {
+			inputElement.addEventListener('click', this._openFn);
+		}
+
+		this._registerKeyboardEvent();
+	}
+
+	_registerKeyboardEvent() {
+		let inputElement = this.getInputElement();
+		let keydownFn = event => {
+			let scope = this.getScope();
+			let keyCode = event.keyCode;
+
+			// 关闭状态时按键打开
+			if (!this._dropdownCtrl.getIsOpen()) {
+				if (keyCode === 13 || keyCode === 38 || keyCode === 40) {
+					this.open();
+					return;
+				}
+			}
+
+			switch (event.keyCode) {
+				case 13: // enter
+					this.selectItemAt(this.focusIndex);
+					break;
+				case 38: // up
+					this.focusUp();
+					scope.$root.$$phase || scope.$apply();
+					break;
+				case 40: // down
+					this.focusDown();
+					scope.$root.$$phase || scope.$apply();
+					break;
+				default:
+			}
+		};
+		inputElement.addEventListener('focus', event => {
+			let target = event.currentTarget;
+			target.addEventListener('keydown', keydownFn);
+		});
+		inputElement.addEventListener('blur', event => {
+			let target = event.currentTarget;
+			target.removeEventListener('keydown', keydownFn);
+		});
+	}
+
+	onDatalistChange(datalist, oldDatalist) {
+		this.items = this._getClampedDatalist(datalist || []);
+	}
+
+	onSearchTextChange(text, oldText) {
+		if (text !== oldText) {
+			text = text.trim();
+			if (!this._dropdownCtrl.getIsOpen()) {
+				this.open();
+			}
+			if (text.length) {
+				this._search(text);
 			} else {
-				this.datalist = [...options.datalist];
+				this.items = this._getClampedDatalist(this.datalist);
+			}
+			this.focusAt(0);
+		}
+	}
+
+	onDropdownOpen() {
+		this.getInputElement().focus();
+		if (this.searchable && this.title.length) {
+			this._search(this.title);
+			this.focusAt(0);
+		}
+	}
+
+	onDropdownClose() {
+		if (this.searchable) {
+			this.getInputElement().addEventListener('click', this._openFn);
+		}
+	}
+
+	clearDropdownSelectInput() {
+		this.title = '';
+		this.items = this._getClampedDatalist(this.datalist);
+		this.focusAt(0);
+	}
+
+	toggle() {
+		if (this._dropdownCtrl.getIsOpen()) {
+			this.close();
+		} else {
+			this.open();
+		}
+	}
+
+	open() {
+		dropdownService.open(this._dropdownCtrl);
+	}
+
+	close() {
+		dropdownService.close(this._dropdownCtrl);
+	}
+
+	selectItemAt(index) {
+		let item = this.items[index];
+		if (item) {
+			this.title = item[this.mapping.displayField];
+			this.value = item[this.mapping.valueField];
+			this.focusAt(index);
+			this.close();
+		}
+	}
+
+	focusAt(index) {
+		this.focusIndex = index;
+	}
+
+	focusUp() {
+		if (--this.focusIndex < 0) {
+			this.focusIndex = 0;
+		}
+	}
+
+	focusDown() {
+		let listCount = this.items.length;
+		if (++this.focusIndex > listCount - 1) {
+			this.focusIndex = listCount - 1;
+		}
+	}
+
+	getElement() {
+		return this._$element[0];
+	}
+
+	getInputElement() {
+		return this.getElement().querySelector('.dropdown-select-input');
+	}
+
+	getScope() {
+		return this._$scope;
+	}
+
+	highlight(content, hiText) {
+		if (!this.searchable || !hiText) {
+			return content;
+		}
+		return content.replace(new RegExp(hiText, 'gi'), '<span class="highlight">$&</span>');
+	}
+
+	_getClampedDatalist(datalist) {
+		// 将每个 item 构造为对象
+		// e.g. 将 ['北京', '上海'] 构造为
+		// [{title: '北京', value: '北京'}, {title: '上海', value: '上海'}]
+		return datalist.map(item => {
+			if (typeof item !== 'object') {
+				return {
+					[this.mapping.displayField]: item,
+					[this.mapping.valueField]: item
+				};
+			} else {
+				return item;
 			}
 		});
 	}
 
-	search(text) {
-		let
-			options = this.options,
-			datalist = [...options.datalist],
-			searchFields = [options.valueField, options.displayField],
-			searchResult = [];
+	_search(text) {
+		let datalist = this._getClampedDatalist(this.datalist);
+		let mapping = this.mapping;
+		let searchFields = [mapping.valueField, mapping.displayField];
+		let filteredItems = [];
 
 		searchFields.forEach(field => {
 			for (let i = datalist.length - 1; i > -1; i--) {
 				let item = datalist[i];
 				if (item[field].indexOf(text) !== -1) {
-					searchResult.push(item);
+					filteredItems.push(item);
 					datalist.splice(i, 1);
 				}
 			}
 		});
 
-		this.datalist = searchResult;
+		this.items = filteredItems;
 	}
 
-	selectItem(item) {
-		this.searchText = item[this.options.displayField];
-		this.$scope.selectedItem = item;
-		this.closeList();
+	_getDropdownCtrl() {
+		let element = this.getElement();
+		let dropdownElement = element.querySelector('dropdown') ||
+					element.querySelector('[dropdown]');
+		return angular.element(dropdownElement).controller('dropdown');
 	}
+};
 
-	selectFocusedItem() {
-		this.selectItem(this.datalist[this.focusIndex]);
-	}
-
-	clearSelection() {
-		this.searchText = '';
-		this.$scope.selectedItem = null;
-	}
-
-	focusFirst() {
-		this.focusIndex = 0;
-		this.$scope.$root.$$phase || this.$scope.$apply();
-	}
-
-	focusPrevious() {
-		if (--this.focusIndex < 0) {
-			this.focusIndex = 0;
-		}
-		this.$scope.$root.$$phase || this.$scope.$apply();
-	}
-
-	focusNext() {
-		let listCount = this.datalist.length;
-		if (++this.focusIndex > listCount - 1) {
-			this.focusIndex = listCount - 1;
-		}
-		this.$scope.$root.$$phase || this.$scope.$apply();
-	}
-
-	toggleList() {
-		if (this.isOpen) {
-			this.closeList();
-		} else {
-			this.openList();
-		}
-	}
-
-	openList() {
-		this.isOpen = true;
-		this.$scope.$root.$$phase || this.$scope.$apply();
-		this.dropdownService.open(this);
-	}
-
-	closeList() {
-		this.isOpen = false;
-		this.$scope.$root.$$phase || this.$scope.$apply();
-		this.dropdownService.close();
-	}
-
-}

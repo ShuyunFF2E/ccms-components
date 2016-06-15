@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>下拉</title>
+<style>
+	[ng-app] {
+		margin: 1em;
+	}
+</style>
+
+<div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+	<dropdown-select
+			placeholder="快，快选我。。啊！"
+			value="ctrl.value1"
+			datalist="ctrl.datalist1"
+			searchable="true"
+			mapping="ctrl.fieldsMap">
+	</dropdown-select>
+	<dropdown-select
+			placeholder="哈哈哈"
+			value="ctrl.value2"
+			datalist="ctrl.datalist2"
+			searchable="false"
+			mapping="ctrl.fieldsMap">
+	</dropdown-select>
+</div>
+
+<script src="/components.js"></script>
+<script>
+	angular.module('demoApp', ['ccms.components'])
+		.controller('DemoCtrl', function($scope) {
+			this.datalist1 = ['北京', '上海', '深圳', '广州'];
+			this.datalist2 = [
+				{title: '北京', value: 'bj'},
+				{title: '上海', value: 'sh'},
+				{title: '深圳', value: 'sz'},
+				{title: '广州', value: 'gz'}
+			];
+			this.fieldsMap = {
+				valueField: 'value',
+				displayField: 'title'
+			};
+		});
+</script>
+

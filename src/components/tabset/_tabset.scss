@@ -70,12 +70,13 @@ tabset {
 
 				&.btn-back {
 					@extend .iconfont;
-					@extend .icon-iconfontarrowleft;
+				  	@extend .icon-rightarrow;
+				  	transform: rotate(180deg);
 				}
 
 				&.btn-forward {
 					@extend .iconfont;
-					@extend .icon-iconfontarrowright;
+					@extend .icon-rightarrow;
 				}
 			}
 
