@@ -1,4 +1,4 @@
-<div class="p-pager" ng-cloak ng-switch on="$ctrl.pageLayout">
+<div class="p-pager" ng-cloak ng-switch on="$ctrl.type">
 	<div class="p-group"></div>
 	<div class="p-group" ng-class="{disabled:$ctrl.pageNum===1}">
 		<div class="p-first"
@@ -26,10 +26,9 @@
 				ng-switch-when="normal"
 				ng-click="$ctrl.changePageNumByShortcut('last')"></div>
 	</div>
-	<div class="p-group"
-			ng-switch-when="normal"
-			ng-if="$ctrl.showPageSizeList">
+	<div class="p-group" ng-switch-when="normal">
 		<select
+				ng-disabled="$ctrl.disablePageSizeList"
 				ng-options="pageSize for pageSize in ::$ctrl.pageSizeList track by pageSize"
 				ng-model="$ctrl.pageSize"
 				ng-change="$ctrl.changePageSize($ctrl.pageSize)">

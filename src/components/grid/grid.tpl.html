@@ -36,8 +36,7 @@
 			ng-if="$ctrl.opts.showPagination"
 			page-num="$ctrl.opts.pager.pageNum"
 			page-size="$ctrl.opts.pager.pageSize"
-			page-size-list
-			page-layout="normal"
+			page-size-list="$ctrl.opts.pager.pageSizeList"
 			totals="$ctrl.opts.pager.totals"
 			total-pages="$ctrl.opts.pager.totalPages"
 			on-change="$ctrl.onPagerChange(pageNum, pageSize)">

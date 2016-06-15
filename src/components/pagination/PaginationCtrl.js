@@ -19,16 +19,17 @@ const DEFAULT_PAGER = {
 export default class PaginationCtrl {
 
 	constructor() {
-		// 分页布局风格
-		// enum: 'normal', 'simple'
-		this.pageLayout = 'normal';
+		// 分页风格
+		// enum: ['normal', 'simple']
+		this.type = 'normal';
 
-		this.showPageSizeList = false;
+		this.disablePageSizeList = undefined;
 	}
 
 	$onInit() {
-		if (this.getElement().hasAttribute('page-size-list')) {
-			this.showPageSizeList = true;
+		let element = this.getElement();
+		if (element.hasAttribute('disable-page-size-list') && this.disablePageSizeList !== false) {
+			this.disablePageSizeList = true;
 		}
 
 		// 初始化默认值

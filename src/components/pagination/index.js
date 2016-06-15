@@ -17,12 +17,13 @@ const paginationDDO = {
 	template,
 	controller,
 	bindings: {
+		type: '@?',
 		totals: '<?',  // 总条数
 		totalPages: '<?',  // 总页数
 		pageNum: '<?',  // 当前页码
 		pageSize: '<?', // 每页大小
 		pageSizeList: '<?',
-		pageLayout: '@?',
+		disablePageSizeList: '<?',
 		onChange: '&?'	// 刷新回调
 	}
 
