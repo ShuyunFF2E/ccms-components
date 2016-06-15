@@ -20,7 +20,7 @@ title: Home &middot; CCMS 组件库
 
 3. [jsfiddle base](https://jsfiddle.net/Kuitos/bny6tf2x/)
 
-4.常用的示例都已经写在 `docs/components/simple-component.md` 中，可以参考 [Sample component](http://localhost:3001/docs/components/sample-component/) 的效果。
+4.常用的示例都已经写在 `docs/components/simple-component.md` 中，可以参考 [Sample component](//docs/components/sample-component/) 的效果。
 
 {% callout danger %}
 #### 样式冲突
