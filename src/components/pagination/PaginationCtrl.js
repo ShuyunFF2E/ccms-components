@@ -23,13 +23,13 @@ export default class PaginationCtrl {
 		// enum: ['normal', 'simple']
 		this.type = 'normal';
 
-		this.disablePageSizeList = undefined;
+		this.pageSizeListDisabled = undefined;
 	}
 
 	$onInit() {
 		let element = this.getElement();
-		if (element.hasAttribute('disable-page-size-list') && this.disablePageSizeList !== false) {
-			this.disablePageSizeList = true;
+		if (element.hasAttribute('page-size-list-disabled') && this.pageSizeListDisabled !== false) {
+			this.pageSizeListDisabled = true;
 		}
 
 		// 初始化默认值

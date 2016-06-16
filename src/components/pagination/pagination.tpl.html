@@ -28,7 +28,7 @@
 	</div>
 	<div class="p-group" ng-switch-when="normal">
 		<select
-				ng-disabled="$ctrl.disablePageSizeList"
+				ng-disabled="$ctrl.pageSizeListDisabled"
 				ng-options="pageSize for pageSize in ::$ctrl.pageSizeList track by pageSize"
 				ng-model="$ctrl.pageSize"
 				ng-change="$ctrl.changePageSize($ctrl.pageSize)">
