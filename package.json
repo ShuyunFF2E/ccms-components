@@ -52,11 +52,13 @@
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.4.1"
   },
-  "dependencies": {
+  "peerDependencies": {
     "angular": "^1.5.2",
-    "angular-es-utils": "^1.2.27",
-    "angular-resource": "^1.5.2",
     "angular-ui-router": "^0.2.18",
+    "angular-resource": "^1.5.2"
+  },
+  "dependencies": {
+    "angular-es-utils": "^1.2.27",
     "normalize.css": "^4.1.1"
   }
 }
