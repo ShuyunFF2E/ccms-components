@@ -10,11 +10,27 @@ const chopStyle2Num = style => {
 	return Number(style.substr(0, style.length - 2));
 };
 
-const closestParent = (element, tagName) => {
+const closestTagParent = (element, tagName) => {
 
 	let parentNode = element.parentNode;
 
 	while (parentNode.nodeName.toLowerCase() !== tagName) {
+		parentNode = parentNode.parentNode;
+
+		if (parentNode === document.body) {
+			parentNode = null;
+			break;
+		}
+	}
+
+	return parentNode;
+};
+
+const closestAttrParent = (element, attrName) => {
+
+	let parentNode = element.parentNode;
+
+	while (!parentNode.hasAttribute(attrName)) {
 		parentNode = parentNode.parentNode;
 
 		if (parentNode === document.body) {
@@ -53,6 +69,7 @@ const isContentOverflow = (element, content) => {
 
 export {
 	chopStyle2Num,
-	closestParent,
+	closestTagParent,
+	closestAttrParent,
 	isContentOverflow
 };
