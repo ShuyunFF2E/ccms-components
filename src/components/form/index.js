@@ -5,15 +5,52 @@
  */
 
 import angular from 'angular';
-import {FactoryCreator} from 'angular-es-utils';
 
-import ValidatorsDirective from './validators/ValidatorsDirective';
-import ValidatorDirective from './validator/ValidatorDirective';
-import ValidatorService from './validator/ValidatorService';
+import './_form.scss';
+import ValidatorService from './ValidatorService';
+import ValidatorsCtrl from './ValidatorsCtrl';
+import ValidatorCtrl from './ValidatorCtrl';
+
+const validatorsDDO = {
+	restrict: 'A',
+	require: {
+		formCtrl: '?form'
+	},
+	controller: ValidatorsCtrl,
+	controllerAs: '$ctrl',
+	bindToController: {
+		validators: '<',
+		name: '@'
+	}
+};
+
+const validatorDDO = {
+	restrict: 'A',
+	require: {
+		ngModelCtrl: 'ngModel',
+		validatorsCtrl: '?^^validators',
+		formCtrl: '?^^form'
+	},
+	controller: ValidatorCtrl,
+	controllerAs: '$ctrl',
+	bindToController: {
+		validator: '@'
+	}
+};
+
+const forbidFormNativeValidator = {
+
+	compile(element) {
+		element[0].setAttribute('novalidate', 'true');
+	}
+};
 
 export default angular
 	.module('ccms.components.form', [])
-	.directive('validators', FactoryCreator.create(ValidatorsDirective))
-	.directive('validator', FactoryCreator.create(ValidatorDirective))
+	.directive('validators', () => validatorsDDO)
+	.directive('validator', () => validatorDDO)
+	// 对built-in的表单添加额外逻辑
+	.directive('form', () => forbidFormNativeValidator)
+	.directive('ngForm', () => forbidFormNativeValidator)
 	.service('$Validator', ValidatorService)
 	.name;

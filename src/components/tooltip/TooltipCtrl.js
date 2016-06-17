@@ -34,13 +34,14 @@ export default class TooltipCtrl {
 
 	open() {
 		this.tooltip = new Tooltip(this._$element[0], this._$attrs.tooltipType || TOOLTIP_TYPE.NORMAL, this._$attrs.tooltipAppendToBody);
-		this.tooltip.setContent(this.tooltipMsg);
-		this.tooltip.open();
+		this.tooltip.open(this.tooltipMsg);
 		this.opened = true;
 	}
 
 	close() {
-		this.tooltip.close();
+		if (this.tooltip) {
+			this.tooltip.close();
+		}
 		this.opened = false;
 	}
 
