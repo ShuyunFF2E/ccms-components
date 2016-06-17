@@ -7,8 +7,7 @@
 import angular from 'angular';
 
 import Popup from '../../common/bases/Popup';
-import {chopStyle2Num} from '../../common/utils/style-helper';
-import Position from '../../common/utils/position';
+import {chopStyle2Num, offset, position} from '../../common/utils/style-helper';
 
 import template from './tooltip.tpl.html';
 import {TOOLTIP_TYPE} from './Contants';
@@ -63,14 +62,14 @@ export default class Tooltip extends Popup {
 				/* ------------------为tooltip设置合适的位置------------------- */
 				let tooltipEl = this.element;
 
-				const hostPos = this.append2Body ? Position.offset(this.hostEl) : Position.position(this.hostEl);
+				const hostPos = this.append2Body ? offset(this.hostEl) : position(this.hostEl);
 
 				// 获取箭头的高度
 				const arrowHeight = chopStyle2Num(window.getComputedStyle(tooltipEl, ':after').getPropertyValue('border-top-width'));
 				// tooltipEl.style.maxWidth = `${hostPos.width}px`;
 
 				// 获取tooltip的top位置
-				const tooltipPos = Position.offset(tooltipEl);
+				const tooltipPos = offset(tooltipEl);
 				tooltipEl.style.top = hostPos.top - tooltipPos.height - arrowHeight - ARROW_MARGIN + 'px';
 				tooltipEl.style.left = `${hostPos.left}px`;
 

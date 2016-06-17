@@ -7,7 +7,7 @@
 import {Inject} from 'angular-es-utils';
 import angular from 'angular';
 
-import Position from '../../common/utils/position';
+import {position} from '../../common/utils/style-helper';
 import throttle from '../../common/utils/performance/throttle';
 import Tips from './Tips';
 import tipsTpl from './float-tips.tpl.html';
@@ -81,5 +81,5 @@ export default class TipsService {
 }
 
 function setTipsPosition(contextContainer, floatTipsContainer) {
-	floatTipsContainer.style.top = `${Position.position(contextContainer).top}px`;
+	floatTipsContainer.style.top = `${position(contextContainer).top}px`;
 }
