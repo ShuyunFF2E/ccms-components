@@ -52,3 +52,4 @@ export default angular
 		tabset
 	])
 	.name;
+
