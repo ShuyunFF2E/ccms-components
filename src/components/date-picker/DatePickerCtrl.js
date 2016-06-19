@@ -81,6 +81,7 @@ export default class DatePickerCtrl {
 		this.ngModelCtrl.$setValidity('minDate', true);
 		this.ngModelCtrl.$setValidity('maxDate', true);
 		this._errorTip && this._errorTip.close();
+		this._errorTip = null;
 	}
 
 
