@@ -105,12 +105,11 @@ $confirm-icon-margin: 15px;
 			text-align: right;
 
 			button {
-				margin-top: 11px;
-				margin-bottom: 11px;
+				margin: 11px 0 11px 11px;
 			}
 
 			button:last-child {
-				margin: 0 19px 0 11px;
+				margin-right: 19px;
 			}
 		}
 

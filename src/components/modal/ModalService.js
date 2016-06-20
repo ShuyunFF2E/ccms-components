@@ -31,6 +31,7 @@ export default class ModalService {
 	 *  fullscreen:   {boolean} 是否允许全屏,默认不允许
 	 *  hasFooter: {boolean} 是否有底部按钮,默认有
 	 *  body:   {string} 模板url,modal主体内容区
+	 *  footer: {string} 模板url,modal footer按钮区
 	 *  locals: {object} 需要传递到modal控制器中的数据,以服务的方式注入
 	 *  controller: {function|string} 控制器
 	 *  controllerAs: {string} 控制器别名,默认为$ctrl
@@ -39,7 +40,7 @@ export default class ModalService {
 	 *
 	 * @returns {Modal}
 	 */
-	modal({scope, title, style, fullscreen = false, hasFooter = true, body, locals, controller, controllerAs = '$ctrl', bindings, onClose = noop}) {
+	modal({scope, title, style, fullscreen = false, hasFooter = true, body, footer, locals, controller, controllerAs = '$ctrl', bindings, onClose = noop}) {
 
 		let modalElement = angular.element(modalTemplate);
 		let modalHTMLElement = modalElement[0];
@@ -53,19 +54,17 @@ export default class ModalService {
 		let renderDeferred = this._$q.defer();
 		let modalInstance = new Modal(modalHTMLElement, renderDeferred);
 
-		// 从配置中获取模版
-		this._$templateRequest(body).then(tplStr => {
+		// 从配置中获取 body/footer 模版
+		let tplPromises = {
+			bodyTpl: this._$templateRequest(body),
+			footerTpl: footer ? this._$templateRequest(footer) : this._$q.resolve(null)
+		};
+		this._$q.all(tplPromises).then(({bodyTpl, footerTpl}) => {
 
 			// 复制modal的scope中支持的属性
 			modalScope.title = title;
 			modalScope.style = style;
 			modalScope.fullscreen = fullscreen;
-
-			// 如果配置了没有底部,则手动将底部块移除.这里不采用ng-if的指令方式是因为$compile是一个异步过程,会导致后面的计算出问题
-			if (!hasFooter) {
-				const footer = modalHTMLElement.querySelector('footer');
-				footer.parentNode.removeChild(footer);
-			}
 
 			// 为模板scoep添加方法
 			modalScope.$ok = modalInstance.ok;
@@ -113,7 +112,16 @@ export default class ModalService {
 				}
 			}
 
-			angular.element(modalHTMLElement.querySelector(CONSTANT.BODY_SELECTOR)).append(tplStr);
+			modalHTMLElement.querySelector(CONSTANT.BODY_SELECTOR).innerHTML = bodyTpl;
+			if (footerTpl) {
+				modalHTMLElement.querySelector(CONSTANT.FOOTER_SELECTOR).innerHTML = footerTpl;
+			}
+
+			// 如果配置了没有底部,则手动将底部块移除.这里不采用ng-if的指令方式是因为$compile是一个异步过程,会导致后面的计算出问题
+			if (!hasFooter) {
+				const footer = modalHTMLElement.querySelector('footer');
+				footer.parentNode.removeChild(footer);
+			}
 
 			renderDeferred.resolve(this._$compile(modalElement)(modalScope));
 		});

@@ -44,6 +44,19 @@
 			modalInstance.close();
 		};
 
+		this.previous = function () {
+			console.log('上一步');
+		};
+
+		this.sure = function () {
+			console.log('sure');
+		};
+
+		this.fuckOff = function () {
+			console.log('fuck off');
+			modalInstance.cancel();
+		};
+
 	}
 
 	angular.module('app', ['ccms.components'])
@@ -115,6 +128,7 @@
 							//height: '850px'
 						},
 						body: '/demos/modal/modal-body.tpl.html',
+						footer: '/demos/modal/modal-footer.tpl.html',
 						controller: Controller,
 						bindings: self
 					})
