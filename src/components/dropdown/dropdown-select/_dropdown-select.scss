@@ -2,18 +2,26 @@
 @import "../../styles/mixins";
 @import "../../styles/input";
 
-.dropdown-select {
+dropdown-select {
 	display: inline-block;
+	vertical-align: middle;
+}
+.dropdown-select {
 	position: relative;
+	min-width: 64px;
+	max-width: 280px;
+	vertical-align: middle;
 
 	.dropdown-select-input-wrap {
-		position: relative;
+		display: flex;
+		border: solid 1px $input-border-color;
 		.dropdown-select-input {
-			min-width: 64px;
-			max-width: 280px;
-			padding-right: 48px;
+			flex: 1;
+			width: 100%;
+			padding-right: 0;
 			line-height: $control-height;
 			vertical-align: top;
+			border: none;
 			// TODO: input 字体大小应该在基础组件中写？
 			font-size: 12px;
 			&[readonly] {
@@ -25,20 +33,18 @@
 		}
 
 		.dropdown-select-icons {
-			position: absolute;
-			top: 0;
-			right: 0;
+			display: inline-block;
 		}
 
 		%action-icon {
 			@extend .iconfont;
 			display: inline-block;
-			margin-left: 8px;
+			padding-left: 8px;
 			line-height: $control-height;
 			cursor: pointer;
 			color: #c9c9c9;
 			&:last-child {
-				margin-right: 8px;
+				padding-right: 8px;
 			}
 			&:hover, .active > & {
 				color: $input-active-border;
@@ -49,9 +55,10 @@
 			@extend %action-icon;
 			@extend .icon-clear;
 			font-size: 12px;
-			display: none;
-			:hover > & {
-				display: inline-block;
+			display: inline-block;
+			visibility: hidden;
+			:hover > &.visible {
+				visibility: visible;
 			}
 		}
 		.dropdown-select-down {

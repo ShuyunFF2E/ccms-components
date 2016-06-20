@@ -16,6 +16,14 @@ export default class TooltipCtrl {
 		this.opened = false;
 	}
 
+	$onChanges(models) {
+
+		// tooltip内容发生变更时内容也相应变更
+		if (this.tooltip && !models.tooltipMsg.isFirstChange()) {
+			this.tooltip.open(models.tooltipMsg.currentValue);
+		}
+	}
+
 	$postLink() {
 		// 默认通过mouseenter/mouseleave触发
 		if (!this._$attrs.tooltipTrigger && !this._$attrs.tooltipOpened) {
@@ -34,13 +42,16 @@ export default class TooltipCtrl {
 
 	open() {
 		this.tooltip = new Tooltip(this._$element[0], this._$attrs.tooltipType || TOOLTIP_TYPE.NORMAL, this._$attrs.tooltipAppendToBody);
-		this.tooltip.setContent(this.tooltipMsg);
-		this.tooltip.open();
+		this.tooltip.open(this.tooltipMsg);
 		this.opened = true;
 	}
 
 	close() {
-		this.tooltip.close();
+		if (this.tooltip) {
+			this.tooltip.close();
+			this.tooltip = null;
+		}
+
 		this.opened = false;
 	}
 

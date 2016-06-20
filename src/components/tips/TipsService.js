@@ -7,7 +7,7 @@
 import {Inject} from 'angular-es-utils';
 import angular from 'angular';
 
-import Position from '../../common/utils/position';
+import {position} from '../../common/utils/style-helper';
 import throttle from '../../common/utils/performance/throttle';
 import Tips from './Tips';
 import tipsTpl from './float-tips.tpl.html';
@@ -30,9 +30,10 @@ export default class TipsService {
 	constructor() {
 		this.containerMap = new Map();
 		this._linkedTpl = null;
+		this._defaultContainer = document.querySelector('menu-bar') && document.querySelector('menu-bar').nextElementSibling || document.body;
 	}
 
-	_create(type, msg, contextContainer = document.body) {
+	_create(type, msg, contextContainer = this._defaultContainer) {
 
 		// 性能考虑,模板只编译一次
 		if (!this._linkedTpl) {
@@ -81,5 +82,5 @@ export default class TipsService {
 }
 
 function setTipsPosition(contextContainer, floatTipsContainer) {
-	floatTipsContainer.style.top = `${Position.position(contextContainer).top}px`;
+	floatTipsContainer.style.top = `${position(contextContainer).top}px`;
 }

@@ -80,6 +80,11 @@
 					.modal({
 						title: '基础模态框',
 						hasFooter: false,
+						style: {
+							// 'min-height': '200px',
+							height: '300px',
+							'width': '100px'
+						},
 						locals: {
 							data: [1, 2, 3]
 						},
@@ -105,7 +110,8 @@
 							data: [1, 2, 3]
 						},
 						style: {
-							width: '800px',
+							// width: '800px',
+							// 'max-width': '400px'
 							//height: '850px'
 						},
 						body: '/demos/modal/modal-body.tpl.html',

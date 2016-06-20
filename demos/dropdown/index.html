@@ -5,23 +5,32 @@
 	[ng-app] {
 		margin: 1em;
 	}
+	.demo {
+		margin: .5em;
+	}
 </style>
 
 <div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<dropdown-select
-			placeholder="快，快选我。。啊！"
-			value="ctrl.value1"
-			datalist="ctrl.datalist1"
-			searchable="true"
-			mapping="ctrl.fieldsMap">
-	</dropdown-select>
-	<dropdown-select
-			placeholder="哈哈哈"
-			value="ctrl.value2"
-			datalist="ctrl.datalist2"
-			searchable="false"
-			mapping="ctrl.fieldsMap">
-	</dropdown-select>
+	<div class="demo">
+		<dropdown-select
+				placeholder="快，快选我。。啊！"
+				model="ctrl.value1"
+				datalist="ctrl.datalist1"
+				searchable="true"
+				mapping="ctrl.fieldsMap">
+		</dropdown-select>
+		<span ng-bind="ctrl.value1"></span>
+	</div>
+	<div class="demo">
+		<dropdown-select
+				placeholder="哈哈哈"
+				model="ctrl.value2"
+				datalist="ctrl.datalist2"
+				searchable="false"
+				mapping="ctrl.fieldsMap">
+		</dropdown-select>
+		<span ng-bind="ctrl.value2"></span>
+	</div>
 </div>
 
 <script src="/components.js"></script>

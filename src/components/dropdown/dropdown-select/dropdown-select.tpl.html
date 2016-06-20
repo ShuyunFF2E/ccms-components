@@ -8,9 +8,9 @@
 				ng-model="$ctrl.title">
 		<div class="dropdown-select-icons"
 			><span class="dropdown-select-clear"
-				ng-if="$ctrl.searchable"
-				ng-show="$ctrl.title.length"
-				ng-click="$ctrl.clearDropdownSelectInput()"></span
+					ng-class="{visible: $ctrl.title.length}"
+					ng-if="$ctrl.searchable"
+					ng-click="$ctrl.clearDropdownSelectInput()"></span
 			><span class="dropdown-select-down" dropdown-toggle></span>
 		</div>
 	</div>
