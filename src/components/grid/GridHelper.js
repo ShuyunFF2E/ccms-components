@@ -63,9 +63,9 @@ export default {
 
 					let pager = gridOptions.pager;
 
-					pager.pageNum = res.pageNum || 1;
-					pager.pageSize = res.pageSize || 20;
-					pager.totals = res.totals || 0;
+					pager.pageNum = res.pageNum;
+					pager.pageSize = res.pageSize;
+					pager.totals = res.totals;
 					pager.totalPages = Math.ceil((res.totals || 0) / pager.pageSize);
 
 				});

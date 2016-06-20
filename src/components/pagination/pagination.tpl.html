@@ -10,6 +10,7 @@
 		<span class="pcontrol">
 			<input type="text"
 					ng-switch-when="normal"
+                    ng-disabled="$ctrl.totalPages===1"
 					ng-blur="$ctrl.changePageNumByInput($event)"
 					ng-enter="$ctrl.changePageNumByInput($event)"
 					ng-dom-value="$ctrl.pageNum">

@@ -7,14 +7,6 @@
 
 import {Inject} from 'angular-es-utils';
 
-const DEFAULT_PAGER = {
-	totals: 0,  // 总条数
-	totalPages: 1,  // 总页数
-	pageNum: 1,  // 当前页码
-	pageSize: 20, // 每页大小
-	pageSizeList: [10, 15, 20, 30, 50]
-};
-
 @Inject('$element')
 export default class PaginationCtrl {
 
@@ -26,16 +18,43 @@ export default class PaginationCtrl {
 		this.pageSizeListDisabled = undefined;
 	}
 
+	get totalPages() {
+		return this._totalPages || 1;
+	}
+
+	set totalPages(value) {
+		this._totalPages = value;
+	}
+
+	get pageNum() {
+		return this._pageNum || 1;
+	}
+
+	set pageNum(value) {
+		this._pageNum = value;
+	}
+
+	get pageSize() {
+		return this._pageSize || 20;
+	}
+
+	set pageSize(value) {
+		this._pageSize = value;
+	}
+
+	get pageSizeList() {
+		return this._pageSizeList || [10, 15, 20, 30, 50];
+	}
+
+	set pageSizeList(value) {
+		this._pageSizeList = value;
+	}
+
 	$onInit() {
 		let element = this.getElement();
 		if (element.hasAttribute('page-size-list-disabled') && this.pageSizeListDisabled !== false) {
 			this.pageSizeListDisabled = true;
 		}
-
-		// 初始化默认值
-		Object.keys(DEFAULT_PAGER).forEach(prop => {
-			this[prop] = this[prop] || DEFAULT_PAGER[prop];
-		});
 	}
 
 	getElement() {
