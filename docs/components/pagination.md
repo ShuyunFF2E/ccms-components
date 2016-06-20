@@ -22,3 +22,4 @@ group: components
 
 ## Examples
 
+<iframe width="100%" height="400" src="//jsfiddle.net/arzyu/3aeku9ee/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>

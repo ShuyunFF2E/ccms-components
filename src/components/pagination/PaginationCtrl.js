@@ -5,7 +5,7 @@
  * 分页组件控制器
  */
 
-import {Inject, Debounce} from 'angular-es-utils';
+import {Inject} from 'angular-es-utils';
 
 const DEFAULT_PAGER = {
 	totals: 0,  // 总条数
@@ -106,7 +106,6 @@ export default class PaginationCtrl {
 		this.changePager({pageNum: 1, pageSize});
 	}
 
-	@Debounce(200)
 	changePager(pagerInfo) {
 		// 通知外部分页内容已发生变更
 		this.onChange(pagerInfo);
