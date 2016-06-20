@@ -23,7 +23,7 @@ const paginationDDO = {
 		pageNum: '<?',  // 当前页码
 		pageSize: '<?', // 每页大小
 		pageSizeList: '<?',
-		disablePageSizeList: '<?',
+		pageSizeListDisabled: '<?',
 		onChange: '&?'	// 刷新回调
 	}
 
