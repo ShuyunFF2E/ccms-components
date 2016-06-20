@@ -82,7 +82,8 @@
 						hasFooter: false,
 						style: {
 							// 'min-height': '200px',
-							height: '300px'
+							height: '300px',
+							'width': '100px'
 						},
 						locals: {
 							data: [1, 2, 3]
