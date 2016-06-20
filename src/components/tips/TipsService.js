@@ -17,7 +17,6 @@ const TIPS_TYPE = {
 	ERROR: 'error'
 };
 
-const DEFAULT_CONTEXT_CONTAINER = document.querySelector('menu-bar') && document.querySelector('menu-bar').nextElementSibling || document.body;
 const FLOAT_TIPS_CONTAINER = '<div class="float-tips-container"></div>';
 
 const AUTO_CLOSE_DELAY = 3 * 1000;
@@ -31,9 +30,10 @@ export default class TipsService {
 	constructor() {
 		this.containerMap = new Map();
 		this._linkedTpl = null;
+		this._defaultContainer = document.querySelector('menu-bar') && document.querySelector('menu-bar').nextElementSibling || document.body;
 	}
 
-	_create(type, msg, contextContainer = DEFAULT_CONTEXT_CONTAINER) {
+	_create(type, msg, contextContainer = this._defaultContainer) {
 
 		// 性能考虑,模板只编译一次
 		if (!this._linkedTpl) {
