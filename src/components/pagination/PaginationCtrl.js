@@ -5,7 +5,7 @@
  * 分页组件控制器
  */
 
-import {Inject, Debounce} from 'angular-es-utils';
+import {Inject} from 'angular-es-utils';
 
 const DEFAULT_PAGER = {
 	totals: 0,  // 总条数
@@ -15,7 +15,7 @@ const DEFAULT_PAGER = {
 	pageSizeList: [10, 15, 20, 30, 50]
 };
 
-@Inject('$scope', '$element')
+@Inject('$element')
 export default class PaginationCtrl {
 
 	constructor() {
@@ -36,10 +36,6 @@ export default class PaginationCtrl {
 		Object.keys(DEFAULT_PAGER).forEach(prop => {
 			this[prop] = this[prop] || DEFAULT_PAGER[prop];
 		});
-	}
-
-	getScope() {
-		return this._$scope;
 	}
 
 	getElement() {
@@ -110,13 +106,9 @@ export default class PaginationCtrl {
 		this.changePager({pageNum: 1, pageSize});
 	}
 
-	@Debounce(200)
 	changePager(pagerInfo) {
 		// 通知外部分页内容已发生变更
 		this.onChange(pagerInfo);
-
-		let scope = this.getScope();
-		scope.$root.$$phase || scope.$apply();
 	}
 
 }
