@@ -83,7 +83,7 @@
 						style: {
 							// 'min-height': '200px',
 							height: '300px',
-							'width': '100px'
+							'min-width': '300px'
 						},
 						locals: {
 							data: [1, 2, 3]

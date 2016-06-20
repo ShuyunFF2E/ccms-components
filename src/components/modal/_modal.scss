@@ -69,6 +69,7 @@ $confirm-icon-margin: 15px;
 	}
 
 	.container {
+		display: none;
 		z-index: $modal-z-index;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.13);
 
@@ -193,8 +194,15 @@ $confirm-icon-margin: 15px;
 		transition: opacity .5s linear;
 	}
 
-	&.modal-opened .mask {
-		opacity: 1;
+	&.modal-opened {
+
+		.container {
+			display: block;
+		}
+
+		.mask {
+			opacity: 1;
+		}
 	}
 
 }
