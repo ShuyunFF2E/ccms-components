@@ -38,7 +38,15 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 				},
 				{field: 'age', displayName: '年龄', align: 'center'},
 				{field: 'gender', displayName: '性别', align: 'right'}
-			]
+			],
+			// transformer: {
+			// 	pageNum: 'currentPage',
+			// 	totals: 'totalCount'
+			// }
+			transformer: function (res) {
+				console.log(res);
+				return [];
+			}
 
 			//headerTpl: '/demos/grid/test.html'
 
