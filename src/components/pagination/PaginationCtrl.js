@@ -15,7 +15,7 @@ const DEFAULT_PAGER = {
 	pageSizeList: [10, 15, 20, 30, 50]
 };
 
-@Inject('$element')
+@Inject('$scope', '$element')
 export default class PaginationCtrl {
 
 	constructor() {
@@ -36,6 +36,10 @@ export default class PaginationCtrl {
 		Object.keys(DEFAULT_PAGER).forEach(prop => {
 			this[prop] = this[prop] || DEFAULT_PAGER[prop];
 		});
+	}
+
+	getScope() {
+		return this._$scope;
 	}
 
 	getElement() {
@@ -110,6 +114,9 @@ export default class PaginationCtrl {
 	changePager(pagerInfo) {
 		// 通知外部分页内容已发生变更
 		this.onChange(pagerInfo);
+
+		let scope = this.getScope();
+		scope.$root.$$phase || scope.$apply();
 	}
 
 }
