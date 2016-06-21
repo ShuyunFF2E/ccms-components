@@ -59,8 +59,8 @@
 			pageNum: 1,
 			pageSize: 20,
 			pageSizeList: [10, 15, 20, 30, 50],
-			totals: 100,
-			totalPages: 5
+			totals: 50,
+			totalPages: 3
 		};
 		this.onPageChange = (pageNum, pageSize) => {
 			// 获取业务数据...
@@ -69,7 +69,7 @@
 			let pageOptions = this.pageOptions;
 			pageOptions.pageNum = pageNum;
 			pageOptions.pageSize = pageSize;
-			pageOptions.totals = 100;
+			pageOptions.totals = 50;
 			pageOptions.totalPages = Math.ceil(pageOptions.totals / pageSize);
 		}
 	}
