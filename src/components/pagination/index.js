@@ -18,7 +18,6 @@ const paginationDDO = {
 	controller,
 	bindings: {
 		type: '@?',
-		totals: '<?',  // 总条数
 		totalPages: '<?',  // 总页数
 		pageNum: '<?',  // 当前页码
 		pageSize: '<?', // 每页大小
