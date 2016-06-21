@@ -5,7 +5,7 @@
  * @Date: 2016-02-29 6:52 PM
  * To change this template use File | Settings | File Templates.
  */
-import {Inject} from 'angular-es-utils';
+import {Inject, EventBus} from 'angular-es-utils';
 import {$Menus} from './MenuService';
 
 @Inject('$menus', '$timeout', '$state', '$rootScope', '$document', '$scope')
@@ -148,6 +148,7 @@ export default class MenusCtrl {
 				// -第一次广播时间通知调用者当前选择的店铺
 				$timeout(() => {
 					this.$rootScope.$broadcast('shopSelect', $menus.shopActive);
+					EventBus.dispatch('shopSelect', $menus.shopActive);
 				}, 0);
 			}
 		};
