@@ -6,17 +6,22 @@
 </head>
 <body ng-app="componentsApp" ng-controller="ctrl as app">
 
-<div class="ccmsc-main-container" ng-class="{'ssss':app.menusOptions.unfold}">
+<div class="ccmsc-main-container" ng-class="{'contract-left':!app.menusOptions.unfold}">
 
-    <menu-bar options="app.menusOptions"></menu-bar>
+    <div class="left-container constact-container">
+        <menu-bar options="app.menusOptions"></menu-bar>
+    </div>
 
-    <div class="center-container">
-
-        <div style="position: relative;left: 200px;">
+    <div class="center-container ">
+        <div ng-if="!app.show" ng-click="app.show=!app.show">
             <nav-title name="app.titleName"></nav-title>
+        </div>
+        <div>
+            center
         </div>
     </div>
     <div class="right-container">
+        right
     </div>
 </div>
 

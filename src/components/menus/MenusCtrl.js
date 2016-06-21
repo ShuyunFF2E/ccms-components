@@ -71,11 +71,11 @@ export default class MenusCtrl {
 		 */
 		this.activeMenus = (menus = []) => {
 			const active = menus.find(menu => {
-				return $state.includes(menu.state);
+				return $state.includes(menu.url);
 			});
 			active ? active.toggleNode = true : null;
 			if (active !== undefined && active !== null) {
-				const child = active.child;
+				const child = active.children;
 				Array.isArray(child) && child.length > 0 ? this.activeMenus(child) : null;
 			}
 		};

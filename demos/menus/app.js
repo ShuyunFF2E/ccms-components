@@ -6,49 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-
-/**
- * menu-bar 指令使用说明:
- *
- *  <menu-bar options="menusOptions"></menu-bar>
- *
- *  options : 指令配置,其中包括如下:
- *
- *           unfold: 菜单展开标记   (bool)默认 true
- *      unfoldClick: 菜单展开收起回调函数  (function)默认为null
- *    menusResource: 菜单数据集合或者Resource  (array 或者 Resource)
- *       menusQuery: 菜单数据Resource查询参数  (object)
- *
- *            shops: 店铺配置是否启用   (bool) 默认false
- *    shopsResource: 店铺数据集合或者Resource  (array 或者 Resource)
- *       shopsQuery: 店铺数据Resource查询参数  (object)
- *
- * 样例:
- *
- * const shops=[],
- *       options={
- *			unfold: true,
- *			unfoldClick: () => {console.log('菜单展开或者收起');},
- *			shops: true,
- *			menusQuery: {
- *		     a:111
- *			},
- *			shopsQuery: null,
- *			menusResource: $resource('menus/'),
- *			shopsResource: shops
- *	  	}
- *
- *
- *  // -查询店铺是否有更改
- *  $rootScope.$on('shopSelect', function (event, shop) {
- *	 console.log(shop);
- *	// -查询当前选择的店铺
- *	 console.log('$menus.active:', $menus.shopActive);
- *  });
- *
- */
-
-
 angular
 	.module('componentsApp', ['ccms.components', 'ui.router', 'ngResource'])
 
@@ -114,56 +71,56 @@ angular
 		var menus = [
 			{
 				"name": "忠诚度设置",
-				"state": "card",
+				"url": "card",
 				"icon": "",
-				"child": [
+				"children": [
 					{
 						"name": "积分类型",
-						"state": "card.point",
+						"url": "card.point",
 						"icon": "",
-						"child": []
+						"children": []
 					},
 					{
 						"name": "等级类型",
-						"state": "card.grade",
+						"url": "card.grade",
 						"icon": "",
-						"child": []
+						"children": []
 					}
 				]
 			},
 			{
 				"name": "TAE会员专区",
-				"state": "views",
+				"url": "views",
 				"icon": "",
-				"child": [
+				"children": [
 					{
 						"name": "界面设置",
-						"state": "views.set",
+						"url": "views.set",
 						"icon": "",
-						"child": [
+						"children": [
 							{
 								"name": "手淘",
-								"state": "views.set.st",
+								"url": "views.set.st",
 								"icon": "",
-
+								"children": []
 							}
 						]
 					},
 					{
 						"name": "赚积分",
-						"state": "views.point",
+						"url": "views.point",
 						"icon": "",
-						"child": [
+						"children": [
 							{
 								"name": "签到",
-								"state": "views.point.sign",
+								"url": "views.point.sign",
 								"icon": "",
-								"child": [
+								"children": [
 									{
 										"name": "再签到",
-										"state": "views.point.sign.reload",
+										"url": "views.point.sign.reload",
 										"icon": "",
-										"child": []
+										"children": []
 									}
 								]
 							}
@@ -173,9 +130,9 @@ angular
 			},
 			{
 				"name": "会员等级管理",
-				"state": "grade",
+				"url": "grade",
 				"icon": "",
-				"child": []
+				"children": []
 			}
 		];
 
@@ -189,8 +146,8 @@ angular
 				console.log('结果:', unfold);
 			},
 			shops: true,
-			menusResource: $resource('/menus'),
-			//menusResource: menus,
+			//menusResource: $resource('/menus'),
+			menusResource: menus,
 			//shopsResource: $resource('/shops')
 			shopsResource: shops,
 			searchPlaceholder: '请输入XXX'
@@ -201,7 +158,6 @@ angular
 
 routerConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 function routerConfig($stateProvider, $urlRouterProvider) {
-
 	$stateProvider
 		.state('card', {
 			abstract: true,
@@ -210,26 +166,24 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('card.point', {
 			url: '/point',
-			title: '积分类型',
 			template: '积分类型'
-
 		})
 		.state('card.grade', {
 			url: '/grade',
-			title: '等级类型',
 			template: '等级类型'
 		})
 		.state('views', {
 			abstract: true,
-			url: '/views'
+			url: '/views',
+			template: '<div ui-view></div>'
 		})
 		.state('views.set', {
 			url: '/set',
-			abstract: true
+			abstract: true,
+			template: '<div ui-view></div>'
 		})
 		.state('views.set.st', {
 			url: '/st',
-			title: '手机淘宝0000',
 			template: '手机淘宝'
 		})
 		.state('views.point', {
@@ -244,11 +198,9 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.point.sign.reload', {
 			url: '/sign',
-			title: '签到绘声绘色一条龙',
 			template: '签到绘声绘色'
 		})
 		.state('grade', {
-			title: '尿性行天下',
 			url: '/grade',
 			template: '任性的一哥们儿'
 		});
@@ -260,11 +212,8 @@ function runConfig($state, $rootScope, $menus) {
 	$rootScope.$state = $state;
 
 	// -查询店铺是否有更改
-	$rootScope.$on('shopSelect', function(event, shop) {
+	$rootScope.$on('shopSelect', function (event, shop) {
 		console.log(shop);
 		console.log('$menus.active:', $menus.shopActive);
-	});
-	$rootScope.$on('menuSelect', function(event, menu) {
-		console.log(menu);
 	});
 }
