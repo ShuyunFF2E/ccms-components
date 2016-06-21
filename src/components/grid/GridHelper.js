@@ -4,9 +4,19 @@
  * @since 2016-01-04
  */
 import injector from 'angular-es-utils/injector';
+import {isPromiseLike, isObject, isFunction} from 'angular-es-utils/type-auth';
 
-function isPromiseLike(obj) {
-	return !!obj && typeof obj.then === 'function';
+function transformer(response, mapping) {
+
+	let result = Object.assign({}, response);
+
+	for (let prop in mapping) {
+		if (mapping.hasOwnProperty(prop)) {
+			result[prop] = response[mapping[prop]] || response[prop];
+		}
+	}
+
+	return result;
 }
 
 /**
@@ -57,8 +67,16 @@ export default {
 
 				.then(res => {
 
+					let transformedData;
+
+					if (isFunction(gridOptions.transformer)) {
+						transformedData = gridOptions.transformer(res);
+					} else if (isObject(gridOptions.transformer)) {
+						transformedData = transformer(res, gridOptions.transformer);
+					}
+
 					gridOptions.response = res;
-					gridOptions.data = res.list;
+					gridOptions.data = transformedData.list;
 					gridOptions.loading = false;
 
 					let pager = gridOptions.pager;

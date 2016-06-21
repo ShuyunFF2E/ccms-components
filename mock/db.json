@@ -3,8 +3,9 @@
     {
       "id": 1,
       "pageNum": 1,
+      "currentPage": 1,
+      "totalCount": 40,
       "pageSize": 10,
-      "totals": 40,
       "list": [
         {
           "name": "旗木卡卡西xx",
