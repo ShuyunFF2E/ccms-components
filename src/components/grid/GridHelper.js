@@ -81,10 +81,10 @@ export default {
 
 					let pager = gridOptions.pager;
 
-					pager.pageNum = transformedData.pageNum || 1;
-					pager.pageSize = transformedData.pageSize || 20;
-					pager.totals = transformedData.totals || 0;
-					pager.totalPages = Math.ceil((transformedData.totals || 0) / pager.pageSize);
+					pager.pageNum = res.pageNum;
+					pager.pageSize = res.pageSize;
+					pager.totals = res.totals;
+					pager.totalPages = Math.ceil((res.totals || 0) / pager.pageSize);
 
 				});
 
