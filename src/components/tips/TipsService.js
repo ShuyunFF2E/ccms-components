@@ -69,14 +69,16 @@ export default class TipsService {
 		// 根据上下文容器设置提示层位置
 		setTipsPosition(contextContainer, floatTipsContainer);
 		tips.open();
+
+		return tips;
 	}
 
 	success(msg, container) {
-		this._create(TIPS_TYPE.SUCCESS, msg, container);
+		return this._create(TIPS_TYPE.SUCCESS, msg, container);
 	}
 
 	error(msg, container) {
-		this._create(TIPS_TYPE.ERROR, msg, container);
+		return this._create(TIPS_TYPE.ERROR, msg, container);
 	}
 
 }
