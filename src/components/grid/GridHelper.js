@@ -67,12 +67,16 @@ export default {
 
 				.then(res => {
 
-					let transformedData;
+					let transformedData = null;
 
-					if (isFunction(gridOptions.transformer)) {
-						transformedData = gridOptions.transformer(res);
-					} else if (isObject(gridOptions.transformer)) {
-						transformedData = transformer(res, gridOptions.transformer);
+					if (gridOptions.transformer) {
+						if (isFunction(gridOptions.transformer)) {
+							transformedData = gridOptions.transformer(res);
+						} else if (isObject(gridOptions.transformer)) {
+							transformedData = transformer(res, gridOptions.transformer);
+						}
+					} else {
+						transformedData = res;
 					}
 
 					gridOptions.response = res;
@@ -81,10 +85,10 @@ export default {
 
 					let pager = gridOptions.pager;
 
-					pager.pageNum = res.pageNum;
-					pager.pageSize = res.pageSize;
-					pager.totals = res.totals;
-					pager.totalPages = Math.ceil((res.totals || 0) / pager.pageSize);
+					pager.pageNum = transformedData.pageNum;
+					pager.pageSize = transformedData.pageSize;
+					pager.totals = transformedData.totals;
+					pager.totalPages = Math.ceil((transformedData.totals || 0) / pager.pageSize);
 
 				});
 
