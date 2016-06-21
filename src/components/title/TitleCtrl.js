@@ -6,15 +6,22 @@
  * To change this template use File | Settings | File Templates.
  */
 import {EventBus} from 'angular-es-utils';
-
+let eventBus;
 export default class TitleCtrl {
 	constructor() {
 		const self = this;
-		/**
-		 * 检测菜单选中
-		 */
-		EventBus.on('menuSelect', menu => {
-			self.name = self.name || menu.name;
-		});
+
+		// 如果未配置name 则获取菜单数据
+		if (!self.name) {
+
+			// -检测菜单选中
+			eventBus = EventBus.on('menuSelect', menu => {
+				self.name = self.name || menu.name;
+			});
+		}
+	}
+
+	$onDestroy() {
+		eventBus && eventBus();
 	}
 }

@@ -6,8 +6,21 @@
  * To change this template use File | Settings | File Templates.
  */
 import angular from 'angular';
-import TitleDirective from './TitleDirective';
+
+import './_title-with-prefixed-icon.scss';
+import template from './title.tpl.html';
+import controller from './TitleCtrl';
+
+const titleDOO = {
+	template,
+	controller,
+	controllerAs: 'title',
+	bindings: {
+		name: '='
+	}
+};
+
 export default angular
 	.module('ccms.components.title', [])
-	.component('navTitle', new TitleDirective())
+	.component('navTitle', titleDOO)
 	.name;
