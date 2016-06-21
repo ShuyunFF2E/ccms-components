@@ -25,7 +25,105 @@ grid {
 		bottom: 0;
 	}
 
-	& > .footer {
+	.ccms-table-wrapper {
+		background-color: #fff;
+		border: $table-border;
+		overflow: auto;
+		position: absolute;
+		bottom: $table-bottom-height;
+		left: 0;
+		right: 0;
+		top: 0;
+
+		&,
+		& * {
+			box-sizing: border-box;
+		}
+	}
+
+	.ccms-table {
+		background-color: #fff;
+		border-collapse: collapse;
+		color: $color-text;
+		font-family: $font-family;
+		font-size: $font-size-base;
+		table-layout: fixed;
+		width: 100%;
+
+		tr {
+			border-bottom: $table-border;
+			height: 42px;
+
+			&:nth-child(even) {
+				background-color: $tr-even-bg;
+			}
+
+			&.row-selected {
+				background-color: $tr-hover-bg;
+			}
+		}
+
+		thead > tr {
+			background: $thead-bg;
+			color: $color-text-light;
+		}
+
+		tbody > tr:hover {
+			background-color: $tr-hover-bg;
+		}
+
+		th {
+			font-weight: 400;
+			padding: $td-padding;
+			text-align: left;
+		}
+
+		td {
+			@include cut-long-text;
+			white-space: normal;
+			padding: $td-padding;
+		}
+
+		.checkbox {
+			text-align: center;
+			width: 38px;
+
+			& + th,
+			& + td {
+				padding-left: 0;
+			}
+		}
+	}
+
+	.init-msg {
+		@extend %absolute-center;
+		@include all-link($init-color);
+
+		span {
+			font-family: $font-family;
+			font-size: $font-size-large;
+			height: 40px;
+			line-height: 40px;
+			color: $font-color-comment;
+			vertical-align: middle;
+
+			&.msg {
+				margin-left: 15px;
+			}
+
+			&.warning {
+				font-size: 44px;
+				@extend .iconfont;
+				@extend .icon-caution;
+			}
+		}
+	}
+
+	.grid-loading {
+		@extend %absolute-center;
+	}
+
+	.footer {
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -101,121 +199,25 @@ grid {
 			float: right;
 		}
 	}
-}
 
-.ccms-table-wrapper {
-	background-color: #fff;
-	border: $table-border;
-	overflow: auto;
-	position: absolute;
-	bottom: $table-bottom-height;
-	left: 0;
-	right: 0;
-	top: 0;
-
-	&,
-	& * {
-		box-sizing: border-box;
-	}
-}
-
-.ccms-table {
-	background-color: #fff;
-	border-collapse: collapse;
-	color: $color-text;
-	font-family: $font-family;
-	font-size: $font-size-base;
-	table-layout: fixed;
-	width: 100%;
-
-	tr {
-		border-bottom: $table-border;
-		height: 42px;
-
-		&:nth-child(even) {
-			background-color: $tr-even-bg;
-		}
-
-		&.row-selected {
-			background-color: $tr-hover-bg;
-		}
-	}
-
-	thead > tr {
-		background: $thead-bg;
-		color: $color-text-light;
-	}
-
-	tbody > tr:hover {
-		background-color: $tr-hover-bg;
-	}
-
-	th {
-		font-weight: 400;
-		padding: $td-padding;
-		text-align: left;
-	}
-
-	td {
-		@include cut-long-text;
-		white-space: normal;
-		padding: $td-padding;
-	}
-
-	.checkbox {
-		text-align: center;
-		width: 38px;
-
-		& + th,
-		& + td {
-			padding-left: 0;
-		}
-	}
-}
-
-.init-msg {
-	@extend %absolute-center;
-	@include all-link($init-color);
-
-	span {
-		font-family: $font-family;
-		font-size: $font-size-large;
-		height: 40px;
-		line-height: 40px;
-		color: $font-color-comment;
-		vertical-align: middle;
-
-		&.msg {
-			margin-left: 15px;
-		}
-
-		&.warning {
-			font-size: 44px;
-			@extend .iconfont;
-			@extend .icon-caution;
-		}
-	}
-}
-
-.grid-loading {
-	@extend %absolute-center;
-}
-
-grid-cell {
-	display: flex;
-	justify-content: flex-start;
-	word-break: break-all;
-
-	&.left {
+	grid-cell {
+		display: flex;
 		justify-content: flex-start;
-	}
+		word-break: break-all;
 
-	&.right {
-		justify-content: flex-end;
-	}
+		&.left {
+			justify-content: flex-start;
+		}
 
-	&.center {
-		justify-content: center;
-	}
+		&.right {
+			justify-content: flex-end;
+		}
 
+		&.center {
+			justify-content: center;
+		}
+
+	}
 }
+
+
