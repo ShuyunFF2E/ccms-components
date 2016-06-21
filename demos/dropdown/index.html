@@ -3,9 +3,12 @@
 <title>下拉</title>
 <style>
 	[ng-app] {
+		display: flex;
+		width: 500px;
 		margin: 1em;
 	}
 	.demo {
+		flex: 1;
 		margin: .5em;
 	}
 </style>
@@ -36,7 +39,7 @@
 <script src="/components.js"></script>
 <script>
 	angular.module('demoApp', ['ccms.components'])
-		.controller('DemoCtrl', function($scope) {
+		.controller('DemoCtrl', function() {
 			this.datalist1 = ['北京', '上海', '深圳', '广州'];
 			this.datalist2 = [
 				{title: '北京', value: 'bj'},
