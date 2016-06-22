@@ -1,3 +1,4 @@
+import angular from 'angular';
 import {Inject, Bind} from 'angular-es-utils';
 
 @Inject('$scope', '$element')
@@ -27,12 +28,25 @@ export default class DropdownSelectCtrl {
 	$onInit() {
 		let scope = this.getScope();
 
-		scope.$watch(() => this.datalist, datalist => {
-			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
-		});
-
 		this.mapping = Object.assign({}, DropdownSelectCtrl.defaultMapping, this.mapping);
-		this.datalist = this.datalist || [];
+
+		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
+			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
+
+			// 选中预设值
+			if (this.model !== null) {
+				let valueField = this.mapping.valueField;
+				let modelExisted = this.items.some(item => {
+					if (angular.equals(item[valueField], this.model)) {
+						this.title = item[this.mapping.displayField];
+						return true;
+					}
+				});
+				if (!modelExisted) {
+					this.model = null;
+				}
+			}
+		});
 	}
 
 	$postLink() {
