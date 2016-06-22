@@ -6,13 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 import angular from 'angular';
-import {Inject} from 'angular-es-utils';
 
-@Inject('$rootScope')
 export class $Menus {
 
-	constructor($rootScope) {
-		this.$rootScope = $rootScope;
+	constructor() {
 		this.shopActive = {};
 	}
 
@@ -29,7 +26,8 @@ export class $Menus {
 			menusQuery: {}, // -查询menus参数
 			shopsQuery: {}, // -查询shops查询参数
 			menusResource: null, // -菜单资源$resource
-			shopsResource: null  // -店铺资源$resource
+			shopsResource: null,  // -店铺资源$resource
+			searchPlaceholder: '请输入店铺名称' // -搜索框placeholder提示文字
 		};
 		return angular.extend(DEFAULT_CONFIGS, menuOptions);
 	}
