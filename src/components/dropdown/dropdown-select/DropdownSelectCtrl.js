@@ -181,15 +181,29 @@ export default class DropdownSelectCtrl {
 	}
 
 	focusUp() {
-		if (--this.focusIndex < 0) {
-			this.focusIndex = 0;
+		let index = this.focusIndex - 1;
+		if (index < 0) {
+			index = 0;
+		}
+		this.focusAt(index);
+
+		let itemElement = this.getItemElementAt(index);
+		if (itemElement) {
+			itemElement.scrollIntoView(true);
 		}
 	}
 
 	focusDown() {
 		let listCount = this.items.length;
-		if (++this.focusIndex > listCount - 1) {
-			this.focusIndex = listCount - 1;
+		let index = this.focusIndex + 1;
+		if (index > listCount - 1) {
+			index = listCount - 1;
+		}
+		this.focusAt(index);
+
+		let itemElement = this.getItemElementAt(index);
+		if (itemElement) {
+			itemElement.scrollIntoView(false);
 		}
 	}
 
@@ -199,6 +213,12 @@ export default class DropdownSelectCtrl {
 
 	getInputElement() {
 		return this.getElement().querySelector('.dropdown-select-input');
+	}
+
+	getItemElementAt(index) {
+		return this.getElement()
+				.querySelector('.dropdown-list')
+				.querySelectorAll('li:not(.empty-list-item)')[index];
 	}
 
 	getScope() {

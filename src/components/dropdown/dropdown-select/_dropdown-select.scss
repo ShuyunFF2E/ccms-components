@@ -82,6 +82,8 @@ dropdown-select {
 			box-sizing: border-box;
 			min-width: 100%;
 			max-width: 150%;
+			max-height: 152px;
+			overflow-y: scroll;
 			padding: 0;
 			list-style: none;
 			border: solid 1px $input-border;
