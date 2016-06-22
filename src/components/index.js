@@ -27,6 +27,7 @@ import instantSearch from './instant-search';
 import dropdown from './dropdown/dropdown';
 import dropdownSelect from './dropdown/dropdown-select';
 import tabset from './tabset';
+import title from './title';
 
 export default angular
 	.module('ccms.components.ui', [
@@ -49,7 +50,8 @@ export default angular
 		datePicker,
 		dateRange,
 		calendar,
-		tabset
+		tabset,
+		title
 	])
 	.name;
 
