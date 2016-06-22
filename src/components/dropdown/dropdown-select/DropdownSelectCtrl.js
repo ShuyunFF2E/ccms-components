@@ -10,6 +10,7 @@ export default class DropdownSelectCtrl {
 
 	constructor() {
 		this.datalist = [];
+		this._clampedDatalist = [];
 		this.items = [];
 		this.mapping = {};
 		this.title = '';
@@ -26,7 +27,9 @@ export default class DropdownSelectCtrl {
 	$onInit() {
 		let scope = this.getScope();
 
-		scope.$watch(() => this.datalist, ::this.onDatalistChange);
+		scope.$watch(() => this.datalist, datalist => {
+			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
+		});
 
 		this.mapping = Object.assign({}, DropdownSelectCtrl.defaultMapping, this.mapping);
 		this.datalist = this.datalist || [];
@@ -91,10 +94,6 @@ export default class DropdownSelectCtrl {
 		});
 	}
 
-	onDatalistChange(datalist, oldDatalist) {
-		this.items = this._getClampedDatalist(datalist || []);
-	}
-
 	onSearchTextChange(text, oldText) {
 		if (text !== oldText) {
 			text = text.trim();
@@ -104,7 +103,7 @@ export default class DropdownSelectCtrl {
 			if (text.length) {
 				this._search(text);
 			} else {
-				this.items = this._getClampedDatalist(this.datalist);
+				this.items = this._clampedDatalist;
 			}
 			this.focusAt(0);
 		}
@@ -216,19 +215,17 @@ export default class DropdownSelectCtrl {
 	}
 
 	_search(text) {
-		let datalist = this._getClampedDatalist(this.datalist);
+		let datalist = this._clampedDatalist;
 		let mapping = this.mapping;
 		let searchFields = [mapping.valueField, mapping.displayField];
 		let filteredItems = [];
 
 		searchFields.forEach(field => {
-			for (let i = datalist.length - 1; i > -1; i--) {
-				let item = datalist[i];
-				if (item[field].indexOf(text) !== -1) {
+			datalist.forEach(item => {
+				if (item[field].indexOf(text) !== -1 && filteredItems.indexOf(item) === -1) {
 					filteredItems.push(item);
-					datalist.splice(i, 1);
 				}
-			}
+			});
 		});
 
 		this.items = filteredItems;

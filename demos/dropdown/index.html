@@ -40,13 +40,13 @@
 <script>
 	angular.module('demoApp', ['ccms.components'])
 		.controller('DemoCtrl', function() {
-			this.datalist1 = ['北京', '上海', '深圳', '广州'];
-			this.datalist2 = [
+			this.datalist1 = [
 				{title: '北京', value: 'bj'},
 				{title: '上海', value: 'sh'},
 				{title: '深圳', value: 'sz'},
 				{title: '广州', value: 'gz'}
 			];
+			this.datalist2 = ['北京', '上海', '深圳', '广州'];
 			this.fieldsMap = {
 				valueField: 'value',
 				displayField: 'title'
