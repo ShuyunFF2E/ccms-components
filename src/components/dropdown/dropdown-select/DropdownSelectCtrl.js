@@ -34,18 +34,7 @@ export default class DropdownSelectCtrl {
 			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
 
 			// 选中预设值
-			if (this.model !== null) {
-				let valueField = this.mapping.valueField;
-				let modelExisted = this.items.some(item => {
-					if (angular.equals(item[valueField], this.model)) {
-						this.title = item[this.mapping.displayField];
-						return true;
-					}
-				});
-				if (!modelExisted) {
-					this.model = null;
-				}
-			}
+			this.setModelValue(this.model);
 		});
 	}
 
@@ -117,6 +106,7 @@ export default class DropdownSelectCtrl {
 			if (text.length) {
 				this._search(text);
 			} else {
+				this.setModelValue(null);
 				this.items = this._clampedDatalist;
 			}
 			this.focusAt(0);
@@ -137,13 +127,34 @@ export default class DropdownSelectCtrl {
 		let scope = this.getScope();
 		if (this.searchable) {
 			this.getInputElement().addEventListener('click', this._openFn);
+			this.setModelValue(this.model);
 			scope.$root.$$phase || scope.$apply();
 		}
 	}
 
-	clearDropdownSelectInput() {
-		this.title = '';
+	setModelValue(modelValue) {
+		if (modelValue !== null) {
+			let valueField = this.mapping.valueField;
+			let modelExisted = this.items.some(item => {
+				if (angular.equals(item[valueField], this.model)) {
+					this.title = item[this.mapping.displayField];
+					return true;
+				}
+			});
+			if (!modelExisted) {
+				this.title = '';
+				this.model = null;
+			}
+		} else {
+			this.title = '';
+			this.model = null;
+		}
+	}
+
+	clear() {
+		this.setModelValue(null);
 		this.items = this._getClampedDatalist(this.datalist);
+		this.getInputElement().focus();
 		this.focusAt(0);
 	}
 
