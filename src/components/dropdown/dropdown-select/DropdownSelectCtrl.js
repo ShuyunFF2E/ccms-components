@@ -75,9 +75,11 @@ export default class DropdownSelectCtrl {
 						break;
 					case 38: // up
 						this.focusUp();
+						event.preventDefault();
 						break;
 					case 40: // down
 						this.focusDown();
+						event.preventDefault();
 						break;
 					default:
 				}
