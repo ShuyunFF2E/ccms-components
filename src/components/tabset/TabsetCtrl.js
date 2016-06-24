@@ -8,23 +8,19 @@ import {Inject} from 'angular-es-utils';
 export default class TabsetCtrl {
 
 	$onInit() {
-		let activeIndex = 0;
+		let activeIndex = (this.active || 1) - 1;
 
 		this.tabs = this.tabs || [];
 
-		// 以最后一项设置的active为主
-		this.tabs.forEach((tab, index) => {
-			tab.active && (activeIndex = index);
-		});
-
-		if (this.tabs[activeIndex]) {
-			this.current = this.tabs[activeIndex];
-			this.current.active = true;
+		if (activeIndex >= this.tabs.length - 1) {
+			activeIndex = this.tabs.length - 1;
 		}
+
+		this.current = this.tabs[activeIndex];
+		this.current.active = true;
 	}
 
 	selectTab(tab, anyValue) {
-
 		if ((tab.disabled && !anyValue) || tab.active) return;
 
 		// 先设置以前选中的为false
@@ -32,10 +28,14 @@ export default class TabsetCtrl {
 
 		this.current = tab;
 		this.current.active = true;
-		tab.event && tab.event(tab);
+
+		this.onActive && this.onActive({tab: this.current});
+		tab.onActive && tab.onActive(tab);
 	}
 
 	removeTab(tab) {
+		if (this.tabs.length <= 1) return;
+
 		// 找到需要删除的tab
 		let removeIndex = this.tabs.indexOf(tab);
 		let prevIndex = removeIndex - 1;
@@ -46,6 +46,7 @@ export default class TabsetCtrl {
 
 		if (!tab.active || !this.tabs.length) return;
 
+		// 删除向前找选中目标
 		if (prevIndex >= 0) {
 			for (let i = prevIndex; i >= 0; i--) {
 				if (!this.tabs[i].disabled) {
@@ -55,6 +56,7 @@ export default class TabsetCtrl {
 			}
 		}
 
+		// 删除向后找选中目标
 		if (activeIndex === -1 && nextIndex <= this.tabs.length) {
 			for (let i = removeIndex; i <= nextIndex; i++) {
 				if (!this.tabs[i].disabled) {

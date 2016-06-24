@@ -1,0 +1,12 @@
+<div class="tabset-header" ng-cloak>
+	<div ng-class="{'remove': $tabsetCtrl.remove, 'smaller': $tabsetCtrl.smaller, 'justified': $tabsetCtrl.justified}">
+		<div ng-class="{active: tab.active, disabled: tab.disabled}" ng-repeat="tab in $tabsetCtrl.tabs">
+			<a ng-click="$tabsetCtrl.selectTab(tab)" ng-bind="tab.title"></a>
+			<span ng-if="$tabsetCtrl.remove && $tabsetCtrl.tabs.length > 1" ng-click="$tabsetCtrl.removeTab(tab)" class="btn-remove"></span>
+		</div>
+	</div>
+	<!-- <div class="tabset-btn-ctrl" tab-more="$tabsetCtrl.tabs">
+		<a class="btn-ctrl btn-back" ng-click="dirControl(1)"></a>
+		<a class="btn-ctrl btn-forward" ng-click="dirControl(-1)"></a>
+	</div> -->
+</div>

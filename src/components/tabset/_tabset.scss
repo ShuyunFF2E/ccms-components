@@ -25,30 +25,7 @@ tabset {
 	box-sizing: border-box;
 	overflow: hidden;
 
-	// 让内容继承外面高度
-	& > div,
-	.tabset-content,
-	.tabset-pane {
-		width: inherit;
-		height: inherit;
-	}
-	.tabset-content {
-		padding-top: 60px;
-		box-sizing: border-box;
-		&.small {
-			padding-top: 50px;
-		}
-	}
-	.tabset-pane {
-		height: 100%;
-		overflow: auto;
-	}
-
-	.tabset-tab.small ~ .tabset-dir-ctrl .dir-ctrl {
-		@include btn-ctrl-size(25px);
-	}
 	.tabset-header {
-		position: absolute;
 		width: 100%;
 		top: 0;
 		overflow: hidden;
@@ -62,64 +39,80 @@ tabset {
 			border-bottom: $border-style;
 		}
 
-		.tabset-btn-ctrl {
-			display: none;
-			position: absolute;
-			right: 0;
-			top: 0;
-			background-color: #fff;
-			z-index: 7;
+		// & > div.smaller ~ .tabset-dir-ctrl .dir-ctrl {
+		// 	@include btn-ctrl-size(25px);
+		// }
 
-			&.active {
-				display: block;
-			}
+		// .tabset-btn-ctrl {
+		// 	display: none;
+		// 	position: absolute;
+		// 	right: 0;
+		// 	top: 0;
+		// 	margin-right: 0;
+		// 	background-color: #fff;
+		// 	z-index: 7;
 
-			.btn-ctrl {
-				@include btn-ctrl-size;
-				display: inline-block;
-				margin-right: 1px;
-				text-align: center;
-				vertical-align: top;
-				cursor: pointer;
-				color: #666;
+		// 	&.active {
+		// 		display: block;
+		// 	}
 
-				&:hover {
-					background-color: #f6f6f6;
-				}
+		// 	.btn-ctrl {
+		// 		@include btn-ctrl-size;
+		// 		display: inline-block;
+		// 		margin-right: 1px;
+		// 		text-align: center;
+		// 		vertical-align: top;
+		// 		cursor: pointer;
+		// 		color: #666;
 
-				&:last-of-type {
-					margin-right: 0;
-				}
+		// 		&:hover {
+		// 			background-color: #f6f6f6;
+		// 		}
 
-				&.btn-back {
-					@extend .iconfont;
-					@extend .icon-rightarrow;
-					transform: rotate(180deg);
-				}
+		// 		&:last-of-type {
+		// 			margin-right: 0;
+		// 		}
 
-				&.btn-forward {
-					@extend .iconfont;
-					@extend .icon-rightarrow;
-				}
-			}
+		// 		&.btn-back {
+		// 			@extend .iconfont;
+		// 			@extend .icon-rightarrow;
+		// 			transform: rotate(180deg);
+		// 		}
 
-			&.not-forward .btn-forward,
-			&.not-back .btn-back {
-				color: #eee;
-				&:hover {
-					background-color: #fff;
-				}
-			}
-		}
+		// 		&.btn-forward {
+		// 			@extend .iconfont;
+		// 			@extend .icon-rightarrow;
+		// 		}
+		// 	}
+
+		// 	&.not-forward .btn-forward,
+		// 	&.not-back .btn-back {
+		// 		color: #eee;
+		// 		&:hover {
+		// 			background-color: #fff;
+		// 		}
+		// 	}
+		// }
 	}
 
-	.tabset-tab {
+	.tabset-header > div {
 		display: inline-block;
 		margin-top: 0;
-		padding-left: 0;
+		margin-right: 4px;
+		margin-left: 0;
 		transition: .7s;
 		font-family: $font-string;
 		white-space: nowrap;
+
+		&.justified {
+			display: block;
+			width: 100%;
+
+			& > div {
+				display: table-cell;
+				width: 1%;
+			}
+		}
 
 		& > * {
 			box-sizing: border-box;
@@ -129,81 +122,77 @@ tabset {
 			margin-right: 0;
 		}
 
-		& > tab {
+		& > div {
+			position: relative;
 			display: inline-block;
-			padding-right: 5px;
+			margin-right: 5px;
+			line-height: 28px;
+			font-size: $font-size-text;
+			border: 1px solid $default-border-color;
+			border-bottom-color: $border-color;
+			background-color: #f4f4f4;
+			color: #145681;
+			text-align: center;
+			cursor: pointer;
 
 			a {
 				display: block;
 				@include padding-blank;
 			}
 
-			& > div {
-				position: relative;
-				display: inline-block;
-				line-height: 28px;
-				font-size: $font-size-text;
-				border: 1px solid $default-border-color;
-				border-bottom-color: $border-color;
-				background-color: #f4f4f4;
-				color: #145681;
-				text-align: center;
-				cursor: pointer;
-
-				&.active {
-					border-color: $border-color;
-					border-bottom-color: #fcfcfc;
-					background-color: #fcfcfc;
-					color: $tab-active-color;
-					cursor: text;
-					z-index: 6;
-				}
-
-				&.disabled {
-					cursor: not-allowed;
-					color: $color-disabled;
-				}
-
-				&:not(.active):not(.disabled):hover {
-					background-color: #fff;
-					color: $tab-active-color;
-				}
+			&.active {
+				border-color: $border-color;
+				border-bottom-color: #fcfcfc;
+				background-color: #fcfcfc;
+				color: $tab-active-color;
+				cursor: text;
+				z-index: 6;
 			}
 
-			.btn-remove {
-				display: none;
+			&.disabled {
+				cursor: not-allowed;
+				color: $color-disabled;
+			}
+
+			&:not(.active):not(.disabled):hover {
+				background-color: #fff;
+				color: $tab-active-color;
+			}
+		}
+
+		.btn-remove {
+			display: none;
+			position: absolute;
+			top: 1px;
+			right: 1px;
+			width: $remove-btn-size;
+			height: $remove-btn-size;
+			border-radius: 50%;
+			background-color: #d7d8d7;
+			cursor: pointer;
+
+			&:hover {
+				background-color: #cdcfcf;
+			}
+
+			&::before,
+			&::after {
 				position: absolute;
-				top: 1px;
-				right: 1px;
-				width: $remove-btn-size;
-				height: $remove-btn-size;
-				border-radius: 50%;
-				background-color: #d7d8d7;
-				cursor: pointer;
+				top: 50%;
+				left: 50%;
+				margin-top: -4px;
+				content: "";
+				width: 1px;
+				height: 8px;
+				background-color: #f9fafa;
+			}
 
-				&:hover {
-					background-color: #cdcfcf;
-				}
+			&::before {
+				transform: rotate(-45deg);
+			}
 
-				&::before,
-				&::after {
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					margin-top: -4px;
-					content: "";
-					width: 1px;
-					height: 8px;
-					background-color: #f9fafa;
-				}
-
-				&::before {
-					transform: rotate(-45deg);
-				}
-
-				&::after {
-					transform: rotate(45deg);
-				}
+			&::after {
+				transform: rotate(45deg);
 			}
 		}
 
@@ -213,8 +202,8 @@ tabset {
 			}
 		}
 
-		&.small {
-			tab > div {
+		&.smaller {
+			div {
 				line-height: 24px;
 			}
 

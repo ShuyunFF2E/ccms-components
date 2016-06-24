@@ -5,17 +5,14 @@
 <div ng-app="demoApp" ng-controller="TabsetCtrl as ctrl">
 
 	<h3>标准基础版</h3>
-	<tabset tabs="ctrl.tabs">
-        <tab data="tab" ng-repeat="tab in ctrl.tabs"></tab>
-    </tabset>
+    <tabset tabs="ctrl.tabs" active="3" on-active="ctrl.onActive(tab)"></tabset>
 
 	<br>
 	<br>
 
-	<h3>小版 + 删除功能</h3>
-	<tabset tabs="ctrl.tabsClone" remove="true" small="true">
-        <tab data="tab" ng-repeat="tab in ctrl.tabsClone"></tab>
-    </tabset>
+	<h3>更小的版本，支持删除</h3>
+	<tabset tabs="ctrl.smallerTabs" active="1" smaller="true" remove="true"></tabset>
+
 </div>
 
 <script src="/components.js"></script>
@@ -25,33 +22,41 @@
 			'ccms.components',
 			'ngResource'
 		])
-		.controller('templateUrlCtrl', function(){
-			this.name = '我是测试的';
-			this.handle = function() {
-				this.name = this.name.split('').join(',');
-			}
-		})
 		.controller('TabsetCtrl', function() {
+
+			// 每个tab都触发的方法
+			this.onActive = function(tab) {
+				// 获取
+				console.log(tab);
+			}
 
 			// tabset 数据
 			this.tabs = [
-				{title: '普通内容', content: '普通的字符串内容'},
-				{title: '禁用tab状态', content: '欢迎学习reactJs内容', disabled: true},
-				{title: '我有事件', content: '就一个傻傻的alert事件，还是少点击好', event: () => {
-					window.alert('有设置事件');
-				}},
-				{title: '我是看起来比较长', content: '只不过标题稍微有点长而已'},
-				{title: 'templadUrl', templateUrl: '/demos/tabset/tpl/url.tpl.html', scope: {
-					name: '我是测试的',
-					handle() {
-						this.name = this.name.split('').join(',');
-					}
+				{title: '选项一'},
+				{title: '禁用选项二', disabled: true},
+				{title: '可触发事件', onActive: () => {
+					window.alert('触发的事件');
+				}}
+			];
+
+			// tabset 数据
+			this.tabs2 = [
+				{title: '选项一'},
+				{title: '禁用选项二', disabled: true},
+				{title: '可触发事件', onActive: () => {
+					window.alert('触发的事件');
 				}}
 			];
 
 			/**
 			 * clone一份数据
 			 */
-			this.tabsClone = angular.copy(this.tabs).concat(angular.copy(this.tabs));
+			this.smallerTabs = [
+				{title: '选项一'},
+				{title: '禁用选项二', disabled: true},
+				{title: '可触发事件', onActive: tab => {
+					console.log(tab);
+				}}
+			];
 		});
 </script>
