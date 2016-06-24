@@ -32,4 +32,4 @@ tabs数据项 [object]：
 ## Examples
 	> TODO
 
-<iframe width="100%" height="300" src="//jsfiddle.net/fawziwu/wbL4Lvef/4/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="300" src="//jsfiddle.net/fawziwu/wbL4Lvef/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
