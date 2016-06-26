@@ -70,7 +70,9 @@ export default class DatePickerCtrl {
 
 		// 区分显示值和实际值 (如验证不合法, 实际值为 null)
 		this._displayValue = dateValue;
-		this.ngModelCtrl.$setViewValue(this.$scope.datePicker.$valid ? dateValue : null);
+		this.ngModelCtrl.$setViewValue(
+			(this.$scope.datePicker.$valid && this.ngModelCtrl.$valid) ? dateValue : null
+		);
 	}
 
 
@@ -186,17 +188,21 @@ export default class DatePickerCtrl {
 		const input = $event.target,
 			parts = this.parts;
 
+		let dateValue = null;
+
 		input.value = addZero(input.value);
 		setTextWidth(input);
 
-		const dateValue = new Date(
-			parseNumber(parts.year),
-			parseNumber(parts.month) - 1,
-			parseNumber(parts.date),
-			parseNumber(parts.hour),
-			parseNumber(parts.minute),
-			parseNumber(parts.second)
-		);
+		if (parts.year && parts.month && parts.date && parts.hour && parts.minute && parts.second) {
+			dateValue = new Date(
+				parseNumber(parts.year),
+				parseNumber(parts.month) - 1,
+				parseNumber(parts.date),
+				parseNumber(parts.hour),
+				parseNumber(parts.minute),
+				parseNumber(parts.second)
+			);
+		}
 
 		this.checkValidity(dateValue);
 
