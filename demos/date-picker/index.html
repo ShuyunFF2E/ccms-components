@@ -38,6 +38,11 @@
 <date-range ng-if="!app.hideDates"
 						opts="app.dateRange"></date-range>
 
+<p>日期时间区间选择器 ({{app.anotherRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.anotherRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+<date-range ng-if="!app.hideDates"
+						opts="app.anotherRange"></date-range>
+
 <pre>
 &lt;date-range opts="app.dateRange">&lt;/date-range>
 
@@ -78,6 +83,10 @@ self.dateRange = {
 
 				// 是否显示时间 (true)
 				dateOnly: false
+			};
+
+			self.anotherRange = {
+//				maxDate: new Date()
 			};
 		});
 </script>

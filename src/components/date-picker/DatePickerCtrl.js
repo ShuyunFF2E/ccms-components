@@ -60,19 +60,17 @@ export default class DatePickerCtrl {
 	checkValidity(dateValue) {
 		this.clearErrorMessage();
 
-		if (this.minDate && (dateValue < this.minDate)) {
+		if (dateValue && this.minDate && (dateValue < this.minDate)) {
 			this.ngModelCtrl.$setValidity('minDate', false);
 			this.createErrorTip(`时间不能早于 ${service.$filter('date')(this.minDate, 'yyyy-MM-dd HH:mm:ss')}`);
-		} else if (this.maxDate && (dateValue > this.maxDate)) {
+		} else if (dateValue && this.maxDate && (dateValue > this.maxDate)) {
 			this.ngModelCtrl.$setValidity('maxDate', false);
 			this.createErrorTip(`时间不能晚于 ${service.$filter('date')(this.maxDate, 'yyyy-MM-dd HH:mm:ss')}`);
 		}
 
-		// 区分显示值和实际值 (如验证不合法, 实际值为 null)
+		// 区分显示值和实际值
 		this._displayValue = dateValue;
-		this.ngModelCtrl.$setViewValue(
-			(this.$scope.datePicker.$valid && this.ngModelCtrl.$valid) ? dateValue : null
-		);
+		this.ngModelCtrl.$setViewValue(this.$scope.datePicker.$valid ? dateValue : null);
 	}
 
 
