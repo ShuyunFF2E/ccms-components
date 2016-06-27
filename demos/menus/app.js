@@ -49,10 +49,10 @@
  */
 
 
-angular
-	.module('componentsApp', ['ccms.components', 'ui.router', 'ngResource'])
 
-	.controller('ctrl', function($scope, $timeout, $resource) {
+angular.module('componentsApp', ['ccms.components', 'ui.router', 'ngResource'])
+
+	.controller('ctrl', function ($scope, $timeout, $resource) {
 
 		var shops = [
 			{
@@ -145,7 +145,7 @@ angular
 								"name": "手淘",
 								"state": "views.set.st",
 								"icon": "",
-
+								"child": []
 							}
 						]
 					},
@@ -181,19 +181,18 @@ angular
 
 		var self = this;
 
-		self.titleName = '头部XXX';
+		//$resource('/pages');
 
 		self.menusOptions = {
 			unfold: true,
-			unfoldClick: function(unfold) {
+			unfoldClick: function (unfold) {
 				console.log('结果:', unfold);
 			},
 			shops: true,
 			menusResource: $resource('/menus'),
 			//menusResource: menus,
 			//shopsResource: $resource('/shops')
-			shopsResource: shops,
-			searchPlaceholder: '请输入XXX'
+			shopsResource: shops
 		};
 	})
 	.config(routerConfig)
@@ -201,7 +200,6 @@ angular
 
 routerConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 function routerConfig($stateProvider, $urlRouterProvider) {
-
 	$stateProvider
 		.state('card', {
 			abstract: true,
@@ -210,26 +208,24 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('card.point', {
 			url: '/point',
-			title: '积分类型',
 			template: '积分类型'
-
 		})
 		.state('card.grade', {
 			url: '/grade',
-			title: '等级类型',
 			template: '等级类型'
 		})
 		.state('views', {
 			abstract: true,
-			url: '/views'
+			url: '/views',
+			template: '<div ui-view></div>'
 		})
 		.state('views.set', {
 			url: '/set',
-			abstract: true
+			abstract: true,
+			template: '<div ui-view></div>'
 		})
 		.state('views.set.st', {
 			url: '/st',
-			title: '手机淘宝0000',
 			template: '手机淘宝'
 		})
 		.state('views.point', {
@@ -244,11 +240,9 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.point.sign.reload', {
 			url: '/sign',
-			title: '签到绘声绘色一条龙',
 			template: '签到绘声绘色'
 		})
 		.state('grade', {
-			title: '尿性行天下',
 			url: '/grade',
 			template: '任性的一哥们儿'
 		});
@@ -260,11 +254,8 @@ function runConfig($state, $rootScope, $menus) {
 	$rootScope.$state = $state;
 
 	// -查询店铺是否有更改
-	$rootScope.$on('shopSelect', function(event, shop) {
+	$rootScope.$on('shopSelect', function (event, shop) {
 		console.log(shop);
 		console.log('$menus.active:', $menus.shopActive);
-	});
-	$rootScope.$on('menuSelect', function(event, menu) {
-		console.log(menu);
 	});
 }
