@@ -11,19 +11,13 @@ import MenusNodeCtrl from './MenusNodeCtrl';
 export default class MenusNode {
 
 	constructor() {
-
-		Object.assign(this, {
-			restrict: 'E',
-			replace: true,
-			template,
-			controller: MenusNodeCtrl,
-			controllerAs: 'childNode',
-			bindToController: true,
-			scope: {
-				list: '=',
-				toggle: '=',
-				level: '='
-			}
-		});
+		this.template = template;
+		this.controller = MenusNodeCtrl;
+		this.controllerAs = 'childNode';
+		this.bindings = {
+			list: '=',
+			toggle: '=',
+			level: '='
+		};
 	}
 }
