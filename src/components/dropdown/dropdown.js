@@ -1,18 +1,21 @@
 import angular from 'angular';
-import { Inject } from 'angular-es-utils';
+import { Inject, Bind } from 'angular-es-utils';
 
 import dropdownService from './DropdownService';
 
-@Inject('$scope', '$element')
+@Inject('$element')
 export default class DropdownCtrl {
 	constructor() {
 		this.panelCtrl = null;
 
+		this._isOpen = false;
+		this._phase = '';
+
 		// 自动关闭下拉 enum: 'enabled', 'disabled'
 		this.autoClose = 'enabled';
 
-		this.onDropdownOpen = () => {};
-		this.onDropdownClose = () => {};
+		this.ondropdownopen = () => {};
+		this.ondropdownclose = () => {};
 	}
 
 	$onInit() {
@@ -20,72 +23,90 @@ export default class DropdownCtrl {
 			this.autoClose = 'enabled';
 		}
 
-		this.onDropdownOpen = this.onDropdownOpen || (() => {});
-		this.onDropdownClose = this.onDropdownClose || (() => {});
+		this.ondropdownopen = this.ondropdownopen || (() => {});
+		this.ondropdownclose = this.ondropdownclose || (() => {});
 	}
 
 	getElement() {
 		return this._$element[0];
 	}
 
-	getScope() {
-		return this._$scope;
+	_setOpenState(openState) {
+		this._isOpen = openState;
+
+		// 设置 _phase 避免进入 set isOpen 循环
+		this._phase = openState ? 'open' : 'close';
+		this.isOpen = openState;
+		this._phase = '';
 	}
 
-	getIsOpen() {
-		return this.panelCtrl.isVisible;
+	get isOpen() {
+		return this._isOpen;
+	}
+
+	set isOpen(openState) {
+		if (typeof this._phase === 'string' && !this._phase.length && this.isOpen !== openState) {
+			if (openState) {
+				this.open();
+			} else {
+				this.close();
+			}
+		}
 	}
 
 	open() {
+		dropdownService.open(this);
 		this.panelCtrl.show();
-		this.onDropdownOpen();
+		this._setOpenState(true);
+		this.ondropdownopen();
 	}
 
 	close() {
+		dropdownService.close(this);
 		this.panelCtrl.hide();
-		this.onDropdownClose();
+		this._setOpenState(false);
+		this.ondropdownclose();
 	}
 }
 
 @Inject('$element')
 export default class DropdownToggleCtrl {
 	$postLink() {
-		this.getElement().addEventListener('click', event => {
-			this.toggle();
-			event.stopPropagation();
-		});
+		this.getElement().addEventListener('click', this.toggle);
 	}
 
 	getElement() {
 		return this._$element[0];
 	}
 
-	toggle() {
+	@Bind
+	toggle(event) {
 		let dropdownCtrl = this.parent;
-		if (!dropdownCtrl.getIsOpen()) {
-			dropdownService.open(dropdownCtrl);
+		if (dropdownCtrl.isOpen) {
+			dropdownCtrl.close();
 		} else {
-			dropdownService.close(dropdownCtrl);
+			dropdownCtrl.open();
 		}
+		event.stopPropagation();
 	}
 }
 
 @Inject('$element')
 export default class DropdownPanelCtrl {
-	constructor() {
-		this.isVisible = false;
-	}
-
 	$onInit() {
 		this.parent.panelCtrl = this;
 	}
 
+	getElement() {
+		return this._$element[0];
+	}
+
 	show() {
-		this.isVisible = true;
+		this.getElement().classList.remove('hide');
 	}
 
 	hide() {
-		this.isVisible = false;
+		this.getElement().classList.add('hide');
 	}
 }
 
@@ -94,9 +115,10 @@ const dropdownDDO = {
 	controller: DropdownCtrl,
 	controllerAs: '$ctrl',
 	scope: {
-		autoClose: '@',
-		onDropdownOpen: '&',
-		onDropdownClose: '&'
+		isOpen: '=?',
+		autoClose: '@?',
+		ondropdownopen: '&?',
+		ondropdownclose: '&?'
 	},
 	bindToController: true
 };
@@ -121,7 +143,7 @@ const dropdownPanelDDO = {
 	transclude: true,
 	controller: DropdownPanelCtrl,
 	controllerAs: '$ctrl',
-	scope: true,
+	scope: {},
 	bindToController: true
 };
 

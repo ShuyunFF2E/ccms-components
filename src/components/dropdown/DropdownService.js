@@ -5,47 +5,41 @@
 class DropdownService {
 	constructor() {
 		this.lastDropdownCtrl = null;
-		this.closeFn = null;
+
+		// 用于自动关闭 dropdown 的回调
+		this.autoCloseFn = null;
 	}
 
 	open(dropdownCtrl) {
-		let scope = dropdownCtrl.getScope();
 		// 关闭之前的下拉
 		if (this.lastDropdownCtrl) {
-			this.closeFn();
+			this.autoCloseFn();
 		}
 
 		// 为需要自动关闭的下拉注册处理事件
 		if (dropdownCtrl.autoClose === 'enabled') {
 			// 点击下拉自身内容阻止触发自动关闭
 			let element = dropdownCtrl.getElement();
-			let clickSelfFn = event => {
+			let avoidAutoCloseFn = event => {
 				event.stopPropagation();
 			};
-			element.addEventListener('click', clickSelfFn);
+			element.addEventListener('click', avoidAutoCloseFn);
 
 			this.lastDropdownCtrl = dropdownCtrl;
-			this.closeFn = () => {
-				element.removeEventListener('click', clickSelfFn);
-				this.close(this.lastDropdownCtrl);
+			this.autoCloseFn = () => {
+				element.removeEventListener('click', avoidAutoCloseFn);
+				this.lastDropdownCtrl.close();
 			};
-			document.addEventListener('click', this.closeFn);
+			document.addEventListener('click', this.autoCloseFn);
 		}
-
-		// 打开下拉
-		dropdownCtrl.open();
-		scope.$root.$$phase || scope.$apply();
 	}
 
 	close(dropdownCtrl) {
-		let scope = dropdownCtrl.getScope();
 		if (dropdownCtrl.autoClose === 'enabled') {
-			document.removeEventListener('click', this.closeFn);
+			document.removeEventListener('click', this.autoCloseFn);
 			this.lastDropdownCtrl = null;
-			this.closeFn = null;
+			this.autoCloseFn = null;
 		}
-		dropdownCtrl.close();
-		scope.$root.$$phase || scope.$apply();
 	}
 }
 
