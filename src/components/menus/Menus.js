@@ -1,5 +1,5 @@
 /**
- * Created with MenusDirective.js.js
+ * Created with Menus.js
  * @Description:
  * @Author: muchaoyang
  * @Date: 2016-02-29 5:28 PM
@@ -10,12 +10,18 @@ import template from './menus.tpl.html';
 import MenusCtrl from './MenusCtrl';
 
 export default class Menus {
+
 	constructor() {
-		this.template = template;
-		this.controller = MenusCtrl;
-		this.controllerAs = 'menus';
-		this.bindings = {
-			options: '='
-		};
+
+		Object.assign(this, {
+			restrict: 'E',
+			template,
+			controller: MenusCtrl,
+			controllerAs: 'menus',
+			bindToController: true,
+			scope: {
+				options: '='
+			}
+		});
 	}
 }

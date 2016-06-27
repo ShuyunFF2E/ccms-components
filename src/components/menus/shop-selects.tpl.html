@@ -2,7 +2,7 @@
      ng-class="{'shop-choose-none':shops.list.length <= 0,'shop-select-hide':!shops.animation}">
 
     <div class="shop-search">
-        <input type="search" placeholder="{{shops.placeholder}}"
+        <input type="search" placeholder="请输入店铺名称"
                ng-model="shops.searchName"
                ng-keyup="shops.keyupSearchShop($event, shops.searchName)">
 

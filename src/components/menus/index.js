@@ -7,17 +7,18 @@
  */
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
+import {FactoryCreator} from 'angular-es-utils';
 import utils from '../../common/utils';
-import MenusDirective from './MenusDirective';
-import MenusNodeDirective from './MenusNodeDirective';
+import Menus from './Menus';
+import MenusNode from './MenusNode';
 import {$Menus} from './MenuService';
-import ShopSelectsDirective from './ShopSelectsDirective';
+import ShopSelect from './ShopSelects';
 import { SearchShop } from './ShopSelectsFilter';
 export default angular
 	.module('ccms.components.menus', [uiRouter, utils])
-	.component('menuBar', new MenusDirective())
-	.component('menuNode', new MenusNodeDirective())
-	.component('shopSelect', new ShopSelectsDirective())
+	.directive('menuBar', FactoryCreator.create(Menus))
+	.directive('menuNode', FactoryCreator.create(MenusNode))
+	.directive('shopSelect', FactoryCreator.create(ShopSelect))
 	.service('$menus', $Menus)
 	.filter('SearchShop', SearchShop)
 	.name;
