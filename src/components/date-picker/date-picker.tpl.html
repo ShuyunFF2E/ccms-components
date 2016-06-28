@@ -5,7 +5,6 @@
 		<input class="date-picker-input date-picker-input-year"
 					 name="year"
 					 placeholder="YYYY"
-					 required
 					 maxlength="4"
 					 ng-model="ctrl.parts.year"
 					 ng-min="0"
@@ -18,7 +17,6 @@
 					 name="month"
 					 placeholder="MM"
 					 maxlength="2"
-					 required
 					 ng-model="ctrl.parts.month"
 					 ng-min="1"
 					 ng-max="12"
@@ -30,7 +28,6 @@
 					 name="date"
 					 placeholder="DD"
 					 maxlength="2"
-					 required
 					 ng-model="ctrl.parts.date"
 					 ng-min="1"
 					 ng-max="ctrl.calDateMax()"
@@ -44,7 +41,6 @@
 			<input class="date-picker-input date-picker-input-hour"
 						 name="hour"
 						 placeholder="hh"
-						 required
 						 maxlength="2"
 						 ng-model="ctrl.parts.hour"
 						 ng-min="0"
@@ -56,7 +52,6 @@
 						 ng-blur="ctrl.updateValue($event)">:<input class="date-picker-input date-picker-input-minute"
 						 name="minute"
 						 placeholder="mm"
-						 required
 						 maxlength="2"
 						 ng-model="ctrl.parts.minute"
 						 ng-min="0"
@@ -68,7 +63,6 @@
 						 ng-blur="ctrl.updateValue($event)">:<input class="date-picker-input date-picker-input-second"
 						 name="second"
 						 placeholder="ss"
-						 required
 						 maxlength="2"
 						 ng-model="ctrl.parts.second"
 						 ng-min="0"
