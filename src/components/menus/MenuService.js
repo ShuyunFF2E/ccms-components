@@ -6,13 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 import angular from 'angular';
-import {Inject} from 'angular-es-utils';
 
-@Inject('$rootScope')
 export class $Menus {
 
-	constructor($rootScope) {
-		this.$rootScope = $rootScope;
+	constructor() {
 		this.shopActive = {};
 	}
 
@@ -26,10 +23,9 @@ export class $Menus {
 			unfold: true, // -展开配置
 			unfoldClick: null, // -展开事件
 			shops: false, // -店铺
-			menusQuery: {}, // -查询menus参数
-			shopsQuery: {}, // -查询shops查询参数
 			menusResource: null, // -菜单资源$resource
-			shopsResource: null  // -店铺资源$resource
+			shopsResource: null,  // -店铺资源$resource
+			searchPlaceholder: '请输入店铺名称' // -搜索框placeholder提示文字
 		};
 		return angular.extend(DEFAULT_CONFIGS, menuOptions);
 	}
@@ -42,7 +38,7 @@ export class $Menus {
 	static getMenus(menuOptions) {
 		const isArray = Array.isArray(menuOptions.menusResource),
 			resource = isArray ? menuOptions.menusResource
-				: menuOptions.menusResource.query(menuOptions.menusQuery);
+				: menuOptions.menusResource.query();
 		return {
 			isArray,
 			resource
@@ -56,7 +52,7 @@ export class $Menus {
 	static getShops(menuOptions) {
 		const isArray = Array.isArray(menuOptions.shopsResource),
 			resource = isArray ? menuOptions.shopsResource
-				: menuOptions.shopsResource.query(menuOptions.shopsQuery);
+				: menuOptions.shopsResource.query();
 		return {
 			isArray,
 			resource

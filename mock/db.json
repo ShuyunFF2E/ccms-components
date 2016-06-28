@@ -157,56 +157,56 @@
   "menus": [
     {
       "name": "忠诚度设置",
-      "state": "card",
+      "url": "card",
       "icon": "",
-      "child": [
+      "children": [
         {
           "name": "积分类型",
           "state": "card.point",
           "icon": "",
-          "child": []
+          "children": []
         },
         {
           "name": "等级类型",
-          "state": "card.grade",
+          "url": "card.grade",
           "icon": "",
-          "child": []
+          "children": []
         }
       ]
     },
     {
       "name": "TAE会员专区",
-      "state": "views",
+      "url": "views",
       "icon": "",
-      "child": [
+      "children": [
         {
           "name": "界面设置",
-          "state": "views.set",
+          "url": "views.set",
           "icon": "",
-          "child": [
+          "children": [
             {
               "name": "手淘",
-              "state": "views.set.st",
+              "url": "views.set.st",
               "icon": "",
-              "child": []
+              "children": []
             }
           ]
         },
         {
           "name": "赚积分",
-          "state": "views.point",
+          "url": "views.point",
           "icon": "",
-          "child": [
+          "children": [
             {
               "name": "签到",
-              "state": "views.point.sign",
+              "url": "views.point.sign",
               "icon": "",
-              "child": [
+              "children": [
                 {
                   "name": "再签到",
-                  "state": "views.point.sign.reload",
+                  "url": "views.point.sign.reload",
                   "icon": "",
-                  "child": []
+                  "children": []
                 }
               ]
             }
@@ -216,9 +216,9 @@
     },
     {
       "name": "会员等级管理",
-      "state": "grade",
+      "url": "grade",
       "icon": "",
-      "child": []
+      "children": []
     }
   ],
   "instant-search": [
