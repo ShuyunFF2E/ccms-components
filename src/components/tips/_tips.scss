@@ -4,182 +4,182 @@
 
 @mixin tips-border($bgc, $border-color, $font-color) {
 
-  font-family: $font;
+	font-family: $font;
 
-  background: $bgc;
-  border: 1px solid $border-color;
-  border-radius: 2px;
-  color: $font-color;
+	background: $bgc;
+	border: 1px solid $border-color;
+	border-radius: 2px;
+	color: $font-color;
 
-  font-size: 12px;
+	font-size: 12px;
 
 }
 
 tips {
-  display: inline-block;
+	display: inline-block;
 
-  box-sizing: border-box;
+	box-sizing: border-box;
 
-  width: 450px;
-  height: 30px;
+	height: 30px;
 
-  p {
+	p {
 
-    @include tips-border(#ecf8fc, #d2eeff, #999999);
+		@include tips-border(#ecf8fc, #d2eeff, #999999);
 
-    margin: 0;
+		margin: 0;
 
-    line-height: 18px;
-    padding: 5px 45px 5px 11px;
-    position: relative;
+		line-height: 18px;
+		padding: 5px 11px;
+		position: relative;
 
-    &.major {
-      background: #fcf8e2;
-      border: 1px solid #faecca;
-      color: #666666;
-    }
-    &.warning {
-      background: #fcf2f0;
-      border: 1px solid #ffdfe0;
-      color: #3a3a3a;
-    }
+		&.major {
+			background: #fcf8e2;
+			border: 1px solid #faecca;
+			color: #666666;
+		}
+		&.warning {
+			background: #fcf2f0;
+			border: 1px solid #ffdfe0;
+			color: #3a3a3a;
+		}
 
-    .expand-icon {
-      display: none;
-    }
+		.expand-icon {
+			display: none;
+		}
 
-    &.text-overflow {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+		&.text-overflow {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			padding-right: 45px;
 
-      .expand-icon {
-        @extend .iconfont;
-        @extend .icon-iconfontarrowdropdown;
-        display: inline;
-        font-size: 12px;
-        color: #B3B3B3;
-        position: absolute;
-        right: 11px;
-        top: 6px;
-        &:active {
-          color: #878787;
-        }
-      }
+			.expand-icon {
+				@extend .iconfont;
+				@extend .icon-arrow;
+				display: inline;
+				font-size: 12px;
+				color: #B3B3B3;
+				position: absolute;
+				right: 11px;
+				top: 6px;
+				&:active {
+					color: #878787;
+				}
+			}
 
-      &.expand {
-        white-space: normal;
-        padding-right: 30px;
-        .expand-icon {
-          display: inline;
-          transform: rotate(180deg);
-        }
-      }
-    }
+			&.expand {
+				white-space: normal;
+				padding-right: 30px;
+				.expand-icon {
+					display: inline;
+					transform: rotate(180deg);
+				}
+			}
+		}
 
-  }
+	}
 
 }
 
 .float-tips-container {
 
-  & * {
-    box-sizing: border-box;
-  }
+	& * {
+		box-sizing: border-box;
+	}
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  width: 450px;
-  z-index: $tips-z-index;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 450px;
+	z-index: $tips-z-index;
 }
 
 .float-tips {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  flex: 1;
-  margin: 2px 0 0 0;
-  width: 450px;
-  max-height: 120px;
-  overflow: hidden;
-
-  &.tips-opening {
-    animation-name: fade-in, slide-down;
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    animation-duration: .5s;
-  }
-
-  &.tips-fade-out {
-    animation: .5s fade-out 0s ease-in;
-  }
-
-  &.tips-compress {
-    opacity: 0;
-    animation: .5s tips-height-compress 0s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  &.success {
-    @include tips-border(#d8f2d4, #c3d3bf, #3a773a);
-	.close-icon {
-	  color: #6DA89C;
-	}
-  }
-
-  &.error {
-    @include tips-border(#ffdfe0, #ffdfe0, #853432);
-  }
-
-  span {
-    display: inline-block;
-  }
-
-  .message {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
 	flex: 1;
-	max-width: 364px;
-	line-height: 18px;
-	margin: 8px 0 7px 5px;
-	word-break: break-all;
-  }
+	margin: 2px 0 0 0;
+	width: 450px;
+	max-height: 120px;
+	overflow: hidden;
 
-  .success-icon {
-	margin: 7px 0 0 20px;
-	font-size: 18px;
-	color: #389d25;
-	-moz-transform: translateY(-2px);//处理火狐往下2px的偏差
-    @extend .iconfont;
-    @extend .icon-iconfontsuccess;
-  }
-
-  .error-icon {
-	margin: 7px 0 0 20px;
-    font-size: 18px;
-    color: #ff5243;
-	-moz-transform: translateY(-2px);//处理火狐往下2px的偏差
-    @extend .iconfont;
-    @extend .icon-iconfontwarning;
-  }
-
-  .close-icon {
-    @extend .iconfont;
-    @extend .icon-iconfontclose;
-	margin: 9px 14px 0 20px;
-    font-size: 12px;
-    cursor: pointer;
-	opacity: 0.6;
-	&:hover {
-	  opacity: 0.8;
+	&.tips-opening {
+		animation-name: fade-in, slide-down;
+		animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		animation-duration: .5s;
 	}
-  }
+
+	&.tips-fade-out {
+		animation: .5s fade-out 0s ease-in;
+	}
+
+	&.tips-compress {
+		opacity: 0;
+		animation: .5s tips-height-compress 0s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	&.success {
+		@include tips-border(#d8f2d4, #c3d3bf, #3a773a);
+		.close-icon {
+			color: #6DA89C;
+		}
+	}
+
+	&.error {
+		@include tips-border(#ffdfe0, #ffdfe0, #853432);
+	}
+
+	span {
+		display: inline-block;
+	}
+
+	.message {
+		flex: 1;
+		max-width: 364px;
+		line-height: 18px;
+		margin: 8px 0 7px 5px;
+		word-break: break-all;
+	}
+
+	.success-icon {
+		margin: 7px 0 0 20px;
+		font-size: 18px;
+		color: #389d25;
+		-moz-transform: translateY(-2px); //处理火狐往下2px的偏差
+		@extend .iconfont;
+		@extend .icon-radiofill;
+	}
+
+	.error-icon {
+		margin: 7px 0 0 20px;
+		font-size: 18px;
+		color: #ff5243;
+		-moz-transform: translateY(-2px); //处理火狐往下2px的偏差
+		@extend .iconfont;
+		@extend .icon-caution;
+	}
+
+	.close-icon {
+		@extend .iconfont;
+		@extend .icon-close;
+		margin: 9px 14px 0 20px;
+		font-size: 12px;
+		cursor: pointer;
+		opacity: 0.6;
+		&:hover {
+			opacity: 0.8;
+		}
+	}
 
 }
 
 @keyframes tips-height-compress {
-  to {
-    max-height: 0;
-    margin: 0;
-    border: 0;
-  }
+	to {
+		max-height: 0;
+		margin: 0;
+		border: 0;
+	}
 }

@@ -42,6 +42,11 @@
 //
 
 .bd-content {
+	> h2,
+	> h3 {
+		margin-bottom: 1.5rem;
+	}
+
   > h2:not(:first-child) {
     margin-top: 3rem;
   }

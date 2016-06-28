@@ -21,20 +21,21 @@ import datePicker from './date-picker';
 import dateRange from './date-range';
 import calendar from './calendar';
 import tips from './tips';
-import position from './position';
 import form from './form';
 import checkbox from './checkbox';
 import instantSearch from './instant-search';
+import dropdown from './dropdown/dropdown';
 import dropdownSelect from './dropdown/dropdown-select';
 import tabset from './tabset';
+import title from './title';
 
 export default angular
 	.module('ccms.components.ui', [
+		dropdown,
 		dropdownSelect,
 		instantSearch,
 		checkbox,
 		form,
-		position,
 		grid,
 		pagination,
 		smsEditor,
@@ -49,6 +50,8 @@ export default angular
 		datePicker,
 		dateRange,
 		calendar,
-		tabset
+		tabset,
+		title
 	])
 	.name;
+

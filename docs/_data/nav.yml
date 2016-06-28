@@ -1,5 +1,11 @@
 - title: Components
   pages:
+    - title: Iconfont
+    - title: Date Picker
+    - title: Dropdown
+    - title: Grid
+    - title: Form
     - title: Modal
+    - title: Tabset
+    - title: Menus
     - title: Sample Component
-

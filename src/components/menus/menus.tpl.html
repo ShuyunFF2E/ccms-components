@@ -33,7 +33,7 @@
 
                 <span ng-bind="menus.active.plat.name"></span>
                 |
-				<span ng-bind="menus.active.shop.name"></span>
+                <span ng-bind="menus.active.shop.name"></span>
 
             </p>
         </div>
@@ -48,6 +48,8 @@
         <shop-select animation="menus.shopShow"
                      ng-if="menus.opts.shops"
                      active="menus.active"
+                     placeholder="menus.opts.searchPlaceholder"
                      shops="menus.shopsInfo"></shop-select>
+
     </div>
 </div>

@@ -1,6 +1,7 @@
 <div class="ccms-modal">
 
-	<div class="container modal" ng-class="{'fullscreen':isFullScreen}" ng-style="isFullScreen?{}:style">
+	<div class="container modal" ng-class="{'fullscreen':isFullScreen}"
+	     ng-style="isFullScreen?{}:{width:style.width,'max-width':style['max-width'],'min-width':style['min-width']}">
 
 		<header>
 
@@ -13,7 +14,7 @@
 
 		</header>
 
-		<div class="modal-body"></div>
+		<div class="modal-body" ng-style="isFullScreen?{}:style"></div>
 
 		<footer>
 			<button class="btn-ok" ng-click="$ok()">确定</button>

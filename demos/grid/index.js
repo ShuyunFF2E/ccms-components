@@ -6,13 +6,21 @@
 
 angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
-	.controller('ctrl', function ($scope, $resource, $timeout) {
+	.controller('ctrl', function ($scope, $resource, $grid) {
 
 		this.click = () => {
 			console.log(this);
 		};
 
 		this.selectedItems = [];
+
+		this.refreshGrid = function() {
+			$grid.refresh(this.pagerGridOptions).then(() => this.selectedItems.length = 0);
+		};
+
+		this.refreshDataGrid = function() {
+			$grid.refresh(this.dataGridOptions).then(() => console.log('data grid refreshed!'));
+		};
 
 		this.pagerGridOptions = {
 
@@ -23,14 +31,22 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			},
 			columnsDef: [
 				{
-					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" tooltip="entity.name"></span>',
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
 					width: '100px'
 				},
 				{field: 'age', displayName: '年龄', align: 'center'},
 				{field: 'gender', displayName: '性别', align: 'right'}
-			]
+			],
+			transformer: {
+				pageNum: 'currentPage',
+				totals: 'totalCount'
+			}
+			// transformer: function (res) {
+			// 	console.log(res);
+			// 	return [];
+			// }
 
 			//headerTpl: '/demos/grid/test.html'
 
@@ -44,7 +60,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			// 	age: 11,
 			// 	gender: '女'
 			// }]),
-			response: null,
+			// response: null,
 			columnsDef: [
 				{
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',

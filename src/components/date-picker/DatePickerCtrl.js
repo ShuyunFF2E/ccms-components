@@ -20,11 +20,10 @@ export default class DatePickerCtrl {
 		this.inputs = [].slice.call($element[0].querySelectorAll('input'));
 		this.$scope = $scope;
 		this.$element = $element;
-		this._errorTip = new Tooltip(this.$element[0], TOOLTIP_TYPE.ERROR_MINOR);
 
 		// 当开始和结束日期变化时, 清除过期的报错信息
 		$scope.$watchGroup(['ctrl.minDate', 'ctrl.maxDate'], () => {
-			if (!this.ngModelCtrl.$viewValue && this._displayValue) {
+			if (this._displayValue) {
 				this.checkValidity(this._displayValue);
 			}
 		});
@@ -63,10 +62,10 @@ export default class DatePickerCtrl {
 
 		if (this.minDate && (dateValue < this.minDate)) {
 			this.ngModelCtrl.$setValidity('minDate', false);
-			this._errorTip.open(`时间不能早于 ${service.$filter('date')(this.minDate, 'yyyy-MM-dd HH:mm:ss')}`);
+			this.createErrorTip(`时间不能早于 ${service.$filter('date')(this.minDate, 'yyyy-MM-dd HH:mm:ss')}`);
 		} else if (this.maxDate && (dateValue > this.maxDate)) {
 			this.ngModelCtrl.$setValidity('maxDate', false);
-			this._errorTip.open(`时间不能晚于 ${service.$filter('date')(this.maxDate, 'yyyy-MM-dd HH:mm:ss')}`);
+			this.createErrorTip(`时间不能晚于 ${service.$filter('date')(this.maxDate, 'yyyy-MM-dd HH:mm:ss')}`);
 		}
 
 		// 区分显示值和实际值 (如验证不合法, 实际值为 null)
@@ -81,7 +80,8 @@ export default class DatePickerCtrl {
 	clearErrorMessage() {
 		this.ngModelCtrl.$setValidity('minDate', true);
 		this.ngModelCtrl.$setValidity('maxDate', true);
-		this._errorTip.close();
+		this._errorTip && this._errorTip.close();
+		this._errorTip = null;
 	}
 
 
@@ -92,6 +92,16 @@ export default class DatePickerCtrl {
 	clearValue($event) {
 		$event.stopPropagation();
 		this.setValue(null);
+	}
+
+
+  /**
+	 * 生成报错信息
+	 * @param msg
+	 */
+	createErrorTip(msg) {
+		this._errorTip = new Tooltip(this.$element[0], TOOLTIP_TYPE.ERROR_MINOR, false);
+		this._errorTip.open(msg);
 	}
 
 

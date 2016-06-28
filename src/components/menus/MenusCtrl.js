@@ -5,9 +5,8 @@
  * @Date: 2016-02-29 6:52 PM
  * To change this template use File | Settings | File Templates.
  */
-import {Inject} from 'angular-es-utils';
+import {Inject, EventBus} from 'angular-es-utils';
 import {$Menus} from './MenuService';
-//let show;
 
 @Inject('$menus', '$timeout', '$state', '$rootScope', '$document', '$scope')
 export default class MenusCtrl {
@@ -72,11 +71,11 @@ export default class MenusCtrl {
 		 */
 		this.activeMenus = (menus = []) => {
 			const active = menus.find(menu => {
-				return $state.includes(menu.state);
+				return $state.includes(menu.url);
 			});
 			active ? active.toggleNode = true : null;
 			if (active !== undefined && active !== null) {
-				const child = active.child;
+				const child = active.children;
 				Array.isArray(child) && child.length > 0 ? this.activeMenus(child) : null;
 			}
 		};
@@ -149,6 +148,7 @@ export default class MenusCtrl {
 				// -第一次广播时间通知调用者当前选择的店铺
 				$timeout(() => {
 					this.$rootScope.$broadcast('shopSelect', $menus.shopActive);
+					EventBus.dispatch('shopSelect', $menus.shopActive);
 				}, 0);
 			}
 		};

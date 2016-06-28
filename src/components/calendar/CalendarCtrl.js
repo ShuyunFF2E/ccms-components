@@ -40,6 +40,12 @@ export default class DatePickerCtrl {
 				this.parts.month = this.parts.month.replace(/^0/, '') - 1 + '';
 			}
 		});
+
+		$scope.$watchGroup(['ctrl.datePicker.minDate', 'ctrl.datePicker.maxDate'], () => {
+			if (this._realValue) {
+				this.createTimeRange(this._realValue);
+			}
+		});
 	}
 
 
@@ -101,11 +107,11 @@ export default class DatePickerCtrl {
 		while (i++ < 42) {
 			const showDate = new Date(new Date(showStart).setHours(0, 0, 0, 0));
 
-			showDate.active = (
+			showDate.active = (this._realValue && (
 					showDate.getFullYear() === this._realValue.getFullYear() &&
 					showDate.getMonth() === this._realValue.getMonth() &&
 					showDate.getDate() === this._realValue.getDate()
-				) || (
+				)) || (
 					this.datePicker.rangeStart &&
 					maxDate &&
 					new Date(maxDate).setHours(0, 0, 0, 0) === showDate.valueOf()
@@ -118,7 +124,7 @@ export default class DatePickerCtrl {
 			showDate.inRange = (this.datePicker.rangeStart && maxDate && (showDate <= maxDate) && (showDate >= this._realValue)) ||
 				(this.datePicker.rangeEnd && minDate && (showDate >= minDate) && (showDate <= this._realValue));
 
-			showDate.otherMonth = showDate.getMonth() !== this._realValue.getMonth();
+			showDate.otherMonth = showDate.getMonth() !== dateValue.getMonth();
 
 			showDate.disabled = (minDate && (showDate < minDate)) || (maxDate && (showDate > maxDate));
 

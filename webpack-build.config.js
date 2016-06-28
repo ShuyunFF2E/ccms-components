@@ -6,12 +6,13 @@
 var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
+var CleanPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-	devtool: 'source-map',
+	devtool: 'cheap-source-map',
 	entry: {
-		'ccms_components': './src/index.js',
-		'ccms_components.min': './src/index.js'
+		'ccms-components': './src/index.js',
+		'ccms-components.min': './src/index.js'
 	},
 	output: {
 		path: path.join(__dirname, 'dist'),
@@ -28,6 +29,7 @@ module.exports = {
 				NODE_ENV: JSON.stringify('production')
 			}
 		}),
+		new CleanPlugin(['dist']),
 		new webpack.optimize.UglifyJsPlugin({
 			include: /\.min\.js$/,
 			minimize: true
@@ -88,19 +90,19 @@ module.exports = {
 			},
 			{
 				test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=15000&mimetype=application/font-woff&prefix=fonts'
+				loader: 'url?limit=25000&mimetype=application/font-woff&prefix=fonts'
 			},
 			{
 				test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=15000&mimetype=application/octet-stream&prefix=fonts'
+				loader: 'url?limit=25000&mimetype=application/octet-stream&prefix=fonts'
 			},
 			{
 				test: /\.eot(\?#\w+)?$/,
-				loader: 'url?limit=15000&mimetype=application/vnd.ms-fontobject&prefix=fonts'
+				loader: 'url?limit=25000&mimetype=application/vnd.ms-fontobject&prefix=fonts'
 			},
 			{
 				test: /\.svg(#\w+)?$/,
-				loader: 'url?limit=15000&mimetype=image/svg+xml&prefix=fonts'
+				loader: 'url?limit=40000&mimetype=image/svg+xml&prefix=fonts'
 			}
 
 		]
