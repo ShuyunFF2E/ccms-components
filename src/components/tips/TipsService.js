@@ -7,7 +7,7 @@
 import {Inject} from 'angular-es-utils';
 import angular from 'angular';
 
-import Position from '../../common/utils/position';
+import {offset} from '../../common/utils/style-helper';
 import throttle from '../../common/utils/performance/throttle';
 import Tips from './Tips';
 import tipsTpl from './float-tips.tpl.html';
@@ -21,8 +21,7 @@ const FLOAT_TIPS_CONTAINER = '<div class="float-tips-container"></div>';
 
 const AUTO_CLOSE_DELAY = 3 * 1000;
 
-const noopCloneAttachFn = () => {
-};
+const noopCloneAttachFn = () => {};
 
 @Inject('$compile', '$rootScope')
 export default class TipsService {
@@ -32,7 +31,8 @@ export default class TipsService {
 		this._linkedTpl = null;
 	}
 
-	_create(type, msg, contextContainer = document.body) {
+	// 在ui-view环境下容器引用会在路由切换情况下变化,必须重新获取容器引用
+	_create(type, msg, contextContainer = document.querySelector('menu-bar') && document.querySelector('menu-bar').nextElementSibling || document.body) {
 
 		// 性能考虑,模板只编译一次
 		if (!this._linkedTpl) {
@@ -68,18 +68,20 @@ export default class TipsService {
 		// 根据上下文容器设置提示层位置
 		setTipsPosition(contextContainer, floatTipsContainer);
 		tips.open();
+
+		return tips;
 	}
 
 	success(msg, container) {
-		this._create(TIPS_TYPE.SUCCESS, msg, container);
+		return this._create(TIPS_TYPE.SUCCESS, msg, container);
 	}
 
 	error(msg, container) {
-		this._create(TIPS_TYPE.ERROR, msg, container);
+		return this._create(TIPS_TYPE.ERROR, msg, container);
 	}
 
 }
 
 function setTipsPosition(contextContainer, floatTipsContainer) {
-	floatTipsContainer.style.top = `${Position.position(contextContainer).top}px`;
+	floatTipsContainer.style.top = `${offset(contextContainer).top}px`;
 }

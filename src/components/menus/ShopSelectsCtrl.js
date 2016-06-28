@@ -8,7 +8,7 @@
 
 import angular from 'angular';
 
-import {Inject} from 'angular-es-utils';
+import {Inject, EventBus} from 'angular-es-utils';
 import {$Menus} from './MenuService';
 
 @Inject('$rootScope', '$filter', '$menus', '$timeout', '$scope')
@@ -40,6 +40,7 @@ export default class ShopSelectsCtrl {
 		};
 		this.$menus.shopActive = $Menus._active(plat, shop);
 		this.$rootScope.$broadcast('shopSelect', this.active);
+		EventBus.dispatch('shopSelect', this.active);
 		// -关闭店铺选择器
 		this.animation = false;
 	}

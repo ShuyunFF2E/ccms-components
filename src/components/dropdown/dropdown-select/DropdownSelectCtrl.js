@@ -1,7 +1,5 @@
 import angular from 'angular';
-import { Inject } from 'angular-es-utils';
-
-import dropdownService from '../DropdownService';
+import {Inject, Bind} from 'angular-es-utils';
 
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
@@ -13,145 +11,179 @@ export default class DropdownSelectCtrl {
 
 	constructor() {
 		this.datalist = [];
+		this._clampedDatalist = [];
 		this.items = [];
 		this.mapping = {};
 		this.title = '';
-		this.value = null;
 		this.placeholder = '';
 		this.searchable = false;
+		this.model = null;
 		this.focusIndex = 0;
+		this.isOpen = false;
+		this.isActive = false;
 
-		this._dropdownCtrl = null;
 		this._openFn = null;
 	}
 
 	$onInit() {
 		let scope = this.getScope();
 
-		scope.$watch(() => this.datalist, ::this.onDatalistChange);
-
 		this.mapping = Object.assign({}, DropdownSelectCtrl.defaultMapping, this.mapping);
-		this.datalist = this.datalist || [];
+
+		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
+			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
+
+			// 选中预设值
+			this.setModelValue(this.model);
+		});
 	}
 
 	$postLink() {
-		let inputElement = this.getInputElement();
-
-		this._dropdownCtrl = this._getDropdownCtrl();
-
-		this._openFn = this::(() => {
-			this.open();
-			inputElement.removeEventListener('click', this._openFn);
-		});
-
-		if (!this.searchable) {
-			inputElement.addEventListener('click', ::this.toggle);
-		} else {
-			inputElement.addEventListener('click', this._openFn);
-		}
-
-		this._registerKeyboardEvent();
+		this._prepareMouseEvents();
+		this._prepareKeyboardEvents();
 	}
 
-	_registerKeyboardEvent() {
+	_prepareMouseEvents() {
 		let inputElement = this.getInputElement();
+
+		if (!this.searchable) {
+			inputElement.addEventListener('click', this.toggle);
+		} else {
+			this._openFn = this::(event => {
+				let scope = this.getScope();
+				this.open();
+				scope.$root.$$phase || scope.$apply();
+				inputElement.removeEventListener('click', this._openFn);
+			});
+			inputElement.addEventListener('click', this._openFn);
+		}
+	}
+
+	_prepareKeyboardEvents() {
 		let keydownFn = event => {
 			let scope = this.getScope();
 			let keyCode = event.keyCode;
-
-			// 关闭状态时按键打开
-			if (!this._dropdownCtrl.getIsOpen()) {
+			if (!this.isOpen) {
+				// 下拉激活且关闭时，按 回车、上、下 键打开下拉
 				if (keyCode === 13 || keyCode === 38 || keyCode === 40) {
 					this.open();
-					return;
+				}
+			} else {
+				switch (keyCode) {
+					case 13: // enter
+						this.selectItemAt(this.focusIndex);
+						break;
+					case 38: // up
+						this.focusUp();
+						event.preventDefault();
+						break;
+					case 40: // down
+						this.focusDown();
+						event.preventDefault();
+						break;
+					default:
 				}
 			}
-
-			switch (event.keyCode) {
-				case 13: // enter
-					this.selectItemAt(this.focusIndex);
-					break;
-				case 38: // up
-					this.focusUp();
-					scope.$root.$$phase || scope.$apply();
-					break;
-				case 40: // down
-					this.focusDown();
-					scope.$root.$$phase || scope.$apply();
-					break;
-				default:
-			}
+			scope.$root.$$phase || scope.$apply();
 		};
-		inputElement.addEventListener('focus', event => {
-			let target = event.currentTarget;
-			target.addEventListener('keydown', keydownFn);
-		});
-		inputElement.addEventListener('blur', event => {
-			let target = event.currentTarget;
-			target.removeEventListener('keydown', keydownFn);
-		});
-	}
 
-	onDatalistChange(datalist, oldDatalist) {
-		this.items = this._getClampedDatalist(datalist || []);
+		this.getScope().$watch(() => this.isActive, (isActive, oldState) => {
+			if (isActive !== oldState) {
+				let inputElement = this.getInputElement();
+				if (isActive) {
+					inputElement.addEventListener('keydown', keydownFn);
+				} else {
+					inputElement.removeEventListener('keydown', keydownFn);
+				}
+			}
+		});
 	}
 
 	onSearchTextChange(text, oldText) {
 		if (text !== oldText) {
 			text = text.trim();
-			if (!this._dropdownCtrl.getIsOpen()) {
+			if (!this.isOpen) {
 				this.open();
 			}
 			if (text.length) {
 				this._search(text);
 			} else {
-				this.items = this._getClampedDatalist(this.datalist);
+				this.setModelValue(null);
+				this.items = this._clampedDatalist;
 			}
 			this.focusAt(0);
 		}
 	}
 
 	onDropdownOpen() {
+		let scope = this.getScope();
 		this.getInputElement().focus();
 		if (this.searchable && this.title.length) {
 			this._search(this.title);
 			this.focusAt(0);
+			scope.$root.$$phase || scope.$apply();
 		}
 	}
 
 	onDropdownClose() {
+		let scope = this.getScope();
 		if (this.searchable) {
 			this.getInputElement().addEventListener('click', this._openFn);
+			this.setModelValue(this.model);
+			scope.$root.$$phase || scope.$apply();
 		}
 	}
 
-	clearDropdownSelectInput() {
-		this.title = '';
+	setModelValue(modelValue) {
+		if (modelValue !== null) {
+			let valueField = this.mapping.valueField;
+			let modelExisted = this.items.some(item => {
+				if (angular.equals(item[valueField], this.model)) {
+					this.title = item[this.mapping.displayField];
+					return true;
+				}
+			});
+			if (!modelExisted) {
+				this.title = '';
+				this.model = null;
+			}
+		} else {
+			this.title = '';
+			this.model = null;
+		}
+	}
+
+	clear() {
+		this.setModelValue(null);
 		this.items = this._getClampedDatalist(this.datalist);
+		this.getInputElement().focus();
 		this.focusAt(0);
 	}
 
+	@Bind
 	toggle() {
-		if (this._dropdownCtrl.getIsOpen()) {
+		let scope = this.getScope();
+		if (this.isOpen) {
 			this.close();
 		} else {
 			this.open();
 		}
+		scope.$root.$$phase || scope.$apply();
 	}
 
 	open() {
-		dropdownService.open(this._dropdownCtrl);
+		this.isOpen = true;
 	}
 
 	close() {
-		dropdownService.close(this._dropdownCtrl);
+		this.isOpen = false;
 	}
 
 	selectItemAt(index) {
 		let item = this.items[index];
 		if (item) {
 			this.title = item[this.mapping.displayField];
-			this.value = item[this.mapping.valueField];
+			this.model = item[this.mapping.valueField];
 			this.focusAt(index);
 			this.close();
 		}
@@ -162,15 +194,29 @@ export default class DropdownSelectCtrl {
 	}
 
 	focusUp() {
-		if (--this.focusIndex < 0) {
-			this.focusIndex = 0;
+		let index = this.focusIndex - 1;
+		if (index < 0) {
+			index = 0;
+		}
+		this.focusAt(index);
+
+		let itemElement = this.getItemElementAt(index);
+		if (itemElement) {
+			itemElement.scrollIntoView(true);
 		}
 	}
 
 	focusDown() {
 		let listCount = this.items.length;
-		if (++this.focusIndex > listCount - 1) {
-			this.focusIndex = listCount - 1;
+		let index = this.focusIndex + 1;
+		if (index > listCount - 1) {
+			index = listCount - 1;
+		}
+		this.focusAt(index);
+
+		let itemElement = this.getItemElementAt(index);
+		if (itemElement) {
+			itemElement.scrollIntoView(false);
 		}
 	}
 
@@ -180,6 +226,12 @@ export default class DropdownSelectCtrl {
 
 	getInputElement() {
 		return this.getElement().querySelector('.dropdown-select-input');
+	}
+
+	getItemElementAt(index) {
+		return this.getElement()
+				.querySelector('.dropdown-list')
+				.querySelectorAll('li:not(.empty-list-item)')[index];
 	}
 
 	getScope() {
@@ -210,29 +262,20 @@ export default class DropdownSelectCtrl {
 	}
 
 	_search(text) {
-		let datalist = this._getClampedDatalist(this.datalist);
+		let datalist = this._clampedDatalist;
 		let mapping = this.mapping;
 		let searchFields = [mapping.valueField, mapping.displayField];
 		let filteredItems = [];
 
 		searchFields.forEach(field => {
-			for (let i = datalist.length - 1; i > -1; i--) {
-				let item = datalist[i];
-				if (item[field].indexOf(text) !== -1) {
+			datalist.forEach(item => {
+				if (item[field].indexOf(text) !== -1 && filteredItems.indexOf(item) === -1) {
 					filteredItems.push(item);
-					datalist.splice(i, 1);
 				}
-			}
+			});
 		});
 
 		this.items = filteredItems;
-	}
-
-	_getDropdownCtrl() {
-		let element = this.getElement();
-		let dropdownElement = element.querySelector('dropdown') ||
-					element.querySelector('[dropdown]');
-		return angular.element(dropdownElement).controller('dropdown');
 	}
 };
 

@@ -44,6 +44,19 @@
 			modalInstance.close();
 		};
 
+		this.previous = function () {
+			console.log('上一步');
+		};
+
+		this.sure = function () {
+			console.log('sure');
+		};
+
+		this.fuckOff = function () {
+			console.log('fuck off');
+			modalInstance.cancel();
+		};
+
 	}
 
 	angular.module('app', ['ccms.components'])
@@ -80,6 +93,11 @@
 					.modal({
 						title: '基础模态框',
 						hasFooter: false,
+						style: {
+							// 'min-height': '200px',
+							height: '300px',
+							'min-width': '300px'
+						},
 						locals: {
 							data: [1, 2, 3]
 						},
@@ -105,10 +123,12 @@
 							data: [1, 2, 3]
 						},
 						style: {
-							width: '800px',
+							// width: '800px',
+							// 'max-width': '400px'
 							//height: '850px'
 						},
 						body: '/demos/modal/modal-body.tpl.html',
+						footer: '/demos/modal/modal-footer.tpl.html',
 						controller: Controller,
 						bindings: self
 					})

@@ -11,12 +11,16 @@
 		.module('app', ['ccms.components'])
 		.controller('ctrl', function ($scope, TipsService, ModalService) {
 
+			let tips = null;
+
 			$scope.showSuccess = function () {
 				TipsService.success('成功提示');
 			};
 
 			$scope.showError = function () {
-				TipsService.error('出错提示' + Math.random());
+				if (!tips || !tips.element) {
+					tips = TipsService.error('出错提示' + Math.random());
+				}
 			};
 
 			$scope.showModal = function () {
