@@ -1,20 +1,23 @@
-<div class="dropdown-select" dropdown
-			on-dropdown-open="$ctrl.onDropdownOpen()"
-			on-dropdown-close="$ctrl.onDropdownClose()">
+<div class="dropdown-select" dropdown is-open="$ctrl.isOpen"
+		ng-class="{active: $ctrl.isActive}"
+		ondropdownopen="$ctrl.onDropdownOpen()"
+		ondropdownclose="$ctrl.onDropdownClose()">
 	<div class="dropdown-select-input-wrap">
 		<input type="text" class="dropdown-select-input" placeholder="{{$ctrl.placeholder}}"
 				ng-readonly="!$ctrl.searchable"
+				ng-focus="$ctrl.isActive = true"
+				ng-blur="$ctrl.isActive = false"
 				ng-change="$ctrl.onSearchTextChange($ctrl.title, '{{$ctrl.title}}')"
 				ng-model="$ctrl.title">
 		<div class="dropdown-select-icons"
 			><span class="dropdown-select-clear"
-				ng-if="$ctrl.searchable"
-				ng-show="$ctrl.title.length"
-				ng-click="$ctrl.clearDropdownSelectInput()"></span
+					ng-class="{visible: $ctrl.title.length}"
+					ng-if="$ctrl.searchable"
+					ng-click="$ctrl.clear()"></span
 			><span class="dropdown-select-down" dropdown-toggle></span>
 		</div>
 	</div>
-	<div dropdown-panel ng-show="$ctrl.isVisible">
+	<div class="dropdown-panel hide" dropdown-panel>
 		<ul class="dropdown-list">
 			<li ng-repeat="item in $ctrl.items track by $index"
 					ng-click="$ctrl.selectItemAt($index);"
