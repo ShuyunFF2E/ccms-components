@@ -25,7 +25,9 @@ export default class DatePicker {
 				minDate: '=',
 				maxDate: '=',
 				rangeStart: '=',
-				rangeEnd: '='
+				rangeEnd: '=',
+				start: '=',
+				end: '='
 			},
 			template
 		});

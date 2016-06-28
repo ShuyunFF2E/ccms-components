@@ -60,15 +60,15 @@ export default class DatePickerCtrl {
 	checkValidity(dateValue) {
 		this.clearErrorMessage();
 
-		if (this.minDate && (dateValue < this.minDate)) {
+		if (dateValue && this.minDate && (dateValue < this.minDate)) {
 			this.ngModelCtrl.$setValidity('minDate', false);
 			this.createErrorTip(`时间不能早于 ${service.$filter('date')(this.minDate, 'yyyy-MM-dd HH:mm:ss')}`);
-		} else if (this.maxDate && (dateValue > this.maxDate)) {
+		} else if (dateValue && this.maxDate && (dateValue > this.maxDate)) {
 			this.ngModelCtrl.$setValidity('maxDate', false);
 			this.createErrorTip(`时间不能晚于 ${service.$filter('date')(this.maxDate, 'yyyy-MM-dd HH:mm:ss')}`);
 		}
 
-		// 区分显示值和实际值 (如验证不合法, 实际值为 null)
+		// 区分显示值和实际值
 		this._displayValue = dateValue;
 		this.ngModelCtrl.$setViewValue(this.$scope.datePicker.$valid ? dateValue : null);
 	}
@@ -186,17 +186,21 @@ export default class DatePickerCtrl {
 		const input = $event.target,
 			parts = this.parts;
 
+		let dateValue = null;
+
 		input.value = addZero(input.value);
 		setTextWidth(input);
 
-		const dateValue = new Date(
-			parseNumber(parts.year),
-			parseNumber(parts.month) - 1,
-			parseNumber(parts.date),
-			parseNumber(parts.hour),
-			parseNumber(parts.minute),
-			parseNumber(parts.second)
-		);
+		if (parts.year && parts.month && parts.date && parts.hour && parts.minute && parts.second) {
+			dateValue = new Date(
+				parseNumber(parts.year),
+				parseNumber(parts.month) - 1,
+				parseNumber(parts.date),
+				parseNumber(parts.hour),
+				parseNumber(parts.minute),
+				parseNumber(parts.second)
+			);
+		}
 
 		this.checkValidity(dateValue);
 
