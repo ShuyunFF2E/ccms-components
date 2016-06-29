@@ -5,17 +5,14 @@ group: components
 ---
 
 
-### options : 指令配置,其中包括如下:(*required*)
+### menu-bar : 指令配置,其中包括如下:(*required*)
 ---
 
-* options参数
-    *           unfold: `Boolean`(default:**true**) 菜单展开标记
-    *      unfoldClick: `Function`(default:**null**) 菜单展开收起回调函数
-    *    menusResource: `Array|ngResource` 菜单资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
-    *
-    *            shops: `Boolean`(default:**false**) 店铺配置是否启用
-    *    shopsResource: `Array|ngResource` 店铺资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
-    *       searchPlaceholder：`String`(default:**请输入店铺名称**) 店铺搜索框placeholder提示文字
+*                 unfold: `Boolean`(default:**true**) 菜单展开标记
+*        unfold-callback: `Function`(default:**null**) 菜单展开收起回调函数
+*    menus-data-resource: `Array|ngResource` 菜单资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
+*    shops-data-resource: `Array|ngResource` 店铺资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
+*     search-placeholder: `String`(default:**请输入店铺名称**) 店铺搜索框placeholder提示文字
 
 ### $menus配套服务
 ---
