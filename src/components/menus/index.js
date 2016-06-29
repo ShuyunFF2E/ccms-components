@@ -1,15 +1,13 @@
 /**
  * Created with index.js
  * @Description:
- * @Author: muchaoyang
+ * @Author: maxsmu
  * @Date: 2016-02-29 5:24 PM
- * To change this template use File | Settings | File Templates.
  */
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import utils from '../../common/utils';
 import {$Menus} from './MenuService';
-import { SearchShop } from './ShopSelectsFilter';
 
 import './_menu.scss';
 import menuBarTemplate from './menus.tpl.html';
@@ -28,7 +26,11 @@ const
 		controller: MenusCtrl,
 		controllerAs: 'menus',
 		bindings: {
-			options: '='
+			unfold: '=',
+			unfoldCallback: '=',
+			menusDataResource: '=',
+			shopsDataResource: '=',
+			searchPlaceholder: '='
 		}
 	},
 	menusNodeDDO = {
@@ -59,5 +61,4 @@ export default angular
 	.component('menuNode', menusNodeDDO)
 	.component('shopSelect', shopSelectDDO)
 	.service('$menus', $Menus)
-	.filter('SearchShop', SearchShop)
 	.name;

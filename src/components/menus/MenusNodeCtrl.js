@@ -1,19 +1,17 @@
 /**
  * Created with MenusNodeCtrl.js
  * @Description:
- * @Author: muchaoyang
+ * @Author: maxsmu
  * @Date: 2016-03-16 9:04 AM
- * To change this template use File | Settings | File Templates.
  */
 import {Inject, EventBus} from 'angular-es-utils';
 
 @Inject('$state', '$timeout')
 export default class MenusNodeCtrl {
 
-	constructor($state, $timeout) {
-
-		$timeout(() => {
-			this.$state = $state;
+	$onInit() {
+		this._$timeout(() => {
+			this.$state = this._$state;
 
 			// -获取当前选择的菜单项(初始化时)
 			const menu = this.getMenu(this.list);

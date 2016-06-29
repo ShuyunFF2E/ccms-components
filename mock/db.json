@@ -162,7 +162,7 @@
       "children": [
         {
           "name": "积分类型",
-          "state": "card.point",
+          "url": "card.point",
           "icon": "",
           "children": []
         },

@@ -6,16 +6,20 @@
 </head>
 <body ng-app="componentsApp" ng-controller="ctrl as app">
 
-<div class="ccmsc-main-container" ng-class="{'contract-left':!app.menusOptions.unfold}">
+<div class="ccmsc-main-container" ng-class="{'contract-left':!app.unfold}">
 
-    <div class="left-container constact-container">
-        <menu-bar options="app.menusOptions"></menu-bar>
+    <div class="left-container">
+        <menu-bar
+                unfold="app.unfold"
+                unfold-callback="app.unfoldClick"
+                menus-data-resource="app.menusResource"
+                shops-data-resource="app.shopsResource"
+                search-placeholder="app.searchPlaceholder">
+        </menu-bar>
     </div>
 
     <div class="center-container ">
-        <div ng-if="!app.show" ng-click="app.show=!app.show">
-            <nav-title name="app.titleName"></nav-title>
-        </div>
+        <nav-title name="app.titleName"></nav-title>
         <div>
             center
         </div>

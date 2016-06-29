@@ -139,19 +139,17 @@ angular
 		var self = this;
 
 		self.titleName = '头部XXX';
-
-		self.menusOptions = {
-			unfold: true,
-			unfoldClick: function(unfold) {
-				console.log('结果:', unfold);
-			},
-			shops: true,
-			//menusResource: $resource('/menus'),
-			menusResource: menus,
-			//shopsResource: $resource('/shops')
-			shopsResource: shops,
-			searchPlaceholder: '请输入XXX'
+		self.unfold = true;
+		self.unfoldClick = function(unfold) {
+			console.log('结果:', unfold);
 		};
+		self.shops = true;
+		//self.menusResource = menus;
+		self.menusResource = $resource('/menus');
+		//self.shopsResource = shops;
+		self.shopsResource = $resource('/shops');
+		self.searchPlaceholder = '请输入XXX';
+
 	})
 	.config(routerConfig)
 	.run(runConfig);
@@ -212,8 +210,8 @@ function runConfig($state, $rootScope, $menus) {
 	$rootScope.$state = $state;
 
 	// -查询店铺是否有更改
-	$rootScope.$on('shopSelect', function (event, shop) {
-		console.log(shop);
-		console.log('$menus.active:', $menus.shopActive);
+	$rootScope.$on('shopSelect', function(event, shop) {
+		console.log(shop.plat.name + '|' + shop.shop.name);
+		console.log('$menus.active:', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name);
 	});
 }
