@@ -72,10 +72,20 @@ export default class TipsService {
 		return tips;
 	}
 
+	/**
+	 * popup success tip
+	 * @param {String} msg
+	 * @param {DOMElement} container
+	 */
 	success(msg, container) {
 		return this._create(TIPS_TYPE.SUCCESS, msg, container);
 	}
 
+	/**
+	 * popup error tip
+	 * @param {String} msg
+	 * @param {DOMElement} container
+	 */
 	error(msg, container) {
 		return this._create(TIPS_TYPE.ERROR, msg, container);
 	}

@@ -8,7 +8,7 @@ import {Bind, Inject} from 'angular-es-utils/decorators';
 import Tooltip from './Tooltip';
 import {TOOLTIP_TYPE} from './Contants';
 
-@Inject('$element', '$attrs')
+@Inject('$element', '$attrs', '$compile', '$scope')
 export default class TooltipCtrl {
 
 	$onInit() {
@@ -37,23 +37,23 @@ export default class TooltipCtrl {
 		this.opened = !this.opened;
 	}
 
-	// msg变化
-	set msg(msg) {
-		this._msg = msg;
+	// content变化
+	set content(content) {
+		this._content = content;
 		if (this.opened) {
-			this.opened = !!msg;
+			this.opened = !!content;
 		}
 	}
 
-	get msg() {
-		return this._msg;
+	get content() {
+		return this._content;
 	}
 
 	// watch opened
 	set opened(opened) {
 
 		if (opened !== undefined) {
-			if (this.msg) {
+			if (this.content) {
 				this._opened = opened;
 			} else {
 				// 无信息时将tooltip置为关闭状态
@@ -72,7 +72,14 @@ export default class TooltipCtrl {
 		if (!this.element) {
 			this.element = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody);
 		}
-		this.element.open(this.msg);
+
+		let compiledContent = this.content;
+		if (this.compilable) {
+			compiledContent = this._$compile(this.content)(this._$scope)[0];
+			this._$scope.$digest();
+		}
+
+		this.element.open(compiledContent);
 	}
 
 	close() {

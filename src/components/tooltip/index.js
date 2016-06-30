@@ -10,11 +10,12 @@ const tooltipDDO = {
 	controller: TooltipCtrl,
 	controllerAs: '$tooltipCtrl',
 	bindToController: {
-		msg: '<tooltip',
+		content: '<tooltip',
 		trigger: '@?tooltipTrigger',
 		opened: '<?tooltipOpened',
 		type: '@?tooltipType',
-		appendToBody: '@?tooltipAppendToBody'
+		appendToBody: '@?tooltipAppendToBody',
+		compilable: '<?tooltipCompilable'
 	}
 };
 
