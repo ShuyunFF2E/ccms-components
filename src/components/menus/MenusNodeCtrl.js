@@ -42,7 +42,7 @@ export default class MenusNodeCtrl {
 	 */
 	getMenu(menus = []) {
 		return Array.isArray(menus) ? menus.find(item => {
-			return item.state === this.$state.current.name;
+			return item.url === this.$state.current.name;
 		}) : {};
 	}
 }
