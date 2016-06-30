@@ -8,13 +8,14 @@
 import {EventBus} from 'angular-es-utils';
 
 export default class TitleCtrl {
-	constructor() {
-		const self = this;
-		/**
-		 * 检测菜单选中
-		 */
-		EventBus.on('menuSelect', menu => {
-			self.name = self.name || menu.name;
-		});
+
+	$onInit() {
+		!this.name && (this.eventBus = EventBus.on('menuSelect', menu => {
+			this.name = menu.name;
+		}));
+	}
+
+	$onDestroy() {
+		this.eventBus && this.eventBus();
 	}
 }
