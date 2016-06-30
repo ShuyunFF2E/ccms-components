@@ -12,47 +12,74 @@ import {TOOLTIP_TYPE} from './Contants';
 export default class TooltipCtrl {
 
 	$onInit() {
-		this.tooltip = null;
-		this.opened = false;
-	}
-
-	$onChanges(models) {
-
-		// tooltip内容发生变更时内容也相应变更
-		if (this.tooltip && !models.tooltipMsg.isFirstChange()) {
-			this.tooltip.open(models.tooltipMsg.currentValue);
-		}
+		this.hostElement = this._$element;
+		this.element = null;
 	}
 
 	$postLink() {
-		// 默认通过mouseenter/mouseleave触发
+		// 默认通过mouseenter/mouseleave触发(当未手动配置trigger/opened)
 		if (!this._$attrs.tooltipTrigger && !this._$attrs.tooltipOpened) {
-			this._$element.bind('mouseenter mouseleave', this.toggle);
+			this.hostElement.bind('mouseenter mouseleave', this.toggle);
+		}
+
+		if (this.trigger) {
+			this.hostElement.bind(this.trigger, this.toggle);
 		}
 	}
 
 	$onDestroy() {
-		this._$element.unbind('mouseenter mouseleave', this.toggle);
+		this.hostElement.unbind('mouseenter mouseleave', this.toggle);
+		this.hostElement.unbind(this.trigger, this.toggle);
 	}
 
 	@Bind
 	toggle() {
-		this[(this.opened = !this.opened) ? 'open' : 'close']();
+		this.opened = !this.opened;
+	}
+
+	// msg变化
+	set msg(msg) {
+		this._msg = msg;
+		if (this.opened) {
+			this.opened = !!msg;
+		}
+	}
+
+	get msg() {
+		return this._msg;
+	}
+
+	// watch opened
+	set opened(opened) {
+
+		if (opened !== undefined) {
+			if (this.msg) {
+				this._opened = opened;
+			} else {
+				// 无信息时将tooltip置为关闭状态
+				this._opened = false;
+			}
+
+			this[this._opened ? 'open' : 'close']();
+		}
+	}
+
+	get opened() {
+		return this._opened;
 	}
 
 	open() {
-		this.tooltip = new Tooltip(this._$element[0], this._$attrs.tooltipType || TOOLTIP_TYPE.NORMAL, this._$attrs.tooltipAppendToBody);
-		this.tooltip.open(this.tooltipMsg);
-		this.opened = true;
+		if (!this.element) {
+			this.element = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody);
+		}
+		this.element.open(this.msg);
 	}
 
 	close() {
-		if (this.tooltip) {
-			this.tooltip.close();
-			this.tooltip = null;
+		if (this.element) {
+			this.element.close();
 		}
-
-		this.opened = false;
+		this.element = null;
 	}
 
 }
