@@ -22,7 +22,7 @@ dropdown-select {
 
 		.dropdown-select-input {
 			flex: 1;
-			width: 100%;
+			min-width: 0;
 			padding-right: 0;
 			line-height: $control-height;
 			vertical-align: top;
