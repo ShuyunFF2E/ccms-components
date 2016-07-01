@@ -3,8 +3,11 @@
 @import "variables";
 @import "input";
 
+/* 页面默认样式 */
 body {
 	font-family: $font-family;
+	font-size: $font-size-base;
+	line-height: $line-height;
 }
 
 ul, li, p {
