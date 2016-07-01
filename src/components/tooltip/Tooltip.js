@@ -6,6 +6,8 @@
 
 import angular from 'angular';
 
+import {isElement} from 'angular-es-utils/type-auth';
+
 import Popup from '../../common/bases/Popup';
 import {chopStyle2Num, offset, position} from '../../common/utils/style-helper';
 
@@ -29,15 +31,20 @@ export default class Tooltip extends Popup {
 		this.append2Body = !!append2Body;
 	}
 
-	setContent(msg) {
-		this.element.innerHTML = msg;
+	setContent(content) {
+
+		if (isElement(content)) {
+			this.element.appendChild(content);
+		} else {
+			this.element.innerHTML = content;
+		}
 	}
 
 	/**
 	 * @override
-	 * @param msg
+	 * @param content optional
 	 */
-	open(msg) {
+	open(content) {
 
 		if (!this.append2Body) {
 			this.init(false, this.hostEl.nextSibling);
@@ -45,8 +52,8 @@ export default class Tooltip extends Popup {
 			this.init(true);
 		}
 
-		if (msg) {
-			this.setContent(msg);
+		if (content) {
+			this.setContent(content);
 		}
 
 		// 这里必须先show再给tooltip定位,因为tooltip在show之前是display:none,这时候tooltip不被渲染从而无法获取其坐标

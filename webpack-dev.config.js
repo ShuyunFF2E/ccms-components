@@ -12,7 +12,6 @@ module.exports = {
 	entry: {
 		components: ['webpack-hot-middleware/client?path=/__webpack_hmr&reload=true', './src/index.js'],
 		style: ['webpack-hot-middleware/client?path=/__webpack_hmr&reload=true', './src/components/styles/index.js']
-
 	},
 	output: {
 		path: path.join(__dirname, 'build'),
