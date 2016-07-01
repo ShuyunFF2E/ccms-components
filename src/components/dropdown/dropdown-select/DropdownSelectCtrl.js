@@ -36,6 +36,12 @@ export default class DropdownSelectCtrl {
 			// 选中预设值
 			this.setModelValue(this.model);
 		});
+
+		scope.$watch(() => this.model, (model, oldModel) => {
+			if (!angular.equals(model, oldModel)) {
+				this.setModelValue(this.model);
+			}
+		});
 	}
 
 	$postLink() {

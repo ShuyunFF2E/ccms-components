@@ -23,6 +23,10 @@
 				mapping="ctrl.fieldsMap">
 		</dropdown-select>
 		<span ng-bind="ctrl.value1"></span>
+		<div style="margin: 0.5em 0;">
+			<input ng-model="newValue" style="width: 50%;">
+			<button ng-click="ctrl.setValue(newValue)">设置新值</button>
+		</div>
 	</div>
 	<div class="demo">
 		<dropdown-select
@@ -51,6 +55,10 @@
 				{title: '重庆', value: 'cq'},
 				{title: '广州', value: 'gz'}
 			];
+			this.setValue = function(newValue) {
+				this.value1 = newValue;
+			};
+
 			this.datalist2 = ['北京', '上海', '深圳', '广州'];
 			this.fieldsMap = {
 				valueField: 'value',
