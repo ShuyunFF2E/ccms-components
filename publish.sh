@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+cnpm i
 NODE_ENV=production webpack --config webpack-build.config.js
 cp package.json dist
 cp -R src/components/styles dist/scss
