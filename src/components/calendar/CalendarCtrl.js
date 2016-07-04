@@ -223,15 +223,32 @@ export default class DatePickerCtrl {
 	 * @param $event
 	 */
 	updateTime($event) {
+		const input = $event.target;
+
+		if (!input.value) return;
+
+		const value = parseNumber(input.value);
+
+		if (isNaN(value) ||
+				(value < +input.getAttribute('ng-min')) ||
+				(value > +input.getAttribute('ng-max'))) {
+			this.parts[input.name] = '00';
+		} else {
+			this.parts[input.name] = value;
+			this.setDate(this.value);
+		}
+	}
+
+
+	/**
+	 * 为时间栏补零
+	 * @param $event
+   */
+	addTimeZero($event) {
 		const input = $event.target,
 			value = parseNumber(input.value);
 
-		if (isNaN(value) || (value < +input.getAttribute('ng-min')) || (value > +input.getAttribute('ng-max'))) {
-			this.parts[input.name] = '00';
-		} else {
-			this.parts[input.name] = addZero(value);
-			this.setDate(this.value);
-		}
+		this.parts[input.name] = addZero(value);
 	}
 
 
