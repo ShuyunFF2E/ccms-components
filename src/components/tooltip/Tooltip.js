@@ -9,7 +9,7 @@ import angular from 'angular';
 import {isElement} from 'angular-es-utils/type-auth';
 
 import Popup from '../../common/bases/Popup';
-import {chopStyle2Num, offset, position} from '../../common/utils/style-helper';
+import {positionElements, chopStyle2Num} from '../../common/utils/style-helper';
 
 import template from './tooltip.tpl.html';
 import {TOOLTIP_TYPE} from './Contants';
@@ -17,10 +17,11 @@ import {TOOLTIP_TYPE} from './Contants';
 const OPENED_CLASS = 'tooltip-opened';
 const ARROW_MARGIN = 2;
 const TOOLTIP_EL = angular.element(template)[0];
+const DEFAULT_PLACEMENT = 'auto top-left';
 
 export default class Tooltip extends Popup {
 
-	constructor(hostEl, type = TOOLTIP_TYPE.NORMAL, append2Body) {
+	constructor(hostEl, type = TOOLTIP_TYPE.NORMAL, append2Body, placement = DEFAULT_PLACEMENT) {
 
 		let toolTipEl = TOOLTIP_EL.cloneNode(false);
 		toolTipEl.classList.add(`${type}-tooltip`);
@@ -29,6 +30,7 @@ export default class Tooltip extends Popup {
 		this.hostEl = hostEl;
 		this.type = type;
 		this.append2Body = !!append2Body;
+		this.placement = placement;
 	}
 
 	setContent(content) {
@@ -67,18 +69,45 @@ export default class Tooltip extends Popup {
 			case TOOLTIP_TYPE.ERROR_MINOR:
 
 				/* ------------------为tooltip设置合适的位置------------------- */
-				let tooltipEl = this.element;
+				let tooltip = this.element;
 
-				const hostPos = this.append2Body ? offset(this.hostEl) : position(this.hostEl);
+				const ttPos = positionElements(this.hostEl, tooltip, this.placement, this.append2Body);
+
+				const placement = ttPos.placement.split('-');
 
 				// 获取箭头的高度
-				const arrowHeight = chopStyle2Num(window.getComputedStyle(tooltipEl, ':after').getPropertyValue('border-top-width'));
+				const arrowHeight = chopStyle2Num(window.getComputedStyle(tooltip, ':after').getPropertyValue(`border-${placement[0]}-width`));
 				// tooltipEl.style.maxWidth = `${hostPos.width}px`;
 
-				// 获取tooltip的top位置
-				const tooltipPos = offset(tooltipEl);
-				tooltipEl.style.top = hostPos.top - tooltipPos.height - arrowHeight - ARROW_MARGIN + 'px';
-				tooltipEl.style.left = `${hostPos.left}px`;
+				let ttOffset = {
+					top: ttPos.top,
+					left: ttPos.left
+				};
+
+				switch (placement[0]) {
+					case 'top':
+						ttOffset.top = ttPos.top - arrowHeight - ARROW_MARGIN;
+						break;
+					case 'bottom':
+						ttOffset.top = ttPos.top + arrowHeight + ARROW_MARGIN;
+						break;
+					case 'left':
+						ttOffset.left = ttPos.left - arrowHeight - ARROW_MARGIN;
+						break;
+					case 'right':
+						ttOffset.left = ttPos.left + arrowHeight + ARROW_MARGIN;
+						break;
+				}
+
+				tooltip.style.top = `${ttOffset.top}px`;
+				tooltip.style.left = `${ttOffset.left}px`;
+
+				tooltip.classList.add(ttPos.placement);
+
+				// first time through tt element will have the
+				// uib-position-measure class or if the placement
+				// has changed we need to position the arrow.
+				// $position.positionArrow(tooltip, ttPos.placement);
 
 				break;
 
