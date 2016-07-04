@@ -104,11 +104,6 @@ export default class Tooltip extends Popup {
 
 				tooltip.classList.add(ttPos.placement);
 
-				// first time through tt element will have the
-				// uib-position-measure class or if the placement
-				// has changed we need to position the arrow.
-				// $position.positionArrow(tooltip, ttPos.placement);
-
 				break;
 
 			case TOOLTIP_TYPE.ERROR_MAJOR:
