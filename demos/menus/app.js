@@ -71,18 +71,18 @@ angular
 		var menus = [
 			{
 				"name": "忠诚度设置",
-				"url": "card",
+				"state": "card",
 				"icon": "",
 				"children": [
 					{
 						"name": "积分类型",
-						"url": "card.point",
+						"state": "card.point",
 						"icon": "",
 						"children": []
 					},
 					{
 						"name": "等级类型",
-						"url": "card.grade",
+						"state": "card.grade",
 						"icon": "",
 						"children": []
 					}
@@ -90,17 +90,17 @@ angular
 			},
 			{
 				"name": "TAE会员专区",
-				"url": "views",
+				"state": "views",
 				"icon": "",
 				"children": [
 					{
 						"name": "界面设置",
-						"url": "views.set",
+						"state": "views.set",
 						"icon": "",
 						"children": [
 							{
 								"name": "手淘",
-								"url": "views.set.st",
+								"state": "views.set.st",
 								"icon": "",
 								"children": []
 							}
@@ -108,17 +108,17 @@ angular
 					},
 					{
 						"name": "赚积分",
-						"url": "views.point",
+						"state": "views.point",
 						"icon": "",
 						"children": [
 							{
 								"name": "签到",
-								"url": "views.point.sign",
+								"state": "views.point.sign",
 								"icon": "",
 								"children": [
 									{
 										"name": "再签到",
-										"url": "views.point.sign.reload",
+										"state": "views.point.sign.reload",
 										"icon": "",
 										"children": []
 									}
@@ -130,7 +130,7 @@ angular
 			},
 			{
 				"name": "会员等级管理",
-				"url": "grade",
+				"state": "grade",
 				"icon": "",
 				"children": []
 			}
@@ -139,17 +139,16 @@ angular
 		var self = this;
 
 		self.titleName = '头部XXX';
-		self.unfold = true;
-		self.unfoldClick = function(unfold) {
-			console.log('结果:', unfold);
-		};
-		self.shops = true;
-		//self.menusResource = menus;
-		self.menusResource = $resource('/menus');
-		//self.shopsResource = shops;
-		self.shopsResource = $resource('/shops');
-		self.searchPlaceholder = '请输入XXX';
 
+		self.menusOptions = {
+			unfold: true,
+			unfoldClick: function(unfold) {
+				console.log('结果:', unfold);
+			},
+			menusResource: $resource('/menus'),
+			shopsResource: $resource('/shops'),
+			searchPlaceholder: '请输入XXX'
+		};
 	})
 	.config(routerConfig)
 	.run(runConfig);

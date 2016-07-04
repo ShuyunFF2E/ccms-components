@@ -10,11 +10,11 @@
 
     <div class="left-container">
         <menu-bar
-                unfold="app.unfold"
-                unfold-callback="app.unfoldClick"
-                menus-data-resource="app.menusResource"
-                shops-data-resource="app.shopsResource"
-                search-placeholder="app.searchPlaceholder">
+                unfold="app.menusOptions.unfold"
+                on-unfold="app.menusOptions.unfoldClick"
+                menu-source="app.menusOptions.menusResource"
+                shop-source="app.menusOptions.shopsResource"
+                search-placeholder="app.menusOptions.searchPlaceholder">
         </menu-bar>
     </div>
 

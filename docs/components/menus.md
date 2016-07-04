@@ -8,11 +8,12 @@ group: components
 ### menu-bar : 指令配置,其中包括如下:(*required*)
 ---
 
-*                 unfold: `Boolean`(default:**true**) 菜单展开标记
-*        unfold-callback: `Function`(default:**null**) 菜单展开收起回调函数
-*    menus-data-resource: `Array|ngResource` 菜单资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
-*    shops-data-resource: `Array|ngResource` 店铺资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
+*           unfold: `Boolean`(default:**true**) 菜单展开标记
+*        on-unfold: `Function`(default:**null**) 菜单展开收起回调函数
+*    menu-source: `Array|ngResource` 菜单资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
+*    shop-source: `Array|ngResource` 店铺资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
 *     search-placeholder: `String`(default:**请输入店铺名称**) 店铺搜索框placeholder提示文字
+
 
 ### $menus配套服务
 ---
