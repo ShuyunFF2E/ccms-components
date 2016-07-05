@@ -5,7 +5,8 @@
 
 $table-border: 1px solid #e8e8e8;
 $table-bottom-height: 39px;
-$td-padding: 0 8px;
+$pagination-padding: 11px;
+$td-padding: 0 $pagination-padding;
 
 $thead-bg: #f1f1f1;
 $tr-even-bg: #fafafa;
@@ -141,7 +142,7 @@ grid {
 			float: left;
 			color: #666666;
 			line-height: 39px;
-			padding-left: 11px;
+			padding-left: $pagination-padding;
 
 			%p-button {
 				border: 0 none;
@@ -168,7 +169,7 @@ grid {
 			.font-num {
 				font-family: $font-number;
 				float: none;
-				margin-right: 0px;
+				margin-right: 0;
 			}
 
 			.reload {
