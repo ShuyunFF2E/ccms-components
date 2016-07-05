@@ -112,16 +112,15 @@ export default class MenusCtrl {
 			menus.resource.$promise
 				.then(res => {
 					this.menuList = res || [];
+					this.activeMenus(this.menuList);
 				});
 		} else {
-
 			this.menuList = Array.isArray(menus.resource) ? menus.resource : [];
+			this.activeMenus(this.menuList);
 		}
 
+		// -获取店铺信息
 		this.getShops();
-		this._$timeout(() => {
-			this.activeMenus(this.menuList);
-		}, 0);
 	}
 
 	/**
@@ -152,14 +151,16 @@ export default class MenusCtrl {
 	 * @param menuList
 	 */
 	activeMenus(menuList = []) {
-		const active = menuList.find(menu => {
-			return this._$state.includes(menu.state);
-		});
-		active ? active.toggleNode = true : null;
-		if (active) {
-			const child = active.children;
-			Array.isArray(child) && child.length > 0 ? this.activeMenus(child) : null;
-		}
+		this._$timeout(() => {
+			const active = menuList.find(menu => {
+				return this._$state.includes(menu.state);
+			});
+			active ? active.toggleNode = true : null;
+			if (active) {
+				const child = active.children;
+				Array.isArray(child) && child.length > 0 ? this.activeMenus(child) : null;
+			}
+		}, 0);
 	}
 
 	/**

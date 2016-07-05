@@ -146,6 +146,7 @@ angular
 				console.log('结果:', unfold);
 			},
 			menusResource: $resource('/menus'),
+			//menusResource: menus,
 			shopsResource: $resource('/shops'),
 			searchPlaceholder: '请输入XXX'
 		};

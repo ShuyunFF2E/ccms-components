@@ -10,14 +10,14 @@ export class $Menus {
 	constructor() {
 		this.shopActive = {};
 	}
+
 	/**
 	 * 获取菜单列表
 	 * @param menusResource menus数据源
 	 * @returns {*}
 	 */
 	static getMenus(menusResource) {
-
-		const isResource = menusResource.name === 'Resource',
+		const isResource = menusResource && typeof menusResource.query === 'function',
 		// -如果是Resource则返回Resource,否则返回原数据
 			resource = !isResource ? menusResource
 				: menusResource.query();
@@ -33,7 +33,7 @@ export class $Menus {
 	 */
 	static getShops(shopsResource) {
 
-		const isResource = shopsResource.name === 'Resource',
+		const isResource = shopsResource && typeof shopsResource.query === 'function',
 
 		// -如果是Resource则返回Resource,否则返回原数据
 			resource = !isResource ? shopsResource
