@@ -14,6 +14,7 @@
     "codecheck": "NODE_EVN=test eslint src/components",
     "start": "node server.js",
     "lint": "npm run codecheck",
+    "prepush": "npm run codecheck",
     "test": "npm run lint"
   },
   "author": "shuyun FE2E",
