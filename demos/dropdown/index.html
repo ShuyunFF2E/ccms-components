@@ -3,38 +3,63 @@
 <title>下拉</title>
 <style>
 	[ng-app] {
+		display: flex;
+		width: 500px;
 		margin: 1em;
+	}
+	.demo {
+		flex: 1;
+		margin: .5em;
 	}
 </style>
 
 <div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<dropdown-select
-			placeholder="快，快选我。。啊！"
-			value="ctrl.value1"
-			datalist="ctrl.datalist1"
-			searchable="true"
-			mapping="ctrl.fieldsMap">
-	</dropdown-select>
-	<dropdown-select
-			placeholder="哈哈哈"
-			value="ctrl.value2"
-			datalist="ctrl.datalist2"
-			searchable="false"
-			mapping="ctrl.fieldsMap">
-	</dropdown-select>
+	<div class="demo">
+		<dropdown-select
+				placeholder="快，快选我。。啊！"
+				model="ctrl.value1"
+				datalist="ctrl.datalist1"
+				searchable="true"
+				mapping="ctrl.fieldsMap">
+		</dropdown-select>
+		<span ng-bind="ctrl.value1"></span>
+		<div style="margin: 0.5em 0;">
+			<input ng-model="newValue" style="width: 50%;">
+			<button ng-click="ctrl.setValue(newValue)">设置新值</button>
+		</div>
+	</div>
+	<div class="demo">
+		<dropdown-select
+				placeholder="哈哈哈"
+				model="ctrl.value2"
+				datalist="ctrl.datalist2"
+				searchable="false"
+				mapping="ctrl.fieldsMap">
+		</dropdown-select>
+		<span ng-bind="ctrl.value2"></span>
+	</div>
 </div>
 
 <script src="/components.js"></script>
 <script>
 	angular.module('demoApp', ['ccms.components'])
-		.controller('DemoCtrl', function($scope) {
-			this.datalist1 = ['北京', '上海', '深圳', '广州'];
-			this.datalist2 = [
+		.controller('DemoCtrl', function() {
+			this.value1 = 'sh';
+			this.datalist1 = [
 				{title: '北京', value: 'bj'},
 				{title: '上海', value: 'sh'},
 				{title: '深圳', value: 'sz'},
+				{title: '西安', value: 'xa'},
+				{title: '南京', value: 'nj'},
+				{title: '武汉', value: 'wh'},
+				{title: '重庆', value: 'cq'},
 				{title: '广州', value: 'gz'}
 			];
+			this.setValue = function(newValue) {
+				this.value1 = newValue;
+			};
+
+			this.datalist2 = ['北京', '上海', '深圳', '广州'];
 			this.fieldsMap = {
 				valueField: 'value',
 				displayField: 'title'

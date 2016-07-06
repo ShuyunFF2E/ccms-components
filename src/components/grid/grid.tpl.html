@@ -1,5 +1,4 @@
-<div>
-
+<section>
 	<!--表格头部-->
 	<div class="ccms-table-wrapper">
 		<table class="ccms-table">
@@ -24,14 +23,23 @@
 
 	</div>
 
-	<!--分页组件-->
-	<pagination ng-if="$ctrl.opts.showPagination"
-	            page-num="$ctrl.opts.pager.pageNum"
-	            page-size="$ctrl.opts.pager.pageSize"
-	            totals="$ctrl.opts.pager.totals"
-	            total-pages="$ctrl.opts.pager.totalPages"
-	            selected-counts="$ctrl.selectedItems.length"
-	            on-change="$ctrl.onPagerChange(pageNum, pageSize)">
-	</pagination>
+	<!--分页-->
+	<div class="footer" ng-if="$ctrl.opts.showPagination">
+		<div class="page-con">
+			<span ng-show="$ctrl.selectedItems.length">已选<span ng-bind="$ctrl.selectedItems.length" class="font-num"></span>条</span>
+			<span>共<span ng-bind="$ctrl.opts.pager.totals" class="font-num"></span>条</span>
+			<div class="reload" ng-click="$ctrl.onPagerChange($ctrl.opts.pager.pageNum, $ctrl.opts.pager.pageSize)">
+				<div class="p-reload"></div>
+				<span>刷新</span>
+			</div>
+		</div>
+		<pagination
+				page-num="$ctrl.opts.pager.pageNum"
+				page-size="$ctrl.opts.pager.pageSize"
+				page-size-list="$ctrl.opts.pager.pageSizeList"
+				total-pages="$ctrl.opts.pager.totalPages"
+				on-change="$ctrl.onPagerChange(pageNum, pageSize)">
+		</pagination>
+	</div>
 
-</div>
+</section>

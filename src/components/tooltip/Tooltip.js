@@ -6,9 +6,10 @@
 
 import angular from 'angular';
 
+import {isElement} from 'angular-es-utils/type-auth';
+
 import Popup from '../../common/bases/Popup';
-import {chopStyle2Num} from '../../common/utils/style-helper';
-import Position from '../../common/utils/position';
+import {chopStyle2Num, offset, position} from '../../common/utils/style-helper';
 
 import template from './tooltip.tpl.html';
 import {TOOLTIP_TYPE} from './Contants';
@@ -30,15 +31,20 @@ export default class Tooltip extends Popup {
 		this.append2Body = !!append2Body;
 	}
 
-	setContent(msg) {
-		this.element.innerHTML = msg;
+	setContent(content) {
+
+		if (isElement(content)) {
+			this.element.appendChild(content);
+		} else {
+			this.element.innerHTML = content;
+		}
 	}
 
 	/**
 	 * @override
-	 * @param msg
+	 * @param content optional
 	 */
-	open(msg) {
+	open(content) {
 
 		if (!this.append2Body) {
 			this.init(false, this.hostEl.nextSibling);
@@ -46,8 +52,8 @@ export default class Tooltip extends Popup {
 			this.init(true);
 		}
 
-		if (msg) {
-			this.setContent(msg);
+		if (content) {
+			this.setContent(content);
 		}
 
 		// 这里必须先show再给tooltip定位,因为tooltip在show之前是display:none,这时候tooltip不被渲染从而无法获取其坐标
@@ -63,14 +69,14 @@ export default class Tooltip extends Popup {
 				/* ------------------为tooltip设置合适的位置------------------- */
 				let tooltipEl = this.element;
 
-				const hostPos = this.append2Body ? Position.offset(this.hostEl) : Position.position(this.hostEl);
+				const hostPos = this.append2Body ? offset(this.hostEl) : position(this.hostEl);
 
 				// 获取箭头的高度
 				const arrowHeight = chopStyle2Num(window.getComputedStyle(tooltipEl, ':after').getPropertyValue('border-top-width'));
 				// tooltipEl.style.maxWidth = `${hostPos.width}px`;
 
 				// 获取tooltip的top位置
-				const tooltipPos = Position.offset(tooltipEl);
+				const tooltipPos = offset(tooltipEl);
 				tooltipEl.style.top = hostPos.top - tooltipPos.height - arrowHeight - ARROW_MARGIN + 'px';
 				tooltipEl.style.left = `${hostPos.left}px`;
 

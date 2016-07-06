@@ -4,47 +4,50 @@
 	<meta charset="UTF-8">
 	<title>tips</title>
 </head>
-<body ng-app="app" ng-controller="ctrl">
+<body ng-app="app" ng-controller="appCtrl as app">
 
 <br/><br/><br/><br/><br/>
 
-<input type="text" ng-model="msg" tooltip="msg" tooltip-trigger="click" required placeholder="tooltip常显"> <button type="button" tooltip="'hello world'" tooltip-trigger="click">点击切换</button>
+<input type="text" ng-model="msg" tooltip="msg" tooltip-trigger="click" required placeholder="tooltip常显">
+<button type="button" tooltip="'hello world'" tooltip-trigger="click">点击切换</button>
 
 <br/>
 <br/>
-<div>默认/最小化 用法(空间足够文字提示&使用form表单&内置的校验器)</div>
-<form class="form-wrapper" tooltip-type="major" name="hhh" validators>
+<div>最简 用法(空间足够文字提示&使用form表单&内置的校验器)</div>
+<form class="form-wrapper" tooltip-type="major" name="app.hhh">
 	<fieldset>
-		<label for="info">姓名(必填)</label><input type="text" id="info" ng-model="info" validator required placeholder="必填">
+		<label for="info">姓名(必填)</label><input type="text" id="info" ng-model="info" validator required
+		                                       placeholder="必填">
 	</fieldset>
 	<fieldset>
-		<label for="info1">邮箱</label><input type="email" id="info1" ng-model="info1" required validator placeholder="邮箱格式">
+		<label for="info1">邮箱</label><input type="email" id="info1" ng-model="info1" required validator
+		                                    placeholder="邮箱格式">
 	</fieldset>
 	<fieldset>
 		<label for="info2">禁用</label><input type="text" id="info2" disabled value="数云上海">
 	</fieldset>
 
 	<fieldset>
-		<label for="info3">长度需大于3</label><input type="text" id="info3" class="error" validator ng-model="info3" minlength="3">
+		<label for="info3">长度需大于3</label><input type="text" id="info3" class="error" validator ng-model="info3"
+		                                        minlength="3">
 	</fieldset>
 
 	<fieldset>
-		<button type="submit" ng-click="reset()">重置</button>
+		<button type="submit" ng-click="app.reset(app.hhh)">重置</button>
 	</fieldset>
 
 </form>
 <hr>
 
-<br/>
-<div>自定义校验器&空间不够浮动提示(默认)&可手动触发</div>
-<div class="form-wrapper" name='guy' validators="validators">
+<div>自定义校验器&不使用from/ngFrom表单空间不够浮动提示(默认)&可手动触发</div>
+<div class="form-wrapper" ng-form='app.gay' validators="app.validators">
 	<fieldset>
 		<label for="info">姓名</label>
-		<input type="text" ng-model="info11" validator="handsome,letter" required required-msg="填东西啊忘扒蛋!">
+		<input type="text" ng-model="info11" validator="handsome, letter" required required-msg="填东西啊忘扒蛋!">
 	</fieldset>
 	<fieldset>
 		<label for="info1">数字</label>
-		<input type="number" ng-model="info12" validator placeholder="请输入关键词" required>
+		<input type="number" ng-model="info12" validator="number" placeholder="请输入关键词" required>
 	</fieldset>
 	<fieldset>
 		<label for="info2">禁用</label>
@@ -56,9 +59,40 @@
 		<input type="text" class="error" validator ng-model="info13" minlength="3">
 	</fieldset>
 
-	<button type="button" class="button-sure" ng-click="validate()">校验</button>
+	<fieldset>
+		<button type="button" class="button-sure" ng-click="app.validateGay()">校验</button>
+		<button type="submit" ng-click="app.reset(app.gay)">重置</button>
+	</fieldset>
 
 </div>
+
+<br/>
+<div>自定义校验器&使用form/ngForm表单&空间不够浮动提示(默认)&可手动触发</div>
+<form class="form-wrapper" name='app.guy' validators="app.validators">
+	<fieldset>
+		<label for="info">姓名</label>
+		<input type="text" ng-model="info21" validator="letter" required required-msg="填东西啊忘扒蛋!">
+	</fieldset>
+	<fieldset>
+		<label for="info1">数字</label>
+		<input type="number" ng-model="info22" validator placeholder="请输入关键词" required>
+	</fieldset>
+	<fieldset>
+		<label for="info2">禁用</label>
+		<input type="text" disabled value="数云上海">
+	</fieldset>
+
+	<fieldset>
+		<label for="info3">错误提示</label>
+		<input type="text" class="error" validator ng-model="info23" minlength="3">
+	</fieldset>
+
+	<fieldset>
+		<button type="button" class="button-sure" ng-click="app.validate()">校验</button>
+		<button type="submit" ng-click="app.reset(app.guy)">重置</button>
+	</fieldset>
+
+</form>
 
 <!--<span class="tips error-tooltip-minor tooltip-opened">我是错误信息2</span>-->
 

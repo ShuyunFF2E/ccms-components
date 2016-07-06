@@ -22,6 +22,7 @@ $min-width: 30px;
 	}
 	& .center-container {
 		//@include test-border;
+		//border-color: green;
 		position: absolute;
 		left: $left-width;
 		top: 0;
@@ -32,6 +33,7 @@ $min-width: 30px;
 
 	& .right-container {
 		//@include test-border;
+		//border-color: blue;
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -45,6 +47,10 @@ $min-width: 30px;
 		& .center-container {
 			left: $min-width;
 		}
+		& .right-container {
+			padding: 0;
+			display: none;
+		}
 	}
 
 	&.type-two {
@@ -57,6 +63,8 @@ $min-width: 30px;
 			//@include test-border;
 			right: 0;
 			width: $right-width;
+			padding: 20px;
+			display: block;
 		}
 	}
 
@@ -69,6 +77,8 @@ $min-width: 30px;
 		& .right-container {
 			left: $center-width + $left-width + 40;
 			right: 0;
+			padding: 20px;
+			display: block;
 		}
 		&.contract-left {
 			& .right-container {
@@ -78,4 +88,3 @@ $min-width: 30px;
 		}
 	}
 }
-

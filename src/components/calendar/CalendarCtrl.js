@@ -98,6 +98,8 @@ export default class DatePickerCtrl {
 
 			minDate = this.datePicker.minDate,
 			maxDate = this.datePicker.maxDate,
+			start = this.datePicker.start,
+			end = this.datePicker.end,
 
 			dates = [];
 
@@ -113,20 +115,21 @@ export default class DatePickerCtrl {
 					showDate.getDate() === this._realValue.getDate()
 				)) || (
 					this.datePicker.rangeStart &&
-					maxDate &&
-					new Date(maxDate).setHours(0, 0, 0, 0) === showDate.valueOf()
+					end &&
+					new Date(end).setHours(0, 0, 0, 0) === showDate.valueOf()
 				) || (
 					this.datePicker.rangeEnd &&
-					minDate &&
-					new Date(minDate).setHours(0, 0, 0, 0) === showDate.valueOf()
+					start &&
+					new Date(start).setHours(0, 0, 0, 0) === showDate.valueOf()
 				);
 
-			showDate.inRange = (this.datePicker.rangeStart && maxDate && (showDate <= maxDate) && (showDate >= this._realValue)) ||
-				(this.datePicker.rangeEnd && minDate && (showDate >= minDate) && (showDate <= this._realValue));
+			showDate.inRange = (this.datePicker.rangeStart && end && (showDate <= end) && (showDate >= this._realValue)) ||
+				(this.datePicker.rangeEnd && start && (showDate >= start) && (showDate <= this._realValue));
 
 			showDate.otherMonth = showDate.getMonth() !== dateValue.getMonth();
 
-			showDate.disabled = (minDate && (showDate < minDate)) || (maxDate && (showDate > maxDate));
+			showDate.disabled = (minDate && (new Date(showDate).setHours(23, 59, 59, 999) < minDate)) ||
+				(maxDate && (showDate > maxDate));
 
 			dates.push(showDate);
 			showStart += 1000 * 60 * 60 * 24;

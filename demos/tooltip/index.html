@@ -4,7 +4,9 @@
 	<meta charset="UTF-8">
 	<title>tooltip</title>
 </head>
-<body ng-app="app">
+<body ng-app="app" ng-controller="appCtrl as app">
+
+<input type="text" ng-model="tip" tooltip="tip" tooltip-trigger="click">
 
 <button type="button" tooltip="'hello world hello world hello world hello world hello world hello world'"
         style="margin-top: 50px">hover normal tooltip
@@ -13,7 +15,7 @@
 <button type="button" tooltip="'hello world'" tooltip-type="error-minor" style="margin-top: 50px">hover error tooltip
 </button>
 
-<button type="button" tooltip="'hello world'" tooltip-opened="opened" ng-click="opened=!opened">toggle tooltip manual
+<button type="button" tooltip="'hello world'" tooltip-opened="opened" ng-click="opened=!opened" ng-init="opened=true">toggle tooltip manual
 </button>
 
 <button type="button" tooltip="'click me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
@@ -23,6 +25,10 @@
 </div>
 <div>
 	<a href="#" tooltip="'不要不要不要不要不要不要不要不要不要不要不要不要'" tooltip-append-to-body="true">详情1</a>
+</div>
+
+<div>
+	<a href="#" tooltip="app.template" tooltip-compilable="false" tooltip-append-to-body="true">详情2</a>
 </div>
 
 <script src="/components.js"></script>

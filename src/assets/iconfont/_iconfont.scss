@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-	src: url('iconfont.eot?t=1460601854'); /* IE9*/
-	src: url('iconfont.eot?t=1460601854#iefix') format('embedded-opentype'), /* IE6-IE8 */
-	url('iconfont.woff?t=1460601854') format('woff'), /* chrome, firefox */
-	url('iconfont.ttf?t=1460601854') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-	url('iconfont.svg?t=1460601854#iconfont') format('svg'); /* iOS 4.1- */
+	src: url('iconfont.eot?t=1466143781'); /* IE9*/
+	src: url('iconfont.eot?t=1466143781#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('iconfont.woff?t=1466143781') format('woff'), /* chrome, firefox */
+	url('iconfont.ttf?t=1466143781') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+	url('iconfont.svg?t=1466143781#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -63,3 +63,11 @@
 .icon-lastpage:before { content: "\e607"; }
 .icon-nextpage:before { content: "\e605"; }
 .icon-checkbox:before { content: "\e620"; }
+.icon-poor-review:before { content: "\e621"; }
+.icon-good-review:before { content: "\e624"; }
+.icon-medium-review:before { content: "\e62f"; }
+.icon-remark:before { content: "\e630"; }
+.icon-wangwang:before { content: "\e632"; }
+.icon-right:before { content: "\e634"; }
+.icon-flag:before { content: "\e635"; }
+.icon-stick:before { content: "\e637"; }
