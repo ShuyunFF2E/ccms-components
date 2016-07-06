@@ -4,23 +4,13 @@
  * @since 2016-03-17
  */
 
-function isRegExp(value) {
-	return Object.prototype.toString.call(value) === '[object RegExp]';
-}
-
-function isObject(value) {
-	return value !== null && typeof value === 'object';
-}
-
-function isString(value) {
-	return typeof value === 'string';
-}
+import {isString, isRegExp, isObject} from 'angular-es-utils/type-auth';
 
 /**
  * 配置ng内置的校验提示信息
  * @ignore
  */
-export const VALIDATORS = {
+export const DEFAULT_VALIDATORS = {
 
 	required: '必填',
 	email: '邮件格式不合法',
@@ -69,6 +59,7 @@ export const formatValidator = originalValidators => {
 			errorMsg[id] = validator;
 		} else if (isRegExp(validator)) {
 
+			errorMsg[id] = DEFAULT_VALIDATORS[id];
 			validators[id] = (modelVal, viewVal) => {
 				return validator.test(modelVal || viewVal);
 			};

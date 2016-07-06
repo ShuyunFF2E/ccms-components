@@ -8,11 +8,10 @@ var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 
 module.exports = {
-	devtool: 'source-map',
+	devtool: 'cheap-module-eval-source-map',
 	entry: {
 		components: ['webpack-hot-middleware/client?path=/__webpack_hmr&reload=true', './src/index.js'],
 		style: ['webpack-hot-middleware/client?path=/__webpack_hmr&reload=true', './src/components/styles/index.js']
-
 	},
 	output: {
 		path: path.join(__dirname, 'build'),

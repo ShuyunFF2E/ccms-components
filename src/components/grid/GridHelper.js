@@ -3,11 +3,20 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-01-04
  */
-
 import injector from 'angular-es-utils/injector';
+import {isPromiseLike, isObject, isFunction} from 'angular-es-utils/type-auth';
 
-function isPromiseLike(obj) {
-	return !!obj && typeof obj.then === 'function';
+function transformer(response, mapping) {
+
+	let result = Object.assign({}, response);
+
+	for (let prop in mapping) {
+		if (mapping.hasOwnProperty(prop)) {
+			result[prop] = response[mapping[prop]] || response[prop];
+		}
+	}
+
+	return result;
 }
 
 /**
@@ -52,30 +61,34 @@ export default {
 				pageSize: gridOptions.pager.pageSize
 			};
 
-			const $rootScope = injector.get('$rootScope');
 			const params = Object.assign({}, pageParams, gridOptions.queryParams, queryParams);
 
-			gridOptions.resource.get(params).$promise
+			return gridOptions.resource.get(params).$promise
 
 				.then(res => {
 
+					let transformedData = null;
+
+					if (gridOptions.transformer) {
+						if (isFunction(gridOptions.transformer)) {
+							transformedData = gridOptions.transformer(res);
+						} else if (isObject(gridOptions.transformer)) {
+							transformedData = transformer(res, gridOptions.transformer);
+						}
+					} else {
+						transformedData = res;
+					}
+
 					gridOptions.response = res;
-					gridOptions.data = res.list;
+					gridOptions.data = transformedData.list;
 					gridOptions.loading = false;
 
 					let pager = gridOptions.pager;
 
-					pager.pageNum = res.pageNum || 1;
-					pager.pageSize = res.pageSize || 20;
-					pager.totals = res.totals || 0;
-					pager.totalPages = Math.ceil((res.totals || 0) / pager.pageSize);
-
-					gridOptions.asyncChanged = true;
-
-					// 当$http触发的apply调用即将接收，重置状态（基于js单线程原理）
-					$rootScope.$$postDigest(() => {
-						gridOptions.pager.asyncChanged = false;
-					});
+					pager.pageNum = transformedData.pageNum;
+					pager.pageSize = transformedData.pageSize;
+					pager.totals = transformedData.totals;
+					pager.totalPages = Math.ceil((transformedData.totals || 0) / pager.pageSize);
 
 				});
 
@@ -87,9 +100,9 @@ export default {
 			};
 
 			if (isPromiseLike(gridOptions.externalData)) {
-				gridOptions.externalData.then(finish);
+				return gridOptions.externalData.then(finish);
 			} else {
-				finish(gridOptions.externalData);
+				return injector.get('$q').resolve(finish(gridOptions.externalData));
 			}
 
 		}

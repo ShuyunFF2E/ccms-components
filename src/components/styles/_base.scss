@@ -1,14 +1,21 @@
 @import "../../../node_modules/normalize.css";
 @import "button";
-//@import "layout";
+@import "variables";
 @import "input";
-@import "mixins";
 @import "layout";
 
-ul,li,p {
-  margin: 0;
-  padding: 0;
+/* 页面默认样式 */
+body {
+	font-family: $font-family;
+	font-size: $font-size-base;
+	line-height: $line-height;
 }
+
+ul, li, p {
+	margin: 0;
+	padding: 0;
+}
+
 li {
-  list-style: none;
+	list-style: none;
 }

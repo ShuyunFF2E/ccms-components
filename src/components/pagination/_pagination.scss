@@ -10,41 +10,11 @@ $pagination-linear-color-start: #fafafa;
 $pagination-linear-color-end: #f3f3f3;
 $pagination-input-height: 26px;
 
-pagination > div {
-
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 39px;
-
-	@extend %clear-fix;
-
-	background-color: #f6f6f6;
-
-	border: 1px solid #e8e8e8;
-	color: #666666;
-
-	white-space: nowrap;
+pagination {
+	display: inline-block;
 
 	.p-pager {
 		float: right;
-	}
-
-	.page-con {
-		@include fonts;
-		color: #666666;
-		line-height: 39px;
-		padding-left: 11px;
-		span {
-			margin-right: 18px;
-			float: left;
-		}
-		.font-num {
-			font-family: $font-number;
-			float: none;
-			margin-right: 0px;
-		}
 	}
 
 	.p-group {
@@ -94,47 +64,33 @@ pagination > div {
 		}
 
 	}
-	.p-reload {
-		@extend %p-button;
-		@extend .iconfont;
-		@extend .icon-iconfontrefresh;
-		width: 12px;
-		height: 12px;
-		top: -1px;
-		font-size: 14px;
-		color: #929292;
-		margin-right: 4px;
-	}
-	@-moz-document url-prefix() {
-		.p-reload {
-			top: -2px;
-		}
-	}
 	.p-first {
 		@extend %p-button;
 		@extend .iconfont;
-		@extend .icon-iconfontpreviouspage;
+		@extend .icon-lastpage;
 		@include pagebtn;
+	  	transform: rotate(180deg);
 	}
 
 	.p-prev {
 		@extend %p-button;
 		@extend .iconfont;
-		@extend .icon-iconfontpageleft;
+	  	@extend .icon-nextpage;
 		@include pagebtn;
+	  	transform: rotate(180deg);
 		margin: 0 12px 0 10px;
 	}
 	.p-next {
 		@extend %p-button;
 		@extend .iconfont;
-		@extend .icon-iconfontpageright;
+		@extend .icon-nextpage;
 		@include pagebtn;
 		margin: 0 11px;
 	}
 	.p-last {
 		@extend %p-button;
 		@extend .iconfont;
-		@extend .icon-iconfontpagedown;
+		@extend .icon-lastpage;
 		@include pagebtn;
 		margin-right: 27px;
 	}

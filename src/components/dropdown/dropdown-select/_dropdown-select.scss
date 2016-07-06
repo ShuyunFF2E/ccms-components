@@ -2,43 +2,51 @@
 @import "../../styles/mixins";
 @import "../../styles/input";
 
-.dropdown-select {
+dropdown-select {
 	display: inline-block;
+	vertical-align: middle;
+}
+.dropdown-select {
 	position: relative;
+	min-width: 64px;
+	max-width: 280px;
+	vertical-align: middle;
 
 	.dropdown-select-input-wrap {
-		position: relative;
+		display: flex;
+		border: solid 1px $input-border-color;
+
+		@at-root .active#{&} {
+			border-color: $input-active-border;
+		}
+
 		.dropdown-select-input {
-			min-width: 64px;
-			max-width: 280px;
-			padding-right: 48px;
+			flex: 1;
+			min-width: 0;
+			padding-right: 0;
 			line-height: $control-height;
 			vertical-align: top;
+			border: none;
 			// TODO: input 字体大小应该在基础组件中写？
 			font-size: 12px;
 			&[readonly] {
 				user-select: none;
 			}
-			.active > & {
-				border-color: $input-active-border;
-			}
 		}
 
 		.dropdown-select-icons {
-			position: absolute;
-			top: 0;
-			right: 0;
+			display: inline-block;
 		}
 
 		%action-icon {
 			@extend .iconfont;
 			display: inline-block;
-			margin-left: 8px;
+			padding-left: 8px;
 			line-height: $control-height;
 			cursor: pointer;
 			color: #c9c9c9;
 			&:last-child {
-				margin-right: 8px;
+				padding-right: 8px;
 			}
 			&:hover, .active > & {
 				color: $input-active-border;
@@ -47,52 +55,60 @@
 
 		.dropdown-select-clear {
 			@extend %action-icon;
-			@extend .icon-iconfont-clear;
+			@extend .icon-clear;
 			font-size: 12px;
-			display: none;
-			:hover > & {
-				display: inline-block;
+			display: inline-block;
+			visibility: hidden;
+			:hover > &.visible {
+				visibility: visible;
 			}
 		}
 		.dropdown-select-down {
 			@extend %action-icon;
-			@extend .icon-iconfontarrowdropdown;
+			@extend .icon-arrow;
 			font-size: 12px;
 		}
 	}
 
-	.dropdown-list {
-		position: absolute;
-		top: 100%;
-		left: 0;
-		z-index: 1;
-		box-sizing: border-box;
-		min-width: 100%;
-		max-width: 150%;
-		padding: 0;
-		list-style: none;
-		border: solid 1px $input-border;
-		background-color: #fff;
-		li {
-			@include cut-long-text;
+	.dropdown-panel {
+		&.hide {
+			display: none !important;
+		}
+		.dropdown-list {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			z-index: 1;
 			box-sizing: border-box;
-			height: 30px;
-			line-height: 30px;
-			padding: 0 9px;
-			font-size: 12px;
-			background: #fff;
-			cursor: pointer;
-			&.focus, &:hover {
-				background-color: #f6f6f6;
-			}
-			&.empty-list-item {
-				cursor: default;
-				&:hover {
-					background-color: #fff;
+			min-width: 100%;
+			max-width: 150%;
+			max-height: 152px;
+			overflow-y: scroll;
+			padding: 0;
+			list-style: none;
+			border: solid 1px $input-border;
+			background-color: #fff;
+			li {
+				@include cut-long-text;
+				box-sizing: border-box;
+				height: 30px;
+				line-height: 30px;
+				padding: 0 9px;
+				font-size: 12px;
+				background: #fff;
+				cursor: pointer;
+				&.focus, &:hover {
+					background-color: #f6f6f6;
 				}
-			}
-			.highlight {
-				color: #0083ba;
+				&.empty-list-item {
+					cursor: default;
+					&:hover {
+						background-color: #fff;
+					}
+				}
+				.highlight {
+					color: #0083ba;
+				}
 			}
 		}
 	}

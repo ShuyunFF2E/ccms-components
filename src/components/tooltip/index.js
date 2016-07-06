@@ -1,13 +1,25 @@
+import './_tooltip.scss';
+
 import angular from 'angular';
-import {FactoryCreator} from 'angular-es-utils';
 
 import Tooltip from './Tooltip';
-import {TooltipDirective, TooltipTriggerDirective, TooltipOpenedDirective} from './TooltipDirectives';
+import TooltipCtrl from './TooltipCtrl';
 
-export default angular
-	.module('ccms.components.tooltip', [])
-	.directive('tooltip', FactoryCreator.create(TooltipDirective))
-	.directive('tooltipTrigger', FactoryCreator.create(TooltipTriggerDirective))
-	.directive('tooltipOpened', FactoryCreator.create(TooltipOpenedDirective))
+const tooltipDDO = {
+	restrict: 'A',
+	controller: TooltipCtrl,
+	controllerAs: '$tooltipCtrl',
+	bindToController: {
+		content: '<tooltip',
+		trigger: '@?tooltipTrigger',
+		opened: '<?tooltipOpened',
+		type: '@?tooltipType',
+		appendToBody: '@?tooltipAppendToBody',
+		compilable: '<?tooltipCompilable'
+	}
+};
+
+export default angular.module('ccms.components.tooltip', [])
+	.directive('tooltip', () => tooltipDDO)
 	.constant('Tooltip', Tooltip)
 	.name;

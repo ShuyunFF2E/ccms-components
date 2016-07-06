@@ -1,26 +1,47 @@
-import { Inject } from 'angular-es-utils';
-
-@Inject('$document')
-export default class DropdownService {
-
+/**
+ * 全局记录打开的 dropdown 实例，处理自动关闭行为
+ * 以单例模式使用
+ */
+class DropdownService {
 	constructor() {
 		this.lastDropdownCtrl = null;
+
+		// 用于自动关闭 dropdown 的回调
+		this.autoCloseFn = null;
 	}
 
 	open(dropdownCtrl) {
-		if (!this.lastDropdownCtrl) {
-			this.$document.on('click', ::dropdownCtrl.closeList);
-		} else if (this.lastDropdownCtrl !== dropdownCtrl) {
-			this.lastDropdownCtrl.closeList();
-		}
-		this.lastDropdownCtrl = dropdownCtrl;
-	}
-
-	close() {
+		// 关闭之前的下拉
 		if (this.lastDropdownCtrl) {
-			this._$document.off('click', ::this.lastDropdownCtrl.closeList);
-			this.lastDropdownCtrl = null;
+			this.autoCloseFn();
+		}
+
+		// 为需要自动关闭的下拉注册处理事件
+		if (dropdownCtrl.autoClose === 'enabled') {
+			// 点击下拉自身内容阻止触发自动关闭
+			let element = dropdownCtrl.getElement();
+			let avoidAutoCloseFn = event => {
+				event.stopPropagation();
+			};
+			element.addEventListener('click', avoidAutoCloseFn);
+
+			this.lastDropdownCtrl = dropdownCtrl;
+			this.autoCloseFn = () => {
+				element.removeEventListener('click', avoidAutoCloseFn);
+				this.lastDropdownCtrl.close();
+			};
+			document.addEventListener('click', this.autoCloseFn);
 		}
 	}
 
+	close(dropdownCtrl) {
+		if (dropdownCtrl.autoClose === 'enabled') {
+			document.removeEventListener('click', this.autoCloseFn);
+			this.lastDropdownCtrl = null;
+			this.autoCloseFn = null;
+		}
+	}
 }
+
+export default new DropdownService();
+

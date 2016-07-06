@@ -6,11 +6,7 @@ $font-name-color: #145681;
 
 //font-size
 $size-icon-prefix-title: 3px;
-$font-size-h1: 18px;
-$font-size-h2: 14px;
-$font-size-h3: 12px;
 $font-size-text: 12px;
-
 
 // font-color
 $font-color-h1: #2d2d2d;
@@ -29,12 +25,11 @@ $font-color-success: #22ac38;
 // z-index 1~1500
 $calendar-z-index: 1600;
 $modal-z-index: 1500;
-$mask-z-index:1400;
-$tips-z-index:1400;
+$mask-z-index: 1400;
+$tips-z-index: 1400;
 
 // a text decoration
 $a-text-decoration: none;
-
 
 // default font family
 $font-family-default: 'Microsoft Yahei';
@@ -63,8 +58,6 @@ $link-hover-color: #00aaf1;
 $price-font-color: #ff7815;
 $emphasize-font-color: #ff5500;
 $warning-font-color: red;
-
-
 
 // box-sizing
 $box-sizing-default: border-box;
@@ -100,13 +93,10 @@ $pagination-font-color: #636363;
 $pagination-linear-color-start: #fafafa;
 $pagination-linear-color-end: #f3f3f3;
 
-
-
 //--comm-select
 $comm-select-border: 1px solid #d9d9d9;
 $comm-select-height: 24px;
 $comm-select-focus-border: 2px solid #aacbe1;
-
 
 // ----button-care
 $lnitial-button-care-startColor: #31B1EB;
@@ -192,34 +182,34 @@ $all-image: url('#{$image-path}icons.png') no-repeat 0 0;
 $iconfont-path: "";
 
 //area-select
-$font:MicrosoftYaHei;
-
+$font: MicrosoftYaHei;
 
 /* 颜色 */
 
-$color-text-dark:			#2d2d2d;
-$color-text:					#3d3d3d;
-$color-text-light:		#666;
-$color-disabled:			#d1d1d1;
+$color-text-dark: #2d2d2d;
+$color-text: #3d3d3d;
+$color-text-light: #666;
+$color-disabled: #d1d1d1;
 
-$color-primary:				#1182ba;
-$color-primary-light:	#18a8f0;
+$color-primary: #1182ba;
+$color-primary-light: #18a8f0;
 
-$color-error:					#fc6143;
-$color-warning:				#f9ac2d;
-$color-success:				#f9ac2d;
-
+$color-error: #fc6143;
+$color-warning: #f9ac2d;
+$color-success: #f9ac2d;
 
 /* 字体 */
 
-$font-family: 			Tahoma, "Microsoft Yahei", sans-serif;
-$font-size-base:		12px;
-$font-size-large:		$font-size-base + 2;
-$font-size-larger:	$font-size-large + 4;
-$line-height:				1.5;
-
+$font-family: Tahoma, "Microsoft Yahei", sans-serif;
+$font-size-base: 12px;
+$font-size-large: $font-size-base + 2;
+$font-size-larger: $font-size-large + 4;
+$font-size-h1: 18px;
+$font-size-h2: 14px;
+$font-size-h3: 12px;
+$line-height: 1.6;
 
 /* 表单 */
 
-$control-height:				30px;
-$control-default-width:	250px;
+$control-height: 30px;
+$control-default-width: 250px;
