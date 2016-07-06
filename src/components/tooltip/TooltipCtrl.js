@@ -59,6 +59,8 @@ export default class TooltipCtrl {
 				this._opened = false;
 			}
 
+			// getter/setter 会在初始化的时候会触发,这时候有可能constructor还没有初始化(因为使用的Object.create(Ctrl.prototype)),所以这里需要手动delay
+			// @see https://github.com/angular/angular.js/blob/master/src/ng/controller.js#L139
 			setTimeout(() => {
 				this[this._opened ? 'open' : 'close']();
 			}, 0);
