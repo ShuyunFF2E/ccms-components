@@ -15,10 +15,9 @@
 <button type="button" tooltip="'hello world'" tooltip-type="error-minor" style="margin-top: 50px">hover error tooltip
 </button>
 
-<button type="button" tooltip="'hello world'" tooltip-opened="opened" ng-click="opened=!opened" ng-init="opened=true">toggle tooltip manual
-</button>
-
 <button type="button" tooltip="'click me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
+<button type="button" tooltip="'click me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
+
 
 <div>
 	<a href="#" tooltip="'啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'" tooltip-append-to-body="true">详情</a>
@@ -28,8 +27,25 @@
 </div>
 
 <div>
-	<a href="#" tooltip="app.template" tooltip-compilable="false" tooltip-append-to-body="true">详情2</a>
+	<a href="#" tooltip="app.template" tooltip-compilable="true" tooltip-append-to-body="true">详情2</a>
 </div>
+
+<button type="button" tooltip="'hello world xxxx'" tooltip-placement="top" tooltip-opened="app.opened" ng-click="app.opened=!app.opened">toggle tooltip manual top
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="top-left" tooltip-opened="app.opened">toggle tooltip manual top-left
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="top-right" tooltip-opened="app.opened">toggle tooltip manual top-right
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="bottom" tooltip-opened="app.opened">toggle tooltip manual bottom
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="bottom-left" tooltip-opened="app.opened">toggle tooltip manual bottom-left
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="bottom-right" tooltip-opened="app.opened">toggle tooltip manual bottom-right
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="left" tooltip-opened="app.opened">toggle tooltip manual left
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="right" tooltip-opened="app.opened">toggle tooltip manual right
+</button>
 
 <script src="/components.js"></script>
 <script src="index.js"></script>

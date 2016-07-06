@@ -4,14 +4,18 @@
  * @since 2016-03-16
  */
 
-import {Bind, Inject} from 'angular-es-utils/decorators';
+import {Bind} from 'angular-es-utils/decorators';
 import Tooltip from './Tooltip';
 import {TOOLTIP_TYPE} from './Contants';
 
-@Inject('$element', '$attrs', '$compile', '$scope')
 export default class TooltipCtrl {
 
-	$onInit() {
+	constructor($element, $attrs, $compile, $scope) {
+		this._$element = $element;
+		this._$attrs = $attrs;
+		this._$compile = $compile;
+		this._$scope = $scope;
+
 		this.hostElement = this._$element;
 		this.element = null;
 	}
@@ -30,11 +34,6 @@ export default class TooltipCtrl {
 	$onDestroy() {
 		this.hostElement.unbind('mouseenter mouseleave', this.toggle);
 		this.hostElement.unbind(this.trigger, this.toggle);
-	}
-
-	@Bind
-	toggle() {
-		this.opened = !this.opened;
 	}
 
 	// content变化
@@ -60,7 +59,11 @@ export default class TooltipCtrl {
 				this._opened = false;
 			}
 
-			this[this._opened ? 'open' : 'close']();
+			// getter/setter 会在初始化的时候会触发,这时候有可能constructor还没有初始化(因为使用的Object.create(Ctrl.prototype)),所以这里需要手动delay
+			// @see https://github.com/angular/angular.js/blob/master/src/ng/controller.js#L139
+			setTimeout(() => {
+				this[this._opened ? 'open' : 'close']();
+			}, 0);
 		}
 	}
 
@@ -68,14 +71,19 @@ export default class TooltipCtrl {
 		return this._opened;
 	}
 
+	@Bind
+	toggle() {
+		this.opened = !this.opened;
+	}
+
 	open() {
 		if (!this.element) {
-			this.element = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody);
+			this.element = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody, this.placement);
 		}
 
 		let compiledContent = this.content;
 		if (this.compilable) {
-			compiledContent = this._$compile(this.content)(this._$scope)[0];
+			compiledContent = this._$compile(this.content)(this._$scope.$parent)[0];
 			this._$scope.$digest();
 		}
 
@@ -90,3 +98,5 @@ export default class TooltipCtrl {
 	}
 
 }
+
+TooltipCtrl.$inject = ['$element', '$attrs', '$compile', '$scope'];
