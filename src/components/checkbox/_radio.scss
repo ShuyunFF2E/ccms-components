@@ -1,0 +1,125 @@
+/**
+ *  HTML STRUCTURE
+
+    <h1>Checkbox</h1>
+
+    <div class="checkbox">
+        <div class="icon"></div>
+        <div class="text">未选择</div>
+    </div>
+
+    <div class="checkbox">
+        <div class="icon checked"></div>
+        <div class="text">已选择</div>
+    </div>
+
+    <div class="checkbox">
+        <div class="icon indeterminate"></div>
+        <div class="text">已选择</div>
+    </div>
+
+    <div class="checkbox disabled">
+        <div class="icon"></div>
+        <div class="text">Disabled</div>
+    </div>
+
+
+    <h1>Radios</h1>
+
+    <div class="radio">
+        <div class="icon"></div>
+        <div class="text">未选择</div>
+    </div>
+
+    <div class="radio">
+        <div class="icon checked"></div>
+        <div class="text">已选择</div>
+    </div>
+
+    <div class="radio disabled">
+        <div class="icon"></div>
+        <div class="text">Disabled</div>
+    </div>
+*/
+
+
+
+.checkbox{
+  $icon-width: 14px;  // icon size
+  $text-size: 12px;   // font size
+  $c-unchecked: #c0c0c0;
+  $c-unchecked-hover: #a3a3a3;
+  $c-checked: #0083ba;
+  $c-checked-hover: #00aaf1;
+  $c-disable: #d1d1d1;
+  cursor: pointer;
+  color: #000000;
+  .icon-before{
+    font-size: 14px;
+    width: $icon-width;
+    height: $icon-width;
+    line-height: $icon-width;
+    text-align: center;
+    color: $c-unchecked;
+  }
+  .icon {
+    @extend .iconfont;
+    @extend .icon-checkbox;
+    display: inline-block;
+    &:before {
+     @extend .icon-before
+    }
+  }
+  .checked {
+    @extend .icon-checkbox-checked;
+    &:before {
+      color: $c-checked;
+    }
+  }
+  .indeterminate {
+    @extend .icon-indeterminate;
+    &:before{
+      color: $c-checked;
+    }
+  }
+  .text{
+    display: inline-block;
+    font-size: 12px;
+    height: $icon-width;
+    line-height: $icon-width;
+    vertical-align: middle;
+  }
+
+  &:hover{
+    .icon:before{
+      color: $c-unchecked-hover;
+    }
+    .checked:before, .indeterminate:before{
+      color: $c-checked-hover;
+    }
+  }
+  &.disabled {
+    .icon {
+      &:before {
+        color: $c-disable;
+      }
+    }
+    .text {
+      color: $c-disable;
+    }
+  }
+}
+
+.radio {
+  @extend .checkbox;
+  .icon{
+    &:before {
+      content: "\e617"
+    }
+  }
+  .checked{
+    &:before {
+      content: "\e616"
+    }
+  }
+}
