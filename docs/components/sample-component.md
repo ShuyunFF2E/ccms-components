@@ -25,10 +25,6 @@ redirect_from: "/components/"
 
 ## Examples
 
-<script src="{{ site.baseurl }}/demos/modal/modal.js"></script>
-
-<div ng-app="demos.modal" ng-controller="ctrl as Ctrl">
-
 {% example html%}
 <button type="button" ng-click="openBase()">open base modal</button>
 <button type="button" ng-click="open()">open modal</button>

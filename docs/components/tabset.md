@@ -2,7 +2,6 @@
 layout: docs
 title: tabset
 group: components
-redirect_from: "/components/"
 ---
 
 ## Tabset组件
