@@ -6,6 +6,8 @@
  */
 
 import angular from 'angular';
+import {Debounce} from 'angular-es-utils/decorators';
+
 import rowCellTemplate from './tpls/row-cell.tpl.html';
 import TplReqHelper from '../../common/utils/tpl-req-helper';
 
@@ -33,7 +35,6 @@ export default class GridCtrl {
 	$onInit() {
 
 		this.selectedItems = this.selectedItems || [];
-		this.$allSelected = false;
 		const type = (this.type || 'default').toUpperCase();
 
 		GridHelper.fillOpts(this.opts);
@@ -55,13 +56,8 @@ export default class GridCtrl {
 		return !!this.selectedItems.length && !!this.opts.data && contains(this.selectedItems, this.opts.data);
 	}
 
-	set $allSelected(value) {
-		return value;
-	}
-
+	@Debounce(200)
 	onPagerChange(pageNum, pageSize) {
-		// 每次页码更新重置全选状态
-		this.$allSelected = false;
 		GridHelper.refresh(this.opts, Object.assign(this.opts.queryParams || {}, {pageNum, pageSize}));
 	}
 
