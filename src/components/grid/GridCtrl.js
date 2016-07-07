@@ -58,7 +58,12 @@ export default class GridCtrl {
 
 	@Debounce(200)
 	onPagerChange(pageNum, pageSize) {
-		GridHelper.refresh(this.opts, Object.assign(this.opts.queryParams || {}, {pageNum, pageSize}));
+
+		const {opts} = this;
+
+		GridHelper
+			.refresh(opts, Object.assign(opts.queryParams || {}, {pageNum, pageSize}))
+			.then(() => this.onRefresh({opts}));
 	}
 
 	selectAll(allSelected, collection) {
