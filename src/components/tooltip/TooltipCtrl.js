@@ -83,7 +83,7 @@ export default class TooltipCtrl {
 
 		let compiledContent = this.content;
 		if (this.compilable) {
-			compiledContent = this._$compile(this.content)(this._$scope.$parent)[0];
+			compiledContent = this._$compile(this.content)(this._$scope)[0];
 			this._$scope.$digest();
 		}
 

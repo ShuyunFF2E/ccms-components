@@ -117,7 +117,7 @@ $tooltip-arrow-color: #666666;
 	background-color: #ff867c;
 	color: #ffffff;
 	&:after {
-		border-top-color: #ff867c;
+		border-top-color: #ff867c !important;
 	}
 }
 
