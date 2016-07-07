@@ -17,7 +17,9 @@ export default class TooltipCtrl {
 		this._$scope = $scope;
 
 		this.hostElement = this._$element;
-		this.element = null;
+		this.tooltip = null;
+		this.mouseEntered = false;
+		this.timer = null;
 	}
 
 	$postLink() {
@@ -59,11 +61,12 @@ export default class TooltipCtrl {
 				this._opened = false;
 			}
 
+			window.clearTimeout(this.timer);
 			// getter/setter 会在初始化的时候会触发,这时候有可能constructor还没有初始化(因为使用的Object.create(Ctrl.prototype)),所以这里需要手动delay
 			// @see https://github.com/angular/angular.js/blob/master/src/ng/controller.js#L139
-			setTimeout(() => {
+			this.timer = setTimeout(() => {
 				this[this._opened ? 'open' : 'close']();
-			}, 0);
+			}, this[this._opened ? 'openDelay' : 'closeDelay'] || 0);
 		}
 	}
 
@@ -77,8 +80,8 @@ export default class TooltipCtrl {
 	}
 
 	open() {
-		if (!this.element) {
-			this.element = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody, this.placement);
+		if (!this.tooltip) {
+			this.tooltip = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody, this.placement);
 		}
 
 		let compiledContent = this.content;
@@ -87,14 +90,35 @@ export default class TooltipCtrl {
 			this._$scope.$digest();
 		}
 
-		this.element.open(compiledContent);
+		this.tooltip.open(compiledContent);
+
+		if (this.closeDelay) {
+			this.tooltip.element.addEventListener('mouseenter', this._onMouseEnter);
+			this.tooltip.element.addEventListener('mouseleave', this._onMouseLeave);
+		}
 	}
 
 	close() {
-		if (this.element) {
-			this.element.close();
+		// 鼠标未悬浮在tooltip上时
+		if (!this.mouseEntered) {
+			if (this.tooltip) {
+				this.tooltip.element.removeEventListener('mouseenter', this._onMouseEnter);
+				this.tooltip.element.removeEventListener('mouseleave', this._onMouseLeave);
+				this.tooltip.close();
+			}
+			this.tooltip = null;
 		}
-		this.element = null;
+	}
+
+	@Bind
+	_onMouseEnter() {
+		this.mouseEntered = true;
+	}
+
+	@Bind
+	_onMouseLeave() {
+		this.mouseEntered = false;
+		this.opened = false;
 	}
 
 }

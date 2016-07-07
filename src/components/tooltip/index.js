@@ -16,7 +16,9 @@ const tooltipDDO = {
 		opened: '<?tooltipOpened',
 		type: '@?tooltipType',
 		appendToBody: '@?tooltipAppendToBody',
-		compilable: '<?tooltipCompilable'
+		compilable: '<?tooltipCompilable',
+		openDelay: '@?tooltipOpenDelay',
+		closeDelay: '@?tooltipCloseDelay'
 	}
 };
 
