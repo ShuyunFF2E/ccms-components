@@ -24,7 +24,8 @@ const
 		bindings: {
 			opts: '=',
 			selectedItems: '=?',
-			type: '@?'
+			type: '@?',
+			onRefresh: '&?'
 		}
 	},
 

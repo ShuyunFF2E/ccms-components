@@ -5,17 +5,15 @@ group: components
 ---
 
 
-### options : 指令配置,其中包括如下:(*required*)
+### menu-bar : 指令配置,其中包括如下:(*required*)
 ---
 
-* options参数
-    *           unfold: `Boolean`(default:**true**) 菜单展开标记
-    *      unfoldClick: `Function`(default:**null**) 菜单展开收起回调函数
-    *    menusResource: `Array|ngResource` 菜单资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
-    *
-    *            shops: `Boolean`(default:**false**) 店铺配置是否启用
-    *    shopsResource: `Array|ngResource` 店铺资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
-    *       searchPlaceholder：`String`(default:**请输入店铺名称**) 店铺搜索框placeholder提示文字
+*           unfold: `Boolean`(default:**true**) 菜单展开标记
+*        on-unfold: `Function`(default:**null**) 菜单展开收起回调函数
+*    menu-source: `Array|ngResource` 菜单资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
+*    shop-source: `Array|ngResource` 店铺资源对象，若是`ngResource`时，获取菜单数据时调用其get方法
+*     search-placeholder: `String`(default:**请输入店铺名称**) 店铺搜索框placeholder提示文字
+
 
 ### $menus配套服务
 ---
@@ -23,11 +21,11 @@ group: components
 * $menus接口
 	* `$menus.shopActive` : 获取当前选中店铺信息
 * $rootScope 中注册监听
-	* `$rootScope.$on('shopSelect', (event, shop) => { // TODO 相关操作});`: 监听当前选中店铺信息变化
+	* `$rootScope.$on('shop:change', (event, shop) => { // TODO 相关操作});`: 监听当前选中店铺信息变化
 	
 * EventBus 中注册监听(需要引用angular-es-utils/event-bus,将其import到你的代码)
-	* `EventBus.on('menuSelect', menu => { // TODO 相关操作 });`：监听菜单信息变化
-	* `EventBus.on('shopSelect', shop => { // TODO 相关操作});`: 监听当前选中店铺信息变化  
+	* `EventBus.on('menu:change', menu => { // TODO 相关操作 });`：监听菜单信息变化
+	* `EventBus.on('shop:change', shop => { // TODO 相关操作});`: 监听当前选中店铺信息变化  
 	`import {EventBus} from 'angular-es-utils';`
 	
 	`angular-es-utils` [NPM安装地址](https://www.npmjs.com/package/angular-es-utils)

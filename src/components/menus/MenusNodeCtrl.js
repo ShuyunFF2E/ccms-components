@@ -1,23 +1,21 @@
 /**
  * Created with MenusNodeCtrl.js
  * @Description:
- * @Author: muchaoyang
+ * @Author: maxsmu
  * @Date: 2016-03-16 9:04 AM
- * To change this template use File | Settings | File Templates.
  */
 import {Inject, EventBus} from 'angular-es-utils';
 
 @Inject('$state', '$timeout')
 export default class MenusNodeCtrl {
 
-	constructor($state, $timeout) {
-
-		$timeout(() => {
-			this.$state = $state;
+	$onInit() {
+		this._$timeout(() => {
+			this.$state = this._$state;
 
 			// -获取当前选择的菜单项(初始化时)
 			const menu = this.getMenu(this.list);
-			menu && EventBus.dispatch('menuSelect', menu);
+			menu && EventBus.dispatch('menu:change', menu);
 		}, 0);
 	}
 
@@ -34,7 +32,7 @@ export default class MenusNodeCtrl {
 	 * @param menu
 	 */
 	clickMenus(menu) {
-		EventBus.dispatch('menuSelect', menu);
+		EventBus.dispatch('menu:change', menu);
 	};
 
 	/**
@@ -44,7 +42,7 @@ export default class MenusNodeCtrl {
 	 */
 	getMenu(menus = []) {
 		return Array.isArray(menus) ? menus.find(item => {
-			return item.state === this.$state.current.name;
+			return item.url === this.$state.current.name;
 		}) : {};
 	}
 }

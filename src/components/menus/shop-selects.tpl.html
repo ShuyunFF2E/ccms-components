@@ -1,14 +1,15 @@
-<div class="shop-choose-wrapper shop-select-show"
-     ng-class="{'shop-choose-none':shops.list.length <= 0,'shop-select-hide':!shops.animation}">
+<div class="shop-choose-wrapper"
+     ng-class="{'shop-choose-none':shops.list.length <= 0,'shop-select-show':shops.animation!==undefined,'shop-select-hide':(shops.animation!==undefined&&!shops.animation)}">
 
     <div class="shop-search">
         <input type="search" placeholder="{{shops.placeholder}}"
                ng-model="shops.searchName"
-               ng-keyup="shops.keyupSearchShop($event, shops.searchName)">
+        >
+        <!--ng-keyup="shops.keyupSearchShop($event, shops.searchName)">-->
 
         <span class="shop-search-clear"
               ng-if="shops.searchName"
-              ng-click="shops.searchName=''"></span>
+              ng-click="shops.resetSearchValue()"></span>
 
         <span class="shop-search-icon"
               ng-class="{'active':shops.searchName}"
@@ -21,7 +22,7 @@
             <ul>
                 <li ng-repeat="item in shop.child track by $index"
                     ng-class="{'active':shops.active.plat.value===shop.value&&shops.active.shop.value===item.value}"
-                    ng-click="shops.toggleShops(shop,item)">
+                    ng-click="shops.closedShops(shop,item)">
                     {{item.name}}
                     <span></span>
                 </li>

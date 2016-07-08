@@ -6,7 +6,7 @@
 
 angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
-	.controller('ctrl', function ($scope, $resource, $grid) {
+	.controller('ctrl', function($scope, $resource, $grid) {
 
 		this.click = () => {
 			console.log(this);
@@ -20,6 +20,10 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
 		this.refreshDataGrid = function() {
 			$grid.refresh(this.dataGridOptions).then(() => console.log('data grid refreshed!'));
+		};
+
+		this.onRefresh = function(opts) {
+			console.log(opts);
 		};
 
 		this.pagerGridOptions = {

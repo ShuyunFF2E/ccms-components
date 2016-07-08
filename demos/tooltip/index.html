@@ -9,16 +9,15 @@
 <input type="text" ng-model="tip" tooltip="tip" tooltip-trigger="click">
 
 <button type="button" tooltip="'hello world hello world hello world hello world hello world hello world'"
-        style="margin-top: 50px">hover normal tooltip
+        tooltip-close-delay="500" tooltip-open-delay="2000" style="margin-top: 50px">hover normal tooltip
 </button>
 
 <button type="button" tooltip="'hello world'" tooltip-type="error-minor" style="margin-top: 50px">hover error tooltip
 </button>
 
-<button type="button" tooltip="'hello world'" tooltip-opened="opened" ng-click="opened=!opened" ng-init="opened=true">toggle tooltip manual
-</button>
-
 <button type="button" tooltip="'click me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
+<button type="button" tooltip="'click me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
+
 
 <div>
 	<a href="#" tooltip="'啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'" tooltip-append-to-body="true">详情</a>
@@ -28,8 +27,25 @@
 </div>
 
 <div>
-	<a href="#" tooltip="app.template" tooltip-compilable="false" tooltip-append-to-body="true">详情2</a>
+	<a href="#" tooltip="app.template" tooltip-compilable="true" tooltip-append-to-body="true">详情2</a>
 </div>
+
+<button type="button" tooltip="'hello world xxxx'" tooltip-placement="top" tooltip-opened="app.opened" ng-click="app.opened=!app.opened">toggle tooltip manual top
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="top-left" tooltip-opened="app.opened">tooltip top-left
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="top-right" tooltip-opened="app.opened">tooltip top-right
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="bottom" tooltip-opened="app.opened">tooltip bottom
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="bottom-left" tooltip-opened="app.opened">tooltip bottom-left
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="bottom-right" tooltip-opened="app.opened">tooltip bottom-right
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="left" tooltip-opened="app.opened">tooltip left
+</button>
+<button type="button" tooltip="'hello world'" tooltip-placement="right" tooltip-opened="app.opened">tooltip right
+</button>
 
 <script src="/components.js"></script>
 <script src="index.js"></script>
