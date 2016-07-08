@@ -12,10 +12,13 @@ const tooltipDDO = {
 	bindToController: {
 		content: '<tooltip',
 		trigger: '@?tooltipTrigger',
+		placement: '@?tooltipPlacement',
 		opened: '<?tooltipOpened',
 		type: '@?tooltipType',
 		appendToBody: '@?tooltipAppendToBody',
-		compilable: '<?tooltipCompilable'
+		compilable: '<?tooltipCompilable',
+		openDelay: '@?tooltipOpenDelay',
+		closeDelay: '@?tooltipCloseDelay'
 	}
 };
 

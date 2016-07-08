@@ -14,6 +14,8 @@ angular
 			return entity.join(',');
 		};
 
+		this.opened = true;
+
 		this.template = '<div>' +
 			'<div ng-repeat="i in app.entity" ng-bind="i"></div>' +
 			'</div>';
