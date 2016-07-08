@@ -10,7 +10,7 @@ import {EventBus} from 'angular-es-utils';
 export default class TitleCtrl {
 
 	$onInit() {
-		!this.name && (this.eventBus = EventBus.on('menuSelect', menu => {
+		!this.name && (this.eventBus = EventBus.on('menu:change', menu => {
 			this.name = menu.name;
 		}));
 	}
