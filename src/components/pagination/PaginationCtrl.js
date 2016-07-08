@@ -95,6 +95,7 @@ export default class PaginationCtrl {
 		}
 
 		if (pageNum !== this.pageNum) {
+			this.pageNum = pageNum;
 			this.changePager({pageNum, pageSize});
 		}
 
@@ -116,6 +117,7 @@ export default class PaginationCtrl {
 		}
 
 		if (pageNum !== this.pageNum) {
+			this.pageNum = pageNum;
 			this.changePager({pageNum, pageSize});
 		}
 
