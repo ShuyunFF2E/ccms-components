@@ -24,7 +24,7 @@
            ng-class="{'one-content':childNode.level > 0}"
            ng-style="{'padding-left':childNode.level === 0 ? '20px' : (10*(childNode.level+2)+'px')}"
 
-           ui-sref="{{menu.url}}"
+           ui-sref="{{menu.state}}"
 
            ng-click="childNode.clickMenus(menu)"
 

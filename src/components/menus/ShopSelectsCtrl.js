@@ -1,9 +1,8 @@
 /**
  * Created with ShopSelectsCtrl.js
  * @Description:
- * @Author: muchaoyang
+ * @Author: maxsmu
  * @Date: 2016-04-13 4:31 PM
- * To change this template use File | Settings | File Templates.
  */
 
 import angular from 'angular';
@@ -13,34 +12,45 @@ import {$Menus} from './MenuService';
 
 @Inject('$rootScope', '$filter', '$menus', '$timeout', '$scope')
 export default class ShopSelectsCtrl {
-	constructor($rootScope, $filter, $menus, $timeout, $scope) {
-		this.$rootScope = $rootScope;
-		this.$filter = $filter;
-		this.$menus = $menus;
+
+	$onInit() {
 		this.searchName = '';
-		const unWatch = $scope.$watch('shops.shops.length', newLength => {
+		const unWatch = this._$scope.$watch('shops.shops.length', newLength => {
 			if (newLength > 0) {
-				$timeout(() => {
+				this._$timeout(() => {
 					this.list = angular.copy(this.shops);
 				}, 0);
 				unWatch();
 			}
 		});
+
+		// -订阅店铺列表收起时触发重置列表
+		this.EventBus = EventBus.on('shop:list-switch', () => {
+			this.searchName = '';
+			this.searchShop();
+		});
 	}
 
 	/**
-	 * 选择店铺
+	 * ctrl销毁时处理相关解除订阅
+	 */
+	$onDestroy() {
+		this.EventBus && this.EventBus();
+	}
+
+	/**
+	 * 选择店铺并且关闭店铺选择
 	 * @param plat
 	 * @param shop
 	 */
-	toggleShops(plat, shop) {
+	closedShops(plat, shop) {
 		this.active = {
 			plat,
 			shop
 		};
-		this.$menus.shopActive = $Menus._active(plat, shop);
-		this.$rootScope.$broadcast('shopSelect', this.active);
-		EventBus.dispatch('shopSelect', this.active);
+		this._$menus.shopActive = $Menus._active(plat, shop);
+		this._$rootScope.$broadcast('shop:change', this.active);
+		EventBus.dispatch('shop:change', this.active);
 		// -关闭店铺选择器
 		this.animation = false;
 	}
@@ -52,7 +62,6 @@ export default class ShopSelectsCtrl {
 	 */
 	clickSearchShop(event, name) {
 		event.stopPropagation();
-
 		this.searchShop(name);
 	}
 
@@ -72,6 +81,47 @@ export default class ShopSelectsCtrl {
 	 * @param name
 	 */
 	searchShop(name) {
-		this.list = this.$filter('SearchShop')(angular.copy(this.shops), name);
+		this.list = this.filterShop(angular.copy(this.shops), name);
+	}
+
+	/**
+	 * 根据name模糊过滤店铺列表
+	 * @param list
+	 * @param name
+	 * @returns {*}
+	 * @constructor
+	 */
+	filterShop(list, name) {
+		let delIndex = [];
+		if (name) {
+			Array.isArray(list) && list.forEach((plats, index) => {
+				plats.result = [];
+				Array.isArray(plats.child) && plats.child.forEach(shop => {
+					if (shop.name.includes(name)) {
+						plats.result.push(shop);
+					}
+				});
+				if (plats.result.length === 0) {
+					delIndex.push(plats);
+				} else {
+					plats.child = plats.result;
+					delete plats.result;
+				}
+			});
+
+			// -删除多余的项
+			delIndex.forEach(plat => {
+				list.splice(list.indexOf(plat), 1);
+			});
+		}
+		return list;
+	}
+
+	/**
+	 * 重置查询参数
+	 */
+	resetSearchValue() {
+		this.searchName = '';
+		this.searchShop();
 	}
 }

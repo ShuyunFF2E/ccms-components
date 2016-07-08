@@ -71,18 +71,18 @@ angular
 		var menus = [
 			{
 				"name": "忠诚度设置",
-				"url": "card",
+				"state": "card",
 				"icon": "",
 				"children": [
 					{
 						"name": "积分类型",
-						"url": "card.point",
+						"state": "card.point",
 						"icon": "",
 						"children": []
 					},
 					{
 						"name": "等级类型",
-						"url": "card.grade",
+						"state": "card.grade",
 						"icon": "",
 						"children": []
 					}
@@ -90,17 +90,17 @@ angular
 			},
 			{
 				"name": "TAE会员专区",
-				"url": "views",
+				"state": "views",
 				"icon": "",
 				"children": [
 					{
 						"name": "界面设置",
-						"url": "views.set",
+						"state": "views.set",
 						"icon": "",
 						"children": [
 							{
 								"name": "手淘",
-								"url": "views.set.st",
+								"state": "views.set.st",
 								"icon": "",
 								"children": []
 							}
@@ -108,17 +108,17 @@ angular
 					},
 					{
 						"name": "赚积分",
-						"url": "views.point",
+						"state": "views.point",
 						"icon": "",
 						"children": [
 							{
 								"name": "签到",
-								"url": "views.point.sign",
+								"state": "views.point.sign",
 								"icon": "",
 								"children": [
 									{
 										"name": "再签到",
-										"url": "views.point.sign.reload",
+										"state": "views.point.sign.reload",
 										"icon": "",
 										"children": []
 									}
@@ -130,7 +130,7 @@ angular
 			},
 			{
 				"name": "会员等级管理",
-				"url": "grade",
+				"state": "grade",
 				"icon": "",
 				"children": []
 			}
@@ -145,11 +145,9 @@ angular
 			unfoldClick: function(unfold) {
 				console.log('结果:', unfold);
 			},
-			shops: true,
-			//menusResource: $resource('/menus'),
-			menusResource: menus,
-			//shopsResource: $resource('/shops')
-			shopsResource: shops,
+			menusResource: $resource('/menus'),
+			//menusResource: menus,
+			shopsResource: $resource('/shops'),
 			searchPlaceholder: '请输入XXX'
 		};
 	})
@@ -212,8 +210,8 @@ function runConfig($state, $rootScope, $menus) {
 	$rootScope.$state = $state;
 
 	// -查询店铺是否有更改
-	$rootScope.$on('shopSelect', function (event, shop) {
-		console.log(shop);
-		console.log('$menus.active:', $menus.shopActive);
+	$rootScope.$on('shop:change', function(event, shop) {
+		console.log(shop.plat.name + '|' + shop.shop.name);
+		console.log('$menus.active:', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name);
 	});
 }
