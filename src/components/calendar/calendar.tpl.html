@@ -27,21 +27,24 @@
 					 maxlength="2"
 					 ng-min="0"
 					 ng-max="23"
-					 ng-blur="ctrl.updateTime($event)"> :
+					 ng-keyup="ctrl.updateTime($event)"
+					 ng-blur="ctrl.addTimeZero($event)"> :
 		<input class="calendar-time-input"
 					 name="minute"
 					 ng-model="ctrl.parts.minute"
 					 maxlength="2"
 					 ng-min="0"
 					 ng-max="59"
-					 ng-blur="ctrl.updateTime($event)"> :
+					 ng-keyup="ctrl.updateTime($event)"
+					 ng-blur="ctrl.addTimeZero($event)"> :
 		<input class="calendar-time-input"
 					 name="second"
 					 ng-model="ctrl.parts.second"
 					 maxlength="2"
 					 ng-min="0"
 					 ng-max="59"
-					 ng-blur="ctrl.updateTime($event)">
+					 ng-keyup="ctrl.updateTime($event)"
+					 ng-blur="ctrl.addTimeZero($event)">
 	</div>
 
 	<div class="calendar-buttons">
