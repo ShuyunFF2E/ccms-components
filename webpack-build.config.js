@@ -7,6 +7,7 @@ var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var CleanPlugin = require('clean-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 	devtool: 'cheap-source-map',
@@ -30,6 +31,7 @@ module.exports = {
 			}
 		}),
 		new CleanPlugin(['dist']),
+		new ExtractTextPlugin('ccms-components.min.css'),
 		new webpack.optimize.UglifyJsPlugin({
 			include: /\.min\.js$/,
 			minimize: true
@@ -72,13 +74,8 @@ module.exports = {
 				include: path.join(__dirname, 'src')
 			},
 			{
-				test: /\.css$/,
-				loaders: ['style', 'css', 'postcss', 'resolve-url'],
-				exclude: /(node_modules|bower_components)/
-			},
-			{
-				test: /\.scss$/,
-				loaders: ['style', 'css', 'postcss', 'resolve-url', 'sass?sourceMap'],
+				test: /\.(sc|c)ss$/,
+				loader: ExtractTextPlugin.extract('style', 'css!postcss!resolve-url!sass?sourceMap'),
 				exclude: /(node_modules|bower_components)/
 			},
 			{
@@ -90,19 +87,19 @@ module.exports = {
 			},
 			{
 				test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=25000&mimetype=application/font-woff&prefix=fonts'
+				loader: 'url?limit=15000&mimetype=application/font-woff&prefix=fonts'
 			},
 			{
 				test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=25000&mimetype=application/octet-stream&prefix=fonts'
+				loader: 'url?limit=15000&mimetype=application/octet-stream&prefix=fonts'
 			},
 			{
 				test: /\.eot(\?#\w+)?$/,
-				loader: 'url?limit=25000&mimetype=application/vnd.ms-fontobject&prefix=fonts'
+				loader: 'url?limit=15000&mimetype=application/vnd.ms-fontobject&prefix=fonts'
 			},
 			{
 				test: /\.svg(#\w+)?$/,
-				loader: 'url?limit=40000&mimetype=image/svg+xml&prefix=fonts'
+				loader: 'url?limit=15000&mimetype=image/svg+xml&prefix=fonts'
 			}
 
 		]
