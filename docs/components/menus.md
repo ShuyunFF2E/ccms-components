@@ -21,11 +21,11 @@ group: components
 * $menus接口
 	* `$menus.shopActive` : 获取当前选中店铺信息
 * $rootScope 中注册监听
-	* `$rootScope.$on('shopSelect', (event, shop) => { // TODO 相关操作});`: 监听当前选中店铺信息变化
+	* `$rootScope.$on('shop:change', (event, shop) => { // TODO 相关操作});`: 监听当前选中店铺信息变化
 	
 * EventBus 中注册监听(需要引用angular-es-utils/event-bus,将其import到你的代码)
-	* `EventBus.on('menuSelect', menu => { // TODO 相关操作 });`：监听菜单信息变化
-	* `EventBus.on('shopSelect', shop => { // TODO 相关操作});`: 监听当前选中店铺信息变化  
+	* `EventBus.on('menu:change', menu => { // TODO 相关操作 });`：监听菜单信息变化
+	* `EventBus.on('shop:change', shop => { // TODO 相关操作});`: 监听当前选中店铺信息变化  
 	`import {EventBus} from 'angular-es-utils';`
 	
 	`angular-es-utils` [NPM安装地址](https://www.npmjs.com/package/angular-es-utils)

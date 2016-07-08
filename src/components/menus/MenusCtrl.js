@@ -80,8 +80,8 @@ export default class MenusCtrl {
 
 			// -第一次广播时间通知调用者当前选择的店铺
 			this._$timeout(() => {
-				this._$rootScope.$broadcast('shopSelect', this._$menus.shopActive);
-				EventBus.dispatch('shopSelect', this._$menus.shopActive);
+				this._$rootScope.$broadcast('shop:change', this._$menus.shopActive);
+				EventBus.dispatch('shop:change', this._$menus.shopActive);
 			}, 0);
 		}
 	}
@@ -93,7 +93,7 @@ export default class MenusCtrl {
 		this.unfold = !this.unfold;
 
 		// -判断是否为function 是则执行函数   否则不作为
-		(Object.prototype.toString.call(this.onUnfold) === '[object Function]')
+		(typeof this.onUnfold === 'function')
 			? this.onUnfold(this.unfold)
 			: null;
 	};
@@ -171,7 +171,7 @@ export default class MenusCtrl {
 		if (!this.shopShow) {
 
 			// -通知店铺列表收起
-			EventBus.dispatch('retract-shops-list', this.shopShow);
+			EventBus.dispatch('shop:list-switch', this.shopShow);
 		}
 	}
 }

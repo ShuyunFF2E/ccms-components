@@ -210,7 +210,7 @@ function runConfig($state, $rootScope, $menus) {
 	$rootScope.$state = $state;
 
 	// -查询店铺是否有更改
-	$rootScope.$on('shopSelect', function(event, shop) {
+	$rootScope.$on('shop:change', function(event, shop) {
 		console.log(shop.plat.name + '|' + shop.shop.name);
 		console.log('$menus.active:', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name);
 	});

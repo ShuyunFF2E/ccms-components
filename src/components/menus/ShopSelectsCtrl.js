@@ -25,7 +25,7 @@ export default class ShopSelectsCtrl {
 		});
 
 		// -订阅店铺列表收起时触发重置列表
-		this.EventBus = EventBus.on('retract-shops-list', () => {
+		this.EventBus = EventBus.on('shop:list-switch', () => {
 			this.searchName = '';
 			this.searchShop();
 		});
@@ -39,18 +39,18 @@ export default class ShopSelectsCtrl {
 	}
 
 	/**
-	 * 选择店铺
+	 * 选择店铺并且关闭店铺选择
 	 * @param plat
 	 * @param shop
 	 */
-	toggleShops(plat, shop) {
+	closedShops(plat, shop) {
 		this.active = {
 			plat,
 			shop
 		};
 		this._$menus.shopActive = $Menus._active(plat, shop);
-		this._$rootScope.$broadcast('shopSelect', this.active);
-		EventBus.dispatch('shopSelect', this.active);
+		this._$rootScope.$broadcast('shop:change', this.active);
+		EventBus.dispatch('shop:change', this.active);
 		// -关闭店铺选择器
 		this.animation = false;
 	}

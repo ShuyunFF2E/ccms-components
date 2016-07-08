@@ -22,7 +22,7 @@
             <ul>
                 <li ng-repeat="item in shop.child track by $index"
                     ng-class="{'active':shops.active.plat.value===shop.value&&shops.active.shop.value===item.value}"
-                    ng-click="shops.toggleShops(shop,item)">
+                    ng-click="shops.closedShops(shop,item)">
                     {{item.name}}
                     <span></span>
                 </li>

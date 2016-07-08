@@ -15,7 +15,7 @@ export default class MenusNodeCtrl {
 
 			// -获取当前选择的菜单项(初始化时)
 			const menu = this.getMenu(this.list);
-			menu && EventBus.dispatch('menuSelect', menu);
+			menu && EventBus.dispatch('menu:change', menu);
 		}, 0);
 	}
 
@@ -32,7 +32,7 @@ export default class MenusNodeCtrl {
 	 * @param menu
 	 */
 	clickMenus(menu) {
-		EventBus.dispatch('menuSelect', menu);
+		EventBus.dispatch('menu:change', menu);
 	};
 
 	/**
