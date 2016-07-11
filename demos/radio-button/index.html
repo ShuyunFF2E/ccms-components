@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>radio-button</title>
+</head>
+<body ng-app="app" ng-controller="ctrl" style="padding: 20px">
+<h1>Radio button Demo</h1>
+<p>Support Attribute</p>
+<ul style="list-style: disc">
+	<li style="list-style: inside">ng-model</li>
+	<li style="list-style: inside">ng-value</li>
+	<li style="list-style: inside">ng-disabled</li>
+</ul>
+
+<div>
+	<h2>Demo</h2>
+	<p>ng-model & ng-value should be setting on every radio button component.</p>
+	value: {{demo.value}}<br>
+	disabled: {{demo.disabled}}<br>
+	<ccms-radio-button ng-repeat="item in demo.setting track by $index" ng-model="demo.value" ng-value="item" ng-disabled="demo.disabled">{{item}}</ccms-radio-button>
+	<ccms-radio-button ng-model="demo.value" value="d" ng-disabled="demo.disabled">d</ccms-radio-button>
+	<button ng-click="generatorValues()">generator value</button>
+	<button ng-click="demo.disabled = !demo.disabled">toggle disable</button>
+</div>
+
+<script src="/components.js"></script>
+
+<!--<script src="/node_modules/angular/angular.min.js"></script>-->
+<!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->
+<!--<script src="/dist/ccms_components.js"></script>-->
+<script src="index.js"></script>
+
+
+</body>
+</html>
