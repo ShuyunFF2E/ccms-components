@@ -17,7 +17,7 @@ const ccmsCheckboxSetting = {
 	bindings: {
 		ngChecked: '<?',
 		ngDisabled: '<?',
-		ngModel: '=?',
+		ngModel: '<?',
 		ngTrueValue: '<?',
 		ngFalseValue: '<?',
 		indeterminate: '<?'

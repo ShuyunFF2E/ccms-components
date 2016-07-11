@@ -23,7 +23,10 @@
 				value: false,
 				indeterminate: true
 			};
-			$scope.demo5 = false;
+			$scope.demo5 = {
+				value: false,
+				disabled: true
+			};
 
 			$scope.change = function () {
 				console.log('something changed.');
