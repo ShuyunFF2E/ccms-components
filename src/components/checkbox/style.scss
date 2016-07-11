@@ -105,11 +105,19 @@ ccms-checkbox{
 
 	.ccms-checkbox-input{
 	  border-color: $disabled-color;
+
+	  &:before{
+		border-color: $disabled-color;
+	  }
 	}
   }
 
   .ccms-checkbox-input{
 	border-color: $disabled-color;
+
+	&:before{
+	  border-color: $disabled-color;
+	}
   }
 
   .ccms-checkbox-label{

@@ -11,40 +11,29 @@ export default class CheckboxController {
 	constructor() {}
 
 	/**
-	 * init method
-	 * if ng-model set on components, add a listener watch the model value to change the component checked state.
-	 */
-	$onInit() {
-		this.trueValue = this.ngModelController ? (typeof this.ngTrueValue === 'undefined' ? true : this.ngTrueValue) : true;
-		this.falseValue = this.ngModelController ? (typeof this.ngFalseValue === 'undefined' ? false : this.ngFalseValue) : false;
-
-		this.ngModelController && this._$scope.$watch('$ctrl.ngModel', newValue => {
-			this.checked = newValue === this.trueValue;
-		});
-	}
-
-	/**
 	 * onChange method
-	 * watch the value pass from the component's attribute
+	 * watch the ng-model change situation, when ngModel changed, the checked value changes
 	 * @param {object} opt
 	 */
 	$onChanges(opt) {
-		opt.ngChecked && (this.checked = opt.ngChecked.currentValue);
-		opt.ngChecked && this.ngModelController && this.updateNgModel(this.checked);
-		opt.ngTrueValue && this.ngModelController && (this.trueValue = opt.ngTrueValue.currentValue);
-		opt.ngFalseValue && this.ngModelController && (this.falseValue = opt.ngFalseValue.currentValue);
-		opt.ngDisabled && (this.disabled = opt.ngDisabled.currentValue);
-		opt.indeterminate && (this.indeterminate = opt.indeterminate.currentValue);
+		opt.ngModel && (this.ngChecked = opt.ngModel.currentValue === this._trueValue);
 	}
 
 	/**
 	 * toggle the checked value when user click the checkbox
-	 * @returns {boolean}
 	 */
 	toggleClick() {
 		if (this.ngDisabled || this.indeterminate) return false;
-		this.checked = !this.checked;
-		this.ngModelController && this.updateNgModel(this.checked);
+		this.ngChecked = !this.ngChecked;
+		this.ngModelController && this.updateNgModel(this.ngChecked);
+	}
+
+	get _trueValue() {
+		return this.ngModelController ? (typeof this.ngTrueValue === 'undefined' ? true : this.ngTrueValue) : true;
+	}
+
+	get _falseValue() {
+		return this.ngModelController ? (typeof this.ngFalseValue === 'undefined' ? false : this.ngFalseValue) : false;
 	}
 
 	/**
@@ -52,7 +41,7 @@ export default class CheckboxController {
 	 * @param {boolean} checked
 	 */
 	updateNgModel(checked) {
-		let value = checked ? this.trueValue : this.falseValue;
+		let value = checked ? this._trueValue : this._falseValue;
 		this.ngModelController.$setViewValue(value); // change model value & $setViewValue method will trigger method binding on modol
 	}
 }

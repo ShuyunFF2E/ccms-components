@@ -53,8 +53,10 @@
 <div>
 	<h2>Demo 5: Disable checkbox</h2>
 	<p>Use ng-disabled to disable checkbox.</p>
-	value: {{demo5}}<br/>
-	<ccms-checkbox ng-model="demo5" ng-disabled="true">{{demo5}}</ccms-checkbox>
+	value: {{demo5.value}}<br/>
+	disabled: {{demo5.disabled}}<br/>
+	<ccms-checkbox ng-model="demo5.value" ng-disabled="demo5.disabled">{{demo5.value}}</ccms-checkbox>
+	<button ng-click="demo5.disabled = !demo5.disabled">change disabled</button>
 </div>
 
 <h3>Note for All: DO NOT use ng-bind.</h3>
