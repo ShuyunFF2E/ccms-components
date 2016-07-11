@@ -1,19 +1,28 @@
 /**
  * @author fengqiu.wu
  */
+import './_tabset.scss';
+
 import angular from 'angular';
 
-import {FactoryCreator} from 'angular-es-utils';
+import TabsCtrl from './TabsetCtrl';
+import tabsetTemplate from './tabset.tpl.html';
 
-import TabsetComponent from './TabsetComponent';
-import TabComponent from './TabComponent';
-import TabMoreDirective from './TabMoreDirective';
-import TabContent from './TabContentTransclude';
+const TabsetComponent = {
+	template: tabsetTemplate,
+	bindings: {
+		tabs: '=',
+		active: '<',
+		remove: '<',
+		smaller: '<',
+		justified: '<',
+		onActive: '&'
+	},
+	controller: TabsCtrl,
+	controllerAs: '$tabsetCtrl'
+};
 
 export default angular
 	.module('ccms.components.tabsets', [])
-	.directive('tabContentTransclude', FactoryCreator.create(TabContent))
-	.directive('tabMore', FactoryCreator.create(TabMoreDirective))
-	.component('tabset', new TabsetComponent())
-	.component('tab', new TabComponent())
+	.component('tabset', TabsetComponent)
 	.name;

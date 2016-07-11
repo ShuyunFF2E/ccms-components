@@ -2,57 +2,71 @@
  * @author fengqiu.wu
  */
 
-
 import {Inject} from 'angular-es-utils';
 
-
-@Inject('$scope', '$element', '$attrs')
+@Inject()
 export default class TabsetCtrl {
 
-	constructor($scope, $element, $attrs) {
-		let vm = this;
+	$onInit() {
+		let activeIndex = (this.active || 1) - 1;
 
-		vm.tabs = vm.tabs || [];
-		vm.small = $attrs.small === 'true';
-		vm.remove = $attrs.removed === 'true';
-		vm.justified = $attrs.justified === 'true';
+		this.tabs = this.tabs || [];
 
-		vm.active = !isNaN($attrs.active) ? $attrs.active : 0;
+		if (activeIndex >= this.tabs.length - 1) {
+			activeIndex = this.tabs.length - 1;
+		}
 
-		let unwatch = $scope.$watch('tabs', () => {
-			vm.tabs.forEach((tab, index) => {
-				tab.active && (vm.active = index);
-			});
+		this.current = this.tabs[activeIndex];
+		this.current.active = true;
+	}
 
-			if (vm.tabs[vm.active]) {
-				vm.tabs[vm.active].active = true;
-				vm.current = vm.tabs[vm.active];
-			}
-			unwatch();
-		});
+	selectTab(tab, anyValue) {
+		if ((tab.disabled && !anyValue) || tab.active) return;
+
+		// 先设置以前选中的为false
+		this.current.active = false;
+
+		this.current = tab;
+		this.current.active = true;
+
+		this.onActive && this.onActive({tab: this.current});
+		tab.onActive && tab.onActive(tab);
 	}
 
 	removeTab(tab) {
+		if (this.tabs.length <= 1) return;
+
 		// 找到需要删除的tab
 		let removeIndex = this.tabs.indexOf(tab);
 		let prevIndex = removeIndex - 1;
+		let nextIndex = removeIndex + 1;
+		let activeIndex = -1;
 
 		this.tabs.splice(removeIndex, 1);
 
-		if (tab.active && this.tabs[prevIndex]) {
-			if (!this.tabs[prevIndex].disabled) {
-				this.tabs[prevIndex].active = true;
-			} else if (prevIndex >= 0) {
-				for (let i = prevIndex; i >= 0; i--) {
-					if (!this.tabs[i].disabled) {
-						this.tabs[i].active = true;
-						break;
-					}
+		if (!tab.active || !this.tabs.length) return;
+
+		// 删除向前找选中目标
+		if (prevIndex >= 0) {
+			for (let i = prevIndex; i >= 0; i--) {
+				if (!this.tabs[i].disabled) {
+					activeIndex = i;
+					break;
 				}
-			} else {
-				this.tabs[0].active = true;
 			}
 		}
+
+		// 删除向后找选中目标
+		if (activeIndex === -1 && nextIndex <= this.tabs.length) {
+			for (let i = removeIndex; i <= nextIndex; i++) {
+				if (!this.tabs[i].disabled) {
+					activeIndex = i;
+					break;
+				}
+			}
+		}
+
+		this.selectTab(this.tabs[activeIndex !== -1 ? activeIndex : 0], activeIndex === -1);
 	}
 
 }
