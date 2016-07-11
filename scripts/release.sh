@@ -10,7 +10,7 @@ function build() {
 	NODE_ENV=production webpack --config webpack-build.config.js
 
 	# copy files
-	#cp package.json dist
+	cp package.json dist
 	cp -rv src/components/styles dist/scss
 
 	# create dist/index.js
