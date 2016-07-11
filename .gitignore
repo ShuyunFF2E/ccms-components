@@ -7,4 +7,5 @@ dist
 .DS_Store
 lib
 dist/
-Gemfile.lock
+dev-server-path
+
