@@ -13,7 +13,7 @@ fi
 if [[ "$(< dev-server-path)" == "$default_server_path" ]]; then
 	echo
 	echo "==> EDIT ccms-components/dev-server-path"
-	echo "==> THEN RUN: \"$0 --copy-dist\" to continue"
+	echo "==> THEN RUN: \"$0\" to continue"
 	echo
 else
 	rsync --recursive --update --delete-excluded --progress \
