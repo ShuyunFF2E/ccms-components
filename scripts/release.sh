@@ -28,18 +28,6 @@ function publish() {
 	curl -X PUT https://npm.taobao.org/sync/ccms-components
 }
 
-function copy-dist() {
-	if [ ! -f dev-server-path ]; then
-		echo "user@ip:/path/to/ccms-components" > dev-server-path
-		echo
-		echo "EDIT ccms-components/dev-server-path"
-		echo "THEN RUN: \"$0 --copy-dist\" to continue"
-		echo
-	else
-		rsync --recursive --update --delete-excluded --progress dist "$(<dev-server-path)"
-	fi
-}
-
 function release() {
 	version=""
 	while [[ "$1" != "" ]]; do
@@ -47,9 +35,18 @@ function release() {
 			--major | --minor | --patch )
 				version="${1:2}"
 				;;
+			* )
+				echo "Unknow parameter \"$1\""
+				exit 1
+				;;
 		esac
 		shift
 	done
+
+	if [[ "$version" == "" ]]; then
+		echo "Missing version parameter: --major | --minor | --patch"
+		exit 1
+	fi
 
 	# release new version
 	git checkout dev
@@ -61,35 +58,12 @@ function release() {
 	git rebase master
 	git push origin master dev $new_version
 
-	build && publish && copy-dist
+	build && publish
 }
 
 
 # cd ccms-components/
 cd "$(dirname "$0")/.."
 
-release_args=()
-
-while [[ "$1" != "" ]]; do
-	case $1 in
-		--copy-dist )
-			copy-dist
-			exit
-			;;
-		--major | --minor | --patch )
-			release_args+=($1)
-			;;
-		* )
-			echo "Unknow parameter \"$1\""
-			exit
-			;;
-	esac
-	shift
-done
-
-if [[ ${#release_args[@]} > 0 ]]; then
-	release $release_args
-else
-	echo "Missing version parameter: --major | --minor | --patch"
-fi
+release $@
 
