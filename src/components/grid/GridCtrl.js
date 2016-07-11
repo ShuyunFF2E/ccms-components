@@ -63,7 +63,7 @@ export default class GridCtrl {
 
 		GridHelper
 			.refresh(opts, Object.assign(opts.queryParams || {}, {pageNum, pageSize}))
-			.then(() => this.onRefresh({opts}));
+			.then(() => this.onRefresh && this.onRefresh({opts}));
 	}
 
 	selectAll(allSelected, collection) {
