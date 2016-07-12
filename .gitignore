@@ -1,9 +1,6 @@
-_gh_pages/
-.sass-cache/
 node_modules
-build
 dist
 .idea
 .DS_Store
-lib
-dist/
+.sass-cache
+_gh_pages
