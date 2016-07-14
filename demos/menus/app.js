@@ -1,15 +1,15 @@
 /**
  * Created with app.js
  * @Description:
- * @Author: muchaoyang
+ * @Author: maxsmu
  * @Date: 2016-03-04 10:36 AM
- * To change this template use File | Settings | File Templates.
  */
+//import {$Menus} from './MenuService';
 
 angular
 	.module('componentsApp', ['ccms.components', 'ui.router', 'ngResource'])
 
-	.controller('ctrl', function($scope, $timeout, $resource) {
+	.controller('ctrl', function ($scope, $timeout, $resource) {
 
 		var shops = [
 			{
@@ -142,7 +142,7 @@ angular
 
 		self.menusOptions = {
 			unfold: true,
-			unfoldClick: function(unfold) {
+			unfoldClick: function (unfold) {
 				console.log('结果:', unfold);
 			},
 			menusResource: $resource('/menus'),
@@ -164,11 +164,15 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('card.point', {
 			url: '/point',
-			template: '积分类型'
+			templateUrl: 'test1.tpl.html',
+			controller: pointController,
+			controllerAs: 'point'
 		})
 		.state('card.grade', {
 			url: '/grade',
-			template: '等级类型'
+			templateUrl: 'test2.tpl.html',
+			controller: gradeController,
+			controllerAs: 'grade'
 		})
 		.state('views', {
 			abstract: true,
@@ -205,13 +209,61 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('views/point/sign/sign');
 }
 
-runConfig.$inject = ['$state', '$rootScope', '$menus'];
-function runConfig($state, $rootScope, $menus) {
+runConfig.$inject = ['$state', '$rootScope'];
+function runConfig($state, $rootScope) {
 	$rootScope.$state = $state;
+}
 
-	// -查询店铺是否有更改
-	$rootScope.$on('shop:change', function(event, shop) {
-		console.log(shop.plat.name + '|' + shop.shop.name);
-		console.log('$menus.active:', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name);
+gradeController.$inject = ['$scope', '$menus'];
+
+// - 关闭自动开启功能
+function gradeController($scope, $menus) {
+	$scope.$on('shop:change', (event, shop) => {
+		console.log('(closed autoClose)事件广播:', shop.plat.name + '|' + shop.shop.name);
+		console.log('(closed autoClose)服务接口:', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name);
 	});
+
+	this.name = '不是你不懂,而是老司机飙车太快';
+}
+
+
+pointController.$inject = ['$scope', '$menus'];
+
+// - 开启自动关闭功能
+function pointController($scope, $menus) {
+	this.name = '老司机的速度学';
+
+	$scope.$on('shop:change', (event, shop, defer) => {
+
+		if (!$menus.autoClose) {
+
+			const state = window.confirm('确定切换店铺:' + shop.shop.name + '?');
+
+			if (state) {
+				defer.resolve();
+				console.log('(opened autoClose)事件广播(resolve):', shop.plat.name + '|' + shop.shop.name);
+
+				// - 关闭自动关闭,不建议在其中使用 $menus 服务获取当前选中店铺,其原因是在你点击的时,你还没有选择是否切换,这是服务中保存的还是之前的选中状态
+				setTimeout(()=> {
+					console.log('(opened autoClose)服务接口(resolve):', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name);
+				}, 2000);
+
+			} else {
+				defer.reject();
+			}
+		}else {
+			console.log('(opened autoClose)事件广播(resolve):', shop.plat.name + '|' + shop.shop.name);
+			console.log('(opened autoClose)服务接口(resolve):', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name);
+		}
+	});
+
+
+	/**
+	 * 表单修改
+	 */
+	this.formChange = ()=> {
+		$menus.autoClose = false;
+		console.log('更新表单,触发关闭自动切换', $menus);
+	};
+
 }

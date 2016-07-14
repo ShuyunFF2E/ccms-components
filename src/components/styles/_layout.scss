@@ -2,6 +2,7 @@ $left-width: 180px;
 $center-width: 200px;
 $right-width: 200px;
 $min-width: 30px;
+$min-height:700px;
 
 .ccmsc-main-container {
 	display: block;
@@ -10,6 +11,7 @@ $min-width: 30px;
 	right: 0;
 	top: 0;
 	bottom: 0;
+	min-height: $min-height;
 	& .left-container {
 		//@include test-border;
 		position: absolute;

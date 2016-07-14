@@ -7,7 +7,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import utils from '../../common/utils';
-import {$Menus} from './MenuService';
+import $menus from './MenuService';
 
 import './_menu.scss';
 import menuBarTemplate from './menus.tpl.html';
@@ -30,7 +30,8 @@ const
 			onUnfold: '=',
 			menuSource: '=',
 			shopSource: '=',
-			searchPlaceholder: '='
+			searchPlaceholder: '=',
+			searchTypeName: '='
 		}
 	},
 	menusNodeDDO = {
@@ -50,8 +51,9 @@ const
 		bindings: {
 			shops: '=',
 			active: '=',
-			animation: '=',
-			placeholder: '='
+			closedAnimation: '=',
+			placeholder: '=',
+			searchTypeName: '='
 		}
 	};
 
@@ -60,5 +62,5 @@ export default angular
 	.component('menuBar', menusBarDDO)
 	.component('menuNode', menusNodeDDO)
 	.component('shopSelect', shopSelectDDO)
-	.service('$menus', $Menus)
+	.value('$menus', $menus)
 	.name;

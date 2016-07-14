@@ -5,17 +5,17 @@
  * @Date: 2016-02-29 6:52 PM
  */
 import {Inject, EventBus} from 'angular-es-utils';
-import {$Menus} from './MenuService';
-@Inject('$menus', '$timeout', '$state', '$rootScope', '$document', '$scope')
+import $menus from './MenuService';
+@Inject('$timeout', '$state', '$rootScope', '$document', '$scope')
 export default class MenusCtrl {
 
 	$onInit() {
-		// -获取menus数据
-		this.getMenus();
+		// - 生成 menu list 数据
+		this.createMenuList();
 	}
 
 	/**
-	 * 单击一级菜单
+	 * 选中一级菜单
 	 * @param menu
 	 */
 	oneListClick(menu, $event) {
@@ -76,12 +76,22 @@ export default class MenusCtrl {
 			};
 
 			// -更新服务中的当前选择店铺数据
-			this._$menus.shopActive = $Menus._active(plat, shop);
+			$menus.shopActive = $menus._active(plat, shop);
 
 			// -第一次广播时间通知调用者当前选择的店铺
 			this._$timeout(() => {
-				this._$rootScope.$broadcast('shop:change', this._$menus.shopActive);
-				EventBus.dispatch('shop:change', this._$menus.shopActive);
+
+				// - 伪造一个defer延迟对象
+				const fakeDefer = {
+					resolve: () => {
+					},
+					reject: () => {
+					}
+				};
+
+				// - 广播通知店铺选中
+				this._$rootScope.$broadcast('shop:change', $menus.shopActive, fakeDefer);
+				EventBus.dispatch('shop:change', $menus.shopActive, fakeDefer);
 			}, 0);
 		}
 	}
@@ -99,12 +109,11 @@ export default class MenusCtrl {
 	};
 
 	/**
-	 * 获取menus 数据源
+	 * 生成 menu list 数据源
 	 */
-	getMenus() {
-
+	createMenuList() {
 		// -菜单列表
-		const menus = $Menus.getMenus(this.menuSource);
+		const menus = $menus.getMenus(this.menuSource);
 
 		// -如果为Resource,则执行查询操作,否则返回原数据
 		if (menus.isResource) {
@@ -120,15 +129,15 @@ export default class MenusCtrl {
 		}
 
 		// -获取店铺信息
-		this.getShops();
+		this.createShopList();
 	}
 
 	/**
-	 * 获取shops数据源
+	 * 生成 shop list 数据源
 	 */
-	getShops() {
+	createShopList() {
 		// -店铺列表
-		const shops = $Menus.getShops(this.shopSource);
+		const shops = $menus.getShops(this.shopSource);
 
 		if (shops.isResource) {
 
@@ -164,10 +173,11 @@ export default class MenusCtrl {
 	}
 
 	/**
-	 * 店铺信息
+	 * 展示店铺列表
 	 */
-	shopsClick() {
+	showShopSelect() {
 		this.shopShow = !this.shopShow;
+
 		if (!this.shopShow) {
 
 			// -通知店铺列表收起
