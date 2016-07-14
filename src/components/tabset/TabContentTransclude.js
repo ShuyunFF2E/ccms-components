@@ -2,34 +2,33 @@
  * @author fengqiu.wu
  */
 
-import angular from 'angular';
 import {Inject} from 'angular-es-utils';
 
-@Inject('$compile')
+@Inject('$compile', '$timeout')
 export default class TabContentTransclude {
 
-	constructor($compile) {
+	constructor() {
 
-		this.$compile = $compile;
+		Object.assign(this, {
+			restrict: 'A',
+			require: '^tabset'
+		});
 
 	}
 
-	link(scope, element, attrs) {
-		scope.$watch('$tabsetCtrl.current', function() {
-			let tab = scope.$tabsetCtrl.current;
+	link($scope, $element, $attrs, $tabset) {
 
-			if (tab && tab.templateUrl) {
+		// 点击tab 设置相关内容
+		$scope.$watch('$tabset.active', () => {
 
-				element.html(`<ng-include src="'${tab.templateUrl}'"></ng-include>`);
-				tab.scope = angular.extend(scope, tab.scope || {});
+			$tabset.tabs.forEach($tab => {
+				if (Number($tab.tab.index) === $tabset.active) {
+					$element.html('');
+					$element.append($tab.tab.contents);
+				}
+			});
 
-			} else {
-
-				element.html(tab && tab.content || '');
-			}
-
-			this.$compile(element.contents())(tab && tab.scope || scope);
-		}.bind(this));
+		});
 	}
 
 }

@@ -2,57 +2,59 @@
  * @author fengqiu.wu
  */
 
-
+import angular from 'angular';
 import {Inject} from 'angular-es-utils';
 
 
-@Inject('$scope', '$element', '$attrs')
+@Inject('$scope')
 export default class TabsetCtrl {
 
-	constructor($scope, $element, $attrs) {
-		let vm = this;
+	$onInit() {
 
-		vm.tabs = vm.tabs || [];
-		vm.small = $attrs.small === 'true';
-		vm.remove = $attrs.removed === 'true';
-		vm.justified = $attrs.justified === 'true';
+		this.tabs = [];
+		this.active = this.active || 0;
 
-		vm.active = !isNaN($attrs.active) ? $attrs.active : 0;
+		let oldIndex = null;
+		let scope = this._$scope;
 
-		let unwatch = $scope.$watch('tabs', () => {
-			vm.tabs.forEach((tab, index) => {
-				tab.active && (vm.active = index);
-			});
-
-			if (vm.tabs[vm.active]) {
-				vm.tabs[vm.active].active = true;
-				vm.current = vm.tabs[vm.active];
+		scope.$watch('$tabset.active', index => {
+			if (angular.isDefined(index) && index !== oldIndex) {
+				this.selectTab(this.findIndex(index));
 			}
-			unwatch();
 		});
 	}
 
-	removeTab(tab) {
-		// 找到需要删除的tab
-		let removeIndex = this.tabs.indexOf(tab);
-		let prevIndex = removeIndex - 1;
-
-		this.tabs.splice(removeIndex, 1);
-
-		if (tab.active && this.tabs[prevIndex]) {
-			if (!this.tabs[prevIndex].disabled) {
-				this.tabs[prevIndex].active = true;
-			} else if (prevIndex >= 0) {
-				for (let i = prevIndex; i >= 0; i--) {
-					if (!this.tabs[i].disabled) {
-						this.tabs[i].active = true;
-						break;
-					}
-				}
-			} else {
-				this.tabs[0].active = true;
+	findIndex(index) {
+		let findIndex = -1;
+		this.tabs.forEach((tab, i) => {
+			if (tab.index === index) {
+				findIndex = i;
 			}
-		}
+		});
+		return findIndex;
 	}
 
+	selectTab(index, tab) {
+		if (index === undefined && this.active === undefined) return;
+
+		this.active = index;
+		tab && tab.onSelect && tab.onSelect({tab: {
+			index: tab.index,
+			title: tab.title,
+			contents: tab.contents
+		}});
+	}
+
+	addTab(tab) {
+		tab.index = this.tabs.length;
+		this.tabs.push({
+			tab,
+			index: tab.index
+		});
+
+		if (tab.index === this.active || !angular.isDefined(this.active) && this.tabs.length === 1) {
+			const activeIndex = this.findIndex(tab.index);
+			this.selectTab(activeIndex, this.tabs[activeIndex]);
+		}
+	}
 }

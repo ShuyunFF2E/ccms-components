@@ -1,5 +1,5 @@
-<div ng-class="{active: $tabCtrl.tab.active, disabled: $tabCtrl.tab.disabled}">
-	<a ng-click="$tabCtrl.select($event)">{{$tabCtrl.tab.title}}
+<div ng-class="{active: $tab.index == $tab.tabset.active}">
+	<a ng-click="$tab.tabset.selectTab($tab.index, $tab)" ng-transclude tab-title-transclude>
         <span class="btn-remove"></span>
     </a>
 </div>

@@ -14,10 +14,11 @@ export default class TabsetComponent {
 			transclude: true,
 			template,
 			bindings: {
-				tabs: '='
+				active: '=?',
+				type: '@'
 			},
 			controller: TabsCtrl,
-			controllerAs: '$tabsetCtrl'
+			controllerAs: '$tabset'
 		});
 
 	}

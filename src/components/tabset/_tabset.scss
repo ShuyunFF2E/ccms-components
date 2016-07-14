@@ -23,9 +23,9 @@ tabset {
 	display: block;
 	overflow: hidden;
 
-	.tabset-tab.small ~ .tabset-dir-ctrl .dir-ctrl {
-		@include btn-ctrl-size(25px);
-	}
+	// .tabset-nav.tabset-smaller ~ .tabset-dir-ctrl .dir-ctrl {
+	// 	@include btn-ctrl-size(25px);
+	// }
 	.tabset-header {
 		position: relative;
 		margin-bottom: 30px;
@@ -39,58 +39,58 @@ tabset {
 			border-bottom: $border-style;
 		}
 
-		.tabset-btn-ctrl {
-			display: none;
-			position: absolute;
-			right: 0;
-			top: 0;
-			background-color: #fff;
-			z-index: 7;
+		// .tabset-btn-ctrl {
+		// 	display: none;
+		// 	position: absolute;
+		// 	right: 0;
+		// 	top: 0;
+		// 	background-color: #fff;
+		// 	z-index: 7;
 
-			&.active {
-				display: block;
-			}
+		// 	&.active {
+		// 		display: block;
+		// 	}
 
-			.btn-ctrl {
-				@include btn-ctrl-size;
-				display: inline-block;
-				margin-right: 1px;
-				text-align: center;
-				vertical-align: top;
-				cursor: pointer;
-				color: #666;
+		// 	.btn-ctrl {
+		// 		@include btn-ctrl-size;
+		// 		display: inline-block;
+		// 		margin-right: 1px;
+		// 		text-align: center;
+		// 		vertical-align: top;
+		// 		cursor: pointer;
+		// 		color: #666;
 
-				&:hover {
-					background-color: #f6f6f6;
-				}
+		// 		&:hover {
+		// 			background-color: #f6f6f6;
+		// 		}
 
-				&:last-of-type {
-					margin-right: 0;
-				}
+		// 		&:last-of-type {
+		// 			margin-right: 0;
+		// 		}
 
-				&.btn-back {
-					@extend .iconfont;
-				  	@extend .icon-rightarrow;
-				  	transform: rotate(180deg);
-				}
+		// 		&.btn-back {
+		// 			@extend .iconfont;
+		// 		  	@extend .icon-rightarrow;
+		// 		  	transform: rotate(180deg);
+		// 		}
 
-				&.btn-forward {
-					@extend .iconfont;
-					@extend .icon-rightarrow;
-				}
-			}
+		// 		&.btn-forward {
+		// 			@extend .iconfont;
+		// 			@extend .icon-rightarrow;
+		// 		}
+		// 	}
 
-			&.not-forward .btn-forward,
-			&.not-back .btn-back {
-				color: #eee;
-				&:hover {
-					background-color: #fff;
-				}
-			}
-		}
+		// 	&.not-forward .btn-forward,
+		// 	&.not-back .btn-back {
+		// 		color: #eee;
+		// 		&:hover {
+		// 			background-color: #fff;
+		// 		}
+		// 	}
+		// }
 	}
 
-	.tabset-tab {
+	.tabset-nav {
 		display: inline-block;
 		margin-top: 0;
 		padding-left: 0;
@@ -199,7 +199,7 @@ tabset {
 			}
 		}
 
-		&.small {
+		&.tabset-smaller {
 			tab > div {
 				line-height: 24px;
 			}
