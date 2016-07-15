@@ -3,7 +3,7 @@
 开发指南 [Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34)
 
 ## Document
-[组件API文档](http://114.215.169.170:3001/docs/)
+[组件API文档](http://shuyunff2e.github.io/ccms-components/)
 
 ## How To Use
 
