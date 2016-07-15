@@ -1,0 +1,42 @@
+<div class="dropdown-multiselect" dropdown auto-close="$ctrl.autoClose"
+		is-open="$ctrl.isOpen"
+		ng-class="{active: $ctrl.isActive}"
+		on-dropdown-open="$ctrl.onOpen()"
+		on-dropdown-close="$ctrl.onClose()">
+	<div class="dropdown-select-input-wrap">
+		<input type="text" class="dropdown-select-input" placeholder="{{$ctrl.placeholder}}"
+				ng-readonly="!$ctrl.searchable"
+				ng-focus="$ctrl.setActiveState(true)"
+				ng-blur="$ctrl.setActiveState(false)"
+				ng-change="$ctrl.onSearchTextChange($ctrl.title, '{{$ctrl.title}}')"
+				ng-model="$ctrl.title">
+		<div class="dropdown-select-icons"
+			><span class="dropdown-select-clear"
+					ng-class="{visible: $ctrl.title.length}"
+					ng-if="$ctrl.searchable"
+					ng-click="$ctrl.clear()"></span
+			><span class="dropdown-select-down" dropdown-toggle></span>
+		</div>
+	</div>
+	<div class="dropdown-panel hide" dropdown-panel>
+		<ul class="dropdown-list">
+			<li ng-repeat="item in $ctrl.items track by $index"
+					ng-class="{focus: $index === $ctrl.focusIndex}">
+				<label>
+					<input type="checkbox"
+							ng-checked="$ctrl.selection.indexOf(item) > -1"
+							ng-click="$ctrl.toggleSelection(item)">
+					<span bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
+				</label>
+			</li>
+			<li class="empty-list-item"
+					ng-if="$ctrl.searchable" ng-show="!$ctrl.items.length && $ctrl.title.length">
+				<span>没有匹配</span>
+			</li>
+		</ul>
+		<div class="confirm-buttons" ng-if="$ctrl.confirmButton">
+			<button class="btn-ok-normal" ng-click="$ctrl.confirmSelection()">确认</button>
+			<button class="btn-cancel-normal" ng-click="$ctrl.cancelSelection()">取消</button>
+		</div>
+	</div>
+</div>

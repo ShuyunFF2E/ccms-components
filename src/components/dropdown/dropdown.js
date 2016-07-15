@@ -115,7 +115,7 @@ const dropdownDDO = {
 	controllerAs: '$ctrl',
 	scope: {
 		isOpen: '=?',
-		autoClose: '@?',
+		autoClose: '<?',
 		onDropdownOpen: '&?',
 		onDropdownClose: '&?'
 	},
@@ -137,7 +137,7 @@ const dropdownPanelDDO = {
 	require: {
 		parent: '^^dropdown'
 	},
-	template: '<div ng-transclude></div>',
+	template: '<div class="content" ng-transclude></div>',
 	transclude: true,
 	controller: DropdownPanelCtrl,
 	controllerAs: '$ctrl',
