@@ -6,9 +6,9 @@
 
 import angular from 'angular';
 
-import './style.scss';
-import controller from './controller.js';
-import template from './radio-button.tpl.html';
+import './_radio.scss';
+import controller from './RadioCtrl.js';
+import template from './radio.tpl.html';
 
 const ccmsRadioButtonSetting = {
 	controller,

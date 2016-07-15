@@ -6,8 +6,8 @@
 
 import angular from 'angular';
 
-import './style.scss';
-import controller from './controller.js';
+import './_checkbox.scss';
+import controller from './CheckboxCtrl.js';
 import template from './checkbox.tpl.html';
 
 const ccmsCheckboxSetting = {
@@ -20,7 +20,7 @@ const ccmsCheckboxSetting = {
 		ngModel: '<?',
 		ngTrueValue: '<?',
 		ngFalseValue: '<?',
-		indeterminate: '<?'
+		indeterminate: '=?'
 	},
 	require: {
 		ngModelController: '?ngModel'

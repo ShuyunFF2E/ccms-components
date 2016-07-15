@@ -4,12 +4,11 @@
  * @since 2016-07-07 17:36
  */
 
-import { Inject } from 'angular-es-utils';
-
-@Inject('$scope')
 export default class CheckboxController {
-	constructor() {}
-
+	/**
+	 * @name $onInit
+	 * controller init method, one of ngModel or value isn't set, method will console an error message
+	 */
 	$onInit() {
 		(typeof this.ngModel === 'undefined' || typeof this._value === 'undefined') && (console.error('Radio button have to used with ng-model & ng-value') || (this.isError = true));
 	}
@@ -19,8 +18,9 @@ export default class CheckboxController {
 	}
 
 	/**
-	 * update ng-model value
+	 * @name updateNgModel
 	 * @param {any} value
+	 * update ng-model value
 	 */
 	updateNgModel(value) {
 		this.ngModelController && this.ngModelController.$setViewValue(value); // change model value & $setViewValue method will trigger method binding on model
