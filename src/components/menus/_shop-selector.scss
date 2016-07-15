@@ -2,7 +2,6 @@
 @import '../../assets/iconfont/iconfont';
 @import "../styles/base";
 
-
 $left-width: 180px;
 $shop-wrap-width: 344px;
 %shop-wrap {
@@ -19,6 +18,7 @@ $shop-wrap-width: 344px;
   height: 73px;
   box-sizing: border-box;
   font-family: $font;
+  cursor: pointer;
   //引用店铺图片的时候
   .img-wrapper {
     @extend %shop-wrap;
@@ -47,9 +47,9 @@ $shop-wrap-width: 344px;
     line-height: 14px;
     font-size: 12px;
     text-align: center;
-	& span:nth-child(2){
-	  color: #999999;
-	}
+    & span:nth-child(2) {
+      color: #999999;
+    }
   }
 }
 
@@ -106,15 +106,15 @@ $shop-wrap-width: 344px;
       right: 9px;
       top: calc(50% - 9px);
       cursor: pointer;
-	  &.active {
-		color: #666666;
-	  }
+      &.active {
+        color: #666666;
+      }
     }
-	@-moz-document url-prefix(){
-	  .shop-search-icon {
-		top: calc(50% - 10px);
-	  }
-	}
+    @-moz-document url-prefix() {
+      .shop-search-icon {
+        top: calc(50% - 10px);
+      }
+    }
   }
   .shop-info-wrapper {
     margin-top: 20px;
