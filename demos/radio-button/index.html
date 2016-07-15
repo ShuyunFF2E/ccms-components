@@ -18,8 +18,8 @@
 	<p>ng-model & ng-value should be setting on every radio button component.</p>
 	value: {{demo.value}}<br>
 	disabled: {{demo.disabled}}<br>
-	<ccms-radio-button ng-repeat="item in demo.setting track by $index" ng-model="demo.value" ng-value="item" ng-disabled="demo.disabled">{{item}}</ccms-radio-button>
-	<ccms-radio-button ng-model="demo.value" value="d" ng-disabled="demo.disabled">d</ccms-radio-button>
+	<cc-radio ng-repeat="item in demo.setting track by $index" ng-model="demo.value" ng-value="item" ng-disabled="demo.disabled">{{item}}</cc-radio>
+	<cc-radio ng-model="demo.value" value="d" ng-disabled="demo.disabled">d</cc-radio>
 	<button ng-click="generatorValues()">generator value</button>
 	<button ng-click="demo.disabled = !demo.disabled">toggle disable</button>
 </div>

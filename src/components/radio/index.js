@@ -16,7 +16,7 @@ const ccmsRadioButtonSetting = {
 	template,
 	bindings: {
 		ngDisabled: '<?',
-		ngModel: '=?',
+		ngModel: '<?',
 		ngValue: '<?',
 		value: '@?'
 	},
@@ -27,5 +27,5 @@ const ccmsRadioButtonSetting = {
 
 export default angular
 	.module('ccms.components.radioButton', [])
-	.component('ccmsRadioButton', ccmsRadioButtonSetting)
+	.component('ccRadio', ccmsRadioButtonSetting)
 	.name;

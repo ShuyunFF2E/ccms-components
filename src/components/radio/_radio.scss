@@ -7,11 +7,11 @@ $checked-border-color: #0083BA;
 $checked-hover-border-color: #00AAF1;
 $disabled-color: #D1D1D1;
 
-ccms-radio-button{
+cc-radio{
   display: inline-block;
 }
 
-.ccms-radio-button{
+.cc-radio{
   font-size: $default-font-size;
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@ ccms-radio-button{
   }
 }
 
-.ccms-radio-button.checked{
+.cc-radio.checked{
   &:hover{
 	.radio-button-icon{
 	  border-color: $checked-hover-border-color;
@@ -69,7 +69,7 @@ ccms-radio-button{
   }
 }
 
-.ccms-radio-button.disabled{
+.cc-radio.disabled{
   &:hover{
 	cursor: default;
 

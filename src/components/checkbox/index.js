@@ -20,7 +20,7 @@ const ccmsCheckboxSetting = {
 		ngModel: '<?',
 		ngTrueValue: '<?',
 		ngFalseValue: '<?',
-		indeterminate: '=?'
+		indeterminate: '<?'
 	},
 	require: {
 		ngModelController: '?ngModel'
@@ -29,5 +29,5 @@ const ccmsCheckboxSetting = {
 
 export default angular
 	.module('ccms.components.checkbox', [])
-	.component('ccmsCheckbox', ccmsCheckboxSetting)
+	.component('ccCheckbox', ccmsCheckboxSetting)
 	.name;
