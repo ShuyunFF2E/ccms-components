@@ -28,6 +28,7 @@ import dropdown from './dropdown/dropdown';
 import dropdownSelect from './dropdown/dropdown-select';
 import tabset from './tabset';
 import title from './title';
+import radio from './radio';
 
 export default angular
 	.module('ccms.components.ui', [
@@ -51,7 +52,8 @@ export default angular
 		dateRange,
 		calendar,
 		tabset,
-		title
+		title,
+		radio
 	])
 	.name;
 

@@ -8,12 +8,13 @@
 import angular from 'angular';
 
 import {Inject, EventBus} from 'angular-es-utils';
-import {$Menus} from './MenuService';
-
-@Inject('$rootScope', '$filter', '$menus', '$timeout', '$scope')
+import $menus from './MenuService';
+let autoEventBus;
+@Inject('$rootScope', '$filter', '$timeout', '$scope', '$q')
 export default class ShopSelectsCtrl {
 
 	$onInit() {
+		// - 搜索结果
 		this.searchName = '';
 		const unWatch = this._$scope.$watch('shops.shops.length', newLength => {
 			if (newLength > 0) {
@@ -43,20 +44,67 @@ export default class ShopSelectsCtrl {
 	 * @param plat
 	 * @param shop
 	 */
-	closedShops(plat, shop) {
-		this.active = {
-			plat,
-			shop
-		};
-		this._$menus.shopActive = $Menus._active(plat, shop);
-		this._$rootScope.$broadcast('shop:change', this.active);
-		EventBus.dispatch('shop:change', this.active);
-		// -关闭店铺选择器
-		this.animation = false;
+	checkedShop(plat, shop) {
+
+		// - 本次点击店铺信息
+		const checked = {plat, shop};
+
+		// - 选择同一个店铺,阻止事件广播
+		if (this.active.plat.value !== plat.value || this.active.shop.value !== shop.value) {
+
+			// - 是否自动关闭标记  true 开启状态  false 关闭状态
+			const confirmState = $menus.isConfirmable();
+
+			// - 切换店铺延迟对象
+			const deferred = this._$q.defer();
+
+			// - 不开启autoClose 则执行同步head info 以及 更新服务
+			if (!confirmState) {
+
+				this.active = checked;
+
+				// - 设置当前选中的平台以及店铺
+				$menus.setCurrentPlatShop(checked.plat, checked.shop);
+
+				deferred.resolve();
+			} else {
+
+				// - 监听已存在则无需再重复监听
+				if (!autoEventBus) {
+					autoEventBus = EventBus.on('menu:change', () => {
+						// - 关闭二次确认状态
+						$menus.setConfirmable(false);
+					});
+				}
+			}
+
+			this._$rootScope.$broadcast('shop:change', checked, deferred);
+			EventBus.dispatch('shop:change', checked, deferred);
+
+			deferred.promise.then(() => {
+
+				// - 若开启autoClose 则执行修改同步head info以及更新服务
+				if (confirmState) {
+
+					this.active = checked;
+					// - 设置当前选中的平台以及店铺
+					$menus.setCurrentPlatShop(checked.plat, checked.shop);
+				}
+
+				// - 关闭店铺选择器
+				this.closedAnimation = false;
+
+				// - 关闭二次确认状态
+				$menus.setConfirmable(false);
+			});
+		} else {
+			// - 选择同一店铺,关闭店铺选择器
+			this.closedAnimation = false;
+		}
 	}
 
 	/**
-	 * 单击查询店铺
+	 * 单击查询
 	 * @param event
 	 * @param name
 	 */

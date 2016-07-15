@@ -1,11 +1,10 @@
 <div class="shop-choose-wrapper"
-     ng-class="{'shop-choose-none':shops.list.length <= 0,'shop-select-show':shops.animation!==undefined,'shop-select-hide':(shops.animation!==undefined&&!shops.animation)}">
+     ng-class="{'shop-choose-none':shops.list.length <= 0,'shop-select-show':shops.closedAnimation!==undefined,'shop-select-hide':(shops.closedAnimation!==undefined&&!shops.closedAnimation)}">
 
     <div class="shop-search">
         <input type="search" placeholder="{{shops.placeholder}}"
                ng-model="shops.searchName"
-        >
-        <!--ng-keyup="shops.keyupSearchShop($event, shops.searchName)">-->
+               ng-keyup="shops.keyupSearchShop($event, shops.searchName)">
 
         <span class="shop-search-clear"
               ng-if="shops.searchName"
@@ -22,7 +21,7 @@
             <ul>
                 <li ng-repeat="item in shop.child track by $index"
                     ng-class="{'active':shops.active.plat.value===shop.value&&shops.active.shop.value===item.value}"
-                    ng-click="shops.closedShops(shop,item)">
+                    ng-click="shops.checkedShop(shop,item)">
                     {{item.name}}
                     <span></span>
                 </li>
@@ -32,7 +31,7 @@
 
     <div ng-if="shops.list.length <= 0" class="shop-info-none">
         <p>没有搜索结果</p>
-        <p>请重新输入关键字或者查看<a href="javascript:void(0);" ng-click="shops.clickSearchShop($event,'');shops.searchName='';">全部店铺</a>
+        <p>请重新输入关键字或者<a href="javascript:void(0);" ng-click="shops.clickSearchShop($event,'');shops.searchName='';">查看全部</a>
         </p>
     </div>
 </div>

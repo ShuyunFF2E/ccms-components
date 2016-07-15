@@ -1,0 +1,126 @@
+$default-font-size: 12px !default;
+$font-size-number: 12;
+$text-color: #3d3d3d !default;
+$default-border-width: 2px;
+$normal-border-color: #929292;
+$normal-hover-border-color: #828282;
+$checked-border-color: #0083BA;
+$checked-hover-border-color: #00AAF1;
+$disabled-color: #D1D1D1;
+
+cc-checkbox{
+  display: inline-block;
+}
+
+.cc-checkbox{
+  font-size: $default-font-size;
+  display: flex;
+  align-items: center;
+
+  &:hover{
+	cursor: pointer;
+
+	.cc-checkbox-input{
+	  border-color: $normal-hover-border-color;
+	}
+  }
+
+  .cc-checkbox-input{
+	border: solid 1px $normal-border-color;
+	border-radius: $default-border-width;
+	position: relative;
+	width: (14 / $font-size-number) + em;
+	height: (14 / $font-size-number) + em;
+	margin-right: 1em;
+
+	&:before{
+	  position: absolute;
+	  content: '';
+	  display: block;
+	}
+  }
+
+  .cc-checkbox-label{
+	color: $text-color;
+  }
+}
+
+.cc-checkbox.checked{
+  &:hover{
+	.cc-checkbox-input{
+	  border-color: $checked-hover-border-color;
+
+	  &:before{
+		border-color: $checked-hover-border-color;
+	  }
+	}
+  }
+
+  .cc-checkbox-input{
+	border-color: $checked-border-color;
+
+	&:before{
+	  width: (4 / $font-size-number) + em;
+	  height: (8 / $font-size-number) + em;
+	  transform: rotate(45deg);
+	  border-width: $default-border-width;
+	  border-style: solid;
+	  border-color: $checked-border-color;
+	  border-left: 0;
+	  border-top: 0;
+	  left: (4 / $font-size-number) + em;
+	  top: (1 / $font-size-number) + em;
+	}
+  }
+}
+
+.cc-checkbox.indeterminate{
+  &:hover{
+	.cc-checkbox-input{
+	  border-color: $checked-hover-border-color;
+
+	  &:before{
+		border-color: $checked-hover-border-color;
+	  }
+	}
+  }
+
+  .cc-checkbox-input{
+	border-color: $checked-border-color;
+
+	&:before{
+	  width: 0;
+	  height: 0;
+	  transform: rotate(0deg);
+	  border: (4 / $font-size-number) + em solid $checked-border-color;
+	  left: (3 / $font-size-number) + em;
+	  top: (3 / $font-size-number) + em;
+	}
+  }
+}
+
+.cc-checkbox.disabled{
+  &:hover{
+	cursor: default;
+
+	.cc-checkbox-input{
+	  border-color: $disabled-color;
+
+	  &:before{
+		border-color: $disabled-color;
+	  }
+	}
+  }
+
+  .cc-checkbox-input{
+	border-color: $disabled-color;
+
+	&:before{
+	  border-color: $disabled-color;
+	}
+  }
+
+  .cc-checkbox-label{
+	color: $disabled-color;
+  }
+}

@@ -8,6 +8,15 @@ var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var cssnano = require('cssnano');
+var cssNanoCommonOpts = {
+	discardComments: {removeAll: true},
+	discardDuplicates: true,
+	discardOverridden: true,
+	discardUnused: true,
+	minifyGradients: true
+};
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
 	devtool: 'cheap-source-map',
@@ -31,10 +40,25 @@ module.exports = {
 			}
 		}),
 		new CleanPlugin(['dist']),
-		new ExtractTextPlugin('ccms-components.min.css'),
 		new webpack.optimize.UglifyJsPlugin({
 			include: /\.min\.js$/,
 			minimize: true
+		}),
+		new ExtractTextPlugin('[name].css'),
+		// 处理extract出来的css
+		new OptimizeCssAssetsPlugin({
+			assetNameRegExp: /\.css$/g,
+			cssProcessor: cssnano,
+			cssProcessorOptions: Object.assign({
+				core: false
+			}, cssNanoCommonOpts),
+			canPrint: true
+		}),
+		new OptimizeCssAssetsPlugin({
+			assetNameRegExp: /\.min\.css$/g,
+			cssProcessor: cssnano,
+			cssProcessorOptions: cssNanoCommonOpts,
+			canPrint: true
 		}),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.NoErrorsPlugin()
@@ -75,7 +99,7 @@ module.exports = {
 			},
 			{
 				test: /\.(sc|c)ss$/,
-				loader: ExtractTextPlugin.extract('style', 'css!postcss!resolve-url!sass?sourceMap'),
+				loader: ExtractTextPlugin.extract('style', 'css?-minimize!postcss!resolve-url!sass?sourceMap'),
 				exclude: /(node_modules|bower_components)/
 			},
 			{
