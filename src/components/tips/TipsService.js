@@ -32,7 +32,7 @@ export default class TipsService {
 	}
 
 	// 在ui-view环境下容器引用会在路由切换情况下变化,必须重新获取容器引用
-	_create(type, msg, contextContainer = document.querySelector('menu-bar') && document.querySelector('menu-bar').nextElementSibling || document.body) {
+	_create(type, msg, contextContainer = document.querySelector('ui-view ui-view') || document.body) {
 
 		// 性能考虑,模板只编译一次
 		if (!this._linkedTpl) {
@@ -69,7 +69,13 @@ export default class TipsService {
 		setTipsPosition(contextContainer, floatTipsContainer);
 		tips.open();
 
+		this._autoDestroy(angular.element(contextContainer).scope(), tips);
+
 		return tips;
+	}
+
+	_autoDestroy(scope, tips) {
+		scope.$on('$destroy', ::tips.destroy);
 	}
 
 	/**

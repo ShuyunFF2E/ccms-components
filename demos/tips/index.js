@@ -8,7 +8,33 @@
 	'use strict';
 
 	angular
-		.module('app', ['ccms.components'])
+		.module('app', ['ccms.components', 'ui.router'])
+		.config(function ($stateProvider, $urlRouterProvider) {
+
+			$urlRouterProvider.otherwise('/app');
+
+			$stateProvider
+				.state('app', {
+					url: '/app',
+					template: '<div>' +
+					'<h2>第一层容器</h2>' +
+					'<ul>' +
+					'<li><a ui-sref="app.container1">module1</a></li>' +
+					'<li><a ui-sref="app.container2">module2</a></li>' +
+					'</ul>' +
+					'<ui-view></ui-view>' +
+					'</div>'
+				})
+				.state('app.container1', {
+					url: '/module1',
+					template: '<span>第二层容器:container1</span>'
+				})
+				.state('app.container2', {
+					url: '/module2',
+					template: '<span>第二层容器:container2</span>'
+				});
+
+		})
 		.controller('ctrl', function ($scope, TipsService, ModalService) {
 
 			let tips = null;
