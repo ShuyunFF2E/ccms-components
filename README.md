@@ -1,35 +1,3 @@
-# CCMS Components [![Build Status](https://img.shields.io/travis/ShuyunFF2E/ccms-components/master.svg?style=flat)](https://travis-ci.org/ShuyunFF2E/ccms-components) [![npm version](https://img.shields.io/npm/v/ccms-components.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
-
-开发指南 [Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34)
-
-## Document
-[组件API文档](http://114.215.169.170:3001/docs/)
-
-## How To Use
-
-```bash
-npm install --save ccms-components
-```
-
-```js
-import angular from 'angular';
-import ccmsComponents from 'ccms-components';
-
-angular.module('app', [ccmsComponents]);
-```
-
-#### 友情提示
-ccms模块产品请将组件库手动设置到webpack的externals中，避免重复打包
-
-```js
-externals: {'ccms-components': '\'ccms.components\''}
-```
-
-#### 开发规范
-1. 所有组件模板以.tpl.html为后缀名,区别于业务模板的.html后缀,便于打包时对组件跟业务模板做差异化处理.
-
-组件库使用 [Phabricator 系统](http://phabricator.shuyun.com/) 做 code view，工作流程可以参考 [Phabricator 新用户指南](https://gist.github.com/arzyu/0deeac12b8cc4db3b6e0)。
-
 ## 运行文档服务
 
 文档使用 [jekyll] 生成，这是使用 [ruby] 脚本编写的一个工具，为了运行 [jekyll] 你需要安装 [ruby] 环境。
