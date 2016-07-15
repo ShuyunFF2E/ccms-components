@@ -1,7 +1,7 @@
 <div class="dropdown-select" dropdown is-open="$ctrl.isOpen"
 		ng-class="{active: $ctrl.isActive}"
-		ondropdownopen="$ctrl.onDropdownOpen()"
-		ondropdownclose="$ctrl.onDropdownClose()">
+		on-dropdown-open="$ctrl.onOpen()"
+		on-dropdown-close="$ctrl.onClose()">
 	<div class="dropdown-select-input-wrap">
 		<input type="text" class="dropdown-select-input" placeholder="{{$ctrl.placeholder}}"
 				ng-readonly="!$ctrl.searchable"

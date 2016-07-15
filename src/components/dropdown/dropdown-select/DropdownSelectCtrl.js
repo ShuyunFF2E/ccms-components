@@ -121,7 +121,7 @@ export default class DropdownSelectCtrl {
 		}
 	}
 
-	onDropdownOpen() {
+	onOpen() {
 		let scope = this.getScope();
 		this.getInputElement().focus();
 		if (this.searchable && this.title.length) {
@@ -131,7 +131,7 @@ export default class DropdownSelectCtrl {
 		}
 	}
 
-	onDropdownClose() {
+	onClose() {
 		let scope = this.getScope();
 		if (this.searchable) {
 			this.getInputElement().addEventListener('click', this._openFn);

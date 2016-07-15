@@ -117,8 +117,8 @@ const dropdownDDO = {
 	scope: {
 		isOpen: '=?',
 		autoClose: '@?',
-		ondropdownopen: '&?',
-		ondropdownclose: '&?'
+		onDropdownOpen: '&?',
+		onDropdownClose: '&?'
 	},
 	bindToController: true
 };
