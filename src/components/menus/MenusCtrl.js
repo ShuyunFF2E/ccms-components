@@ -10,6 +10,10 @@ import $menus from './MenuService';
 export default class MenusCtrl {
 
 	$onInit() {
+
+		// - 初始化$menus中的私有变量,原因:各个产品间切换,避免A产品中的数据携带到B产品中
+		$menus.init();
+
 		// - 生成 menu list 数据
 		this.createMenuList();
 	}
@@ -75,8 +79,8 @@ export default class MenusCtrl {
 				shop
 			};
 
-			// -更新服务中的当前选择店铺数据
-			$menus.shopActive = $menus._active(plat, shop);
+			// - 设置当前选中的平台以及店铺
+			$menus.setCurrentPlatShop(plat, shop);
 
 			// -第一次广播时间通知调用者当前选择的店铺
 			this._$timeout(() => {
@@ -89,9 +93,13 @@ export default class MenusCtrl {
 					}
 				};
 
+				// - 获取当前选中的平台以及店铺
+				const currentPlatShop = $menus.getCurrentPlatShop();
+
 				// - 广播通知店铺选中
-				this._$rootScope.$broadcast('shop:change', $menus.shopActive, fakeDefer);
-				EventBus.dispatch('shop:change', $menus.shopActive, fakeDefer);
+				this._$rootScope.$broadcast('shop:change', currentPlatShop, fakeDefer);
+
+				EventBus.dispatch('shop:change', currentPlatShop, fakeDefer);
 			}, 0);
 		}
 	}

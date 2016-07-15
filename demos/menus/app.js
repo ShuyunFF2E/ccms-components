@@ -224,7 +224,10 @@ function gradeController($scope, $menus) {
 
 		// --TODO 执行其他操作
 		console.log('(closed autoClose)事件广播:', shop.plat.name + '|' + shop.shop.name);
-		console.log('(closed autoClose)服务接口:', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name);
+
+		const currentPlatShop = $menus.getCurrentPlatShop();
+
+		console.log('(closed autoClose)服务接口:', currentPlatShop.plat.name + '|' + currentPlatShop.shop.name);
 	});
 }
 
@@ -237,7 +240,7 @@ function pointController($scope, $menus) {
 
 	$scope.$on('shop:change', (event, shop, defer) => {
 
-		if (!$menus.autoClose) {
+		if ($menus.getConformState()) {
 
 			const state = window.confirm('确定切换店铺:' + shop.shop.name + '?');
 
@@ -251,7 +254,13 @@ function pointController($scope, $menus) {
 
 				// - 关闭自动关闭,不建议在其中使用 $menus 服务获取当前选中店铺,其原因是当切换店铺,并且点击确认切换时,`$menus.shopActive`中的数据还没有及时更新,此情况下调用`$menus.activeShop`得到的还是上次的数据
 				// - 这种情况下直接使用 监听返回的数据
-				setTimeout(()=>console.log('(opened autoClose)服务接口(resolve):', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name), 2000);
+				setTimeout(()=> {
+
+					// - 获取当前选中的平台以及店铺
+					const currentPlatShop = $menus.getCurrentPlatShop();
+
+					console.log('(opened autoClose)服务接口(resolve):', currentPlatShop.plat.name + '|' + currentPlatShop.shop.name);
+				}, 2000);
 
 			} else {
 
@@ -259,15 +268,15 @@ function pointController($scope, $menus) {
 				defer.reject();
 			}
 		} else {
-
+			// - 获取当前选中的平台以及店铺
+			const currentPlatShop = $menus.getCurrentPlatShop();
 			console.log('(opened autoClose)事件广播(resolve):', shop.plat.name + '|' + shop.shop.name);
-			console.log('(opened autoClose)服务接口(resolve):', $menus.shopActive.plat.name + '|' + $menus.shopActive.shop.name);
+			console.log('(opened autoClose)服务接口(resolve):', currentPlatShop.plat.name + '|' + currentPlatShop.shop.name);
 		}
 	});
-
 
 	/**
 	 * 表单修改
 	 */
-	this.formChange = () => $menus.autoClose = false;
+	this.formChange = () => $menus.openConform();
 }

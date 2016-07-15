@@ -4,9 +4,9 @@
  * @Author: maxsmu
  * @Date: 2016-03-10 8:11 PM
  */
+import CONFIG from './Constant';
 export default {
-	shopActive: {},
-	_autoClose: true,
+
 	/**
 	 * 获取菜单列表
 	 * @param menusResource menus数据源
@@ -41,29 +41,49 @@ export default {
 	},
 
 	/**
-	 * 设置shopActive状态值
+	 * 初始化状态值
+	 */
+	init() {
+		CONFIG.CURRENT = {};
+		CONFIG.CONFORM_STATE = false;
+	},
+
+	/**
+	 * 查询当前选中的平台及店铺
+	 * @returns {CURRENT|{}}
+	 */
+	getCurrentPlatShop() {
+		return CONFIG.CURRENT;
+	},
+
+	/**
+	 * 设置当前选中平台及店铺
 	 * @param plat
 	 * @param shop
 	 */
-	_active(plat, shop) {
-		return {
-			plat,
-			shop
-		};
+	setCurrentPlatShop(plat, shop) {
+		CONFIG.CURRENT = {plat, shop};
 	},
 
-	// - 是否自动关闭属性值
-	get autoClose() {
-		return this._autoClose;
+	/**
+	 * 查询确认开启状态
+	 * @returns {boolean}
+	 */
+	getConformState() {
+		return CONFIG.CONFORM_STATE;
 	},
 
-	set autoClose(value) {
-		if (typeof value === 'boolean') {
+	/**
+	 * 打开确认开启状态
+	 */
+	openConform() {
+		CONFIG.CONFORM_STATE = true;
+	},
 
-			this._autoClose = value;
-		} else {
-
-			throw new Error('autoClose is boolean');
-		}
+	/**
+	 * 关闭确认开启状态
+	 */
+	closeConform() {
+		CONFIG.CONFORM_STATE = false;
 	}
 };
