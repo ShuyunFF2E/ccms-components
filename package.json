@@ -15,6 +15,10 @@
     "start": "node server.js",
     "lint": "npm run codecheck",
     "prepush": "npm run codecheck",
+    "release:major": "./scripts/release.sh --major",
+    "release:minor": "./scripts/release.sh --minor",
+    "release:patch": "./scripts/release.sh --patch",
+    "copy-dist": "./scripts/copy-dist-to-server.sh",
     "test": "npm run lint"
   },
   "author": "shuyun FE2E",
