@@ -17,7 +17,7 @@
 
     <!-- 店铺 header -->
     <div class="menu-shop-show"
-         ng-click="menus.shopsClick()"
+         ng-click="menus.showShopSelect()"
          ng-if="menus.shopsInfo">
 
         <div class="shop-wrapper"
@@ -48,7 +48,7 @@
     </menu-node>
 
     <!-- shop-select -->
-    <shop-select animation="menus.shopShow"
+    <shop-select closed-animation="menus.shopShow"
                  ng-if="menus.shopsInfo"
                  active="menus.active"
                  placeholder="menus.searchPlaceholder"
