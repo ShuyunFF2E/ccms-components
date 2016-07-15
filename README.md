@@ -5,57 +5,43 @@
 ## Document
 [组件API文档](http://shuyunff2e.github.io/ccms-components/)
 
+## Dependencies
+* [angular](https://www.npmjs.com/package/angular)
+* [angular-resource](https://www.npmjs.com/package/angular-resource)
+* [angular-ui-router](https://www.npmjs.com/package/angular-ui-router)
+
 ## How To Use
 
 ```bash
 npm install --save ccms-components
 ```
 
+### ES6
 ```js
 import angular from 'angular';
+import ngResource from 'angular-resource';
+import uiRouter from 'angular-ui-router';
+
 import ccmsComponents from 'ccms-components';
 
-angular.module('app', [ccmsComponents]);
+angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 ```
 
-#### 友情提示
+### ES5
+```html
+<link rel="stylesheet" href="/node_modules/ccms-components.css">
+....
+<script src='/node_modules/angular/angular.js'></script>
+<script src='/node_modules/angular-resource/angular-resource.js'></script>
+<script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+
+<script src='/node_modules/ccms-components.js'></script>
+```
+
+## 友情提示
 ccms模块产品请将组件库手动设置到webpack的externals中，避免重复打包
 
 ```js
 externals: {'ccms-components': '\'ccms.components\''}
 ```
 
-#### 开发规范
-1. 所有组件模板以.tpl.html为后缀名,区别于业务模板的.html后缀,便于打包时对组件跟业务模板做差异化处理.
-
-组件库使用 [Phabricator 系统](http://phabricator.shuyun.com/) 做 code view，工作流程可以参考 [Phabricator 新用户指南](https://gist.github.com/arzyu/0deeac12b8cc4db3b6e0)。
-
-## 运行文档服务
-
-文档使用 [jekyll] 生成，这是使用 [ruby] 脚本编写的一个工具，为了运行 [jekyll] 你需要安装 [ruby] 环境。
-
-推荐使用 [rvm] 管理 [ruby] 版本, 类似于用 [nvm] 管理 [nodejs] 版本。
-
-```bash
-# 安装 rvm 及 ruby
-curl -L https://get.rvm.io | bash -s stable --autolibs=enabled --ruby
-
-# 首次设置 ruby 版本
-rvm use 2.3.0 --default --create
-
-# 安装 bundler，用于管理依赖
-gem install bundler
-
-# 在 CCMS_Components 项目根目录运行 bundler install 即可安装 Gemfile 指定的依赖（包括 jekyll）
-bundler install
-
-# 在 CCMS_Components 项目根目录运行文档服务，http://localhost:3001/docs/
-jekyll serve
-```
-
-
-[jekyll]: https://jekyllrb.com/
-[ruby]: https://www.ruby-lang.org/
-[rvm]: https://github.com/rvm/rvm
-[nvm]: https://github.com/creationix/nvm
-[nodejs]: https://nodejs.org/
