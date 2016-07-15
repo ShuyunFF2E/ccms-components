@@ -18,7 +18,7 @@ import GridHelper from './GridHelper';
  * 容器是否包含另一个集合
  */
 function contains(container, collection) {
-	return collection.every(item => findEntity(container, item) !== -1);
+	return !!collection && collection.every(item => findEntity(container, item) !== -1);
 }
 
 /**

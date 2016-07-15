@@ -10,12 +10,14 @@ import {Inject, EventBus} from 'angular-es-utils';
 export default class MenusNodeCtrl {
 
 	$onInit() {
+
 		this._$timeout(() => {
-			this.$state = this._$state;
 
 			// -获取当前选择的菜单项(初始化时)
 			const menu = this.getMenu(this.list);
-			menu && EventBus.dispatch('menu:change', menu);
+			if (menu) {
+				EventBus.dispatch('menu:change', menu);
+			}
 		}, 0);
 	}
 
@@ -32,7 +34,10 @@ export default class MenusNodeCtrl {
 	 * @param menu
 	 */
 	clickMenus(menu) {
-		EventBus.dispatch('menu:change', menu);
+		// - 路由未发生变化时,阻断事件广播
+		if (menu.state !== this._$state.current.name) {
+			EventBus.dispatch('menu:change', menu);
+		}
 	};
 
 	/**
@@ -42,7 +47,7 @@ export default class MenusNodeCtrl {
 	 */
 	getMenu(menus = []) {
 		return Array.isArray(menus) ? menus.find(item => {
-			return item.url === this.$state.current.name;
+			return item.state === this._$state.current.name;
 		}) : {};
 	}
 }
