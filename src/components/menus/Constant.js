@@ -11,5 +11,5 @@
  */
 export default {
 	CURRENT: {},
-	CONFORM_STATE: false
+	CONFIRMABLE: false
 };

@@ -45,7 +45,7 @@ export default {
 	 */
 	init() {
 		CONFIG.CURRENT = {};
-		CONFIG.CONFORM_STATE = false;
+		CONFIG.CONFIRMABLE = false;
 	},
 
 	/**
@@ -69,21 +69,14 @@ export default {
 	 * 查询确认开启状态
 	 * @returns {boolean}
 	 */
-	getConformState() {
-		return CONFIG.CONFORM_STATE;
+	isConfirmable() {
+		return CONFIG.CONFIRMABLE;
 	},
 
 	/**
-	 * 打开确认开启状态
+	 * 设置确认开启状态
 	 */
-	openConform() {
-		CONFIG.CONFORM_STATE = true;
-	},
-
-	/**
-	 * 关闭确认开启状态
-	 */
-	closeConform() {
-		CONFIG.CONFORM_STATE = false;
+	setConfirmable(confirmable) {
+		CONFIG.CONFIRMABLE = !!confirmable;
 	}
 };

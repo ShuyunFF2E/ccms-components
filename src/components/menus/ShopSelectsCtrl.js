@@ -53,14 +53,13 @@ export default class ShopSelectsCtrl {
 		if (this.active.plat.value !== plat.value || this.active.shop.value !== shop.value) {
 
 			// - 是否自动关闭标记  true 开启状态  false 关闭状态
-			const conformState = $menus.getConformState();
+			const confirmState = $menus.isConfirmable();
 
-			console.log(conformState);
 			// - 切换店铺延迟对象
 			const deferred = this._$q.defer();
 
 			// - 不开启autoClose 则执行同步head info 以及 更新服务
-			if (!conformState) {
+			if (!confirmState) {
 
 				this.active = checked;
 
@@ -74,7 +73,7 @@ export default class ShopSelectsCtrl {
 				if (!autoEventBus) {
 					autoEventBus = EventBus.on('menu:change', () => {
 						// - 关闭二次确认状态
-						$menus.closeConform();
+						$menus.setConfirmable(false);
 					});
 				}
 			}
@@ -85,7 +84,7 @@ export default class ShopSelectsCtrl {
 			deferred.promise.then(() => {
 
 				// - 若开启autoClose 则执行修改同步head info以及更新服务
-				if (conformState) {
+				if (confirmState) {
 
 					this.active = checked;
 					// - 设置当前选中的平台以及店铺
@@ -96,7 +95,7 @@ export default class ShopSelectsCtrl {
 				this.closedAnimation = false;
 
 				// - 关闭二次确认状态
-				$menus.closeConform();
+				$menus.setConfirmable(false);
 			});
 		} else {
 			// - 选择同一店铺,关闭店铺选择器

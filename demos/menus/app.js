@@ -240,7 +240,7 @@ function pointController($scope, $menus) {
 
 	$scope.$on('shop:change', (event, shop, defer) => {
 
-		if ($menus.getConformState()) {
+		if ($menus.isConfirmable()) {
 
 			const state = window.confirm('确定切换店铺:' + shop.shop.name + '?');
 
@@ -248,7 +248,6 @@ function pointController($scope, $menus) {
 
 				// - 确认切换
 				defer.resolve();
-
 				// --TODO 切换后执行其他操作
 				console.log('(opened autoClose)事件广播(resolve):', shop.plat.name + '|' + shop.shop.name);
 
@@ -256,7 +255,7 @@ function pointController($scope, $menus) {
 				// - 这种情况下直接使用 监听返回的数据
 				setTimeout(()=> {
 
-					// - 获取当前选中的平台以及店铺
+					//- 获取当前选中的平台以及店铺
 					const currentPlatShop = $menus.getCurrentPlatShop();
 
 					console.log('(opened autoClose)服务接口(resolve):', currentPlatShop.plat.name + '|' + currentPlatShop.shop.name);
@@ -278,5 +277,5 @@ function pointController($scope, $menus) {
 	/**
 	 * 表单修改
 	 */
-	this.formChange = () => $menus.openConform();
+	this.formChange = () => $menus.setConfirmable(true);
 }
