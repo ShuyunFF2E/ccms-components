@@ -15,6 +15,7 @@ function build() {
 
 	# create dist/index.js
 	cat > dist/index.js <<- EOT
+	require('./ccms-components.css');
 	require('./ccms-components.js');
 	module.exports = 'ccms.components';
 	EOT
