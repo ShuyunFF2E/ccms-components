@@ -11,16 +11,15 @@ export default class DropdownCtrl {
 		this._isOpen = false;
 		this._phase = '';
 
-		// 自动关闭下拉 enum: 'enabled', 'disabled'
-		this.autoClose = 'enabled';
+		this.autoClose = true;
 
 		this.ondropdownopen = () => {};
 		this.ondropdownclose = () => {};
 	}
 
 	$onInit() {
-		if (this.autoClose !== 'disabled') {
-			this.autoClose = 'enabled';
+		if (typeof this.autoClose !== 'undefined' && this.autoClose !== false) {
+			this.autoClose = true;
 		}
 
 		this.ondropdownopen = this.ondropdownopen || (() => {});
