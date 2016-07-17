@@ -58,14 +58,14 @@ export default class DropdownCtrl {
 		dropdownService.open(this);
 		this.panelCtrl.show();
 		this._setOpenState(true);
-		this.ondropdownopen();
+		this.onDropdownOpen();
 	}
 
 	close() {
 		dropdownService.close(this);
 		this.panelCtrl.hide();
 		this._setOpenState(false);
-		this.ondropdownclose();
+		this.onDropdownClose();
 	}
 }
 

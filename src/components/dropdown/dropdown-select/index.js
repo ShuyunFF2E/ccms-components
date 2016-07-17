@@ -13,11 +13,11 @@ const dropdownSelectDDO = {
 	controller: DropdownSelectCtrl,
 	controllerAs: '$ctrl',
 	scope: {
-		model: '=',
-		mapping: '<',
+		model: '=?',
+		mapping: '<?',
 		datalist: '<',
-		searchable: '<',
-		placeholder: '@'
+		searchable: '<?',
+		placeholder: '@?'
 	},
 	bindToController: true
 };
