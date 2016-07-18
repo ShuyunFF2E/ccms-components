@@ -10,6 +10,10 @@ $disabled-color: #D1D1D1;
 
 cc-radio{
   display: inline-block;
+
+  * {
+	box-sizing: border-box;
+  }
 }
 
 .cc-radio{
@@ -29,8 +33,8 @@ cc-radio{
 	border: solid 1px $normal-border-color;
 	border-radius: 50%;
 	position: relative;
-	width: (14 / $font-size-number) + em;
-	height: (14 / $font-size-number) + em;
+	width: (16 / $font-size-number) + em;
+	height: (16 / $font-size-number) + em;
 	margin-right: 1em;
 
 	&:before{
