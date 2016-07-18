@@ -1,4 +1,5 @@
-$default-font-size: 12px !default;
+@import "../styles/variables";
+
 $font-size-number: 12;
 $text-color: #3d3d3d !default;
 $normal-border-color: #929292;
@@ -12,7 +13,7 @@ cc-radio{
 }
 
 .cc-radio{
-  font-size: $default-font-size;
+  font-size: $font-size-base;
   display: flex;
   align-items: center;
 
@@ -59,12 +60,12 @@ cc-radio{
 	border-color: $checked-border-color;
 
 	&:before{
-	  width: (10 / $font-size-number) + em;
-	  height: (10 / $font-size-number) + em;
+	  width: (8 / $font-size-number) + em;
+	  height: (8 / $font-size-number) + em;
 	  border-radius: 50%;
 	  background-color: $checked-border-color;
-	  left: (2 / $font-size-number) + em;
-	  top: (2 / $font-size-number) + em;
+	  left: (3 / $font-size-number) + em;
+	  top: (3 / $font-size-number) + em;
 	}
   }
 }

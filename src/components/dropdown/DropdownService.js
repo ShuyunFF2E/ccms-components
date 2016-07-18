@@ -17,7 +17,7 @@ class DropdownService {
 		}
 
 		// 为需要自动关闭的下拉注册处理事件
-		if (dropdownCtrl.autoClose === 'enabled') {
+		if (dropdownCtrl.autoClose) {
 			// 点击下拉自身内容阻止触发自动关闭
 			let element = dropdownCtrl.getElement();
 			let avoidAutoCloseFn = event => {
@@ -35,7 +35,7 @@ class DropdownService {
 	}
 
 	close(dropdownCtrl) {
-		if (dropdownCtrl.autoClose === 'enabled') {
+		if (dropdownCtrl.autoClose) {
 			document.removeEventListener('click', this.autoCloseFn);
 			this.lastDropdownCtrl = null;
 			this.autoCloseFn = null;
