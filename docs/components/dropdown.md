@@ -36,7 +36,7 @@ group: components
 	* displayField `String` (default: 'title') 数据源显示字段映射
 * placeholder `String` (default: '') 提示文本
 * searchable `Boolean` (default: false) 启用搜索功能
-* confirmButton `Boolean` (default: false) 启用"确认/取消"选择的按钮
+* confirm-button `Boolean` (default: false) 启用"确认/取消"选择的按钮
 
 ### Examples
 
