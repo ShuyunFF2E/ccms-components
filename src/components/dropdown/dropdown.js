@@ -129,8 +129,7 @@ const dropdownToggleDDO = {
 	},
 	controller: DropdownToggleCtrl,
 	controllerAs: '$ctrl',
-	scope: {},
-	bindToController: true
+	scope: {}
 };
 
 const dropdownPanelDDO = {
