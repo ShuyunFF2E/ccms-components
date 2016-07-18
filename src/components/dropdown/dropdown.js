@@ -11,20 +11,19 @@ export default class DropdownCtrl {
 		this._isOpen = false;
 		this._phase = '';
 
-		// 自动关闭下拉 enum: 'enabled', 'disabled'
-		this.autoClose = 'enabled';
+		this.autoClose = true;
 
-		this.ondropdownopen = () => {};
-		this.ondropdownclose = () => {};
+		this.onDropdownOpen = () => {};
+		this.onDropdownClose = () => {};
 	}
 
 	$onInit() {
-		if (this.autoClose !== 'disabled') {
-			this.autoClose = 'enabled';
+		if (typeof this.autoClose !== 'undefined' && this.autoClose !== false) {
+			this.autoClose = true;
 		}
 
-		this.ondropdownopen = this.ondropdownopen || (() => {});
-		this.ondropdownclose = this.ondropdownclose || (() => {});
+		this.onDropdownopen = this.onDropdownOpen || (() => {});
+		this.onDropdownclose = this.onDropdownClose || (() => {});
 	}
 
 	getElement() {
@@ -58,14 +57,14 @@ export default class DropdownCtrl {
 		dropdownService.open(this);
 		this.panelCtrl.show();
 		this._setOpenState(true);
-		this.ondropdownopen();
+		this.onDropdownOpen();
 	}
 
 	close() {
 		dropdownService.close(this);
 		this.panelCtrl.hide();
 		this._setOpenState(false);
-		this.ondropdownclose();
+		this.onDropdownClose();
 	}
 }
 
@@ -116,9 +115,9 @@ const dropdownDDO = {
 	controllerAs: '$ctrl',
 	scope: {
 		isOpen: '=?',
-		autoClose: '@?',
-		ondropdownopen: '&?',
-		ondropdownclose: '&?'
+		autoClose: '<?',
+		onDropdownOpen: '&?',
+		onDropdownClose: '&?'
 	},
 	bindToController: true
 };
@@ -130,8 +129,7 @@ const dropdownToggleDDO = {
 	},
 	controller: DropdownToggleCtrl,
 	controllerAs: '$ctrl',
-	scope: {},
-	bindToController: true
+	scope: {}
 };
 
 const dropdownPanelDDO = {
@@ -139,7 +137,7 @@ const dropdownPanelDDO = {
 	require: {
 		parent: '^^dropdown'
 	},
-	template: '<div ng-transclude></div>',
+	template: '<div class="content" ng-transclude></div>',
 	transclude: true,
 	controller: DropdownPanelCtrl,
 	controllerAs: '$ctrl',

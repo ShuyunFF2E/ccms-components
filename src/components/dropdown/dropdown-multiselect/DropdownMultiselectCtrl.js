@@ -2,7 +2,7 @@ import angular from 'angular';
 import {Inject, Bind} from 'angular-es-utils';
 
 @Inject('$scope', '$element')
-export default class DropdownSelectCtrl {
+export default class DropdownMultiselectCtrl {
 	// 选项 item 字段映射
 	static defaultMapping = {
 		valueField: 'value',
@@ -15,10 +15,13 @@ export default class DropdownSelectCtrl {
 		this.items = [];
 		this.mapping = {};
 		this.title = '';
+		this.model = [];
+		this.selection = [];
 		this.placeholder = '';
 		this.searchable = false;
-		this.model = null;
-		this.focusIndex = 0;
+		this.confirmButton = false;
+		this.autoClose = true;
+		this.focusIndex = -1;
 		this.isOpen = false;
 		this.isActive = false;
 
@@ -26,27 +29,45 @@ export default class DropdownSelectCtrl {
 	}
 
 	$onInit() {
-		let scope = this.getScope();
-
-		this.mapping = Object.assign({}, DropdownSelectCtrl.defaultMapping, this.mapping);
-
-		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
-			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
-
-			// 选中预设值
-			this.setModelValue(this.model);
-		});
-
-		scope.$watch(() => this.model, (model, oldModel) => {
-			if (!angular.equals(model, oldModel)) {
-				this.setModelValue(this.model);
-			}
-		});
+		this._prepareOptions();
+		this._prepareWatches();
 	}
 
 	$postLink() {
 		this._prepareMouseEvents();
 		this._prepareKeyboardEvents();
+	}
+
+	_prepareOptions() {
+		this.mapping = Object.assign({}, DropdownMultiselectCtrl.defaultMapping, this.mapping);
+
+		if (typeof this.searchable === 'undefined') {
+			this.searchable = false;
+		}
+
+		if (typeof this.confirmButton === 'undefined') {
+			this.confirmButton = false;
+			this.autoClose = true;
+		} else if (this.confirmButton !== false) {
+			this.autoClose = false;
+		}
+	}
+
+	_prepareWatches() {
+		let scope = this.getScope();
+
+		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
+			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
+
+			// 选中预设值
+			this.selection = this._getItemsByValues(this.model);
+			this.updateTitle();
+		});
+
+		scope.$watchCollection(() => this.selection, () => {
+			this.updateTitle();
+		});
+
 	}
 
 	_prepareMouseEvents() {
@@ -77,7 +98,7 @@ export default class DropdownSelectCtrl {
 			} else {
 				switch (keyCode) {
 					case 13: // enter
-						this.selectItemAt(this.focusIndex);
+						this.toggleSelection(this.items[this.focusIndex]);
 						break;
 					case 38: // up
 						this.focusUp();
@@ -105,6 +126,51 @@ export default class DropdownSelectCtrl {
 		});
 	}
 
+	setTitle(title) {
+		this.title = title;
+	}
+
+	updateTitle() {
+		let titleList = this.selection.map(item => item[this.mapping.displayField]);
+		this.setTitle(titleList.join(','));
+	}
+
+	_getItemsByValues(values) {
+		let items = [];
+		let itemsList = this._clampedDatalist;
+		let valueField = this.mapping.valueField;
+
+		values.forEach(value => {
+			let targetItem = itemsList.find(item => {
+				return angular.equals(item[valueField], value);
+			});
+			if (targetItem) {
+				items.push(targetItem);
+			}
+		});
+
+		return items;
+	}
+
+	toggleSelection(item) {
+		let index = this.selection.indexOf(item);
+		if (index > -1) {
+			this.selection.splice(index, 1);
+		} else {
+			this.selection.push(item);
+		}
+	}
+
+	confirmSelection() {
+		this.setValue(this.selection);
+		this.close();
+	}
+
+	cancelSelection() {
+		this.selection = this._getItemsByValues(this.model);
+		this.close();
+	}
+
 	onSearchTextChange(text, oldText) {
 		if (text !== oldText) {
 			text = text.trim();
@@ -114,10 +180,9 @@ export default class DropdownSelectCtrl {
 			if (text.length) {
 				this._search(text);
 			} else {
-				this.setModelValue(null);
+				// TODO: setValue
 				this.items = this._clampedDatalist;
 			}
-			this.focusAt(0);
 		}
 	}
 
@@ -126,7 +191,6 @@ export default class DropdownSelectCtrl {
 		this.getInputElement().focus();
 		if (this.searchable && this.title.length) {
 			this._search(this.title);
-			this.focusAt(0);
 			scope.$root.$$phase || scope.$apply();
 		}
 	}
@@ -135,35 +199,33 @@ export default class DropdownSelectCtrl {
 		let scope = this.getScope();
 		if (this.searchable) {
 			this.getInputElement().addEventListener('click', this._openFn);
-			this.setModelValue(this.model);
-			scope.$root.$$phase || scope.$apply();
+			// TODO: setValue
 		}
+
+		this.model = this.selection.map(item => item[this.mapping.valueField]);
+		this.updateTitle();
+		scope.$root.$$phase || scope.$apply();
 	}
 
-	setModelValue(modelValue) {
-		if (modelValue !== null) {
-			let valueField = this.mapping.valueField;
-			let modelExisted = this.items.some(item => {
-				if (angular.equals(item[valueField], this.model)) {
-					this.title = item[this.mapping.displayField];
-					return true;
-				}
-			});
-			if (!modelExisted) {
-				this.title = '';
-				this.model = null;
-			}
-		} else {
-			this.title = '';
-			this.model = null;
-		}
+	setValue(modelValue) {
+		this.model = modelValue;
 	}
 
 	clear() {
-		this.setModelValue(null);
-		this.items = this._getClampedDatalist(this.datalist);
+		this.items = this._clampedDatalist;
+		this.setTitle('');
 		this.getInputElement().focus();
-		this.focusAt(0);
+		if (!this.isOpen) {
+			this.open();
+		}
+	}
+
+	setActiveState(isActive) {
+		this.isActive = isActive;
+		if (isActive && this.searchable) {
+			this.items = this._clampedDatalist;
+			this.setTitle('');
+		}
 	}
 
 	@Bind
@@ -183,16 +245,6 @@ export default class DropdownSelectCtrl {
 
 	close() {
 		this.isOpen = false;
-	}
-
-	selectItemAt(index) {
-		let item = this.items[index];
-		if (item) {
-			this.title = item[this.mapping.displayField];
-			this.model = item[this.mapping.valueField];
-			this.focusAt(index);
-			this.close();
-		}
 	}
 
 	focusAt(index) {

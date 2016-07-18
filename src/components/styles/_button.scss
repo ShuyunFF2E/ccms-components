@@ -155,12 +155,29 @@ button {
   @extend %btn-primary;
   @extend %btn-large;
 }
+.btn-ok-normal {
+	@extend %btn-primary;
+  @extend %btn-base;
+}
+.btn-ok-small {
+	@extend %btn-primary;
+	@extend %btn-small;
+}
 
 // 取消
 .btn-cancel {
   @extend %btn-normal;
   @extend %btn-large;
 }
+.btn-cancel-normal {
+	@extend %btn-normal;
+  @extend %btn-base;
+}
+.btn-cancel-small {
+	@extend %btn-normal;
+	@extend %btn-small;
+}
+
 
 // 功能按钮 (普通)
 .btn-function-normal {
