@@ -26,6 +26,7 @@ import checkbox from './checkbox';
 import instantSearch from './instant-search';
 import dropdown from './dropdown/dropdown';
 import dropdownSelect from './dropdown/dropdown-select';
+import dropdownMultiselect from './dropdown/dropdown-multiselect';
 import tabset from './tabset';
 import title from './title';
 import radio from './radio';
@@ -34,6 +35,7 @@ export default angular
 	.module('ccms.components.ui', [
 		dropdown,
 		dropdownSelect,
+		dropdownMultiselect,
 		instantSearch,
 		checkbox,
 		form,
