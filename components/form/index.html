@@ -244,8 +244,8 @@
           </li>
         </ul>
       </li>
-      <li><a href="#angularvalidator" id="markdown-toc-angularvalidator">内置的校验器(对应angular内置的validator)</a></li>
       <li><a href="#form" id="markdown-toc-form">Form配套服务</a></li>
+      <li><a href="#angularvalidator" id="markdown-toc-angularvalidator">内置的校验器(对应angular内置的validator)</a></li>
     </ul>
   </li>
   <li><a href="#examples" id="markdown-toc-examples">Examples</a></li>
@@ -374,23 +374,12 @@
 
 <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;input</span> <span class="na">ng-model=</span><span class="s">"app.userName"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">validator=</span><span class="s">"handsome, word"</span> <span class="na">handsome-msg=</span><span class="s">"不够帅啊同学!"</span> <span class="na">word-msg=</span><span class="s">"填单词啊同学!"</span><span class="nt">&gt;</span></code></pre></figure>
 
-<h3 id="angularvalidator">内置的校验器(对应angular内置的validator)</h3>
-<ul>
-  <li>required: ‘必填’</li>
-  <li>email: ‘邮件格式不合法’,</li>
-  <li>max: ‘输入值过大’,</li>
-  <li>maxlength: ‘输入值太长’,</li>
-  <li>min: ‘输入值过小’,</li>
-  <li>minlength: ‘输入值太短’,</li>
-  <li>number: ‘不合法的数字’,</li>
-  <li>pattern: ‘不合法的格式’,</li>
-  <li>url: ‘不合法的url’,</li>
-  <li>date: ‘不合法的日期’,</li>
-  <li>datetimelocal: ‘不合法的本地日期’,</li>
-  <li>time: ‘不合法的时间’,</li>
-  <li>week: ‘不合法的星期值’,</li>
-  <li>month: ‘不合法的月份值’</li>
-</ul>
+<div class="bd-callout bd-callout-info">
+<p>validator校验触发时机为 model 更新的时机,如果默认model更新时机(input)不能满足需求,可配合<code class="highlighter-rouge">ng-model-options</code>指令控制。如</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;input</span> <span class="na">ng-model=</span><span class="s">"app.userName"</span> <span class="na">ng-model-options=</span><span class="s">"{updateOn:'blur'}"</span> <span class="na">required</span> <span class="na">validator</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">&gt;</span></code></pre></figure>
+
+</div>
 
 <h3 id="form">Form配套服务</h3>
 
@@ -425,6 +414,24 @@
       </li>
     </ul>
   </li>
+</ul>
+
+<h3 id="angularvalidator">内置的校验器(对应angular内置的validator)</h3>
+<ul>
+  <li>required: ‘必填’</li>
+  <li>email: ‘邮件格式不合法’,</li>
+  <li>max: ‘输入值过大’,</li>
+  <li>maxlength: ‘输入值太长’,</li>
+  <li>min: ‘输入值过小’,</li>
+  <li>minlength: ‘输入值太短’,</li>
+  <li>number: ‘不合法的数字’,</li>
+  <li>pattern: ‘不合法的格式’,</li>
+  <li>url: ‘不合法的url’,</li>
+  <li>date: ‘不合法的日期’,</li>
+  <li>datetimelocal: ‘不合法的本地日期’,</li>
+  <li>time: ‘不合法的时间’,</li>
+  <li>week: ‘不合法的星期值’,</li>
+  <li>month: ‘不合法的月份值’</li>
 </ul>
 
 <h2 id="examples">Examples</h2>

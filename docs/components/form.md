@@ -94,22 +94,13 @@ form标签
 <input ng-model="app.userName" type="text" validator="handsome, word" handsome-msg="不够帅啊同学!" word-msg="填单词啊同学!">
 {% endhighlight %}
 
+{% callout info %}
+validator校验触发时机为 model 更新的时机,如果默认model更新时机(input)不能满足需求,可配合`ng-model-options`指令控制。如
+{% highlight html %}
+<input ng-model="app.userName" ng-model-options="{updateOn:'blur'}" required validator type="text">
+{% endhighlight %}
 
-### 内置的校验器(对应angular内置的validator)
-* required: '必填'
-* email: '邮件格式不合法',
-* max: '输入值过大',
-* maxlength: '输入值太长',
-* min: '输入值过小',
-* minlength: '输入值太短',
-* number: '不合法的数字',
-* pattern: '不合法的格式',
-* url: '不合法的url',
-* date: '不合法的日期',
-* datetimelocal: '不合法的本地日期',
-* time: '不合法的时间',
-* week: '不合法的星期值',
-* month: '不合法的月份值'
+{% endcallout %}
 
 ### Form配套服务
 
@@ -136,6 +127,22 @@ form标签
 		```
 		$Validator.setPristine(formCtrl);
 		```
+
+### 内置的校验器(对应angular内置的validator)
+* required: '必填'
+* email: '邮件格式不合法',
+* max: '输入值过大',
+* maxlength: '输入值太长',
+* min: '输入值过小',
+* minlength: '输入值太短',
+* number: '不合法的数字',
+* pattern: '不合法的格式',
+* url: '不合法的url',
+* date: '不合法的日期',
+* datetimelocal: '不合法的本地日期',
+* time: '不合法的时间',
+* week: '不合法的星期值',
+* month: '不合法的月份值'
 
 ## Examples
 
