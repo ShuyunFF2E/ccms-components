@@ -13,8 +13,8 @@ export default class DropdownCtrl {
 
 		this.autoClose = true;
 
-		this.ondropdownopen = () => {};
-		this.ondropdownclose = () => {};
+		this.onDropdownOpen = () => {};
+		this.onDropdownClose = () => {};
 	}
 
 	$onInit() {
@@ -22,8 +22,8 @@ export default class DropdownCtrl {
 			this.autoClose = true;
 		}
 
-		this.ondropdownopen = this.ondropdownopen || (() => {});
-		this.ondropdownclose = this.ondropdownclose || (() => {});
+		this.onDropdownopen = this.onDropdownOpen || (() => {});
+		this.onDropdownclose = this.onDropdownClose || (() => {});
 	}
 
 	getElement() {
