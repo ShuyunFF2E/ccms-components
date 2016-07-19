@@ -4,8 +4,6 @@
  * @Author: maxsmu
  * @Date: 2016-03-04 10:36 AM
  */
-//import {$Menus} from './MenuService';
-
 const menusList = [
 	{
 		"name": "忠诚度设置",
@@ -220,14 +218,12 @@ gradeController.$inject = ['$scope', '$menus'];
 // - 关闭自动开启功能
 function gradeController($scope, $menus) {
 
-	$scope.$on('shop:change', (event, shop) => {
-
+	$scope.$on('shop:change', (event, current) => {
+		const serveCurrent = $menus.getCurrentPlatShop();
 		// --TODO 执行其他操作
-		console.log('(closed autoClose)事件广播:', shop.plat.name + '|' + shop.shop.name);
+		console.log('事件广播:', current.plat.name + '|' + current.shop.name);
+		console.log('服务接口:', serveCurrent.plat.name + '|' + serveCurrent.shop.name);
 
-		const currentPlatShop = $menus.getCurrentPlatShop();
-
-		console.log('(closed autoClose)服务接口:', currentPlatShop.plat.name + '|' + currentPlatShop.shop.name);
 	});
 }
 
@@ -236,46 +232,34 @@ pointController.$inject = ['$scope', '$menus'];
 
 // - 开启自动关闭功能
 function pointController($scope, $menus) {
+
 	this.name = '老司机飙车速度疾';
 
-	$scope.$on('shop:change', (event, shop, defer) => {
+	let isChange = false;
 
-		if ($menus.isConfirmable()) {
+	$scope.$on('shop:changeStart', (event, defer) => {
 
-			const state = window.confirm('确定切换店铺:' + shop.shop.name + '?');
-
+		if (isChange) {
+			const state = window.confirm('确定切换店铺?');
 			if (state) {
-
-				// - 确认切换
 				defer.resolve();
-				// --TODO 切换后执行其他操作
-				console.log('(opened autoClose)事件广播(resolve):', shop.plat.name + '|' + shop.shop.name);
-
-				// - 关闭自动关闭,不建议在其中使用 $menus 服务获取当前选中店铺,其原因是当切换店铺,并且点击确认切换时,`$menus.shopActive`中的数据还没有及时更新,此情况下调用`$menus.activeShop`得到的还是上次的数据
-				// - 这种情况下直接使用 监听返回的数据
-				setTimeout(()=> {
-
-					//- 获取当前选中的平台以及店铺
-					const currentPlatShop = $menus.getCurrentPlatShop();
-
-					console.log('(opened autoClose)服务接口(resolve):', currentPlatShop.plat.name + '|' + currentPlatShop.shop.name);
-				}, 2000);
-
 			} else {
-
-				// - 阻止切换
 				defer.reject();
 			}
-		} else {
-			// - 获取当前选中的平台以及店铺
-			const currentPlatShop = $menus.getCurrentPlatShop();
-			console.log('(opened autoClose)事件广播(resolve):', shop.plat.name + '|' + shop.shop.name);
-			console.log('(opened autoClose)服务接口(resolve):', currentPlatShop.plat.name + '|' + currentPlatShop.shop.name);
+			isChange = false;
 		}
+	});
+
+	$scope.$on('shop:change', (event, current) => {
+		const serveCurrent = $menus.getCurrentPlatShop();
+		console.log('事件广播:', current.plat.name + '|' + current.shop.name);
+		console.log('服务接口:', serveCurrent.plat.name + '|' + serveCurrent.shop.name);
 	});
 
 	/**
 	 * 表单修改
 	 */
-	this.formChange = () => $menus.setConfirmable(true);
+	this.formChange = () => {
+		isChange = true;
+	};
 }

@@ -1,10 +1,10 @@
 <div class="shop-choose-wrapper"
-     ng-class="{'shop-choose-none':shops.list.length <= 0,'shop-select-show':shops.closedAnimation!==undefined,'shop-select-hide':(shops.closedAnimation!==undefined&&!shops.closedAnimation)}">
+     ng-class="{'shop-choose-none':shops.list.length <= 0,'shop-select-show':shops.collapsed!==undefined,'shop-select-hide':(shops.collapsed!==undefined&&!shops.collapsed)}">
 
     <div class="shop-search">
         <input type="search" placeholder="{{shops.placeholder}}"
                ng-model="shops.searchName"
-               ng-keyup="shops.keyupSearchShop($event, shops.searchName)">
+               ng-keyup="shops.searchShop($event,'keyup',shops.searchName)">
 
         <span class="shop-search-clear"
               ng-if="shops.searchName"
@@ -12,7 +12,7 @@
 
         <span class="shop-search-icon"
               ng-class="{'active':shops.searchName}"
-              ng-click="shops.clickSearchShop($event, shops.searchName)"></span>
+              ng-click="shops.searchShop(null,'click',shops.searchName)"></span>
     </div>
 
     <div class="shop-info-wrapper">
@@ -20,8 +20,8 @@
             <p ng-bind="shop.name"></p>
             <ul>
                 <li ng-repeat="item in shop.child track by $index"
-                    ng-class="{'active':shops.active.plat.value===shop.value&&shops.active.shop.value===item.value}"
-                    ng-click="shops.checkedShop(shop,item)">
+                    ng-class="{'active': shops.shopInfo.plat.value === shop.value && shops.shopInfo.shop.value === item.value}"
+                    ng-click="shops.selectedShop(shop,item)">
                     {{item.name}}
                     <span></span>
                 </li>
@@ -31,7 +31,8 @@
 
     <div ng-if="shops.list.length <= 0" class="shop-info-none">
         <p>没有搜索结果</p>
-        <p>请重新输入关键字或者<a href="javascript:void(0);" ng-click="shops.clickSearchShop($event,'');shops.searchName='';">查看全部</a>
+        <p>请重新输入关键字或者<a href="javascript:void(0);" class="shop-list-btn"
+                        ng-click="shops.searchShop(null,'click',''); shops.searchName='';">查看全部</a>
         </p>
     </div>
 </div>

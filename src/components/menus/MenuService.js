@@ -1,10 +1,17 @@
 /**
+ * CURRENT - 当前选中平台信息
+ * @type {{CURRENT: {}}}
+ */
+export let CONFIG = {
+	CURRENT: {}
+};
+
+/**
  * Created with MenuService.js
  * @Description:
  * @Author: maxsmu
  * @Date: 2016-03-10 8:11 PM
  */
-import CONFIG from './Constant';
 export default {
 
 	/**
@@ -45,7 +52,6 @@ export default {
 	 */
 	init() {
 		CONFIG.CURRENT = {};
-		CONFIG.CONFIRMABLE = false;
 	},
 
 	/**
@@ -63,20 +69,5 @@ export default {
 	 */
 	setCurrentPlatShop(plat, shop) {
 		CONFIG.CURRENT = {plat, shop};
-	},
-
-	/**
-	 * 查询确认开启状态
-	 * @returns {boolean}
-	 */
-	isConfirmable() {
-		return CONFIG.CONFIRMABLE;
-	},
-
-	/**
-	 * 设置确认开启状态
-	 */
-	setConfirmable(confirmable) {
-		CONFIG.CONFIRMABLE = !!confirmable;
 	}
 };

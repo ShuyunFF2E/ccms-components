@@ -30,8 +30,7 @@ const
 			onUnfold: '=',
 			menuSource: '=',
 			shopSource: '=',
-			searchPlaceholder: '=',
-			searchTypeName: '='
+			searchPlaceholder: '='
 		}
 	},
 	menusNodeDDO = {
@@ -49,11 +48,10 @@ const
 		controller: ShopSelectsCtrl,
 		controllerAs: 'shops',
 		bindings: {
-			shops: '=',
-			active: '=',
-			closedAnimation: '=',
-			placeholder: '=',
-			searchTypeName: '='
+			shopList: '=',
+			shopInfo: '=',
+			collapsed: '=',
+			placeholder: '<?'
 		}
 	};
 
