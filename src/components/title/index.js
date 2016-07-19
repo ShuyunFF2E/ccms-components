@@ -13,7 +13,7 @@ const titleDDO = {
 	controller,
 	controllerAs: 'title',
 	bindings: {
-		name: '='
+		name: '<?'
 	}
 };
 
