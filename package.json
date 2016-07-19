@@ -12,6 +12,7 @@
     "build:dist": "NODE_ENV=production webpack --config webpack-build.config.js",
     "build": "npm run build:dist",
     "codecheck": "NODE_EVN=test eslint src/components",
+    "docs": "jekyll serve --source docs",
     "start": "node server.js",
     "lint": "npm run codecheck",
     "prepush": "npm run codecheck",

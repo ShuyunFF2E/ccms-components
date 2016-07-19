@@ -1,0 +1,39 @@
+//
+// Main navbar
+//
+
+.bd-navbar {
+	border-radius: 0;
+	border-bottom: solid 2px $bd-purple;
+  .navbar-nav {
+    .nav-link {
+      color: $bd-graphite-light;
+
+      &.active,
+      &:hover,
+      &:focus {
+        color: $gray-dark;
+        background-color: transparent;
+      }
+
+      &.active {
+        font-weight: 500;
+        color: darken($gray-dark, 15%);
+      }
+    }
+  }
+
+  .dropdown-menu {
+    font-size: inherit;
+  }
+
+  @include media-breakpoint-down(sm) {
+    .nav-link {
+      float: none;
+
+      + .nav-link {
+        margin-left: 0;
+      }
+    }
+  }
+}
