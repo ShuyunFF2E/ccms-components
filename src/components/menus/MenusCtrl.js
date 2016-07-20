@@ -47,27 +47,33 @@ export default class MenusCtrl {
 	 * @private
 	 */
 	_getActiveShop(list) {
-		// -点击非有效区域自动关闭shopSelect
-		this._$document.bind('click', event => {
-			const target = event.target,
-				targetName = target.className,
-				shopClosest = target.closest('.shop-choose-wrapper'),
-				retrackShopClosest = target.closest('.retrack-shop'),
-				menusClosest = target.closest('.menu-shop-show');
-			// -!targetName.includes('shop-search-clear') 清除点击清空收起店铺选择器问题
-			// -!targetName.includes('shop-list-btn') 清除点击查看全部收齐问题
-			if (shopClosest === null &&
-				retrackShopClosest == null &&
-				menusClosest === null && !targetName.includes('shop-search-clear') && !targetName.includes('menu-constract-icon') && !targetName.includes('expand') && !targetName.includes('shop-list-btn')) {
-				if (this.shopShow) {
-					this.shopShow = false;
-					this._$scope.$digest();
-				}
-			}
-		});
-		this.active = {};
-
 		if (Array.isArray(list)) {
+
+			// - 是否展示店铺相关信息
+			this.isShowShopInfo = list.length > 0;
+
+			if (this.isShowShopInfo) {
+				// -点击非有效区域自动关闭shopSelect
+				this._$document.bind('click', event => {
+					const target = event.target,
+						targetName = target.className,
+						shopClosest = target.closest('.shop-choose-wrapper'),
+						retrackShopClosest = target.closest('.retrack-shop'),
+						menusClosest = target.closest('.menu-shop-show');
+					// -!targetName.includes('shop-search-clear') 清除点击清空收起店铺选择器问题
+					// -!targetName.includes('shop-list-btn') 清除点击查看全部收齐问题
+					if (shopClosest === null &&
+						retrackShopClosest == null &&
+						menusClosest === null && !targetName.includes('shop-search-clear') && !targetName.includes('menu-constract-icon') && !targetName.includes('expand') && !targetName.includes('shop-list-btn')) {
+						if (this.shopShow) {
+							this.shopShow = false;
+							this._$scope.$digest();
+						}
+					}
+				});
+			}
+
+			this.active = {};
 
 			// -查询所在平台
 			const plat = list.find(plat => {
