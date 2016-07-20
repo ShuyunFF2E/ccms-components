@@ -12,7 +12,6 @@
 		.module('app', ['ccms.components'])
 		.controller('ctrl', function ($scope) {
 
-			$scope.demo1 = false;
 			$scope.demo2 = false;
 			$scope.demo3 = {
 				trueValue: 'up',
