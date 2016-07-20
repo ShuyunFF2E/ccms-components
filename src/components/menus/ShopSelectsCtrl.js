@@ -53,11 +53,6 @@ export default class ShopSelectsCtrl {
 			EventBus.dispatch('shop:changeStart', deferred);
 
 			if (deferred.promise.$$state.status === 0) {
-
-				this.shopInfo = selectedShop;
-
-				$menus.setCurrentPlatShop(selectedShop.plat, selectedShop.shop);
-
 				deferred.resolve();
 			}
 
