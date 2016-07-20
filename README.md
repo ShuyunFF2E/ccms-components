@@ -47,7 +47,7 @@ externals: {'ccms-components': '\'ccms.components\''}
 
 ### 基本的开发步骤
 
-1. ccms-components 组内的成员直接 **clone** 本项目；其它人员请 **fork** 本项目。
+1. ccms-components 组内的人员直接 **clone** 本项目；其它人员请 **fork** 本项目。
 
 2. 基于 dev 分支创建你的分支，例如 feature/abc, bugfix/abc, docs/abc
 
@@ -58,7 +58,7 @@ externals: {'ccms-components': '\'ccms.components\''}
 5. 在开始另一个功能开发创建新分支之前，应当先将 dev 分支同步为最新的状态。
 
 	```bash
-	# 对于 ccms-components 组内的成员，在 dev 分支拉取更新
+	# 对于 ccms-components 组内的人员，在 dev 分支拉取更新
 	git pull
 
 	# 对于 fork 本项目的人员，需要先将本项目添加为一个 git remote，再拉取更新，参考以下操作
@@ -67,11 +67,11 @@ externals: {'ccms-components': '\'ccms.components\''}
 	# step 2, 在 dev 分支拉取 ccms 的更新
 	git pull ccms
 	```
-6. 重复 2~5 的操作，创建新分支做开发
+6. 重复 2~5 的操作，创建新分支继续其它功能的开发
 
 ### 提交代码、pull request 准则
 
-提交代码的 commit message 和 pull request 标题需按如果格式：
+提交代码的 commit message 和 pull request 标题需按如下格式：
 
 `<type>(<scope>): <subject>`
 
