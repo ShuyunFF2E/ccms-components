@@ -53,6 +53,7 @@ function release() {
 	git checkout dev
 	git pull --prune
 	git checkout master
+	git reset origin/master --hard
 	git merge dev --no-ff -m "chore(release): Merge branch 'dev' into master"
 	new_version=$(npm version $version -m "chore(release): v%s")
 	git checkout dev
