@@ -8,7 +8,7 @@
     </div>
 
     <div class="retrack-shop"
-         ng-if="menus.shopsInfo"
+         ng-if="menus.shopList"
          ng-click="menus.shopShow=!menus.shopShow">
         <span></span>
     </div>
@@ -18,7 +18,7 @@
     <!-- 店铺 header -->
     <div class="menu-shop-show"
          ng-click="menus.showShopSelect()"
-         ng-if="menus.shopsInfo">
+         ng-if="menus.shopList">
 
         <div class="shop-wrapper"
              ng-if="!menus.active.shop.logo">
@@ -48,10 +48,10 @@
     </menu-node>
 
     <!-- shop-select -->
-    <shop-select closed-animation="menus.shopShow"
-                 ng-if="menus.shopsInfo"
-                 active="menus.active"
+    <shop-select collapsed="menus.shopShow"
+                 ng-if="menus.shopList"
+                 shop-info="menus.active"
                  placeholder="menus.searchPlaceholder"
-                 shops="menus.shopsInfo">
+                 shop-list="menus.shopList">
     </shop-select>
 </div>

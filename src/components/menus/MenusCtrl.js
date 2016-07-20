@@ -53,8 +53,10 @@ export default class MenusCtrl {
 				targetName = target.className,
 				shopClosest = target.closest('.shop-choose-wrapper'),
 				menusClosest = target.closest('.menu-container');
-			// -!targetName.includes('shop-search-clear') 清除点击清空收起店铺选择器的bug
-			if (shopClosest === null && menusClosest === null && !targetName.includes('shop-search-clear')) {
+			// -!targetName.includes('shop-search-clear') 清除点击清空收起店铺选择器问题
+			// -!targetName.includes('shop-list-btn') 清除点击查看全部收齐问题
+			if (shopClosest === null &&
+				menusClosest === null && !targetName.includes('shop-search-clear') && !targetName.includes('shop-list-btn')) {
 				if (this.shopShow) {
 					this.shopShow = false;
 					this._$scope.$digest();
@@ -85,21 +87,13 @@ export default class MenusCtrl {
 			// -第一次广播时间通知调用者当前选择的店铺
 			this._$timeout(() => {
 
-				// - 伪造一个defer延迟对象
-				const fakeDefer = {
-					resolve: () => {
-					},
-					reject: () => {
-					}
-				};
-
 				// - 获取当前选中的平台以及店铺
 				const currentPlatShop = $menus.getCurrentPlatShop();
 
 				// - 广播通知店铺选中
-				this._$rootScope.$broadcast('shop:change', currentPlatShop, fakeDefer);
+				this._$rootScope.$broadcast('shop:change', currentPlatShop);
 
-				EventBus.dispatch('shop:change', currentPlatShop, fakeDefer);
+				EventBus.dispatch('shop:change', currentPlatShop);
 			}, 0);
 		}
 	}
@@ -129,11 +123,11 @@ export default class MenusCtrl {
 			menus.resource.$promise
 				.then(res => {
 					this.menuList = res || [];
-					this.activeMenus(this.menuList);
+					this.selectedMenus(this.menuList);
 				});
 		} else {
 			this.menuList = Array.isArray(menus.resource) ? menus.resource : [];
-			this.activeMenus(this.menuList);
+			this.selectedMenus(this.menuList);
 		}
 
 		// -获取店铺信息
@@ -152,14 +146,14 @@ export default class MenusCtrl {
 			shops.resource
 				.$promise
 				.then(res => {
-					this.shopsInfo = res || [];
-					this._getActiveShop(this.shopsInfo);
+					this.shopList = res || [];
+					this._getActiveShop(this.shopList);
 				});
 
 		} else {
 			const resourceIsArray = Array.isArray(shops.resource);
-			this.shopsInfo = resourceIsArray ? shops.resource : [];
-			resourceIsArray && this._getActiveShop(this.shopsInfo);
+			this.shopList = resourceIsArray ? shops.resource : [];
+			resourceIsArray && this._getActiveShop(this.shopList);
 		}
 	}
 
@@ -167,7 +161,7 @@ export default class MenusCtrl {
 	 * 当前选中的菜单
 	 * @param menuList
 	 */
-	activeMenus(menuList = []) {
+	selectedMenus(menuList = []) {
 		this._$timeout(() => {
 			const active = menuList.find(menu => {
 				return this._$state.includes(menu.state);
@@ -175,7 +169,7 @@ export default class MenusCtrl {
 			active ? active.toggleNode = true : null;
 			if (active) {
 				const child = active.children;
-				Array.isArray(child) && child.length > 0 ? this.activeMenus(child) : null;
+				Array.isArray(child) && child.length > 0 ? this.selectedMenus(child) : null;
 			}
 		}, 0);
 	}
@@ -189,7 +183,7 @@ export default class MenusCtrl {
 		if (!this.shopShow) {
 
 			// -通知店铺列表收起
-			EventBus.dispatch('shop:list-switch', this.shopShow);
+			EventBus.dispatch('shop:listCollapsed', this.shopShow);
 		}
 	}
 }
