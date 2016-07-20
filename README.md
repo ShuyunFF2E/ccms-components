@@ -1,61 +1,91 @@
 # CCMS Components [![Build Status](https://img.shields.io/travis/ShuyunFF2E/ccms-components/master.svg?style=flat)](https://travis-ci.org/ShuyunFF2E/ccms-components) [![npm version](https://img.shields.io/npm/v/ccms-components.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
 
+[组件 API 文档](http://shuyunff2e.github.io/ccms-components/)
+
 开发指南 [Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34)
 
-## Document
-[组件API文档](http://shuyunff2e.github.io/ccms-components/)
-
-## How To Use
+## 安装与使用
 
 ```bash
-npm install --save ccms-components
+# 安装 ccms-components 和相关依赖
+npm install --save ccms-components angular angular-resource angular-ui-router
 ```
 
+### 引入方式
+
+#### ES6
 ```js
 import angular from 'angular';
+import ngResource from 'angular-resource';
+import uiRouter from 'angular-ui-router';
+
 import ccmsComponents from 'ccms-components';
 
-angular.module('app', [ccmsComponents]);
+angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 ```
 
-#### 友情提示
-ccms模块产品请将组件库手动设置到webpack的externals中，避免重复打包
+#### ES5
+```html
+<link rel="stylesheet" href="/node_modules/ccms-components.css">
+
+<script src='/node_modules/angular/angular.js'></script>
+<script src='/node_modules/angular-resource/angular-resource.js'></script>
+<script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+
+<script src='/node_modules/ccms-components.js'></script>
+```
+
+### 避免重复打包
+
+由于 ccms-portal 中已经引入 ccms-components，所以相关项目在使用 webpack 打包时可忽略 ccms-components，配置如下：
 
 ```js
 externals: {'ccms-components': '\'ccms.components\''}
 ```
 
-#### 开发规范
-1. 所有组件模板以.tpl.html为后缀名,区别于业务模板的.html后缀,便于打包时对组件跟业务模板做差异化处理.
+## 参与开发
 
-组件库使用 [Phabricator 系统](http://phabricator.shuyun.com/) 做 code view，工作流程可以参考 [Phabricator 新用户指南](https://gist.github.com/arzyu/0deeac12b8cc4db3b6e0)。
+### 基本的开发步骤
 
-## 运行文档服务
+1. ccms-components 组内的成员直接 **clone** 本项目；其它人员请 **fork** 本项目。
 
-文档使用 [jekyll] 生成，这是使用 [ruby] 脚本编写的一个工具，为了运行 [jekyll] 你需要安装 [ruby] 环境。
+2. 基于 dev 分支创建你的分支，例如 feature/abc, bugfix/abc, docs/abc
 
-推荐使用 [rvm] 管理 [ruby] 版本, 类似于用 [nvm] 管理 [nodejs] 版本。
+3. 开发完成之后，在 github 网页中创建一个 pull request，base 为 dev，compare 为你的分支名
 
-```bash
-# 安装 rvm 及 ruby
-curl -L https://get.rvm.io | bash -s stable --autolibs=enabled --ruby
+4. 等待上游 review，merge pull request
 
-# 首次设置 ruby 版本
-rvm use 2.3.0 --default --create
+5. 在开始另一个功能开发创建新分支之前，应当先将 dev 分支同步为最新的状态。
 
-# 安装 bundler，用于管理依赖
-gem install bundler
+	```bash
+	# 对于 ccms-components 组内的成员，在 dev 分支拉取更新
+	git pull
 
-# 在 CCMS_Components 项目根目录运行 bundler install 即可安装 Gemfile 指定的依赖（包括 jekyll）
-bundler install
+	# 对于 fork 本项目的人员，需要先将本项目添加为一个 git remote，再拉取更新，参考以下操作
+	# step 1，添加一个 remote
+	git remote add ccms https://github.com/ShuyunFF2E/ccms-components
+	# step 2, 在 dev 分支拉取 ccms 的更新
+	git pull ccms
+	```
+6. 重复 2~5 的操作，创建新分支做开发
 
-# 在 CCMS_Components 项目根目录运行文档服务，http://localhost:3001/docs/
-jekyll serve
-```
+### 提交代码、pull request 准则
 
+提交代码的 commit message 和 pull request 标题需按如果格式：
 
-[jekyll]: https://jekyllrb.com/
-[ruby]: https://www.ruby-lang.org/
-[rvm]: https://github.com/rvm/rvm
-[nvm]: https://github.com/creationix/nvm
-[nodejs]: https://nodejs.org/
+`<type>(<scope>): <subject>`
+
+* `<type>`，变更的类型，可用的类型有以下几种：
+	- **feat**，A new feature
+	- **fix**，A bug fix
+	- **docs**，Documentation only changes
+	- **style**，Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+	- **refactor**，A code change that neither fixes a bug nor adds a feature
+	- **perf**，A code change that improves performance
+	- **test**，Adding missing tests
+	- **chore**，Changes to the build process or auxiliary tools and libraries such as documentation generation
+
+* `<scope>`，标记变更的范围，通常为你的模块名
+
+* `<subject>`，用于描述的文字
+
