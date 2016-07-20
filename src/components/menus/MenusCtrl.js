@@ -58,11 +58,13 @@ export default class MenusCtrl {
 					const target = event.target,
 						targetName = target.className,
 						shopClosest = target.closest('.shop-choose-wrapper'),
-						menusClosest = target.closest('.menu-container');
+						retrackShopClosest = target.closest('.retrack-shop'),
+						menusClosest = target.closest('.menu-shop-show');
 					// -!targetName.includes('shop-search-clear') 清除点击清空收起店铺选择器问题
 					// -!targetName.includes('shop-list-btn') 清除点击查看全部收齐问题
 					if (shopClosest === null &&
-						menusClosest === null && !targetName.includes('shop-search-clear') && !targetName.includes('shop-list-btn')) {
+						retrackShopClosest == null &&
+						menusClosest === null && !targetName.includes('shop-search-clear') && !targetName.includes('menu-constract-icon') && !targetName.includes('expand') && !targetName.includes('shop-list-btn')) {
 						if (this.shopShow) {
 							this.shopShow = false;
 							this._$scope.$digest();

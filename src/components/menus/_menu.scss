@@ -92,7 +92,7 @@ $font: MicrosoftYaHei;
   @extend %constract-icon;
   font-size: 10px !important;
   top: 4px;
-  left: calc(50% - 4px);
+  left: calc(50% - 9px);
 }
 
 @-moz-document url-prefix() {
@@ -143,7 +143,7 @@ $font: MicrosoftYaHei;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -10px;
+    margin-top: -15px;
     margin-left: -10px;
   }
   &:hover {
