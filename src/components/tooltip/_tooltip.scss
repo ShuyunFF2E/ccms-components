@@ -4,6 +4,7 @@
 $tooltip-arrow-width: 3px;
 $tooltip-arrow-offset: $tooltip-arrow-width + 1;
 $tooltip-arrow-color: #666666;
+$tooltip-error-color: #ff867c;
 
 %tooltip {
 	box-sizing: border-box;
@@ -99,7 +100,7 @@ $tooltip-arrow-color: #666666;
 // 主要错误提示,用于空间足够的场景
 .error-major-tooltip {
 	display: none;
-	color: #ff867c;
+	color: $tooltip-error-color;
 	margin-left: 12px;
 
 	&.tooltip-opened {
@@ -114,10 +115,30 @@ $tooltip-arrow-color: #666666;
 // 浮动错误提示,用于空间不足场景
 .error-minor-tooltip {
 	@extend %tooltip;
-	background-color: #ff867c;
+	background-color: $tooltip-error-color;
 	color: #ffffff;
-	&:after {
-		border-top-color: #ff867c !important;
+	&.top, &.top-left, &.top-right {
+		&:after {
+			border-top-color: $tooltip-error-color !important;
+		}
+	}
+
+	&.right {
+		&:after {
+			border-right-color: $tooltip-error-color !important;
+		}
+	}
+
+	&.left {
+		&:after {
+			border-left-color: $tooltip-error-color !important;
+		}
+	}
+
+	&.bottom, &.bottom-left, &.bottom-right {
+		&:after {
+			border-bottom-color: $tooltip-error-color !important;
+		}
 	}
 }
 

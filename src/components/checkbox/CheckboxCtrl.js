@@ -12,6 +12,7 @@ export default class CheckboxController {
 	$onInit() {
 		this.ngTrueValue = this.ngModelController ? (typeof this.ngTrueValue === 'undefined' ? true : this.ngTrueValue) : true;
 		this.ngFalseValue = this.ngModelController ? (typeof this.ngFalseValue === 'undefined' ? false : this.ngFalseValue) : false;
+		this.ngChecked = ('ngModel' in this) ? this.ngModel === this.ngTrueValue : this.ngChecked;
 	}
 
 	/**
