@@ -60,6 +60,16 @@ function release() {
 	git rebase master
 	git push origin master dev $new_version
 
+	# release docs
+	if [[ ! -d docs/_gh_pages ]]; then
+		jekyll build --source docs
+	fi
+	git add -f docs/_gh_pages
+	git commit -m "chore(docs): generate documents"
+	git subtree split --prefix=docs/_gh_pages -b gh-pages
+	git push -f origin gh-pages:gh-pages
+	git branch -D gh-pages
+
 	build && publish
 }
 

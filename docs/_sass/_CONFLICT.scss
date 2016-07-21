@@ -1,0 +1,21 @@
+/* bootstrap 与 ccms 冲突的样式处理 */
+
+h1 {
+	margin: 0 0 0.5rem 0 !important;
+}
+
+p {
+	margin: .5rem 0 !important;
+}
+
+.bd-home {
+	> .container {
+		margin-top: 2rem;
+	}
+}
+
+.ccms-modal {
+	> .container {
+		padding: 0;
+	}
+}
