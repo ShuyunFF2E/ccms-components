@@ -1,0 +1,8 @@
+<div class="customer-profile-header">
+	<span class="user-info"><label>客户：</label>Hugo Boss</span>
+	<span class="user-mobile-info"><label>常用手机：</label>13333333333</span>
+	<div class="switch-view">
+		<div class="switch-view-icon" ng-class=" { 'switch-view-icon--active': $ctrl.viewMode } " ng-click="$ctrl.changeToView()">a</div>
+		<div class="switch-view-icon" ng-class=" { 'switch-view-icon--active': !$ctrl.viewMode } " ng-click="$ctrl.changeToList()">b</div>
+	</div>
+</div>

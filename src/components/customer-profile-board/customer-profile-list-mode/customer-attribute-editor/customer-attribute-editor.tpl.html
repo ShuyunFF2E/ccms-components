@@ -1,0 +1,6 @@
+<div class="customer-attribute-editor">
+	<p class="attribute-editor-header" ng-bind="$ctrl.attributes.name"></p>
+	<ul class="attribute-editor-content">
+		<li ng-repeat="attr in $ctrl.attributes.attr" ng-bind="attr.name + ': ' + attr.value"></li>
+	</ul>
+</div>

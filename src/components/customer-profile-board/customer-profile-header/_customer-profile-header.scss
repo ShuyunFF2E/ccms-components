@@ -1,0 +1,43 @@
+@import "../param";
+
+$header-height: 60px;
+$font-size: 14px;
+$font-color: #333;
+$switch-model-background: #f5f5f5;
+$switch-icon-color: #646F83;
+$switch-active-icon-color: #007FCD;
+
+.customer-profile-header{
+  height: $header-height;
+  margin: 0;
+  padding: 15px 20px;
+  box-shadow:0 2px 2px 0 rgba(0,0,0,0.07);
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .user-info, .user-mobile-info{
+	font-size: $font-size;
+	color: $font-color;
+  }
+
+  .switch-view{
+	background-color: $switch-model-background;
+  }
+
+  .switch-view-icon{
+	cursor: pointer;
+	float: left;
+	width: 36px;
+	height: 30px;
+	color: $switch-icon-color;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&.switch-view-icon--active{
+	  color: $switch-active-icon-color;
+	}
+  }
+}

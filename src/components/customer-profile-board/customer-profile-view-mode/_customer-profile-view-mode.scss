@@ -1,0 +1,69 @@
+@import "../param";
+
+.customer-profile-view-mode{
+  height: 400px;
+  position: relative;
+
+  .customer-label{
+	position: absolute;
+	margin: 10px;
+  	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 10px;
+	color: $white;
+	font-size: 13px;
+  }
+
+  .center-icon{
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+	position: absolute;
+	top: calc(50% - 60px); // 60 = 100(height) / 2 + 10(margin)
+	left: calc(50% - 60px); // 60 = 100(width) / 2 + 10(margin)
+	border-radius: 50%;
+	background-color: $white;
+	text-align: center;
+
+	.center-icon-body{
+	  margin-top: 18px;
+	  width: 44px;
+	  height: 44px;
+	}
+
+	.center-icon-text{
+	  font-size: 14px;
+	  color: $default-font-color;
+	}
+  }
+
+  .note-container{
+	position: absolute;
+	top: 26px;
+	width: 176px;
+	height: calc(100% - 26px * 2);
+	overflow: hidden;
+  }
+
+  .note-container--left{
+	left: -88px;
+
+	customer-attribute-note:nth-child(1) .note-header{
+	  background: $header-background-color-2;
+	}
+
+	customer-attribute-note:nth-child(2) .note-header{
+	  background: $header-background-color-3;
+	}
+  }
+
+  .note-container--right{
+	right: -88px;
+
+	customer-attribute-note:nth-child(1) .note-header{
+	  background: $header-background-color-1;
+	}
+  }
+}

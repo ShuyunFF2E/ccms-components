@@ -1,0 +1,13 @@
+<div class="customer-profile-list-mode">
+	<ul class="left-panel-list">
+		<li class="left-panel-item"
+				ng-repeat="attr in $ctrl.attributesList track by $index"
+				ng-class="{ 'left-panel-item--active': $ctrl.activeAttributeBlockIndex === $index }"
+				ng-click="$ctrl.scrollToAttributeBlock({index: $index})">
+			<span class="item-icon" ng-bind="attr.iconFont"></span><span ng-bind="attr.name"></span>
+		</li>
+	</ul>
+	<div class="right-panel-block">
+		<customer-attribute-editor ng-repeat="attr in $ctrl.attributesList track by $index" attributes="attr"></customer-attribute-editor>
+	</div>
+</div>
