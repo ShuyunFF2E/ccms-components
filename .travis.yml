@@ -2,3 +2,8 @@
 language: node_js
 node_js:
   - 6.2.0 # lastest
+install:
+  - npm install -g codecov
+script:
+  - npm run lint
+  - codecov

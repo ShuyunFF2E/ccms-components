@@ -14,14 +14,15 @@
     "codecheck": "NODE_EVN=test eslint src/components",
     "docs": "jekyll serve --source docs",
     "start": "node server.js",
-    "lint": "npm run codecheck & karma start test/karma.conf.js --single-run",
+    "lint": "npm run codecheck & npm run cover",
     "prepush": "npm run codecheck",
     "release:major": "./scripts/release.sh --major",
     "release:minor": "./scripts/release.sh --minor",
     "release:patch": "./scripts/release.sh --patch",
     "update-dev-server": "./scripts/update-dev-server.sh",
     "copy-dist": "./scripts/copy-dist-to-server.sh",
-    "test": "NODE_ENV=dev karma start test/karma.conf.js"
+    "test": "NODE_ENV=dev karma start test/karma.unit.conf.js",
+    "cover": "NODE_ENV=dev karma start test/karma.cover.conf.js --single-run"
   },
   "author": "shuyun FE2E",
   "devDependencies": {
@@ -49,6 +50,7 @@
     "html-loader": "^0.4.0",
     "husky": "^0.10.1",
     "image-webpack-loader": "^1.6.3",
+    "istanbul-instrumenter-loader": "^0.2.0",
     "json-mock-kuitos": "^1.0.3",
     "karma": "^1.1.1",
     "karma-chrome-launcher": "^1.0.1",
