@@ -7,7 +7,7 @@ var preLoaders = (NODE_ENV === 'dev') ? [{
 	test: /\.js$/,
 	loader: 'eslint-loader',
 	exclude: /node_modules/,
-	include: [path.join(__dirname, 'src')]
+	include: [path.join(__dirname, '../src')]
 }] : [];
 
 module.exports = function (config) {
@@ -54,9 +54,10 @@ module.exports = function (config) {
 				formatter: require('eslint-friendly-formatter')
 			},
 
-			module: Object.assign({
+			module: {
+				preLoaders: preLoaders,
 				loaders: loaders
-			}, {preLoaders: preLoaders})
+			}
 
 		},
 
@@ -94,5 +95,5 @@ module.exports = function (config) {
 		// Concurrency level
 		// how many browser should be started simultaneous
 		concurrency: Infinity
-	})
+	});
 };

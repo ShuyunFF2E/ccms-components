@@ -5,10 +5,9 @@
  */
 
 import GridCtrl from '../GridCtrl';
-import GridHelper from '../GridHelper';
-import TplReqHelper from '../../../common/utils/tpl-req-helper';
+import GRID_TEMPLATES from '../Constant';
+import rowCellTemplate from '../tpls/row-cell.tpl.html';
 
-import sinon from 'sinon';
 import {assert} from 'chai';
 
 describe('GridCtrl', () => {
@@ -16,9 +15,6 @@ describe('GridCtrl', () => {
 	let gridCtrl;
 
 	before(() => {
-
-		sinon.stub(GridHelper, 'refresh', gridOptions => GridHelper.fillOpts(gridOptions));
-		sinon.stub(TplReqHelper, 'get', () => Promise.resolve(null));
 
 		gridCtrl = new GridCtrl();
 		gridCtrl.opts = {
@@ -42,6 +38,22 @@ describe('GridCtrl', () => {
 		};
 
 		gridCtrl.$onInit();
+	});
+
+	it('$onInit', done => {
+
+		const type = 'default'.toUpperCase();
+
+		Promise.all([gridCtrl.headerTemplate, gridCtrl.emptyTipsTemplate])
+			.then(tpls => {
+				assert.equal(tpls[0], GRID_TEMPLATES[type][0]);
+				assert.equal(tpls[1], GRID_TEMPLATES[type][2]);
+
+				const bodyTpl = rowCellTemplate.replace('{::cell-placeholder}', GRID_TEMPLATES[type][1]);
+				assert.equal(gridCtrl.bodyTemplate, bodyTpl);
+
+				done();
+			});
 	});
 
 	it('switchSelectAll', () => {

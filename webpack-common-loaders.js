@@ -4,11 +4,9 @@
  * @since 2016-07-14
  */
 
-var path = require('path');
-
 module.exports = [
 	{
-		test: /\.js?$/,
+		test: /\.js$/,
 		loaders: ['babel'],
 		exclude: /(node_modules|bower_components)/
 	},

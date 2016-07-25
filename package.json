@@ -21,7 +21,7 @@
     "release:patch": "./scripts/release.sh --patch",
     "update-dev-server": "./scripts/update-dev-server.sh",
     "copy-dist": "./scripts/copy-dist-to-server.sh",
-    "test": "karma start test/karma.conf.js"
+    "test": "NODE_ENV=dev karma start test/karma.conf.js"
   },
   "author": "shuyun FE2E",
   "devDependencies": {
