@@ -22,6 +22,8 @@ describe('GridHelper', () => {
 		const filledOpts = GridHelper.fillOpts(opts);
 
 		assert.equal(filledOpts, opts);
+		assert.equal(filledOpts.resource, 'A');
+		assert.deepEqual(filledOpts.columnsDef, [{filed: 'name'}]);
 		assert.includeMembers(Object.keys(filledOpts), [
 			'resource',
 			'response',
