@@ -20,8 +20,9 @@ export default class CustomerProfileViewModeCtrl {
 	constructor() {}
 
 	$postLink() {
-		this._$scope.changeToSpecificAttributeBlock = this.changeToSpecificAttributeBlock;
-		this.generateUserLabels(this.userLabels);
+		this._$element.ready(() => {
+			this.generateUserLabels(this.userLabels);
+		});
 	}
 
 	/**

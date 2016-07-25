@@ -12,7 +12,7 @@ import CustomerAttributeEditor from './customer-attribute-editor';
 
 const CustomerProfileListMode = {
 	bindings: {
-		attributesList: '<',
+		attributesSetting: '<',
 		scrollToAttributeBlock: '&'
 	},
 	template,

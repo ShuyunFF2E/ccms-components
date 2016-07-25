@@ -12,7 +12,7 @@ const CustomerAttributeEditor = {
 	template,
 	controller,
 	bindings: {
-		attributes: '<'
+		attributeSetting: '<'
 	}
 };
 

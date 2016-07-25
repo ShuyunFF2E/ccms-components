@@ -1,6 +1,11 @@
 <div class="customer-attribute-editor">
-	<p class="attribute-editor-header" ng-bind="$ctrl.attributes.name"></p>
+	<p class="attribute-editor-header" ng-bind="$ctrl.attributeSetting.title"></p>
 	<ul class="attribute-editor-content">
-		<li ng-repeat="attr in $ctrl.attributes.attr" ng-bind="attr.name + ': ' + attr.value"></li>
+		<li ng-repeat="attributeBlock in $ctrl.attributeSetting.attributeBlock track by $index">
+			<dl>
+				<dt ng-bind="attributeBlock.title"></dt>
+				<dd ng-repeat="attribute in attributeBlock.attributeList track by $index"><label ng-bind="attribute.name + ': '"></label>{{attribute.value}}</dd>
+			</dl>
+		</li>
 	</ul>
 </div>

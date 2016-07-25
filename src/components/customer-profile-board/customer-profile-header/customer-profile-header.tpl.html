@@ -1,8 +1,8 @@
 <div class="customer-profile-header">
-	<span class="user-info"><label>客户：</label>Hugo Boss</span>
-	<span class="user-mobile-info"><label>常用手机：</label>13333333333</span>
+	<span class="user-info"><label>客户：</label>{{$ctrl.customerInfo.customerName}}</span>
+	<span class="user-mobile-info"><label>常用手机：</label>{{$ctrl.customerInfo.customerMobile}}</span>
 	<div class="switch-view">
-		<div class="switch-view-icon" ng-class=" { 'switch-view-icon--active': $ctrl.viewMode } " ng-click="$ctrl.changeToView()">a</div>
-		<div class="switch-view-icon" ng-class=" { 'switch-view-icon--active': !$ctrl.viewMode } " ng-click="$ctrl.changeToList()">b</div>
+		<div class="switch-view-icon" ng-class=" { 'switch-view-icon--active': $ctrl.viewMode } " ng-click="$ctrl.changeToView()">&#xe65d;</div>
+		<div class="switch-view-icon" ng-class=" { 'switch-view-icon--active': !$ctrl.viewMode } " ng-click="$ctrl.changeToList()">&#xe65a;</div>
 	</div>
 </div>

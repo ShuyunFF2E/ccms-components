@@ -27,5 +27,9 @@ customer-attribute-editor:nth-of-type(3) .attribute-editor-header{
 	padding: 10px 25px;
 	line-height: 22px;
 	color: $default-font-color;
+
+	label{
+	  margin-right: 12px;
+	}
   }
 }
