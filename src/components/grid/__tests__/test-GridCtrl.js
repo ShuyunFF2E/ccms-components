@@ -65,7 +65,15 @@ describe('GridCtrl', () => {
 
 		assert.isTrue(gridCtrl.isEntitySelected({name: 'kuitos'}));
 		assert.isFalse(gridCtrl.isEntitySelected({name: 'kuitosx'}));
+	});
 
+	it('$allSelected should auto change', () => {
+
+		gridCtrl.opts.data = [{name: 'kuitos'}];
+		assert.isTrue(gridCtrl.$allSelected);
+
+		gridCtrl.opts.data = [{name: 'kuitos'}, {age: 10}];
+		assert.isFalse(gridCtrl.$allSelected);
 	});
 
 });
