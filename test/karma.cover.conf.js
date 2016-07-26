@@ -9,7 +9,7 @@ var base = require('./karma.base.conf');
 module.exports = function (config) {
 
 	var opts = Object.assign(base, {
-		browsers: ['Chrome'],
+		browsers: ['PhantomJS'],
 		reporters: ['mocha', 'coverage'],
 		coverageReporter: {
 			reporters: [
@@ -20,6 +20,7 @@ module.exports = function (config) {
 	});
 
 	opts.singleRun = true;
+	opts.files.unshift('../node_modules/babel-polyfill/browser.js');
 
 	opts.webpack.module.postLoaders = [
 		{

@@ -48,7 +48,6 @@ module.exports = {
 			emitError: true,
 			formatter: require('eslint-friendly-formatter')
 		},
-
 		module: {
 			preLoaders: [{
 				test: /\.js$/,
