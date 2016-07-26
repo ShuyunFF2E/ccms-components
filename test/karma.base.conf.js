@@ -7,15 +7,6 @@
 var path = require('path');
 var loaders = require('../webpack-common-loaders');
 
-var NODE_ENV = process.env.NODE_ENV;
-
-var preLoaders = (NODE_ENV === 'dev') ? [{
-	test: /\.js$/,
-	loader: 'eslint-loader',
-	exclude: /node_modules/,
-	include: [path.join(__dirname, '../src')]
-}] : [];
-
 module.exports = {
 
 	// base path that will be used to resolve all patterns (eg. files, exclude)
@@ -59,7 +50,12 @@ module.exports = {
 		},
 
 		module: {
-			preLoaders: preLoaders,
+			preLoaders: [{
+				test: /\.js$/,
+				loader: 'eslint-loader',
+				exclude: /node_modules/,
+				include: [path.join(__dirname, '../src')]
+			}],
 			loaders: loaders
 		}
 

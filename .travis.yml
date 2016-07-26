@@ -2,8 +2,5 @@
 language: node_js
 node_js:
   - 6.2.0 # lastest
-install:
-  - npm install -g codecov
 script:
-  - npm run lint
-  - codecov
+  - cat ./test/coverage/lcov.info | ./node_modules/.bin/codecov
