@@ -10,7 +10,7 @@ module.exports = function (config) {
 
 	var opts = Object.assign(base, {
 		browsers: ['PhantomJS'],
-		reporters: ['mocha', 'coverage'],
+		reporters: ['progress', 'coverage'],
 		coverageReporter: {
 			reporters: [
 				{type: 'lcov', dir: './coverage', subdir: '.'},

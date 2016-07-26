@@ -1,6 +1,7 @@
 # CCMS Components 
 [![Build Status](https://img.shields.io/travis/ShuyunFF2E/ccms-components/master.svg?style=flat)](https://travis-ci.org/ShuyunFF2E/ccms-components) 
 [![npm version](https://img.shields.io/npm/v/ccms-components.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
+[![npm downloads](https://img.shields.io/npm/dt/ccms-components.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
 [![coverage](https://img.shields.io/codecov/c/github/ShuyunFF2E/ccms-components.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
 [组件 API 文档](http://shuyunff2e.github.io/ccms-components/)
 
