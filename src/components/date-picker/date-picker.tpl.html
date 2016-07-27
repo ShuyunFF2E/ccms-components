@@ -6,6 +6,8 @@
 					 name="year"
 					 placeholder="YYYY"
 					 maxlength="4"
+					 ondragstart="return false;"
+					 ondrop="return false;"
 					 ng-model="ctrl.parts.year"
 					 ng-min="0"
 					 ng-max="9999"
@@ -17,6 +19,8 @@
 					 name="month"
 					 placeholder="MM"
 					 maxlength="2"
+					 ondragstart="return false;"
+					 ondrop="return false;"
 					 ng-model="ctrl.parts.month"
 					 ng-min="1"
 					 ng-max="12"
@@ -28,6 +32,8 @@
 					 name="date"
 					 placeholder="DD"
 					 maxlength="2"
+					 ondragstart="return false;"
+					 ondrop="return false;"
 					 ng-model="ctrl.parts.date"
 					 ng-min="1"
 					 ng-max="ctrl.calDateMax()"
@@ -42,6 +48,8 @@
 						 name="hour"
 						 placeholder="hh"
 						 maxlength="2"
+						 ondragstart="return false;"
+						 ondrop="return false;"
 						 ng-model="ctrl.parts.hour"
 						 ng-min="0"
 						 ng-max="23"
@@ -53,6 +61,8 @@
 						 name="minute"
 						 placeholder="mm"
 						 maxlength="2"
+						 ondragstart="return false;"
+						 ondrop="return false;"
 						 ng-model="ctrl.parts.minute"
 						 ng-min="0"
 						 ng-max="59"
@@ -64,6 +74,8 @@
 						 name="second"
 						 placeholder="ss"
 						 maxlength="2"
+						 ondragstart="return false;"
+						 ondrop="return false;"
 						 ng-model="ctrl.parts.second"
 						 ng-min="0"
 						 ng-max="59"
@@ -78,7 +90,6 @@
 					ng-click="ctrl.clearValue($event)"></span>
 
 		<span class="date-picker-icon date-picker-icon-calendar iconfont icon-calendar"></span>
-
 	</form>
 
 	<calendar />
