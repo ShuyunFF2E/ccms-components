@@ -17,6 +17,7 @@ var cssNanoCommonOpts = {
 	minifyGradients: true
 };
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var loaders = require('./webpack-common-loaders');
 
 module.exports = {
 	devtool: 'cheap-source-map',
@@ -82,50 +83,6 @@ module.exports = {
 				include: path.join(__dirname, 'src')
 			}
 		],
-
-		loaders: [
-			{
-				test: /\.js?$/,
-				loaders: ['babel'],
-				exclude: /(node_modules|bower_components)/,
-				include: [path.join(__dirname, 'src'), path.join(__dirname, 'demo')]
-			},
-			{
-				test: /\.html$/,
-				loader: 'html',
-				query: {interpolate: true},
-				exclude: /(node_modules|bower_components)/,
-				include: path.join(__dirname, 'src')
-			},
-			{
-				test: /\.(sc|c)ss$/,
-				loader: ExtractTextPlugin.extract('style', 'css?-minimize!postcss!resolve-url!sass?sourceMap'),
-				exclude: /(node_modules|bower_components)/
-			},
-			{
-				test: /\.(jpe?g|png|gif)$/i,
-				loaders: [
-					'file?hash=sha512&digest=hex&name=[hash:8].[ext]',
-					'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-				]
-			},
-			{
-				test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=15000&mimetype=application/font-woff&prefix=fonts'
-			},
-			{
-				test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-				loader: 'url?limit=15000&mimetype=application/octet-stream&prefix=fonts'
-			},
-			{
-				test: /\.eot(\?#\w+)?$/,
-				loader: 'url?limit=15000&mimetype=application/vnd.ms-fontobject&prefix=fonts'
-			},
-			{
-				test: /\.svg(#\w+)?$/,
-				loader: 'url?limit=15000&mimetype=image/svg+xml&prefix=fonts'
-			}
-
-		]
+		loaders: loaders
 	}
 };

@@ -122,6 +122,9 @@ export default class Modal extends Popup {
 	close() {
 		this.element.removeChild(this._modalContainer || this._confirmContainer);
 
+		window.removeEventListener('resize', this._resizeModal);
+		window.removeEventListener('hashchange', this.close);
+
 		// force firefox to repaint for attaching trasitionend/animationend event
 		if (isFirefox) {
 			this.element.offsetHeight;
@@ -135,9 +138,6 @@ export default class Modal extends Popup {
 			if (this.element.$scope && typeof this.element.$scope.$destroy === 'function') {
 				this.element.$scope.$destroy();
 			}
-
-			window.removeEventListener('resize', this._resizeModal);
-			window.removeEventListener('hashchange', this.close);
 
 			this.destroy();
 		});

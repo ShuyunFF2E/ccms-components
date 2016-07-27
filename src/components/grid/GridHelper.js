@@ -36,13 +36,7 @@ export default {
 			headerTpl: null, // 表头模板,允许 字符串 or 模板url
 			cellTpl: null, // 表格元素模板,允许 字符串 or 模板url
 			emptyTipTpl: null,  // 表格为空时的提示 允许 字符串 or 模板url
-			pager: {
-				totals: 0,  // 总条数
-				totalPages: 1,  // 总页数
-				pageNum: 1,  // 当前页码
-				pageSize: 20, // 每页大小
-				pageSizeList: [10, 15, 20, 30, 50]
-			}
+			pager: null // 分页配置 @see pagination component
 		};
 
 		return Object.assign(gridOptions, Object.assign(DEFAULT_CONFIGS, gridOptions));

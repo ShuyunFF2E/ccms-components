@@ -25,7 +25,7 @@ function contains(container, collection) {
  * 从集合中获取entity的index,找不到返回-1
  */
 function findEntity(collection, entity) {
-	return collection.findIndex(item => entity === item || angular.equals(item, entity));
+	return collection.findIndex(item => angular.equals(item, entity));
 }
 
 const PLACEHOLDER = '{::cell-placeholder}';
@@ -66,9 +66,9 @@ export default class GridCtrl {
 			.then(() => this.onRefresh && this.onRefresh({opts}));
 	}
 
-	selectAll(allSelected, collection) {
+	switchSelectAll(allSelected, selectedCollection) {
 
-		collection.forEach(entity => {
+		selectedCollection.forEach(entity => {
 
 			const index = findEntity(this.selectedItems, entity);
 
@@ -84,7 +84,7 @@ export default class GridCtrl {
 		});
 	}
 
-	selectItem(entity, $selected) {
+	switchSelectItem($selected, entity) {
 
 		if ($selected) {
 			this.selectedItems.push(entity);
