@@ -69,6 +69,7 @@ function release() {
 	git subtree split --prefix=docs/_gh_pages -b gh-pages
 	git push -f origin gh-pages:gh-pages
 	git branch -D gh-pages
+	git reset $new_version --hard
 
 	build && publish
 }
