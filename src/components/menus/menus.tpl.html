@@ -9,7 +9,7 @@
 
     <div class="retrack-shop"
          ng-if="menus.isShowShopInfo"
-         ng-click="menus.shopShow=!menus.shopShow">
+         ng-click="menus.showShopSelect()">
         <span></span>
     </div>
     <!-- menus收起 end -->
@@ -49,9 +49,10 @@
 
     <!-- shop-select -->
     <shop-select collapsed="menus.shopShow"
+                 is-init="menus.isInitShopSelect"
                  ng-if="menus.isShowShopInfo"
                  shop-info="menus.active"
                  placeholder="menus.searchPlaceholder"
-                 shop-list="menus.shopList">
+                 shop-source="menus.shopSource">
     </shop-select>
 </div>
