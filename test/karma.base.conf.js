@@ -6,6 +6,13 @@
 
 var path = require('path');
 var loaders = require('../webpack-common-loaders');
+loaders.push(
+	{
+		test: /\.(sc|c)ss$/,
+		loaders: ['style', 'css', 'postcss', 'resolve-url', 'sass?sourceMap'],
+		exclude: /(node_modules|bower_components)/
+	}
+);
 
 module.exports = {
 
