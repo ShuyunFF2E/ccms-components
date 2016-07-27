@@ -7,4 +7,4 @@ lib
 dist/
 docs/_gh_pages/
 dev-server-path
-
+coverage

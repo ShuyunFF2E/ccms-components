@@ -7,6 +7,13 @@ var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var loaders = require('./webpack-common-loaders');
+loaders.push(
+	{
+		test: /\.(sc|c)ss$/,
+		loaders: ['style', 'css', 'postcss', 'resolve-url', 'sass?sourceMap'],
+		exclude: /(node_modules|bower_components)/
+	}
+);
 
 module.exports = {
 	devtool: 'source-map',

@@ -19,6 +19,14 @@ var cssNanoCommonOpts = {
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 var loaders = require('./webpack-common-loaders');
 
+loaders.push(
+	{
+		test: /\.(sc|c)ss$/,
+		loader: ExtractTextPlugin.extract('style', 'css?-minimize!postcss!resolve-url!sass?sourceMap'),
+		exclude: /(node_modules|bower_components)/
+	}
+);
+
 module.exports = {
 	devtool: 'cheap-source-map',
 	entry: {
