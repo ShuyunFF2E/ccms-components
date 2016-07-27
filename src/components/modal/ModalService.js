@@ -40,7 +40,7 @@ export default class ModalService {
 	 *
 	 * @returns {Modal}
 	 */
-	modal({scope, title, style, fullscreen = false, hasFooter = true, body, footer, locals, controller, controllerAs = '$ctrl', bindings, onClose = noop}) {
+	modal({scope, title, style, fullscreen = false, hasFooter = true, body, uid, __body, footer, locals, controller, controllerAs = '$ctrl', bindings, onClose = noop}) {
 
 		let modalElement = angular.element(modalTemplate);
 		let modalHTMLElement = modalElement[0];
@@ -55,8 +55,9 @@ export default class ModalService {
 		let modalInstance = new Modal(modalHTMLElement, renderDeferred);
 
 		// 从配置中获取 body/footer 模版
+		// 私有属性 __body 允许配置字符串模板
 		let tplPromises = {
-			bodyTpl: this._$templateRequest(body),
+			bodyTpl: __body ? this._$q.resolve(__body) : this._$templateRequest(body),
 			footerTpl: footer ? this._$templateRequest(footer) : this._$q.resolve(null)
 		};
 		this._$q.all(tplPromises).then(({bodyTpl, footerTpl}) => {
@@ -65,6 +66,7 @@ export default class ModalService {
 			modalScope.title = title;
 			modalScope.style = style;
 			modalScope.fullscreen = fullscreen;
+			modalScope.uid = uid;
 
 			// 为模板scoep添加方法
 			modalScope.$ok = modalInstance.ok;
