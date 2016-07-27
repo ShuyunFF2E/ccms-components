@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1467968108'); /* IE9*/
-  src: url('iconfont.eot?t=1467968108#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1467968108') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1467968108') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1467968108#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1469430777'); /* IE9*/
+  src: url('iconfont.eot?t=1469430777#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1469430777') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1469430777') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1469430777#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -15,8 +15,10 @@
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-phone:before { content: "\e655"; }
 .icon-upload:before { content: "\e631"; }
 .icon-recover:before { content: "\e633"; }
+.icon-browser:before { content: "\e656"; }
 .icon-clear:before { content: "\e61f"; }
 .icon-money:before { content: "\e611"; }
 .icon-question-mark:before { content: "\e601"; }
@@ -40,7 +42,6 @@
 .icon-click-rate:before { content: "\e62b"; }
 .icon-page-view:before { content: "\e62c"; }
 .icon-add:before { content: "\e62d"; }
-.icon-menu:before { content: "\e62e"; }
 .icon-wechat:before { content: "\e61e"; }
 .icon-shop:before { content: "\e604"; }
 .icon-finish:before { content: "\e638"; }
@@ -97,3 +98,16 @@
 .icon-folder:before { content: "\e64f"; }
 .icon-add-folder:before { content: "\e650"; }
 .icon-more:before { content: "\e651"; }
+.icon-tag:before { content: "\e652"; }
+.icon-bell:before { content: "\e653"; }
+.icon-editorial-background:before { content: "\e654"; }
+.icon-able:before { content: "\e657"; }
+.icon-diable:before { content: "\e658"; }
+.icon-export:before { content: "\e659"; }
+.icon-view-list:before { content: "\e65a"; }
+.icon-set-up:before { content: "\e62e"; }
+.icon-basic-information:before { content: "\e65b"; }
+.icon-interaction:before { content: "\e65c"; }
+.icon-view-chart:before { content: "\e65d"; }
+.icon-shoppingcart:before { content: "\e65e"; }
+.icon-customer:before { content: "\e65f"; }
