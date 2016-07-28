@@ -41,7 +41,8 @@ export default {
 				totalPages: 1,  // 总页数
 				pageNum: 1,  // 当前页码
 				pageSize: 20, // 每页大小
-				pageSizeList: [10, 15, 20, 30, 50]
+				pageSizeList: [10, 15, 20, 30, 50],
+				pageSizeListDisabled: true
 			} // 分页配置 @see pagination component
 		};
 
