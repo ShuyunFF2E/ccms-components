@@ -351,7 +351,13 @@ const closestAttrParent = (element, attrName) => {
 
 const isContentOverflow = (element, content) => {
 
-	// 创建临时span
+	// -创建临时 element
+	let cloneElement = element.cloneNode(true);
+	cloneElement.style.display = 'inline-block';
+	cloneElement.style.opacity = 0;
+	document.body.appendChild(cloneElement);
+
+	// 创建临时 span
 	let span = document.createElement('span');
 	const computedStyle = window.getComputedStyle(element);
 
@@ -362,13 +368,12 @@ const isContentOverflow = (element, content) => {
 	span.style.fontFamily = computedStyle.getPropertyValue('font-family');
 	document.body.appendChild(span);
 
-	const paddingSides = chopStyle2Num(computedStyle.getPropertyValue('padding-left')) + chopStyle2Num(computedStyle.getPropertyValue('padding-right'));
-
-	// 得到文本是否超出的flag
-	const isContentOverflow = offset(span).width > (offset(element).width - paddingSides);
+	// 得到文本是否超出的 flag
+	const isContentOverflow = offset(span).width > (offset(cloneElement).width);
 
 	// 移除临时元素
 	document.body.removeChild(span);
+	document.body.removeChild(cloneElement);
 
 	return isContentOverflow;
 
