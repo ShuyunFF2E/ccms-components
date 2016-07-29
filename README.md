@@ -6,7 +6,7 @@
 
 [组件 API 文档](http://shuyunff2e.github.io/ccms-components/)
 
-开发指南 [Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34)
+开发指南 [Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34) [ccms开发指南](https://github.com/ShuyunFF2E/ccms-angular-styleguide)
 
 ## 安装与使用
 
@@ -47,9 +47,17 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 externals: {'ccms-components': '\'ccms.components\''}
 ```
 
-## 参与开发
+## 贡献代码
 
-### 基本的开发步骤
+### 组件库规范
+在遵照基本的开发指南基础上,组件库额外的规范:
+
+1. 需要对外暴露的服务,以 `$` 为前缀,如 `$modal`
+2. 组件库组件均以 `cc-xx` 形式提供,如`cc-grid`. (cc => ccms-component 首字母)
+3. 提交的组件, Controller 部分需同时提交单元测试,不符合无法通过review。
+4. 其他规范遵照目前已有组件的风格。
+
+### 开发步骤
 
 1. ccms-components 组内的人员直接 **clone** 本项目；其它人员请 **fork** 本项目。
 
