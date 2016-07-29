@@ -42,7 +42,7 @@ export default {
 				pageNum: 1,  // 当前页码
 				pageSize: 20, // 每页大小
 				pageSizeList: [10, 15, 20, 30, 50],
-				pageSizeListDisabled: true
+				pageSizeListDisabled: false
 			} // 分页配置 @see pagination component
 		};
 
@@ -90,7 +90,7 @@ export default {
 					pager.pageSize = transformedData.pageSize;
 					pager.totals = transformedData.totals;
 					pager.totalPages = Math.ceil((transformedData.totals || 0) / pager.pageSize);
-
+					console.log(pager);
 				});
 
 		} else {

@@ -46,9 +46,6 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			transformer: {
 				pageNum: 'currentPage',
 				totals: 'totalCount'
-			},
-			pager: {
-
 			}
 			// transformer: function (res) {
 			// 	console.log(res);
