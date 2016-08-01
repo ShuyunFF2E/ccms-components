@@ -68,6 +68,9 @@
 					confirm-button="true"
 					mapping="ctrl.fieldsMap">
 			</dropdown-multiselect>
+			<div style="margin: 0.5em 0;">
+				<button class="btn-ok" ng-click="ctrl.setList()">设置新值</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -92,6 +95,9 @@
 			];
 			this.setValue = function(newValue) {
 				this.value2 = newValue;
+			};
+			this.setList = function() {
+				this.value4 = ['nj', 'sh'];
 			};
 
 			this.datalist2 = ['北京', '上海', '深圳', '广州'];
