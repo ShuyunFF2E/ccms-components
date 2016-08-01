@@ -39,13 +39,13 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 <script src='/node_modules/ccms-components.js'></script>
 ```
 
-### 避免重复打包
+> #### 使用 ccms-portal 的项目不需要重复打包 ccms-components
 
-由于 ccms-portal 中已经引入 ccms-components，所以相关项目在使用 webpack 打包时可忽略 ccms-components，配置如下：
+> 由于 ccms-portal 中已经引入 ccms-components，所以相关项目在使用 webpack 打包时可忽略 ccms-components，配置如下：
 
-```js
-externals: {'ccms-components': '\'ccms.components\''}
-```
+> ```js
+> externals: {'ccms-components': '\'ccms.components\''}
+> ```
 
 ## 参与开发
 
@@ -77,7 +77,9 @@ externals: {'ccms-components': '\'ccms.components\''}
 
 提交代码的 commit message 和 pull request 标题需按如下格式：
 
-`<type>(<scope>): <subject>`
+```
+<type>(<scope>): <subject>
+```
 
 * `<type>`，变更的类型，可用的类型有以下几种：
 	- **feat**，A new feature
