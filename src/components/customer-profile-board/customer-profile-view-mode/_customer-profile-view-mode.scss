@@ -1,7 +1,7 @@
 @import "../param";
 
 .customer-profile-view-mode{
-  height: 400px;
+  height: $modal-body-height;
   position: relative;
 
   .customer-label{

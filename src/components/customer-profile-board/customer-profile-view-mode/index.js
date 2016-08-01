@@ -14,6 +14,7 @@ const CustomerProfileViewMode = {
 	bindings: {
 		userLabels: '<',
 		attributesSetting: '<',
+		attributesDataMap: '<',
 		changeToSpecificAttributeBlock: '&'
 	},
 	controller,

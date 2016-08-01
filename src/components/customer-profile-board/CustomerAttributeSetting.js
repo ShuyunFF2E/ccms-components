@@ -140,11 +140,12 @@ const customer = {
 				type: 'text',
 				validate: ['/^\\d{1, 6}$/']
 			}],
-			value: '浙江省绍兴市天镜南苑21幢206室 3200000',
 			defaultValue: '无',
 			editable: true
 		}]
-	}, {
+	}
+		/* 自定义属性，暂不提供
+		, {
 		title: '更多个人信息',
 		name: 'personal',
 		attributeList: [{
@@ -193,7 +194,8 @@ const customer = {
 			}],
 			isInListMode: true
 		}]
-	}]
+	}*/
+	]
 };
 
 const consumer = {
@@ -236,6 +238,7 @@ const consumer = {
 	}, {
 		title: 'RFM指标',
 		name: 'rfm',
+		type: 'List',
 		attributeList: [{
 			attribute: 'trade_first_time',
 			name: '第一次购买时间',
@@ -326,7 +329,7 @@ const consumer = {
 			defaultValue: '',
 			editable: false
 		}, {
-			attribute: '',
+			attribute: 'trade_order_discount_fee',
 			name: '订单级优惠费用',
 			defaultValue: '',
 			editable: false
@@ -383,6 +386,22 @@ const other = {
 			defaultValue: '',
 			editable: false,
 			isInListMode: true
+		}]
+	}, {
+		title: '社交绑定',
+		name: 'social',
+		attributeList: [{
+			attribute: 'nickName',
+			name: '微信昵称',
+			defaultValue: '未开通',
+			editable: false,
+			isInListMode: false
+		}, {
+			attribute: 'sinawbUserId',
+			name: '微博账号',
+			defaultValue: '未开通',
+			editable: false,
+			isInListMode: false
 		}]
 	}]
 };

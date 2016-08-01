@@ -12,7 +12,8 @@ const CustomerAttributeEditor = {
 	template,
 	controller,
 	bindings: {
-		attributeSetting: '<'
+		attributeSetting: '<',
+		attributesDataMap: '<'
 	}
 };
 

@@ -23,13 +23,52 @@ customer-attribute-editor:nth-of-type(3) .attribute-editor-header{
 	color: $white;
   }
 
+  .attribute-block{
+	margin: 0;
+
+	.attribute-block-title{
+	  height: 30px;
+	  line-height: 30px;
+	  border-bottom: 1px solid #ddd;
+	  margin-bottom: 6px;
+	}
+
+	.attribute-block-selector{
+	  float: right;
+	  width: 100px;
+
+	  .dropdown-select .dropdown-select-input-wrap{
+		border: 0;
+	  }
+
+	  .dropdown-select .dropdown-panel .dropdown-list{
+		border: 0;
+		overflow: inherit;
+	  }
+
+	  input{
+		margin-top: 3px;
+		height: 26px;
+		line-height: 26px;
+		color: #00aaf1;
+	  }
+	}
+  }
+
   .attribute-editor-content{
-	padding: 10px 25px;
+	padding: 10px;
 	line-height: 22px;
 	color: $default-font-color;
 
+	.attribute-block-item{
+	  margin: 0;
+	}
+
 	label{
-	  margin-right: 12px;
+	  display: inline-block;
+	  margin-right: 15px;
+	  width: 136px;
+	  text-align: right;
 	}
   }
 }

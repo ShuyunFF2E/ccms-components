@@ -23,7 +23,7 @@ export default class CustomerAttributeNote {
 	 */
 	expandAttributeList(attributeList) {
 		let tmpList = [];
-		attributeList.forEach(attribute => (typeof attribute.attribute !== 'undefined') ? tmpList.push(attribute) : (tmpList = [...tmpList, ...this.getAttributeList(attribute.attributes)]));
+		attributeList.forEach(attribute => (typeof attribute.attribute !== 'undefined') ? tmpList.push(attribute) : (tmpList = [...tmpList, ...this.expandAttributeList(attribute.attributes)]));
 		return tmpList;
 	}
 }

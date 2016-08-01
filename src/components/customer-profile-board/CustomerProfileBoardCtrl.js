@@ -7,10 +7,14 @@
 import { Inject } from 'angular-es-utils';
 
 import CustomerAttributeSetting from './CustomerAttributeSetting.js';
+import CustomerProfileBoardService from './CustomerProfileBoardService.js';
 
 @Inject('$element')
 export default class CheckboxController {
 	constructor() {
+		this.CustomerProfileBoardService = new CustomerProfileBoardService();
+		this.customerAttributeSetting = CustomerAttributeSetting;
+
 		this.customerData = {
 			'customerId': 1,
 			'customerName': 'Hugo BOSS',
@@ -19,7 +23,12 @@ export default class CheckboxController {
 			'labels': ['夜猫子', '男性用户', '40-49岁', '上班狗', '喵酱', '旺棍'],
 			'viewType': 'list'
 		};
-		this.customerAttributeSetting = CustomerAttributeSetting;
+
+		const {buyerNick, platCustNo, platId, platShopId} = this.customerInformation;
+
+		this.CustomerProfileBoardService
+			.queryCustomerProfileData(buyerNick, platCustNo, platId, platShopId)
+			.then(data => (this.attributesDataMap = this.CustomerProfileBoardService.generateAttributeDataMap(data)));
 	}
 
 	/**

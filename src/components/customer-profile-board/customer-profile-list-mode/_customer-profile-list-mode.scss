@@ -5,12 +5,12 @@ $left-panel-item-background: #fdfdfd;
 $left-panel-item-background-active: #c7cbd5;
 
 .customer-profile-list-mode{
-  height: 400px;
+  height: $modal-body-height;
 
   .left-panel-list{
 	float: left;
 	width: 154px;
-	height: 400px;
+	height: 100%;
 	background: $left-panel-list-background;
 	padding: 20px 15px;
   }
@@ -40,7 +40,7 @@ $left-panel-item-background-active: #c7cbd5;
   .right-panel-block{
 	float: left;
 	width: 486px;
-	height: 400px;
+	height: 100%;
 	padding: 20px 15px 0;
 	overflow: auto;
   }
