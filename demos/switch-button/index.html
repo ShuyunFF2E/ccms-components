@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>switch-button</title>
+	<style>
+		#demo2 .switch-button-block{
+			font-size: 18px;
+		}
+		#demo3 .switch-button-block{
+			width: 8em;
+		}
+	</style>
+</head>
+<body ng-app="app" ng-controller="ctrl" style="padding: 20px">
+<h1>Switch button Demo</h1>
+<p>Support Attribute</p>
+<ul style="list-style: disc">
+	<li style="list-style: inside">state</li>
+	<li style="list-style: inside">open-text</li>
+	<li style="list-style: inside">close-text</li>
+</ul>
+
+<div>
+	<h2>Demo</h2>
+	<p>no params.</p>
+	<cc-switch-button></cc-switch-button>
+
+	<p>with state: {{demo}}</p>
+	<cc-switch-button state="demo"></cc-switch-button>
+
+	<p>If you want change component size, rewrite <b>font-size</b> of the 'switch-button-block' class.</p>
+	<cc-switch-button id="demo2"></cc-switch-button>
+
+	<p>If you want change component width, rewrite <b>width</b> of the 'switch-button-block' class. Using 'em' unit is recommended.</p>
+	<cc-switch-button id="demo3" open-text="long-words" close-text="short-words"></cc-switch-button>
+</div>
+
+<script src="/components.js"></script>
+
+<script src="index.js"></script>
+</body>
+</html>
