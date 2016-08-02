@@ -8,20 +8,26 @@
 
 import angular from 'angular';
 
-import './style.scss';
-import template from './template.html';
-import controller from './controller';
+import './_switch.scss';
+import template from './switch.tpl.html';
+import controller from './SwitchCtrl';
 
 const componentSetting = {
 	template,
 	bindings: {
-		state: '=?',
+		ngModel: '<',
+		ngTrueValue: '<?',
+		ngFalseValue: '<?',
+		ngDisabled: '<?',
 		openText: '@?',
 		closeText: '@?'
+	},
+	require: {
+		ngModelController: '?ngModel'
 	},
 	controller
 };
 
-export default angular.module('ebm.components.directive.switchButton', [])
-	.component('ccSwitchButton', componentSetting)
+export default angular.module('ccms.components.switch', [])
+	.component('ccSwitch', componentSetting)
 	.name;

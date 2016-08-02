@@ -30,7 +30,7 @@ import dropdownMultiselect from './dropdown/dropdown-multiselect';
 import tabset from './tabset';
 import title from './title';
 import radio from './radio';
-import switchButton from './switch-button';
+import switchButton from './switch';
 
 export default angular
 	.module('ccms.components.ui', [

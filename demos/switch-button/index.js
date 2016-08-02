@@ -12,7 +12,7 @@
 		.module('app', ['ccms.components'])
 		.controller('ctrl', function ($scope) {
 
-			$scope.demo = false;
+			$scope.demo1 = false;
 		});
 
 })(window.angular);
