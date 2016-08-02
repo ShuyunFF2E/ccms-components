@@ -1,0 +1,69 @@
+$defaultFontSize: 12px;
+$minWidth: 3.67em !default;
+$minHeight: 1.67em !default;
+$radioButtonColor: #f1f1f1;
+$closeColor: #c2c2c2;
+$openColor: #2296e1;
+
+cc-switch-button{
+  * {
+	box-sizing: border-box;
+  }
+}
+
+.switch-button-block{
+  align-items: center;
+  background-color: $closeColor;
+  border-radius: $minHeight / 2;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: $defaultFontSize;
+  width: $minWidth;
+  height: $minHeight;
+  min-width: $minWidth;
+  min-height: $minHeight;
+  justify-content: space-between;
+  transition: all .5s ease-in-out;
+
+  &:hover{
+    cursor: pointer;
+  }
+
+  &.active{
+    background-color: $openColor;
+
+    .open-text{
+      width: 100%;
+    }
+
+    .close-text{
+      width: 0;
+    }
+  }
+
+  .open-text{
+    width: 0;
+  }
+
+  .close-text{
+    width: 100%;
+  }
+
+  .switch-button{
+    flex: none;
+    background-color: $radioButtonColor;
+    border-radius: 50%;
+    width: $minHeight - .12;
+    height: $minHeight - .12;
+    margin: .1em;
+  }
+
+  .switch-text{
+    margin: .1em 0;
+    text-align: center;
+    transition: all .5s ease-in-out;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
