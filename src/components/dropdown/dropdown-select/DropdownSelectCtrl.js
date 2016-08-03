@@ -1,6 +1,17 @@
 import angular from 'angular';
 import {Inject, Bind} from 'angular-es-utils';
 
+const readonlySkip = (target, name, descriptor) => {
+	const originalMethod = descriptor.value;
+	descriptor.value = function() {
+		if (this.readonly) {
+			return;
+		}
+		return originalMethod.call(this);
+	};
+	return descriptor;
+};
+
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
 	// 选项 item 字段映射
@@ -26,9 +37,26 @@ export default class DropdownSelectCtrl {
 	}
 
 	$onInit() {
-		let scope = this.getScope();
+		this._prepareOptions();
+		this._prepareWatches();
+	}
 
-		this.mapping = Object.assign({}, DropdownSelectCtrl.defaultMapping, this.mapping);
+	$postLink() {
+		this._prepareMouseEvents();
+		this._prepareKeyboardEvents();
+	}
+
+	_prepareOptions() {
+		const defaultMapping = DropdownSelectCtrl.defaultMapping;
+		this.mapping = Object.assign({}, defaultMapping, this.mapping);
+
+		if (typeof this.readonly === 'undefined') {
+			this.readonly = false;
+		}
+	}
+
+	_prepareWatches() {
+		const scope = this.getScope();
 
 		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
 			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
@@ -42,11 +70,14 @@ export default class DropdownSelectCtrl {
 				this.setModelValue(this.model);
 			}
 		});
-	}
 
-	$postLink() {
-		this._prepareMouseEvents();
-		this._prepareKeyboardEvents();
+		if (this.readonly) {
+			scope.$watch(() => this.isOpen, (openState, oldOpenstate) => {
+				if (openState) {
+					this.isOpen = false;
+				}
+			});
+		}
 	}
 
 	_prepareMouseEvents() {
@@ -177,10 +208,12 @@ export default class DropdownSelectCtrl {
 		scope.$root.$$phase || scope.$apply();
 	}
 
+	@readonlySkip
 	open() {
 		this.isOpen = true;
 	}
 
+	@readonlySkip
 	close() {
 		this.isOpen = false;
 	}

@@ -17,6 +17,7 @@ const dropdownSelectDDO = {
 		mapping: '<?',
 		datalist: '<',
 		searchable: '<?',
+		readonly: '<?',
 		placeholder: '@?'
 	},
 	bindToController: true

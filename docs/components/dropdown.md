@@ -32,6 +32,7 @@ group: components
 	* `displayField`: `String` (default: 'title') 数据源显示字段映射
 * `placeholder`: `String` (default: '') 提示文本
 * `searchable`: `Boolean` (default: false) 启用搜索功能
+* `readonly` `Boolean` (default: false) 启用只读模式
 
 ### Examples
 
