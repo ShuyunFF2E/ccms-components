@@ -1,17 +1,6 @@
 import angular from 'angular';
 import {Inject, Bind} from 'angular-es-utils';
 
-const readonlySkip = (target, name, descriptor) => {
-	const originalMethod = descriptor.value;
-	descriptor.value = function() {
-		if (this.readonly) {
-			return;
-		}
-		return originalMethod.call(this);
-	};
-	return descriptor;
-};
-
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
 	// 选项 item 字段映射
@@ -208,12 +197,10 @@ export default class DropdownSelectCtrl {
 		scope.$root.$$phase || scope.$apply();
 	}
 
-	@readonlySkip
 	open() {
 		this.isOpen = true;
 	}
 
-	@readonlySkip
 	close() {
 		this.isOpen = false;
 	}
