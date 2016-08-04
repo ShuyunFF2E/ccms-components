@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 
-	<!--<link rel="stylesheet" href="/dist/ccms-components.min.css">-->
+    <!--<link rel="stylesheet" href="/dist/ccms-components.min.css">-->
 
-	<style>
+    <style>
 
-		main {
-			display: block;
-			width: 100%;
-			min-height: 100%;
-		}
+        main {
+            display: block;
+            width: 100%;
+            min-height: 100%;
+        }
 
-		main grid {
-			min-height: 500px;
-			height: 800px;
-		}
+        main grid {
+            min-height: 500px;
+            height: 800px;
+        }
 
-		main .pager-grid, main .data-grid {
-			display: inline-block;
-			width: 40%;
-			overflow: auto;
-		}
+        main .pager-grid, main .data-grid {
+            display: inline-block;
+            width: 40%;
+            overflow: auto;
+        }
 
-		.info span {
-			display: block;
-		}
+        .info span {
+            display: block;
+        }
 
 		.demo {
 			margin: .5em;
@@ -40,22 +40,23 @@
 
 <main>
 
-	<div class="pager-grid">
+    <div class="pager-grid">
 
-		<strong style="display: block;">表格宽高由用户设定,默认继承自父容器</strong>
-		<button type="button" ng-click="app.refreshGrid()">refresh</button>
-		<grid opts="app.pagerGridOptions" selected-items="app.selectedItems" type="selectable" on-refresh="app.onRefresh(opts)" style="height: 400px;width: 600px;"></grid>
+        <strong style="display: block;">表格宽高由用户设定,默认继承自父容器</strong>
+        <button type="button" ng-click="app.refreshGrid()">refresh</button>
+        <grid opts="app.pagerGridOptions" selected-items="app.selectedItems" type="selectable"
+              on-refresh="app.onRefresh(opts)" style="height: 400px;width: 600px;"></grid>
 
-		<div class="info">
+        <div class="info">
 
-			<span>查询参数</span>
-			<span ng-bind="app.pagerGridOptions.queryParams|json"></span>
+            <span>查询参数</span>
+            <span ng-bind="app.pagerGridOptions.queryParams|json"></span>
 
-			<span>选中数据</span>
-			<span ng-bind="app.selectedItems|json"></span>
-		</div>
+            <span>选中数据</span>
+            <span ng-bind="app.selectedItems|json"></span>
+        </div>
 
-	</div>
+    </div>
 
 	<div class="data-grid">
 

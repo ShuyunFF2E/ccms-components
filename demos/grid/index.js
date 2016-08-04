@@ -38,10 +38,25 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
-					width: '100px'
+					width: '100px',
+					sort: {
+						prop: 'name',
+						onCompare: (prev, next) => {
+							return prev['name'] > next['name'] ? -1 : 1;
+						}
+					}
 				},
-				{field: 'age', displayName: '年龄', align: 'center'},
-				{field: 'gender', displayName: '性别', align: 'right'}
+				{
+					field: 'age', displayName: '年龄', align: 'center',
+					sort: true
+				},
+				{
+					field: 'gender', displayName: '性别', align: 'right',
+					sort: (pre, next)=> {
+
+						return pre['age'] > next['age'] ? -1 : 1;
+					}
+				}
 			],
 			transformer: {
 				pageNum: 'currentPage',
@@ -71,7 +86,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					displayName: '姓名',
 					align: 'left'
 				},
-				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'age', displayName: '年龄', align: 'center', sort: true},
 				{field: 'gender', displayName: '性别', align: 'right'}
 			],
 			showPagination: false
