@@ -157,4 +157,16 @@ export default class GridCtrl {
 				}
 			});
 	}
+
+	toggleColumnByIndex(index) {
+		const columns = this.opts.columnsDef;
+		const column = columns[index];
+		column.isHidden = !column.isHidden;
+	}
+
+	getShownColumnsCount() {
+		return this.opts.columnsDef.reduce(
+			(count, col) => col.isHidden ? count : count + 1, 0
+		);
+	}
 }

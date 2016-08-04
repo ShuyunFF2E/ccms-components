@@ -95,6 +95,32 @@ cc-grid {
 				padding-left: 0;
 			}
 		}
+
+		.hidden-columns {
+			position: relative;
+			width: 54px;
+			> span {
+				cursor: pointer;
+			}
+			[cc-dropdown-panel] {
+				position: absolute;
+				right: 1px;
+				z-index: 1;
+				padding: 10px;
+				border: solid 1px #ccc;
+				background-color: #fff;
+				&.hide {
+					display: none !important;
+				}
+				li {
+					white-space: nowrap;
+					cursor: pointer;
+					label {
+						cursor: inherit;
+					}
+				}
+			}
+		}
 	}
 
 	.column-sort {
