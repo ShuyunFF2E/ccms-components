@@ -1,4 +1,5 @@
 <!--默认的表格body模板-->
-<td ng-repeat="column in $ctrl.opts.columnsDef track by $index" ng-style="{width:column.width}">
+<td ng-repeat="column in $ctrl.columns track by $index" ng-style="{width:column.width}">
 	<grid-cell ng-class="column.align" column="column" entity="entity"></grid-cell>
 </td>
+<td class="hidden-columns" ng-if="$ctrl.opts.hiddenColumns !== false"></td>

@@ -77,4 +77,20 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			showPagination: false
 		};
 
+		this.gridOption3 = {
+
+			externalData: [{name: 'kuitos', age: 10, gender: '男'}, {name: 'xxx', age: 11, gender: '女'}],
+			columnsDef: [
+				{
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
+					displayName: '姓名',
+					align: 'left'
+				},
+				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'gender', displayName: '性别', align: 'right'}
+			],
+			hiddenColumns: ['gender'],
+			showPagination: false
+		};
+
 	});

@@ -32,6 +32,10 @@ const PLACEHOLDER = '{::cell-placeholder}';
 
 export default class GridCtrl {
 
+	constructor() {
+		this.columns = [];
+	}
+
 	$onInit() {
 
 		this.selectedItems = this.selectedItems || [];
@@ -46,6 +50,8 @@ export default class GridCtrl {
 		TplReqHelper.get(cellTpl || GRID_TEMPLATES[type][1]).then(tpl => {
 			this.bodyTemplate = rowCellTemplate.replace(PLACEHOLDER, tpl);
 		});
+
+		this.updateColumns();
 
 		// 刷新页面
 		GridHelper.refresh(this.opts);
@@ -95,6 +101,30 @@ export default class GridCtrl {
 
 	isEntitySelected(entity) {
 		return findEntity(this.selectedItems, entity) !== -1;
+	}
+
+	toggleColumn(field) {
+		// TODO: 至少保留一个显示的列
+		const hiddenColumns = this.opts.hiddenColumns;
+		const index = hiddenColumns.indexOf(field);
+		if (index !== -1) {
+			hiddenColumns.splice(index, 1);
+		} else {
+			hiddenColumns.push(field);
+		}
+		this.updateColumns();
+	}
+
+	updateColumns() {
+		// 记录没有被设置隐藏的列
+		const hiddenColumns = this.opts.hiddenColumns;
+		if (Array.isArray(hiddenColumns)) {
+			this.columns = this.opts.columnsDef.filter(column => {
+				return hiddenColumns.indexOf(column.field) === -1;
+			});
+		} else {
+			this.columns = [...this.opts.columnsDef];
+		}
 	}
 
 }
