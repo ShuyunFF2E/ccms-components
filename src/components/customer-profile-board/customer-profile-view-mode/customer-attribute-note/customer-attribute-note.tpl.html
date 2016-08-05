@@ -4,6 +4,6 @@
 		<span class="note-header-icon" ng-click="$ctrl.changeToSpecificAttributeBlock({ name: $ctrl.customerAttribute.name })"></span>
 	</div>
 	<ul class="note-content">
-		<li class="note-item" ng-repeat="attr in $ctrl.displayAttributeList" ng-bind="attr.name + ': ' + ($ctrl.attributesDataMap[attr.attribute] !== undefined ? $ctrl.attributesDataMap[attr.attribute] : attr.defaultValue)"></li>
+		<li class="note-item" ng-repeat="attr in $ctrl.displayAttributeList" ng-bind="attr.name + ': ' + ($ctrl.customerData[attr.attribute] !== undefined ? $ctrl.customerData[attr.attribute] : attr.defaultValue)"></li>
 	</ul>
 </div>

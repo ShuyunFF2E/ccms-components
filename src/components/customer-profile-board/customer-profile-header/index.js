@@ -10,7 +10,7 @@ import controller from './CustomerProfileHeaderCtrl.js';
 
 const CustomerProfileHeader = {
 	bindings: {
-		customerInfo: '<',
+		customerData: '<',
 		viewMode: '<',
 		changeToView: '&',
 		changeToList: '&'

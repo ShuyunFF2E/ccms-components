@@ -8,15 +8,14 @@ import { Inject } from 'angular-es-utils';
 
 import controller from './CustomerProfileBoardCtrl.js';
 import template from './customer-profile-board.html';
-
 import generatorQueryString from './queryStringSchema.js';
+import { TagsMapping, RfmLabel } from './CustomerAttributeSetting.js';
+
 const MODALTITLESTRING = '客户基本信息';
-const APIADDRESS = 'http://172.18.21.113:8888/fullView';
+const APIADDRESS = 'http://172.18.21.113:8887/fullView';
 
 @Inject('ModalService')
 export default class CustomerProfileBoardService {
-	constructor() {}
-
 	popProfileBoardModal(scope, customerInformation = {}) {
 		const modalOptions = {
 			scope,
@@ -33,8 +32,7 @@ export default class CustomerProfileBoardService {
 		this._ModalService.modal(modalOptions).open();
 	}
 
-	queryCustomerProfileData(buyerNick = '米粒星期天', platCustNo = '123', platId = 'taobao', platShopId = '100094062') {
-		console.log(generatorQueryString(buyerNick, platCustNo, platId, platShopId));
+	queryCustomerProfileData(nickName = '2010ydaiqiong', tenantId = '65879458', shopId = '100094062', platName = 'taobao') {
 		return fetch(
 			APIADDRESS,
 			{
@@ -42,14 +40,56 @@ export default class CustomerProfileBoardService {
 				headers: {
 					'Content-Type': 'application/graphql'
 				},
-				body: generatorQueryString(buyerNick, platCustNo, platId, platShopId)
+				body: generatorQueryString(nickName, tenantId, shopId, platName)
 			})
 			.then(data => data.json());
 	}
 
-	generateAttributeDataMap(data) {
+	generateCustomerData(data = {}) {
+		console.log(data);
+		console.log(Object.keys(data)
+			.map(key => {
+				switch (key) {
+					case 'customer':
+					case 'trade':
+						return data[key].data.data[0];
+					case 'rfm':
+						return { rfm: this.setRfmLabel(data[key].data.data) };
+					case 'tags':
+						return { tags: this.getTagsList(data[key].result) };
+					default:
+						return data[key];
+				}
+			})
+			.reduce((pre, curr) => ({...pre, ...curr}), {}));
 		return Object.keys(data)
-			.map(key => data[key])
+			.map(key => {
+				switch (key) {
+					case 'customer':
+					case 'trade':
+						return data[key].data.data[0];
+					case 'rfm':
+						return Object.assign({ rfm: this.setRfmLabel(data[key].data.data) }, this.getLastRfmItem(data[key].data.data));
+					case 'tags':
+						return { tags: this.getTagsList(data[key].result) };
+					default:
+						return data[key];
+				}
+			})
 			.reduce((pre, curr) => ({...pre, ...curr}), {});
+	}
+
+	getTagsList(tagObj = {}) {
+		return Object.keys(tagObj)
+			.filter(key => +tagObj[key])
+			.map(key => TagsMapping[key]);
+	}
+
+	getLastRfmItem(rfmList = []) {
+		return rfmList.length ? rfmList.sort((prev, next) => prev.period > next.period ? -1 : 1)[rfmList.length - 1] : {};
+	}
+
+	setRfmLabel(rfmList = []) {
+		return rfmList.map(rfm => ({...rfm, period_label: RfmLabel[rfm.period]}));
 	}
 }

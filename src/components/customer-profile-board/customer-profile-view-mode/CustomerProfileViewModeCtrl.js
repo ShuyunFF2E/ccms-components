@@ -19,10 +19,8 @@ const _LABELDISPLAYCONFIG = {
 export default class CustomerProfileViewModeCtrl {
 	constructor() {}
 
-	$postLink() {
-		this._$element.ready(() => {
-			this.generateUserLabels(this.userLabels);
-		});
+	$onChanges(obj) {
+		obj.customerData.currentValue.tags && this.generateUserLabels(this.customerData.tags);
 	}
 
 	/**

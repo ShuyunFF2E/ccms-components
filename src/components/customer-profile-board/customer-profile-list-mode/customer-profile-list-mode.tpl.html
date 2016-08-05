@@ -8,6 +8,6 @@
 		</li>
 	</ul>
 	<div class="right-panel-block">
-		<customer-attribute-editor ng-repeat="attributeSetting in $ctrl.attributesSetting track by $index" attributes-data-map="$ctrl.attributesDataMap" attribute-setting="attributeSetting"></customer-attribute-editor>
+		<customer-attribute-editor ng-repeat="attributeSetting in $ctrl.attributesSetting track by $index" customer-data="$ctrl.customerData" attribute-setting="attributeSetting"></customer-attribute-editor>
 	</div>
 </div>

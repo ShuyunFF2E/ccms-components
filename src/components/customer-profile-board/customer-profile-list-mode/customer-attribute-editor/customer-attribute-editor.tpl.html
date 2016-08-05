@@ -2,16 +2,22 @@
 	<p class="attribute-editor-header" ng-bind="$ctrl.attributeSetting.title"></p>
 	<ul class="attribute-editor-content">
 		<li ng-repeat="attributeBlock in $ctrl.attributeSetting.attributeBlock track by $index">
-			<dl class="attribute-block">
+			<dl class="attribute-block" ng-if="attributeBlock.type !== 'List'">
+				<dt class="attribute-block-title">{{attributeBlock.title}}</dt>
+				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
+					<label ng-bind="attribute.name + ': '"></label>{{$ctrl.customerData[attribute.attribute] !== undefined ? $ctrl.customerData[attribute.attribute] : attribute.defaultValue}}</dd>
+			</dl>
+			<dl class="attribute-block" ng-if="attributeBlock.type === 'List'">
 				<dt class="attribute-block-title">
 					{{attributeBlock.title}}
-					<dropdown-select class="attribute-block-selector" ng-if="attributeBlock.type === 'List'"
-							model="ctrl.value2"
-							datalist="['最近30天', '最近1年']">
+					<dropdown-select class="attribute-block-selector"
+													 model="$ctrl.selectedRfmPeriod"
+													 mapping="$ctrl.rfmSelectorFieldsMap"
+													 datalist="$ctrl.customerData.rfm">
 					</dropdown-select>
 				</dt>
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
-					<label ng-bind="attribute.name + ': '"></label>{{$ctrl.attributesDataMap[attribute.attribute] !== undefined ? $ctrl.attributesDataMap[attribute.attribute] : attribute.defaultValue}}</dd>
+					<label ng-bind="attribute.name + ': '"></label>{{$ctrl.selectedRfm[attribute.attribute] !== undefined ? $ctrl.selectedRfm[attribute.attribute] : attribute.defaultValue}}</dd>
 			</dl>
 		</li>
 	</ul>

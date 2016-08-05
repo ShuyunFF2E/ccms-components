@@ -4,10 +4,10 @@
 		<div class="center-icon-text">意向客户</div>
 	</div>
 	<div class="note-container note-container--left">
-		<customer-attribute-note attributes-data-map="$ctrl.attributesDataMap" customer-attribute="$ctrl.attributesSetting[1]" change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock({name})"></customer-attribute-note>
-		<customer-attribute-note attributes-data-map="$ctrl.attributesDataMap" customer-attribute="$ctrl.attributesSetting[2]" change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock({name})"></customer-attribute-note>
+		<customer-attribute-note customer-data="$ctrl.customerData" customer-attribute="$ctrl.attributesSetting[1]" change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock({name})"></customer-attribute-note>
+		<customer-attribute-note customer-data="$ctrl.customerData" customer-attribute="$ctrl.attributesSetting[2]" change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock({name})"></customer-attribute-note>
 	</div>
 	<div class="note-container note-container--right">
-		<customer-attribute-note attributes-data-map="$ctrl.attributesDataMap" customer-attribute="$ctrl.attributesSetting[0]" change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock({name})"></customer-attribute-note>
+		<customer-attribute-note customer-data="$ctrl.customerData" customer-attribute="$ctrl.attributesSetting[0]" change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock({name})"></customer-attribute-note>
 	</div>
 </div>

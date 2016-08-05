@@ -12,7 +12,7 @@ const customer = {
 		title: '基本信息',
 		name: 'base',
 		attributeList: [{
-			attribute: 'receiver_name',
+			attribute: 'full_name',
 			name: '姓名',
 			defaultValue: '无',
 			editable: true,
@@ -60,20 +60,20 @@ const customer = {
 			validate: ['/^\\w{1, 50}$/'],
 			isInListMode: true
 		}, {
-			attribute: 'receiver_mobile',
+			attribute: 'mobile',
 			name: '常用手机',
 			defaultValue: '无',
 			editable: true,
 			type: 'text',
 			validate: ['/^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9]){1}\\d{8}$/']
 		}, {
-			attribute: 'receiver_mobile',
+			attribute: 'mobile',
 			name: '支付手机',
 			defaultValue: '无',
 			editable: false,
 			isInListMode: true
 		}, {
-			attribute: 'receiver_mobile',
+			attribute: 'mobile',
 			name: '最新收货手机',
 			defaultValue: '无',
 			editable: false
@@ -411,5 +411,53 @@ const CustomerAttributeSetting = [
 	consumer,
 	other
 ];
+
+export const TagsMapping = {
+	'male': '男性用户',
+	'female': '女性用户',
+	'family': '家庭用户',
+	'sex_unknown': '性别未识别',
+	'school': '学校人员',
+	'company_employ': '公司白领',
+	'gov_institute': '政府机构人员',
+	'hospital': '医护人员',
+	'mall': '商场职员',
+	'finance_institute': '金融机构职员',
+	'job_unknown': '职业未识别',
+	'yemaozi': '夜猫子',
+	'wanjiangou': '晚间购',
+	'shangbangou': '上班时段购',
+	'zaochengou': '早晨购',
+	'time_unknown': '购物时段偏好未识别',
+	'pingshigou': '平时购',
+	'zhoumogou': '周末购',
+	'date_unknown': '购物日期偏好未识别',
+	'sportman': '运动达人',
+	'nbnm': '奶爸奶妈',
+	'jyet': '家有儿童',
+	'houseman': '居家能手',
+	'ccc': '3C数码控',
+	'bfm': '白富美',
+	'foodlover': '美食家',
+	'life_unknown': '生活方式未识别',
+	'shouji': '手机购',
+	'non_shouji': '非手机购',
+	'jhs': '聚划算购',
+	'non_jhs': '非聚划算购',
+	'discount_sense1': '打折敏感度指数1',
+	'discount_sense2': '打折敏感度指数2',
+	'discount_sense3': '打折敏感度指数3',
+	'discount_sense4': '打折敏感度指数4',
+	'discount_sense5': '打折敏感度指数5'
+};
+
+export const RfmLabel = {
+	1: '最近30天',
+	2: '最近60天',
+	3: '最近90天',
+	4: '最近180天',
+	5: '最近360天',
+	6: '时间不限'
+};
 
 export default CustomerAttributeSetting;

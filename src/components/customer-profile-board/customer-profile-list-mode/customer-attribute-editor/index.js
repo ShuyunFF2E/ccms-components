@@ -13,7 +13,7 @@ const CustomerAttributeEditor = {
 	controller,
 	bindings: {
 		attributeSetting: '<',
-		attributesDataMap: '<'
+		customerData: '<'
 	}
 };
 

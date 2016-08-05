@@ -12,9 +12,8 @@ import controller from './CustomerProfileViewModeCtrl.js';
 
 const CustomerProfileViewMode = {
 	bindings: {
-		userLabels: '<',
 		attributesSetting: '<',
-		attributesDataMap: '<',
+		customerData: '<',
 		changeToSpecificAttributeBlock: '&'
 	},
 	controller,

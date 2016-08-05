@@ -13,7 +13,7 @@ const CustomerAttributeNote = {
 	controller,
 	bindings: {
 		customerAttribute: '<',
-		attributesDataMap: '<',
+		customerData: '<',
 		changeToSpecificAttributeBlock: '&'
 	}
 };

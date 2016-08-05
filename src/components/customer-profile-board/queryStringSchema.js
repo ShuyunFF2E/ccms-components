@@ -4,11 +4,20 @@
  * @since 2016-08-01 10:20
  */
 
-const generatorQueryString = (nick = '', platCustNo = '', platId = '', platShopId = '') => {
-	const COMMONQUERYPARAM = `
+/**
+ * generator graphql query string
+ * @name generatorQueryString
+ * @param {String} nick 用户昵称
+ * @param {String} tenantId 租户id
+ * @param {String} shopId 店铺id
+ * @param {String} platName 平台名
+ * @returns {String}
+ */
+const generatorQueryString = (nick = '', tenantId = '', shopId = '', platName = 'taobao') => {
+	const generatorQueryParam = (name, fields) => `
 	{
 	  settings:{
-	    data_source:"trade"
+	    data_source: "${name}"
 	    query_id:"report-id"
 	    pagination:{
 	      limit:6
@@ -18,55 +27,45 @@ const generatorQueryString = (nick = '', platCustNo = '', platId = '', platShopI
 	  }
 	  filters:{
 	    type:"and"
-	    fields:[{
-	      type:"str_selector"
-	      dimension:"buyer_nick"
-	      value:"${nick}"
-	    }]
+	    fields: ${fields}
 	  }
 	}
 	`;
 
-	const TradeQuerySchema = `
-		trade:shuyun_searchapi_trade(
-	    param: ${COMMONQUERYPARAM}
-	  ){
+	const CustomerQuerySchema = `
+		customer:shuyun_searchapi_customer(
+			param: ${generatorQueryParam('customer', `[{ type:"str_selector" dimension:"customerno" value:"${nick}" }]`)}
+		){
 	    flag
 	    msg
 	    data{
 	      data{
-	        receiver_name
-	        receiver_mobile
-	        buyer_email
-	        receiver_state
-	        receiver_city
-	        receiver_district
-	        receiver_address
-	        receiver_zip
-
-	        sex
-	        birthday
-	        age
-	        job
-	        vip_info
-	        buyer_credit_lev
-	      }
+          full_name
+          sex
+          birthday:birth_year
+          vip_info
+          buyer_credit_lev
+          mobile
+        }
 	    }
 	  }
 	`;
 
 	const RfmQuerySchema = `
 		rfm:shuyun_searchapi_rfm(
-	    param: ${COMMONQUERYPARAM}
+	    param: ${generatorQueryParam('rfm', `[{ type:"str_selector" dimension:"dp_id" value:"${tenantId}" } { type:"str_selector" dimension:"buyer_nick" value:"${nick}" }]`)}
 	  ){
 	    flag
 	    msg
 	    data{
 	      data{
+	        period
 	        trade_first_time
 	        trade_first_amount
+	        trade_first_interval
 	        trade_last_time
 	        trade_last_amount
+	        trade_last_interval
 	        trade_tidcount
 	        trade_count
 	        trade_amount
@@ -79,19 +78,86 @@ const generatorQueryString = (nick = '', platCustNo = '', platId = '', platShopI
 	        trade_avg_confirm_interval
 	        trade_max_amount
 	        trade_order_discount_fee
-
-	        trade_first_interval
-	        trade_last_interval
 	      }
 	    }
 	  }
 	`;
 
+	const TradeQuerySchema = `
+		trade:shuyun_searchapi_trade(
+	    param: ${generatorQueryParam('trade', `[{ type:"str_selector" dimension:"buyer_nick" value:"${nick}" }]`)}
+	  ){
+	    flag
+	    msg
+	    data{
+	      data{
+	        buyer_email
+	        receiver_state
+	        receiver_city
+	        receiver_district
+	        receiver_address
+	        receiver_zip
+	      }
+	    }
+	  }
+	`;
+
+	const TagQuerySchema = `
+		tags:shuyun_searchapi_tags(
+			param:{
+        type:"buyer_nick"
+        value:"${nick}"
+        dp_id:"${tenantId}"
+        buyer_nick:"${nick}"
+      }){
+	      result{
+          bfm
+          ccc
+          company_employ
+          date_unknown
+          discount_sense1
+          discount_sense2
+          discount_sense3
+          discount_sense4
+          discount_sense5
+          family
+          female
+          finance_institute
+          foodlover
+          gov_institute
+          hospital
+          houseman
+          jhs
+          job_unknown
+          jyet
+          life_unknown
+          male
+          mall
+          nbnm
+          non_jhs
+          non_shouji
+          pingshigou
+          school
+          sex_unknown
+          shangbangou
+          shouji
+          sportman
+          time_unknown
+          wanjiangou
+          yemaozi
+          zaochengou
+          zhoumogou
+          score
+        }
+	    }
+	`;
+
+
 	const WeChatQuerySchema = `
 		wechat:wxcrm_ccms(
-	    platCustNo: "${platCustNo}"
-	    platId: "${platId}"
-	    platShopId: "${platShopId}"
+	    platCustNo: "${nick}"
+	    platId: "${platName}"
+	    platShopId: "${shopId}"
 	  ){
 	    platId
 	    platShopId
@@ -112,18 +178,21 @@ const generatorQueryString = (nick = '', platCustNo = '', platId = '', platShopI
 
 	let queryString = `
 		{
-			${TradeQuerySchema}
+			${CustomerQuerySchema}
 			${RfmQuerySchema}
+			${TradeQuerySchema}
+			${TagQuerySchema}
 			${WeChatQuerySchema}
 			${WeiBoQuerySchema}
 		}
 	`;
 
-	// test use
 	queryString = `
 		{
-			${WeChatQuerySchema}
-			${WeiBoQuerySchema}
+			${CustomerQuerySchema}
+			${RfmQuerySchema}
+			${TradeQuerySchema}
+			${TagQuerySchema}
 		}
 	`;
 
