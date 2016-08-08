@@ -1,35 +1,47 @@
 /**
  * @author fengqiu.wu
  */
-
 import angular from 'angular';
 import {Inject} from 'angular-es-utils';
 
 @Inject('$compile')
 export default class TabContentTransclude {
 
-	constructor($compile) {
+	constructor() {
 
-		this.$compile = $compile;
+		Object.assign(this, {
+			restrict: 'A',
+			require: '^tabset',
+			scope: {}
+		});
 
 	}
 
-	link(scope, element, attrs) {
-		scope.$watch('$tabsetCtrl.current', function() {
-			let tab = scope.$tabsetCtrl.current;
+	link(scope, element, attrs, tabset) {
+		scope.active = 0;
 
-			if (tab && tab.templateUrl) {
+		// 点击tab 设置相关内容
+		scope.$watch('$parent.$tabset.active', () => {
+			scope.active = tabset.active;
 
-				element.html(`<ng-include src="'${tab.templateUrl}'"></ng-include>`);
-				tab.scope = angular.extend(scope, tab.scope || {});
+			tabset.tabs.forEach(tab => {
+				if (Number(tab.index) === tabset.active) {
+					if (!tab.pane) {
+						let contentWrap = angular.element('<div></div>');
+						tab.pane = contentWrap;
 
-			} else {
+						contentWrap.append(tab.tab.contents);
+						element.append(contentWrap);
 
-				element.html(tab && tab.content || '');
-			}
-
-			this.$compile(element.contents())(tab && tab.scope || scope);
-		}.bind(this));
+						this._$compile(contentWrap)(angular.extend(scope, {index: tab.index}));
+					} else {
+						tab.pane.removeClass('ng-hide');
+					}
+				} else if (tab.pane) {
+					tab.pane.addClass('ng-hide');
+				}
+			});
+		});
 	}
 
 }
