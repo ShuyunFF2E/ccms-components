@@ -28,10 +28,10 @@ $font: MicrosoftYaHei;
 
 //菜单展开时
 .menu-container {
-  position: relative;
   width: $left-width;
   height: 100%;
   background: #E9EBEE;
+  overflow-y: auto;
   & .expand {
     height: 20px;
     position: relative;
