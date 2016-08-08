@@ -19,7 +19,7 @@
 			};
 
 			$scope.generatorValues = () =>{
-				$scope.demo.setting = $scope.demo.setting.map(() => Math.floor(Math.random() * 10 + 1));
+				$scope.demo.setting = $scope.demo.setting.map(() => Math.floor(Math.random() * 10));
 			};
 
 			$scope.change = function () {

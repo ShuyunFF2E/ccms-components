@@ -13,8 +13,13 @@ export default class CheckboxController {
 		(typeof this.ngModel === 'undefined' || typeof this._value === 'undefined') && (console.error('Radio button have to used with ng-model & ng-value') || (this.isError = true));
 	}
 
+	/**
+	 * get value from ngValue | value
+	 * @returns {boolean | undefined}
+	 * @private
+	 */
 	get _value() {
-		return this.ngValue ? this.ngValue : this.value ? this.value : undefined;
+		return typeof this.ngValue !== 'undefined' ? this.ngValue : (typeof this.value !== 'undefined' ? this.value : undefined);
 	}
 
 	/**
