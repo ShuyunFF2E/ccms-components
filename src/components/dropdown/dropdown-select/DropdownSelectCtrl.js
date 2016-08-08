@@ -39,8 +39,8 @@ export default class DropdownSelectCtrl {
 		const defaultMapping = DropdownSelectCtrl.defaultMapping;
 		this.mapping = Object.assign({}, defaultMapping, this.mapping);
 
-		if (typeof this.readonly === 'undefined') {
-			this.readonly = false;
+		if (typeof this.disabled === 'undefined') {
+			this.disabled = false;
 		}
 	}
 
@@ -60,7 +60,7 @@ export default class DropdownSelectCtrl {
 			}
 		});
 
-		if (this.readonly) {
+		if (this.disabled) {
 			scope.$watch(() => this.isOpen, (openState, oldOpenstate) => {
 				if (openState) {
 					this.isOpen = false;
