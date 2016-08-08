@@ -20,6 +20,11 @@ dropdown-select {
 			border-color: $input-active-border;
 		}
 
+		@at-root .disabled#{&} {
+			background-color: #eee;
+			border: solid 1px #ccc;
+		}
+
 		.dropdown-select-input {
 			flex: 1;
 			min-width: 0;
@@ -27,6 +32,7 @@ dropdown-select {
 			line-height: $control-height;
 			vertical-align: top;
 			border: none;
+			background-color: inherit;
 			// TODO: input 字体大小应该在基础组件中写？
 			font-size: 12px;
 			&[readonly] {
