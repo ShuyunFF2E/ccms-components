@@ -29,7 +29,7 @@ export default class SMSPreview {
 			const text = opts.text || '';
 			const preview = opts.preview || '';
 			const signature = opts.signature || '';
-			const customSignature = opts.customSignature ? `【${opts.customSignature}】` : '';
+			const customSignature = opts.customSignature ? `【${opts.customSignature.replace(/</g, '&lt;')}】` : '';
 			const unsubscribeText = opts.useUnsubscribe ? (opts.unsubscribeText || '') : '';
 
 			// 字数统计

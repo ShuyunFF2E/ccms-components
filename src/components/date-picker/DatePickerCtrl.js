@@ -21,6 +21,14 @@ export default class DatePickerCtrl {
 		this.$scope = $scope;
 		this.$element = $element;
 
+		if (this.minDate instanceof Date) {
+			this.minDate = new Date(this.minDate.setMilliseconds(0));
+		}
+
+		if (this.maxDate instanceof Date) {
+			this.maxDate = new Date(this.maxDate.setMilliseconds(999));
+		}
+
 		// 当开始和结束日期变化时, 清除过期的报错信息
 		$scope.$watchGroup(['ctrl.minDate', 'ctrl.maxDate'], () => {
 			if (this._displayValue) {

@@ -64,10 +64,16 @@ export default class DropdownMultiselectCtrl {
 			this.updateTitle();
 		});
 
+		scope.$watch(() => this.model, (model, oldModel) => {
+			if (!angular.equals(model, oldModel)) {
+				this.selection = this._getItemsByValues(model);
+				this.updateTitle();
+			}
+		});
+
 		scope.$watchCollection(() => this.selection, () => {
 			this.updateTitle();
 		});
-
 	}
 
 	_prepareMouseEvents() {
@@ -162,7 +168,7 @@ export default class DropdownMultiselectCtrl {
 	}
 
 	confirmSelection() {
-		this.setValue(this.selection);
+		this.setValue(this.selection.map(item => item[this.mapping.valueField]));
 		this.close();
 	}
 
@@ -180,7 +186,6 @@ export default class DropdownMultiselectCtrl {
 			if (text.length) {
 				this._search(text);
 			} else {
-				// TODO: setValue
 				this.items = this._clampedDatalist;
 			}
 		}
@@ -199,7 +204,6 @@ export default class DropdownMultiselectCtrl {
 		let scope = this.getScope();
 		if (this.searchable) {
 			this.getInputElement().addEventListener('click', this._openFn);
-			// TODO: setValue
 		}
 
 		this.model = this.selection.map(item => item[this.mapping.valueField]);

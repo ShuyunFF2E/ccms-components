@@ -26,9 +26,26 @@ export default class DropdownSelectCtrl {
 	}
 
 	$onInit() {
-		let scope = this.getScope();
+		this._prepareOptions();
+		this._prepareWatches();
+	}
 
-		this.mapping = Object.assign({}, DropdownSelectCtrl.defaultMapping, this.mapping);
+	$postLink() {
+		this._prepareMouseEvents();
+		this._prepareKeyboardEvents();
+	}
+
+	_prepareOptions() {
+		const defaultMapping = DropdownSelectCtrl.defaultMapping;
+		this.mapping = Object.assign({}, defaultMapping, this.mapping);
+
+		if (typeof this.disabled === 'undefined') {
+			this.disabled = false;
+		}
+	}
+
+	_prepareWatches() {
+		const scope = this.getScope();
 
 		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
 			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
@@ -42,11 +59,14 @@ export default class DropdownSelectCtrl {
 				this.setModelValue(this.model);
 			}
 		});
-	}
 
-	$postLink() {
-		this._prepareMouseEvents();
-		this._prepareKeyboardEvents();
+		if (this.disabled) {
+			scope.$watch(() => this.isOpen, (openState, oldOpenstate) => {
+				if (openState) {
+					this.isOpen = false;
+				}
+			});
+		}
 	}
 
 	_prepareMouseEvents() {

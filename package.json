@@ -15,7 +15,6 @@
     "release:minor": "./scripts/release.sh --minor",
     "release:patch": "./scripts/release.sh --patch",
     "update-dev-server": "./scripts/update-dev-server.sh",
-    "copy-dist": "./scripts/copy-dist-to-server.sh",
     "start": "node server.js",
     "prepush": "npm run codecheck",
     "codecheck": "NODE_EVN=test eslint src/components",

@@ -1,14 +1,17 @@
 - title: Components
   pages:
-    - title: Iconfont
     - title: Checkbox
     - title: Date Picker
     - title: Dropdown
-    - title: Grid
     - title: Form
-    - title: Modal
-    - title: Tabset
-    - title: Menus
+    - title: Grid
+    - title: Iconfont
     - title: Layout
+    - title: Loading
+    - title: Menus
+    - title: Modal
+    - title: Pagination
     - title: Radio Button
     - title: Sample Component
+    - title: Tabset
+

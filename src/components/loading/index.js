@@ -6,9 +6,18 @@
 
 import angular from 'angular';
 
-import LoadingDirective from './LoadingDirective';
+import './_loading.scss';
+import template from './loading.tpl.html';
+
+const ddo = {
+	template,
+	transclude: true,
+	bindings: {
+		type: '@?'  // loading 类型: default | layer(带背景层)
+	}
+};
 
 export default angular
 	.module('ccms.components.loading', [])
-	.component('loading', new LoadingDirective())
+	.component('loading', ddo)
 	.name;
