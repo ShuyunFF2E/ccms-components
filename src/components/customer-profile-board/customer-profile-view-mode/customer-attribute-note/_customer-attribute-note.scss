@@ -37,5 +37,7 @@
   .note-item{
 	color: $default-font-color;
 	line-height: 1.6667;
+	white-space: nowrap;
+	overflow: hidden;
   }
 }

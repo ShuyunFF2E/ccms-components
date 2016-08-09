@@ -15,10 +15,16 @@ export default class CustomerAttributeEditorCtrl {
 		};
 	}
 
+	/**
+	 * @name $postLink
+	 * set default rfm item & add watch on current selected rfm item
+	 */
 	$postLink() {
-		this.selectedRfm = this.customerData.rfm[0];
-		this.selectedRfmPeriod = this.selectedRfm.period;
+		if (this.customerData.rfm && this.customerData.rfm.length) {
+			this.selectedRfm = this.customerData.rfm[0];
+			this.selectedRfmPeriod = this.selectedRfm.period;
 
-		this._$scope.$watch('$ctrl.selectedRfmPeriod', period => (this.selectedRfm = this.customerData.rfm.filter(rfm => rfm.period === period)[0]));
+			this._$scope.$watch('$ctrl.selectedRfmPeriod', period => (this.selectedRfm = this.customerData.rfm.filter(rfm => rfm.period === period)[0]));
+		}
 	}
 }

@@ -9,6 +9,12 @@ export default class CustomerAttributeNote {
 		this.displayAttributeList = this.getDisplayAttributeList(this.customerAttribute);
 	}
 
+	/**
+	 * @name getDisplayAttributeList
+	 * @param {Object} customerAttribute
+	 * @returns {Array}
+	 * According to customerAttribute object to generator a list that only includes attributes whose isInListMode value is true
+	 */
 	getDisplayAttributeList(customerAttribute = {}) {
 		let attributeList = [];
 		customerAttribute.attributeBlock.forEach(block => attributeList.push(this.expandAttributeList(block.attributeList)));
@@ -16,14 +22,14 @@ export default class CustomerAttributeNote {
 	}
 
 	/**
-	 * Recursion expand attribute list array
 	 * @name expandAttributeList
 	 * @param {Array} attributeList
 	 * @returns {Array}
+	 * Recursion expand attribute list array
 	 */
 	expandAttributeList(attributeList) {
 		let tmpList = [];
-		attributeList.forEach(attribute => (typeof attribute.attribute !== 'undefined') ? tmpList.push(attribute) : (tmpList = [...tmpList, ...this.expandAttributeList(attribute.attributes)]));
+		attributeList.forEach(attribute => (typeof attribute.attributes === 'undefined') ? tmpList.push(attribute) : (tmpList = [...tmpList, ...this.expandAttributeList(attribute.attributes)]));
 		return tmpList;
 	}
 }

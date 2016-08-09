@@ -5,22 +5,19 @@
  */
 
 /**
- * generator graphql query string
- * @name generatorQueryString
- * @param {String} nick 用户昵称
- * @param {String} tenantId 租户id
- * @param {String} shopId 店铺id
- * @param {String} platName 平台名
- * @returns {String}
+ * @name generatorQueryParam
+ * @param {String} name
+ * @param {String} fields
+ * @param {Number} limit
+ * generator query param of graphql query string
  */
-const generatorQueryString = (nick = '', tenantId = '', shopId = '', platName = 'taobao') => {
-	const generatorQueryParam = (name, fields) => `
+const generatorQueryParam = (name = '', fields = '[]', limit = 1) => `
 	{
 	  settings:{
 	    data_source: "${name}"
 	    query_id:"report-id"
 	    pagination:{
-	      limit:6
+	      limit: ${limit}
 	      offset:0
 	    }
 	    return_format:"json"
@@ -32,6 +29,15 @@ const generatorQueryString = (nick = '', tenantId = '', shopId = '', platName = 
 	}
 	`;
 
+/**
+ * @name generatorQueryString
+ * @param {String} nick 用户昵称
+ * @param {String} shopId 店铺id
+ * @param {String} platName 平台名
+ * @returns {String}
+ * generator graphql query string
+ */
+const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
 	const CustomerQuerySchema = `
 		customer:shuyun_searchapi_customer(
 			param: ${generatorQueryParam('customer', `[{ type:"str_selector" dimension:"customerno" value:"${nick}" }]`)}
@@ -53,7 +59,7 @@ const generatorQueryString = (nick = '', tenantId = '', shopId = '', platName = 
 
 	const RfmQuerySchema = `
 		rfm:shuyun_searchapi_rfm(
-	    param: ${generatorQueryParam('rfm', `[{ type:"str_selector" dimension:"dp_id" value:"${tenantId}" } { type:"str_selector" dimension:"buyer_nick" value:"${nick}" }]`)}
+	    param: ${generatorQueryParam('rfm', `[{ type:"str_selector" dimension:"dp_id" value:"${shopId}" } { type:"str_selector" dimension:"buyer_nick" value:"${nick}" }]`, 10)}
 	  ){
 	    flag
 	    msg
@@ -107,7 +113,7 @@ const generatorQueryString = (nick = '', tenantId = '', shopId = '', platName = 
 			param:{
         type:"buyer_nick"
         value:"${nick}"
-        dp_id:"${tenantId}"
+        dp_id:"${shopId}"
         buyer_nick:"${nick}"
       }){
 	      result{
@@ -152,6 +158,29 @@ const generatorQueryString = (nick = '', tenantId = '', shopId = '', platName = 
 	    }
 	`;
 
+	const MemberInfoQuerySchema = `
+		loyalty_member_gpinfo(
+      platDpId:"${shopId}"
+      cardNo:"${nick}"
+    ){
+      cardGrade
+      effectTime
+      expireTime
+      currentPoint
+      totalGet
+    }
+		loyalty_member_info(
+      platDpId:"${shopId}"
+      cardNo:"${nick}"
+    ){
+      actionInfo{
+				signCount
+      }
+      orderInfo{
+				exchangeCount
+      }
+    }
+	`;
 
 	const WeChatQuerySchema = `
 		wechat:wxcrm_ccms(
@@ -164,7 +193,7 @@ const generatorQueryString = (nick = '', tenantId = '', shopId = '', platName = 
 	    platCustNo
 	    weChatPublicNumber
 	    openid
-	    nickName
+	    wechatNick:nickName
 	  }
 	`;
 
@@ -182,6 +211,7 @@ const generatorQueryString = (nick = '', tenantId = '', shopId = '', platName = 
 			${RfmQuerySchema}
 			${TradeQuerySchema}
 			${TagQuerySchema}
+			${MemberInfoQuerySchema}
 			${WeChatQuerySchema}
 			${WeiBoQuerySchema}
 		}

@@ -12,8 +12,14 @@
 		.module('app', ['ccms.components'])
 		.controller('ctrl', function ($scope, CustomerProfileBoardService) {
 
+			const customerInformation = {
+				nickName: 's_peggy',
+				shopId: '62847409',
+				platName: 'taobao'
+			};
+
 			$scope.pop = function() {
-				CustomerProfileBoardService.popProfileBoardModal($scope);
+				CustomerProfileBoardService.popProfileBoardModal($scope, customerInformation);
 			}
 		});
 
