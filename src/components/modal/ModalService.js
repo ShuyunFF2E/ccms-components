@@ -131,7 +131,7 @@ export default class ModalService {
 		return modalInstance;
 	}
 
-	confirm(message, {onClose = noop} = {}) {
+	confirm(message, onClose = noop) {
 
 		let confirmElement = angular.element(confirmTemplate);
 		let confirmDOMElement = confirmElement[0];
