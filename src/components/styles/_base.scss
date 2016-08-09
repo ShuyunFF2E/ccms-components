@@ -1,21 +1,21 @@
-@import "../../../node_modules/normalize.css";
+//@import "../../../node_modules/normalize.css";
 @import "button";
 @import "variables";
 @import "input";
 @import "layout";
 
 /* 页面默认样式 */
-body {
-	font-family: $font-family;
-	font-size: $font-size-base;
-	line-height: $line-height;
-}
-
-ul, li, p {
-	margin: 0;
-	padding: 0;
-}
-
-li {
-	list-style: none;
-}
+//body {
+//	font-family: $font-family;
+//	font-size: $font-size-base;
+//	line-height: $line-height;
+//}
+//
+//ul, li, p {
+//	margin: 0;
+//	padding: 0;
+//}
+//
+//li {
+//	list-style: none;
+//}
