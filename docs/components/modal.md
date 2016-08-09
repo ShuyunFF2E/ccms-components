@@ -50,5 +50,3 @@ options 包含以下配置:
 
 ## Examples
 <iframe width="100%" height="300" src="//jsfiddle.net/Kuitos/hnbkk9sz/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-
-</div>
