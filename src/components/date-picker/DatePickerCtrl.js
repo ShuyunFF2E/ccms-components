@@ -165,6 +165,7 @@ export default class DatePickerCtrl {
 	 * @param date
 	 */
 	setValue(date) {
+		this._displayValue = date;
 		this.ngModelCtrl.$setViewValue(date);
 		this.ngModelCtrl.$render();
 		this.clearErrorMessage();
@@ -199,7 +200,10 @@ export default class DatePickerCtrl {
 		input.value = addZero(input.value);
 		setTextWidth(input);
 
-		if (parts.year && parts.month && parts.date && parts.hour && parts.minute && parts.second) {
+		const allDateHasValue = parts.year && parts.month && parts.date,
+			allTimeHasValue = parts.hour && parts.minute && parts.second;
+
+		if ((!this.dateOnly && allDateHasValue && allTimeHasValue) || (this.dateOnly && allDateHasValue)) {
 			dateValue = new Date(
 				parseNumber(parts.year),
 				parseNumber(parts.month) - 1,
