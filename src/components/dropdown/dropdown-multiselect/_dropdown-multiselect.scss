@@ -14,6 +14,7 @@ dropdown-multiselect {
 
 	.dropdown-select-input-wrap {
 		display: flex;
+		background-color: #fff;
 		border: solid 1px $input-border-color;
 
 		@at-root .active#{&} {
@@ -26,6 +27,7 @@ dropdown-multiselect {
 			padding-right: 0;
 			line-height: $control-height;
 			vertical-align: top;
+			background-color: inherit;
 			border: none;
 			// TODO: input 字体大小应该在基础组件中写？
 			font-size: 12px;
@@ -36,7 +38,7 @@ dropdown-multiselect {
 
 		.dropdown-select-icons {
 			display: inline-block;
-			background: #ffffff;
+			background: inherit;
 		}
 
 		%action-icon {
