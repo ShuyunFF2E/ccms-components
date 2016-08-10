@@ -39,12 +39,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					displayName: '姓名',
 					align: 'center',
 					width: '100px',
-					sort: {
-						prop: 'name',
-						onCompare: (prev, next) => {
-							return prev['name'] > next['name'] ? -1 : 1;
-						}
-					}
+					sort: 'name'
 				},
 				{
 					field: 'age', displayName: '年龄', align: 'center',
@@ -52,10 +47,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 				},
 				{
 					field: 'gender', displayName: '性别', align: 'right',
-					sort: (pre, next)=> {
-
-						return pre['age'] > next['age'] ? -1 : 1;
-					}
+					sort: true
 				}
 			],
 			transformer: {

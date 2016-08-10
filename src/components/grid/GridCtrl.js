@@ -57,32 +57,29 @@ export default class GridCtrl {
 		this.sortConfig = [];
 		this.opts.columnsDef.forEach(col => {
 			let colConfig = {};
+
+			// - 根据 col.sort 的类型分别处理
 			switch (typeof col.sort) {
 
-				case 'function':
+				case 'boolean':
+
+					if (!col.field && col.cellTemplate) {
+
+						console.warn('grid 配置中[' + col.displayName + ']列未指定排列属性,会造成失效!');
+					}
 
 					colConfig.prop = col.field;
 					colConfig.type = 'default';
-					colConfig.compareFn = col.sort;
 					break;
-				case 'object':
 
-					colConfig.prop = col.sort.prop || col.field;
+				case 'string':
+
+					colConfig.prop = col.sort;
 					colConfig.type = 'default';
-					colConfig.compareFn = col.sort.onCompare;
 					break;
-				case 'boolean':
 
-					if (col.sort) {
-
-						colConfig.prop = col.field;
-						colConfig.type = 'default';
-					} else {
-
-						colConfig = null;
-					}
-					break;
 				default:
+
 					colConfig = null;
 					break;
 			}
@@ -164,6 +161,26 @@ export default class GridCtrl {
 	}
 
 	runColumnSorting(index) {
-		GridHelper.sort(index, this.opts.data, this.sortConfig);
+
+		// - 遍历sortConfig 修改状态
+		this.sortConfig.forEach((config, cIndex) => {
+			if (config) {
+				if (index === cIndex) {
+					config.type = config.type === 'asc' ? 'desc' : 'asc';
+				} else {
+					config.type = 'default';
+				}
+			}
+		});
+
+		const columnConfig = this.sortConfig[index];
+
+		const {opts} = this;
+
+		GridHelper
+			.refresh(opts, Object.assign(opts.queryParams || {}, {
+				sortOrder: columnConfig.type,
+				sortProp: columnConfig.prop
+			})).then(() => this.onRefresh && this.onRefresh({opts}));
 	}
 }

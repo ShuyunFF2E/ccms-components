@@ -19,73 +19,6 @@ function transformer(response, mapping) {
 	return result;
 }
 
-// -默认排序方法
-function defaultSortCompareFn(prev, next, prop) {
-	if (typeof prev[prop] === 'string' || typeof next[prop] === 'string') {
-
-		if (prev[prop].toString() < next[prop].toString()) {
-			return -1;
-		} else if ((prev[prop].toString() > next[prop].toString())) {
-			return 1;
-		} else {
-			return 0;
-		}
-	} else {
-
-		return (prev[prop] - next[prop]);
-	}
-}
-
-// -刷新数据时 排序 gridData
-function refreshDataSort(list, columnSortConfig) {
-	// column sorting
-	const index = columnSortConfig.findIndex(config => {
-		return config.type !== 'default';
-	});
-	if (index >= 0) {
-		runColumnSorting(index, list, columnSortConfig, false);
-	}
-}
-
-// -修改排序 temp 状态
-function updateSortConfig(index, columnSortConfig = [], isUpdateConfig = true) {
-	// -是否更改config
-	if (isUpdateConfig) {
-
-		columnSortConfig.forEach((config, cIndex) => {
-			if (config) {
-				if (index === cIndex) {
-					config.type = config.type === 'asc' ? 'desc' : 'asc';
-				} else {
-					config.type = 'default';
-				}
-			}
-		});
-	}
-}
-
-// -排序 gridData
-function runColumnSorting(columnIndex, gridData, columnSortConfig, isUpdateConfig) {
-
-	const sortConfig = columnSortConfig[columnIndex];
-	if (sortConfig) {
-		updateSortConfig(columnIndex, columnSortConfig, isUpdateConfig);
-
-		const prop = sortConfig.prop;
-		const reverse = sortConfig.type === 'desc' ? -1 : 1;
-		if (typeof sortConfig.compareFn === 'function') {
-
-			gridData.sort((prev, next) => {
-				return sortConfig.compareFn(prev, next) * reverse;
-			});
-		} else {
-			gridData.sort((prev, next) => {
-				return defaultSortCompareFn(prev, next, prop) * reverse;
-			});
-		}
-	}
-}
-
 /**
  * 表格服务,对外提供刷新服务
  */
@@ -117,7 +50,7 @@ export default {
 		return Object.assign(gridOptions, Object.assign(DEFAULT_CONFIGS, gridOptions));
 	},
 
-	refresh(gridOptions, queryParams, columnSortConfig = []) {
+	refresh(gridOptions, queryParams) {
 
 		this.fillOpts(gridOptions);
 		gridOptions.loading = true;
@@ -150,9 +83,6 @@ export default {
 
 					gridOptions.response = res;
 
-					// column sorting
-					refreshDataSort(transformedData.list, columnSortConfig);
-
 					gridOptions.data = transformedData.list;
 					gridOptions.loading = false;
 
@@ -168,9 +98,6 @@ export default {
 
 			const finish = data => {
 
-				// column sorting
-				refreshDataSort(data, columnSortConfig);
-
 				gridOptions.data = data;
 				gridOptions.loading = false;
 			};
@@ -182,10 +109,5 @@ export default {
 			}
 
 		}
-	},
-
-	sort(columnIndex, gridData, columnSortConfig) {
-
-		runColumnSorting(columnIndex, gridData, columnSortConfig);
 	}
 };
