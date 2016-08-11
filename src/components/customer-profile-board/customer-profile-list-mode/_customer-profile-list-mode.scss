@@ -1,0 +1,47 @@
+@import "../param";
+
+$left-panel-list-background: #e4e6eb;
+$left-panel-item-background: #fdfdfd;
+$left-panel-item-background-active: #c7cbd5;
+
+.customer-profile-list-mode{
+  height: $modal-body-height;
+
+  .left-panel-list{
+	float: left;
+	width: 154px;
+	height: 100%;
+	background: $left-panel-list-background;
+	padding: 20px 15px;
+  }
+
+  .left-panel-item{
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 5px;
+	padding-left: 12px;
+	background-color: $left-panel-item-background;
+	box-shadow:0 1px 0 0 rgba(220,220,220,0.50);
+	color: $default-font-color;
+	cursor: pointer;
+
+	.item-icon{
+	  display: inline-block;
+	  width: 16px;
+	  height: 16px;
+	  margin-right: 8px;
+	}
+  }
+
+  .left-panel-item--active{
+	background-color: $left-panel-item-background-active;
+  }
+
+  .right-panel-block{
+	float: left;
+	width: 486px;
+	height: 100%;
+	padding: 20px 15px 0;
+	overflow: auto;
+  }
+}
