@@ -11,6 +11,12 @@ loaders.push(
 		test: /\.(sc|c)ss$/,
 		loaders: ['style', 'css', 'postcss', 'resolve-url', 'sass?sourceMap'],
 		exclude: /(node_modules|bower_components)/
+	},
+	{
+		test: /^((?!\.tpl).)*\.html$/,
+		loader: 'file?name=[path][name]-[hash:8].[ext]',
+		exclude: /(node_modules|bower_components)/,
+		include: /src\/.*\/__tests__/
 	}
 );
 

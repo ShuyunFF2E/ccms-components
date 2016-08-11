@@ -29,7 +29,7 @@ options 包含以下配置:
 |body|string|default: `undefined` modal主体内容区,值为模板url|
 |footer|string|default: `undefined` modal footer按钮区,值为模板url|
 |locals|object|default: `undefined` 需要传递到modal控制器中的数据,以服务的方式注入|
-|controller|class\|function|default: `undefined` modal对应的控制器|
+|controller|class\|function|default: `undefined` modal对应的控制器,当使用弹出框默认的footer时,可以通过覆写控制器的ok、cancel、close方法实现自有逻辑(不覆写则为关闭弹框的默认逻辑)|
 |controllerAs|string|default: `$ctrl` 控制器别名|
 |bindings|object\|boolean|default: `undefined` 为true时则从scope中复制数据,为object则直接从提供的这个对象中复制数据(浅复制)|
 |onClose|function|default: `undefined` 点击弹框右上角关闭按钮时触发的回调|
@@ -49,4 +49,4 @@ options 包含以下配置:
 `object`	弹框实例,具备result属性。result为一个promise,modal确认时会触发promise resolve,取消时触发promise reject
 
 ## Examples
-<iframe width="100%" height="300" src="//jsfiddle.net/Kuitos/hnbkk9sz/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="600" src="//jsfiddle.net/Kuitos/hnbkk9sz/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>

@@ -11,7 +11,7 @@ module.exports = [
 		exclude: /(node_modules|bower_components)/
 	},
 	{
-		test: /\.html$/,
+		test: /\.tpl\.html$/,
 		loader: 'html',
 		query: {interpolate: true},
 		exclude: /(node_modules|bower_components)/

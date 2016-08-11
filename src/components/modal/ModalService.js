@@ -7,20 +7,20 @@
 import './_modal.scss';
 
 import angular from 'angular';
-import {Inject} from 'angular-es-utils';
+import injector from 'angular-es-utils/injector';
 
 import modalTemplate from './modal.tpl.html';
 import confirmTemplate from './confirm.tpl.html';
 import Modal from './Modal';
 import CONSTANT from './Constants';
 
-const noop = () => {};
+const noop = () => {
+};
 
 /**
  * modal服务
  */
-@Inject('$compile', '$controller', '$rootScope', '$q', '$templateRequest')
-export default class ModalService {
+const ModalService = {
 
 	/**
 	 *
@@ -42,25 +42,31 @@ export default class ModalService {
 	 */
 	modal({scope, title, style, fullscreen = false, hasFooter = true, body, uid, __body, footer, locals, controller, controllerAs = '$ctrl', bindings, onClose = noop}) {
 
+		const $compile = injector.get('$compile');
+		const $rootScope = injector.get('$rootScope');
+		const $q = injector.get('$q');
+		const $templateRequest = injector.get('$templateRequest');
+		const $controller = injector.get('$controller');
+
 		let modalElement = angular.element(modalTemplate);
 		let modalHTMLElement = modalElement[0];
 
 		// 如果指定了scope,则以该scope为父作用域构建modal作用域,否则以rootScope为父作用域构建
-		const providedScope = scope || this._$rootScope;
+		const providedScope = scope || $rootScope;
 		let modalScope = providedScope.$new();
 		// 将当前scope挂载到节点上,节点销毁时会回收scope
 		modalHTMLElement.$scope = modalScope;
 
-		let renderDeferred = this._$q.defer();
+		let renderDeferred = $q.defer();
 		let modalInstance = new Modal(modalHTMLElement, renderDeferred);
 
 		// 从配置中获取 body/footer 模版
 		// 私有属性 __body 允许配置字符串模板
 		let tplPromises = {
-			bodyTpl: __body ? this._$q.resolve(__body) : this._$templateRequest(body),
-			footerTpl: footer ? this._$templateRequest(footer) : this._$q.resolve(null)
+			bodyTpl: __body ? $q.resolve(__body) : $templateRequest(body),
+			footerTpl: footer ? $templateRequest(footer) : $q.resolve(null)
 		};
-		this._$q.all(tplPromises).then(({bodyTpl, footerTpl}) => {
+		$q.all(tplPromises).then(({bodyTpl, footerTpl}) => {
 
 			// 复制modal的scope中支持的属性
 			modalScope.title = title;
@@ -72,8 +78,7 @@ export default class ModalService {
 			modalScope.$ok = modalInstance.ok;
 			modalScope.$cancel = modalInstance.cancel;
 			modalScope.$close = () => {
-				modalInstance.close();
-				onClose();
+				modalInstance.close(onClose);
 			};
 
 			if (controller) {
@@ -88,7 +93,7 @@ export default class ModalService {
 
 				// 构建controller壳子,等数据全部绑定完成后再做初始化($controller第三个参数设成true,private api),黑科技hold不住别乱用hhh
 				// @see https://github.com/angular/angular.js/blob/master/src/ng/controller.js#L126
-				let ctrlInstantiate = this._$controller(controller, ctrlLocals, true);
+				let ctrlInstantiate = $controller(controller, ctrlLocals, true);
 
 				// 获取controller实例引用,此时还未初始化
 				ctrlInstance = ctrlInstantiate.instance;
@@ -125,21 +130,25 @@ export default class ModalService {
 				footer.parentNode.removeChild(footer);
 			}
 
-			renderDeferred.resolve(this._$compile(modalElement)(modalScope));
+			renderDeferred.resolve($compile(modalElement)(modalScope));
 		});
 
 		return modalInstance;
-	}
+	},
 
 	confirm(message, onClose = noop) {
+
+		const $rootScope = injector.get('$rootScope');
+		const $q = injector.get('$q');
+		const $compile = injector.get('$compile');
 
 		let confirmElement = angular.element(confirmTemplate);
 		let confirmDOMElement = confirmElement[0];
 
-		let renderDeferred = this._$q.defer();
+		let renderDeferred = $q.defer();
 		let confirmInstance = new Modal(confirmDOMElement, renderDeferred);
 
-		let scope = this._$rootScope.$new();
+		let scope = $rootScope.$new();
 		scope.message = message;
 		scope.$ok = confirmInstance.ok;
 		scope.$cancel = confirmInstance.cancel;
@@ -148,7 +157,7 @@ export default class ModalService {
 			onClose();
 		};
 
-		this._$compile(confirmDOMElement.querySelector(CONSTANT.CONFIRM_CONTAINER))(scope);
+		$compile(confirmDOMElement.querySelector(CONSTANT.CONFIRM_CONTAINER))(scope);
 
 		renderDeferred.resolve();
 
@@ -160,4 +169,6 @@ export default class ModalService {
 
 	}
 
-}
+};
+
+export default ModalService;

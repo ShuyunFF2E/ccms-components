@@ -11,6 +11,6 @@ import ModalService from './ModalService';
 
 export default angular
 	.module('ccms.components.modal', [bindHtml])
-	.deprecatedService('ModalService', ModalService, 'ModalService 服务将在下一版本废弃,请使用 $ccModal 服务代替!')
-	.service('$ccModal', ModalService)
+	.deprecatedValue('ModalService', ModalService, 'ModalService 服务将在下一版本废弃,请使用 $ccModal 服务代替!')
+	.value('$ccModal', ModalService)
 	.name;

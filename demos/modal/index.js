@@ -50,6 +50,7 @@
 
 		this.sure = function() {
 			console.log('sure');
+			modalInstance.ok([]);
 		};
 
 		this.fuckOff = function() {

@@ -68,8 +68,8 @@ const genDeprecatedValue = originalValue => (name, val, msg) => {
  */
 const originalModule = angular.module;
 angular.module = (...args) => {
-	const moduleInstance = originalModule(...args);
 
+	const moduleInstance = originalModule(...args);
 	moduleInstance.deprecatedDirective = genDeprecatedDirective(moduleInstance.directive);
 	moduleInstance.deprecatedComponent = genDeprecatedComponent(moduleInstance.component);
 	moduleInstance.deprecatedService = genDeprecatedService(moduleInstance.service);
