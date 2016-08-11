@@ -179,8 +179,8 @@ export default class GridCtrl {
 
 		GridHelper
 			.refresh(opts, Object.assign(opts.queryParams || {}, {
-				sortOrder: columnConfig.type,
-				sortProp: columnConfig.prop
+				sortOrder: columnConfig ? columnConfig.type : '',
+				sortProp: columnConfig ? columnConfig.prop : ''
 			})).then(() => this.onRefresh && this.onRefresh({opts}));
 	}
 }

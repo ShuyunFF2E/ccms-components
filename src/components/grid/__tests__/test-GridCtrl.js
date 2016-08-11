@@ -27,9 +27,10 @@ describe('GridCtrl', () => {
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
-					width: '100px'
+					width: '100px',
+					sort: 'name'
 				},
-				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'age', displayName: '年龄', align: 'center', sort: true},
 				{field: 'gender', displayName: '性别', align: 'right'}
 			],
 			transformer: {
@@ -88,6 +89,15 @@ describe('GridCtrl', () => {
 		assert.isFalse(gridCtrl.$allSelected);
 	});
 
+	it('runColumnSorting', () => {
+
+		assert.isArray(gridCtrl.sortConfig, 'sortConfig is Array');
+		assert.deepEqual(gridCtrl.sortConfig[1], {prop: 'age', type: 'default'});
+		assert.deepEqual(gridCtrl.sortConfig[0], {prop: 'name', type: 'default'});
+		assert.isNull(gridCtrl.sortConfig[2], 'this is null');
+		gridCtrl.runColumnSorting(1);
+		assert.deepEqual(gridCtrl.opts.queryParams, {sortOrder: 'asc', sortProp: 'age', pageNum: 2});
+	});
 });
 
 
