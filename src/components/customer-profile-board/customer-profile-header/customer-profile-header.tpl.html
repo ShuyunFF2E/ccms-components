@@ -1,7 +1,7 @@
 <div class="customer-profile-header">
 	<span class="user-info"><label>客户：</label>{{$ctrl.customerData.nickName}}</span>
 	<span class="user-mobile-info"><label>常用手机：</label>{{$ctrl.customerData.mobile}}</span>
-	<span class="user-marketing-responsivities"><label>营销响应度：</label>{{$ctrl.customerData.marketingResponsivities}}</span>
+	<span class="user-marketing-responsivities"><label>营销响应度：</label><progress class="marketing-responsivities-progress" value="{{+$ctrl.customerData.marketingResponsivities}}" max="10"></progress>{{+$ctrl.customerData.marketingResponsivities}}</span>
 	<div class="switch-view">
 		<div class="switch-view-icon iconfont" ng-class=" { 'switch-view-icon--active': $ctrl.viewMode } " ng-click="$ctrl.changeToView()">&#xe65d;</div>
 		<div class="switch-view-icon iconfont" ng-class=" { 'switch-view-icon--active': !$ctrl.viewMode } " ng-click="$ctrl.changeToList()">&#xe65a;</div>

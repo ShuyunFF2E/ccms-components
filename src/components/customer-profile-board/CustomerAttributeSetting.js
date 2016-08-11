@@ -113,7 +113,7 @@ const customer = {
 				isInListMode: true
 			}, {
 				attribute: 'receiver_district',
-				name: '市县',
+				name: '区县',
 				type: 'select',
 				enum: [{
 					name: '黄浦区',

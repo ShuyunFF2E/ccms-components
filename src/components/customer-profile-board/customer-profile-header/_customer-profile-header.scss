@@ -16,10 +16,31 @@ $switch-active-icon-color: #007FCD;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: $font-size;
+  color: $font-color;
 
-  .user-info, .user-mobile-info{
-	font-size: $font-size;
-	color: $font-color;
+  .user-marketing-responsivities{
+	.marketing-responsivities-progress{
+	  width: 60px;
+	  height:8px;
+	  border-radius:4px;
+	  background-color:#e6e6e6;
+	  margin-right: 6px;
+
+	  &::-webkit-progress-bar{
+		background: transparent;
+	  }
+
+	  &::-webkit-progress-value{
+		background: #6faa4f;
+		border-radius:4px;
+	  }
+
+	  &::-moz-progress-bar {
+		background: #6faa4f;
+		border-radius:4px;
+	  }
+	}
   }
 
   .switch-view{
