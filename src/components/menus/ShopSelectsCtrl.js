@@ -115,7 +115,7 @@ export default class ShopSelectsCtrl {
 		if (this.shopInfo.plat.value !== plat.value || this.shopInfo.shop.value !== shop.value || this.isInit || isMenuChange) {
 			const deferred = this._$q.defer();
 
-			$menus.dispatchShopChangeStart(deferred);
+			$menus.dispatchShopChangeStart(deferred, selectedShop);
 
 			if (!$menus.isOnShopChangeStart() && deferred.promise.$$state.status === 0) {
 

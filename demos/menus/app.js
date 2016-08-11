@@ -238,10 +238,10 @@ function gradeController($scope, $menus) {
 }
 
 
-pointController.$inject = ['$scope', '$menus'];
+pointController.$inject = ['$scope', '$menus', 'ModalService'];
 
 // - 开启自动关闭功能
-function pointController($scope, $menus) {
+function pointController($scope, $menus, ModalService) {
 
 	this.name = '老司机飙车速度疾';
 
@@ -258,15 +258,26 @@ function pointController($scope, $menus) {
 		console.log('积分类型', '广播:', current.plat.name + '|' + current.shop.name);
 	});
 
-	$menus.onShopChangeStart(defer => {
+	const shopChangeStart = $menus.onShopChangeStart((defer, toShop)=> {
+
 		if (isChange) {
-			const state = window.confirm('确定切换店铺?');
-			if (state) {
+
+			var modalInstance = ModalService.confirm('切换店铺中,确定要切换至' + toShop.plat.name + '下的' + toShop.shop.name + '吗?', {
+
+				onClose: function () {
+					console.log('close');
+				}
+
+			});
+
+			modalInstance.open().result.then(() => {
 				defer.resolve();
-			} else {
+				isChange = false;
+			}, () => {
 				defer.reject();
-			}
+			});
 		} else {
+
 			defer.resolve();
 		}
 	});
@@ -277,5 +288,6 @@ function pointController($scope, $menus) {
 	// - $scope 销毁时需要手动清理 $menus.onShopChange
 	$scope.$on('$destroy', () => {
 		change();
+		shopChangeStart();
 	});
 }
