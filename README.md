@@ -4,7 +4,7 @@
 [![npm downloads](https://img.shields.io/npm/dt/ccms-components.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
 [![coverage](https://img.shields.io/codecov/c/github/ShuyunFF2E/ccms-components/dev.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
 
-[组件 API 文档](http://shuyunff2e.github.io/ccms-components/)
+[组件 API 文档](http://shuyunff2e.github.io/ccms-components/components/)
 
 开发指南 [Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34) [ccms开发指南](https://github.com/ShuyunFF2E/ccms-angular-styleguide)
 

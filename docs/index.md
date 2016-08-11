@@ -3,6 +3,11 @@ layout: home
 title: Home &middot; CCMS 组件库
 ---
 
+## 组件库说明
+
+1. 组件库提供的组件均以 `cc-` 作为前缀(ccms-components),如 `cc-grid`、`cc-tooltip`。
+2. 组件库提供的服务均以 `$cc` 作为前缀, 如 `$ccModal`。
+
 ## 添加 Components 文档
 
 以 `Simple Component` 为例

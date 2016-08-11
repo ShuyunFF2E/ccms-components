@@ -6,11 +6,13 @@
 
 import angular from 'angular';
 
-import {Deferred, Animation, Throttle, Bind, getInjector} from 'angular-es-utils';
+import { Deferred, Animation, Throttle, Bind, getInjector } from 'angular-es-utils';
 import Popup from '../../common/bases/Popup';
-import {chopStyle2Num} from '../../common/utils/style-helper';
+import { chopStyle2Num } from '../../common/utils/style-helper';
 import CONSTANT from './Constants';
 
+const noop = () => {
+};
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') !== -1;
 
 export default class Modal extends Popup {
@@ -119,7 +121,7 @@ export default class Modal extends Popup {
 	}
 
 	@Bind
-	close() {
+	close(onClose = noop) {
 		this.element.removeChild(this._modalContainer || this._confirmContainer);
 
 		window.removeEventListener('resize', this._resizeModal);
@@ -139,6 +141,7 @@ export default class Modal extends Popup {
 				this.element.$scope.$destroy();
 			}
 
+			onClose();
 			this.destroy();
 		});
 	}
