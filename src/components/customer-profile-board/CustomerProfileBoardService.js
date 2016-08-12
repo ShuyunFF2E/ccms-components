@@ -56,22 +56,6 @@ class CustomerProfileBoardService {
 	 * according to response, generator customer data
 	 */
 	generateCustomerData(data = {}) {
-		console.log(data);
-		console.log(Object.keys(data)
-			.map(key => {
-				switch (key) {
-					case 'customer':
-					case 'trade':
-						return this.concatCustomerAddressZip(data[key].data.data[0]);
-					case 'rfm':
-						return Object.assign({ rfm: this.setRfmLabel(data[key].data.data) }, this.getLastRfmItem(data[key].data.data));
-					case 'tags':
-						return { tags: this.getTagsList(data[key].result), marketingResponsivities: data[key].result ? data[key].result.score ? +data[key].result.score : 1 : 1 };
-					default:
-						return data[key];
-				}
-			})
-			.reduce((pre, curr) => ({...pre, ...curr}), {}));
 		return Object.keys(data)
 			.map(key => {
 				switch (key) {
