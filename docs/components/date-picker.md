@@ -2,7 +2,7 @@
 layout: docs
 title: Date Picker
 group: components
-redirect_from: "/components/"
+maintainer: lingying.zhang
 ---
 
 ## 输入单个日期
