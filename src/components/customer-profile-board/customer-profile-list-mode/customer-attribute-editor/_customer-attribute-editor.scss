@@ -62,13 +62,17 @@ customer-attribute-editor:nth-of-type(3) .attribute-editor-header{
 
 	.attribute-block-item{
 	  margin: 0;
+	  display: flex;
 	}
 
-	label{
-	  display: inline-block;
+	.attribute-item-label{
 	  margin-right: 15px;
 	  width: 136px;
 	  text-align: right;
+	}
+
+	.attribute-item-content{
+	  flex: 1;
 	}
   }
 }

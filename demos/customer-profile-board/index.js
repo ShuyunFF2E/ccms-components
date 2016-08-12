@@ -10,7 +10,7 @@
 
 	angular
 		.module('app', ['ccms.components'])
-		.controller('ctrl', function ($scope, CustomerProfileBoardService) {
+		.controller('ctrl', function ($scope, $ccCustomerProfileBoard) {
 
 			$scope.customerInformation = {
 				nickName: 's_peggy',
@@ -19,9 +19,8 @@
 			};
 
 			$scope.pop = function() {
-				CustomerProfileBoardService.popProfileBoardModal($scope, $scope.customerInformation);
+				$ccCustomerProfileBoard.popProfileBoardModal($scope.customerInformation);
 			}
 		});
 
 })(window.angular);
-
