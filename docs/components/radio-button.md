@@ -2,6 +2,7 @@
 layout: docs
 title: Radio Button
 group: components
+maintainer: jianzhe.ding
 ---
 
 ## Contents

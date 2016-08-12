@@ -2,6 +2,7 @@
 layout: docs
 title: Iconfont
 group: components
+maintainer: kui.liu
 ---
 
 ## Iconfont

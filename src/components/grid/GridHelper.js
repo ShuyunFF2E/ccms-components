@@ -90,7 +90,6 @@ export default {
 					pager.pageSize = transformedData.pageSize;
 					pager.totals = transformedData.totals;
 					pager.totalPages = Math.ceil((transformedData.totals || 0) / pager.pageSize);
-					console.log(pager);
 				});
 
 		} else {

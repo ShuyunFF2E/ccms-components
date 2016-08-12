@@ -2,6 +2,7 @@
 layout: docs
 title: tabset
 group: components
+maintainer: fengqiu.wu
 ---
 
 ## Tabset组件
@@ -24,5 +25,4 @@ group: components
 
 ## Examples
 
-	> 暂时没有
-<!-- <iframe width="100%" height="300" src="//jsfiddle.net/fawziwu/wbL4Lvef/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe> -->
+<iframe width="100%" height="300" src="//jsfiddle.net/fawziwu/wbL4Lvef/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>

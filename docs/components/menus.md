@@ -2,6 +2,7 @@
 layout: docs
 title: Menus组件使用说明
 group: components
+maintainer: chaoyang.mu
 ---
 
 ### menu-bar : 指令配置,其中包括如下:(*required*)

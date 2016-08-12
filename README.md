@@ -4,7 +4,7 @@
 [![npm downloads](https://img.shields.io/npm/dt/ccms-components.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
 [![coverage](https://img.shields.io/codecov/c/github/ShuyunFF2E/ccms-components/dev.svg?style=flat)](https://www.npmjs.com/package/ccms-components)
 
-[组件 API 文档](http://shuyunff2e.github.io/ccms-components/)
+[组件 API 文档](http://shuyunff2e.github.io/ccms-components/components/)
 
 开发指南 [Angular1.x + ES6 开发风格指南](https://github.com/kuitos/kuitos.github.io/issues/34) [ccms开发指南](https://github.com/ShuyunFF2E/ccms-angular-styleguide)
 
@@ -52,7 +52,7 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 ### 组件库规范
 在遵照基本的开发指南基础上,组件库额外的规范:
 
-1. 需要对外暴露的服务,以 `$` 为前缀,如 `$modal`
+1. 需要对外暴露的服务,以 `$cc` 为前缀,如 `$ccModal`
 2. 组件库组件均以 `cc-xx` 形式提供,如`cc-grid`. (cc => ccms-component 首字母)
 3. 提交的组件, Controller 部分需同时提交单元测试,不符合无法通过review。
 4. 其他规范遵照目前已有组件的风格。
@@ -60,15 +60,10 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 ### 开发步骤
 
 1. ccms-components 组内的人员直接 **clone** 本项目；其它人员请 **fork** 本项目。
-
 2. 基于 dev 分支创建你的分支，例如 feature/abc, bugfix/abc, docs/abc
-
 3. 开发完成之后，在 github 网页中创建一个 pull request，base 为 dev，compare 为你的分支名
-
 4. 等待上游 review，merge pull request
-
 5. 在开始另一个功能开发创建新分支之前，应当先将 dev 分支同步为最新的状态。
-
 	```bash
 	# 对于 ccms-components 组内的人员，在 dev 分支拉取更新
 	git pull
@@ -98,8 +93,6 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 	- **perf**，A code change that improves performance
 	- **test**，Adding missing tests
 	- **chore**，Changes to the build process or auxiliary tools and libraries such as documentation generation
-
 * `<scope>`，标记变更的范围，通常为你的模块名
-
 * `<subject>`，用于描述的文字
 

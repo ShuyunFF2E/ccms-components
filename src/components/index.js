@@ -31,6 +31,7 @@ import tabset from './tabset';
 import title from './title';
 import radio from './radio';
 import switchButton from './switch';
+import customerProfileBoard from './customer-profile-board';
 
 export default angular
 	.module('ccms.components.ui', [
@@ -57,7 +58,8 @@ export default angular
 		tabset,
 		title,
 		radio,
-		switchButton
+		switchButton,
+		customerProfileBoard
 	])
 	.name;
 

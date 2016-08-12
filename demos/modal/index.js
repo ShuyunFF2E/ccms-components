@@ -3,7 +3,7 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-02-28
  */
-;(function () {
+;(function(angular) {
 
 	'use strict';
 
@@ -15,15 +15,15 @@
 		this.scopedArray = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'.split(' ');
 
 		this.showSuccess = () => {
-			TipsService.success('sdfsfsdfsfsfdsfsd', $element[0].querySelector('#modal-body').parentNode);
+			TipsService.success('sdfsfsdfsfsfdsfsd', $element[0].querySelector('.modal-body'));
 		};
 
 		this.showError = () => {
 
-			TipsService.error('sdfsfsdfsfsfdsfsd', $element[0].querySelector('#modal-body').parentNode);
+			TipsService.error('sdfsfsdfsfsfdsfsd', $element[0].querySelector('.modal-body'));
 		};
 
-		this.addRandom = function () {
+		this.addRandom = function() {
 			this.scopedArray.push(Math.random());
 		};
 
@@ -31,28 +31,29 @@
 		 * 通过复写modal的 ok cancel close 方法的方式加入自己的逻辑
 		 * 未复写则使用默认逻辑(简单的关闭弹出框,不做任何业务操作)
 		 */
-		this.ok = function () {
+		this.ok = function() {
 			modalInstance.ok(this.scopedArray);
 		};
 
-		this.cancel = function () {
+		this.cancel = function() {
 			modalInstance.cancel(this.scopedArray);
 		};
 
-		this.close = function () {
+		this.close = function() {
 			console.log('close');
 			modalInstance.close();
 		};
 
-		this.previous = function () {
+		this.previous = function() {
 			console.log('上一步');
 		};
 
-		this.sure = function () {
+		this.sure = function() {
 			console.log('sure');
+			modalInstance.ok([]);
 		};
 
-		this.fuckOff = function () {
+		this.fuckOff = function() {
 			console.log('fuck off');
 			modalInstance.cancel();
 		};
@@ -61,7 +62,7 @@
 
 	angular.module('app', ['ccms.components'])
 
-		.controller('ctrl', function ($scope, ModalService) {
+		.controller('ctrl', function($scope, $ccModal) {
 
 			//$scope.array = [1, 2, 3, 4, 5];
 
@@ -69,26 +70,22 @@
 
 			this.array = [1, 2, 3];
 
-			$scope.confirm = function () {
+			$scope.confirm = function() {
 
-				var modalInstance = ModalService.confirm('活动删除后将无法恢复,确定要删除活动吗?<span style="color: red">ssss</span>', {
-
-					onClose: function () {
-						console.log('close');
-					}
-
+				var modalInstance = $ccModal.confirm('活动删除后将无法恢复,确定要删除活动吗?<span style="color: red">ssss</span>', function() {
+					console.log('close');
 				});
 
-				modalInstance.open().result.then(function () {
+				modalInstance.open().result.then(function() {
 					console.log('确认');
-				}, function () {
+				}, function() {
 					console.log('取消');
 				});
 
 			};
 
-			$scope.openBase = function () {
-				ModalService
+			$scope.openBase = function() {
+				$ccModal
 
 					.modal({
 						title: '基础模态框',
@@ -103,7 +100,7 @@
 						},
 						body: '/demos/modal/modal-body.tpl.html',
 						controller: Controller,
-						onClose: function (...args) {
+						onClose: function(...args) {
 							console.log(args);
 						}
 					})
@@ -111,9 +108,9 @@
 					.open();
 			};
 
-			$scope.open = function () {
+			$scope.open = function() {
 
-				var modalInstance = ModalService
+				var modalInstance = $ccModal
 
 					.modal({
 						scope: $scope,
@@ -136,10 +133,10 @@
 					.open();
 
 				// 收集modal的操作反馈,确认为成功回调,取消为失败回调
-				modalInstance.result.then(function (v) {
+				modalInstance.result.then(function(v) {
 					self.array = v;
 					console.log('resolved', v);
-				}, function (v) {
+				}, function(v) {
 					self.array.length = 0;
 					console.log('rejected', v);
 
@@ -148,4 +145,4 @@
 
 		});
 
-})();
+})(window.angular);
