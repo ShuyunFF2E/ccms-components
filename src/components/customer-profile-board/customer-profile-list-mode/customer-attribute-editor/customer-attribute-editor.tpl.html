@@ -5,7 +5,8 @@
 			<dl class="attribute-block" ng-if="attributeBlock.type !== 'List'">
 				<dt class="attribute-block-title">{{attributeBlock.title}}</dt>
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
-					<label ng-bind="attribute.name + ': '"></label>{{$ctrl.customerData[attribute.attribute] !== undefined ? $ctrl.customerData[attribute.attribute] : attribute.defaultValue}}</dd>
+					<label class="attribute-item-label" ng-bind="attribute.name + ': '"></label>
+					<span class="attribute-item-content" ng-bind="$ctrl.customerData[attribute.attribute] !== undefined ? $ctrl.customerData[attribute.attribute] : attribute.defaultValue"></span></dd>
 			</dl>
 			<dl class="attribute-block" ng-if="attributeBlock.type === 'List'">
 				<dt class="attribute-block-title">
@@ -17,7 +18,8 @@
 													 datalist="$ctrl.customerData.rfm"></dropdown-select>
 				</dt>
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
-					<label ng-bind="attribute.name + ': '"></label>{{$ctrl.selectedRfm[attribute.attribute] !== undefined ? $ctrl.selectedRfm[attribute.attribute] : attribute.defaultValue}}</dd>
+					<label class="attribute-item-label" ng-bind="attribute.name + ': '"></label>
+					<span class="attribute-item-content" ng-bind="$ctrl.selectedRfm[attribute.attribute] !== undefined ? $ctrl.selectedRfm[attribute.attribute] : attribute.defaultValue"></span></dd>
 			</dl>
 		</li>
 	</ul>

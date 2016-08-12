@@ -12,7 +12,6 @@ import CustomerProfileBoardService from './CustomerProfileBoardService.js';
 @Inject('$element', '$scope')
 export default class CheckboxController {
 	constructor() {
-		this.CustomerProfileBoardService = new CustomerProfileBoardService();
 		this.customerAttributeSetting = CustomerAttributeSetting;
 
 		this.customerData = {
@@ -20,10 +19,9 @@ export default class CheckboxController {
 			viewType: 'list' // useless now
 		};
 
-		this.CustomerProfileBoardService
+		CustomerProfileBoardService
 			.queryCustomerProfileData(this.customerData)
-			.then(data => (this.customerData = Object.assign({}, this.customerData, this.CustomerProfileBoardService.generateCustomerData(data))))
-			.then(() => this._$scope.$digest());
+			.then(data => (this.customerData = Object.assign({}, this.customerData, CustomerProfileBoardService.generateCustomerData(data))));
 	}
 
 	/**

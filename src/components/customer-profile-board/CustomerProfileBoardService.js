@@ -4,57 +4,49 @@
  * @since 2016-07-18 11:39
  */
 
-import { Inject } from 'angular-es-utils';
+import genresource from 'angular-es-utils/rs-generator';
+import ModalService from '../modal/ModalService.js';
 
 import controller from './CustomerProfileBoardCtrl.js';
-import template from './customer-profile-board.html';
+import template from './customer-profile-board.tpl.html';
 import generatorQueryString from './queryStringSchema.js';
 import { TagsMapping, RfmLabel } from './CustomerAttributeSetting.js';
 
-const MODALTITLESTRING = '客户基本信息';
-const APIADDRESS = 'http://172.18.21.113:8887/fullView';
+const MODAL_TITLE_STRING = '客户基本信息';
+const API_ADDRESS = 'http://172.18.21.113:8887/fullView';
 
-@Inject('ModalService')
-export default class CustomerProfileBoardService {
+export class $ccCustomerProfileBoard {
 	/**
 	 * @name popProfileBoardModal
-	 * @param {Object} scope
 	 * @param {Object} customerInformation
 	 * pop modal of customer profile board
 	 */
-	popProfileBoardModal(scope, customerInformation = {}) {
+	popProfileBoardModal(customerInformation = {}) {
 		const modalOptions = {
-			scope,
 			bindings: {
 				customerInformation
 			},
-			title: MODALTITLESTRING,
+			title: MODAL_TITLE_STRING,
 			style: {width: '640px', height: '520px', 'min-width': '640px', 'min-height': '520px', 'padding': 0},
 			__body: template,
 			controller: controller,
 			hasFooter: false,
 			uid: 'customer-profile-board'
 		};
-		this._ModalService.modal(modalOptions).open();
+		ModalService.modal(modalOptions).open();
 	}
+}
 
+class CustomerProfileBoardService {
 	/**
 	 * @name queryCustomerProfileData
 	 * @param {Object} customerInfo
 	 * @returns {Promise}
-	 * using fetch method to query customer profile data
+	 * using $resource to query customer profile data
 	 */
 	queryCustomerProfileData({nickName = '', shopId = '', platName = ''} = {}) {
-		return fetch(
-			APIADDRESS,
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/graphql'
-				},
-				body: generatorQueryString(nickName, shopId, platName)
-			})
-			.then(data => data.json());
+		const CustomerProfileResource = genresource(API_ADDRESS);
+		return CustomerProfileResource.save(generatorQueryString(nickName, shopId, platName)).$promise;
 	}
 
 	/**
@@ -89,7 +81,10 @@ export default class CustomerProfileBoardService {
 					case 'rfm':
 						return Object.assign({ rfm: this.setRfmLabel(data[key].data.data) }, this.getLastRfmItem(data[key].data.data));
 					case 'tags':
-						return { tags: this.getTagsList(data[key].result), marketingResponsivities: data[key].result ? data[key].result.score ? +data[key].result.score : 1 : 1 };
+						return {
+							tags: this.getTagsList(data[key].result),
+							marketingResponsivities: data[key].result ? (data[key].result.score ? +data[key].result.score : 1) : 1
+						};
 					default:
 						return data[key];
 				}
@@ -104,13 +99,17 @@ export default class CustomerProfileBoardService {
 	 * concat address & zip data into address_zip attribute
 	 */
 	concatCustomerAddressZip(info = {}) {
-		let address_zip = '';
-		address_zip += info.receiver_state ? info.receiver_state : '';
-		address_zip += info.receiver_city ? info.receiver_city : '';
-		address_zip += info.receiver_district ? info.receiver_district : '';
-		address_zip += info.receiver_address ? info.receiver_address : '';
-		address_zip += info.receiver_zip ? ' ' + info.receiver_zip : '';
-		return { ...info, address_zip };
+		return {
+			...info,
+			address_zip: [
+				info.receiver_state || '',
+				info.receiver_city || '',
+				info.receiver_district || '',
+				info.receiver_address || '',
+				' ',
+				info.receiver_zip || ''
+			].join('')
+		};
 	}
 
 	/**
@@ -149,3 +148,5 @@ export default class CustomerProfileBoardService {
 		return tmp;
 	}
 }
+
+export default new CustomerProfileBoardService();
