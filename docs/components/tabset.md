@@ -2,6 +2,7 @@
 layout: docs
 title: tabset
 group: components
+maintainer: fengqiu.wu
 ---
 
 ## Tabset组件

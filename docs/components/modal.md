@@ -2,6 +2,7 @@
 layout: docs
 title: Modal 弹出框服务
 group: components
+maintainer: kui.liu
 ---
 
 ## Contents

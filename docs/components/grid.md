@@ -2,7 +2,7 @@
 layout: docs
 title: Grid表格组件
 group: components
-redirect_from: "/components/"
+maintainer: yazheng.yu, chaoyang.mu, kui.liu
 ---
 
 ### Grid配置

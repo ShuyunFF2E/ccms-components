@@ -2,6 +2,7 @@
 layout: docs
 title: Pagination
 group: components
+maintainer: yazheng.yu
 ---
 
 ## Contents

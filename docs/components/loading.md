@@ -2,7 +2,7 @@
 layout: docs
 title: loading组件
 group: components
-redirect_from: "/components/"
+maintainer: kui.liu
 ---
 
 ## Contents
