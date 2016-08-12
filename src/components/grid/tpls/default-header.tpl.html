@@ -1,5 +1,20 @@
 <!--默认表格头部模板-->
-<th ng-repeat="column in $ctrl.opts.columnsDef track by $index" ng-style="{width:column.width, 'text-align':column.align}">
+<th ng-repeat="column in $ctrl.columns track by $index" ng-style="{width:column.width, 'text-align':column.align}">
 	<span ng-bind="column.displayName"></span>
 	<!--<a href="#" class="iconfont icon-iconfontarrowdropdown"></a>-->
+</th>
+<th class="hidden-columns" ng-if="$ctrl.opts.hiddenColumns !== false" dropdown>
+	<span dropdown-toggle><span class="iconfont icon-set-up"></span><span class="iconfont icon-arrow"></span></span>
+	<div class="dropdown-panel hide" dropdown-panel>
+		<ul>
+			<li ng-repeat="column in $ctrl.opts.columnsDef track by $index">
+				<label>
+					<input type="checkbox"
+							ng-checked="$ctrl.opts.hiddenColumns.indexOf(column.field) === -1"
+							ng-click="$ctrl.toggleColumn(column.field)">
+					<span ng-bind="column.displayName"></span>
+				</label>
+			</li>
+		</ul>
+	</div>
 </th>
