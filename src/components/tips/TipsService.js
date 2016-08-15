@@ -69,13 +69,7 @@ export default class TipsService {
 		setTipsPosition(contextContainer, floatTipsContainer);
 		tips.open();
 
-		this._autoDestroy(angular.element(contextContainer).scope(), tips);
-
 		return tips;
-	}
-
-	_autoDestroy(scope, tips) {
-		scope.$on('$destroy', ::tips.destroy);
 	}
 
 	/**
