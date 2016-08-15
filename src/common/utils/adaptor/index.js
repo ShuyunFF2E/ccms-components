@@ -6,29 +6,13 @@
 
 import angular from 'angular';
 
+import browser from '../browser';
+
 const SERVICE_PREFIX = '$cc';
 const DIRECTIVE_PREFIX = 'cc';
 
-const browser = (function() {
-	let ua = navigator.userAgent, tem,
-		M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-	if (/trident/i.test(M[1])) {
-		tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-		return 'IE ' + (tem[1] || '');
-	}
-	if (M[1] === 'Chrome') {
-		tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
-		if (tem != null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
-	}
-	M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-	if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
-	return {
-		name: M[0],
-		version: M[1]
-	};
-}());
 const browserName = browser.name.toLowerCase();
-const compatibleBrowser = browserName === 'firefox' || browserName !== 'safari' && browserName === 'chrome' && Number(browser.version) > 48;
+const isBrowserCompatible = browserName === 'firefox' || browserName !== 'safari' && browserName === 'chrome' && Number(browser.version) > 48;
 
 const upperCaseCamel = word => word.toUpperCase().substr(0, 1) + word.substr(1);
 const warn = (msg, recipe, name) => {
@@ -75,7 +59,7 @@ const genDeprecatedDirective = originalDirective => (name, directiveFactory, msg
  */
 const genDeprecatedComponent = originalComponent => {
 
-	if (compatibleBrowser) {
+	if (isBrowserCompatible) {
 		// 重写 Function.prototype.toString 方法,使其配合 Proxy 实例的 toString 操作
 		// 绕过 eslint
 		const originalToString = Function.prototype.toString;
@@ -91,7 +75,7 @@ const genDeprecatedComponent = originalComponent => {
 
 	return (name, options, msg) => {
 
-		if (compatibleBrowser) {
+		if (isBrowserCompatible) {
 			let warned = false;
 			// controller 是否初始化过作为 component 是否已被使用的依据
 			// 通过 Proxy 给 controller 添加调用钩子
