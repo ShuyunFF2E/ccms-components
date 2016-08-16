@@ -295,7 +295,18 @@ export default class DropdownSelectCtrl {
 
 		searchFields.forEach(field => {
 			datalist.forEach(item => {
-				if (item[field].indexOf(text) !== -1 && filteredItems.indexOf(item) === -1) {
+				const fieldValue = item[field];
+				let matched = false;
+				if (typeof fieldValue !== 'string') {
+					if (fieldValue.toString() === text) {
+						matched = true;
+					}
+				} else {
+					if (fieldValue.indexOf(text) !== -1) {
+						matched = true;
+					}
+				}
+				if (matched && filteredItems.indexOf(item) === -1) {
 					filteredItems.push(item);
 				}
 			});
