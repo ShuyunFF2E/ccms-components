@@ -20,11 +20,13 @@ export default class CustomerAttributeEditorCtrl {
 	 * set default rfm item & add watch on current selected rfm item
 	 */
 	$postLink() {
-		if (this.customerData.rfm && this.customerData.rfm.length) {
-			this.selectedRfm = this.customerData.rfm[0];
-			this.selectedRfmPeriod = this.selectedRfm.period;
+		this.attributeSetting.attributeBlock.forEach(block => {
+			if (block.type === 'List' && block.listData && block.listData.length) {
+				this.selectedRfm = block.listData[0];
+				this.selectedRfmPeriod = this.selectedRfm.period;
 
-			this._$scope.$watch('$ctrl.selectedRfmPeriod', period => (this.selectedRfm = this.customerData.rfm.filter(rfm => rfm.period === period)[0]));
-		}
+				this._$scope.$watch('$ctrl.selectedRfmPeriod', period => (this.selectedRfm = block.listData.filter(rfm => rfm.period === period)[0]));
+			}
+		});
 	}
 }

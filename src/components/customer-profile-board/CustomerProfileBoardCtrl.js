@@ -4,15 +4,16 @@
  * @since 2016-07-07 17:36
  */
 
+import angular from 'angular';
 import { Inject } from 'angular-es-utils';
 
 import CustomerAttributeSetting from './CustomerAttributeSetting.js';
 import CustomerProfileBoardService from './CustomerProfileBoardService.js';
 
-@Inject('$element', '$scope')
+@Inject('$element', '$timeout', '$scope')
 export default class CheckboxController {
 	constructor() {
-		this.customerAttributeSetting = CustomerAttributeSetting;
+		this.customerAttributeSetting = angular.copy(CustomerAttributeSetting);
 
 		this.customerData = {
 			...this.customerInformation,
@@ -21,7 +22,15 @@ export default class CheckboxController {
 
 		CustomerProfileBoardService
 			.queryCustomerProfileData(this.customerData)
-			.then(data => (this.customerData = Object.assign({}, this.customerData, CustomerProfileBoardService.generateCustomerData(data))));
+			.then(data => Object.assign({}, this.customerData, CustomerProfileBoardService.generateCustomerData(data)))
+			.then(customerData => {
+				this.customerTags = customerData.tags;
+				this.customerData.marketingResponsivities = customerData.marketingResponsivities;
+				this.customerData.mobile = customerData.mobile;
+				this.customerAttributeSetting.forEach(setting =>
+					setting.attributeBlock.forEach(customerAttributeBlock =>
+						CustomerProfileBoardService.mappingDataIntoAttributeBlock(customerAttributeBlock, customerData)));
+			});
 	}
 
 	/**
@@ -72,8 +81,8 @@ export default class CheckboxController {
 	 * According to index, scroll view to special block
 	 */
 	scrollToAttributeBlock(index = 0) {
-		this._$element.ready(() => {
-			this._$element[0].querySelectorAll('customer-attribute-editor')[index].scrollIntoView();
-		});
+		this._$timeout(() => {
+			this._$element[0].querySelectorAll('customer-attribute-editor')[index].scrollIntoView({behavior: 'smooth'});
+		}, 50);
 	}
 }

@@ -6,20 +6,24 @@
 				<dt class="attribute-block-title">{{attributeBlock.title}}</dt>
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
 					<label class="attribute-item-label" ng-bind="attribute.name + ': '"></label>
-					<span class="attribute-item-content" ng-bind="$ctrl.customerData[attribute.attribute] !== undefined ? $ctrl.customerData[attribute.attribute] : attribute.defaultValue"></span></dd>
+					<span class="attribute-item-content"
+								ng-bind="attribute.displayValue"></span>
+				</dd>
 			</dl>
 			<dl class="attribute-block" ng-if="attributeBlock.type === 'List'">
 				<dt class="attribute-block-title">
 					{{attributeBlock.title}}
 					<dropdown-select class="attribute-block-selector"
-													 ng-if="$ctrl.customerData.rfm.length"
+													 ng-if="attributeBlock.listData.length"
 													 model="$ctrl.selectedRfmPeriod"
 													 mapping="$ctrl.rfmSelectorFieldsMap"
-													 datalist="$ctrl.customerData.rfm"></dropdown-select>
+													 datalist="attributeBlock.listData"></dropdown-select>
 				</dt>
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
 					<label class="attribute-item-label" ng-bind="attribute.name + ': '"></label>
-					<span class="attribute-item-content" ng-bind="$ctrl.selectedRfm[attribute.attribute] !== undefined ? $ctrl.selectedRfm[attribute.attribute] : attribute.defaultValue"></span></dd>
+					<span class="attribute-item-content"
+								ng-bind="$ctrl.selectedRfm[attribute.attribute]"></span>
+				</dd>
 			</dl>
 		</li>
 	</ul>

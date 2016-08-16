@@ -6,12 +6,11 @@
 			change-to-list="$ctrl.changeToListMode()"></customer-profile-header>
 	<customer-profile-list-mode
 			ng-if="!$ctrl.viewMode"
-			customer-data="$ctrl.customerData"
 			attributes-setting="$ctrl.customerAttributeSetting"
 			scroll-to-attribute-block="$ctrl.scrollToAttributeBlock(index)"></customer-profile-list-mode>
 	<customer-profile-view-mode
 			ng-if="$ctrl.viewMode"
-			customer-data="$ctrl.customerData"
+			customer-tags="$ctrl.customerTags"
 			attributes-setting="$ctrl.customerAttributeSetting"
 			change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock(name)"></customer-profile-view-mode>
 </div>

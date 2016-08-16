@@ -27,7 +27,7 @@ export class $ccCustomerProfileBoard {
 				customerInformation
 			},
 			title: MODAL_TITLE_STRING,
-			style: {width: '640px', height: '520px', 'min-width': '640px', 'min-height': '520px', 'padding': 0},
+			style: {width: '640px', height: '460px', 'min-width': '640px', 'min-height': '460px', 'padding': 0},
 			__body: template,
 			controller: controller,
 			hasFooter: false,
@@ -130,6 +130,64 @@ class CustomerProfileBoardService {
 		const tmp = rfmList.map(rfm => ({...rfm, period_label: RfmLabel[rfm.period]})).sort((prev, next) => prev.period > next.period ? 1 : -1); // map method will change list order
 		tmp.unshift(tmp.pop());
 		return tmp;
+	}
+
+	mappingDataIntoAttributeBlock(attributeBlock = {}, dataMapping = {}) {
+		if (attributeBlock.type === 'List') {
+			attributeBlock.listData = [...dataMapping[attributeBlock.name]];
+			attributeBlock.listData.forEach(data => {
+				attributeBlock.attributeList.forEach(attribute => {
+					data[attribute.attribute] = this.getAttributeValue(attribute, data);
+				});
+			});
+		}
+		this.mappingDataIntoAttributeSetting(attributeBlock.attributeList, dataMapping);
+	}
+
+	/**
+	 * mapping attribute value into attribute setting object
+	 * @param {Array} attributeList
+	 * @param {Object} dataMapping
+	 */
+	mappingDataIntoAttributeSetting(attributeList = [], dataMapping = {}) {
+		attributeList.map(attribute => {
+			typeof attribute.attributes !== 'undefined' && this.mappingDataIntoAttributeSetting(attribute.attributes, dataMapping);
+			attribute.displayValue = this.getAttributeValue(attribute, dataMapping);
+			return attribute;
+		});
+	}
+
+	/**
+	 * get attribute value
+	 * @param {object} attribute
+	 * @param {object} dataMapping
+	 * @param {string} target
+	 */
+	getAttributeValue(attribute, dataMapping) {
+		if (dataMapping[attribute.attribute] !== undefined) {
+			if (attribute.valueMap) {
+				return attribute.valueMap[dataMapping[attribute.attribute]];
+			} else {
+				return (attribute.currency ? this.formatCurrencyNumber(dataMapping[attribute.attribute]) : dataMapping[attribute.attribute]) + attribute.unit;
+			}
+		} else {
+			if (attribute.valueMap) {
+				return attribute.valueMap[attribute.defaultValue];
+			} else {
+				return attribute.defaultValue;
+			}
+		}
+	}
+
+	/**
+	 * format currency number
+	 * @param {number} number
+	 * @returns {number} number
+	 */
+	formatCurrencyNumber(number, fixed = 2) {
+		number = parseFloat(number);
+		if (!number) number = 0;
+		return number.toFixed(fixed);
 	}
 }
 

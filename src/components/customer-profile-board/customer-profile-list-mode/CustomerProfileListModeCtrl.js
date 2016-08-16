@@ -7,20 +7,11 @@
 import { Inject } from 'angular-es-utils';
 import { Debounce } from 'angular-es-utils/decorators';
 
-@Inject('$element')
+@Inject('$element', '$timeout')
 export default class CustomerProfileListModeCtrl {
 	constructor() {
 		this.rightPanelScrollListener = this.rightPanelScrollListener.bind(this);
-	}
-
-	/**
-	 * @name $onInit
-	 * add scroll event listener on right panel
-	 */
-	$onInit() {
 		this.activeAttributeBlockIndex = 0;
-		const RIGHTPANELELEMENT = this._$element[0].querySelector('.right-panel-block');
-		RIGHTPANELELEMENT.addEventListener('scroll', this.rightPanelScrollListener);
 	}
 
 	/**
@@ -28,9 +19,11 @@ export default class CustomerProfileListModeCtrl {
 	 * generator attributes block offset list
 	 */
 	$postLink() {
-		this._$element.ready(() => {
+		const RIGHTPANELELEMENT = this._$element[0].querySelector('.right-panel-block');
+		RIGHTPANELELEMENT.addEventListener('scroll', this.rightPanelScrollListener);
+		this._$timeout(() => {
 			this.attributesOffsetList = this.getAttributeBlockOffsetList();
-		});
+		}, 50);
 	}
 
 	/**

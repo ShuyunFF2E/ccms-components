@@ -113,7 +113,6 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
 			param:{
         type:"buyer_nick"
         value:"${nick}"
-        dp_id:"${shopId}"
         buyer_nick:"${nick}"
       }){
 	      result{
