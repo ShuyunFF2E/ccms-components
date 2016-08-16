@@ -91,12 +91,13 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 				{
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
 					displayName: '姓名',
-					align: 'left'
+					align: 'left',
+					sort: 'name'
 				},
-				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'age', displayName: '年龄', align: 'center', sort: true, sortOrder: 'asc'},
 				{field: 'gender', displayName: '性别', align: 'right'}
 			],
-			hiddenColumns: ['gender'],
+			hiddenColumns: ['性别'],
 			showPagination: false
 		};
 

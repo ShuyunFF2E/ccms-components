@@ -34,6 +34,7 @@ export default class GridCtrl {
 
 	constructor() {
 		this.columns = [];
+
 	}
 
 	$onInit() {
@@ -53,41 +54,8 @@ export default class GridCtrl {
 
 		this.updateColumns();
 
-		// -temp column config
-		this.sortConfig = [];
-		this.opts.columnsDef.forEach(col => {
-			let colConfig = {};
-
-			// - 根据 col.sort 的类型分别处理
-			switch (typeof col.sort) {
-
-				case 'boolean':
-
-					if (!col.field && col.cellTemplate) {
-
-						console.warn('grid 配置中[' + col.displayName + ']列未指定排列属性,会造成失效!');
-					}
-
-					colConfig.prop = col.field;
-					colConfig.type = 'default';
-					break;
-
-				case 'string':
-
-					colConfig.prop = col.sort;
-					colConfig.type = 'default';
-					break;
-
-				default:
-
-					colConfig = null;
-					break;
-			}
-			this.sortConfig.push(colConfig);
-		});
-
 		// 刷新页面
-		GridHelper.refresh(this.opts);
+		GridHelper.refresh(this.opts, Object.assign(this.opts.queryParams || {}, this.getSortQueryParam(this.sortConfig)));
 	}
 
 	get $allSelected() {
@@ -101,7 +69,7 @@ export default class GridCtrl {
 		const {opts} = this;
 
 		GridHelper
-			.refresh(opts, Object.assign(opts.queryParams || {}, {pageNum, pageSize}), this.sortConfig)
+			.refresh(opts, Object.assign(opts.queryParams || {}, {pageNum, pageSize}))
 			.then(() => this.onRefresh && this.onRefresh({opts}));
 	}
 
@@ -136,15 +104,21 @@ export default class GridCtrl {
 		return findEntity(this.selectedItems, entity) !== -1;
 	}
 
-	toggleColumn(field) {
+	toggleColumn(displayName) {
+
 		// TODO: 至少保留一个显示的列
 		const hiddenColumns = this.opts.hiddenColumns;
-		const index = hiddenColumns.indexOf(field);
+
+		const index = hiddenColumns.indexOf(displayName);
+
 		if (index !== -1) {
+
 			hiddenColumns.splice(index, 1);
 		} else {
-			hiddenColumns.push(field);
+
+			hiddenColumns.push(displayName);
 		}
+
 		this.updateColumns();
 	}
 
@@ -153,34 +127,122 @@ export default class GridCtrl {
 		const hiddenColumns = this.opts.hiddenColumns;
 		if (Array.isArray(hiddenColumns)) {
 			this.columns = this.opts.columnsDef.filter(column => {
-				return hiddenColumns.indexOf(column.field) === -1;
+				return hiddenColumns.indexOf(column.displayName) === -1;
 			});
 		} else {
 			this.columns = [...this.opts.columnsDef];
 		}
+		this.createSortConfig(this.columns);
 	}
 
-	runColumnSorting(index) {
+	runColumnSorting(displayName) {
 
-		// - 遍历sortConfig 修改状态
-		this.sortConfig.forEach((config, cIndex) => {
-			if (config) {
-				if (index === cIndex) {
-					config.type = config.type === 'asc' ? 'desc' : 'asc';
-				} else {
-					config.type = 'default';
-				}
-			}
-		});
-
-		const columnConfig = this.sortConfig[index];
+		this.updateSortConfigState(displayName);
 
 		const {opts} = this;
 
 		GridHelper
-			.refresh(opts, Object.assign(opts.queryParams || {}, {
-				sortOrder: columnConfig ? columnConfig.type : '',
-				sortProp: columnConfig ? columnConfig.prop : ''
-			})).then(() => this.onRefresh && this.onRefresh({opts}));
+			.refresh(opts, Object.assign(opts.queryParams || {}, this.getSortQueryParam(this.sortConfig))).then(() => this.onRefresh && this.onRefresh({opts}));
+	}
+
+	createSortConfig(columns) {
+
+		// temp 之前的排序配置
+		let tempSortConfig = [];
+
+		if (Array.isArray(this.sortConfig)) {
+
+			tempSortConfig = this.sortConfig;
+		}
+		// -sortConfig 列排序配置
+		this.sortConfig = [];
+
+		columns.forEach(col => {
+			let colConfig = {};
+
+			// - 根据 col.sort 的类型分别处理
+			switch (typeof col.sort) {
+
+				case 'boolean':
+
+					if (!col.field && col.cellTemplate) {
+
+						console.warn('grid 配置中[' + col.displayName + ']列未指定排列属性,会造成失效!');
+					}
+
+					colConfig.prop = col.field;
+					colConfig.type = col.sortOrder || 'default';
+					colConfig.displayName = col.displayName;
+					break;
+
+				case 'string':
+
+					colConfig.prop = col.sort;
+					colConfig.type = col.sortOrder || 'default';
+					colConfig.displayName = col.displayName;
+					break;
+
+				default:
+
+					colConfig = null;
+					break;
+			}
+			this.sortConfig.push(colConfig);
+		});
+
+		this.sortConfig.filter(config => {
+
+			if (config) {
+
+				const tempConfig = tempSortConfig.find(temp => {
+
+					return temp && temp.displayName === config.displayName;
+				});
+
+				if (tempConfig) {
+
+					config.type = tempConfig.type;
+				}
+			}
+		});
+	}
+
+	updateSortConfigState(displayName) {
+
+		// - 遍历sortConfig 修改状态
+		this.sortConfig.forEach(config => {
+			if (config) {
+				if (config.displayName === displayName) {
+					if (config.type === 'asc') {
+						config.type = 'desc';
+					} else if (config.type === 'desc') {
+						config.type = 'default';
+					} else {
+						config.type = 'asc';
+					}
+				}
+			}
+		});
+	}
+
+	getSortQueryParam(configs) {
+
+		const sortQueryParam = {
+			props: [],
+			types: []
+		};
+
+		configs.forEach(config => {
+			if (config && config.type !== 'default') {
+				sortQueryParam.props.push(config.prop);
+				sortQueryParam.types.push(config.type);
+			}
+		});
+
+		return {
+			sortOrder: sortQueryParam.types.toString(),
+			sortProp: sortQueryParam.props.toString(),
+			pageNum: 1 // -排序重置页码为1
+		};
 	}
 }

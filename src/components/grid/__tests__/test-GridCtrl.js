@@ -35,6 +35,9 @@ describe('GridCtrl', () => {
 			],
 			transformer: {
 				pageNum: 'currentPage'
+			},
+			onRefresh: () => {
+				assert.isTrue(true);
 			}
 		};
 
@@ -89,14 +92,74 @@ describe('GridCtrl', () => {
 		assert.isFalse(gridCtrl.$allSelected);
 	});
 
-	it('runColumnSorting', () => {
+	it('updateColumns', () => {
 
+		gridCtrl.opts.hiddenColumns = false;
+		gridCtrl.updateColumns();
+		assert.equal(gridCtrl.columns.length, gridCtrl.opts.columnsDef.length, 'columns length is equal');
+
+		gridCtrl.opts.hiddenColumns = ['性别'];
+		gridCtrl.updateColumns();
+		const index = gridCtrl.columns.findIndex(col => {
+			return col.displayName === '性别';
+		});
+		assert.isTrue(index === -1, 'gender columns is hidden');
+	});
+
+	it('toggleColumn', () => {
+
+		let displayName = '性别';
+		gridCtrl.toggleColumn(displayName);
+		assert.isTrue(gridCtrl.columns.indexOf(displayName) === -1, 'gender is hidden');
+
+		displayName = '年龄';
+		gridCtrl.toggleColumn(displayName);
+		assert.isTrue(gridCtrl.columns.indexOf(displayName) === -1, 'age is hidden');
+	});
+
+	it('createSortConfig', () => {
+
+		gridCtrl.columns = gridCtrl.opts.columnsDef;
+		gridCtrl.createSortConfig(gridCtrl.columns);
 		assert.isArray(gridCtrl.sortConfig, 'sortConfig is Array');
-		assert.deepEqual(gridCtrl.sortConfig[1], {prop: 'age', type: 'default'});
-		assert.deepEqual(gridCtrl.sortConfig[0], {prop: 'name', type: 'default'});
-		assert.isNull(gridCtrl.sortConfig[2], 'this is null');
-		gridCtrl.runColumnSorting(1);
-		assert.deepEqual(gridCtrl.opts.queryParams, {sortOrder: 'asc', sortProp: 'age', pageNum: 2});
+		assert.isNull(gridCtrl.sortConfig[2], 'sortConfig[2] is null');
+	});
+
+	it('updateSortConfigState', () => {
+
+		let displayName = '年龄';
+		const index = gridCtrl.sortConfig.findIndex(config => {
+			return config && config.displayName === displayName;
+		});
+
+		if (index >= 0) {
+
+			gridCtrl.updateSortConfigState(displayName);
+			assert.equal(gridCtrl.sortConfig[index].type, 'asc', displayName + 'is sort asc');
+
+			gridCtrl.updateSortConfigState(displayName);
+			assert.equal(gridCtrl.sortConfig[index].type, 'desc', displayName + 'is desc');
+
+			gridCtrl.updateSortConfigState(displayName);
+			assert.equal(gridCtrl.sortConfig[index].type, 'default', displayName + 'is default');
+
+		} else {
+
+			assert.isTrue(false, 'sort column is not exist');
+		}
+	});
+
+	it('getSortQueryParam', () => {
+
+		const queryParam = gridCtrl.getSortQueryParam([
+			{prop: 'age', type: 'asc', displayName: '年龄'},
+			{prop: 'gander', type: 'default', displayName: '性别'},
+			{prop: 'name', type: 'desc', displayName: '姓名'}]);
+		assert.deepEqual(queryParam, {sortOrder: 'asc,desc', sortProp: 'age,name', pageNum: 1});
+	});
+
+	it('runColumnSorting', () => {
+		gridCtrl.runColumnSorting('姓名');
 	});
 });
 

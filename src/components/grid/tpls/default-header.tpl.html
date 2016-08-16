@@ -1,17 +1,17 @@
 <!--默认表格头部模板-->
 <th ng-repeat="column in $ctrl.columns track by $index"
 
-    ng-class="{'column-sort':column.sort}"
+	ng-class="{'column-sort':column.sort}"
 
-    ng-click="$ctrl.runColumnSorting($index)"
+	ng-click="$ctrl.runColumnSorting(column.displayName)"
 
-    ng-style="{width:column.width, 'text-align':column.align}">
+	ng-style="{width:column.width, 'text-align':column.align}">
 
-    <span ng-bind="column.displayName"></span>
+	<span ng-bind="column.displayName"></span>
 
-    <a ng-if="column.sort"
-       ng-class="{'column-sort-default':$ctrl.sortConfig[$index].type==='default','column-sort-desc':$ctrl.sortConfig[$index].type==='desc','column-sort-asc':$ctrl.sortConfig[$index].type==='asc'}"
-       href="#" class="iconfont icon-sort column-sort-default"></a>
+	<a ng-if="column.sort"
+	   ng-class="{'column-sort-default':$ctrl.sortConfig[$index].type==='default','column-sort-desc':$ctrl.sortConfig[$index].type==='desc','column-sort-asc':$ctrl.sortConfig[$index].type==='asc'}"
+	   href="#" class="iconfont icon-sort column-sort-default"></a>
 </th>
 <th class="hidden-columns" ng-if="$ctrl.opts.hiddenColumns !== false" dropdown>
 	<span dropdown-toggle><span class="iconfont icon-set-up"></span><span class="iconfont icon-arrow"></span></span>
@@ -20,8 +20,9 @@
 			<li ng-repeat="column in $ctrl.opts.columnsDef track by $index">
 				<label>
 					<input type="checkbox"
-							ng-checked="$ctrl.opts.hiddenColumns.indexOf(column.field) === -1"
-							ng-click="$ctrl.toggleColumn(column.field)">
+						   ng-checked="$ctrl.opts.hiddenColumns.indexOf(column.displayName) === -1"
+						   ng-disabled="$ctrl.opts.hiddenColumns.indexOf(column.displayName)===-1&&$ctrl.columns.length<=1"
+						   ng-click="$ctrl.toggleColumn(column.displayName)">
 					<span ng-bind="column.displayName"></span>
 				</label>
 			</li>
