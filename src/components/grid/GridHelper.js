@@ -31,6 +31,7 @@ export default {
 			response: null, // 对外暴露的response
 			queryParams: null, // 外部查询参数
 			columnsDef: [],   // 列定义,包括 field:字段 displayName:字段名 cellTemplate:单元格模板 align:文字对齐方式
+			hiddenColumns: false, // 自定义数据列，enum: false, Array(field)
 			externalData: null, // 来自外部表格数据
 			showPagination: true, // 是否展示分页
 			headerTpl: null, // 表头模板,允许 字符串 or 模板url
@@ -81,6 +82,7 @@ export default {
 					}
 
 					gridOptions.response = res;
+
 					gridOptions.data = transformedData.list;
 					gridOptions.loading = false;
 
@@ -95,6 +97,7 @@ export default {
 		} else {
 
 			const finish = data => {
+
 				gridOptions.data = data;
 				gridOptions.loading = false;
 			};
@@ -107,5 +110,4 @@ export default {
 
 		}
 	}
-
 };

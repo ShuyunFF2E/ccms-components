@@ -38,10 +38,17 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
-					width: '100px'
+					width: '100px',
+					sort: 'name'
 				},
-				{field: 'age', displayName: '年龄', align: 'center'},
-				{field: 'gender', displayName: '性别', align: 'right'}
+				{
+					field: 'age', displayName: '年龄', align: 'center',
+					sort: true
+				},
+				{
+					field: 'gender', displayName: '性别', align: 'right',
+					sort: true
+				}
 			],
 			transformer: {
 				pageNum: 'currentPage',
@@ -71,9 +78,26 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					displayName: '姓名',
 					align: 'left'
 				},
-				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'age', displayName: '年龄', align: 'center', sort: true},
 				{field: 'gender', displayName: '性别', align: 'right'}
 			],
+			showPagination: false
+		};
+
+		this.gridOption3 = {
+
+			externalData: [{name: 'kuitos', age: 10, gender: '男'}, {name: 'xxx', age: 11, gender: '女'}],
+			columnsDef: [
+				{
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
+					displayName: '姓名',
+					align: 'left',
+					sort: 'name'
+				},
+				{field: 'age', displayName: '年龄', align: 'center', sort: true, sortOrder: 'asc'},
+				{field: 'gender', displayName: '性别', align: 'right'}
+			],
+			hiddenColumns: ['性别'],
 			showPagination: false
 		};
 

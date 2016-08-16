@@ -13,6 +13,7 @@ $tr-even-bg: #fafafa;
 $tr-hover-bg: #eef8fc;
 
 $init-color: #70a2c7;
+$icon-asc-sort-deg: 180deg;
 
 grid {
 
@@ -94,131 +95,181 @@ grid {
 				padding-left: 0;
 			}
 		}
-	}
 
-	.init-msg {
-		@extend %absolute-center;
-		@include all-link($init-color);
-
-		span {
-			font-family: $font-family;
-			font-size: $font-size-large;
-			height: 40px;
-			line-height: 40px;
-			color: $font-color-comment;
-			vertical-align: middle;
-
-			&.msg {
-				margin-left: 15px;
-			}
-
-			&.warning {
-				font-size: 44px;
-				@extend .iconfont;
-				@extend .icon-caution;
-			}
-		}
-	}
-
-	.grid-loading {
-		@extend %absolute-center;
-	}
-
-	.footer {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 39px;
-		background-color: #f6f6f6;
-		border: 1px solid #e8e8e8;
-		color: #666666;
-		white-space: nowrap;
-		@extend %clear-fix;
-
-		.page-con {
-			@include fonts;
-			display: inline-block;
-			float: left;
-			color: #666666;
-			line-height: 39px;
-			padding-left: $pagination-padding;
-
-			%p-button {
-				border: 0 none;
-				cursor: pointer;
-				float: left;
-				position: relative;
-				top: 4px;
-				span {
-					display: block;
-					float: left;
-					height: 16px;
-					width: 16px;
-				}
-				&:hover {
-					color: #828282;
-				}
-			}
-
-			span {
-				margin-right: 18px;
-				float: left;
-			}
-
-			.font-num {
-				font-family: $font-number;
-				float: none;
-				margin-right: 0;
-			}
-
-			.reload {
-				display: inline-block;
+		.hidden-columns {
+			position: relative;
+			width: 54px;
+			> span {
 				cursor: pointer;
 			}
-
-			.p-reload {
-				@extend %p-button;
-				@extend .iconfont;
-				@extend .icon-refresh;
-				width: 12px;
-				height: 12px;
-				top: -1px;
-				font-size: 14px;
-				color: #929292;
-				margin-right: 4px;
-			}
-
-			@-moz-document url-prefix() {
-				.p-reload {
-					top: -2px;
+			[dropdown-panel] {
+				position: absolute;
+				right: 1px;
+				z-index: 1;
+				padding: 10px;
+				border: solid 1px #ccc;
+				background-color: #fff;
+				&.hide {
+					display: none !important;
+				}
+				li {
+					white-space: nowrap;
+					cursor: pointer;
+					label {
+						cursor: inherit;
+					}
 				}
 			}
 		}
-
-		& > pagination {
-			float: right;
-		}
 	}
 
-	grid-cell {
-		display: flex;
-		justify-content: flex-start;
-		word-break: break-all;
+	.column-sort {
+		cursor: pointer;
+	}
 
-		&.left {
-			justify-content: flex-start;
-		}
+	.column-sort-asc, .column-sort-desc, .column-sort-default {
+		font-size: 12px;
+		text-decoration: none;
+		display: inline-block;
+		color: blue;
+	}
 
-		&.right {
-			justify-content: flex-end;
-		}
+	.column-sort-default {
+		color: dimgray;
+	}
 
-		&.center {
-			justify-content: center;
-		}
-
+	.column-sort-asc {
+		color: blue;
+		// 升序
+		transform: rotate($icon-asc-sort-deg);
+	}
+	.column-sort-desc {
+		color: blue;
+		// 降序
+		transform: rotate(0deg);
 	}
 }
 
+.init-msg {
+	@extend %absolute-center;
+	@include all-link($init-color);
 
+	span {
+		font-family: $font-family;
+		font-size: $font-size-large;
+		height: 40px;
+		line-height: 40px;
+		color: $font-color-comment;
+		vertical-align: middle;
+
+		&.msg {
+			margin-left: 15px;
+		}
+
+		&.warning {
+			font-size: 44px;
+			@extend .iconfont;
+			@extend .icon-caution;
+		}
+	}
+}
+
+.grid-loading {
+	@extend %absolute-center;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 39px;
+	background-color: #f6f6f6;
+	border: 1px solid #e8e8e8;
+	color: #666666;
+	white-space: nowrap;
+	@extend %clear-fix;
+
+	.page-con {
+		@include fonts;
+		display: inline-block;
+		float: left;
+		color: #666666;
+		line-height: 39px;
+		padding-left: $pagination-padding;
+
+		%p-button {
+			border: 0 none;
+			cursor: pointer;
+			float: left;
+			position: relative;
+			top: 4px;
+			span {
+				display: block;
+				float: left;
+				height: 16px;
+				width: 16px;
+			}
+			&:hover {
+				color: #828282;
+			}
+		}
+
+		span {
+			margin-right: 18px;
+			float: left;
+		}
+
+		.font-num {
+			font-family: $font-number;
+			float: none;
+			margin-right: 0;
+		}
+
+		.reload {
+			display: inline-block;
+			cursor: pointer;
+		}
+
+		.p-reload {
+			@extend %p-button;
+			@extend .iconfont;
+			@extend .icon-refresh;
+			width: 12px;
+			height: 12px;
+			top: -1px;
+			font-size: 14px;
+			color: #929292;
+			margin-right: 4px;
+		}
+
+		@-moz-document url-prefix() {
+			.p-reload {
+				top: -2px;
+			}
+		}
+	}
+
+	& > pagination {
+		float: right;
+	}
+}
+
+grid-cell {
+	display: flex;
+	justify-content: flex-start;
+	word-break: break-all;
+
+	&.left {
+		justify-content: flex-start;
+	}
+
+	&.right {
+		justify-content: flex-end;
+	}
+
+	&.center {
+		justify-content: center;
+	}
+
+}

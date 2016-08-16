@@ -30,6 +30,7 @@ maintainer: yazheng.yu, chaoyang.mu, kui.liu
 		* pageSizeList `Array`(default:[10, 15, 20, 30, 50]) 可选的每页数据条数
 * selectedItems `Array`(default:[]) 选中的数据集合
 * type `String`(default:'default') 表格类型 目前支持'selectable'(带checkbox)配置。
+* sort `Boolean|String`(default:false) 排序，若配置`Boolean`时，组件会按照`columnsDef`项中`field`字段执行排序；若配置`columnsDef`项中不存在`field`字段则使用`String`来指定排序字段
 
 ### Grid配套服务
 
