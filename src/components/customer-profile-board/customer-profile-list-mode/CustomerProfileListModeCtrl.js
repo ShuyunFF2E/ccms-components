@@ -7,7 +7,7 @@
 import { Inject } from 'angular-es-utils';
 import { Debounce } from 'angular-es-utils/decorators';
 
-@Inject('$element')
+@Inject('$element', '$timeout')
 export default class CustomerProfileListModeCtrl {
 	constructor() {
 		this.rightPanelScrollListener = this.rightPanelScrollListener.bind(this);
@@ -28,9 +28,9 @@ export default class CustomerProfileListModeCtrl {
 	 * generator attributes block offset list
 	 */
 	$postLink() {
-		this._$element.ready(() => {
+		this._$timeout(() => {
 			this.attributesOffsetList = this.getAttributeBlockOffsetList();
-		});
+		}, 0, false);
 	}
 
 	/**
