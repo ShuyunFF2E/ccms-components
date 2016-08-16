@@ -9,7 +9,7 @@ import { Inject } from 'angular-es-utils';
 import CustomerAttributeSetting from './CustomerAttributeSetting.js';
 import CustomerProfileBoardService from './CustomerProfileBoardService.js';
 
-@Inject('$element', '$scope')
+@Inject('$element', '$scope', '$timeout')
 export default class CheckboxController {
 	constructor() {
 		this.customerAttributeSetting = CustomerAttributeSetting;
@@ -72,8 +72,8 @@ export default class CheckboxController {
 	 * According to index, scroll view to special block
 	 */
 	scrollToAttributeBlock(index = 0) {
-		this._$element.ready(() => {
+		this._$timeout(() => {
 			this._$element[0].querySelectorAll('customer-attribute-editor')[index].scrollIntoView();
-		});
+		}, 0, false);
 	}
 }
