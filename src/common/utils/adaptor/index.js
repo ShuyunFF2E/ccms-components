@@ -75,25 +75,27 @@ const genDeprecatedComponent = originalComponent => {
 
 	return (name, options, msg) => {
 
-		if (isBrowserCompatible) {
-			let warned = false;
-			// controller 是否初始化过作为 component 是否已被使用的依据
-			// 通过 Proxy 给 controller 添加调用钩子
-			const controllerProxy = new Proxy(options.controller, {
-				apply(target, thisArg, args) {
-					if (!warned) {
-						warn(msg, 'directive', name);
-					}
-					warned = true;
-					return Function.prototype.apply(target, [thisArg, ...args]);
+		let counter = 0;
+		// component构造出来的工厂函数调用时,options.template会被调用两次
+		const factoryCallCount = 2;
+
+		// 创建拷贝,防止共用一个引用
+		const copyOptions = angular.copy(options);
+		const template = copyOptions.template;
+		Object.defineProperty(copyOptions, 'template', {
+
+			get() {
+
+				counter++;
+				if (counter === factoryCallCount) {
+					warn(msg, 'directive', name);
 				}
-			});
-			controllerProxy.__proxy__ = options.controller;
 
-			options.controller = controllerProxy;
-		}
+				return template;
+			}
+		});
 
-		return originalComponent(name, options);
+		return originalComponent(name, copyOptions);
 	};
 };
 
