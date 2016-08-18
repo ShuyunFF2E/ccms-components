@@ -17,7 +17,7 @@ const validatorsDDO = {
 		formCtrl: '?form'
 	},
 	controller: ValidatorsCtrl,
-	controllerAs: '$ctrl',
+	controllerAs: '$$validatorsCtrl',
 	bindToController: {
 		validators: '<',
 		name: '@'
@@ -32,7 +32,7 @@ const validatorDDO = {
 		formCtrl: '?^^form'
 	},
 	controller: ValidatorCtrl,
-	controllerAs: '$ctrl',
+	controllerAs: '$$validatorCtrl',
 	bindToController: {
 		validator: '@'
 	}
