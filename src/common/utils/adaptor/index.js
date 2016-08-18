@@ -6,13 +6,8 @@
 
 import angular from 'angular';
 
-import browser from '../browser';
-
 const SERVICE_PREFIX = '$cc';
 const DIRECTIVE_PREFIX = 'cc';
-
-const browserName = browser.name.toLowerCase();
-const isBrowserCompatible = browserName === 'firefox' || browserName !== 'safari' && browserName === 'chrome' && Number(browser.version) > 48;
 
 const upperCaseCamel = word => word.toUpperCase().substr(0, 1) + word.substr(1);
 const warn = (msg, recipe, name) => {
@@ -39,16 +34,37 @@ const warn = (msg, recipe, name) => {
 	}
 };
 
+const directiveAdaptorHookBlocks = [];
+const genDirectiveAdaptorHook = (name, msg) => $injector => {
+	// 获取指令的第一个实例(第一个实例的compile方法被调用即说明该指令被调用)
+	const directive = $injector.get(`${name}Directive`)[0];
+
+	// $$bindings 初始化发生在指令第一次被添加的时候,所以这里采用 $$bindings 作为初始化判断依据
+	let $$bindings = directive.$$bindings;
+	Object.defineProperty(directive, '$$bindings', {
+		get() {
+			return $$bindings;
+		},
+
+		set(value) {
+			warn(msg, 'directive', name);
+			$$bindings = value;
+		}
+	});
+};
+
 /**
  * deprecated directive shortcut
  * only support module.directive(name, factoryFn) definition
  */
 const genDeprecatedDirective = originalDirective => (name, directiveFactory, msg) => {
 
-	const wrappedDirectiveFactory = (...args) => {
+	directiveAdaptorHookBlocks.push(genDirectiveAdaptorHook(name, msg));
 
-		warn(msg, 'directive', name);
-		return directiveFactory(...args);
+	const wrappedDirectiveFactory = (...args) => {
+		const ddo = directiveFactory(...args);
+		// 复制 ddo 避免跟非 deprecated 用同一个配置引用
+		return angular.copy(ddo);
 	};
 
 	return originalDirective(name, wrappedDirectiveFactory);
@@ -59,43 +75,12 @@ const genDeprecatedDirective = originalDirective => (name, directiveFactory, msg
  */
 const genDeprecatedComponent = originalComponent => {
 
-	if (isBrowserCompatible) {
-		// 重写 Function.prototype.toString 方法,使其配合 Proxy 实例的 toString 操作
-		// 绕过 eslint
-		const originalToString = Function.prototype.toString;
-		const $fn = Function;
-		$fn.prototype.toString = function() {
-			if (this.__proxy__) {
-				return originalToString.call(this.__proxy__);
-			} else {
-				return originalToString.call(this);
-			}
-		};
-	}
-
 	return (name, options, msg) => {
 
-		let counter = 0;
-		// component构造出来的工厂函数调用时,options.template会被调用两次
-		const factoryCallCount = 2;
+		directiveAdaptorHookBlocks.push(genDirectiveAdaptorHook(name, msg));
 
-		// 创建拷贝,防止共用一个引用
-		const copyOptions = angular.copy(options);
-		const template = copyOptions.template;
-		Object.defineProperty(copyOptions, 'template', {
-
-			get() {
-
-				counter++;
-				if (counter === factoryCallCount) {
-					warn(msg, 'directive', name);
-				}
-
-				return template;
-			}
-		});
-
-		return originalComponent(name, copyOptions);
+		// 复制 ddo 避免跟非 deprecated 用同一个配置引用
+		return originalComponent(name, angular.copy(options));
 	};
 };
 
@@ -138,3 +123,9 @@ angular.module = (...args) => {
 	return moduleInstance;
 };
 
+export default angular
+	.module('ccms.components.adaptor', [])
+	.run(['$injector', $injector => {
+		directiveAdaptorHookBlocks.forEach(hook => hook($injector));
+	}])
+	.name;
