@@ -10,6 +10,8 @@
 	</ul>
 	<div class="right-panel-block">
 		<customer-attribute-editor ng-repeat="attributeSetting in $ctrl.attributesSetting track by $index"
-															 attribute-setting="attributeSetting"></customer-attribute-editor>
+															 attribute-setting="attributeSetting"
+															 update-attribute-block-offset="$ctrl.updateAttributeBlockOffsetList()"
+															 customer-data="$ctrl.customerData"></customer-attribute-editor>
 	</div>
 </div>

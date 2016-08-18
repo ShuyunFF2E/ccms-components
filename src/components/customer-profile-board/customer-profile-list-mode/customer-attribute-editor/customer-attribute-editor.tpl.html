@@ -2,13 +2,16 @@
 	<p class="attribute-editor-header" ng-bind="$ctrl.attributeSetting.title"></p>
 	<ul class="attribute-editor-content">
 		<li ng-repeat="attributeBlock in $ctrl.attributeSetting.attributeBlock track by $index">
-			<dl class="attribute-block" ng-if="attributeBlock.type !== 'List'">
+			<dl class="attribute-block" ng-if="attributeBlock.type !== 'List'" ng-show="$ctrl.attributeSetting.name !== 'customer' || !$ctrl.showCustomerAttributeEditor">
 				<dt class="attribute-block-title">{{attributeBlock.title}}</dt>
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
 					<label class="attribute-item-label" ng-bind="attribute.name + ': '"></label>
 					<span class="attribute-item-content"
 								ng-bind="attribute.displayValue"></span>
 				</dd>
+				<dd ng-if="attributeBlock.name === 'customerDefined'"><button class="add-attribute-button"
+																																 ng-click="$ctrl.changeCustomerDefinedBlockState(true)"
+																																 href=""> + 添加自定义属性 </button></dd>
 			</dl>
 			<dl class="attribute-block" ng-if="attributeBlock.type === 'List'">
 				<dt class="attribute-block-title">
@@ -24,6 +27,12 @@
 					<span class="attribute-item-content"
 								ng-bind="$ctrl.selectedRfm[attribute.attribute]"></span>
 				</dd>
+			</dl>
+		</li>
+		<li>
+			<dl class="attribute-block customer-defined-attribute-block" ng-if="$ctrl.attributeSetting.name === 'customer' && $ctrl.showCustomerAttributeEditor">
+				<dt class="attribute-block-title">添加自定义属性<a class="back-to-normal" href="" ng-click="$ctrl.changeCustomerDefinedBlockState(false)"> < 返回 </a></dt>
+				<dd class="attribute-block-item"><customer-defined-attribute-editor create-attribute-fn="" cancel-setting="$ctrl.changeCustomerDefinedBlockState(false)"></customer-defined-attribute-editor></dd>
 			</dl>
 		</li>
 	</ul>

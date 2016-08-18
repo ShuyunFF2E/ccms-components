@@ -24,6 +24,11 @@ customer-attribute-editor:last-child .customer-attribute-editor{
   background-color: $white;
   margin-bottom: 15px;
 
+  a{
+	text-decoration: none;
+	color: #00aaf1;
+  }
+
   .attribute-editor-header{
 	height: 30px;
 	line-height: 30px;
@@ -38,7 +43,7 @@ customer-attribute-editor:last-child .customer-attribute-editor{
 	  height: 30px;
 	  line-height: 30px;
 	  border-bottom: 1px solid #ddd;
-	  margin-bottom: 6px;
+	  margin-bottom: 15px;
 	}
 
 	.attribute-block-selector{
@@ -47,6 +52,7 @@ customer-attribute-editor:last-child .customer-attribute-editor{
 
 	  .dropdown-select .dropdown-select-input-wrap{
 		border: 0;
+		margin-top: -2px;
 	  }
 
 	  .dropdown-select .dropdown-panel .dropdown-list{
@@ -55,11 +61,26 @@ customer-attribute-editor:last-child .customer-attribute-editor{
 	  }
 
 	  input{
-		margin-top: 3px;
-		height: 26px;
-		line-height: 26px;
 		color: #00aaf1;
 	  }
+	}
+
+	.add-attribute-button{
+	  color: #0097d7;
+	}
+  }
+
+  .customer-defined-attribute-block{
+	min-height: 335px;
+	display: flex;
+	flex-flow: column nowrap;
+
+	.back-to-normal{
+	  float: right;
+	}
+
+	.attribute-block-item{
+	  flex: 1;
 	}
   }
 

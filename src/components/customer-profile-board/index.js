@@ -12,6 +12,7 @@ import { $ccCustomerProfileBoard } from './CustomerProfileBoardService';
 import CustomerProfileHeader from './customer-profile-header';
 import { CustomerProfileViewMode, CustomerAttributeNote } from './customer-profile-view-mode';
 import { CustomerProfileListMode, CustomerAttributeEditor } from './customer-profile-list-mode';
+import {CustomerDefinedAttributeEditor, AttributeDataEditor} from './customer-defined-attribute-editor';
 
 export default angular
 	.module('ccms.components.customerProfileBoard', [bindHTML])
@@ -21,4 +22,6 @@ export default angular
 	.component('customerAttributeEditor', CustomerAttributeEditor)
 	.component('customerProfileViewMode', CustomerProfileViewMode)
 	.component('customerAttributeNote', CustomerAttributeNote)
+	.component('customerDefinedAttributeEditor', CustomerDefinedAttributeEditor)
+	.component('attributeDataEditor', AttributeDataEditor)
 	.name;

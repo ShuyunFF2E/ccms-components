@@ -13,6 +13,8 @@ export default class CustomerAttributeEditorCtrl {
 			valueField: 'period',
 			displayField: 'period_label'
 		};
+
+		this.showCustomerAttributeEditor = false;
 	}
 
 	/**
@@ -28,5 +30,14 @@ export default class CustomerAttributeEditorCtrl {
 				this._$scope.$watch('$ctrl.selectedRfmPeriod', period => (this.selectedRfm = block.listData.filter(rfm => rfm.period === period)[0]));
 			}
 		});
+	}
+
+	changeCustomerDefinedBlockState(state) {
+		this.showCustomerAttributeEditor = state;
+		this.updateAttributeBlockOffset();
+	}
+
+	saveCustomerDefinedAttribute() {
+
 	}
 }

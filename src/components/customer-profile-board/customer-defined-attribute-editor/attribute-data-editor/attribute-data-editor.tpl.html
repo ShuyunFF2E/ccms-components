@@ -1,0 +1,17 @@
+<div class="attribute-data-editor-block">
+	<div class="attribute-label-block">
+		<span class="attribute-label-item"
+					ng-repeat="attribute in $ctrlA.attributeDataList track by $index">{{attribute}}<span
+				class="attribute-label-delete iconfont" ng-click="$ctrlA.removeAttribute($index)">&#xe658;</span></span>
+	</div>
+	<div class="add-attribute-row">
+		<a ng-show="!$ctrlA.addAttributeState" href="" ng-click="$ctrlA.showAddAttributeInput()">新建属性值</a>
+
+		<div ng-if="$ctrlA.addAttributeState" ng-form="$ctrlA.data" validators="$ctrlA.validators">
+			<input type="text" class="attribute-value-input" maxlength="20" ng-model="$ctrlA.attributeValue"
+						 validator="{{$ctrlA.validator}}"><a class="attribute-value-operator" href=""
+																								 ng-click="$ctrlA.addAttribute()">添加</a><a
+				class="attribute-value-operator cancel" href="" ng-click="$ctrlA.addAttributeState = false">取消</a>
+		</div>
+	</div>
+</div>

@@ -115,66 +115,66 @@ const customer = {
 				validate: ['/^\\d{1, 6}$/']
 			}]
 		}]
-	}
-		/* 自定义属性，暂不提供
-		, {
+	}, {
 		title: '更多个人信息',
-		name: 'personal',
-		attributeList: [{
-		 attribute: 'job',
-		 name: '职业',
-		 defaultValue: '自由职业',
-		 editable: true,
-		 type: 'text',
-		 validate: ['/^\\w{1, 50}$/'],
-		 isInListMode: true
-		 }, {
-			attribute: '',
-			name: '身高/cm',
-			defaultValue: '无',
-			editable: true,
-			type: 'text',
-			validate: ['/^\\d{1, 5}$/'],
-			isInListMode: true
-		}, {
-			attribute: '',
-			name: '体重/kg',
-			defaultValue: '无',
-			editable: true,
-			type: 'text',
-			validate: ['/^\\d{1, 5}$/'],
-			isInListMode: true
-		}, {
-			attribute: '',
-			name: '星座',
-			defaultValue: '无',
-			editable: false,
-			isInListMode: true
-		}, {
-			attribute: '',
-			name: '血型',
-			defaultValue: '',
-			editable: true,
-			type: 'radio',
-			enum: [{
-				name: 'A',
-				value: 'a'
+		name: 'customerDefined',
+		attributeList: [
+			/* {
+				attribute: 'job',
+				name: '职业',
+				defaultValue: '自由职业',
+				editable: true,
+				type: 'text',
+				validate: ['/^\\w{1, 50}$/'],
+				isInListMode: true
 			}, {
-				name: 'B',
-				value: 'b'
+				attribute: '',
+				name: '身高/cm',
+				defaultValue: '无',
+				editable: true,
+				type: 'text',
+				validate: ['/^\\d{1, 5}$/'],
+				isInListMode: true
 			}, {
-				name: 'AB',
-				value: 'ab'
+				attribute: '',
+				name: '体重/kg',
+				defaultValue: '无',
+				editable: true,
+				type: 'text',
+				validate: ['/^\\d{1, 5}$/'],
+				isInListMode: true
 			}, {
-				name: 'O',
-				value: 'o'
+				attribute: '',
+				name: '星座',
+				defaultValue: '无',
+				editable: false,
+				isInListMode: true
 			}, {
-				name: '未知',
-				value: ''
-			}],
-			isInListMode: true
-		}]
-	}*/
+				attribute: '',
+				name: '血型',
+				defaultValue: '',
+				editable: true,
+				type: 'radio',
+				enum: [{
+					name: 'A',
+					value: 'a'
+				}, {
+					name: 'B',
+					value: 'b'
+				}, {
+					name: 'AB',
+					value: 'ab'
+				}, {
+					name: 'O',
+					value: 'o'
+				}, {
+					name: '未知',
+					value: ''
+				}],
+				isInListMode: true
+			}*/
+		]
+	}
 	]
 };
 
@@ -468,6 +468,14 @@ export const RfmLabel = {
 	4: '最近180天',
 	5: '最近360天',
 	6: '时间不限'
+};
+
+export const DEFAULT_ATTRIBUTE_SETTING = {
+	attribute: '',
+	name: '',
+	defaultValue: '',
+	editable: true,
+	isInListMode: false
 };
 
 export default CustomerAttributeSetting;

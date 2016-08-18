@@ -13,7 +13,9 @@ import generatorQueryString from './queryStringSchema.js';
 import { TagsMapping, RfmLabel } from './CustomerAttributeSetting.js';
 
 const MODAL_TITLE_STRING = '客户基本信息';
-const API_ADDRESS = 'http://172.18.21.113:8887/fullView';
+const CUSTOMER_PROFILE_API_ADDRESS = 'http://172.18.21.113:8887/fullView';
+const CUSTOMER_DEFINED_ATTRIBUTES_DATA_API_ADDRESS = '/customer/:nickName';
+const CUSTOMER_DEFINED_ATTRIBUTES_API_ADDRESS = '/properties';
 
 export class $ccCustomerProfileBoard {
 	/**
@@ -38,6 +40,12 @@ export class $ccCustomerProfileBoard {
 }
 
 class CustomerProfileBoardService {
+	constructor() {
+		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API_ADDRESS);
+		this.CustomerDefinedAttributeDataResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_DATA_API_ADDRESS);
+		this.CustomerDefinedAttributeResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_API_ADDRESS);
+	}
+
 	/**
 	 * @name queryCustomerProfileData
 	 * @param {Object} customerInfo
@@ -45,8 +53,27 @@ class CustomerProfileBoardService {
 	 * using $resource to query customer profile data
 	 */
 	queryCustomerProfileData({nickName = '', shopId = '', platName = ''} = {}) {
-		const CustomerProfileResource = genresource(API_ADDRESS);
-		return CustomerProfileResource.save(generatorQueryString(nickName, shopId, platName)).$promise;
+		return this.CustomerProfileResource.save(generatorQueryString(nickName, shopId, platName)).$promise;
+	}
+
+	/**
+	 * @name queryCustomerDefinedAttributeData
+	 * @param {Object} customerInfo
+	 * @returns {Promise}
+	 */
+	queryCustomerDefinedAttributeData({nickName = '', tenantId = ''} = {}) {
+		// return this.CustomerDefinedAttributeDataResource.get({nickName, tenantId}).$promise;
+		return Promise.resolve([]);
+	}
+
+	/**
+	 * @name saveCustomerDefinedAttribute
+	 * @param {Object} attribute
+	 * @returns {Promise}
+	 */
+	saveCustomerDefinedAttribute(attribute) {
+		// return this.CustomerDefinedAttributeResource.save(attribute).$promise;
+		return Promise.resolve();
 	}
 
 	/**
@@ -191,4 +218,4 @@ class CustomerProfileBoardService {
 	}
 }
 
-export default new CustomerProfileBoardService();
+export default CustomerProfileBoardService;

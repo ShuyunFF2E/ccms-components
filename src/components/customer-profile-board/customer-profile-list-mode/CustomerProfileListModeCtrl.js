@@ -21,9 +21,9 @@ export default class CustomerProfileListModeCtrl {
 	$postLink() {
 		const RIGHTPANELELEMENT = this._$element[0].querySelector('.right-panel-block');
 		RIGHTPANELELEMENT.addEventListener('scroll', this.rightPanelScrollListener);
-		this._$timeout(() => {
-			this.attributesOffsetList = this.getAttributeBlockOffsetList();
-		}, 50);
+
+		this.updateAttributeBlockOffsetList();
+
 	}
 
 	/**
@@ -73,5 +73,11 @@ export default class CustomerProfileListModeCtrl {
 			offsetList.push(BlockNodeList[index].offsetTop);
 		}
 		return offsetList.map(offset => offset - HEADERHEIGHT);
+	}
+
+	updateAttributeBlockOffsetList() {
+		this._$timeout(() => {
+			this.attributesOffsetList = this.getAttributeBlockOffsetList();
+		}, 50);
 	}
 }

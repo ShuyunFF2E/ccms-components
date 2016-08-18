@@ -13,6 +13,7 @@ import CustomerProfileBoardService from './CustomerProfileBoardService.js';
 @Inject('$element', '$timeout', '$scope')
 export default class CheckboxController {
 	constructor() {
+		this.CustomerProfileBoardService = new CustomerProfileBoardService();
 		this.customerAttributeSetting = angular.copy(CustomerAttributeSetting);
 
 		this.customerData = {
@@ -20,17 +21,19 @@ export default class CheckboxController {
 			viewType: 'list' // useless now
 		};
 
-		CustomerProfileBoardService
+		this.CustomerProfileBoardService
 			.queryCustomerProfileData(this.customerData)
-			.then(data => Object.assign({}, this.customerData, CustomerProfileBoardService.generateCustomerData(data)))
+			.then(data => Object.assign({}, this.customerData, this.CustomerProfileBoardService.generateCustomerData(data)))
 			.then(customerData => {
 				this.customerTags = customerData.tags;
 				this.customerData.marketingResponsivities = customerData.marketingResponsivities;
 				this.customerData.mobile = customerData.mobile;
 				this.customerAttributeSetting.forEach(setting =>
 					setting.attributeBlock.forEach(customerAttributeBlock =>
-						CustomerProfileBoardService.mappingDataIntoAttributeBlock(customerAttributeBlock, customerData)));
-			});
+						this.CustomerProfileBoardService.mappingDataIntoAttributeBlock(customerAttributeBlock, customerData)));
+			})
+			.then(() => this.CustomerProfileBoardService.queryCustomerDefinedAttributeData(this.customerData))
+			.then(data => (this.customerAttributeSetting[0].attributeBlock[1].attributeList = data));
 	}
 
 	/**
