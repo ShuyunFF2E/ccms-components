@@ -22,11 +22,19 @@ export default class DatePickerCtrl {
 		this.$element = $element;
 
 		if (this.minDate instanceof Date) {
-			this.minDate = new Date(this.minDate.setMilliseconds(0));
+			this.minDate = new Date(
+				this.dateOnly
+					? this.maxDate.setHours(0)
+					: this.minDate.setMilliseconds(0)
+			);
 		}
 
 		if (this.maxDate instanceof Date) {
-			this.maxDate = new Date(this.maxDate.setMilliseconds(999));
+			this.maxDate = new Date(
+				this.dateOnly
+					? this.maxDate.setHours(23, 59, 59, 999)
+					: this.maxDate.setMilliseconds(999)
+			);
 		}
 
 		// 当开始和结束日期变化时, 清除过期的报错信息
@@ -75,10 +83,6 @@ export default class DatePickerCtrl {
 			this.ngModelCtrl.$setValidity('maxDate', false);
 			this.createErrorTip(`时间不能晚于 ${service.$filter('date')(this.maxDate, 'yyyy-MM-dd HH:mm:ss')}`);
 		}
-
-		// 区分显示值和实际值
-		this._displayValue = dateValue;
-		this.ngModelCtrl.$setViewValue(this.$scope.datePicker.$valid ? dateValue : null);
 	}
 
 
@@ -215,6 +219,10 @@ export default class DatePickerCtrl {
 		}
 
 		this.checkValidity(dateValue);
+
+		// 区分显示值和实际值
+		this._displayValue = dateValue;
+		this.ngModelCtrl.$setViewValue(this.$scope.datePicker.$valid ? dateValue : null);
 
 		if (!$event.relatedTarget || this.inputs.indexOf($event.relatedTarget) === -1) {
 			this.$element.removeClass('active');
