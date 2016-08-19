@@ -4,15 +4,14 @@
  * @since 2016-03-16
  */
 
-import {Bind} from 'angular-es-utils/decorators';
+import { Bind } from 'angular-es-utils/decorators';
 import Tooltip from './Tooltip';
-import {TOOLTIP_TYPE} from './Contants';
+import { TOOLTIP_TYPE } from './Contants';
 
 export default class TooltipCtrl {
 
-	constructor($element, $attrs, $compile, $scope) {
+	constructor($element, $compile, $scope) {
 		this._$element = $element;
-		this._$attrs = $attrs;
 		this._$compile = $compile;
 		this._$scope = $scope;
 
@@ -24,7 +23,7 @@ export default class TooltipCtrl {
 
 	$postLink() {
 		// 默认通过mouseenter/mouseleave触发(当未手动配置trigger/opened)
-		if (!this._$attrs.tooltipTrigger && !this._$attrs.tooltipOpened) {
+		if (!this.trigger && !this.opened) {
 			this.hostElement.bind('mouseenter mouseleave', this.toggle);
 		}
 
@@ -123,4 +122,4 @@ export default class TooltipCtrl {
 
 }
 
-TooltipCtrl.$inject = ['$element', '$attrs', '$compile', '$scope'];
+TooltipCtrl.$inject = ['$element', '$compile', '$scope'];

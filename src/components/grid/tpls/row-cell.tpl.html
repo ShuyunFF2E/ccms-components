@@ -3,6 +3,6 @@
     aria-init="{{$selected=$ctrl.isEntitySelected(entity)}}"
 	ng-class="{'row-selected':$selected}"
 	ng-click="$selected=!$selected;$ctrl.switchSelectItem($selected, entity)"
-	dynamic-attr="{'ng-click':$ctrl.type==='selectable'}">
+	cc-dynamic-attr="{'ng-click':$ctrl.type==='selectable'}">
 	{::cell-placeholder}
 </tr>

@@ -5,10 +5,10 @@
  */
 
 import angular from 'angular';
-import {FactoryCreator} from 'angular-es-utils';
-import DynamicAttrDirective from './DynamicAttrDirective';
+import ddo from './DynamicAttrDirective';
 
 export default angular
 	.module('ccms.components.dynamicAttr', [])
-	.directive('dynamicAttr', FactoryCreator.create(DynamicAttrDirective))
+	.directive('ccDynamicAttr', () => ddo)
+	.deprecatedDirective('dynamicAttr', () => ddo)
 	.name;
