@@ -11,6 +11,7 @@ import controller from './CustomerAttributeEditorCtrl.js';
 const CustomerAttributeEditor = {
 	template,
 	controller,
+	controllerAs: '$ctrlA',
 	bindings: {
 		attributeSetting: '<',
 		customerData: '<',

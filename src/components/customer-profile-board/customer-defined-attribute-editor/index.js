@@ -12,6 +12,7 @@ import controller from './CustomerDefinedAttributeEditorCtrl.js';
 
 const CustomerDefinedAttributeEditor = {
 	bindings: {
+		createAttributeFn: '&',
 		cancelSetting: '&'
 	},
 	controllerAs: '$ctrlA',

@@ -10,12 +10,15 @@ import ModalService from '../modal/ModalService.js';
 import controller from './CustomerProfileBoardCtrl.js';
 import template from './customer-profile-board.tpl.html';
 import generatorQueryString from './queryStringSchema.js';
-import { TagsMapping, RfmLabel } from './CustomerAttributeSetting.js';
+import CustomerAttributeSetting, { TagsMapping, RfmLabel } from './CustomerAttributeSetting.js';
 
 const MODAL_TITLE_STRING = '客户基本信息';
-const CUSTOMER_PROFILE_API_ADDRESS = 'http://172.18.21.113:8887/fullView';
-const CUSTOMER_DEFINED_ATTRIBUTES_DATA_API_ADDRESS = '/customer/:nickName';
-const CUSTOMER_DEFINED_ATTRIBUTES_API_ADDRESS = '/properties';
+const CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX = '/cc/customer-defined-attribute';
+const CUSTOMER_PROFILE_API_PREFIX = '/cc/customer-profile';
+const CUSTOMER_PROFILE_API = CUSTOMER_PROFILE_API_PREFIX + '/fullView';
+const CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer/:nickName';
+const CUSTOMER_DEFINED_ATTRIBUTES_UPDATE_DATA_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer';
+const CUSTOMER_DEFINED_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/properties';
 
 export class $ccCustomerProfileBoard {
 	/**
@@ -41,9 +44,10 @@ export class $ccCustomerProfileBoard {
 
 class CustomerProfileBoardService {
 	constructor() {
-		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API_ADDRESS);
-		this.CustomerDefinedAttributeDataResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_DATA_API_ADDRESS);
-		this.CustomerDefinedAttributeResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_API_ADDRESS);
+		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API);
+		this.CustomerDefinedAttributeGetDataResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API);
+		this.CustomerDefinedAttributeUpdateDataResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_UPDATE_DATA_API);
+		this.CustomerDefinedAttributeResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_API);
 	}
 
 	/**
@@ -61,9 +65,12 @@ class CustomerProfileBoardService {
 	 * @param {Object} customerInfo
 	 * @returns {Promise}
 	 */
-	queryCustomerDefinedAttributeData({nickName = '', tenantId = ''} = {}) {
-		// return this.CustomerDefinedAttributeDataResource.get({nickName, tenantId}).$promise;
-		return Promise.resolve([]);
+	queryCustomerDefinedAttributeData({nickName = '', tenantId = '', platName = 'taobao'} = {}) {
+		return this.CustomerDefinedAttributeGetDataResource.get({nickName, tenantId, platform: platName}).$promise;
+	}
+
+	updateCustomerDefinedAttributeData(params = {}) {
+		return this.CustomerDefinedAttributeUpdateDataResource.update(params).$promise;
 	}
 
 	/**
@@ -72,8 +79,7 @@ class CustomerProfileBoardService {
 	 * @returns {Promise}
 	 */
 	saveCustomerDefinedAttribute(attribute) {
-		// return this.CustomerDefinedAttributeResource.save(attribute).$promise;
-		return Promise.resolve();
+		return this.CustomerDefinedAttributeResource.save(attribute).$promise;
 	}
 
 	/**
@@ -90,7 +96,7 @@ class CustomerProfileBoardService {
 					case 'trade':
 						return this.concatCustomerAddressZip(data[key].data.data[0]);
 					case 'rfm':
-						return Object.assign({ rfm: this.setRfmLabel(data[key].data.data) }, this.getLastRfmItem(data[key].data.data));
+						return Object.assign({rfm: this.setRfmLabel(data[key].data.data)}, this.getLastRfmItem(data[key].data.data));
 					case 'tags':
 						return {
 							tags: this.getTagsList(data[key].result),
@@ -154,7 +160,10 @@ class CustomerProfileBoardService {
 	 */
 	setRfmLabel(rfmList = []) {
 		if (!rfmList.length) return rfmList;
-		const tmp = rfmList.map(rfm => ({...rfm, period_label: RfmLabel[rfm.period]})).sort((prev, next) => prev.period > next.period ? 1 : -1); // map method will change list order
+		const tmp = rfmList.map(rfm => ({
+			...rfm,
+			period_label: RfmLabel[rfm.period]
+		})).sort((prev, next) => prev.period > next.period ? 1 : -1); // map method will change list order
 		tmp.unshift(tmp.pop());
 		return tmp;
 	}
@@ -184,11 +193,19 @@ class CustomerProfileBoardService {
 		});
 	}
 
+	getAttributeList() {
+		let attributeList = [];
+		CustomerAttributeSetting.forEach(setting =>
+			setting.attributeBlock.forEach(customerAttributeBlock =>
+				customerAttributeBlock.attributeList.forEach(attribute =>
+					attributeList.push(attribute.attribute))));
+		return attributeList;
+	}
+
 	/**
 	 * get attribute value
 	 * @param {object} attribute
 	 * @param {object} dataMapping
-	 * @param {string} target
 	 */
 	getAttributeValue(attribute, dataMapping) {
 		if (dataMapping[attribute.attribute] !== undefined) {
@@ -215,6 +232,18 @@ class CustomerProfileBoardService {
 		number = parseFloat(number);
 		if (!number) number = 0;
 		return number.toFixed(fixed);
+	}
+
+	transformCustomerDateToAttribute(dataList = []) {
+		return dataList.map(item => {
+			return {
+				...item,
+				attribute: item.name,
+				displayValue: item.value,
+				unit: '',
+				editable: true
+			};
+		});
 	}
 }
 

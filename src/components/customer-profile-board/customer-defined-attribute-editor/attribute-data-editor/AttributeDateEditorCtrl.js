@@ -6,12 +6,18 @@
 
 import { Inject } from 'angular-es-utils';
 
+import CustomerProfileBoardService from '../../CustomerProfileBoardService.js';
+
 @Inject('$Validator')
 export default class AttributeDateEditorCtrl {
+	constructor() {
+		this.CustomerProfileBoardService = new CustomerProfileBoardService();
+		this.attributeNameList = this.CustomerProfileBoardService.getAttributeList();
+	}
+
 	$onInit() {
 		this.addAttributeState = false;
 		this.validators = {
-
 			number: {
 				msg: '请输入数字',
 				regex: /^\d+(\.\d*)?$/
@@ -24,7 +30,7 @@ export default class AttributeDateEditorCtrl {
 				msg: '可选值不能重复',
 				fn: (modelValue, viewValue) => {
 					const value = modelValue || viewValue || '';
-					return this.attributeDataList.indexOf(value.trim()) === -1;
+					return this.attributeDataList.indexOf(value.trim()) === -1 && this.attributeNameList.indexOf(value.trim()) === -1;
 				}
 			}
 		};

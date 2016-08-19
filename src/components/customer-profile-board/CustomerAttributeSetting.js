@@ -16,7 +16,7 @@ const customer = {
 			name: '姓名',
 			defaultValue: '无',
 			unit: '',
-			editable: true,
+			editable: false,
 			type: 'text',
 			validate: ['/^\\w{1, 50}$/'],
 			isInListMode: true
@@ -25,7 +25,7 @@ const customer = {
 			name: '性别',
 			defaultValue: '',
 			unit: '',
-			editable: true,
+			editable: false,
 			type: 'radio',
 			valueMap: {
 				m: '男',
@@ -39,7 +39,7 @@ const customer = {
 			name: '出生日期',
 			defaultValue: '无',
 			unit: '',
-			editable: true,
+			editable: false,
 			type: 'date',
 			validate: [],
 			isInListMode: true
@@ -55,7 +55,7 @@ const customer = {
 			name: '常用手机',
 			defaultValue: '无',
 			unit: '',
-			editable: true,
+			editable: false,
 			type: 'text',
 			validate: ['/^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9]){1}\\d{8}$/']
 		}, {
@@ -76,7 +76,7 @@ const customer = {
 			name: 'email邮箱',
 			defaultValue: '无',
 			unit: '',
-			editable: true,
+			editable: false,
 			type: 'text',
 			validate: ['/^\\w{1, 50}$/', '/@.+(.com|.cn)$/']
 		}, {
@@ -84,7 +84,7 @@ const customer = {
 			name: '常用地址',
 			defaultValue: '无',
 			unit: '',
-			editable: true,
+			editable: false,
 			attributes: [{
 				attribute: 'receiver_state',
 				name: '省份',
@@ -470,12 +470,35 @@ export const RfmLabel = {
 	6: '时间不限'
 };
 
+export const DefinedTypeOptionList = [
+	{
+		name: '字符选择',
+		value: 'CHAR_SELECT'
+	}, {
+		name: '数字选择',
+		value: 'NUMBER_SELECT'
+	}, {
+		name: '日期选择',
+		value: 'DATE_SELECT'
+	}, {
+		name: '字符输入',
+		value: 'CHAR_INPUT'
+	}, {
+		name: '数字输入',
+		value: 'NUMBER_INPUT'
+	}
+];
+
 export const DEFAULT_ATTRIBUTE_SETTING = {
 	attribute: '',
 	name: '',
 	defaultValue: '',
 	editable: true,
-	isInListMode: false
+	remark: '',
+	isInListMode: false,
+	isDisable: false,
+	type: DefinedTypeOptionList[0].value,
+	selector: []
 };
 
 export default CustomerAttributeSetting;

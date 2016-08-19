@@ -33,7 +33,7 @@ export default class CheckboxController {
 						this.CustomerProfileBoardService.mappingDataIntoAttributeBlock(customerAttributeBlock, customerData)));
 			})
 			.then(() => this.CustomerProfileBoardService.queryCustomerDefinedAttributeData(this.customerData))
-			.then(data => (this.customerAttributeSetting[0].attributeBlock[1].attributeList = data));
+			.then(data => (this.customerAttributeSetting[0].attributeBlock[1].attributeList = this.CustomerProfileBoardService.transformCustomerDateToAttribute(data.properties)));
 	}
 
 	/**

@@ -16,7 +16,7 @@ customer-attribute-editor:last-child .customer-attribute-editor{
   margin-bottom: 40px;
 
   li {
-	margin-bottom: 20px;
+	margin-bottom: 12px;
   }
 }
 
@@ -67,6 +67,7 @@ customer-attribute-editor:last-child .customer-attribute-editor{
 
 	.add-attribute-button{
 	  color: #0097d7;
+	  margin: 10px;
 	}
   }
 
@@ -92,6 +93,11 @@ customer-attribute-editor:last-child .customer-attribute-editor{
 	.attribute-block-item{
 	  margin: 0;
 	  display: flex;
+
+	  .icon-edit{
+		margin-left: 10px;
+		cursor: pointer;
+	  }
 	}
 
 	.attribute-item-label{
@@ -102,6 +108,33 @@ customer-attribute-editor:last-child .customer-attribute-editor{
 
 	.attribute-item-content{
 	  flex: 1;
+	  position: relative;
+
+	  .icon-edit{
+		color: #00aaf1;
+	  }
+	}
+
+	.attribute-data-modify-block{
+	  position: absolute;
+	  top: 0;
+	  background:#f8f8f8;
+	  box-shadow:0 2px 4px 0 rgba(0,0,0,0.13);
+	  border-radius:2px;
+	  width:220px;
+	  height:85px;
+	  padding: 10px;
+
+	  .button-row{
+		margin-top: 12px;
+		text-align: right;
+
+		.btn-remark-confirm{
+		  background: #00aaf1;
+		  border: 0;
+		  color: #fff;
+		}
+	  }
 	}
   }
 }

@@ -6,7 +6,7 @@
 
 import { Inject } from 'angular-es-utils';
 
-import {DefinedTypeOptionList} from './CustomerDefinedAttributeSetting.js';
+import {DEFAULT_ATTRIBUTE_SETTING, DefinedTypeOptionList} from '../CustomerAttributeSetting.js';
 
 @Inject('$Validator')
 export default class CustomerDefinedAttributeEditorCtrl {
@@ -16,18 +16,12 @@ export default class CustomerDefinedAttributeEditorCtrl {
 		this.validators = {
 			attributeName: {
 				msg: '属性名称必须为1-20个字符',
-				regex: /^(\d|\w){1,20}$/
+				regex: /^(\d|\w|[\u4e00-\u9fa5]){1,20}$/
 			}
 		};
 		this.showAttributeDataEditor = false;
 		this.showRemarkTextAreaState = false;
-		this.customerDefinedAttribute = {
-			name: '',
-			remark: '',
-			isDisable: false,
-			type: this.DefinedTypeOptionList[0].value,
-			selector: []
-		};
+		this.customerDefinedAttribute = Object.assign({}, DEFAULT_ATTRIBUTE_SETTING);
 	}
 
 	toggleRemarkTextArea() {
@@ -42,7 +36,7 @@ export default class CustomerDefinedAttributeEditorCtrl {
 
 	confirmCustomerDefinedAttribute() {
 		this._$Validator.validate(this.attribute).then(() => {
-			console.log('success', this.customerDefinedAttribute);
+			this.createAttributeFn({attribute: this.customerDefinedAttribute});
 		});
 	}
 }

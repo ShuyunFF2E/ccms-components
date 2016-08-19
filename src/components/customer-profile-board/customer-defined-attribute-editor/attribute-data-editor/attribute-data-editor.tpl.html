@@ -5,7 +5,7 @@
 				class="attribute-label-delete iconfont" ng-click="$ctrlA.removeAttribute($index)">&#xe658;</span></span>
 	</div>
 	<div class="add-attribute-row">
-		<a ng-show="!$ctrlA.addAttributeState" href="" ng-click="$ctrlA.showAddAttributeInput()">新建属性值</a>
+		<a ng-show="!$ctrlA.addAttributeState" href="" ng-click="$ctrlA.showAddAttributeInput()">新建可选值</a>
 
 		<div ng-if="$ctrlA.addAttributeState" ng-form="$ctrlA.data" validators="$ctrlA.validators">
 			<input type="text" class="attribute-value-input" maxlength="20" ng-model="$ctrlA.attributeValue"
