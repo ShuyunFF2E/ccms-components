@@ -24,7 +24,7 @@ export default class DatePickerCtrl {
 		if (this.minDate instanceof Date) {
 			this.minDate = new Date(
 				this.dateOnly
-					? this.maxDate.setHours(0)
+					? this.minDate.setHours(0)
 					: this.minDate.setMilliseconds(0)
 			);
 		}
