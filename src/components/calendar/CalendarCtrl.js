@@ -189,13 +189,7 @@ export default class DatePickerCtrl {
 	 * 设为当前时间
 	 */
 	setNow() {
-		let now = new Date();
-
-		if (this.dateOnly) {
-			now.setHours(0, 0, 0, 0);
-		}
-
-		this.setValue(now);
+		this.setValue(new Date());
 	};
 
 
@@ -205,6 +199,11 @@ export default class DatePickerCtrl {
 	 */
 	setValue(dateValue) {
 		this.value = dateValue || new Date();
+
+		if (this.dateOnly) {
+			this.value = new Date(this.value.setHours(0, 0, 0, 0));
+		}
+
 		this._realValue = this.value;
 	}
 
