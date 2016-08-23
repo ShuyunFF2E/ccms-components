@@ -3,13 +3,13 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-03-08
  */
-;(function(angular, undefined) {
+;(function (angular, undefined) {
 
 	'use strict';
 
 	angular
 		.module('app', ['ccms.components', 'ui.router'])
-		.config(function($stateProvider, $urlRouterProvider) {
+		.config(function ($stateProvider, $urlRouterProvider) {
 
 			$urlRouterProvider.otherwise('/app');
 
