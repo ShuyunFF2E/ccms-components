@@ -217,6 +217,7 @@ export default class DropdownMultiselectCtrl {
 
 	clear() {
 		this.items = this._clampedDatalist;
+		this.selection = [];
 		this.setTitle('');
 		this.getInputElement().focus();
 		if (!this.isOpen) {
