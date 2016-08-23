@@ -355,12 +355,12 @@ const isContentOverflow = (element, content) => {
 	let cloneElement = element.cloneNode(true);
 	cloneElement.style.display = 'inline-block';
 	cloneElement.style.opacity = 0;
+	cloneElement.style.width = element.offsetWidth + 'px';
 	document.body.appendChild(cloneElement);
 
 	// 创建临时 span
 	let span = document.createElement('span');
 	const computedStyle = window.getComputedStyle(element);
-
 	span.innerHTML = content;
 	span.style.opacity = 0;
 	span.style.display = 'inline-block';
