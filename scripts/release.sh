@@ -29,25 +29,8 @@ function publish() {
 	curl -X PUT https://npm.taobao.org/sync/ccms-components
 }
 
-function release() {
-	version=""
-	while [[ "$1" != "" ]]; do
-		case $1 in
-			--major | --minor | --patch )
-				version="${1:2}"
-				;;
-			* )
-				echo "Unknow parameter \"$1\""
-				exit 1
-				;;
-		esac
-		shift
-	done
-
-	if [[ "$version" == "" ]]; then
-		echo "Missing version parameter: --major | --minor | --patch"
-		exit 1
-	fi
+function release_production() {
+	version=$1
 
 	# release new version
 	git checkout dev
@@ -74,9 +57,67 @@ function release() {
 	build && publish
 }
 
+function release_branch() {
+	version="$1"
+	branch=$2
+
+	git fetch --prune
+	git checkout origin/$branch
+	test_version=$(npm version $version -m "chore(release): v%s")
+	git push origin $test_version
+
+	build && publish
+
+	git checkout dev
+}
+
+function release() {
+	version=""
+	branch=""
+	while [[ "$1" != "" ]]; do
+		case $1 in
+			major | minor | patch )
+				version="$1"
+				;;
+			--branch )
+				branch="$2"
+				if [[ "$branch" == "" ]]; then
+					echo "Missing parameter <BRANCH-NAME> for --branch"
+					exit 1;
+				fi
+				shift
+				;;
+			* )
+				echo "Unknow parameter \"$1\""
+				exit 1
+				;;
+		esac
+		shift
+	done
+
+	if [[ "$version" == "" ]]; then
+		echo "Missing parameter <VERSION>: major | minor | patch"
+		exit 1
+	fi
+
+	if [[ "$branch" == "" ]]; then
+		release_production $version
+	else
+		release_branch "pre$version" $branch
+	fi
+}
+
 
 # cd ccms-components/
 cd "$(dirname "$0")/.."
 
-release $@
+if [[ $# < 1 ]]; then
+	echo "Missing parameters, read the document for details:"
+	echo
+	echo -e "\thttps://github.com/ShuyunFF2E/ccms-components#发布脚本"
+	echo
+	exit 0
+else
+	release $@
+fi
 

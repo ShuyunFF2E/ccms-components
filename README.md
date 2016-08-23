@@ -96,3 +96,17 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 * `<scope>`，标记变更的范围，通常为你的模块名
 * `<subject>`，用于描述的文字
 
+### 发布脚本
+
+发布正式版本：
+
+```bash
+npm run release -- <VERSION: major | minor | patch>
+```
+
+发布测试/分支版本
+
+```bash
+npm run release -- <VERSION: major | minor | patch> --branch <BRANCH-NAME>
+```
+
