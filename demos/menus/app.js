@@ -213,35 +213,35 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('views/point/sign/sign');
 }
 
-runConfig.$inject = ['$state', '$rootScope', '$menus'];
-function runConfig($state, $rootScope, $menus) {
+runConfig.$inject = ['$state', '$rootScope', '$ccMenus'];
+function runConfig($state, $rootScope, $ccMenus) {
 	$rootScope.$state = $state;
 }
 
 
-gradeController.$inject = ['$scope', '$menus'];
+gradeController.$inject = ['$scope', '$ccMenus'];
 
 // - 关闭自动开启功能
-function gradeController($scope, $menus) {
+function gradeController($scope, $ccMenus) {
 
-	const change = $menus.onShopChange(current => {
+	const change = $ccMenus.onShopChange(current => {
 		console.log('等级类型', '广播:', current.plat.name + '|' + current.shop.name);
 	});
 
-	//const current = $menus.getCurrentPlatShop();
+	//const current = $ccMenus.getCurrentPlatShop();
 	//console.log('服务积分类型', '广播:', current.plat.name + '|' + current.shop.name);
 
-	// - $scope 销毁时需要手动清理 $menus.onShopChange
+	// - $scope 销毁时需要手动清理 $ccMenus.onShopChange
 	$scope.$on('$destroy', () => {
 		change();
 	});
 }
 
 
-pointController.$inject = ['$scope', '$menus', 'ModalService'];
+pointController.$inject = ['$scope', '$ccMenus', 'ModalService'];
 
 // - 开启自动关闭功能
-function pointController($scope, $menus, ModalService) {
+function pointController($scope, $ccMenus, ModalService) {
 
 	this.name = '老司机飙车速度疾';
 
@@ -254,11 +254,11 @@ function pointController($scope, $menus, ModalService) {
 		isChange = true;
 	};
 
-	const change = $menus.onShopChange(current => {
+	const change = $ccMenus.onShopChange(current => {
 		console.log('积分类型', '广播:', current.plat.name + '|' + current.shop.name);
 	});
 
-	const shopChangeStart = $menus.onShopChangeStart((defer, toShop)=> {
+	const shopChangeStart = $ccMenus.onShopChangeStart((defer, toShop)=> {
 
 		if (isChange) {
 
@@ -282,10 +282,10 @@ function pointController($scope, $menus, ModalService) {
 		}
 	});
 
-	//const current = $menus.getCurrentPlatShop();
+	//const current = $ccMenus.getCurrentPlatShop();
 	//console.log('服务积分类型', '广播:', current.plat.name + '|' + current.shop.name);
 
-	// - $scope 销毁时需要手动清理 $menus.onShopChange
+	// - $scope 销毁时需要手动清理 $ccMenus.onShopChange
 	$scope.$on('$destroy', () => {
 		change();
 		shopChangeStart();
