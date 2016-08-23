@@ -35,33 +35,33 @@
 				});
 
 		})
-		.controller('ctrl', function ($scope, TipsService, ModalService) {
+		.controller('ctrl', function($scope, $ccTips, $ccModal) {
 
 			let tips = null;
 
-			$scope.showSuccess = function () {
-				TipsService.success('成功提示');
+			$scope.showSuccess = function() {
+				$ccTips.success('成功提示');
 			};
 
-			$scope.showError = function () {
+			$scope.showError = function() {
 				if (!tips || !tips.element) {
-					tips = TipsService.error('出错提示' + Math.random());
+					tips = $ccTips.error('出错提示' + Math.random());
 				}
 			};
 
-			$scope.showModal = function () {
-				ModalService.modal({
+			$scope.showModal = function() {
+				$ccModal.modal({
 
 					title: 'tips in modal',
 					body: '/demos/tips/modal-body.tpl.html',
-					controller: ['$element', function ($element) {
+					controller: ['$element', function($element) {
 
-						this.showSuccess = function () {
-							TipsService.success('hhhhh', $element[0].querySelector('.modal-body'));
+						this.showSuccess = function() {
+							$ccTips.success('hhhhh', $element[0].querySelector('.modal-body'));
 						};
 
-						this.showError = function () {
-							TipsService.error('sssssss', $element[0].querySelector('.modal-body'));
+						this.showError = function() {
+							$ccTips.error('sssssss', $element[0].querySelector('.modal-body'));
 						};
 
 					}]

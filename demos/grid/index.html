@@ -4,8 +4,6 @@
 	<meta charset="UTF-8">
 	<title>Title</title>
 
-	<!--<link rel="stylesheet" href="/dist/ccms-components.min.css">-->
-
 	<style>
 
 		main {
@@ -14,7 +12,7 @@
 			min-height: 100%;
 		}
 
-		main grid {
+		main cc-grid {
 			min-height: 500px;
 			height: 800px;
 		}
@@ -40,7 +38,7 @@
 
 		<strong style="display: block;">表格宽高由用户设定,默认继承自父容器</strong>
 		<button type="button" ng-click="app.refreshGrid()">refresh</button>
-		<grid opts="app.pagerGridOptions" selected-items="app.selectedItems" type="selectable" on-refresh="app.onRefresh(opts)" style="height: 400px;width: 600px;"></grid>
+		<cc-grid opts="app.pagerGridOptions" selected-items="app.selectedItems" type="selectable" on-refresh="app.onRefresh(opts)" style="height: 400px;width: 600px;"></cc-grid>
 
 		<div class="info">
 
@@ -57,7 +55,7 @@
 
 		<strong style="display: block;">无分页的表格</strong>
 		<button type="button" ng-click="app.refreshDataGrid()">refresh</button>
-		<grid opts="app.dataGridOptions" style="height: 400px;width: 600px;"></grid>
+		<cc-grid opts="app.dataGridOptions" style="height: 400px;width: 600px;"></cc-grid>
 
 	</div>
 

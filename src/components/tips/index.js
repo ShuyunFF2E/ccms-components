@@ -24,6 +24,8 @@ const ddo = {
 
 export default angular
 	.module('ccms.components.tips', [bindHtml])
-	.component('tips', ddo)
-	.service('TipsService', TipsService)
+	.component('ccTips', ddo)
+	.service('$ccTips', TipsService)
+	.deprecatedComponent('tips', ddo)
+	.deprecatedService('TipsService', TipsService, 'TipsService 服务将在下一版本废弃,请使用 $ccTips 服务代替!')
 	.name;

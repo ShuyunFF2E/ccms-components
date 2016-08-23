@@ -35,6 +35,11 @@
 
 <p>日期时间区间选择器 ({{app.dateRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
 
+<p>
+	<button type="button" ng-click="app.dateRange.start = null;">重置 start</button>
+	<button type="button" ng-click="app.dateRange.end = null">重置 end</button>
+</p>
+
 <date-range ng-if="!app.hideDates"
 						opts="app.dateRange"></date-range>
 
@@ -44,6 +49,11 @@
 						opts="app.anotherRange"></date-range>
 
 <p>日期时间区间选择器 ({{app.dateOnly.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateOnly.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+<p>
+	<button type="button" ng-click="app.dateOnly.start = null;">重置 start</button>
+	<button type="button" ng-click="app.dateOnly.end = null">重置 end</button>
+</p>
 
 <date-range ng-if="!app.hideDates"
 						opts="app.dateOnly"></date-range>
@@ -77,11 +87,11 @@ self.dateRange = {
 			self.maxDate = new Date(2016, 1, 28);
 
 			self.dateRange = {
-				start: new Date(2016, 2, 10),
-				end: new Date(2016, 2, 20),
+				start: new Date(2016, 7, 10),
+				end: new Date(2016, 7, 20),
 
-				minDate: new Date(2016, 2, 1),
-				maxDate: new Date(2016, 2, 31),
+				minDate: new Date(2016, 7, 1),
+				maxDate: new Date(2016, 7, 31),
 
 				// 是否禁用 (false)
 				disabled: false,

@@ -10,43 +10,87 @@ const SERVICE_PREFIX = '$cc';
 const DIRECTIVE_PREFIX = 'cc';
 
 const upperCaseCamel = word => word.toUpperCase().substr(0, 1) + word.substr(1);
+const warn = (msg, recipe, name) => {
+
+	if (msg) {
+		console.warn(msg);
+	} else {
+		let prefix, recipeCN;
+
+		switch (recipe) {
+
+			case 'service':
+				prefix = SERVICE_PREFIX;
+				recipeCN = '服务';
+				break;
+			case 'directive':
+				prefix = DIRECTIVE_PREFIX;
+				recipeCN = '指令';
+				break;
+			// no default
+		}
+
+		console.warn(msg || `${name} ${recipeCN}将在8.30之后废弃,请尽早使用 ${prefix + upperCaseCamel(name)} ${recipeCN}代替!`);
+	}
+};
+
+const directiveAdaptorHookBlocks = [];
+const genDirectiveAdaptorHook = (name, msg) => $injector => {
+	// 获取指令的第一个实例(第一个实例的compile方法被调用即说明该指令被调用)
+	const directive = $injector.get(`${name}Directive`)[0];
+
+	// $$bindings 初始化发生在指令第一次被添加的时候,所以这里采用 $$bindings 作为初始化判断依据
+	let $$bindings = directive.$$bindings;
+	Object.defineProperty(directive, '$$bindings', {
+		get() {
+			return $$bindings;
+		},
+
+		set(value) {
+			warn(msg, 'directive', name);
+			$$bindings = value;
+		}
+	});
+};
 
 /**
  * deprecated directive shortcut
+ * only support module.directive(name, factoryFn) definition
  */
 const genDeprecatedDirective = originalDirective => (name, directiveFactory, msg) => {
 
-	const wrappedDirectiveFactory = (...args) => {
+	directiveAdaptorHookBlocks.push(genDirectiveAdaptorHook(name, msg));
 
-		console.warn(msg || `${name}指令将在下一版本废弃,请使用 ${DIRECTIVE_PREFIX + upperCaseCamel(name)} 指令代替!`);
-		directiveFactory(...args);
+	const wrappedDirectiveFactory = (...args) => {
+		const ddo = directiveFactory(...args);
+		// 复制 ddo 避免跟非 deprecated 用同一个配置引用
+		return angular.copy(ddo);
 	};
 
-	return originalDirective.bind(angular)(name, wrappedDirectiveFactory);
+	return originalDirective(name, wrappedDirectiveFactory);
 };
 
 /**
  * deprecated component shortcut
  */
-const genDeprecatedComponent = originalComponent => (name, options, msg) => {
+const genDeprecatedComponent = originalComponent => {
 
-	const fakeNgComponent = originalComponent.bind({
-		directive: (name, factory) => {
-			return genDeprecatedDirective(name, factory, msg);
-		}
-	});
+	return (name, options, msg) => {
 
-	return fakeNgComponent(name, options);
+		directiveAdaptorHookBlocks.push(genDirectiveAdaptorHook(name, msg));
+
+		// 复制 ddo 避免跟非 deprecated 用同一个配置引用
+		return originalComponent(name, angular.copy(options));
+	};
 };
 
 /**
  * deprecated service shortcut
  */
-const genDeprecatedService = originalService => (name, Service, msg) => {
+const genDeprecatedService = originalFactory => (name, Service, msg) => {
 
-	return originalService(name, ['$injector', function($injector) {
-
-		console.warn(msg || `${name} 服务将在下一版本废弃,请使用 ${SERVICE_PREFIX + upperCaseCamel(name)} 服务代替!`);
+	return originalFactory(name, ['$injector', function($injector) {
+		warn(msg, 'service', name);
 		return $injector.instantiate(Service);
 	}]);
 };
@@ -54,13 +98,14 @@ const genDeprecatedService = originalService => (name, Service, msg) => {
 /**
  * deprecated value shortcut
  */
-const genDeprecatedValue = originalValue => (name, val, msg) => {
+const genDeprecatedValue = originalProvider => (name, val, msg) => {
 
-	return originalValue(name, () => {
-
-		console.warn(msg || `${name} 服务将在下一版本废弃,请使用 ${SERVICE_PREFIX + upperCaseCamel(name)} 服务代替!`);
-		return val;
-	}, false);
+	return originalProvider(name, {
+		$get: () => {
+			warn(msg, 'service', name);
+			return val;
+		}
+	});
 };
 
 /**
@@ -72,9 +117,15 @@ angular.module = (...args) => {
 	const moduleInstance = originalModule(...args);
 	moduleInstance.deprecatedDirective = genDeprecatedDirective(moduleInstance.directive);
 	moduleInstance.deprecatedComponent = genDeprecatedComponent(moduleInstance.component);
-	moduleInstance.deprecatedService = genDeprecatedService(moduleInstance.service);
-	moduleInstance.deprecatedValue = genDeprecatedValue(moduleInstance.value);
+	moduleInstance.deprecatedService = genDeprecatedService(moduleInstance.factory);
+	moduleInstance.deprecatedValue = genDeprecatedValue(moduleInstance.provider);
 
 	return moduleInstance;
 };
 
+export default angular
+	.module('ccms.components.adaptor', [])
+	.run(['$injector', $injector => {
+		directiveAdaptorHookBlocks.forEach(hook => hook($injector));
+	}])
+	.name;
