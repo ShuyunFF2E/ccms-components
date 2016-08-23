@@ -13,7 +13,6 @@ import smsEditor from './sms-editor';
 import smsPreview from './sms-preview';
 import tooltip from './tooltip';
 import ngEnter from './ng-enter';
-import inputCorrector from './input-corrector';
 import loading from './loading';
 import modal from './modal';
 import menuBar from './menus';
@@ -47,7 +46,6 @@ export default angular
 		smsPreview,
 		tooltip,
 		ngEnter,
-		inputCorrector,
 		loading,
 		menuBar,
 		modal,

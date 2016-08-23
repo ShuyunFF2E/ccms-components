@@ -12,10 +12,10 @@
 	color: $font-color;
 
 	font-size: 12px;
-
 }
 
-tips {
+tips,
+cc-tips {
 	display: inline-block;
 
 	box-sizing: border-box;
@@ -98,8 +98,6 @@ tips {
 
 .float-tips {
 	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
 	flex: 1;
 	margin: 2px 0 0 0;
 	width: 450px;
@@ -139,13 +137,12 @@ tips {
 	.message {
 		flex: 1;
 		max-width: 364px;
-		line-height: 18px;
 		margin: 8px 0 7px 5px;
 		word-break: break-all;
 	}
 
 	.success-icon {
-		margin: 7px 0 0 20px;
+		margin: 5px 0 0 20px;
 		font-size: 18px;
 		color: #389d25;
 		-moz-transform: translateY(-2px); //处理火狐往下2px的偏差
@@ -154,7 +151,7 @@ tips {
 	}
 
 	.error-icon {
-		margin: 7px 0 0 20px;
+		margin: 5px 0 0 20px;
 		font-size: 18px;
 		color: #ff5243;
 		-moz-transform: translateY(-2px); //处理火狐往下2px的偏差
@@ -165,7 +162,7 @@ tips {
 	.close-icon {
 		@extend .iconfont;
 		@extend .icon-close;
-		margin: 9px 14px 0 20px;
+		margin: 7px 14px 0 20px;
 		font-size: 12px;
 		cursor: pointer;
 		opacity: 0.6;

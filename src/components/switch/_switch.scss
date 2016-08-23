@@ -42,6 +42,10 @@ cc-switch-button{
     }
   }
 
+  &.disabled{
+	cursor: not-allowed;
+  }
+
   .open-text{
     width: 0;
   }
