@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<title>分页(pagination)</title>
+<title>分页(cc-pagination)</title>
 <style>
 	[ng-app] {
 		margin: 1em;
@@ -14,36 +14,36 @@
 <div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 	<div class="demo">
 		<h3>normal</h3>
-		<pagination
+		<cc-pagination
 				type="normal"
 				page-num="ctrl.pageOptions.pageNum"
 				page-size="ctrl.pageOptions.pageSize"
 				page-size-list="ctrl.pageOptions.pageSizeList"
 				totals="ctrl.pageOptions.totals"
 				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></pagination>
+				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
 	</div>
 	<div class="demo">
 		<h3>simple</h3>
-		<pagination
+		<cc-pagination
 				type="simple"
 				page-num="ctrl.pageOptions.pageNum"
 				page-size="ctrl.pageOptions.pageSize"
 				page-size-list="ctrl.pageOptions.pageSizeList"
 				totals="ctrl.pageOptions.totals"
 				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></pagination>
+				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
 	</div>
 	<div class="demo">
 		<h3>normal &amp; disable pagesize list</h3>
-		<pagination
+		<cc-pagination
 				page-num="ctrl.pageOptions.pageNum"
 				page-size="ctrl.pageOptions.pageSize"
 				page-size-list="ctrl.pageOptions.pageSizeList"
 				page-size-list-disabled
 				totals="ctrl.pageOptions.totals"
 				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></pagination>
+				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
 	</div>
 </div>
 

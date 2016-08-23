@@ -3,13 +3,13 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-03-08
  */
-;(function (angular, undefined) {
+;(function(angular, undefined) {
 
 	'use strict';
 
 	angular
 		.module('app', ['ccms.components'])
-		.controller('appCtrl', function ($Validator) {
+		.controller('appCtrl', function($ccValidator) {
 
 			this.validators = {
 
@@ -32,21 +32,21 @@
 
 			};
 
-			this.reset = function (formCtrl) {
-				$Validator.setPristine(formCtrl);
+			this.reset = function(formCtrl) {
+				$ccValidator.setPristine(formCtrl);
 			};
 
-			this.validateGay = function () {
-				$Validator.validate(this.gay).then(() => {
+			this.validateGay = function() {
+				$ccValidator.validate(this.gay).then(() => {
 					console.log('校验成功!');
 				}, () => {
 					console.log('校验失败!');
 				});
 			};
 
-			this.validate = function () {
+			this.validate = function() {
 
-				$Validator.validate(this.guy).then(() => {
+				$ccValidator.validate(this.guy).then(() => {
 					console.log('校验成功!');
 				}, () => {
 					console.log('校验失败!');

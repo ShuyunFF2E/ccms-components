@@ -14,7 +14,8 @@ $tr-hover-bg: #eef8fc;
 
 $init-color: #70a2c7;
 
-grid {
+grid,
+cc-grid {
 
 	display: inline-block;
 
@@ -125,6 +126,7 @@ grid {
 	}
 
 	.footer {
+		display: flex;
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -134,59 +136,43 @@ grid {
 		border: 1px solid #e8e8e8;
 		color: #666666;
 		white-space: nowrap;
-		@extend %clear-fix;
 
 		.page-con {
 			@include fonts;
-			display: inline-block;
-			float: left;
+			display: flex;
+			flex: 1;
+			align-items: center;
 			color: #666666;
-			line-height: 39px;
 			padding-left: $pagination-padding;
-
-			%p-button {
-				border: 0 none;
-				cursor: pointer;
-				float: left;
-				position: relative;
-				top: 4px;
-				span {
-					display: block;
-					float: left;
-					height: 16px;
-					width: 16px;
-				}
-				&:hover {
-					color: #828282;
-				}
-			}
 
 			span {
 				margin-right: 18px;
-				float: left;
 			}
 
 			.font-num {
 				font-family: $font-number;
-				float: none;
 				margin-right: 0;
 			}
 
 			.reload {
-				display: inline-block;
+				display: flex;
+				align-items: center;
 				cursor: pointer;
 			}
 
-			.p-reload {
-				@extend %p-button;
+			.p-reload-icon {
 				@extend .iconfont;
 				@extend .icon-refresh;
-				width: 12px;
-				height: 12px;
-				top: -1px;
-				font-size: 14px;
+				border: 0 none;
+
 				color: #929292;
-				margin-right: 4px;
+				cursor: pointer;
+
+				&:hover {
+					color: #828282;
+				}
+				font-size: 14px;
+				margin-right: 5px;
 			}
 
 			@-moz-document url-prefix() {
@@ -196,12 +182,13 @@ grid {
 			}
 		}
 
-		& > pagination {
-			float: right;
+		& > pagination,
+		& > cc-pagination {
+			flex: 1;
 		}
 	}
 
-	grid-cell {
+	cc-grid-cell {
 		display: flex;
 		justify-content: flex-start;
 		word-break: break-all;

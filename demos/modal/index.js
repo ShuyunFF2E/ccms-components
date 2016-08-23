@@ -7,20 +7,20 @@
 
 	'use strict';
 
-	Controller.$inject = ['$log', 'TipsService', '$element', '$scope', 'modalInstance', 'data'];
-	function Controller($log, TipsService, $element, $scope, modalInstance, data) {
+	Controller.$inject = ['$log', '$ccTips', '$element', 'modalInstance', 'data'];
+	function Controller($log, $ccTips, $element, modalInstance, data) {
 
 		$log.log('1111', data);
 
 		this.scopedArray = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'.split(' ');
 
 		this.showSuccess = () => {
-			TipsService.success('sdfsfsdfsfsfdsfsd', $element[0].querySelector('.modal-body'));
+			$ccTips.success('sdfsfsdfsfsfdsfsd', $element[0].querySelector('.modal-body'));
 		};
 
 		this.showError = () => {
 
-			TipsService.error('sdfsfsdfsfsfdsfsd', $element[0].querySelector('.modal-body'));
+			$ccTips.error('sdfsfsdfsfsfdsfsd', $element[0].querySelector('.modal-body'));
 		};
 
 		this.addRandom = function() {
