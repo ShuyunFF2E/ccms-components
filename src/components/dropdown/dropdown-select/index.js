@@ -8,7 +8,7 @@ import DropdownSelectCtrl from './DropdownSelectCtrl';
 
 const dropdownSelectDDO = {
 	restrict: 'E',
-	require: 'dropdown',
+	require: 'ccDropdown',
 	template,
 	controller: DropdownSelectCtrl,
 	controllerAs: '$ctrl',
@@ -25,6 +25,7 @@ const dropdownSelectDDO = {
 
 export default angular
 	.module('ccms.components.dropdownSelect', [bindHtml])
-	.directive('dropdownSelect', () => dropdownSelectDDO)
+	.directive('ccDropdownSelect', () => dropdownSelectDDO)
+	.deprecatedDirective('dropdownSelect', () => dropdownSelectDDO)
 	.name;
 

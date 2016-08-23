@@ -125,7 +125,7 @@ const dropdownDDO = {
 const dropdownToggleDDO = {
 	restrict: 'EA',
 	require: {
-		parent: '^^dropdown'
+		parent: '^^ccDropdown'
 	},
 	controller: DropdownToggleCtrl,
 	controllerAs: '$ctrl',
@@ -136,7 +136,7 @@ const dropdownToggleDDO = {
 const dropdownPanelDDO = {
 	restrict: 'EA',
 	require: {
-		parent: '^^dropdown'
+		parent: '^^ccDropdown'
 	},
 	template: '<div class="content" ng-transclude></div>',
 	transclude: true,
@@ -148,8 +148,11 @@ const dropdownPanelDDO = {
 
 export default angular
 	.module('ccms.components.dropdown', [])
-	.directive('dropdown', () => dropdownDDO)
-	.directive('dropdownToggle', () => dropdownToggleDDO)
-	.directive('dropdownPanel', () => dropdownPanelDDO)
+	.directive('ccDropdown', () => dropdownDDO)
+	.deprecatedDirective('dropdown', () => dropdownDDO)
+	.directive('ccDropdownToggle', () => dropdownToggleDDO)
+	.deprecatedDirective('dropdownToggle', () => dropdownToggleDDO)
+	.directive('ccDropdownPanel', () => dropdownPanelDDO)
+	.deprecatedDirective('dropdownPanel', () => dropdownPanelDDO)
 	.name;
 
