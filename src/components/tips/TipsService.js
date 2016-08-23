@@ -4,10 +4,9 @@
  * @since 2016-03-08
  */
 
-import {Inject} from 'angular-es-utils';
+import { Inject } from 'angular-es-utils';
 import angular from 'angular';
 
-import {offset} from '../../common/utils/style-helper';
 import throttle from '../../common/utils/performance/throttle';
 import Tips from './Tips';
 import tipsTpl from './float-tips.tpl.html';
@@ -69,13 +68,7 @@ export default class TipsService {
 		setTipsPosition(contextContainer, floatTipsContainer);
 		tips.open();
 
-		this._autoDestroy(angular.element(contextContainer).scope(), tips);
-
 		return tips;
-	}
-
-	_autoDestroy(scope, tips) {
-		scope.$on('$destroy', ::tips.destroy);
 	}
 
 	/**
@@ -99,5 +92,5 @@ export default class TipsService {
 }
 
 function setTipsPosition(contextContainer, floatTipsContainer) {
-	floatTipsContainer.style.top = `${offset(contextContainer).top}px`;
+	floatTipsContainer.style.top = `${contextContainer.getBoundingClientRect().top}px`;
 }

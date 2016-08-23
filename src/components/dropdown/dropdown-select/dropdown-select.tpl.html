@@ -1,4 +1,4 @@
-<div class="dropdown-select" dropdown is-open="$ctrl.isOpen"
+<div class="dropdown-select" cc-dropdown is-open="$ctrl.isOpen"
 		ng-class="{active: $ctrl.isActive, disabled: $ctrl.disabled}"
 		on-dropdown-open="$ctrl.onOpen()"
 		on-dropdown-close="$ctrl.onClose()">
@@ -14,10 +14,10 @@
 					ng-class="{visible: $ctrl.title.length}"
 					ng-if="$ctrl.searchable"
 					ng-click="$ctrl.clear()"></span
-			><span class="dropdown-select-down" dropdown-toggle></span>
+			><span class="dropdown-select-down" cc-dropdown-toggle></span>
 		</div>
 	</div>
-	<div class="dropdown-panel hide" dropdown-panel>
+	<div class="dropdown-panel hide" cc-dropdown-panel>
 		<ul class="dropdown-list">
 			<li ng-repeat="item in $ctrl.items track by $index"
 					ng-click="$ctrl.selectItemAt($index);"

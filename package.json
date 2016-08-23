@@ -75,14 +75,14 @@
     "webpack-hot-middleware": "^2.4.1"
   },
   "peerDependencies": {
-    "angular": "^1.5.2",
+    "angular": "^1.5.8",
     "angular-ui-router": "^0.2.18",
-    "angular-resource": "^1.5.2"
+    "angular-resource": "^1.5.8"
   },
   "dependencies": {
-    "angular": "^1.5.2",
+    "angular": "^1.5.8",
     "angular-es-utils": "^1.2.40",
-    "angular-resource": "^1.5.2",
+    "angular-resource": "^1.5.8",
     "angular-ui-router": "^0.2.18",
     "normalize.css": "^4.1.1"
   }

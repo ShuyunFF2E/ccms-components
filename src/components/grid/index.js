@@ -15,7 +15,6 @@ import controller from './GridCtrl';
 import link from './GridCellLink';
 
 import $grid from './GridHelper';
-import GRID_TEMPLATES from './Constant';
 
 const
 	gridDDO = {
@@ -40,8 +39,9 @@ const
 
 export default angular
 	.module('ccms.components.grid', [loading, dynamicAttr, checkbox])
-	.component('grid', gridDDO)
-	.directive('gridCell', () => gridCellDDO)
-	.value('$grid', $grid)
-	.constant('GRID_TEMPLATES', GRID_TEMPLATES)
+	.component('ccGrid', gridDDO)
+	.deprecatedComponent('grid', gridDDO)
+	.directive('ccGridCell', () => gridCellDDO)
+	.deprecatedValue('$ccGrid', $grid, '$grid 服务将在8.30之后废弃,请尽早使用 $ccGrid 服务代替!')
+	.value('$ccGrid', $grid)
 	.name;

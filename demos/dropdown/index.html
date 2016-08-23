@@ -23,34 +23,34 @@
 		<div class="demo">
 			<h3>单选</h3>
 			<span>当前值: <span ng-bind="ctrl.value1 | json"></span></span>
-			<dropdown-select
+			<cc-dropdown-select
 					placeholder="哈哈哈"
 					model="ctrl.value1"
 					datalist="ctrl.datalist2"
 					mapping="ctrl.fieldsMap">
-			</dropdown-select>
+			</cc-dropdown-select>
 		</div>
 		<div class="demo">
 			<h3>单选（只读）</h3>
 			<span>当前值: <span ng-bind="ctrl.value1 | json"></span></span>
-			<dropdown-select
+			<cc-dropdown-select
 					disabled="true"
 					placeholder="哈哈哈"
 					model="ctrl.value1"
 					datalist="ctrl.datalist2"
 					mapping="ctrl.fieldsMap">
-			</dropdown-select>
+			</cc-dropdown-select>
 		</div>
 		<div class="demo">
 			<h3>单选（可搜索）</h3>
 			<span>当前值: <span ng-bind="ctrl.value2 | json"></span></span>
-			<dropdown-select
+			<cc-dropdown-select
 					placeholder="快，快选我。。啊！"
 					model="ctrl.value2"
 					datalist="ctrl.datalist1"
 					searchable="true"
 					mapping="ctrl.fieldsMap">
-			</dropdown-select>
+			</cc-dropdown-select>
 			<div style="margin: 0.5em 0;">
 				<input style="width: 50%;" ng-model="newValue">
 				<button class="btn-ok" ng-click="ctrl.setValue(newValue)">设置新值</button>
@@ -61,24 +61,24 @@
 		<div class="demo">
 			<h3>多选</h3>
 			<span>当前值: <span ng-bind="ctrl.value3 | json"></span></span>
-			<dropdown-multiselect
+			<cc-dropdown-multiselect
 					placeholder="快，快选我。。啊！"
 					model="ctrl.value3"
 					datalist="ctrl.datalist1"
 					mapping="ctrl.fieldsMap">
-			</dropdown-multiselect>
+			</cc-dropdown-multiselect>
 		</div>
 		<div class="demo">
 			<h3>多选（可搜索）</h3>
 			<span>当前值: <span ng-bind="ctrl.value4 | json"></span></span>
-			<dropdown-multiselect
+			<cc-dropdown-multiselect
 					placeholder="快，快选我。。啊！"
 					model="ctrl.value4"
 					datalist="ctrl.datalist1"
 					searchable="true"
 					confirm-button="true"
 					mapping="ctrl.fieldsMap">
-			</dropdown-multiselect>
+			</cc-dropdown-multiselect>
 			<div style="margin: 0.5em 0;">
 				<button class="btn-ok" ng-click="ctrl.setList()">设置新值</button>
 			</div>
@@ -97,6 +97,8 @@
 			this.datalist1 = [
 				{title: '北京', value: 'bj'},
 				{title: '上海', value: 'sh'},
+				{title: '123789', value: 123789},
+				{title: '123456', value: 123456},
 				{title: '深圳', value: 'sz'},
 				{title: '西安', value: 'xa'},
 				{title: '南京', value: 'nj'},

@@ -331,7 +331,10 @@ export default class DropdownMultiselectCtrl {
 
 		searchFields.forEach(field => {
 			datalist.forEach(item => {
-				if (item[field].indexOf(text) !== -1 && filteredItems.indexOf(item) === -1) {
+				const fieldValue = item[field];
+				if (fieldValue.toString().indexOf(text) !== -1 &&
+						filteredItems.indexOf(item) === -1) {
+
 					filteredItems.push(item);
 				}
 			});
