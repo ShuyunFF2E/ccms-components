@@ -21,21 +21,18 @@ class NgEnter {
 		const ENTER_KEY_CODE = 13;
 
 		// link function
-		return (scope, element, attr, ngModelController) => {
+		return (scope, element, attr, $ngModelCtrl) => {
 
-			const callback = event => {
+			const callback = $event => {
 
-				if (event.keyCode === ENTER_KEY_CODE) {
+				if ($event.keyCode === ENTER_KEY_CODE) {
 					scope.$apply(() => {
-						fn(scope, {$event: event, $ngModelCtrl: ngModelController});
+						fn(scope, {$event, $ngModelCtrl});
 					});
 				}
 			};
 
 			element.on('keyup', callback);
-
-			// 使用enter事件触发方式就不再需要input触发的方式(解除ngModel绑定的事件)
-			element.off('input change compositionstart compositionend');
 
 			// unbind event listener
 			scope.$on('$destroy', () => {
