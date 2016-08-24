@@ -39,9 +39,9 @@ const
 
 export default angular
 	.module('ccms.components.grid', [loading, dynamicAttr, checkbox])
-	.component('ccGrid', gridDDO)
-	.deprecatedComponent('grid', gridDDO)
 	.directive('ccGridCell', () => gridCellDDO)
-	.deprecatedValue('$ccGrid', $grid, '$grid 服务将在8.30之后废弃,请尽早使用 $ccGrid 服务代替!')
+	.component('ccGrid', gridDDO)
 	.value('$ccGrid', $grid)
+	.deprecatedComponent('grid', gridDDO)
+	.deprecatedValue('$grid', $grid, '$grid 服务将在8.30之后废弃,请尽早使用 $ccGrid 服务代替!')
 	.name;

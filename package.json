@@ -11,9 +11,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack-build.config.js",
     "docs": "jekyll serve --source docs",
-    "release:major": "./scripts/release.sh --major",
-    "release:minor": "./scripts/release.sh --minor",
-    "release:patch": "./scripts/release.sh --patch",
+    "release": "./scripts/release.sh",
     "update-dev-server": "./scripts/update-dev-server.sh",
     "start": "node server.js",
     "prepush": "npm run codecheck",
@@ -81,7 +79,7 @@
   },
   "dependencies": {
     "angular": "^1.5.8",
-    "angular-es-utils": "^1.2.40",
+    "angular-es-utils": "^1.2.41",
     "angular-resource": "^1.5.8",
     "angular-ui-router": "^0.2.18",
     "normalize.css": "^4.1.1"
