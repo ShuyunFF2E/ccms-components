@@ -15,12 +15,16 @@
 								<input type="text" ng-if="attribute.type === 'CHAR_INPUT'" ng-model="$ctrlA.tmpValue" validator="length" maxlength="20">
 								<input type="text" ng-if="attribute.type === 'NUMBER_INPUT'" ng-model="$ctrlA.tmpValue" validator="length,number" maxlength="20">
 								<select ng-if="attribute.type === 'CHAR_SELECT' || attribute.type === 'NUMBER_SELECT'"
-												ng-options="value for value in attribute.selector"
+												ng-options="value for value in attribute.optional"
+												required
+												validator
 												ng-model="$ctrlA.tmpValue"></select>
 								<date-picker ng-if="attribute.type === 'DATE_SELECT'"
 														 ng-model="$ctrlA.tmpValue"
 														 required="true"
 														 date-only="true"
+														 required
+														 validator
 														 disabled="false"></date-picker>
 							</div>
 							<div class="button-row">
@@ -49,7 +53,11 @@
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
 					<label class="attribute-item-label" ng-bind="attribute.name + ': '"></label>
 					<span class="attribute-item-content"
+								ng-if="$ctrlA.selectedRfm"
 								ng-bind="$ctrlA.selectedRfm[attribute.attribute]"></span>
+					<span class="attribute-item-content"
+								ng-if="!$ctrlA.selectedRfm"
+								ng-bind="attribute.defaultValue"></span>
 				</dd>
 			</dl>
 		</li>
@@ -61,6 +69,7 @@
 				</dt>
 				<dd class="attribute-block-item">
 					<customer-defined-attribute-editor
+							validate-duplicate-name-fn="$ctrlA.validateDuplicateNameFn()"
 							create-attribute-fn="$ctrlA.saveCustomerDefinedAttribute(attribute)"
 							cancel-setting="$ctrlA.changeCustomerDefinedBlockState(false)"></customer-defined-attribute-editor>
 				</dd>

@@ -88,29 +88,34 @@ const customer = {
 			attributes: [{
 				attribute: 'receiver_state',
 				name: '省份',
+				defaultValue: '无',
 				unit: '',
 				type: 'select',
 				isInListMode: true
 			}, {
 				attribute: 'receiver_city',
 				name: '城市',
+				defaultValue: '无',
 				unit: '',
 				type: 'select',
 				isInListMode: true
 			}, {
 				attribute: 'receiver_district',
 				name: '区县',
+				defaultValue: '无',
 				unit: '',
 				type: 'select',
 				isInListMode: true
 			}, {
 				attribute: 'receiver_address',
 				type: 'text',
+				defaultValue: '无',
 				unit: '',
 				validate: ['/^\\w{1, 50}$/']
 			}, {
 				attribute: 'receiver_zip',
 				type: 'text',
+				defaultValue: '无',
 				unit: '',
 				validate: ['/^\\d{1, 6}$/']
 			}]
@@ -358,42 +363,49 @@ const other = {
 			attribute: 'cardGrade',
 			name: '会员等级',
 			defaultValue: '未开通',
+			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'effectTime',
 			name: '等级生效日期',
 			defaultValue: '无',
+			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'expireTime',
 			name: '等级失效日期',
 			defaultValue: '无',
+			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'currentPoint',
 			name: '当前积分',
 			defaultValue: '0',
+			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'totalGet',
 			name: '历史积分',
 			defaultValue: '0',
+			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'signCount',
 			name: '签到次数',
 			defaultValue: '0',
+			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'exchangeCount',
 			name: '兑换次数',
 			defaultValue: '0',
+			unit: '',
 			editable: false,
 			isInListMode: true
 		}]
@@ -404,12 +416,14 @@ const other = {
 			attribute: 'wechatNick',
 			name: '微信昵称',
 			defaultValue: '未开通',
+			unit: '',
 			editable: false,
 			isInListMode: false
 		}, {
 			attribute: 'sinawbUserId',
 			name: '微博账号',
 			defaultValue: '未开通',
+			unit: '',
 			editable: false,
 			isInListMode: false
 		}]
@@ -498,7 +512,7 @@ export const DEFAULT_ATTRIBUTE_SETTING = {
 	isInListMode: false,
 	isDisable: false,
 	type: DefinedTypeOptionList[0].value,
-	selector: []
+	optional: []
 };
 
 export default CustomerAttributeSetting;

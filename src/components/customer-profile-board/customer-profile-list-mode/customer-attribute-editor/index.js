@@ -15,7 +15,8 @@ const CustomerAttributeEditor = {
 	bindings: {
 		attributeSetting: '<',
 		customerData: '<',
-		updateAttributeBlockOffset: '&'
+		updateAttributeBlockOffset: '&',
+		scrollToAttributeBlock: '&'
 	}
 };
 

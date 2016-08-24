@@ -7,10 +7,10 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils';
 
-import CustomerAttributeSetting from './CustomerAttributeSetting.js';
+import CustomerAttributeSetting, {DEFAULT_ATTRIBUTE_SETTING} from './CustomerAttributeSetting.js';
 import CustomerProfileBoardService from './CustomerProfileBoardService.js';
 
-@Inject('$element', '$timeout', '$scope')
+@Inject('$element', '$filter')
 export default class CheckboxController {
 	constructor() {
 		this.CustomerProfileBoardService = new CustomerProfileBoardService();
@@ -32,8 +32,14 @@ export default class CheckboxController {
 					setting.attributeBlock.forEach(customerAttributeBlock =>
 						this.CustomerProfileBoardService.mappingDataIntoAttributeBlock(customerAttributeBlock, customerData)));
 			})
-			.then(() => this.CustomerProfileBoardService.queryCustomerDefinedAttributeData(this.customerData))
-			.then(data => (this.customerAttributeSetting[0].attributeBlock[1].attributeList = this.CustomerProfileBoardService.transformCustomerDateToAttribute(data.properties)));
+			.then(() => this.CustomerProfileBoardService.getCustomerDefinedAttributeData(this.customerData))
+			.then(data => (this.customerAttributeSetting[0].attributeBlock[1].attributeList = (data.properties || []).map(item => ({
+				...DEFAULT_ATTRIBUTE_SETTING,
+				...item,
+				attribute: item.name,
+				displayValue: item.type !== 'DATE_SELECT' ? item.value : this._$filter('date')(item.value, 'yyyy-MM-dd')
+			}))))
+			.catch(err => console.error(err.message || err.data.message));
 	}
 
 	/**
@@ -84,8 +90,8 @@ export default class CheckboxController {
 	 * According to index, scroll view to special block
 	 */
 	scrollToAttributeBlock(index = 0) {
-		this._$timeout(() => {
+		setTimeout(() => {
 			this._$element[0].querySelectorAll('customer-attribute-editor')[index].scrollIntoView({behavior: 'smooth'});
-		}, 50);
+		}, 0);
 	}
 }

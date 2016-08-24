@@ -75,6 +75,9 @@ export default class CustomerProfileListModeCtrl {
 		return offsetList.map(offset => offset - HEADERHEIGHT);
 	}
 
+	/**
+	 * @name updateAttributeBlockOffsetList
+	 */
 	updateAttributeBlockOffsetList() {
 		this._$timeout(() => {
 			this.attributesOffsetList = this.getAttributeBlockOffsetList();

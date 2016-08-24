@@ -1,7 +1,6 @@
 <div class="attribute-data-editor-block">
 	<div class="attribute-label-block">
-		<span class="attribute-label-item"
-					ng-repeat="attribute in $ctrlA.attributeDataList track by $index">{{attribute}}<span
+		<span class="attribute-label-item" ng-repeat="attribute in $ctrlA.attributeOptionalList track by $index">{{attribute}}<span
 				class="attribute-label-delete iconfont" ng-click="$ctrlA.removeAttribute($index)">&#xe658;</span></span>
 	</div>
 	<div class="add-attribute-row">

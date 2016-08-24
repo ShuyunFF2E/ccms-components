@@ -17,8 +17,8 @@ const CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX = '/cc/customer-defined-attribute';
 const CUSTOMER_PROFILE_API_PREFIX = '/cc/customer-profile';
 const CUSTOMER_PROFILE_API = CUSTOMER_PROFILE_API_PREFIX + '/fullView';
 const CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer/:nickName';
-const CUSTOMER_DEFINED_ATTRIBUTES_UPDATE_DATA_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer';
-const CUSTOMER_DEFINED_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/properties';
+const CUSTOMER_DEFINED_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer';
+const CUSTOMER_DEFINED_PLATFORM_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/properties';
 
 export class $ccCustomerProfileBoard {
 	/**
@@ -44,10 +44,14 @@ export class $ccCustomerProfileBoard {
 
 class CustomerProfileBoardService {
 	constructor() {
-		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API);
+		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API, true, undefined, undefined, {
+			headers: {
+				'Content-Type': 'application/graphql'
+			}
+		});
 		this.CustomerDefinedAttributeGetDataResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API);
-		this.CustomerDefinedAttributeUpdateDataResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_UPDATE_DATA_API);
 		this.CustomerDefinedAttributeResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_API);
+		this.CustomerDefinedPlatformAttributeResource = genresource(CUSTOMER_DEFINED_PLATFORM_ATTRIBUTES_API);
 	}
 
 	/**
@@ -65,12 +69,20 @@ class CustomerProfileBoardService {
 	 * @param {Object} customerInfo
 	 * @returns {Promise}
 	 */
-	queryCustomerDefinedAttributeData({nickName = '', tenantId = '', platName = 'taobao'} = {}) {
+	getCustomerDefinedAttributeData({nickName = '', tenantId = '', platName = 'taobao'} = {}) {
 		return this.CustomerDefinedAttributeGetDataResource.get({nickName, tenantId, platform: platName}).$promise;
 	}
 
+	saveCustomerDefinedAttribute(params = {}) {
+		return this.CustomerDefinedAttributeResource.save(params).$promise;
+	}
+
 	updateCustomerDefinedAttributeData(params = {}) {
-		return this.CustomerDefinedAttributeUpdateDataResource.update(params).$promise;
+		return this.CustomerDefinedAttributeResource.update(params).$promise;
+	}
+
+	queryCustomerDefinedPlatformAttribute(tenantId = '') {
+		return this.CustomerDefinedPlatformAttributeResource.query({tenantId}).$promise;
 	}
 
 	/**
@@ -78,8 +90,8 @@ class CustomerProfileBoardService {
 	 * @param {Object} attribute
 	 * @returns {Promise}
 	 */
-	saveCustomerDefinedAttribute(attribute) {
-		return this.CustomerDefinedAttributeResource.save(attribute).$promise;
+	saveCustomerDefinedPlatformAttribute(attribute) {
+		return this.CustomerDefinedPlatformAttributeResource.save(attribute).$promise;
 	}
 
 	/**
@@ -102,6 +114,8 @@ class CustomerProfileBoardService {
 							tags: this.getTagsList(data[key].result),
 							marketingResponsivities: data[key].result ? (data[key].result.score ? +data[key].result.score : 1) : 1
 						};
+					case 'memberInfo':
+						return Object.keys(data[key]).map(k => data[key][k]).reduce((pre, curr) => ({...pre, ...curr}), {});
 					default:
 						return data[key];
 				}
@@ -168,8 +182,13 @@ class CustomerProfileBoardService {
 		return tmp;
 	}
 
+	/**
+	 * @name mappingDataIntoAttributeBlock
+	 * @param {object} attributeBlock
+	 * @param {object} dataMapping
+	 */
 	mappingDataIntoAttributeBlock(attributeBlock = {}, dataMapping = {}) {
-		if (attributeBlock.type === 'List') {
+		if (attributeBlock.type === 'List' && dataMapping[attributeBlock.name]) {
 			attributeBlock.listData = [...dataMapping[attributeBlock.name]];
 			attributeBlock.listData.forEach(data => {
 				attributeBlock.attributeList.forEach(attribute => {
@@ -193,6 +212,11 @@ class CustomerProfileBoardService {
 		});
 	}
 
+	/**
+	 * get all static defined attribute list
+	 * @name getAttributeList
+	 * @returns {Array}
+	 */
 	getAttributeList() {
 		let attributeList = [];
 		CustomerAttributeSetting.forEach(setting =>
@@ -234,17 +258,6 @@ class CustomerProfileBoardService {
 		return number.toFixed(fixed);
 	}
 
-	transformCustomerDateToAttribute(dataList = []) {
-		return dataList.map(item => {
-			return {
-				...item,
-				attribute: item.name,
-				displayValue: item.value,
-				unit: '',
-				editable: true
-			};
-		});
-	}
 }
 
 export default CustomerProfileBoardService;

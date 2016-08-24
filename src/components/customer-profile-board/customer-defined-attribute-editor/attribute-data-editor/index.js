@@ -10,8 +10,9 @@ import controller from './AttributeDateEditorCtrl.js';
 
 const CustomerDefinedAttributeDataEditor = {
 	bindings: {
-		attributeDataList: '<',
-		numberOnly: '<'
+		attributeOptionalList: '<',
+		numberOnly: '<',
+		setChild: '&'
 	},
 	controllerAs: '$ctrlA',
 	template,

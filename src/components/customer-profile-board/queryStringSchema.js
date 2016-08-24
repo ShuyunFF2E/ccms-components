@@ -168,7 +168,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
       currentPoint
       totalGet
     }
-		loyalty_member_info(
+		memberInfo:loyalty_member_info(
       platDpId:"${shopId}"
       cardNo:"${nick}"
     ){
@@ -219,9 +219,10 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
 	queryString = `
 		{
 			${CustomerQuerySchema}
-			${RfmQuerySchema}
 			${TradeQuerySchema}
-			${TagQuerySchema}
+			${MemberInfoQuerySchema}
+			${WeChatQuerySchema}
+			${WeiBoQuerySchema}
 		}
 	`;
 

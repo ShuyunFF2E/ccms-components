@@ -1,17 +1,17 @@
-<form class="customer-defined-attribute-editor" name="$ctrlA.attribute" validators="$ctrlA.validators">
+<form class="customer-defined-attribute-editor" name="$ctrlA.attributeForm" validators="$ctrlA.validators">
 	<ul class="customer-defined-attribute-editor-content">
 		<li class="attribute-editor-li">
 			<label class="attribute-editor-label">属性名称：</label><span class="attribute-editor-input"><input type="text"
 																																																		 ng-model="$ctrlA.customerDefinedAttribute.name"
 																																																		 maxlength="20"
-																																																		 validator="attributeName"></span><span
+																																																		 validator="attributeName,duplicate"></span><span
 				class="iconfont attribute-remark-icon" tooltip="$ctrlA.customerDefinedAttribute.remark ? '此处已打备注' : '备注'"
 				ng-class="{'attribute-remark-icon--active': !!$ctrlA.customerDefinedAttribute.remark}"
 				ng-click="$ctrlA.toggleRemarkTextArea()">&#xe635;</span>
 		</li>
 		<li class="attribute-editor-li">
 			<label class="attribute-editor-label">属性类型：</label><span class="attribute-editor-input"><select
-				ng-change="$ctrlA.customerDefinedAttribute.selector = []"
+				ng-change="$ctrlA.customerDefinedAttribute.optional = []"
 				ng-options="item.value as item.name for item in $ctrlA.DefinedTypeOptionList"
 				ng-model="$ctrlA.customerDefinedAttribute.type"></select></span>
 		</li>
@@ -19,8 +19,9 @@
 		<li class="attribute-editor-li">
 			<label class="attribute-editor-label">可选值：</label>
 			<attribute-data-editor
-					attribute-data-list="$ctrlA.customerDefinedAttribute.selector"
+					attribute-optional-list="$ctrlA.customerDefinedAttribute.optional"
 					number-only="$ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[1].value"
+					set-child="$ctrlA.getChildCtrl(child)"
 					ng-if="$ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[0].value || $ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[1].value"></attribute-data-editor><span
 				ng-show="$ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[2].value || $ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[3].value || $ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[4].value">当前属性类型无需设置可选值</span>
 		</li>

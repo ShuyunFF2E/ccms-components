@@ -6,18 +6,18 @@
 
 import { Inject } from 'angular-es-utils';
 
-import CustomerProfileBoardService from '../../CustomerProfileBoardService.js';
-
 @Inject('$Validator')
 export default class AttributeDateEditorCtrl {
-	constructor() {
-		this.CustomerProfileBoardService = new CustomerProfileBoardService();
-		this.attributeNameList = this.CustomerProfileBoardService.getAttributeList();
-	}
-
 	$onInit() {
 		this.addAttributeState = false;
 		this.validators = {
+			required: {
+				msg: '可选值不能为空',
+				fn: (modelValue, viewValue) => {
+					const value = modelValue || viewValue || '';
+					return !!(value.trim());
+				}
+			},
 			number: {
 				msg: '请输入数字',
 				regex: /^\d+(\.\d*)?$/
@@ -30,32 +30,44 @@ export default class AttributeDateEditorCtrl {
 				msg: '可选值不能重复',
 				fn: (modelValue, viewValue) => {
 					const value = modelValue || viewValue || '';
-					return this.attributeDataList.indexOf(value.trim()) === -1 && this.attributeNameList.indexOf(value.trim()) === -1;
+					return this.attributeOptionalList.indexOf(value.trim()) === -1;
 				}
 			}
 		};
+
+		this.setChild({ child: this });
 	}
 
 	$onChanges(obj) {
 		if (obj.numberOnly) {
 			this.addAttributeState = false;
-			this.validator = 'length,duplicate' + (obj.numberOnly.currentValue ? ',number' : '');
+			this.validator = 'required,length,duplicate' + (obj.numberOnly.currentValue ? ',number' : '');
 		}
 	}
 
+	/**
+	 * @name showAddAttributeInput
+	 */
 	showAddAttributeInput() {
 		this.addAttributeState = true;
 		this.attributeValue = '';
 	}
 
+	/**
+	 * @name addAttribute
+	 */
 	addAttribute() {
 		this._$Validator.validate(this.data).then(() => {
-			this.attributeDataList.push(this.attributeValue);
+			this.attributeOptionalList.push(this.attributeValue);
 			this.addAttributeState = false;
 		});
 	}
 
+	/**
+	 * @name removeAttribute
+	 * @param {number} index
+	 */
 	removeAttribute(index) {
-		this.attributeDataList.splice(index, 1);
+		this.attributeOptionalList.splice(index, 1);
 	}
 }
