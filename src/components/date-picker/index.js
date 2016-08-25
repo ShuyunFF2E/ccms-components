@@ -4,11 +4,12 @@
 
 
 import angular from 'angular';
-import { FactoryCreator } from 'angular-es-utils';
 
-import DatePicker from './DatePicker';
+import ddo from './DatePicker';
+
 
 export default angular
-		.module('ccms.components.datePicker', ['ccms.components.calendar'])
-		.directive('datePicker', FactoryCreator.create(DatePicker))
-		.name;
+	.module('ccms.components.datePicker', ['ccms.components.calendar'])
+	.directive('ccDatePicker', () => ddo)
+	.deprecatedDirective('datePicker', () => ddo)
+	.name;

@@ -4,23 +4,19 @@
 
 
 import './_sms-editor.scss';
-
 import template from './sms-editor.tpl.html';
 import SMSEditorCtrl from './SMSEditorCtrl';
 
-export default class SMSEditor {
 
-	constructor() {
-		Object.assign(this, {
-			bindToController: true,
-			controller: SMSEditorCtrl,
-			controllerAs: 'ctrl',
-			replace: true,
-			restrict: 'E',
-			scope: {
-				opts: '='
-			},
-			template
-		});
-	}
-}
+export default {
+
+	bindToController: true,
+	controller: SMSEditorCtrl,
+	controllerAs: 'ctrl',
+	replace: true,
+	restrict: 'E',
+	scope: {
+		opts: '='
+	},
+	template
+};

@@ -2,25 +2,6 @@
 
 set -e
 
-function build() {
-	# install dependencies
-	npm install --registry=https://registry.npm.taobao.org
-
-	# webpack build
-	NODE_ENV=production webpack --config webpack-build.config.js
-
-	# copy files
-	cp package.json dist
-	cp -rv src/components/styles dist/scss
-
-	# create dist/index.js
-	cat > dist/index.js <<- EOT
-	require('./ccms-components.css');
-	require('./ccms-components.js');
-	module.exports = 'ccms.components';
-	EOT
-}
-
 function publish() {
 	# publish to npmjs.org
 	npm publish dist
@@ -54,7 +35,7 @@ function release_production() {
 	git branch -D gh-pages
 	git reset $new_version --hard
 
-	build && publish
+	$PWD/scripts/build.sh && publish
 }
 
 function release_branch() {
@@ -66,7 +47,7 @@ function release_branch() {
 	test_version=$(npm version $version -m "chore(release): v%s")
 	git push origin $test_version
 
-	build && publish
+	$PWD/scripts/build.sh && publish
 
 	git checkout dev
 }
