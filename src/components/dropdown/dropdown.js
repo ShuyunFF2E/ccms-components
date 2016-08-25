@@ -110,6 +110,7 @@ export default class DropdownPanelCtrl {
 }
 
 const dropdownDDO = {
+	name: 'ccDropdown',
 	restrict: 'EA',
 	controller: DropdownCtrl,
 	controllerAs: '$ctrl',
