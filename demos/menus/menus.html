@@ -9,13 +9,13 @@
 <div class="ccmsc-main-container" ng-class="{'contract-left':!app.menusOptions.unfold}">
 
     <div class="left-container">
-        <cc-menu-bar
+        <menu-bar
                 unfold="app.menusOptions.unfold"
                 on-unfold="app.menusOptions.unfoldClick"
                 menu-source="app.menusOptions.menusResource"
                 shop-source="app.menusOptions.shopsResource"
                 search-placeholder="app.menusOptions.searchPlaceholder">
-        </cc-menu-bar>
+        </menu-bar>
     </div>
 
     <div class="center-container " ui-view>
