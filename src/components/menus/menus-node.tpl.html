@@ -37,12 +37,12 @@
 
         <!-- 一级菜单 end -->
 
-        <menu-node
+        <cc-menu-node
                 ng-if="menu.children && menu.children.length > 0"
                 toggle="menu.toggleNode"
                 level="childNode.level+1"
                 list="menu.children">
-        </menu-node>
+        </cc-menu-node>
     </li>
 </ul>
 

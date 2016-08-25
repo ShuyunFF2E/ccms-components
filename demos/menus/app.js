@@ -207,19 +207,19 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('views/point/sign/sign');
 }
 
-runConfig.$inject = ['$state', '$rootScope'];
-function runConfig($state, $rootScope) {
+runConfig.$inject = ['$state', '$rootScope', '$ccMenus'];
+function runConfig($state, $rootScope, $ccMenus) {
 	$rootScope.$state = $state;
 }
 
 
-gradeController.$inject = ['$scope', '$menus'];
+gradeController.$inject = ['$scope', '$ccMenus'];
 
 // - 关闭自动开启功能
-function gradeController($scope, $menus) {
+function gradeController($scope, $ccMenus) {
 
 	$scope.$on('shop:change', (event, current) => {
-		const serveCurrent = $menus.getCurrentPlatShop();
+		const serveCurrent = $ccMenus.getCurrentPlatShop();
 		// --TODO 执行其他操作
 		console.log('事件广播:', current.plat.name + '|' + current.shop.name);
 		console.log('服务接口:', serveCurrent.plat.name + '|' + serveCurrent.shop.name);
@@ -228,16 +228,30 @@ function gradeController($scope, $menus) {
 }
 
 
-pointController.$inject = ['$scope', '$menus'];
+pointController.$inject = ['$scope', '$ccMenus'];
 
 // - 开启自动关闭功能
-function pointController($scope, $menus) {
+function pointController($scope, $ccMenus) {
 
 	this.name = '老司机飙车速度疾';
 
 	let isChange = false;
 
 	$scope.$on('shop:changeStart', (event, defer) => {
+
+		if (isChange) {
+			const state = window.confirm('确定切换店铺?');
+			if (state) {
+				defer.resolve();
+			} else {
+				defer.reject();
+			}
+			isChange = false;
+		}
+	});
+
+	$scope.$on('shop:change', (event, current) => {
+		const serveCurrent = $ccMenus.getCurrentPlatShop();
 
 		if (isChange) {
 			const state = window.confirm('确定切换店铺?');
