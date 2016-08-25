@@ -10,7 +10,7 @@
 	<button type="button" ng-click="app.hideDates = !app.hideDates">显示 / 隐藏</button>
 </div>
 
-<p>日期时间选择器 ({{app.dateValue | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+<p>日期时间选择器 - 老 ({{app.dateValue | date:'yyyy-MM-dd HH:mm:ss'}})</p>
 
 <date-picker ng-if="!app.hideDates"
 						 ng-model="app.dateValue"
@@ -20,9 +20,19 @@
 						 date-only="false"
 						 disabled="false"></date-picker>
 
+<p>日期时间选择器 - 新 ({{app.dateValue | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+<cc-date-picker ng-if="!app.hideDates"
+						 ng-model="app.dateValue"
+						 min-date="app.minDate"
+						 max-date="app.maxDate"
+						 required="true"
+						 date-only="false"
+						 disabled="false"></cc-date-picker>
+
 <p>日期时间选择器 ({{app.blankDate | date:'yyyy-MM-dd HH:mm:ss'}})</p>
 
-<date-picker ng-model="app.blankDate"></date-picker>
+<cc-date-picker ng-model="app.blankDate"></cc-date-picker>
 
 <pre>
 &lt;date-picker ng-model="app.dateValue"
@@ -33,7 +43,7 @@
 	disabled="false">&lt;/date-picker>
 </pre>
 
-<p>日期时间区间选择器 ({{app.dateRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+<p>日期时间区间选择器 - 老 ({{app.dateRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
 
 <p>
 	<button type="button" ng-click="app.dateRange.start = null;">重置 start</button>
@@ -43,10 +53,20 @@
 <date-range ng-if="!app.hideDates"
 						opts="app.dateRange"></date-range>
 
+<p>日期时间区间选择器 - 新({{app.dateRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+<p>
+	<button type="button" ng-click="app.dateRange.start = null;">重置 start</button>
+	<button type="button" ng-click="app.dateRange.end = null">重置 end</button>
+</p>
+
+<cc-date-range ng-if="!app.hideDates"
+						opts="app.dateRange"></cc-date-range>
+
 <p>日期时间区间选择器 ({{app.anotherRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.anotherRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
 
-<date-range ng-if="!app.hideDates"
-						opts="app.anotherRange"></date-range>
+<cc-date-range ng-if="!app.hideDates"
+							 opts="app.anotherRange"></cc-date-range>
 
 <p>日期时间区间选择器 ({{app.dateOnly.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateOnly.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
 
@@ -55,8 +75,8 @@
 	<button type="button" ng-click="app.dateOnly.end = null">重置 end</button>
 </p>
 
-<date-range ng-if="!app.hideDates"
-						opts="app.dateOnly"></date-range>
+<cc-date-range ng-if="!app.hideDates"
+							 opts="app.dateOnly"></cc-date-range>
 
 <pre>
 &lt;date-range opts="app.dateRange">&lt;/date-range>
