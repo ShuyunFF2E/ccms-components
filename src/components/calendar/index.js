@@ -4,11 +4,11 @@
 
 
 import angular from 'angular';
-import { FactoryCreator } from 'angular-es-utils';
 
-import Calendar from './Calendar';
+import ddo from './Calendar';
+
 
 export default angular
 	.module('ccms.components.calendar', [])
-	.directive('calendar', FactoryCreator.create(Calendar))
+	.directive('ccCalendar', () => ddo)
 	.name;

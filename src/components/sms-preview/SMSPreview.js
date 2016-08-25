@@ -4,20 +4,16 @@
 
 
 import './_sms-preview.scss';
-
 import template from './sms-preview.tpl.html';
 
-export default class SMSPreview {
 
-	constructor() {
-		Object.assign(this, {
-			restrict: 'E',
-			scope: {
-				opts: '='
-			},
-			template
-		});
-	}
+export default {
+
+	restrict: 'E',
+	scope: {
+		opts: '='
+	},
+	template,
 
 	link(scope, element) {
 
@@ -44,7 +40,7 @@ export default class SMSPreview {
 
 			element[0].querySelector('.sms-preview-content').innerHTML = this.generateText(preview, unsubscribeText, signature, customSignature, gatewayType);
 		}, true);
-	}
+	},
 
 	/*
 	 0: 短信 +【自定义签名】
@@ -67,4 +63,4 @@ export default class SMSPreview {
 
 		return '';
 	}
-}
+};
