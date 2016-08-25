@@ -265,7 +265,7 @@ function pointController($scope, $ccMenus) {
 	});
 
 	$scope.$on('shop:change', (event, current) => {
-		const serveCurrent = $menus.getCurrentPlatShop();
+		const serveCurrent = $ccMenus.getCurrentPlatShop();
 		console.log('事件广播:', current.plat.name + '|' + current.shop.name);
 		console.log('服务接口:', serveCurrent.plat.name + '|' + serveCurrent.shop.name);
 	});
