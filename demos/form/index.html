@@ -16,11 +16,11 @@
 <div>最简 用法(空间足够文字提示&使用form表单&内置的校验器)</div>
 <form class="form-wrapper" tooltip-type="major" name="app.hhh">
 	<fieldset>
-		<label for="info">姓名(必填)</label><input type="text" id="info" ng-model="info" validator required
+		<label for="info">姓名(必填)</label><input type="text" id="info" ng-model="info" cc-validator required
 		                                       placeholder="必填">
 	</fieldset>
 	<fieldset>
-		<label for="info1">邮箱</label><input type="email" id="info1" ng-model="info1" required validator
+		<label for="info1">邮箱</label><input type="email" id="info1" ng-model="info1" required cc-validator
 		                                    placeholder="邮箱格式">
 	</fieldset>
 	<fieldset>
@@ -28,7 +28,7 @@
 	</fieldset>
 
 	<fieldset>
-		<label for="info3">长度需大于3</label><input type="text" id="info3" class="error" validator ng-model="info3"
+		<label for="info3">长度需大于3</label><input type="text" id="info3" class="error" cc-validator ng-model="info3"
 		                                        minlength="3">
 	</fieldset>
 
@@ -40,14 +40,14 @@
 <hr>
 
 <div>自定义校验器&不使用from/ngFrom表单空间不够浮动提示(默认)&可手动触发</div>
-<div class="form-wrapper" ng-form='app.gay' validators="app.validators">
+<div class="form-wrapper" ng-form='app.gay' cc-validators="app.validators">
 	<fieldset>
 		<label for="info">姓名</label>
-		<input type="text" ng-model="info11" validator="handsome, letter" required required-msg="填东西啊忘扒蛋!">
+		<input type="text" ng-model="info11" cc-validator="handsome, letter" required required-msg="填东西啊忘扒蛋!">
 	</fieldset>
 	<fieldset>
 		<label for="info1">数字</label>
-		<input type="number" ng-model="info12" validator="number" placeholder="请输入关键词" required>
+		<input type="number" ng-model="info12" cc-validator="number" placeholder="请输入关键词" required>
 	</fieldset>
 	<fieldset>
 		<label for="info2">禁用</label>
@@ -56,7 +56,7 @@
 
 	<fieldset>
 		<label for="info3">错误提示</label>
-		<input type="text" class="error" validator ng-model="info13" minlength="3">
+		<input type="text" class="error" cc-validator ng-model="info13" minlength="3">
 	</fieldset>
 
 	<fieldset>
@@ -68,14 +68,14 @@
 
 <br/>
 <div>自定义校验器&使用form/ngForm表单&空间不够浮动提示(默认)&可手动触发</div>
-<form class="form-wrapper" name='app.guy' validators="app.validators">
+<form class="form-wrapper" name='app.guy' cc-validators="app.validators">
 	<fieldset>
 		<label for="info">姓名</label>
-		<input type="text" ng-model="info21" validator="letter" required required-msg="填东西啊忘扒蛋!">
+		<input type="text" ng-model="info21" cc-validator="letter" required required-msg="填东西啊忘扒蛋!">
 	</fieldset>
 	<fieldset>
 		<label for="info1">数字</label>
-		<input type="number" ng-model="info22" validator placeholder="请输入关键词" required>
+		<input type="number" ng-model="info22" cc-validator placeholder="请输入关键词" required>
 	</fieldset>
 	<fieldset>
 		<label for="info2">禁用</label>
@@ -84,7 +84,7 @@
 
 	<fieldset>
 		<label for="info3">错误提示</label>
-		<input type="text" class="error" validator ng-model="info23" minlength="3">
+		<input type="text" class="error" cc-validator ng-model="info23" minlength="3">
 	</fieldset>
 
 	<fieldset>
