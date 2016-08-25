@@ -6,7 +6,7 @@
 
 import { Inject } from 'angular-es-utils';
 
-@Inject('$Validator')
+@Inject('$ccValidator')
 export default class AttributeDateEditorCtrl {
 	$onInit() {
 		this.addAttributeState = false;
@@ -57,7 +57,7 @@ export default class AttributeDateEditorCtrl {
 	 * @name addAttribute
 	 */
 	addAttribute() {
-		this._$Validator.validate(this.data).then(() => {
+		this._$ccValidator.validate(this.data).then(() => {
 			this.attributeOptionalList.push(this.attributeValue);
 			this.addAttributeState = false;
 		});

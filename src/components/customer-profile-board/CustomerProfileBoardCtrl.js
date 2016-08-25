@@ -91,7 +91,7 @@ export default class CheckboxController {
 	 */
 	scrollToAttributeBlock(index = 0) {
 		setTimeout(() => {
-			this._$element[0].querySelectorAll('customer-attribute-editor')[index].scrollIntoView({behavior: 'smooth'});
+			this._$element[0].querySelectorAll('cc-customer-attribute-editor')[index].scrollIntoView({behavior: 'smooth'});
 		}, 0);
 	}
 }

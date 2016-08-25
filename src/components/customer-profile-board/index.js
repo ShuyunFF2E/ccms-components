@@ -10,18 +10,11 @@ import bindHTML from '../bind-html';
 import './_customer-profile-board.scss';
 import { $ccCustomerProfileBoard } from './CustomerProfileBoardService';
 import CustomerProfileHeader from './customer-profile-header';
-import { CustomerProfileViewMode, CustomerAttributeNote } from './customer-profile-view-mode';
-import { CustomerProfileListMode, CustomerAttributeEditor } from './customer-profile-list-mode';
-import {CustomerDefinedAttributeEditor, AttributeDataEditor} from './customer-defined-attribute-editor';
+import CustomerProfileViewMode from './customer-profile-view-mode';
+import CustomerProfileListMode from './customer-profile-list-mode';
+import CustomerDefinedAttributeEditor from './customer-defined-attribute-editor';
 
 export default angular
-	.module('ccms.components.customerProfileBoard', [bindHTML])
+	.module('ccms.components.customerProfileBoard', [bindHTML, CustomerProfileHeader, CustomerProfileViewMode, CustomerProfileListMode, CustomerDefinedAttributeEditor])
 	.service('$ccCustomerProfileBoard', $ccCustomerProfileBoard)
-	.component('customerProfileHeader', CustomerProfileHeader)
-	.component('customerProfileListMode', CustomerProfileListMode)
-	.component('customerAttributeEditor', CustomerAttributeEditor)
-	.component('customerProfileViewMode', CustomerProfileViewMode)
-	.component('customerAttributeNote', CustomerAttributeNote)
-	.component('customerDefinedAttributeEditor', CustomerDefinedAttributeEditor)
-	.component('attributeDataEditor', AttributeDataEditor)
 	.name;

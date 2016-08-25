@@ -1,17 +1,17 @@
 <div class="customer-profile-board">
-	<customer-profile-header
+	<cc-customer-profile-header
 			customer-data="$ctrl.customerData"
 			view-mode="$ctrl.viewMode"
 			change-to-view="$ctrl.changeToViewMode()"
-			change-to-list="$ctrl.changeToListMode()"></customer-profile-header>
-	<customer-profile-list-mode
+			change-to-list="$ctrl.changeToListMode()"></cc-customer-profile-header>
+	<cc-customer-profile-list-mode
 			ng-if="!$ctrl.viewMode"
 			attributes-setting="$ctrl.customerAttributeSetting"
 			customer-data="$ctrl.customerData"
-			scroll-to-attribute-block="$ctrl.scrollToAttributeBlock(index)"></customer-profile-list-mode>
-	<customer-profile-view-mode
+			scroll-to-attribute-block="$ctrl.scrollToAttributeBlock(index)"></cc-customer-profile-list-mode>
+	<cc-customer-profile-view-mode
 			ng-if="$ctrl.viewMode"
 			customer-tags="$ctrl.customerTags"
 			attributes-setting="$ctrl.customerAttributeSetting"
-			change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock(name)"></customer-profile-view-mode>
+			change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock(name)"></cc-customer-profile-view-mode>
 </div>

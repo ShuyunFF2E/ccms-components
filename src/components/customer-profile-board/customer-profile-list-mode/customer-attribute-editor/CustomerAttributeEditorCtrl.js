@@ -8,7 +8,7 @@ import { Inject } from 'angular-es-utils';
 
 import CustomerProfileBoardService from '../../CustomerProfileBoardService.js';
 
-@Inject('$scope', '$Validator', '$filter')
+@Inject('$scope', '$ccValidator', '$filter')
 export default class CustomerAttributeEditorCtrl {
 	constructor() {
 		this.CustomerProfileBoardService = new CustomerProfileBoardService();
@@ -86,7 +86,7 @@ export default class CustomerAttributeEditorCtrl {
 	 * @param {string} value
 	 */
 	modifyAttributeValue(attribute, value) {
-		this._$Validator.validate(this.attributeModify)
+		this._$ccValidator.validate(this.attributeModify)
 			.then(() => {
 				const params = {
 					customerno: this.customerData.nickName,

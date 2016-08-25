@@ -56,11 +56,11 @@
   .note-container--left{
 	left: -100px;
 
-	customer-attribute-note:nth-child(1) .note-header{
+	cc-customer-attribute-note:nth-child(1) .note-header{
 	  background: $header-background-color-2;
 	}
 
-	customer-attribute-note:nth-child(2) .note-header{
+	cc-customer-attribute-note:nth-child(2) .note-header{
 	  background: $header-background-color-3;
 	}
   }
@@ -68,7 +68,7 @@
   .note-container--right{
 	right: -100px;
 
-	customer-attribute-note:nth-child(1) .note-header{
+	cc-customer-attribute-note:nth-child(1) .note-header{
 	  background: $header-background-color-1;
 	}
   }

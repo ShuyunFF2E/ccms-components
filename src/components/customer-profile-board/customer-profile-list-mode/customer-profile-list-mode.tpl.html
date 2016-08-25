@@ -9,10 +9,10 @@
 		</li>
 	</ul>
 	<div class="right-panel-block">
-		<customer-attribute-editor ng-repeat="attributeSetting in $ctrl.attributesSetting track by $index"
+		<cc-customer-attribute-editor ng-repeat="attributeSetting in $ctrl.attributesSetting track by $index"
 															 attribute-setting="attributeSetting"
 															 scroll-to-attribute-block="$ctrl.scrollToAttributeBlock(index)"
 															 update-attribute-block-offset="$ctrl.updateAttributeBlockOffsetList()"
-															 customer-data="$ctrl.customerData"></customer-attribute-editor>
+															 customer-data="$ctrl.customerData"></cc-customer-attribute-editor>
 	</div>
 </div>

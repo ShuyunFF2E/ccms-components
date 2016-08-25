@@ -9,7 +9,7 @@ import { Inject } from 'angular-es-utils';
 
 import {DEFAULT_ATTRIBUTE_SETTING, DefinedTypeOptionList} from '../CustomerAttributeSetting.js';
 
-@Inject('$Validator', '$timeout')
+@Inject('$ccValidator', '$timeout')
 export default class CustomerDefinedAttributeEditorCtrl {
 	constructor() {
 		this.DefinedTypeOptionList = DefinedTypeOptionList;
@@ -59,7 +59,7 @@ export default class CustomerDefinedAttributeEditorCtrl {
 	 * @name confirmCustomerDefinedAttribute
 	 */
 	confirmCustomerDefinedAttribute() {
-		this._$Validator.validate(this.attributeForm).then(() => {
+		this._$ccValidator.validate(this.attributeForm).then(() => {
 			if ((this.customerDefinedAttribute.type === this.DefinedTypeOptionList[0].value || this.customerDefinedAttribute.type === this.DefinedTypeOptionList[1].value) && !this.customerDefinedAttribute.optional.length) {
 				this.childCtrl.showAddAttributeInput.apply(this.childCtrl);
 				this._$timeout(() => this.childCtrl.addAttribute.apply(this.childCtrl), 0);

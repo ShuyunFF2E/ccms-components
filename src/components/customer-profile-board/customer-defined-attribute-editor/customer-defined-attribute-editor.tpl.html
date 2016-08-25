@@ -18,11 +18,11 @@
 		{{$ctrlA.customerData}}
 		<li class="attribute-editor-li">
 			<label class="attribute-editor-label">可选值：</label>
-			<attribute-data-editor
+			<cc-attribute-data-editor
 					attribute-optional-list="$ctrlA.customerDefinedAttribute.optional"
 					number-only="$ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[1].value"
 					set-child="$ctrlA.getChildCtrl(child)"
-					ng-if="$ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[0].value || $ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[1].value"></attribute-data-editor><span
+					ng-if="$ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[0].value || $ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[1].value"></cc-attribute-data-editor><span
 				ng-show="$ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[2].value || $ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[3].value || $ctrlA.customerDefinedAttribute.type === $ctrlA.DefinedTypeOptionList[4].value">当前属性类型无需设置可选值</span>
 		</li>
 	</ul>

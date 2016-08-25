@@ -44,11 +44,11 @@
 			<dl class="attribute-block" ng-if="attributeBlock.type === 'List'">
 				<dt class="attribute-block-title">
 					{{attributeBlock.title}}
-					<dropdown-select class="attribute-block-selector"
+					<cc-dropdown-select class="attribute-block-selector"
 													 ng-if="attributeBlock.listData.length"
 													 model="$ctrlA.selectedRfmPeriod"
 													 mapping="$ctrlA.rfmSelectorFieldsMap"
-													 datalist="attributeBlock.listData"></dropdown-select>
+													 datalist="attributeBlock.listData"></cc-dropdown-select>
 				</dt>
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
 					<label class="attribute-item-label" ng-bind="attribute.name + ': '"></label>
@@ -68,10 +68,10 @@
 																										ng-click="$ctrlA.changeCustomerDefinedBlockState(false)"> < 返回 </a>
 				</dt>
 				<dd class="attribute-block-item">
-					<customer-defined-attribute-editor
+					<cc-customer-defined-attribute-editor
 							validate-duplicate-name-fn="$ctrlA.validateDuplicateNameFn()"
 							create-attribute-fn="$ctrlA.saveCustomerDefinedAttribute(attribute)"
-							cancel-setting="$ctrlA.changeCustomerDefinedBlockState(false)"></customer-defined-attribute-editor>
+							cancel-setting="$ctrlA.changeCustomerDefinedBlockState(false)"></cc-customer-defined-attribute-editor>
 				</dd>
 			</dl>
 		</li>
