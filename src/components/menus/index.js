@@ -28,8 +28,8 @@ const
 		bindings: {
 			unfold: '=',
 			onUnfold: '=',
-			menuSource: '<?',
-			shopSource: '<?',
+			menuSource: '=',
+			shopSource: '=',
 			searchPlaceholder: '='
 		}
 	},
@@ -48,10 +48,9 @@ const
 		controller: ShopSelectsCtrl,
 		controllerAs: 'shops',
 		bindings: {
-			shopSource: '=',
+			shopList: '=',
 			shopInfo: '=',
 			collapsed: '=',
-			isInit: '=',
 			placeholder: '<?'
 		}
 	};

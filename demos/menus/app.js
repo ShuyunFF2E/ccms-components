@@ -184,9 +184,7 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.set.st', {
 			url: '/st',
-			template: '手机淘宝',
-			controller: function () {
-			}
+			template: '手机淘宝'
 		})
 		.state('views.point', {
 			abstract: true,
@@ -200,15 +198,11 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.point.sign.reload', {
 			url: '/sign',
-			template: '签到绘声绘色',
-			controller: function () {
-			}
+			template: '签到绘声绘色'
 		})
 		.state('grade', {
 			url: '/grade',
-			template: '任性的一哥们儿',
-			controller: function () {
-			}
+			template: '任性的一哥们儿'
 		});
 	$urlRouterProvider.otherwise('views/point/sign/sign');
 }
@@ -224,28 +218,57 @@ gradeController.$inject = ['$scope', '$ccMenus'];
 // - 关闭自动开启功能
 function gradeController($scope, $ccMenus) {
 
-	const change = $ccMenus.onShopChange(current => {
-		console.log('等级类型', '广播:', current.plat.name + '|' + current.shop.name);
-	});
+	$scope.$on('shop:change', (event, current) => {
+		const serveCurrent = $ccMenus.getCurrentPlatShop();
+		// --TODO 执行其他操作
+		console.log('事件广播:', current.plat.name + '|' + current.shop.name);
+		console.log('服务接口:', serveCurrent.plat.name + '|' + serveCurrent.shop.name);
 
-	//const current = $ccMenus.getCurrentPlatShop();
-	//console.log('服务积分类型', '广播:', current.plat.name + '|' + current.shop.name);
-
-	// - $scope 销毁时需要手动清理 $ccMenus.onShopChange
-	$scope.$on('$destroy', () => {
-		change();
 	});
 }
 
 
-pointController.$inject = ['$scope', '$ccMenus', 'ModalService'];
+pointController.$inject = ['$scope', '$ccMenus'];
 
 // - 开启自动关闭功能
-function pointController($scope, $ccMenus, ModalService) {
+function pointController($scope, $ccMenus) {
 
 	this.name = '老司机飙车速度疾';
 
 	let isChange = false;
+
+	$scope.$on('shop:changeStart', (event, defer) => {
+
+		if (isChange) {
+			const state = window.confirm('确定切换店铺?');
+			if (state) {
+				defer.resolve();
+			} else {
+				defer.reject();
+			}
+			isChange = false;
+		}
+	});
+
+	$scope.$on('shop:change', (event, current) => {
+		const serveCurrent = $ccMenus.getCurrentPlatShop();
+
+		if (isChange) {
+			const state = window.confirm('确定切换店铺?');
+			if (state) {
+				defer.resolve();
+			} else {
+				defer.reject();
+			}
+			isChange = false;
+		}
+	});
+
+	$scope.$on('shop:change', (event, current) => {
+		const serveCurrent = $menus.getCurrentPlatShop();
+		console.log('事件广播:', current.plat.name + '|' + current.shop.name);
+		console.log('服务接口:', serveCurrent.plat.name + '|' + serveCurrent.shop.name);
+	});
 
 	/**
 	 * 表单修改
@@ -253,41 +276,4 @@ function pointController($scope, $ccMenus, ModalService) {
 	this.formChange = () => {
 		isChange = true;
 	};
-
-	const change = $ccMenus.onShopChange(current => {
-		console.log('积分类型', '广播:', current.plat.name + '|' + current.shop.name);
-	});
-
-	const shopChangeStart = $ccMenus.onShopChangeStart((defer, toShop)=> {
-
-		if (isChange) {
-
-			var modalInstance = ModalService.confirm('切换店铺中,确定要切换至' + toShop.plat.name + '下的' + toShop.shop.name + '吗?', {
-
-				onClose: function () {
-					console.log('close');
-				}
-
-			});
-
-			modalInstance.open().result.then(() => {
-				defer.resolve();
-				isChange = false;
-			}, () => {
-				defer.reject();
-			});
-		} else {
-
-			defer.resolve();
-		}
-	});
-
-	//const current = $ccMenus.getCurrentPlatShop();
-	//console.log('服务积分类型', '广播:', current.plat.name + '|' + current.shop.name);
-
-	// - $scope 销毁时需要手动清理 $ccMenus.onShopChange
-	$scope.$on('$destroy', () => {
-		change();
-		shopChangeStart();
-	});
 }
