@@ -54,7 +54,7 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 
 1. 需要对外暴露的服务,以 `$cc` 为前缀,如 `$ccModal`
 2. 组件库组件均以 `cc-xx` 形式提供,如`cc-grid`. (cc => ccms-component 首字母)
-3. 提交的组件, Controller 部分需同时提交单元测试,不符合无法通过review。如果是开发的新 feature ,同时需要提供 docs 文档。
+3. 提交的组件, Controller 部分需同时提交单元测试,不符合无法通过review。如果是开发的新 feature ,同时需要提供 docs 文档及相应demo。
 4. 其他规范遵照目前已有组件的风格。
 
 ### 开发步骤
