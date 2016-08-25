@@ -33,6 +33,7 @@ function findEntity(collection, entity) {
 
 const PLACEHOLDER = '{::cell-placeholder}';
 const $ = window.NiceScroll.getjQuery();
+const SORT_ORDERS = ['asc', 'desc'];
 
 export default class GridCtrl {
 
@@ -51,8 +52,8 @@ export default class GridCtrl {
 			this.bodyTemplate = rowCellTemplate.replace(PLACEHOLDER, tpl);
 		});
 
-		// 刷新页面
-		GridHelper.refresh(this.opts);
+		// 排序
+		this.sortGridData(true);
 	}
 
 	$postLink() {
@@ -107,4 +108,53 @@ export default class GridCtrl {
 		return findEntity(this.selectedItems, entity) !== -1;
 	}
 
+	toggleColumn(column) {
+		if (column.sort) {
+			switch (column.sortOrder) {
+				case 'asc':
+
+					column.sortOrder = 'desc';
+					break;
+				case 'desc':
+
+					column.sortOrder = 'none';
+					break;
+				default:
+
+					column.sortOrder = 'asc';
+					break;
+			}
+			this.sortGridData();
+		}
+	}
+
+	sortGridData(isInit = false) {
+
+		const sortQueryParam = {
+			orders: [],
+			props: []
+		};
+
+		const {opts} = this;
+
+		this.opts.columnsDef.forEach(column => {
+			if (column.sort && SORT_ORDERS.includes(column.sortOrder)) {
+				sortQueryParam.orders.push(column.sortOrder);
+				sortQueryParam.props.push(column.sort);
+			}
+		});
+
+		GridHelper
+			.refresh(opts, Object.assign(opts.queryParams || {},
+				sortQueryParam.props.length > 0 ? {
+					pageNum: 1,
+					sortProps: sortQueryParam.props.toString(),
+					sortOrders: sortQueryParam.orders.toString()
+				} : {sortProps: '', sortOrders: ''}))
+			.then(() => {
+				if (!isInit && this.onRefresh) {
+					this.onRefresh({opts});
+				}
+			});
+	}
 }

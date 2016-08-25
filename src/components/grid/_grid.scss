@@ -11,7 +11,7 @@ $td-padding: 0 $pagination-padding;
 $thead-bg: #f1f1f1;
 $tr-even-bg: #fafafa;
 $tr-hover-bg: #eef8fc;
-
+$icon-asc-sort-deg: 180deg;
 $init-color: #70a2c7;
 
 grid,
@@ -95,6 +95,32 @@ cc-grid {
 				padding-left: 0;
 			}
 		}
+	}
+
+	.column-sort {
+		cursor: pointer;
+	}
+
+	.column-sort-asc, .column-sort-desc, .column-sort-none {
+		font-size: 12px;
+		text-decoration: none;
+		display: inline-block;
+		color: blue;
+	}
+
+	.column-sort-none {
+		color: dimgray;
+	}
+
+	.column-sort-asc {
+		color: blue;
+		// 升序
+		transform: rotate($icon-asc-sort-deg);
+	}
+	.column-sort-desc {
+		color: blue;
+		// 降序
+		transform: rotate(0deg);
 	}
 
 	.init-msg {
