@@ -1,16 +1,16 @@
 <div class="attribute-data-editor-block">
 	<div class="attribute-label-block">
-		<span class="attribute-label-item" ng-repeat="attribute in $ctrlA.attributeOptionalList track by $index">{{attribute}}<span
-				class="attribute-label-delete iconfont" ng-click="$ctrlA.removeAttribute($index)">&#xe658;</span></span>
+		<span class="attribute-label-item" ng-repeat="attribute in $ctrl.attributeOptionalList track by $index">{{attribute}}<span
+				class="attribute-label-delete iconfont" ng-click="$ctrl.removeAttribute($index)">&#xe658;</span></span>
 	</div>
 	<div class="add-attribute-row">
-		<a ng-show="!$ctrlA.addAttributeState" href="" ng-click="$ctrlA.showAddAttributeInput()">新建可选值</a>
+		<a ng-show="!$ctrl.addAttributeState" href="" ng-click="$ctrl.showAddAttributeInput()">新建可选值</a>
 
-		<div ng-if="$ctrlA.addAttributeState" ng-form="$ctrlA.data" validators="$ctrlA.validators">
-			<input type="text" class="attribute-value-input" maxlength="20" ng-model="$ctrlA.attributeValue"
-						 validator="{{$ctrlA.validator}}"><a class="attribute-value-operator" href=""
-																								 ng-click="$ctrlA.addAttribute()">添加</a><a
-				class="attribute-value-operator cancel" href="" ng-click="$ctrlA.addAttributeState = false">取消</a>
+		<div ng-if="$ctrl.addAttributeState" ng-form="$ctrl.data" validators="$ctrl.validators">
+			<input type="text" class="attribute-value-input" maxlength="20" ng-model="$ctrl.attributeValue"
+						 validator="{{$ctrl.validator}}"><a class="attribute-value-operator" href=""
+																								 ng-click="$ctrl.addAttribute()">添加</a><a
+				class="attribute-value-operator cancel" href="" ng-click="$ctrl.addAttributeState = false">取消</a>
 		</div>
 	</div>
 </div>

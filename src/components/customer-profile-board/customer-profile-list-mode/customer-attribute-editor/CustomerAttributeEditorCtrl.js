@@ -42,7 +42,7 @@ export default class CustomerAttributeEditorCtrl {
 				this.selectedRfm = block.listData[0];
 				this.selectedRfmPeriod = this.selectedRfm.period;
 
-				this._$scope.$watch('$ctrlA.selectedRfmPeriod', period => (this.selectedRfm = block.listData.filter(rfm => rfm.period === period)[0]));
+				this._$scope.$watch('$ctrl.selectedRfmPeriod', period => (this.selectedRfm = block.listData.filter(rfm => rfm.period === period)[0]));
 			}
 		});
 	}

@@ -18,7 +18,6 @@ const CustomerDefinedAttributeEditor = {
 		createAttributeFn: '&',
 		cancelSetting: '&'
 	},
-	controllerAs: '$ctrlA',
 	template,
 	controller
 };

@@ -16,7 +16,6 @@ const CustomerDefinedAttributeDataEditor = {
 		numberOnly: '<',
 		setChild: '&'
 	},
-	controllerAs: '$ctrlA',
 	template,
 	controller
 };
