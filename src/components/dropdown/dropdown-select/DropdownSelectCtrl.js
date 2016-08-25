@@ -52,6 +52,8 @@ export default class DropdownSelectCtrl {
 
 			// 选中预设值
 			this.setModelValue(this.model);
+			// 设置预设值的 focusIndex
+			this.focusAt(this.getItemIndexByItemValue(this.model, this.items));
 		});
 
 		scope.$watch(() => this.model, (model, oldModel) => {
@@ -269,6 +271,20 @@ export default class DropdownSelectCtrl {
 			return content;
 		}
 		return content.replace(new RegExp(hiText, 'gi'), '<span class="highlight">$&</span>');
+	}
+
+	getItemIndexByItemValue(ItemValue, items) {
+		// IE 不支持 数组 findIndex 方法
+		// return items.findIndex(item => {
+		// 	return item[this.mapping.valueField] === ItemValue;
+		// });
+		let itemIndex = 0;
+		items.forEach((item, index) => {
+			if (item[this.mapping.valueField] === ItemValue) {
+				itemIndex = index;
+			}
+		});
+		return itemIndex;
 	}
 
 	_getClampedDatalist(datalist) {
