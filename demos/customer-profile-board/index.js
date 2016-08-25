@@ -15,6 +15,7 @@
 			$scope.customerInformation = {
 				nickName: 's_peggy',
 				shopId: '62847409',
+				tenantId: 'dagouzi01',
 				platName: 'taobao'
 			};
 

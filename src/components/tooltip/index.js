@@ -8,7 +8,7 @@ import TooltipCtrl from './TooltipCtrl';
 const tooltipDDO = {
 	restrict: 'A',
 	controller: TooltipCtrl,
-	controllerAs: '$tooltipCtrl',
+	controllerAs: '$$tooltipCtrl',
 	bindToController: {
 		content: '<tooltip',
 		trigger: '@?tooltipTrigger',

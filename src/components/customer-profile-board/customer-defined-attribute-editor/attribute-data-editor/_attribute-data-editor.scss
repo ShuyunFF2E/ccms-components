@@ -1,0 +1,40 @@
+cc-attribute-data-editor{
+  display: inline-block;
+}
+
+.attribute-data-editor-block{
+  .attribute-label-block{
+	display: flex;
+	flex-flow: row wrap;
+  }
+
+  .attribute-label-item{
+	background:#eff7ff;
+	border:1px solid #e7f3ff;
+	border-radius:1px;
+	height:26px;
+	color:#0183ba;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-left: 10px;
+	padding-right: 6px;
+	margin-right: 15px;
+	margin-bottom: 10px;
+  }
+
+  .attribute-label-delete{
+	color: #cdcdcd;
+	cursor: pointer;
+	margin-left: 15px;
+  }
+
+  .attribute-value-input{
+	width: 200px;
+	margin-right: 20px;
+  }
+
+  .attribute-value-operator.cancel{
+	margin-left: 12px;
+  }
+}

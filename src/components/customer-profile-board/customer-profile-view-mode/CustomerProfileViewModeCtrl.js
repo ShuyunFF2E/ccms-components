@@ -22,7 +22,7 @@ export default class CustomerProfileViewModeCtrl {
 	 * @param {Object} obj
 	 */
 	$onChanges(obj) {
-		obj.customerData.currentValue.tags && this.generateUserLabels(this.customerData.tags);
+		obj.customerTags && this.generateUserLabels(obj.customerTags.currentValue);
 	}
 
 	/**
@@ -31,7 +31,7 @@ export default class CustomerProfileViewModeCtrl {
 	 * generate user label into page
 	 */
 	generateUserLabels(labels = []) {
-		const MAXRANDOMATTEMPTCOUNT = 999;
+		const MAX_RANDOM_ATTEMPT_COUNT = 999;
 		let tmpCoordinate;
 		this._generateAreaOffset = this.getGenerateAreaOffset(labels.length);
 		this._occupiedAreaOffset = [this.getElementOuterOffset(this._$element[0].querySelector('.center-icon'))];
@@ -40,10 +40,10 @@ export default class CustomerProfileViewModeCtrl {
 			let attemptCount = 0;
 			tmpCoordinate = this.randomLabelCoordinate();
 			while (this.isOffsetConflict(this.getElementOuterOffset(tmpCoordinate), this._occupiedAreaOffset)) {
-				if (attemptCount++ > MAXRANDOMATTEMPTCOUNT) break; // 防止人品不好，随机次数过多，页面卡死
+				if (attemptCount++ > MAX_RANDOM_ATTEMPT_COUNT) break; // 防止人品不好，随机次数过多，页面卡死
 				tmpCoordinate = this.randomLabelCoordinate();
 			}
-			if (attemptCount < MAXRANDOMATTEMPTCOUNT) {
+			if (attemptCount < MAX_RANDOM_ATTEMPT_COUNT) {
 				this._occupiedAreaOffset.push(this.getElementOuterOffset(tmpCoordinate));
 				this.appendUserLabelToDom(label, _LABELDISPLAYCONFIG.colorList[index], tmpCoordinate);
 			} else {
@@ -59,7 +59,10 @@ export default class CustomerProfileViewModeCtrl {
 	 * @param {Object} coordinate
 	 * append label into dom according coordinate
 	 */
-	appendUserLabelToDom(label = '', color = _LABELDISPLAYCONFIG.colorList[_LABELDISPLAYCONFIG.colorList.length - 1], coordinate = {offsetTop: _LABELDISPLAYCONFIG.size.margin, offsetLeft: _LABELDISPLAYCONFIG.size.margin}) {
+	appendUserLabelToDom(label = '', color = _LABELDISPLAYCONFIG.colorList[_LABELDISPLAYCONFIG.colorList.length - 1], coordinate = {
+		offsetTop: _LABELDISPLAYCONFIG.size.margin,
+		offsetLeft: _LABELDISPLAYCONFIG.size.margin
+	}) {
 		this._$element.children().append(`<div class="customer-label" style="top: ${coordinate.offsetTop}px;left: ${coordinate.offsetLeft}px;background-color: ${color}">${label}</div>`);
 	}
 
@@ -72,7 +75,7 @@ export default class CustomerProfileViewModeCtrl {
 	getGenerateAreaOffset(labelCount) {
 		const coefficient = 3 - labelCount * 0.2;
 		const LEAVEBLANKDISTANCE = 40 * coefficient;
-		const	NOTEELEMENTHALFWIDTH = 100;
+		const NOTEELEMENTHALFWIDTH = 100;
 		const element = this._$element[0].querySelector('.customer-profile-view-mode');
 		return {
 			top: LEAVEBLANKDISTANCE,
