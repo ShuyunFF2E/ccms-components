@@ -25,6 +25,10 @@ $font: MicrosoftYaHei;
   opacity: 0.6;
   transform: scale(0.8) rotate(90deg);
 }
+menu-bar,
+cc-menu-bar {
+	 position: relative;
+}
 
 //菜单展开时
 .menu-container {
