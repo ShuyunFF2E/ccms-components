@@ -62,13 +62,11 @@ export default class DropdownSelectCtrl {
 			}
 		});
 
-		if (this.disabled) {
-			scope.$watch(() => this.isOpen, (openState, oldOpenstate) => {
-				if (openState) {
-					this.isOpen = false;
-				}
-			});
-		}
+		scope.$watch(() => this.isOpen, (openState, oldOpenstate) => {
+			if (this.disabled && openState) {
+				this.isOpen = false;
+			}
+		});
 	}
 
 	_prepareMouseEvents() {
