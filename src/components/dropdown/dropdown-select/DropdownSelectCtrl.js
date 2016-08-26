@@ -274,17 +274,9 @@ export default class DropdownSelectCtrl {
 	}
 
 	getItemIndexByItemValue(ItemValue, items) {
-		// IE 不支持 数组 findIndex 方法
-		// return items.findIndex(item => {
-		// 	return item[this.mapping.valueField] === ItemValue;
-		// });
-		let itemIndex = 0;
-		items.forEach((item, index) => {
-			if (item[this.mapping.valueField] === ItemValue) {
-				itemIndex = index;
-			}
+		return items.findIndex(item => {
+			return item[this.mapping.valueField] === ItemValue;
 		});
-		return itemIndex;
 	}
 
 	_getClampedDatalist(datalist) {
