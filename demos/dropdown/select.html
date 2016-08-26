@@ -33,13 +33,16 @@
 		<div class="demo">
 			<h3>单选（只读）</h3>
 			<span>当前值: <span ng-bind="ctrl.value1 | json"></span></span>
-			<cc-dropdown-select
-					disabled="true"
+			<cc-dropdown-select ng-init="ctrl.disabled = true"
+					disabled="ctrl.disabled"
 					placeholder="哈哈哈"
 					model="ctrl.value1"
 					datalist="ctrl.datalist2"
 					mapping="ctrl.fieldsMap">
 			</cc-dropdown-select>
+			<div style="margin: 0.5em 0;">
+				<button class="btn-ok" ng-click="ctrl.disabled = !ctrl.disabled">切换 disabled 状态</button>
+			</div>
 		</div>
 		<div class="demo">
 			<h3>单选（可搜索）</h3>
