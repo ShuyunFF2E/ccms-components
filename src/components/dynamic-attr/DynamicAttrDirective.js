@@ -43,7 +43,7 @@ export default {
 		return (scope, element, attr) => {
 
 			// 因为监听的是一个对象类型，所以这里watch的时候必须是true(调用angular.equals()对比而不是简单的===，简单的===可能会引发TTL负载异常)
-			scope.$watch(attr.dynamicAttr, attributes => {
+			scope.$watch(attr.ccDynamicAttr, attributes => {
 
 				if (attributes !== undefined) {
 

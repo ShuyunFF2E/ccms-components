@@ -59,6 +59,7 @@ export default class DropdownSelectCtrl {
 		scope.$watch(() => this.model, (model, oldModel) => {
 			if (!angular.equals(model, oldModel)) {
 				this.setModelValue(this.model);
+				this.focusAt(this.getItemIndexByItemValue(this.model, this.items));
 			}
 		});
 
