@@ -10,5 +10,4 @@ import ddo from './DynamicAttrDirective';
 export default angular
 	.module('ccms.components.dynamicAttr', [])
 	.directive('ccDynamicAttr', () => ddo)
-	.deprecatedDirective('dynamicAttr', () => ddo)
 	.name;
