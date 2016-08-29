@@ -23,7 +23,7 @@ import tips from './tips';
 import form from './form';
 import checkbox from './checkbox';
 import instantSearch from './instant-search';
-import dropdown from './dropdown/dropdown';
+import dropdown from './dropdown';
 import dropdownSelect from './dropdown/dropdown-select';
 import dropdownMultiselect from './dropdown/dropdown-multiselect';
 import tabset from './tabset';
