@@ -5,19 +5,15 @@
  */
 
 import angular from 'angular';
-import {Inject, FactoryCreator} from 'angular-es-utils';
+import injector from 'angular-es-utils/injector';
 
-@Inject('$parse')
-class NgEnter {
+const ddo = {
 
-	constructor($parse) {
-		this.$parse = $parse;
-		this.require = '?ngModel';
-	}
-
+	require: '?ngModel',
 	compile(element, attr) {
 
-		const fn = this.$parse(attr['ngEnter'], null, true);
+		const $parse = injector.get('$parse');
+		const fn = $parse(attr['ngEnter'], null, true);
 		const ENTER_KEY_CODE = 13;
 
 		// link function
@@ -40,12 +36,11 @@ class NgEnter {
 			});
 
 		};
-
 	}
 
-}
+};
 
 export default angular
 	.module('ccms.components.ngEnter', [])
-	.directive('ngEnter', FactoryCreator.create(NgEnter))
+	.directive('ngEnter', () => ddo)
 	.name;
