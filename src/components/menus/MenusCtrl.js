@@ -20,8 +20,11 @@ export default class MenusCtrl {
 		// - 初始化$menus中的私有变量,原因:各个产品间切换,避免A产品中的数据携带到B产品中
 		$menus.init();
 
+		// - 获取菜单数据
+		const menus = $menus.getMenus(this.menuSource);
+
 		// - 生成 menu list 数据
-		this.createMenuList();
+		this.createMenuList(menus);
 
 		this.anyClickShopSelectClosed();
 	}
@@ -41,9 +44,7 @@ export default class MenusCtrl {
 	/**
 	 * 生成 menu list 数据源
 	 */
-	createMenuList() {
-		// -菜单列表
-		const menus = $menus.getMenus(this.menuSource);
+	createMenuList(menus) {
 
 		// -如果为Resource,则执行查询操作,否则返回原数据
 		if (menus.isResource) {

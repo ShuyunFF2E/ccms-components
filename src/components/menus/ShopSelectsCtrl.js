@@ -8,7 +8,7 @@
 import angular from 'angular';
 import {Inject, EventBus} from 'angular-es-utils';
 import $menus from './MenuService';
-@Inject('$filter', '$q')
+@Inject('$q')
 export default class ShopSelectsCtrl {
 
 	constructor() {

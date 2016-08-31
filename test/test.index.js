@@ -6,10 +6,10 @@
 
 import angular from 'angular';
 import 'angular-mocks';
-
+import components from '../src';
 // init injector
 document.body.innerHTML = '<body ng-app="app"></body>';
-angular.module('app', []);
+angular.module('app', [components]);
 angular.bootstrap(document.body);
 
 const context = require.context('../src', true, /\/__tests__\/test-.*\.js$/);
