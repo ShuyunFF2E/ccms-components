@@ -37,7 +37,7 @@ const customer = {
 		}, {
 			attribute: 'birthday',
 			name: '出生日期',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			type: 'date',
@@ -46,14 +46,14 @@ const customer = {
 		}, {
 			attribute: 'age',
 			name: '年龄',
-			defaultValue: 0,
+			defaultValue: '-',
 			unit: '岁',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'mobile',
 			name: '常用手机',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			type: 'text',
@@ -61,20 +61,20 @@ const customer = {
 		}, {
 			attribute: 'mobile',
 			name: '支付手机',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'mobile',
 			name: '最新收货手机',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false
 		}, {
 			attribute: 'buyer_email',
 			name: 'email邮箱',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			type: 'text',
@@ -82,40 +82,40 @@ const customer = {
 		}, {
 			attribute: 'address_zip',
 			name: '常用地址',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			attributes: [{
 				attribute: 'receiver_state',
 				name: '省份',
-				defaultValue: '无',
+				defaultValue: '-',
 				unit: '',
 				type: 'select',
 				isInListMode: true
 			}, {
 				attribute: 'receiver_city',
 				name: '城市',
-				defaultValue: '无',
+				defaultValue: '-',
 				unit: '',
 				type: 'select',
 				isInListMode: true
 			}, {
 				attribute: 'receiver_district',
 				name: '区县',
-				defaultValue: '无',
+				defaultValue: '-',
 				unit: '',
 				type: 'select',
 				isInListMode: true
 			}, {
 				attribute: 'receiver_address',
 				type: 'text',
-				defaultValue: '无',
+				defaultValue: '-',
 				unit: '',
 				validate: ['/^\\w{1, 50}$/']
 			}, {
 				attribute: 'receiver_zip',
 				type: 'text',
-				defaultValue: '无',
+				defaultValue: '-',
 				unit: '',
 				validate: ['/^\\d{1, 6}$/']
 			}]
@@ -135,7 +135,7 @@ const customer = {
 			}, {
 				attribute: '',
 				name: '身高/cm',
-				defaultValue: '无',
+				defaultValue: '-',
 				editable: true,
 				type: 'text',
 				validate: ['/^\\d{1, 5}$/'],
@@ -143,7 +143,7 @@ const customer = {
 			}, {
 				attribute: '',
 				name: '体重/kg',
-				defaultValue: '无',
+				defaultValue: '-',
 				editable: true,
 				type: 'text',
 				validate: ['/^\\d{1, 5}$/'],
@@ -151,7 +151,7 @@ const customer = {
 			}, {
 				attribute: '',
 				name: '星座',
-				defaultValue: '无',
+				defaultValue: '-',
 				editable: false,
 				isInListMode: true
 			}, {
@@ -200,21 +200,21 @@ const consumer = {
 		}, {
 			attribute: '',
 			name: '客户类型',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: false
 		}, {
 			attribute: 'vip_info',
 			name: '淘宝全站等级',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'buyer_credit_lev',
 			name: '信用等级',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false
 		}, {
@@ -232,33 +232,33 @@ const consumer = {
 		attributeList: [{
 			attribute: 'trade_first_time',
 			name: '第一次购买时间',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false
 		}, {
 			attribute: 'trade_first_amount',
 			name: '第一次购买金额',
-			defaultValue: '0 元',
+			defaultValue: '-',
 			unit: ' 元',
 			currency: true,
 			editable: false
 		}, {
 			attribute: 'trade_first_interval',
 			name: '第一次购买间隔',
-			defaultValue: '0 天',
+			defaultValue: '-',
 			unit: ' 天',
 			editable: false
 		}, {
 			attribute: 'trade_last_time',
 			name: '最后一次购买时间',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'trade_last_amount',
 			name: '最后一次购买金额',
-			defaultValue: '0.00 元',
+			defaultValue: '-',
 			unit: ' 元',
 			currency: true,
 			editable: false,
@@ -266,25 +266,25 @@ const consumer = {
 		}, {
 			attribute: 'trade_last_interval',
 			name: '最后一次购买间隔',
-			defaultValue: '0 天',
+			defaultValue: '-',
 			unit: ' 天',
 			editable: false
 		}, {
 			attribute: 'trade_tidcount',
 			name: '累计购买订单数',
-			defaultValue: '0 单',
+			defaultValue: '-',
 			unit: ' 单',
 			editable: false
 		}, {
 			attribute: 'trade_count',
 			name: '累计购买次数',
-			defaultValue: '0 次',
+			defaultValue: '-',
 			unit: ' 次',
 			editable: false
 		}, {
 			attribute: 'trade_amount',
 			name: '累计购买金额',
-			defaultValue: '0.00 元',
+			defaultValue: '-',
 			unit: ' 元',
 			currency: true,
 			editable: false,
@@ -292,13 +292,13 @@ const consumer = {
 		}, {
 			attribute: 'trade_item_num',
 			name: '累计购买件数',
-			defaultValue: '0 件',
+			defaultValue: '-',
 			unit: ' 件',
 			editable: false
 		}, {
 			attribute: 'trade_avg_amount',
 			name: '平均每次购买金额',
-			defaultValue: '0.00 元',
+			defaultValue: '-',
 			unit: ' 元',
 			currency: true,
 			editable: false,
@@ -306,45 +306,45 @@ const consumer = {
 		}, {
 			attribute: 'trade_avg_item_num',
 			name: '平均每次购买件数',
-			defaultValue: '0 件',
+			defaultValue: '-',
 			unit: ' 件',
 			editable: false
 		}, {
 			attribute: 'trade_avg_buy_interval',
 			name: '平均每次购买间隔',
-			defaultValue: '0 天',
+			defaultValue: '-',
 			unit: ' 天',
 			editable: false
 		}, {
 			attribute: 'trade_refund_count',
 			name: '退款次数',
-			defaultValue: '0 次',
+			defaultValue: '-',
 			unit: ' 次',
 			editable: false
 		}, {
 			attribute: 'trade_refund_amount',
 			name: '退款金额',
-			defaultValue: '0.00 元',
+			defaultValue: '-',
 			unit: ' 元',
 			currency: true,
 			editable: false
 		}, {
 			attribute: 'trade_avg_confirm_interval',
 			name: '平均发货到确认收货间隔',
-			defaultValue: '0 天',
+			defaultValue: '-',
 			unit: ' 天',
 			editable: false
 		}, {
 			attribute: 'trade_max_amount',
 			name: '最大单笔订单购买金额',
-			defaultValue: '0.00 元',
+			defaultValue: '-',
 			unit: ' 元',
 			currency: true,
 			editable: false
 		}, {
 			attribute: 'trade_order_discount_fee',
 			name: '订单级优惠费用',
-			defaultValue: '0.00 元',
+			defaultValue: '-',
 			unit: ' 元',
 			currency: true,
 			editable: false
@@ -369,42 +369,42 @@ const other = {
 		}, {
 			attribute: 'effectTime',
 			name: '等级生效日期',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'expireTime',
 			name: '等级失效日期',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'currentPoint',
 			name: '当前积分',
-			defaultValue: '0',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'totalGet',
 			name: '历史积分',
-			defaultValue: '0',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'signCount',
 			name: '签到次数',
-			defaultValue: '0',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
 		}, {
 			attribute: 'exchangeCount',
 			name: '兑换次数',
-			defaultValue: '0',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
