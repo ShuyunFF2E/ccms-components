@@ -19,11 +19,10 @@ export default class CustomerProfileListModeCtrl {
 	 * generator attributes block offset list
 	 */
 	$postLink() {
-		const RIGHTPANELELEMENT = this._$element[0].querySelector('.right-panel-block');
-		RIGHTPANELELEMENT.addEventListener('scroll', this.rightPanelScrollListener);
+		const RIGHT_PANEL_ELEMENT = this._$element[0].querySelector('.right-panel-block');
+		RIGHT_PANEL_ELEMENT.addEventListener('scroll', this.rightPanelScrollListener);
 
 		this.updateAttributeBlockOffsetList();
-
 	}
 
 	/**
@@ -31,8 +30,8 @@ export default class CustomerProfileListModeCtrl {
 	 * remove scroll event listener on right panel
 	 */
 	$onDestroy() {
-		const RIGHTPANELELEMENT = this._$element[0].querySelector('.right-panel-block');
-		RIGHTPANELELEMENT.removeEventListener('scroll', this.rightPanelScrollListener);
+		const RIGHT_PANEL_ELEMENT = this._$element[0].querySelector('.right-panel-block');
+		RIGHT_PANEL_ELEMENT.removeEventListener('scroll', this.rightPanelScrollListener);
 	}
 
 	/**
@@ -66,13 +65,13 @@ export default class CustomerProfileListModeCtrl {
 	 * get attribute block offset list
 	 */
 	getAttributeBlockOffsetList() {
-		const HEADERHEIGHT = this._$element[0].parentNode.querySelector('.customer-profile-header').clientHeight;
-		const BlockNodeList = this._$element[0].querySelectorAll('customer-attribute-editor');
+		const HEADER_HEIGHT = this._$element[0].parentNode.querySelector('.customer-profile-header').clientHeight;
+		const BlockNodeList = this._$element[0].querySelectorAll('cc-customer-attribute-editor');
 		let offsetList = [];
 		for (let index = 0, len = BlockNodeList.length; index < len; index++) {
 			offsetList.push(BlockNodeList[index].offsetTop);
 		}
-		return offsetList.map(offset => offset - HEADERHEIGHT);
+		return offsetList.map(offset => offset - HEADER_HEIGHT);
 	}
 
 	/**

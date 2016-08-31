@@ -5,7 +5,7 @@
  */
 
 const customer = {
-	title: '客户信息',
+	title: '客户属性',
 	name: 'customer',
 	icon: '&#xe65b;',
 	attributeBlock: [{
@@ -184,7 +184,7 @@ const customer = {
 };
 
 const consumer = {
-	title: '消费信息',
+	title: '消费属性',
 	name: 'consumer',
 	icon: '&#xe65e;',
 	attributeBlock: [{
@@ -220,7 +220,7 @@ const consumer = {
 		}, {
 			attribute: '',
 			name: '买家好评率',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			isInListMode: true
@@ -353,7 +353,7 @@ const consumer = {
 };
 
 const other = {
-	title: '会员信息',
+	title: '会员互动',
 	name: 'other',
 	icon: '&#xe65c;',
 	attributeBlock: [{

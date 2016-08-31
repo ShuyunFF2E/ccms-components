@@ -16,7 +16,7 @@ loaders.push(
 		test: /^((?!\.tpl).)*\.html$/,
 		loader: 'file?name=[path][name]-[hash:8].[ext]',
 		exclude: /(node_modules|bower_components)/,
-		include: /src\/.*\/__tests__/
+		include: /src(\/|\\).*(\/|\\)__tests__/
 	}
 );
 
