@@ -43,9 +43,9 @@ function release_branch() {
 	branch=$2
 
 	git fetch --prune
-	git checkout origin/$branch
+	git checkout -B $branch origin/$branch
 	test_version=$(npm version $version -m "chore(release): v%s")
-	git push origin $test_version
+	git push origin $branch $test_version
 
 	$PWD/scripts/build.sh && publish
 
