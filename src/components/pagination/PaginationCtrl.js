@@ -32,6 +32,7 @@ export default class PaginationCtrl {
 
 	set pageNum(value) {
 		this._pageNum = value;
+		this._tmpPageNum = value;
 	}
 
 	get pageSize() {
@@ -101,17 +102,15 @@ export default class PaginationCtrl {
 
 	}
 
-	// todo controller中不应该出现dom
-	changePageNumByInput(event) {
+	changePageNumByInput() {
 
-		const inputDom = event.target;
-		const value = inputDom.value;
+		const value = this._tmpPageNum;
 
 		let {pageNum, totalPages, pageSize} = this;
 
 		// 如果是非数字 or 输入页码大于总页码 则回滚成之前的值
 		if (isNaN(value) || value > totalPages || value <= 0) {
-			inputDom.value = pageNum;
+			this._tmpPageNum = pageNum;
 		} else {
 			pageNum = Number(value);
 		}

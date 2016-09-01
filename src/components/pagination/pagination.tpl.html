@@ -11,9 +11,9 @@
 			<input type="text"
 					ng-switch-when="normal"
                     ng-disabled="$ctrl.totalPages===1"
-					ng-blur="$ctrl.changePageNumByInput($event)"
-					ng-enter="$ctrl.changePageNumByInput($event)"
-					ng-dom-value="$ctrl.pageNum">
+					ng-blur="$ctrl.changePageNumByInput()"
+					ng-enter="$ctrl.changePageNumByInput()"
+				    ng-model="$ctrl._tmpPageNum">
 			<span>
 				<span style="font-family: Tahoma"
 						ng-switch-when="simple"
