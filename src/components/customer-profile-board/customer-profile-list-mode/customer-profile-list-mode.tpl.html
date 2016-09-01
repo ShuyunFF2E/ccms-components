@@ -4,7 +4,7 @@
 				ng-repeat="attributeSetting in $ctrl.attributesSetting track by $index"
 				ng-class="{ 'left-panel-item--active': $ctrl.activeAttributeBlockIndex === $index }"
 				ng-click="$ctrl.scrollToAttributeBlock({index: $index})">
-			<span class="item-icon iconfont" bind-html="attributeSetting.icon"></span><span
+			<span class="item-icon iconfont" cc-bind-html="attributeSetting.icon"></span><span
 				ng-bind="attributeSetting.title"></span>
 		</li>
 	</ul>
