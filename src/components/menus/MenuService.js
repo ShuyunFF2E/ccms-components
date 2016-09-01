@@ -7,6 +7,43 @@
 
 import CONFIG from './Constant';
 
+import Deferred from 'angular-es-utils/deferred';
+
+let deferred = new Deferred();
+let isInit = true;
+
+export function init() {
+	CONFIG.CURRENT = {};
+}
+export function setCurrentPlatShop(plat, shop) {
+	if (!isInit) {
+		deferred = new Deferred();
+	}
+
+	const selectedShop = {plat, shop};
+
+	CONFIG.CURRENT = selectedShop;
+
+	deferred.resolve(CONFIG.CURRENT);
+
+	dispatchShopChange(selectedShop);
+
+	isInit = false;
+}
+export function dispatchMenuChange(...args) {
+	CONFIG.dispatchListenerHelper('menuChange', ...args);
+	offMenuChange();
+}
+export function offMenuChange() {
+	CONFIG.offListenerHelper('menuChange');
+}
+export function dispatchShopChange(...args) {
+	CONFIG.dispatchListenerHelper('shopChange', ...args);
+}
+export function dispatchShopChangeStart(...args) {
+	CONFIG.dispatchListenerHelper('shopChangeStart', ...args);
+}
+
 export default {
 
 	getMenus(menusResource) {
@@ -33,47 +70,20 @@ export default {
 		};
 	},
 
-	init() {
-		CONFIG.CURRENT = {};
-	},
-
 	getCurrentPlatShop() {
-		return CONFIG.CURRENT;
-	},
-
-	setCurrentPlatShop(plat, shop) {
-		const selectedShop = {plat, shop};
-		CONFIG.CURRENT = selectedShop;
-		this.dispatchShopChange(selectedShop);
+		return deferred.promise;
 	},
 
 	onMenuChange(listener) {
 		CONFIG.onListenerHelper('menuChange', listener);
 	},
 
-	dispatchMenuChange(...args) {
-		CONFIG.dispatchListenerHelper('menuChange', ...args);
-		this.offMenuChange();
-	},
-
-	offMenuChange() {
-		CONFIG.offListenerHelper('menuChange');
-	},
-
 	onShopChange(listener) {
 		return CONFIG.onListenerHelper('shopChange', listener, true);
 	},
 
-	dispatchShopChange(...args) {
-		CONFIG.dispatchListenerHelper('shopChange', ...args);
-	},
-
 	onShopChangeStart(listener) {
 		return CONFIG.onListenerHelper('shopChangeStart', listener, true);
-	},
-
-	dispatchShopChangeStart(...args) {
-		CONFIG.dispatchListenerHelper('shopChangeStart', ...args);
 	},
 
 	isOnShopChangeStart() {

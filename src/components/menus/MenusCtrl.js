@@ -5,7 +5,7 @@
  * @Date: 2016-02-29 6:52 PM
  */
 import {Inject, EventBus} from 'angular-es-utils';
-import $menus from './MenuService';
+import $menus, {init} from './MenuService';
 @Inject('$timeout', '$state', '$rootScope', '$document', '$scope')
 export default class MenusCtrl {
 
@@ -18,7 +18,7 @@ export default class MenusCtrl {
 	$onInit() {
 
 		// - 初始化$menus中的私有变量,原因:各个产品间切换,避免A产品中的数据携带到B产品中
-		$menus.init();
+		init();
 
 		// - 获取菜单数据
 		const menus = $menus.getMenus(this.menuSource);

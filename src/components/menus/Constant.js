@@ -30,7 +30,7 @@ export default {
 
 		// -是否需要返回销毁函数
 		if (isReset) {
-			return this.offListenerHelper.bind(this, topic);
+			return this.offListenerHelper.bind(this, topic, listener);
 		}
 	},
 
@@ -40,8 +40,12 @@ export default {
 		});
 	},
 
-	offListenerHelper(topic) {
-		this[topic + 'Topics'] = [];
+	offListenerHelper(topic, listener) {
+		if (topic === 'menuChange') {
+			this[topic + 'Topics'] = [];
+		} else {
+			this[topic + 'Topics'].splice(this[topic + 'Topics'].indexOf(listener), 1);
+		}
 	},
 
 	isOnListenerHelper(topic) {
