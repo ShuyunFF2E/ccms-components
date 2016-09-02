@@ -8,7 +8,6 @@ import angular from 'angular';
 
 import './_customer-profile-header.scss';
 import template from './customer-profile-header.tpl.html';
-import controller from './CustomerProfileHeaderCtrl.js';
 
 const CustomerProfileHeader = {
 	bindings: {
@@ -17,7 +16,6 @@ const CustomerProfileHeader = {
 		changeToView: '&',
 		changeToList: '&'
 	},
-	controller,
 	template
 };
 

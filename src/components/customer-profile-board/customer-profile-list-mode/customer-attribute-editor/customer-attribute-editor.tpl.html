@@ -6,7 +6,7 @@
 					ng-show="$ctrl.attributeSetting.name !== 'customer' || !$ctrl.showCustomerAttributeEditor">
 				<dt class="attribute-block-title">{{attributeBlock.title}}</dt>
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
-					<label class="attribute-item-label" ng-bind="attribute.name + ': '"></label><div class="attribute-item-content">
+					<label class="attribute-item-label" ng-bind="attribute.name + '：'"></label><div class="attribute-item-content">
 						<span ng-bind="attribute.displayValue || attribute.defaultValue"></span><span class="iconfont icon-edit"
 																																ng-if="attribute.editable && !attribute.editingValue"
 																																ng-click="$ctrl.showAttributeModifyBlock(attribute, attribute.value)"></span>
@@ -51,7 +51,7 @@
 													 datalist="attributeBlock.listData"></cc-dropdown-select>
 				</dt>
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
-					<label class="attribute-item-label" ng-bind="attribute.name + ': '"></label>
+					<label class="attribute-item-label" ng-bind="attribute.name + '：'"></label>
 					<span class="attribute-item-content"
 								ng-if="$ctrl.selectedRfm"
 								ng-bind="$ctrl.selectedRfm[attribute.attribute]"></span>
