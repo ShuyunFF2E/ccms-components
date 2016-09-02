@@ -4,49 +4,45 @@
  * @Author: maxsmu
  * @Date: 2016-03-10 8:11 PM
  */
-/**
- * CURRENT - 当前选中平台信息
- * @type {{CURRENT : {}}}
- * @type {{menuChangeTopics : []}}
- * @type {{shopChangeStartTopics : []}}
- * @type {{shopChangeTopics: []}}
- */
-export let CONFIG = {
-	CURRENT: {},
 
-	menuChangeTopics: [],
+import CONFIG from './Constant';
 
-	shopChangeStartTopics: [],
+import Deferred from 'angular-es-utils/deferred';
 
-	shopChangeTopics: [],
+let deferred = new Deferred();
+let isInit = true;
 
-	onListenerHelper(topic, listener, isReset = false) {
-		if (typeof listener === 'function') {
-			this[topic + 'Topics'].push(listener);
-		} else {
-			console.error(topic + '注册callback不是函数类型!');
-		}
+export function init() {
+	CONFIG.CURRENT = {};
+	isInit = true;
+}
+export function setCurrentPlatShop(plat, shop) {
 
-		// -是否需要返回销毁函数
-		if (isReset) {
-			return this.offListenerHelper.bind(this, topic);
-		}
-	},
+	const selectedShop = {plat, shop};
 
-	dispatchListenerHelper(topic, ...args) {
-		this[topic + 'Topics'].forEach(listener => {
-			listener.apply(null, args);
-		});
-	},
+	CONFIG.CURRENT = selectedShop;
 
-	offListenerHelper(topic) {
-		this[topic + 'Topics'] = [];
-	},
-
-	isOnListenerHelper(topic) {
-		return this[topic + 'Topics'].length > 0;
+	if (!isInit) {
+		deferred = new Deferred();
+		dispatchShopChange(selectedShop);
 	}
-};
+	deferred.resolve(CONFIG.CURRENT);
+
+	isInit = false;
+}
+export function dispatchMenuChange(...args) {
+	CONFIG.dispatchListenerHelper('menuChange', ...args);
+	offMenuChange();
+}
+export function offMenuChange() {
+	CONFIG.offListenerHelper('menuChange');
+}
+export function dispatchShopChange(...args) {
+	CONFIG.dispatchListenerHelper('shopChange', ...args);
+}
+export function dispatchShopChangeStart(...args) {
+	CONFIG.dispatchListenerHelper('shopChangeStart', ...args);
+}
 
 export default {
 
@@ -74,48 +70,20 @@ export default {
 		};
 	},
 
-	init() {
-		CONFIG.CURRENT = {};
-	},
-
 	getCurrentPlatShop() {
-		return CONFIG.CURRENT;
-	},
-
-	setCurrentPlatShop(plat, shop) {
-		const selectedShop = {plat, shop};
-		CONFIG.CURRENT = selectedShop;
-		this.dispatchShopChange(selectedShop);
+		return deferred.promise;
 	},
 
 	onMenuChange(listener) {
-		console.log('onMenuChange');
 		CONFIG.onListenerHelper('menuChange', listener);
-	},
-
-	dispatchMenuChange(...args) {
-		CONFIG.dispatchListenerHelper('menuChange', ...args);
-		this.offMenuChange();
-	},
-
-	offMenuChange() {
-		CONFIG.offListenerHelper('menuChange');
 	},
 
 	onShopChange(listener) {
 		return CONFIG.onListenerHelper('shopChange', listener, true);
 	},
 
-	dispatchShopChange(...args) {
-		CONFIG.dispatchListenerHelper('shopChange', ...args);
-	},
-
 	onShopChangeStart(listener) {
 		return CONFIG.onListenerHelper('shopChangeStart', listener, true);
-	},
-
-	dispatchShopChangeStart(...args) {
-		CONFIG.dispatchListenerHelper('shopChangeStart', ...args);
 	},
 
 	isOnShopChangeStart() {
