@@ -14,19 +14,19 @@ let isInit = true;
 
 export function init() {
 	CONFIG.CURRENT = {};
+	isInit = true;
 }
 export function setCurrentPlatShop(plat, shop) {
-	if (!isInit) {
-		deferred = new Deferred();
-	}
 
 	const selectedShop = {plat, shop};
 
 	CONFIG.CURRENT = selectedShop;
 
+	if (!isInit) {
+		deferred = new Deferred();
+		dispatchShopChange(selectedShop);
+	}
 	deferred.resolve(CONFIG.CURRENT);
-
-	dispatchShopChange(selectedShop);
 
 	isInit = false;
 }

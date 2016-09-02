@@ -6,7 +6,7 @@
  */
 
 import angular from 'angular';
-import {Inject, EventBus} from 'angular-es-utils';
+import {Inject} from 'angular-es-utils';
 import $menus, { dispatchShopChangeStart, setCurrentPlatShop } from './MenuService';
 @Inject('$q')
 export default class ShopSelectsCtrl {
@@ -19,12 +19,15 @@ export default class ShopSelectsCtrl {
 	}
 
 	$onInit() {
-		// -订阅店铺列表收起时触发重置列表
-		this.EventBus = EventBus.on('shop:listCollapsed', () => {
-			this.resetSearchValue();
-		});
 
 		this.createShopList();
+	}
+
+	$onChanges(bindings) {
+		if (bindings.collapsed) {
+			// - 订阅店铺列表收起时触发重置列表
+			this.resetSearchValue();
+		}
 	}
 
 	/**
