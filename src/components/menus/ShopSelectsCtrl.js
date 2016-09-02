@@ -6,9 +6,9 @@
  */
 
 import angular from 'angular';
-import {Inject, EventBus} from 'angular-es-utils';
-import $menus from './MenuService';
-@Inject('$filter', '$q')
+import {Inject} from 'angular-es-utils';
+import $menus, { dispatchShopChangeStart, setCurrentPlatShop } from './MenuService';
+@Inject('$q')
 export default class ShopSelectsCtrl {
 
 	constructor() {
@@ -19,23 +19,15 @@ export default class ShopSelectsCtrl {
 	}
 
 	$onInit() {
-		// -订阅店铺列表收起时触发重置列表
-		this.EventBus = EventBus.on('shop:listCollapsed', () => {
-			this.resetSearchValue();
-		});
 
 		this.createShopList();
-		let isInitOn = true;
-		this.menuChangeEventBus = EventBus.on('menu:change', () => {
+	}
 
-			if (!isInitOn) {
-				setTimeout(() => {
-					const currentPlatShop = $menus.getCurrentPlatShop();
-					this.selectedShop(currentPlatShop.plat, currentPlatShop.shop, !isInitOn);
-				}, 0);
-			}
-			isInitOn = false;
-		});
+	$onChanges(bindings) {
+		if (bindings.collapsed) {
+			// - 订阅店铺列表收起时触发重置列表
+			this.resetSearchValue();
+		}
 	}
 
 	/**
@@ -44,11 +36,6 @@ export default class ShopSelectsCtrl {
 	$onDestroy() {
 		if (this.EventBus) {
 			this.EventBus();
-		}
-
-		if (this.menuChangeEventBus) {
-
-			this.menuChangeEventBus();
 		}
 	}
 
@@ -105,17 +92,16 @@ export default class ShopSelectsCtrl {
 	 * 选中店铺
 	 * @param plat
 	 * @param shop
-	 * @param isMenuChange
 	 */
-	selectedShop(plat, shop, isMenuChange) {
+	selectedShop(plat, shop) {
 		// - 本次点击店铺信息
 		const selectedShop = {plat, shop};
 
 		// - 选择同一个店铺,阻止事件广播
-		if (this.shopInfo.plat.value !== plat.value || this.shopInfo.shop.value !== shop.value || this.isInit || isMenuChange) {
+		if (this.shopInfo.plat.value !== plat.value || this.shopInfo.shop.value !== shop.value || this.isInit) {
 			const deferred = this._$q.defer();
 
-			$menus.dispatchShopChangeStart(deferred, selectedShop);
+			dispatchShopChangeStart(deferred, selectedShop);
 
 			if (!$menus.isOnShopChangeStart() && deferred.promise.$$state.status === 0) {
 
@@ -125,7 +111,7 @@ export default class ShopSelectsCtrl {
 			deferred.promise.then(() => {
 				this.shopInfo = selectedShop;
 
-				$menus.setCurrentPlatShop(selectedShop.plat, selectedShop.shop);
+				setCurrentPlatShop(selectedShop.plat, selectedShop.shop);
 
 				this.collapsed = false;
 			});
