@@ -438,8 +438,8 @@ const other = {
 			editable: false,
 			isInListMode: false
 		}, {
-			attribute: 'sinawbUserId',
-			name: '微博账号',
+			attribute: 'sinawbUserName',
+			name: '微博昵称',
 			defaultValue: '未认证',
 			unit: '',
 			editable: false,

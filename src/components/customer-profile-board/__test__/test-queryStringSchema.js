@@ -123,6 +123,7 @@ describe('queryStringSchema', () => {
 			taobaoNick: "s_peggy"
 		){
 			sinawbUserId
+			sinawbUserName
 		}
 
 		}`;
