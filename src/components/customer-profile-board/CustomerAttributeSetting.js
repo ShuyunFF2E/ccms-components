@@ -415,14 +415,14 @@ const other = {
 		attributeList: [{
 			attribute: 'wechatNick',
 			name: '微信昵称',
-			defaultValue: '未开通',
+			defaultValue: '未认证',
 			unit: '',
 			editable: false,
 			isInListMode: false
 		}, {
 			attribute: 'sinawbUserId',
 			name: '微博账号',
-			defaultValue: '未开通',
+			defaultValue: '未认证',
 			unit: '',
 			editable: false,
 			isInListMode: false
