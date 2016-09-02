@@ -208,6 +208,17 @@ const consumer = {
 			attribute: 'vip_info',
 			name: '淘宝全站等级',
 			defaultValue: '-',
+			valueMap: {
+				'asso_vip': '荣誉会员',
+				'c': '普通会员',
+				'vip1': 'VIP1',
+				'vip2': 'VIP2',
+				'vip3': 'VIP3',
+				'vip4': 'VIP4',
+				'vip5': 'VIP5',
+				'vip6': 'VIP6',
+				'-': '-'
+			},
 			unit: '',
 			editable: false,
 			isInListMode: true
