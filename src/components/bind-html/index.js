@@ -8,14 +8,16 @@ import angular from 'angular';
 import controller from './BindHtmlCtrl';
 
 const bindHTMLDDO = {
+	name: 'ccBindHtml',
 	restrict: 'A',
 	controller,
 	controllerAs: '$bindHtmlCtrl',
 	bindToController: {
-		content: '<bindHtml'
+		content: '<ccBindHtml'
 	}
 };
 
 export default angular.module('ccms.components.bindHtml', [])
-	.directive('bindHtml', () => bindHTMLDDO)
+	.directive('ccBindHtml', () => bindHTMLDDO)
+	.deprecatedDirective('bindHtml', () => bindHTMLDDO)
 	.name;

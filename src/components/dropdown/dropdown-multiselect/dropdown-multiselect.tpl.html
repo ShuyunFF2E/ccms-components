@@ -26,7 +26,7 @@
 					<input type="checkbox"
 							ng-checked="$ctrl.selection.indexOf(item) > -1"
 							ng-click="$ctrl.toggleSelection(item)">
-					<span bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
+					<span cc-bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
 				</label>
 			</li>
 			<li class="empty-list-item"

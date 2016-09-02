@@ -13,7 +13,11 @@ import {DEFAULT_ATTRIBUTE_SETTING, DefinedTypeOptionList} from '../CustomerAttri
 export default class CustomerDefinedAttributeEditorCtrl {
 	constructor() {
 		this.DefinedTypeOptionList = DefinedTypeOptionList;
+		this.showRemarkTextAreaState = false;
+		this.customerDefinedAttribute = angular.copy(DEFAULT_ATTRIBUTE_SETTING); // Object.assign not work for array value
+	}
 
+	$onInit() {
 		this.validators = {
 			attributeName: {
 				msg: '属性名称必须为1-20个字符',
@@ -24,8 +28,6 @@ export default class CustomerDefinedAttributeEditorCtrl {
 				fn: this.validateDuplicateNameFn()
 			}
 		};
-		this.showRemarkTextAreaState = false;
-		this.customerDefinedAttribute = angular.copy(DEFAULT_ATTRIBUTE_SETTING); // Object.assign not work for array value
 	}
 
 	/**

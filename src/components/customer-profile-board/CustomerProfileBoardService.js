@@ -73,14 +73,29 @@ class CustomerProfileBoardService {
 		return this.CustomerDefinedAttributeGetDataResource.get({nickName, tenantId, platform: platName}).$promise;
 	}
 
+	/**
+	 * @name saveCustomerDefinedAttribute
+	 * @param {object} params
+	 * @returns {promise}
+	 */
 	saveCustomerDefinedAttribute(params = {}) {
 		return this.CustomerDefinedAttributeResource.save(params).$promise;
 	}
 
+	/**
+	 * @name updateCustomerDefinedAttributeData
+	 * @param {object} params
+	 * @returns {promise}
+	 */
 	updateCustomerDefinedAttributeData(params = {}) {
 		return this.CustomerDefinedAttributeResource.update(params).$promise;
 	}
 
+	/**
+	 * @name queryCustomerDefinedPlatformAttribute
+	 * @param {string} tenantId
+	 * @returns {promise}
+	 */
 	queryCustomerDefinedPlatformAttribute(tenantId = '') {
 		return this.CustomerDefinedPlatformAttributeResource.query({tenantId}).$promise;
 	}
@@ -130,6 +145,9 @@ class CustomerProfileBoardService {
 	 * concat address & zip data into address_zip attribute
 	 */
 	concatCustomerAddressZip(info = {}) {
+		if (!info.receiver_state && !info.receiver_city &&
+			!info.receiver_district && !info.receiver_address &&
+			!info.receiver_zip) return info;
 		return {
 			...info,
 			address_zip: [
@@ -213,20 +231,6 @@ class CustomerProfileBoardService {
 	}
 
 	/**
-	 * get all static defined attribute list
-	 * @name getAttributeList
-	 * @returns {Array}
-	 */
-	getAttributeList() {
-		let attributeList = [];
-		CustomerAttributeSetting.forEach(setting =>
-			setting.attributeBlock.forEach(customerAttributeBlock =>
-				customerAttributeBlock.attributeList.forEach(attribute =>
-					attributeList.push(attribute.attribute))));
-		return attributeList;
-	}
-
-	/**
 	 * get attribute value
 	 * @param {object} attribute
 	 * @param {object} dataMapping
@@ -245,6 +249,20 @@ class CustomerProfileBoardService {
 				return attribute.defaultValue;
 			}
 		}
+	}
+
+	/**
+	 * get all static defined attribute list
+	 * @name getAttributeList
+	 * @returns {Array}
+	 */
+	getAttributeList() {
+		let attributeList = [];
+		CustomerAttributeSetting.forEach(setting =>
+			setting.attributeBlock.forEach(customerAttributeBlock =>
+				customerAttributeBlock.attributeList.forEach(attribute =>
+					attributeList.indexOf(attribute.attribute) === -1 && attributeList.push(attribute.attribute))));
+		return attributeList;
 	}
 
 	/**

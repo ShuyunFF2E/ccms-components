@@ -18,15 +18,19 @@ var apiPrefix = '';
 var filename = path.resolve(__dirname, './mock/db.json');
 
 var CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX = '/cc/customer-defined-attribute';
+var headerOptionFn = function() {
+	var now = new Date();
+	return {
+		'X-Caller-Service': 'ea',
+		'X-Caller-Timestamp': now.toLocaleString(),
+		'X-Caller-Sign': '1'
+	};
+};
 var customerDefinedAttributeServerSetting = {
 	host: 'http://api.sh-dev.shuyun.com',
 	port: '',
 	option: {
-		headers:{
-			'X-Caller-Service': 'ea',
-			'X-Caller-Timestamp': '2016-08-19 13:35:00',
-			'X-Caller-Sign': '1'
-		},
+		headers: headerOptionFn(),
 		forwardPath: function (req) {
 			return url.parse(req.originalUrl).path.replace(CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX, '/custom-property/1.0');
 		}

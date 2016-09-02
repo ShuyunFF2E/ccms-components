@@ -3,7 +3,7 @@
     <div class="ccms-table-wrapper">
         <table class="ccms-table">
             <thead>
-            <tr bind-html="$ctrl.headerTemplate"></tr>
+            <tr cc-bind-html="$ctrl.headerTemplate"></tr>
             </thead>
         </table>
     </div>
@@ -12,12 +12,12 @@
     <div style="top:43px" class="ccms-table-wrapper">
 
         <table class="ccms-table">
-            <tbody bind-html="$ctrl.bodyTemplate">
+            <tbody cc-bind-html="$ctrl.bodyTemplate">
             </tbody>
         </table>
 
         <!--表格没数据的提示信息-->
-        <div ng-if="!$ctrl.opts.loading && !$ctrl.opts.data.length" bind-html="$ctrl.emptyTipsTemplate"></div>
+        <div ng-if="!$ctrl.opts.loading && !$ctrl.opts.data.length" cc-bind-html="$ctrl.emptyTipsTemplate"></div>
 
         <cc-loading ng-show="$ctrl.opts.loading" class="grid-loading"></cc-loading>
 

@@ -7,7 +7,7 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils';
 
-import CustomerAttributeSetting, {DEFAULT_ATTRIBUTE_SETTING} from './CustomerAttributeSetting.js';
+import CustomerAttributeSetting from './CustomerAttributeSetting.js';
 import CustomerProfileBoardService from './CustomerProfileBoardService.js';
 
 @Inject('$element', '$filter')
@@ -32,13 +32,15 @@ export default class CheckboxController {
 					setting.attributeBlock.forEach(customerAttributeBlock =>
 						this.CustomerProfileBoardService.mappingDataIntoAttributeBlock(customerAttributeBlock, customerData)));
 			})
+			/*
+			自定义属性调用方式修改
 			.then(() => this.CustomerProfileBoardService.getCustomerDefinedAttributeData(this.customerData))
 			.then(data => (this.customerAttributeSetting[0].attributeBlock[1].attributeList = (data.properties || []).map(item => ({
 				...DEFAULT_ATTRIBUTE_SETTING,
 				...item,
 				attribute: item.name,
 				displayValue: item.type !== 'DATE_SELECT' ? item.value : this._$filter('date')(item.value, 'yyyy-MM-dd')
-			}))))
+			}))))*/
 			.catch(err => console.error(err.message || err.data.message));
 	}
 
