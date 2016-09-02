@@ -7,7 +7,7 @@
 
 import angular from 'angular';
 import {Inject, EventBus} from 'angular-es-utils';
-import $menus, {dispatchShopChangeStart, setCurrentPlatShop} from './MenuService';
+import $menus, { dispatchShopChangeStart, setCurrentPlatShop } from './MenuService';
 @Inject('$q')
 export default class ShopSelectsCtrl {
 

@@ -50,7 +50,7 @@ const
 		bindings: {
 			shopSource: '=',
 			shopInfo: '=',
-			collapsed: '=',
+			collapsed: '=?',
 			isInit: '=',
 			placeholder: '<?'
 		}
