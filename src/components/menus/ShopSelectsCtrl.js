@@ -6,77 +6,126 @@
  */
 
 import angular from 'angular';
-
 import {Inject, EventBus} from 'angular-es-utils';
-import $menus from './MenuService';
-
-@Inject('$rootScope', '$filter', '$timeout', '$scope', '$q')
+import $menus, { dispatchShopChangeStart, setCurrentPlatShop } from './MenuService';
+@Inject('$q')
 export default class ShopSelectsCtrl {
 
-	$onInit() {
+	constructor() {
 		// - 搜索结果
 		this.searchName = '';
-		const unWatch = this._$scope.$watch('shops.shopList.length', newLength => {
-			if (newLength > 0) {
-				this._$timeout(() => {
-					this.list = angular.copy(this.shopList);
-				}, 0);
-				unWatch();
-			}
-		});
-
-		// -订阅店铺列表收起时触发重置列表
-		this.EventBus = EventBus.on('shop:listCollapsed', () => {
-			this.searchName = '';
-			this.searchShop();
-		});
+		this.list = [];
+		this.tempList = [];
 	}
 
+	$onInit() {
+		// -订阅店铺列表收起时触发重置列表
+		this.EventBus = EventBus.on('shop:listCollapsed', () => {
+			this.resetSearchValue();
+		});
+
+		this.createShopList();
+	}
+
+	/**
+	 * $scope销毁时清楚EventBus
+	 */
 	$onDestroy() {
 		if (this.EventBus) {
 			this.EventBus();
 		}
 	}
 
-	selectedShop(plat, shop) {
+	/**
+	 * 生成 shop list 数据源
+	 */
+	createShopList() {
+		// -店铺列表
+		const shops = $menus.getShops(this.shopSource);
 
+		if (shops.isResource) {
+
+			shops.resource
+				.$promise
+				.then(res => {
+					this.list = res || [];
+					this.tempList = angular.copy(this.list);
+					this._getActiveShop(this.list);
+				});
+
+		} else {
+			const resourceIsArray = Array.isArray(shops.resource);
+			this.list = resourceIsArray ? shops.resource : [];
+			this.tempList = angular.copy(this.list);
+			resourceIsArray && this._getActiveShop(this.list);
+		}
+	}
+
+	/**
+	 * 获取当前选中的平台以及店铺
+	 * @param list
+	 * @private
+	 */
+	_getActiveShop(list) {
+		if (Array.isArray(list)) {
+			// -查询所在平台
+			const plat = list.find(plat => {
+					return plat.active;
+				}),
+			// -查询在平台中选中的店铺
+				shop = plat && Array.isArray(plat.child) ? plat.child.find(shop => {
+					return shop.active;
+				}) : {};
+			// - 通知
+			this.shopInfo = {
+				plat,
+				shop
+			};
+			this.selectedShop(plat, shop);
+		}
+	}
+
+	/**
+	 * 选中店铺
+	 * @param plat
+	 * @param shop
+	 */
+	selectedShop(plat, shop) {
 		// - 本次点击店铺信息
 		const selectedShop = {plat, shop};
 
 		// - 选择同一个店铺,阻止事件广播
-		if (this.shopInfo.plat.value !== plat.value || this.shopInfo.shop.value !== shop.value) {
-
+		if (this.shopInfo.plat.value !== plat.value || this.shopInfo.shop.value !== shop.value || this.isInit) {
 			const deferred = this._$q.defer();
 
-			this._$rootScope.$broadcast('shop:changeStart', deferred);
+			dispatchShopChangeStart(deferred, selectedShop);
 
-			EventBus.dispatch('shop:changeStart', deferred);
+			if (!$menus.isOnShopChangeStart() && deferred.promise.$$state.status === 0) {
 
-			if (deferred.promise.$$state.status === 0) {
 				deferred.resolve();
 			}
 
 			deferred.promise.then(() => {
-
 				this.shopInfo = selectedShop;
 
-				$menus.setCurrentPlatShop(selectedShop.plat, selectedShop.shop);
-
-				this._$rootScope.$broadcast('shop:change', selectedShop);
-
-				EventBus.dispatch('shop:change', selectedShop);
+				setCurrentPlatShop(selectedShop.plat, selectedShop.shop);
 
 				this.collapsed = false;
 			});
 		} else {
-
 			this.collapsed = false;
 		}
 	}
 
+	/**
+	 * 根据搜索内容查询店铺
+	 * @param event
+	 * @param type
+	 * @param name
+	 */
 	searchShop(event, type, name) {
 		if (type === 'reset' || type === 'click' || (type === 'keyup' && event.keyCode === 13)) {
-			this.list = this.filterShop(angular.copy(this.shopList), name);
+			this.list = this.filterShop(angular.copy(this.tempList), name);
 		}
 	}
 

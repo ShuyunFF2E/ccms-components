@@ -1,24 +1,51 @@
 /**
- * CURRENT - 当前选中平台信息
- * @type {{CURRENT: {}}}
- */
-export let CONFIG = {
-	CURRENT: {}
-};
-
-/**
  * Created with MenuService.js
  * @Description:
  * @Author: maxsmu
  * @Date: 2016-03-10 8:11 PM
  */
+
+import CONFIG from './Constant';
+
+import Deferred from 'angular-es-utils/deferred';
+
+let deferred = new Deferred();
+let isInit = true;
+
+export function init() {
+	CONFIG.CURRENT = {};
+}
+export function setCurrentPlatShop(plat, shop) {
+	if (!isInit) {
+		deferred = new Deferred();
+	}
+
+	const selectedShop = {plat, shop};
+
+	CONFIG.CURRENT = selectedShop;
+
+	deferred.resolve(CONFIG.CURRENT);
+
+	dispatchShopChange(selectedShop);
+
+	isInit = false;
+}
+export function dispatchMenuChange(...args) {
+	CONFIG.dispatchListenerHelper('menuChange', ...args);
+	offMenuChange();
+}
+export function offMenuChange() {
+	CONFIG.offListenerHelper('menuChange');
+}
+export function dispatchShopChange(...args) {
+	CONFIG.dispatchListenerHelper('shopChange', ...args);
+}
+export function dispatchShopChangeStart(...args) {
+	CONFIG.dispatchListenerHelper('shopChangeStart', ...args);
+}
+
 export default {
 
-	/**
-	 * 获取菜单列表
-	 * @param menusResource menus数据源
-	 * @returns {*}
-	 */
 	getMenus(menusResource) {
 		const isResource = menusResource && typeof menusResource.query === 'function',
 		// -如果是Resource则返回Resource,否则返回原数据
@@ -30,10 +57,6 @@ export default {
 		};
 	},
 
-	/**
-	 * 获取店铺列表
-	 * @param shopsResource shops数据源
-	 */
 	getShops(shopsResource) {
 
 		const isResource = shopsResource && typeof shopsResource.query === 'function',
@@ -47,27 +70,23 @@ export default {
 		};
 	},
 
-	/**
-	 * 初始化状态值
-	 */
-	init() {
-		CONFIG.CURRENT = {};
-	},
-
-	/**
-	 * 查询当前选中的平台及店铺
-	 * @returns {CURRENT|{}}
-	 */
 	getCurrentPlatShop() {
-		return CONFIG.CURRENT;
+		return deferred.promise;
 	},
 
-	/**
-	 * 设置当前选中平台及店铺
-	 * @param plat
-	 * @param shop
-	 */
-	setCurrentPlatShop(plat, shop) {
-		CONFIG.CURRENT = {plat, shop};
+	onMenuChange(listener) {
+		CONFIG.onListenerHelper('menuChange', listener);
+	},
+
+	onShopChange(listener) {
+		return CONFIG.onListenerHelper('shopChange', listener, true);
+	},
+
+	onShopChangeStart(listener) {
+		return CONFIG.onListenerHelper('shopChangeStart', listener, true);
+	},
+
+	isOnShopChangeStart() {
+		return CONFIG.isOnListenerHelper('shopChangeStart');
 	}
 };

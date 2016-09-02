@@ -5,7 +5,7 @@
  * @Date: 2016-03-16 9:04 AM
  */
 import {Inject, EventBus} from 'angular-es-utils';
-
+import {dispatchMenuChange} from './MenuService';
 @Inject('$state', '$timeout')
 export default class MenusNodeCtrl {
 
@@ -17,6 +17,7 @@ export default class MenusNodeCtrl {
 			const menu = this.getMenu(this.list);
 			if (menu) {
 				EventBus.dispatch('menu:change', menu);
+				dispatchMenuChange(menu);
 			}
 		}, 0);
 	}
@@ -37,6 +38,7 @@ export default class MenusNodeCtrl {
 		// - 路由未发生变化时,阻断事件广播
 		if (menu.state !== this._$state.current.name) {
 			EventBus.dispatch('menu:change', menu);
+			dispatchMenuChange(menu);
 		}
 	};
 
