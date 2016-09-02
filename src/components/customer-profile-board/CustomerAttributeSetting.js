@@ -362,8 +362,15 @@ const other = {
 		attributeList: [{
 			attribute: 'cardGrade',
 			name: '会员等级',
-			defaultValue: '未开通',
+			defaultValue: '',
 			unit: '',
+			valueMap: {
+				1: '普通会员',
+				2: '高级会员',
+				3: 'VIP会员',
+				4: '至尊VIP',
+				'': '未开通'
+			},
 			editable: false,
 			isInListMode: true
 		}, {
