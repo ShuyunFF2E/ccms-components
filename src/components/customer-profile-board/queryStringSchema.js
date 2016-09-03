@@ -201,6 +201,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
 			taobaoNick: "${nick}"
 		){
 			sinawbUserId
+			sinawbUserName
 		}
 	`;
 
