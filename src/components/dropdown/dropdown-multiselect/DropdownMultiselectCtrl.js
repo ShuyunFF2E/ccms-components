@@ -24,6 +24,7 @@ export default class DropdownMultiselectCtrl {
 		this.focusIndex = -1;
 		this.isOpen = false;
 		this.isActive = false;
+		this.oldText = '';
 
 		this._openFn = null;
 	}
@@ -177,8 +178,9 @@ export default class DropdownMultiselectCtrl {
 		this.close();
 	}
 
-	onSearchTextChange(text, oldText) {
-		if (text !== oldText) {
+	onSearchTextChange(text) {
+		if (text !== this.oldText) {
+			this.oldText = text;
 			text = text.trim();
 			if (!this.isOpen) {
 				this.open();

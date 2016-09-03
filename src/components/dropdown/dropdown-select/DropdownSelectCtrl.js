@@ -21,6 +21,7 @@ export default class DropdownSelectCtrl {
 		this.focusIndex = 0;
 		this.isOpen = false;
 		this.isActive = false;
+		this.oldText = '';
 
 		this._openFn = null;
 	}
@@ -126,8 +127,9 @@ export default class DropdownSelectCtrl {
 		});
 	}
 
-	onSearchTextChange(text, oldText) {
-		if (text !== oldText) {
+	onSearchTextChange(text) {
+		if (text !== this.oldText) {
+			this.oldText = text;
 			text = text.trim();
 			if (!this.isOpen) {
 				this.open();
