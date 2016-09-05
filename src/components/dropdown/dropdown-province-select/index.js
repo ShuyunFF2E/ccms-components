@@ -7,22 +7,18 @@ import template from './dropdown-province-select.tpl.html';
 import DropdownProvinceSelectCtrl from './DropdownProvinceSelectCtrl';
 
 const dropdownProvinceSelectCtrlDDO = {
-	restrict: 'E',
 	require: 'ccDropdown',
 	template,
 	controller: DropdownProvinceSelectCtrl,
-	controllerAs: '$ctrl',
-	scope: {
+	bindings: {
 		model: '=?',
 		placeholder: '@?',
 		style: '@?'
-	},
-	bindToController: true
+	}
 };
 
 export default angular
 	.module('ccms.components.dropdownProvinceSelect', [bindHtml])
-	.directive('ccDropdownProvinceSelect', () => dropdownProvinceSelectCtrlDDO)
-	.deprecatedDirective('dropdownProvinceSelect', () => dropdownProvinceSelectCtrlDDO)
+	.component('ccDropdownProvinceSelect', dropdownProvinceSelectCtrlDDO)
 	.name;
 
