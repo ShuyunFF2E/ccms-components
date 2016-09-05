@@ -75,16 +75,35 @@ export default {
 		return deferred.promise;
 	},
 
-	onMenuChange(listener) {
-		return EventBus.once('cc:menuChange', listener);
+	onMenuChange(listener, scope) {
+
+		const offListener = EventBus.once('cc:menuChange', listener);
+
+		if (scope) {
+			scope.$on('$destroy', offListener);
+		}
+
+		return offListener;
 	},
 
-	onShopChange(listener) {
-		return EventBus.on('cc:shopChange', listener);
+	onShopChange(listener, scope) {
+		const offListener = EventBus.on('cc:shopChange', listener);
+
+		if (scope) {
+			scope.$on('$destroy', offListener);
+		}
+
+		return offListener;
 	},
 
-	onShopChangeStart(listener) {
-		return EventBus.on('cc:shopChangeStart', listener);
+	onShopChangeStart(listener, scope) {
+		const offListener = EventBus.on('cc:shopChangeStart', listener);
+
+		if (scope) {
+			scope.$on('$destroy', offListener);
+		}
+
+		return offListener;
 	}
 
 };
