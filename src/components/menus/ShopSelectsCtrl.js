@@ -6,8 +6,8 @@
  */
 
 import angular from 'angular';
-import {Inject} from 'angular-es-utils';
-import $menus, { dispatchShopChangeStart, setCurrentPlatShop } from './MenuService';
+import { Inject } from 'angular-es-utils';
+import $menus, { dispatchShopChangeStart, isHaveBindShopChangeStart, setCurrentPlatShop } from './MenuService';
 @Inject('$q')
 export default class ShopSelectsCtrl {
 
@@ -75,7 +75,7 @@ export default class ShopSelectsCtrl {
 			const plat = list.find(plat => {
 					return plat.active;
 				}),
-			// -查询在平台中选中的店铺
+				// -查询在平台中选中的店铺
 				shop = plat && Array.isArray(plat.child) ? plat.child.find(shop => {
 					return shop.active;
 				}) : {};
@@ -103,7 +103,7 @@ export default class ShopSelectsCtrl {
 
 			dispatchShopChangeStart(deferred, selectedShop);
 
-			if (!$menus.isOnShopChangeStart() && deferred.promise.$$state.status === 0) {
+			if (!isHaveBindShopChangeStart() && deferred.promise.$$state.status === 0) {
 
 				deferred.resolve();
 			}

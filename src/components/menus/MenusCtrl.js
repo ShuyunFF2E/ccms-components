@@ -4,8 +4,8 @@
  * @Author: maxsmu
  * @Date: 2016-02-29 6:52 PM
  */
-import {Inject, EventBus} from 'angular-es-utils';
-import $menus, {init} from './MenuService';
+import { Inject } from 'angular-es-utils';
+import $menus, { reset } from './MenuService';
 @Inject('$timeout', '$state', '$rootScope', '$document', '$scope')
 export default class MenusCtrl {
 
@@ -17,8 +17,8 @@ export default class MenusCtrl {
 
 	$onInit() {
 
-		// - 初始化$menus中的私有变量,原因:各个产品间切换,避免A产品中的数据携带到B产品中
-		init();
+		// - 重置$menus中的私有变量,原因:各个产品间切换,避免A产品中的数据携带到B产品中
+		reset();
 
 		// - 获取菜单数据
 		const menus = $menus.getMenus(this.menuSource);
@@ -83,11 +83,6 @@ export default class MenusCtrl {
 	showShopSelect() {
 		this.shopShow = !this.shopShow;
 		this.isInitShopSelect = false;
-		if (!this.shopShow) {
-
-			// -通知店铺列表收起
-			EventBus.dispatch('shop:listCollapsed', this.shopShow);
-		}
 	}
 
 	/**
