@@ -1,58 +1,58 @@
 <div class="menu-container" ng-class="{'ccms-left':!menus.unfold}">
 
-    <!-- menus收起 -->
-    <div class="expand" ng-click="menus.unfoldClick(menus.unfold)">
+	<!-- menus收起 -->
+	<div class="expand" ng-click="menus.unfoldClick(menus.unfold)">
 
-        <span class="iconfont menu-constract-icon"></span>
+		<span class="iconfont menu-constract-icon"></span>
 
-    </div>
+	</div>
 
-    <div class="retrack-shop"
-         ng-if="menus.isShowShopInfo"
-         ng-click="menus.showShopSelect()">
-        <span></span>
-    </div>
-    <!-- menus收起 end -->
+	<div class="retrack-shop"
+		 ng-if="menus.isShowShopInfo"
+		 ng-click="menus.showShopSelect()">
+		<span></span>
+	</div>
+	<!-- menus收起 end -->
 
 
-    <!-- 店铺 header -->
-    <div class="menu-shop-show"
-         ng-click="menus.showShopSelect()"
-         ng-if="menus.isShowShopInfo">
+	<!-- 店铺 header -->
+	<div class="menu-shop-show"
+		 ng-click="menus.showShopSelect()"
+		 ng-if="menus.isShowShopInfo">
+		<div class="shop-wrapper"
+			 ng-if="!menus.active.shop.logo">
 
-        <div class="shop-wrapper"
-             ng-if="!menus.active.shop.logo">
+			<span></span>
+		</div>
 
-            <span></span>
-        </div>
+		<img ng-if="menus.active.shop.logo"
+			 ng-src="{{menus.active.shop.logo}}"
+			 class="img-wrapper">
 
-        <img ng-if="menus.active.shop.logo"
-             ng-src="{{menus.active.shop.logo}}"
-             class="img-wrapper">
+		<p class="shop-name">
 
-        <p class="shop-name">
+			<span ng-bind="menus.active.plat.name"></span>
+			|
+			<span ng-bind="menus.active.shop.name"></span>
 
-            <span ng-bind="menus.active.plat.name"></span>
-            |
-            <span ng-bind="menus.active.shop.name"></span>
+		</p>
+	</div>
+	<!-- 店铺 header end -->
 
-        </p>
-    </div>
-    <!-- 店铺 header end -->
+	<!-- menus-node  -->
+	<cc-menu-node list="menus.menuList"
+				  toggle="true"
+				  level="0"
+				  ng-if="menus.unfold">
+	</cc-menu-node>
 
-    <!-- menus-node  -->
-    <cc-menu-node list="menus.menuList"
-               toggle="true"
-               level="0"
-               ng-if="menus.unfold">
-    </cc-menu-node>
-
-    <!-- shop-select -->
-    <cc-shop-select collapsed="menus.shopShow"
-                 is-init="menus.isInitShopSelect"
-                 ng-if="menus.isShowShopInfo"
-                 shop-info="menus.active"
-                 placeholder="menus.searchPlaceholder"
-                 shop-source="menus.shopSource">
-    </cc-shop-select>
+	<!-- shop-select -->
+	<cc-shop-select retract="menus.retract"
+					on-retract="menus.showShopSelect()"
+					is-init="menus.isInitShopSelect"
+					ng-if="menus.isShowShopInfo"
+					shop-info="menus.active"
+					placeholder="menus.searchPlaceholder"
+					shop-source="menus.shopSource">
+	</cc-shop-select>
 </div>

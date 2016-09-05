@@ -228,17 +228,16 @@ function gradeController($scope, $ccMenus) {
 		console.log('等级类型:(server)', current.plat.name + '|' + current.shop.name);
 	});
 
-	$ccMenus.onShopChange(current => {
+	const change = $ccMenus.onShopChange(current => {
 		console.log('等级类型:(listener)', current.plat.name + '|' + current.shop.name);
 	}, $scope);
-
 }
 
 
-pointController.$inject = ['$scope', '$ccMenus', 'ModalService'];
+pointController.$inject = ['$scope', '$ccMenus', '$ccModal'];
 
 // - 开启自动关闭功能
-function pointController($scope, $ccMenus, ModalService) {
+function pointController($scope, $ccMenus, $ccModal) {
 
 	$ccMenus.getCurrentPlatShop().then(current => {
 		console.log('积分类型:(server)', current.plat.name + '|' + current.shop.name)
@@ -259,19 +258,14 @@ function pointController($scope, $ccMenus, ModalService) {
 		console.log('积分类型:(listener)', current.plat.name + '|' + current.shop.name);
 	}, $scope);
 
-	const shopChangeStart = $ccMenus.onShopChangeStart((defer, toShop)=> {
-
+	$ccMenus.onShopChangeStart((defer, toShop)=> {
 		if (isChange) {
 
-			var modalInstance = ModalService.confirm('切换店铺中,确定要切换至' + toShop.plat.name + '下的' + toShop.shop.name + '吗?', {
-
+			$ccModal.confirm('切换店铺中,确定要切换至' + toShop.plat.name + '下的' + toShop.shop.name + '吗?', {
 				onClose: function () {
 					console.log('close');
 				}
-
-			});
-
-			modalInstance.open().result.then(() => {
+			}).open().result.then(() => {
 				defer.resolve();
 				isChange = false;
 			}, () => {
@@ -281,7 +275,7 @@ function pointController($scope, $ccMenus, ModalService) {
 
 			defer.resolve();
 		}
-	});
+	}, $scope);
 
 }
 

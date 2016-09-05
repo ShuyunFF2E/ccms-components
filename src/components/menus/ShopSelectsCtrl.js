@@ -24,18 +24,9 @@ export default class ShopSelectsCtrl {
 	}
 
 	$onChanges(bindings) {
-		if (bindings.collapsed) {
+		if (bindings.retract) {
 			// - 订阅店铺列表收起时触发重置列表
 			this.resetSearchValue();
-		}
-	}
-
-	/**
-	 * $scope销毁时清楚EventBus
-	 */
-	$onDestroy() {
-		if (this.EventBus) {
-			this.EventBus();
 		}
 	}
 
@@ -75,7 +66,7 @@ export default class ShopSelectsCtrl {
 			const plat = list.find(plat => {
 					return plat.active;
 				}),
-				// -查询在平台中选中的店铺
+			// -查询在平台中选中的店铺
 				shop = plat && Array.isArray(plat.child) ? plat.child.find(shop => {
 					return shop.active;
 				}) : {};
@@ -113,10 +104,17 @@ export default class ShopSelectsCtrl {
 
 				setCurrentPlatShop(selectedShop.plat, selectedShop.shop);
 
-				this.collapsed = false;
+				this.retract = false;
+
+				if (typeof this.onRetract === 'function' && !this.isInit) {
+					this.onRetract();
+				}
 			});
 		} else {
-			this.collapsed = false;
+			this.retract = false;
+			if (typeof this.onRetract === 'function' && !this.isInit) {
+				this.onRetract();
+			}
 		}
 	}
 

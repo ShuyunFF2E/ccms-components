@@ -11,7 +11,7 @@ export default class MenusCtrl {
 
 	constructor() {
 		this.active = {};
-		this.shopShow = false;
+		this.retract = false;
 		this.isInitShopSelect = true;
 	}
 
@@ -81,7 +81,7 @@ export default class MenusCtrl {
 	 * 展示店铺列表
 	 */
 	showShopSelect() {
-		this.shopShow = !this.shopShow;
+		this.retract = !this.retract;
 		this.isInitShopSelect = false;
 	}
 
@@ -105,8 +105,8 @@ export default class MenusCtrl {
 				if (shopClosest === null &&
 					retrackShopClosest == null &&
 					menusClosest === null && !targetName.includes('shop-search-clear') && !targetName.includes('menu-constract-icon') && !targetName.includes('expand') && !targetName.includes('shop-list-btn')) {
-					if (this.shopShow) {
-						this.shopShow = false;
+					if (this.retract) {
+						this.retract = false;
 						this._$scope.$digest();
 					}
 				}
