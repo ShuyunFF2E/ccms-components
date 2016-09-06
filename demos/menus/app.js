@@ -230,19 +230,14 @@ function gradeController($scope, $ccMenus) {
 
 	const change = $ccMenus.onShopChange(current => {
 		console.log('等级类型:(listener)', current.plat.name + '|' + current.shop.name);
-	});
-
-	// - $scope 销毁时需要手动清理 $ccMenus.onShopChange
-	$scope.$on('$destroy', () => {
-		change();
-	});
+	}, $scope);
 }
 
 
-pointController.$inject = ['$scope', '$ccMenus', 'ModalService'];
+pointController.$inject = ['$scope', '$ccMenus', '$ccModal'];
 
 // - 开启自动关闭功能
-function pointController($scope, $ccMenus, ModalService) {
+function pointController($scope, $ccMenus, $ccModal) {
 
 	$ccMenus.getCurrentPlatShop().then(current => {
 		console.log('积分类型:(server)', current.plat.name + '|' + current.shop.name)
@@ -259,23 +254,18 @@ function pointController($scope, $ccMenus, ModalService) {
 		isChange = true;
 	};
 
-	const change = $ccMenus.onShopChange(current => {
+	$ccMenus.onShopChange(current => {
 		console.log('积分类型:(listener)', current.plat.name + '|' + current.shop.name);
-	});
+	}, $scope);
 
-	const shopChangeStart = $ccMenus.onShopChangeStart((defer, toShop)=> {
-
+	$ccMenus.onShopChangeStart((defer, toShop)=> {
 		if (isChange) {
 
-			var modalInstance = ModalService.confirm('切换店铺中,确定要切换至' + toShop.plat.name + '下的' + toShop.shop.name + '吗?', {
-
+			$ccModal.confirm('切换店铺中,确定要切换至' + toShop.plat.name + '下的' + toShop.shop.name + '吗?', {
 				onClose: function () {
 					console.log('close');
 				}
-
-			});
-
-			modalInstance.open().result.then(() => {
+			}).open().result.then(() => {
 				defer.resolve();
 				isChange = false;
 			}, () => {
@@ -285,13 +275,8 @@ function pointController($scope, $ccMenus, ModalService) {
 
 			defer.resolve();
 		}
-	});
+	}, $scope);
 
-	// - $scope 销毁时需要手动清理 $ccMenus.onShopChange
-	$scope.$on('$destroy', () => {
-		change();
-		shopChangeStart();
-	});
 }
 
 
@@ -303,13 +288,13 @@ function gradeManageController($scope, $ccMenus) {
 	});
 
 
-	const change = $ccMenus.onShopChange(current => {
+	$ccMenus.onShopChange(current => {
 		console.log('会员等级管理:(listener)', current.plat.name + '|' + current.shop.name);
 
 		$ccMenus.getCurrentPlatShop().then(current => {
 			console.log('3会员等级管理:(server)', current.plat.name + '|' + current.shop.name);
 		});
-	});
+	}, $scope);
 
 	this.searchPlatShop = () => {
 		$ccMenus.getCurrentPlatShop().then(current => {
@@ -317,10 +302,6 @@ function gradeManageController($scope, $ccMenus) {
 		});
 	};
 
-	// - $scope 销毁时需要手动清理 $ccMenus.onShopChange
-	$scope.$on('$destroy', () => {
-		change();
-	});
 }
 
 pointSignReloadController.$inject = ['$scope', '$ccMenus'];
@@ -328,28 +309,20 @@ function pointSignReloadController($scope, $ccMenus) {
 
 	$ccMenus.getCurrentPlatShop().then(current => {
 		console.log('再签到:(server)', current.plat.name + '|' + current.shop.name);
-	});
+	}, $scope);
 
-	const change = $ccMenus.onShopChange(current => {
+	$ccMenus.onShopChange(current => {
 		console.log('再签到:(listener)', current.plat.name + '|' + current.shop.name);
-	});
-	// - $scope 销毁时需要手动清理 $ccMenus.onShopChange
-	$scope.$on('$destroy', () => {
-		change();
-	});
+	}, $scope);
 }
 phoneTaoBaoController.$inject = ['$scope', '$ccMenus'];
 function phoneTaoBaoController($scope, $ccMenus) {
 
 	$ccMenus.getCurrentPlatShop().then(current => {
 		console.log('手机淘宝:(server)', current.plat.name + '|' + current.shop.name);
-	});
+	}, $scope);
 
-	const change = $ccMenus.onShopChange(current => {
+	$ccMenus.onShopChange(current => {
 		console.log('手机淘宝:(listener)', current.plat.name + '|' + current.shop.name);
-	});
-	// - $scope 销毁时需要手动清理 $ccMenus.onShopChange
-	$scope.$on('$destroy', () => {
-		change();
-	});
+	}, $scope);
 }

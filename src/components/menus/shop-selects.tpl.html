@@ -1,5 +1,5 @@
 <div class="shop-choose-wrapper"
-     ng-class="{'shop-choose-none':shops.list.length <= 0,'shop-select-show':!shops.isInit&&shops.collapsed,'shop-select-hide': !shops.isInit&&!shops.collapsed}">
+     ng-class="{'shop-choose-none':shops.list.length <= 0,'shop-select-show':!shops.isInit&&shops.retract,'shop-select-hide': !shops.isInit&&!shops.retract}">
     <div class="shop-search">
         <input type="search" placeholder="{{shops.placeholder}}"
                ng-model="shops.searchName"

@@ -48,10 +48,11 @@ const
 		controller: ShopSelectsCtrl,
 		controllerAs: 'shops',
 		bindings: {
-			shopSource: '=',
+			shopSource: '<?',
 			shopInfo: '=',
-			collapsed: '<?',
-			isInit: '=',
+			retract: '<?',
+			onRetract: '&?',
+			isInit: '<?',
 			placeholder: '<?'
 		}
 	};
