@@ -6,8 +6,8 @@
  */
 
 import angular from 'angular';
-import {Inject} from 'angular-es-utils';
-import $menus, { dispatchShopChangeStart, setCurrentPlatShop } from './MenuService';
+import { Inject } from 'angular-es-utils';
+import $menus, { dispatchShopChangeStart, isHaveBindShopChangeStart, setCurrentPlatShop } from './MenuService';
 @Inject('$q')
 export default class ShopSelectsCtrl {
 
@@ -24,18 +24,9 @@ export default class ShopSelectsCtrl {
 	}
 
 	$onChanges(bindings) {
-		if (bindings.collapsed) {
+		if (bindings.retract) {
 			// - 订阅店铺列表收起时触发重置列表
 			this.resetSearchValue();
-		}
-	}
-
-	/**
-	 * $scope销毁时清楚EventBus
-	 */
-	$onDestroy() {
-		if (this.EventBus) {
-			this.EventBus();
 		}
 	}
 
@@ -103,7 +94,7 @@ export default class ShopSelectsCtrl {
 
 			dispatchShopChangeStart(deferred, selectedShop);
 
-			if (!$menus.isOnShopChangeStart() && deferred.promise.$$state.status === 0) {
+			if (!isHaveBindShopChangeStart() && deferred.promise.$$state.status === 0) {
 
 				deferred.resolve();
 			}
@@ -113,10 +104,17 @@ export default class ShopSelectsCtrl {
 
 				setCurrentPlatShop(selectedShop.plat, selectedShop.shop);
 
-				this.collapsed = false;
+				this.retract = false;
+
+				if (typeof this.onRetract === 'function' && !this.isInit) {
+					this.onRetract();
+				}
 			});
 		} else {
-			this.collapsed = false;
+			this.retract = false;
+			if (typeof this.onRetract === 'function' && !this.isInit) {
+				this.onRetract();
+			}
 		}
 	}
 
