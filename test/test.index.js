@@ -7,10 +7,10 @@
 import angular from 'angular';
 import ngResource from 'angular-resource';
 import 'angular-mocks';
-
+import components from '../src';
 // init injector
 document.body.innerHTML = '<body ng-app="app"></body>';
-angular.module('app', [ngResource]);
+angular.module('app', [components, ngResource]);
 angular.bootstrap(document.body);
 
 const context = require.context('../src', true, /\/__tests__\/test-.*\.js$/);
