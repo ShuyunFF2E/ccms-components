@@ -14,7 +14,7 @@
     "release": "./scripts/release.sh",
     "update-dev-server": "./scripts/update-dev-server.sh",
     "start": "node server.js",
-    "prepush": "npm run codecheck",
+    "prepush": "npm test",
     "codecheck": "NODE_EVN=test eslint src/components",
     "start:test": "karma start test/karma.unit.conf.js",
     "test": "npm run codecheck & npm run test:cover",
