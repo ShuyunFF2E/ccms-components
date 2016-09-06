@@ -60,6 +60,14 @@
 	</fieldset>
 
 	<fieldset>
+		<label for="info14">请选择</label>
+		<select ng-model="info14" id="info14" required cc-validator>
+			<option value="1">1</option>
+			<option value="2">2</option>
+		</select>
+	</fieldset>
+
+	<fieldset>
 		<button type="button" class="button-sure" ng-click="app.validateGay()">校验</button>
 		<button type="submit" ng-click="app.reset(app.gay)">重置</button>
 	</fieldset>
