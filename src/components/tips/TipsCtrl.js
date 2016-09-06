@@ -11,6 +11,6 @@ import {isContentOverflow} from '../../common/utils/style-helper';
 export default class TipsCtrl {
 
 	isContentOverflow(content) {
-		return isContentOverflow(this._$element[0], content);
+		return isContentOverflow(this._$element[0].querySelector('p'), content);
 	}
 }
