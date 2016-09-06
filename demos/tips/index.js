@@ -45,7 +45,7 @@
 
 			$scope.showError = function() {
 				if (!tips || !tips.element) {
-					tips = $ccTips.error('出错提示' + Math.random());
+					tips = $ccTips.error('<span style="color: red;">出错提示</span>出错提示出错提示出错提示出错提示出错提示出错提示出错提示出错提示' + Math.random());
 				}
 			};
 
