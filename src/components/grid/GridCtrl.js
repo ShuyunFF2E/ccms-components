@@ -108,8 +108,8 @@ export default class GridCtrl {
 		return findEntity(this.selectedItems, entity) !== -1;
 	}
 
-	toggleColumn(column) {
-		if (column.sort) {
+	toggleSort(column) {
+		if (column.sortProp) {
 			switch (column.sortOrder) {
 				case 'asc':
 
@@ -117,7 +117,7 @@ export default class GridCtrl {
 					break;
 				case 'desc':
 
-					column.sortOrder = 'none';
+					column.sortOrder = undefined;
 					break;
 				default:
 
@@ -138,9 +138,9 @@ export default class GridCtrl {
 		const {opts} = this;
 
 		this.opts.columnsDef.forEach(column => {
-			if (column.sort && SORT_ORDERS.includes(column.sortOrder)) {
+			if (column.sortProp && SORT_ORDERS.includes(column.sortOrder)) {
 				sortQueryParam.orders.push(column.sortOrder);
-				sortQueryParam.props.push(column.sort);
+				sortQueryParam.props.push(column.sortProp);
 			}
 		});
 

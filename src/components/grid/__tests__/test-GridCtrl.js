@@ -28,11 +28,11 @@ describe('GridCtrl', () => {
 					displayName: '姓名',
 					align: 'center',
 					width: '100px',
-					sort: 'name',
+					sortProp: 'name',
 					sortOrder: 'asc'
 				},
 				{field: 'age', displayName: '年龄', align: 'center', sort: 'age'},
-				{field: 'remark', displayName: '备注', align: 'center', sort: 'remark', sortOrder: 'desc'},
+				{field: 'remark', displayName: '备注', align: 'center', sortProp: 'remark', sortOrder: 'desc'},
 				{field: 'gender', displayName: '性别', align: 'right'}
 			],
 			transformer: {
@@ -94,30 +94,30 @@ describe('GridCtrl', () => {
 		assert.isFalse(gridCtrl.$allSelected);
 	});
 
-	it('toggleColumn', () => {
+	it('toggleSort', () => {
 
 		const columnsDef = gridCtrl.opts.columnsDef;
 		let targetSortOrder = getTargetSortOrder(columnsDef[0]);
-		gridCtrl.toggleColumn(columnsDef[0]);
+		gridCtrl.toggleSort(columnsDef[0]);
 		assert.equal(columnsDef[0].sortOrder, targetSortOrder, 'sort order is equal');
 
 		targetSortOrder = getTargetSortOrder(columnsDef[1]);
-		gridCtrl.toggleColumn(columnsDef[1]);
+		gridCtrl.toggleSort(columnsDef[1]);
 		assert.equal(columnsDef[1].sortOrder, targetSortOrder, 'sort order is equal');
 
 		targetSortOrder = getTargetSortOrder(columnsDef[2]);
-		gridCtrl.toggleColumn(columnsDef[2]);
+		gridCtrl.toggleSort(columnsDef[2]);
 		assert.equal(columnsDef[2].sortOrder, targetSortOrder, 'sort order is equal');
 
 		function getTargetSortOrder(column) {
-			if (column.sort) {
+			if (column.sortProp) {
 				switch (column.sortOrder) {
 					case 'asc':
 
 						return 'desc';
 					case 'desc':
 
-						return 'none';
+						return undefined;
 					default:
 
 						return 'asc';
@@ -132,9 +132,9 @@ describe('GridCtrl', () => {
 
 		gridCtrl.sortGridData();
 
-		gridCtrl.opts.columnsDef[0].sort = '';
-		gridCtrl.opts.columnsDef[1].sort = '';
-		gridCtrl.opts.columnsDef[2].sort = '';
+		gridCtrl.opts.columnsDef[0].sortProp = '';
+		gridCtrl.opts.columnsDef[1].sortProp = '';
+		gridCtrl.opts.columnsDef[2].sortProp = '';
 		gridCtrl.sortGridData();
 	});
 });
