@@ -39,7 +39,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					displayName: '姓名',
 					align: 'center',
 					width: '100px',
-					sort: 'name'
+					sortProp: 'name'
 				},
 				{field: 'age', displayName: '年龄', align: 'center', sortOrder: 'age'},
 				{field: 'gender', displayName: '性别', align: 'right'}
