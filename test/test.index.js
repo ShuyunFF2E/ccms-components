@@ -17,5 +17,5 @@ const context = require.context('../src', true, /\/__tests__\/test-.*\.js$/);
 context.keys().forEach(context);
 
 // require all `src/**/index.js`
-const appContext = require.context('../src', true, /[A-Z]+.*\.js$/);
+const appContext = require.context('../src', true, /\/[A-Z]+.*\.js$/);
 appContext.keys().forEach(appContext);
