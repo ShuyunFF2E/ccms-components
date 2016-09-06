@@ -19,7 +19,7 @@ maintainer: kui.liu
 form标签
 {% highlight html %}
 <form
-    [validators="string"]
+    [cc-validators="string"]
     [name="string"]
     [tooltip-type="string"]>
 
@@ -38,7 +38,7 @@ form标签
 非form标签
 {% highlight html %}
 <div
-    validators="string"
+    cc-validators="string"
     [ng-form="string"]
     [name="string"]
     [tooltip-type="string"]>
@@ -91,41 +91,41 @@ form标签
 
 ##### example
 {% highlight html %}
-<input ng-model="app.userName" type="text" validator="handsome, word" handsome-msg="不够帅啊同学!" word-msg="填单词啊同学!">
+<input ng-model="app.userName" type="text" cc-validator="handsome, word" handsome-msg="不够帅啊同学!" word-msg="填单词啊同学!">
 {% endhighlight %}
 
 {% callout info %}
 validator校验触发时机为 model 更新的时机,如果默认model更新时机(input)不能满足需求,可配合`ng-model-options`指令控制。如
 {% highlight html %}
-<input ng-model="app.userName" ng-model-options="{updateOn:'blur'}" required validator type="text">
+<input ng-model="app.userName" ng-model-options="{updateOn:'blur'}" required cc-validator type="text">
 {% endhighlight %}
 
 {% endcallout %}
 
 ### Form配套服务
 
-* $Validator(service)
+* $ccValidator(service)
 
     Methods
 
-    * $Validator.validate(formCtrl)
+    * $ccValidator.validate(formCtrl)
 
 	  手动校验表单
 
 	  参数：formCtrl `Controller` 表单控制器，通过在表单上声明name绑定
 
 		```
-		$Validator.validate(formCtrl).then(() => console.log('校验成功！')).catch(() => console.log('校验失败！'));
+		$ccValidator.validate(formCtrl).then(() => console.log('校验成功！')).catch(() => console.log('校验失败！'));
 		```
 
 	  return `Promise` 校验通过触发resolve，失败触发reject
 
-	* $Validator.setPristine(formCtrl)
+	* $ccValidator.setPristine(formCtrl)
 	    清除当前表单校验状态
 		参数：formCtrl `Controller` 表单控制器，通过在表单上声明name绑定
 
 		```
-		$Validator.setPristine(formCtrl);
+		$ccValidator.setPristine(formCtrl);
 		```
 
 ### 内置的校验器(对应angular内置的validator)
@@ -149,17 +149,17 @@ validator校验触发时机为 model 更新的时机,如果默认model更新时�
 {% highlight html %}
 <form class="form-wrapper" tooltip-type="major" name="app.formName">
     <fieldset>
-        <label for="info">姓名(必填)</label><input type="text" id="info" ng-model="app.info" validator required placeholder="必填">
+        <label for="info">姓名(必填)</label><input type="text" id="info" ng-model="app.info" cc-validator required placeholder="必填">
     </fieldset>
     <fieldset>
-        <label for="info1">邮箱</label><input type="email" id="info1" ng-model="app.info1" required validator placeholder="邮箱格式">
+        <label for="info1">邮箱</label><input type="email" id="info1" ng-model="app.info1" required cc-validator placeholder="邮箱格式">
     </fieldset>
     <fieldset>
         <label for="info2">禁用</label><input type="text" id="info2" disabled value="数云上海">
     </fieldset>
 
     <fieldset>
-        <label for="info3">长度需大于3</label><input type="text" id="info3" class="error" validator ng-model="app.info3" minlength="3">
+        <label for="info3">长度需大于3</label><input type="text" id="info3" class="error" cc-validator ng-model="app.info3" minlength="3">
     </fieldset>
 
     <fieldset>

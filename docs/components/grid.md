@@ -5,6 +5,8 @@ group: components
 maintainer: yazheng.yu, chaoyang.mu, kui.liu
 ---
 
+组件: cc-grid
+
 ### Grid配置
 
 * opts 表格配置(required)
@@ -33,11 +35,11 @@ maintainer: yazheng.yu, chaoyang.mu, kui.liu
 
 ### Grid配套服务
 
-* $grid
+* $ccGrid
 	* refresh 手动刷新表格信息 return`Promise`
 
 		```
-		$grid.refresh(gridOpts, externalQueryParams).then(() => this.selectedItems.length = 0);
+		$ccGrid.refresh(gridOpts, externalQueryParams).then(() => this.selectedItems.length = 0);
 		```
 
 ### examples

@@ -17,10 +17,10 @@ loading组件
 ### 用法
 
 {% highlight html %}
-<loading
+<cc-loading
     [type="string"]>
 	transclude template
-</form>
+</cc-loading>
 {% endhighlight %}
 
 ### 参数说明
