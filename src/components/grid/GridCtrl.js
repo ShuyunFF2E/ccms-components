@@ -6,9 +6,12 @@
  */
 
 import angular from 'angular';
-import {Debounce} from 'angular-es-utils/decorators';
+import 'jquery.nicescroll';
+
+import { Debounce } from 'angular-es-utils/decorators';
 
 import rowCellTemplate from './tpls/row-cell.tpl.html';
+import browser from '../../common/utils/browser';
 import TplReqHelper from '../../common/utils/tpl-req-helper';
 
 import GRID_TEMPLATES from './Constant';
@@ -29,6 +32,7 @@ function findEntity(collection, entity) {
 }
 
 const PLACEHOLDER = '{::cell-placeholder}';
+const $ = window.NiceScroll.getjQuery();
 
 export default class GridCtrl {
 
@@ -49,6 +53,12 @@ export default class GridCtrl {
 
 		// 刷新页面
 		GridHelper.refresh(this.opts);
+	}
+
+	$postLink() {
+		if (browser.os !== 'MacOS') {
+			$('.cc-grid [data-id=tbody]').niceScroll();
+		}
 	}
 
 	get $allSelected() {

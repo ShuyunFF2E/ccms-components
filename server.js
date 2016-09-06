@@ -10,7 +10,6 @@ var webpack = require('webpack');
 var config = require('./webpack-dev.config');
 var url = require('url');
 
-
 var app = jsonServer.create();
 var compiler = webpack(config);
 
@@ -42,10 +41,10 @@ var customerProfileServerSetting = {
 	host: 'http://qa-jushita-hangzhou-stage-ual.fenxibao.com',
 	port: '',
 	option: {
-		headers:{
+		headers: {
 			'Content-Type': 'application/graphql'
 		},
-		forwardPath: function (req) {
+		forwardPath: function(req) {
 			return url.parse(req.originalUrl).path.replace(CUSTOMER_PROFILE_API_PREFIX, '/fullView/1.0/');
 		}
 	}
