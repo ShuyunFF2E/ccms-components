@@ -119,6 +119,8 @@
       "id": 1,
       "pageNum": 2,
       "pageSize": 20,
+      "sortOrders": "",
+      "sortProps": "",
       "totals": 40,
       "list": [
         {

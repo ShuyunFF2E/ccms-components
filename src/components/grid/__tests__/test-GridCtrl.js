@@ -27,13 +27,19 @@ describe('GridCtrl', () => {
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
-					width: '100px'
+					width: '100px',
+					sort: 'name',
+					sortOrder: 'asc'
 				},
-				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'age', displayName: '年龄', align: 'center', sort: 'age'},
+				{field: 'remark', displayName: '备注', align: 'center', sort: 'remark', sortOrder: 'desc'},
 				{field: 'gender', displayName: '性别', align: 'right'}
 			],
 			transformer: {
 				pageNum: 'currentPage'
+			},
+			onRefresh: () => {
+				assert.equal(1, 1, 'grid refresh');
 			}
 		};
 
@@ -88,6 +94,47 @@ describe('GridCtrl', () => {
 		assert.isFalse(gridCtrl.$allSelected);
 	});
 
+	it('toggleColumn', () => {
+
+		const columnsDef = gridCtrl.opts.columnsDef;
+		let targetSortOrder = getTargetSortOrder(columnsDef[0]);
+		gridCtrl.toggleColumn(columnsDef[0]);
+		assert.equal(columnsDef[0].sortOrder, targetSortOrder, 'sort order is equal');
+
+		targetSortOrder = getTargetSortOrder(columnsDef[1]);
+		gridCtrl.toggleColumn(columnsDef[1]);
+		assert.equal(columnsDef[1].sortOrder, targetSortOrder, 'sort order is equal');
+
+		targetSortOrder = getTargetSortOrder(columnsDef[2]);
+		gridCtrl.toggleColumn(columnsDef[2]);
+		assert.equal(columnsDef[2].sortOrder, targetSortOrder, 'sort order is equal');
+
+		function getTargetSortOrder(column) {
+			if (column.sort) {
+				switch (column.sortOrder) {
+					case 'asc':
+
+						return 'desc';
+					case 'desc':
+
+						return 'none';
+					default:
+
+						return 'asc';
+				}
+			}
+		}
+	});
+
+	it('sortGridData', () => {
+
+		gridCtrl.sortGridData(true);
+
+		gridCtrl.sortGridData();
+
+		gridCtrl.opts.columnsDef[0].sort = '';
+		gridCtrl.opts.columnsDef[1].sort = '';
+		gridCtrl.opts.columnsDef[2].sort = '';
+		gridCtrl.sortGridData();
+	});
 });
-
-

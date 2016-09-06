@@ -1,5 +1,13 @@
 <!--默认表格头部模板-->
-<th ng-repeat="column in $ctrl.opts.columnsDef track by $index" ng-style="{width:column.width, 'text-align':column.align}">
+<th ng-repeat="column in $ctrl.opts.columnsDef track by $index"
+	ng-class="{'column-sort':column.sort}"
+	ng-click="$ctrl.toggleColumn(column)"
+	ng-style="{width:column.width, 'text-align':column.align}">
+
 	<span ng-bind="column.displayName"></span>
-	<!--<a href="#" class="iconfont icon-iconfontarrowdropdown"></a>-->
+
+	<a href="#" class="iconfont icon-sort"
+	   ng-class="{'column-sort-none':(column.sortOrder==='none'||column.sortOrder===undefined),'column-sort-asc':column.sortOrder==='asc','column-sort-desc':column.sortOrder==='desc'}"
+	   ng-if="column.sort"
+	></a>
 </th>
