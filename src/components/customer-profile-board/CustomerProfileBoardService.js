@@ -38,7 +38,8 @@ export class $ccCustomerProfileBoard {
 			hasFooter: false,
 			uid: 'customer-profile-board'
 		};
-		ModalService.modal(modalOptions).open();
+
+		return ModalService.modal(modalOptions).open();
 	}
 }
 
@@ -145,9 +146,7 @@ class CustomerProfileBoardService {
 	 * concat address & zip data into address_zip attribute
 	 */
 	concatCustomerAddressZip(info = {}) {
-		if (!info.receiver_state && !info.receiver_city &&
-			!info.receiver_district && !info.receiver_address &&
-			!info.receiver_zip) return info;
+		if (!info.receiver_state && !info.receiver_city && !info.receiver_district && !info.receiver_address && !info.receiver_zip) return info;
 		return {
 			...info,
 			address_zip: [
@@ -261,7 +260,7 @@ class CustomerProfileBoardService {
 		CustomerAttributeSetting.forEach(setting =>
 			setting.attributeBlock.forEach(customerAttributeBlock =>
 				customerAttributeBlock.attributeList.forEach(attribute =>
-					attributeList.indexOf(attribute.attribute) === -1 && attributeList.push(attribute.attribute))));
+				attributeList.indexOf(attribute.attribute) === -1 && attributeList.push(attribute.attribute))));
 		return attributeList;
 	}
 

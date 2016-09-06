@@ -7,12 +7,12 @@
 import angular from 'angular';
 import { assert } from 'chai';
 import injector from 'angular-es-utils/injector';
+import ModalService from '../../modal/ModalService';
 import sinon from 'sinon';
 
-import CustomerProfileBoardService, {$ccCustomerProfileBoard} from '../CustomerProfileBoardService.js';
+import CustomerProfileBoardService, { $ccCustomerProfileBoard } from '../CustomerProfileBoardService.js';
 
 describe('CustomerProfileBoard', () => {
-	const scope = injector.get('$rootScope').$new();
 	let sandbox;
 
 	beforeEach(() => {
@@ -20,6 +20,11 @@ describe('CustomerProfileBoard', () => {
 		angular.mock.inject($injector => {
 			sandbox = sinon.sandbox.create();
 			sandbox.stub(injector, 'get', service => $injector.get(service));
+			sandbox.stub(ModalService, 'modal', v => ({
+				open() {
+					return v;
+				}
+			}));
 		});
 	});
 
@@ -28,31 +33,35 @@ describe('CustomerProfileBoard', () => {
 	});
 
 	describe('$ccCustomerProfileBoard', () => {
+
 		const ccCustomerProfileBoard = new $ccCustomerProfileBoard();
 
 		it('popProfileBoardModal', () => {
-			ccCustomerProfileBoard.popProfileBoardModal();
-			scope.$$postDigest(() => {
-				assert.isNotNull(document.querySelector('.ccms-modal[data-uid="customer-profile-board"]'));
-			});
+			const modalInstance = ccCustomerProfileBoard.popProfileBoardModal();
+			assert.deepEqual(modalInstance.bindings, {customerInformation: {}});
 		});
 
-		after(() => {
-			document.body.removeChild(document.querySelector('.ccms-modal'));
-		});
 	});
 
 	describe('CustomerProfileBoardService', () => {
 		it('queryCustomerProfileData', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
 			assert.isFunction(customerProfileBoardService.queryCustomerProfileData().then);
-			assert.isFunction(customerProfileBoardService.queryCustomerProfileData({nickName: 'a', shopId: 'b', platName: 'c'}).then);
+			assert.isFunction(customerProfileBoardService.queryCustomerProfileData({
+				nickName: 'a',
+				shopId: 'b',
+				platName: 'c'
+			}).then);
 		});
 
 		it('getCustomerDefinedAttributeData', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
 			assert.isFunction(customerProfileBoardService.getCustomerDefinedAttributeData().then);
-			assert.isFunction(customerProfileBoardService.getCustomerDefinedAttributeData({nickName: 'a', tenantId: 'b', platName: 'c'}).then);
+			assert.isFunction(customerProfileBoardService.getCustomerDefinedAttributeData({
+				nickName: 'a',
+				tenantId: 'b',
+				platName: 'c'
+			}).then);
 		});
 
 		it('saveCustomerDefinedAttribute', () => {
