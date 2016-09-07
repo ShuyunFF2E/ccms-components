@@ -11,7 +11,7 @@ const bindHTMLDDO = {
 	name: 'ccBindHtml',
 	restrict: 'A',
 	controller,
-	controllerAs: '$bindHtmlCtrl',
+	controllerAs: '$$bindHtmlCtrl',
 	bindToController: {
 		content: '<ccBindHtml'
 	}
@@ -19,5 +19,4 @@ const bindHTMLDDO = {
 
 export default angular.module('ccms.components.bindHtml', [])
 	.directive('ccBindHtml', () => bindHTMLDDO)
-	.deprecatedDirective('bindHtml', () => bindHTMLDDO)
 	.name;
