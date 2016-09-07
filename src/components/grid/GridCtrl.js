@@ -11,7 +11,6 @@ import 'jquery.nicescroll';
 import { Debounce } from 'angular-es-utils/decorators';
 
 import rowCellTemplate from './tpls/row-cell.tpl.html';
-import browser from '../../common/utils/browser';
 import TplReqHelper from '../../common/utils/tpl-req-helper';
 
 import GRID_TEMPLATES from './Constant';
@@ -32,7 +31,6 @@ function findEntity(collection, entity) {
 }
 
 const PLACEHOLDER = '{::cell-placeholder}';
-const $ = window.NiceScroll.getjQuery();
 const SORT_ORDERS = ['asc', 'desc'];
 
 export default class GridCtrl {
@@ -54,12 +52,6 @@ export default class GridCtrl {
 
 		// 排序
 		this.sortGridData(true);
-	}
-
-	$postLink() {
-		if (browser.os !== 'MacOS') {
-			$('.cc-grid [data-id=tbody]').niceScroll();
-		}
 	}
 
 	get $allSelected() {

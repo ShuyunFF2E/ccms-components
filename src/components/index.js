@@ -7,6 +7,7 @@
 import angular from 'angular';
 
 import grid from './grid';
+import niceScroll from './nice-scroll';
 import pagination from './pagination';
 import smsEditor from './sms-editor';
 import smsPreview from './sms-preview';
@@ -39,6 +40,7 @@ export default angular
 		checkbox,
 		form,
 		grid,
+		niceScroll,
 		pagination,
 		smsEditor,
 		smsPreview,
