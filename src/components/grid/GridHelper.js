@@ -4,7 +4,9 @@
  * @since 2016-01-04
  */
 import injector from 'angular-es-utils/injector';
-import {isPromiseLike, isObject, isFunction} from 'angular-es-utils/type-auth';
+import { isPromiseLike, isObject, isFunction } from 'angular-es-utils/type-auth';
+
+import filter from '../../common/utils/object/filter';
 
 function transformer(response, mapping) {
 
@@ -62,7 +64,7 @@ export default {
 				pageSize: gridOptions.pager.pageSize
 			};
 
-			const params = Object.assign({}, pageParams, gridOptions.queryParams, queryParams);
+			const params = filter(Object.assign({}, pageParams, gridOptions.queryParams, queryParams), value => !!value);
 
 			return gridOptions.resource.get(params).$promise
 
