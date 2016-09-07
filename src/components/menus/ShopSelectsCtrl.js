@@ -64,17 +64,19 @@ export default class ShopSelectsCtrl {
 		if (Array.isArray(list)) {
 			// -查询所在平台
 			const plat = list.find(plat => {
-					return plat.active;
-				}),
+				return plat.active;
+			}) || {};
+
 			// -查询在平台中选中的店铺
-				shop = plat && Array.isArray(plat.child) ? plat.child.find(shop => {
-					return shop.active;
-				}) : {};
+			const shop = plat && Array.isArray(plat.child) && plat.child.find(shop => {
+				return shop.active;
+			}) || {};
 			// - 通知
 			this.shopInfo = {
 				plat,
 				shop
 			};
+
 			this.selectedShop(plat, shop);
 		}
 	}
@@ -89,11 +91,10 @@ export default class ShopSelectsCtrl {
 		const selectedShop = {plat, shop};
 
 		// - 选择同一个店铺,阻止事件广播
-		// - shop === undefined ==> 当plat下没有店铺时
 		// - this.shopInfo.plat.value !== plat.value ==> 不同平台时
 		// - this.shopInfo.shop.value !== shop.value ==> 不同店铺时
 		// - this.isInit ==> 第一次初始化
-		if (shop === undefined || this.shopInfo.plat.value !== plat.value || this.shopInfo.shop.value !== shop.value || this.isInit) {
+		if (this.shopInfo.plat.value !== plat.value || this.shopInfo.shop.value !== shop.value || this.isInit) {
 			const deferred = this._$q.defer();
 
 			dispatchShopChangeStart(deferred, selectedShop);
