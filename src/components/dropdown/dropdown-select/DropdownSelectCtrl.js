@@ -1,5 +1,5 @@
 import angular from 'angular';
-import {Inject, Bind} from 'angular-es-utils';
+import { Inject, Bind } from 'angular-es-utils';
 
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
@@ -21,6 +21,7 @@ export default class DropdownSelectCtrl {
 		this.focusIndex = 0;
 		this.isOpen = false;
 		this.isActive = false;
+		this.oldText = '';
 
 		this._openFn = null;
 	}
@@ -126,8 +127,9 @@ export default class DropdownSelectCtrl {
 		});
 	}
 
-	onSearchTextChange(text, oldText) {
-		if (text !== oldText) {
+	onSearchTextChange(text) {
+		if (text !== this.oldText) {
+			this.oldText = text;
 			text = text.trim();
 			if (!this.isOpen) {
 				this.open();
@@ -165,8 +167,9 @@ export default class DropdownSelectCtrl {
 		if (modelValue !== null) {
 			let valueField = this.mapping.valueField;
 			let modelExisted = this.items.some(item => {
-				if (angular.equals(item[valueField], this.model)) {
+				if (angular.equals(item[valueField], modelValue)) {
 					this.title = item[this.mapping.displayField];
+					this.model = modelValue;
 					return true;
 				}
 			});
@@ -257,8 +260,8 @@ export default class DropdownSelectCtrl {
 
 	getItemElementAt(index) {
 		return this.getElement()
-				.querySelector('.dropdown-list')
-				.querySelectorAll('li:not(.empty-list-item)')[index];
+			.querySelector('.dropdown-list')
+			.querySelectorAll('li:not(.empty-list-item)')[index];
 	}
 
 	getScope() {
@@ -304,7 +307,7 @@ export default class DropdownSelectCtrl {
 			datalist.forEach(item => {
 				const fieldValue = item[field];
 				if (fieldValue.toString().indexOf(text) !== -1 &&
-						filteredItems.indexOf(item) === -1) {
+					filteredItems.indexOf(item) === -1) {
 
 					filteredItems.push(item);
 				}

@@ -2,7 +2,7 @@ import { assert } from 'chai';
 
 import '../../../index';
 
-const { module, inject } = window;
+const {module, inject} = window;
 
 describe('cc-dropdown-select', () => {
 	let selectEl, ctrl, scope;
@@ -41,13 +41,10 @@ describe('cc-dropdown-select', () => {
 	}));
 
 	describe('DropdownSelectCtrl', () => {
-		it('.setModelValue()', done => {
+		it('.setModelValue()', () => {
 			ctrl.setModelValue('sh');
-			setTimeout(() => {
-				done();
-				assert.strictEqual(ctrl.title, '上海');
-				assert.strictEqual(ctrl.model, 'sh');
-			}, 0);
+			assert.strictEqual(ctrl.title, '上海');
+			assert.strictEqual(ctrl.model, 'sh');
 		});
 
 		it('.focusUp()', () => {
@@ -85,13 +82,10 @@ describe('cc-dropdown-select', () => {
 			assert.strictEqual(ctrl.isOpen, false);
 		});
 
-		it('.toggle()', done => {
+		it('.toggle()', () => {
 			const openState = ctrl.isOpen;
 			ctrl.toggle();
-			setTimeout(() => {
-				done();
-				assert.strictEqual(ctrl.isOpen, !openState);
-			}, 0);
+			assert.strictEqual(ctrl.isOpen, !openState);
 		});
 
 		it('.getElement()', () => {

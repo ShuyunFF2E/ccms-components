@@ -6,9 +6,12 @@
  */
 
 import angular from 'angular';
-import {Debounce} from 'angular-es-utils/decorators';
+import 'jquery.nicescroll';
+
+import { Debounce } from 'angular-es-utils/decorators';
 
 import rowCellTemplate from './tpls/row-cell.tpl.html';
+import browser from '../../common/utils/browser';
 import TplReqHelper from '../../common/utils/tpl-req-helper';
 
 import GRID_TEMPLATES from './Constant';
@@ -29,6 +32,8 @@ function findEntity(collection, entity) {
 }
 
 const PLACEHOLDER = '{::cell-placeholder}';
+const $ = window.NiceScroll.getjQuery();
+const SORT_ORDERS = ['asc', 'desc'];
 
 export default class GridCtrl {
 
@@ -47,8 +52,14 @@ export default class GridCtrl {
 			this.bodyTemplate = rowCellTemplate.replace(PLACEHOLDER, tpl);
 		});
 
-		// 刷新页面
-		GridHelper.refresh(this.opts);
+		// 排序
+		this.sortGridData(true);
+	}
+
+	$postLink() {
+		if (browser.os !== 'MacOS') {
+			$('.cc-grid [data-id=tbody]').niceScroll();
+		}
 	}
 
 	get $allSelected() {
@@ -97,4 +108,53 @@ export default class GridCtrl {
 		return findEntity(this.selectedItems, entity) !== -1;
 	}
 
+	toggleSort(column) {
+		if (column.sortProp) {
+			switch (column.sortOrder) {
+				case 'asc':
+
+					column.sortOrder = 'desc';
+					break;
+				case 'desc':
+
+					column.sortOrder = undefined;
+					break;
+				default:
+
+					column.sortOrder = 'asc';
+					break;
+			}
+			this.sortGridData();
+		}
+	}
+
+	sortGridData(isInit = false) {
+
+		const sortQueryParam = {
+			orders: [],
+			props: []
+		};
+
+		const {opts} = this;
+
+		this.opts.columnsDef.forEach(column => {
+			if (column.sortProp && SORT_ORDERS.includes(column.sortOrder)) {
+				sortQueryParam.orders.push(column.sortOrder);
+				sortQueryParam.props.push(column.sortProp);
+			}
+		});
+
+		GridHelper
+			.refresh(opts, Object.assign(opts.queryParams || {},
+				sortQueryParam.props.length > 0 ? {
+					pageNum: 1,
+					sortProps: sortQueryParam.props.toString(),
+					sortOrders: sortQueryParam.orders.toString()
+				} : {sortProps: '', sortOrders: ''}))
+			.then(() => {
+				if (!isInit && this.onRefresh) {
+					this.onRefresh({opts});
+				}
+			});
+	}
 }

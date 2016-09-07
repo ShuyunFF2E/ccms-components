@@ -3,10 +3,11 @@ import { assert } from 'chai';
 import angular from 'angular';
 import '../../../index';
 
-const { module, inject } = window;
+const {module, inject} = window;
 
 describe('cc-dropdown', () => {
 	let dropdownEl, ctrl;
+	let $scope;
 
 	beforeEach(module('ccms.components'));
 	beforeEach(inject((_$compile_, _$rootScope_) => {
@@ -20,11 +21,12 @@ describe('cc-dropdown', () => {
 			</div>
 		</cc-dropdown>
 		`;
-		const scope = _$rootScope_.$new();
 
-		dropdownEl = _$compile_(html)(scope);
+		$scope = _$rootScope_.$new();
+
+		dropdownEl = _$compile_(html)($scope);
 		ctrl = dropdownEl.controller('ccDropdown');
-		scope.$digest();
+		$scope.$digest();
 	}));
 
 	describe('DropdownCtrl', () => {
@@ -54,33 +56,31 @@ describe('cc-dropdown', () => {
 	});
 
 	describe('DropdownToggleCtrl', () => {
-		let openState, toggleEl;
+		let toggleEl;
 
-		before(() => {
-			openState = ctrl.isOpen;
+		beforeEach(() => {
 			toggleEl = dropdownEl[0].querySelector('[cc-dropdown-toggle]');
 		});
 
 		it('.parent', () => {
 			const toggleCtrl = angular.element(toggleEl).controller('ccDropdownToggle');
-			// assert.strictEqual(toggleCtrl.parent, ctrl);
+			assert.strictEqual(toggleCtrl.parent, ctrl);
 			assert.instanceOf(toggleCtrl.parent, ctrl.constructor);
 		});
 
-		it('.toggle()', done => {
+		it('.toggle()', () => {
+			const openState = ctrl.isOpen;
+			ctrl.$$hash = 'xxxkuitos';
 			// TODO: need another click
 			toggleEl.click();
-			setTimeout(() => {
-				done();
-				assert.strictEqual(ctrl.isOpen, !openState);
-			}, 0);
+			assert.strictEqual(ctrl.isOpen, !openState);
 		});
 	});
 
 	describe('DropdownPanelCtrl', () => {
 		let panelEl;
 
-		before(() => {
+		beforeEach(() => {
 			panelEl = dropdownEl[0].querySelector('[cc-dropdown-panel]');
 		});
 
