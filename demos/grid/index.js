@@ -35,7 +35,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			},
 			columnsDef: [
 				{
-					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" tooltip="entity.name" tooltip-append-to-body="true"></span>',
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
 					width: '100px',
