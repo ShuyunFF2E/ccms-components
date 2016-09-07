@@ -159,8 +159,7 @@ export default class GridCtrl {
 	}
 
 	toggleColumnByIndex(index) {
-		const columns = this.opts.columnsDef;
-		const column = columns[index];
+		const column = this.opts.columnsDef[index];
 		column.isHidden = !column.isHidden;
 	}
 
