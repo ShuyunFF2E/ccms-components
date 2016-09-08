@@ -8,7 +8,7 @@
 import angular from 'angular';
 import 'jquery.nicescroll';
 
-import { Debounce } from 'angular-es-utils/decorators';
+import { Debounce, Inject } from 'angular-es-utils/decorators';
 
 import rowCellTemplate from './tpls/row-cell.tpl.html';
 import TplReqHelper from '../../common/utils/tpl-req-helper';
@@ -33,10 +33,11 @@ function findEntity(collection, entity) {
 const PLACEHOLDER = '{::cell-placeholder}';
 const SORT_ORDERS = ['asc', 'desc'];
 
+@Inject('$scope')
 export default class GridCtrl {
 
 	$onInit() {
-
+		this.$scope = this._$scope;
 		this.selectedItems = this.selectedItems || [];
 		const type = (this.type || 'default').toUpperCase();
 
