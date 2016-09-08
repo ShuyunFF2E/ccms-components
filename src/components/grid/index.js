@@ -33,7 +33,8 @@ const
 		link,
 		scope: {
 			entity: '<',
-			column: '<'
+			column: '<',
+			baseScope: '<'
 		}
 	};
 
