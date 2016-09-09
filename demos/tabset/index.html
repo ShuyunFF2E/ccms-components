@@ -11,29 +11,29 @@
 
 	<br>
 
-	<tabset active="tabset.activeIndex">
+	<cc-tabset active="tabset.activeIndex">
 
-		<tab index="0" title="google">
+		<cc-tab index="0" title="google">
 			<dl>
 				<dt>查询的结果共 0 条</dt>
 				<dd style="margin-left: 0;">根据您的搜索提示为您推荐 <a href="javascript:;">百度一下>></a></dd>
 			</dl>
-		</tab>
+		</cc-tab>
 
-		<tab index="1" title="facebook">
+		<cc-tab index="1" title="facebook">
 			<dl>
 				<dt>404</dt>
 				<dd style="margin-left: 0;">not a found</dd>
 			</dl>
-		</tab>
+		</cc-tab>
 
-		<tab index="2" title="youtube">
+		<cc-tab index="2" title="youtube">
 			<div ng-controller="TestCtrl as test">
 				<input type="text" ng-model="test.name"> <input type="button" value="showName" ng-mousedown="test.alertMe();">
 			</div>
-		</tab>
+		</cc-tab>
 
-    </tabset>
+    </cc-tabset>
 
     <br>
     <br>
