@@ -37,22 +37,8 @@ var customerDefinedAttributeServerSetting = {
 	}
 };
 
-var CUSTOMER_PROFILE_API_PREFIX = '/cc/customer-profile/fullView';
-var customerProfileServerSetting = {
-	host: 'http://qa-jushita-hangzhou-stage-ual.fenxibao.com',
-	port: '',
-	option: {
-		headers:{
-			'Content-Type': 'application/graphql'
-		},
-		forwardPath: function (req) {
-			return url.parse(req.originalUrl).path.replace(CUSTOMER_PROFILE_API_PREFIX, '/fullView/1.0/');
-		}
-	}
-};
 
 var customerDefinedAttributeServer = jsonServer.proxy(customerDefinedAttributeServerSetting.host, customerDefinedAttributeServerSetting.port, customerDefinedAttributeServerSetting.option);
-var customerProfileServer = jsonServer.proxy(customerProfileServerSetting.host, customerProfileServerSetting.port, customerProfileServerSetting.option);
 
 app.use(require('webpack-dev-middleware')(compiler, {
 	noInfo: false,
@@ -71,7 +57,6 @@ app.use(/\/$/, function(req, res) {
 app.use(require('webpack-hot-middleware')(compiler));
 app.use(jsonServer.defaults({static: path.resolve(__dirname)}));
 app.use(CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/*', customerDefinedAttributeServer);
-app.use(CUSTOMER_PROFILE_API_PREFIX, customerProfileServer);
 app.use(jsonServer.router(apiPrefix, filename));
 
 app.listen(3000, 'localhost', function(err) {

@@ -11,11 +11,11 @@ import controller from './CustomerProfileBoardCtrl.js';
 import template from './customer-profile-board.tpl.html';
 import generatorQueryString from './queryStringSchema.js';
 import CustomerAttributeSetting, { TagsMapping, RfmLabel } from './CustomerAttributeSetting.js';
+import { API_ADDRESS } from './config.js';
 
 const MODAL_TITLE_STRING = '客户基本信息';
 const CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX = '/cc/customer-defined-attribute';
-const CUSTOMER_PROFILE_API_PREFIX = '/cc/customer-profile';
-const CUSTOMER_PROFILE_API = CUSTOMER_PROFILE_API_PREFIX + '/fullView';
+const CUSTOMER_PROFILE_API = API_ADDRESS + '/fullView/1.0/';
 const CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer/:nickName';
 const CUSTOMER_DEFINED_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer';
 const CUSTOMER_DEFINED_PLATFORM_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/properties';
@@ -44,10 +44,17 @@ export class $ccCustomerProfileBoard {
 
 class CustomerProfileBoardService {
 	constructor() {
-		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API, true, undefined, undefined, {
+		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API, true, undefined, {
+			'graphql': {
+				method: 'POST',
+				withCredentials: true
+			}
+		}, {
 			headers: {
 				'Content-Type': 'application/graphql'
 			}
+		}, {
+			stripTrailingSlashes: false
 		});
 		this.CustomerDefinedAttributeGetDataResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API);
 		this.CustomerDefinedAttributeResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_API);
@@ -61,7 +68,7 @@ class CustomerProfileBoardService {
 	 * using $resource to query customer profile data
 	 */
 	queryCustomerProfileData({nickName = '', shopId = '', platName = ''} = {}) {
-		return this.CustomerProfileResource.save(generatorQueryString(nickName, shopId, platName)).$promise;
+		return this.CustomerProfileResource.graphql(generatorQueryString(nickName, shopId, platName)).$promise;
 	}
 
 	/**
