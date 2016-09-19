@@ -6,7 +6,7 @@
 
 import angular from 'angular';
 import 'jquery.nicescroll';
-import { Inject } from 'angular-es-utils/decorators';
+import { Bind, Inject, Debounce } from 'angular-es-utils/decorators';
 
 import browser from '../../common/utils/browser';
 
@@ -23,13 +23,24 @@ class Controller {
 					cursorcolor: '#808080',
 					mousescrollstep: 200
 				});
+
+			// 内容发生变更时重算滚动条
+			this._$element[0].addEventListener('DOMSubtreeModified', this.resize, false);
+
 		}
 	}
 
 	$onDestroy() {
 		if (this.niceScroll) {
 			this.niceScroll.remove();
+			this._$element[0].removeEventListener('DOMSubtreeModified');
 		}
+	}
+
+	@Bind
+	@Debounce(100)
+	resize() {
+		this.niceScroll.resize();
 	}
 
 }
