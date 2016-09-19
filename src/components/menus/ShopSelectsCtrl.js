@@ -62,22 +62,29 @@ export default class ShopSelectsCtrl {
 	 */
 	_getActiveShop(list) {
 		if (Array.isArray(list)) {
+
 			// -查询所在平台
-			const plat = list.find(plat => {
-				return plat.active;
-			}) || {};
+			const plat = list.find(
+					plat => {
+						return plat.active;
+					}
+				) || {};
 
 			// -查询在平台中选中的店铺
-			const shop = plat && Array.isArray(plat.child) && plat.child.find(shop => {
-				return shop.active;
-			}) || {};
+			const shop = plat &&
+				Array.isArray(plat.child) &&
+				plat.child.find(shop => {
+					return shop.active;
+				}) || {};
+
 			// - 通知
 			this.shopInfo = {
 				plat,
 				shop
 			};
 
-			this.selectedShop(plat, shop);
+			// 选择默认店铺
+			setCurrentPlatShop(plat, shop);
 		}
 	}
 
