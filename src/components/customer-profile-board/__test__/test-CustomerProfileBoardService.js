@@ -31,7 +31,7 @@ describe('CustomerProfileBoard', () => {
 		const ccCustomerProfileBoard = new $ccCustomerProfileBoard();
 
 		it('popProfileBoardModal', () => {
-			ccCustomerProfileBoard.popProfileBoardModal();
+			ccCustomerProfileBoard.$get().popProfileBoardModal();
 			scope.$$postDigest(() => {
 				assert.isNotNull(document.querySelector('.ccms-modal[data-uid="customer-profile-board"]'));
 			});
