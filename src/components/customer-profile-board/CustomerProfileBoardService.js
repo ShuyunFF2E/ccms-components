@@ -54,15 +54,6 @@ export class $ccCustomerProfileBoard {
 			}
 		};
 	}
-
-	setAPI(address = '', version = '1.0') {
-		API_ADDRESS = address;
-		API_VERSION = version;
-	}
-
-	$get() {
-		return this;
-	}
 }
 
 class CustomerProfileBoardService {
