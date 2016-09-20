@@ -11,14 +11,14 @@ import controller from './CustomerProfileBoardCtrl.js';
 import template from './customer-profile-board.tpl.html';
 import generatorQueryString from './queryStringSchema.js';
 import CustomerAttributeSetting, { TagsMapping, RfmLabel } from './CustomerAttributeSetting.js';
-import { API_ADDRESS } from './config.js';
 
 const MODAL_TITLE_STRING = '客户基本信息';
 const CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX = '/cc/customer-defined-attribute';
-const CUSTOMER_PROFILE_API = API_ADDRESS + '/fullView/1.0/';
 const CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer/:nickName';
 const CUSTOMER_DEFINED_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer';
 const CUSTOMER_DEFINED_PLATFORM_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/properties';
+
+let API_ADDRESS, API_VERSION;
 
 export class $ccCustomerProfileBoard {
 	/**
@@ -40,10 +40,20 @@ export class $ccCustomerProfileBoard {
 		};
 		ModalService.modal(modalOptions).open();
 	}
+
+	setAPI(address = '', version = '1.0') {
+		API_ADDRESS = address;
+		API_VERSION = version;
+	}
+
+	$get() {
+		return this;
+	}
 }
 
 class CustomerProfileBoardService {
 	constructor() {
+		const CUSTOMER_PROFILE_API = `${API_ADDRESS}/fullView/${API_VERSION}/`;
 		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API, true, undefined, {
 			'graphql': {
 				method: 'POST',
@@ -67,8 +77,8 @@ class CustomerProfileBoardService {
 	 * @returns {Promise}
 	 * using $resource to query customer profile data
 	 */
-	queryCustomerProfileData({nickName = '', shopId = '', platName = ''} = {}) {
-		return this.CustomerProfileResource.graphql(generatorQueryString(nickName, shopId, platName)).$promise;
+	queryCustomerProfileData({nickName = '', shopId = '', platName = '', tenantId = ''} = {}) {
+		return this.CustomerProfileResource.graphql(generatorQueryString(nickName, shopId, platName, tenantId)).$promise;
 	}
 
 	/**
