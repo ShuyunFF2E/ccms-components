@@ -42,7 +42,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					sortProp: 'name'
 				},
 				{field: 'age', displayName: '年龄', align: 'center', sortOrder: 'age'},
-				{field: 'gender', displayName: '性别', align: 'right'}
+				{field: 'gender', displayName: '性别', align: 'right', width: '100px', cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>'}
 			],
 			transformer: {
 				pageNum: 'currentPage',
