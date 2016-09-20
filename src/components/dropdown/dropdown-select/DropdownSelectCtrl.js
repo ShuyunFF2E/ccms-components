@@ -180,12 +180,12 @@ export default class DropdownSelectCtrl {
 		} else {
 			this.title = '';
 			this.model = null;
+			this.items = this._clampedDatalist;
 		}
 	}
 
 	clear() {
 		this.setModelValue(null);
-		this.items = this._getClampedDatalist(this.datalist);
 		this.getInputElement().focus();
 		this.focusAt(0);
 	}
