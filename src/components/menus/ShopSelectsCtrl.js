@@ -44,14 +44,24 @@ export default class ShopSelectsCtrl {
 				.then(res => {
 					this.list = res || [];
 					this.tempList = angular.copy(this.list);
-					this._getActiveShop(this.list);
+					const platShop = this._getActiveShop(this.list);
+					// - 通知
+					this.shopInfo = platShop;
+					// 选择默认店铺
+					setCurrentPlatShop(platShop.plat, platShop.shop);
 				});
 
 		} else {
 			const resourceIsArray = Array.isArray(shops.resource);
 			this.list = resourceIsArray ? shops.resource : [];
 			this.tempList = angular.copy(this.list);
-			resourceIsArray && this._getActiveShop(this.list);
+			if (resourceIsArray) {
+				const platShop = this._getActiveShop(this.list);
+				// - 通知
+				this.shopInfo = platShop;
+				// 选择默认店铺
+				setCurrentPlatShop(platShop.plat, platShop.shop);
+			}
 		}
 	}
 
@@ -63,21 +73,22 @@ export default class ShopSelectsCtrl {
 	_getActiveShop(list) {
 		if (Array.isArray(list)) {
 			// -查询所在平台
-			const plat = list.find(plat => {
-				return plat.active;
-			}) || {};
-
+			const plat = list.find(
+					plat => {
+						return plat.active;
+					}
+				) || {};
 			// -查询在平台中选中的店铺
-			const shop = plat && Array.isArray(plat.child) && plat.child.find(shop => {
-				return shop.active;
-			}) || {};
-			// - 通知
-			this.shopInfo = {
+			const shop = plat &&
+				Array.isArray(plat.child) &&
+				plat.child.find(shop => {
+					return shop.active;
+				}) || {};
+
+			return {
 				plat,
 				shop
 			};
-
-			this.selectedShop(plat, shop);
 		}
 	}
 

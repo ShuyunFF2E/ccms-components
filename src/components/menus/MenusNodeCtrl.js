@@ -46,6 +46,8 @@ export default class MenusNodeCtrl {
 	 * @returns {*}
 	 */
 	getMenu(menus = []) {
+
+
 		return Array.isArray(menus) ? menus.find(item => {
 			return item.state === this._$state.current.name;
 		}) : {};
