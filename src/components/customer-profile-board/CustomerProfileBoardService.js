@@ -22,23 +22,37 @@ let API_ADDRESS, API_VERSION;
 
 export class $ccCustomerProfileBoard {
 	/**
-	 * @name popProfileBoardModal
-	 * @param {Object} customerInformation
-	 * pop modal of customer profile board
+	 * set graphql api
+	 * @param {string} address
+	 * @param {string} version
 	 */
-	popProfileBoardModal(customerInformation = {}) {
-		const modalOptions = {
-			bindings: {
-				customerInformation
-			},
-			title: MODAL_TITLE_STRING,
-			style: {width: '640px', height: '460px', 'min-width': '640px', 'min-height': '460px', 'padding': 0},
-			__body: template,
-			controller: controller,
-			hasFooter: false,
-			uid: 'customer-profile-board'
+	setAPI(address = '', version = '1.0') {
+		API_ADDRESS = address;
+		API_VERSION = version;
+	}
+
+	$get() {
+		return {
+			/**
+			 * @name popProfileBoardModal
+			 * @param {Object} customerInformation
+			 * pop modal of customer profile board
+			 */
+			popProfileBoardModal(customerInformation = {}) {
+				const modalOptions = {
+					bindings: {
+						customerInformation
+					},
+					title: MODAL_TITLE_STRING,
+					style: {width: '640px', height: '460px', 'min-width': '640px', 'min-height': '460px', 'padding': 0},
+					__body: template,
+					controller: controller,
+					hasFooter: false,
+					uid: 'customer-profile-board'
+				};
+				ModalService.modal(modalOptions).open();
+			}
 		};
-		ModalService.modal(modalOptions).open();
 	}
 
 	setAPI(address = '', version = '1.0') {
