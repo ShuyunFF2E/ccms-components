@@ -37,7 +37,7 @@ const generatorQueryParam = (name = '', fields = '[]', limit = 1) => `
  * @returns {String}
  * generator graphql query string
  */
-const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
+const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenantId = '') => {
 	const CustomerQuerySchema = `
 		customer:shuyun_searchapi_customer(
 			param: ${generatorQueryParam('customer', `[{ type:"str_selector" dimension:"customerno" value:"${nick}" }]`)}
@@ -205,6 +205,22 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
 		}
 	`;
 
+	const customPropertyCustomer = `
+		custom_property_customer(
+      customerNo:"${nick}"
+      tenantId:"${tenantId}"
+      platform:"${platName}"
+    ){
+      properties{
+        id
+        name
+        type
+        optional
+        value
+      }
+    }
+	`;
+
 	let queryString = `
 		{
 			${CustomerQuerySchema}
@@ -214,16 +230,19 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
 			${MemberInfoQuerySchema}
 			${WeChatQuerySchema}
 			${WeiBoQuerySchema}
+			${customPropertyCustomer}
 		}
 	`;
 
 	queryString = `
 		{
 			${CustomerQuerySchema}
+			${RfmQuerySchema}
 			${TradeQuerySchema}
 			${MemberInfoQuerySchema}
 			${WeChatQuerySchema}
 			${WeiBoQuerySchema}
+			${customPropertyCustomer}
 		}
 	`;
 
