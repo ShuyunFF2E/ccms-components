@@ -10,6 +10,9 @@
 
 	angular
 		.module('app', ['ccms.components'])
+		.config(['$ccCustomerProfileBoardProvider', function($ccCustomerProfileBoardProvider) {
+			$ccCustomerProfileBoardProvider.setAPI('//qa-ual.fenxibao.com');
+		}])
 		.controller('ctrl', function ($scope, $ccCustomerProfileBoard) {
 
 			$scope.customerInformation = {
