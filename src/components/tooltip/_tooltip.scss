@@ -7,9 +7,11 @@ $tooltip-arrow-color: #666666;
 $tooltip-error-color: #ff867c;
 
 %tooltip {
+	position: absolute;
+	top: 0;
+	left: 0;
 	box-sizing: border-box;
 	display: none;
-	position: absolute;
 	font-size: $font-size-text;
 	border-radius: 2px;
 	padding: 4px 8px;

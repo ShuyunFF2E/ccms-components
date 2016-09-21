@@ -1,29 +1,64 @@
 <div>
 
-	<button ng-click="$ctrl.close()">关闭</button>
+	<select style="display: block; clear: both; margin-bottom: 10px;"
+	        ng-options="channel.name for channel in $ctrl.channelInfo"
+	        ng-model="$ctrl.channel"></select>
 
-	<button type="button" ng-click="$ctrl.showSuccess()">show success</button>
-	<button type="button" ng-click="$ctrl.showError()">show error</button>
+	<div style="float: left;">
+		<cc-sms-editor opts="$ctrl.channel"></cc-sms-editor>
 
-	<p ng-repeat="d in Ctrl.array" ng-bind="d"></p>
+		<input type="text"
+		       placeholder="签名"
+		       ng-model="$ctrl.channel.customSignature">
 
-	<div>
-
-		<span ng-repeat="a in $ctrl.scopedArray track by $index">
-			{{a}}
-			<br/>
-		</span>
-
-		<div>
-
-			<ckeditor ng-if data="data"></ckeditor>
-
-		</div>
-
+		<label><input type="checkbox" ng-model="$ctrl.channel.useUnsubscribe"> <span ng-bind="$ctrl.smsEditorOptions.unsubscribeText"></span></label>
 	</div>
 
-	<button ng-click="$ctrl.addRandom()">add random to scoped array</button>
+	<div style="float: left; margin-left: 50px;">
+		<cc-sms-preview opts="$ctrl.channel"></cc-sms-preview>
+	</div>
 
-	<scope array="array"></scope>
+	<div style="clear: both;">
+		<h2>短信编辑器结果：</h2>
+		<div ng-bind="$ctrl.channel.text" style="border: 1px solid; padding: 10px; width: 500px;"></div>
+	</div>
+
+	<!--<div style="display: flex; flex: 1; justify-content: space-between;flex-direction: column">-->
+
+		<!--<div style="align-self: flex-start">-->
+			<!--<button type="button"-->
+			        <!--cc-tooltip="'click me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzz'"-->
+			        <!--tooltip-trigger="click">click toggle tooltip-->
+			<!--</button>-->
+		<!--</div>-->
+
+		<!--<div style="align-self: flex-start">-->
+			<!--<button type="button"-->
+			        <!--cc-tooltip="'click me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzz'"-->
+			        <!--tooltip-trigger="click">click toggle tooltip-->
+			<!--</button>-->
+		<!--</div>-->
+
+
+	<!--</div>-->
+
+	<!--<div style="display: flex; flex: 1; justify-content: space-between;flex-direction: column">-->
+
+		<!--<div style="align-self: flex-end">-->
+			<!--<button type="button"-->
+			        <!--cc-tooltip="'click me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzz'"-->
+			        <!--tooltip-trigger="click">click toggle tooltip-->
+			<!--</button>-->
+		<!--</div>-->
+
+		<!--<div style="align-self: flex-end">-->
+			<!--<button type="button"-->
+			        <!--cc-tooltip="'click me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzz'"-->
+			        <!--tooltip-trigger="click">click toggle tooltip-->
+			<!--</button>-->
+		<!--</div>-->
+
+
+	<!--</div>-->
 
 </div>
