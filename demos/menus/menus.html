@@ -1,31 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>菜单栏</title>
+	<meta charset="UTF-8">
+	<title>菜单栏</title>
 </head>
 <body ng-app="componentsApp" ng-controller="ctrl as app">
 
-<div class="ccmsc-main-container" ng-class="{'contract-left':!app.menusOptions.unfold}">
+<header>
+	header
+</header>
 
-    <div class="left-container">
-        <cc-menu-bar
-                unfold="app.menusOptions.unfold"
-                on-unfold="app.menusOptions.unfoldClick"
-                menu-source="app.menusOptions.menusResource"
-                shop-source="app.menusOptions.shopsResource"
-                search-placeholder="app.menusOptions.searchPlaceholder">
-        </cc-menu-bar>
-    </div>
+<main>
 
-    <div class="center-container " ui-view>
-        <!--<nav-title name="app.titleName"></nav-title>-->
-    </div>
-    <div class="right-container">
-        right
-    </div>
-</div>
+	<article class="cc-main-container">
 
+		<cc-menu-bar class="cc-side-container">
+
+		</cc-menu-bar>
+
+		<ui-view class="cc-content-container"></ui-view>
+
+		<aside class="cc-aside-container"></aside>
+
+
+	</article>
+
+</main>
+
+
+
+<!--<div class="ccmsc-main-container col-2" ng-class="{'contract-left':!app.menusOptions.unfold}">-->
+
+	<!--<div class="left-container">-->
+		<!--<cc-menu-bar-->
+				<!--unfold="app.menusOptions.unfold"-->
+				<!--on-unfold="app.menusOptions.unfoldClick"-->
+				<!--menu-source="app.menusOptions.menusResource"-->
+				<!--shop-source="app.menusOptions.shopsResource"-->
+				<!--search-placeholder="app.menusOptions.searchPlaceholder">-->
+		<!--</cc-menu-bar>-->
+	<!--</div>-->
+
+	<!--<div class="center-container " ui-view>-->
+		<!--&lt;!&ndash;<nav-title name="app.titleName"></nav-title>&ndash;&gt;-->
+	<!--</div>-->
+<!--</div>-->
 <script src="/components.js"></script>
 <script src="./app.js"></script>
 </body>

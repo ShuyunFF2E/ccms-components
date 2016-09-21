@@ -2,66 +2,41 @@ $left-width: 180px;
 $center-width: 200px;
 $right-width: 200px;
 $min-width: 30px;
-
+$body-min-height: 650px;
 .ccmsc-main-container {
-	display: block;
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	& .left-container {
+	display: flex;
+	min-height: $body-min-height;
+	height: 100%;
+	.left-container {
 		//@include test-border;
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
+		flex: none;
+		order: 1;
 		z-index: 200;
 		width: $left-width;
-		background: #E9EBEE;
 	}
-	& .center-container {
-		//@include test-border;
-		//border-color: green;
-		position: absolute;
-		left: $left-width;
-		top: 0;
-		bottom: 0;
-		right: 0;
+	.center-container {
+		flex: 1;
+		order: 2;
 		padding: 20px;
 	}
 
-	& .right-container {
+	.right-container {
 		//@include test-border;
-		//border-color: blue;
-		position: absolute;
-		top: 0;
-		bottom: 0;
+		flex: 0 0 16em;
+		order: 3;
 		padding: 20px;
+		display: none;
 	}
 
 	&.contract-left {
-		& .left-container {
+		.left-container {
 			width: $min-width;
-		}
-		& .center-container {
-			left: $min-width;
-		}
-		& .right-container {
-			padding: 0;
-			display: none;
 		}
 	}
 
 	&.type-two {
-		& .center-container {
+		.right-container {
 			//@include test-border;
-			right: $right-width + 40;
-		}
-
-		& .right-container {
-			//@include test-border;
-			right: 0;
 			width: $right-width;
 			padding: 20px;
 			display: block;
@@ -69,22 +44,14 @@ $min-width: 30px;
 	}
 
 	&.type-three {
-		& .center-container {
-			width: $center-width;
-			right: inherit;
-		}
-
-		& .right-container {
-			left: $center-width + $left-width + 40;
-			right: 0;
+		.center-container {
+			flex: none;
+			width: 200px;
 			padding: 20px;
-			display: block;
 		}
-		&.contract-left {
-			& .right-container {
-				left: $center-width + $min-width + 40;
-				right: 0;
-			}
+		.right-container {
+			display: block;
+			flex: 1;
 		}
 	}
 }
