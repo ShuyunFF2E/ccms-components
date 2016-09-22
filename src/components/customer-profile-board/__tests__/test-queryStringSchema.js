@@ -132,6 +132,54 @@ describe('queryStringSchema', () => {
 	    }
 	  }
 
+	  tags:shuyun_searchapi_tags(
+			param:{
+        type:"buyer_nick"
+        value:"s_peggy"
+        dp_id: "62847409"
+        buyer_nick:"s_peggy"
+      }){
+	      result{
+          bfm
+          ccc
+          company_employ
+          date_unknown
+          discount_sense1
+          discount_sense2
+          discount_sense3
+          discount_sense4
+          discount_sense5
+          family
+          female
+          finance_institute
+          foodlover
+          gov_institute
+          hospital
+          houseman
+          jhs
+          job_unknown
+          jyet
+          life_unknown
+          male
+          mall
+          nbnm
+          non_jhs
+          non_shouji
+          pingshigou
+          school
+          sex_unknown
+          shangbangou
+          shouji
+          sportman
+          time_unknown
+          wanjiangou
+          yemaozi
+          zaochengou
+          zhoumogou
+          score
+        }
+	    }
+
 		loyalty_member_gpinfo(
       platDpId:"62847409"
       cardNo:"s_peggy"
