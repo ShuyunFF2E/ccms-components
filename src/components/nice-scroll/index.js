@@ -33,7 +33,7 @@ class Controller {
 	$onDestroy() {
 		if (this.niceScroll) {
 			this.niceScroll.remove();
-			this._$element[0].removeEventListener('DOMSubtreeModified');
+			this._$element[0].removeEventListener('DOMSubtreeModified', this.resize, false);
 		}
 	}
 
