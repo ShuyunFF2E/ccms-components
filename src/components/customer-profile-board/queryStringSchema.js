@@ -113,6 +113,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 			param:{
         type:"buyer_nick"
         value:"${nick}"
+        dp_id: "${shopId}"
         buyer_nick:"${nick}"
       }){
 	      result{
@@ -221,24 +222,12 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
     }
 	`;
 
-	let queryString = `
+	const queryString = `
 		{
 			${CustomerQuerySchema}
 			${RfmQuerySchema}
 			${TradeQuerySchema}
 			${TagQuerySchema}
-			${MemberInfoQuerySchema}
-			${WeChatQuerySchema}
-			${WeiBoQuerySchema}
-			${customPropertyCustomer}
-		}
-	`;
-
-	queryString = `
-		{
-			${CustomerQuerySchema}
-			${RfmQuerySchema}
-			${TradeQuerySchema}
 			${MemberInfoQuerySchema}
 			${WeChatQuerySchema}
 			${WeiBoQuerySchema}

@@ -120,11 +120,11 @@ const customer = {
 				validate: ['/^\\d{1, 6}$/']
 			}]
 		}]
-	}/* , {
+	}, {
 		title: '更多个人信息',
 		name: 'customerDefined',
 		attributeList: [
-			 {
+		/* {
 				attribute: 'job',
 				name: '职业',
 				defaultValue: '自由职业',
@@ -177,10 +177,9 @@ const customer = {
 					value: ''
 				}],
 				isInListMode: true
-			}
+			}*/
 		]
-	}*/
-	]
+	}]
 };
 
 const consumer = {
