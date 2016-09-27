@@ -1,8 +1,8 @@
 <!--行模板-->
 <tr ng-repeat="entity in $ctrl.opts.data track by $index"
     aria-init="{{$selected=$ctrl.isEntitySelected(entity)}}"
-	ng-class="{'row-selected':$selected}"
+	ng-class="{'row-selected':$selected || $ctrl.selectedItem === entity}"
 	ng-click="$selected=!$selected;$ctrl.switchSelectItem($selected, entity)"
-	cc-dynamic-attr="{'ng-click':$ctrl.type==='selectable'}">
+	cc-dynamic-attr="{'ng-click':$ctrl.isSetClickEvt()}">
 	{::cell-placeholder}
 </tr>

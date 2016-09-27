@@ -1,0 +1,7 @@
+<!--每条数据前的radio-->
+<td class="checkbox">
+	<input type="radio" name="{{$ctrl.singleName}}" ng-checked="$ctrl.selectedItem === entity">
+</td>
+
+<!--引入默认的表格元素 html-loader -->
+${require('./default-cell.tpl.html')}

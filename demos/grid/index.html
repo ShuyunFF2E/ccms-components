@@ -17,7 +17,7 @@
 		}
 
 		main .pager-grid, main .data-grid {
-			display: inline-block;
+			/*display: inline-block;*/
 			/*width: 40%;*/
 			overflow: auto;
 		}
@@ -58,8 +58,12 @@
 
 		<strong style="display: block;">无分页的表格</strong>
 		<button type="button" ng-click="app.refreshDataGrid()">refresh</button>
-		<cc-grid opts="app.dataGridOptions" style="height: 400px;width: 600px;"></cc-grid>
+		<cc-grid opts="app.dataGridOptions" style="height: 400px;width: 600px;" selected-item="app.selectedItem" type="single"></cc-grid>
 
+	</div>
+	<div class="info">
+		<span>选中的数据[单选]</span>
+		<span ng-bind="app.selectedItem|json"></span>
 	</div>
 
 	<div class="demo">

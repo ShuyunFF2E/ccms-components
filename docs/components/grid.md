@@ -32,8 +32,9 @@ maintainer: yazheng.yu, chaoyang.mu, kui.liu
 		* pageNum `Number`(default:1) 当前页码
 		* pageSize `Number`(default:20) 每页数据条数
 		* pageSizeList `Array`(default:[10, 15, 20, 30, 50]) 可选的每页数据条数
+* selectedItem `Object`(default:null) 选中的单条数据，配合 `type="single"` 使用
 * selectedItems `Array`(default:[]) 选中的数据集合
-* type `String`(default:'default') 表格类型 目前支持'selectable'(带checkbox)配置。
+* type `String`(default:'default') 表格类型 目前支持'selectable'(带checkbox)和'single'(带radio)配置。
 
 ### Grid配套服务
 

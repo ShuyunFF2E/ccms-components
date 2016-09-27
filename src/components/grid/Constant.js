@@ -8,6 +8,8 @@ import defaultHeaderTpl from './tpls/default-header.tpl.html';
 import defaultCellTpl from './tpls/default-cell.tpl.html';
 import checkboxHeaderTpl from './tpls/checkbox-header.tpl.html';
 import checkboxCellTpl from './tpls/checkbox-cell.tpl.html';
+import radioHeaderTpl from './tpls/radio-header.tpl.html';
+import radioCellTpl from './tpls/radio-cell.tpl.html';
 import emptyGridTipTpl from './tpls/empty-grid-tip.tpl.html';
 
 /**
@@ -16,5 +18,6 @@ import emptyGridTipTpl from './tpls/empty-grid-tip.tpl.html';
  */
 export default {
 	DEFAULT: [defaultHeaderTpl, defaultCellTpl, emptyGridTipTpl],
+	SINGLE: [radioHeaderTpl, radioCellTpl, emptyGridTipTpl],
 	SELECTABLE: [checkboxHeaderTpl, checkboxCellTpl, emptyGridTipTpl]
 };
