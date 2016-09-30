@@ -14,7 +14,7 @@ const customer = {
 		attributeList: [{
 			attribute: 'full_name',
 			name: '姓名',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			type: 'text',
@@ -23,7 +23,7 @@ const customer = {
 		}, {
 			attribute: 'sex',
 			name: '性别',
-			defaultValue: '',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			type: 'radio',
@@ -372,7 +372,7 @@ const other = {
 		attributeList: [{
 			attribute: 'cardGrade',
 			name: '会员等级',
-			defaultValue: '',
+			defaultValue: '-',
 			unit: '',
 			valueMap: {
 				1: '普通会员',
