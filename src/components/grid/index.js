@@ -22,6 +22,7 @@ const
 		controller,
 		bindings: {
 			opts: '=',
+			selectedItem: '=?',
 			selectedItems: '=?',
 			type: '@?',
 			onRefresh: '&?'

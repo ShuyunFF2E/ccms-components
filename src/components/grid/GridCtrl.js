@@ -39,6 +39,11 @@ export default class GridCtrl {
 	$onInit() {
 		this.$scope = this._$scope;
 		this.selectedItems = this.selectedItems || [];
+		this.selectedItem = this.selectedItem || null;
+
+		// radio name属性值
+		this.singleName = `SINGLE_${Date.now()}`;
+
 		const type = (this.type || 'default').toUpperCase();
 
 		GridHelper.fillOpts(this.opts);
@@ -89,16 +94,28 @@ export default class GridCtrl {
 	}
 
 	switchSelectItem($selected, entity) {
+		const type = (this.type || 'default').toUpperCase();
 
-		if ($selected) {
-			this.selectedItems.push(entity);
-		} else {
-			this.selectedItems.splice(findEntity(this.selectedItems, entity), 1);
+		switch (true) {
+			case type === 'SINGLE':
+				this.selectedItem = entity;
+				break;
+			default:
+				if ($selected) {
+					this.selectedItems.push(entity);
+				} else {
+					this.selectedItems.splice(findEntity(this.selectedItems, entity), 1);
+				}
+				break;
 		}
 	}
 
 	isEntitySelected(entity) {
 		return findEntity(this.selectedItems, entity) !== -1;
+	}
+
+	isSetClickEvt() {
+		return ['SELECTABLE', 'SINGLE'].indexOf((this.type || 'default').toUpperCase()) !== -1;
 	}
 
 	toggleSort(column) {
