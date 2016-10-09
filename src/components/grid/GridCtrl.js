@@ -10,7 +10,7 @@ import 'jquery.nicescroll';
 
 import { Debounce, Inject } from 'angular-es-utils/decorators';
 
-import rowCellTemplate from './tpls/row-cell.tpl.html';
+import rowTemplate from './tpls/row.tpl.html';
 import TplReqHelper from '../../common/utils/tpl-req-helper';
 
 import GRID_TEMPLATES from './Constant';
@@ -30,7 +30,6 @@ function findEntity(collection, entity) {
 	return collection.findIndex(item => angular.equals(item, entity));
 }
 
-const PLACEHOLDER = '{::cell-placeholder}';
 const SORT_ORDERS = ['asc', 'desc'];
 
 @Inject('$scope')
@@ -43,13 +42,17 @@ export default class GridCtrl {
 
 		GridHelper.fillOpts(this.opts);
 
-		const {headerTpl, emptyTipTpl, cellTpl} = this.opts;
+		const {headerTpl, emptyTipTpl, rowTpl} = this.opts;
 
 		this.headerTemplate = TplReqHelper.get(headerTpl || GRID_TEMPLATES[type][0]);
 		this.emptyTipsTemplate = TplReqHelper.get(emptyTipTpl || GRID_TEMPLATES[type][2]);
-		TplReqHelper.get(cellTpl || GRID_TEMPLATES[type][1]).then(tpl => {
-			this.bodyTemplate = rowCellTemplate.replace(PLACEHOLDER, tpl);
-		});
+
+		if (rowTpl) {
+			this.bodyTemplate = TplReqHelper.get(rowTpl);
+		} else {
+			this.bodyTemplate = rowTemplate;
+			this.rowCellTemplate = GRID_TEMPLATES[type][1];
+		}
 
 		// 排序
 		this.sortGridData(true);
