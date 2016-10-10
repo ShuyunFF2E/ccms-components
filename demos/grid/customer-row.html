@@ -1,0 +1,18 @@
+<!--行模板-->
+<tr ng-repeat="entity in $ctrl.opts.data track by $index"
+    aria-init="{{$selected=$ctrl.isEntitySelected(entity)}}"
+    ng-class="{'row-selected':$selected}"
+    ng-click="$selected=!$selected;$ctrl.switchSelectItem($selected, entity)"
+    cc-dynamic-attr="{'ng-click':$ctrl.selectedItems.length<=2||$selected}">
+
+	<td class="checkbox" aria-init="{{$selected=$ctrl.isEntitySelected(entity)}}">
+		<input type="checkbox" ng-checked="$selected" ng-disabled="!$selected&&$ctrl.selectedItems.length > 2">
+	</td>
+
+	<!--默认的表格行元素模板-->
+	<td ng-repeat="column in $ctrl.opts.columnsDef track by $index"
+	    ng-style="{width:column.width}">
+		<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="entity"></cc-grid-cell>
+	</td>
+
+</tr>
