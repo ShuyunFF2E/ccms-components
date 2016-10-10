@@ -24,8 +24,9 @@ maintainer: yazheng.yu, chaoyang.mu, kui.liu
 	* enableHiddenColumns `Boolean`(default: false) 是否开启隐藏列功能
 	* externalData `Array|Promise`(default:null) 当分页数据不由resource接口查询而来，可通过配置该参数展示数据。数据可以是一个数组，也可以是一个已经被resolve了的promise。**注意：该配置与resource配置互斥，当resource不为`null|undefined`时，该配置失效。**
 	* headerTpl `String` 自定义表头模板，支持 字符串｜模板url
-	* cellTpl `String` 表格元素模板，支持 字符串｜模板url
+	* rowTpl `String` 表格行模板，支持 字符串｜模板url，可模仿已提供的[模板](https://github.com/ShuyunFF2E/ccms-components/blob/dev/src/components/grid/tpls/row-cell.tpl.html)编写自定义模板
 	* emptyTipTpl `String` 表格为空时的提示信息模板，支持 字符串｜模板url
+	* transformer `Object|Function` 字段映射配置，
 	* pager `Object` 分页信息定义
 		* totals `Number`(default:0) 数据总条数
 		* totalPages `Number`(default:1) 总页数

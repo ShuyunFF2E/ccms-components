@@ -6,7 +6,7 @@
 
 import GridCtrl from '../GridCtrl';
 import GRID_TEMPLATES from '../Constant';
-import rowCellTemplate from '../tpls/row-cell.tpl.html';
+import rowTemplate from '../tpls/row.tpl.html';
 
 import {assert} from 'chai';
 
@@ -54,9 +54,7 @@ describe('GridCtrl', () => {
 			.then(tpls => {
 				assert.equal(tpls[0], GRID_TEMPLATES[type][0]);
 				assert.equal(tpls[1], GRID_TEMPLATES[type][2]);
-
-				const bodyTpl = rowCellTemplate.replace('{::cell-placeholder}', GRID_TEMPLATES[type][1]);
-				assert.equal(gridCtrl.bodyTemplate, bodyTpl);
+				assert.equal(gridCtrl.bodyTemplate, rowTemplate);
 
 				done();
 			});

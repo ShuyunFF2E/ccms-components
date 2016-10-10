@@ -6,7 +6,7 @@
 
 import GridHelper from '../GridHelper';
 
-import {assert} from 'chai';
+import { assert } from 'chai';
 
 describe('GridHelper', () => {
 
@@ -32,7 +32,8 @@ describe('GridHelper', () => {
 			'externalData',
 			'showPagination',
 			'headerTpl',
-			'cellTpl',
+			'rowTpl',
+			'transformer',
 			'emptyTipTpl',
 			'pager'
 		]);
