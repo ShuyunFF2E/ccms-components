@@ -184,7 +184,7 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.set.st', {
 			url: '/st',
-			template: '手机淘宝',
+			template: '手机淘宝<cc-date-picker ng-model="date"></cc-date-picker>',
 			controller: phoneTaoBaoController,
 			controllerAs: 'st'
 		})
