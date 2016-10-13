@@ -1,5 +1,3 @@
-$side-container-width: 180px;
-
 .cc-main-container {
 
 	position: relative;
@@ -8,8 +6,8 @@ $side-container-width: 180px;
 	height: 100%;
 
 	& .cc-side-container {
-		width: $side-container-width;
 		order: 1;
+		overflow: auto;
 	}
 
 	& cc-menu-bar {
@@ -21,10 +19,12 @@ $side-container-width: 180px;
 		flex: 1;
 		padding: 20px;
 		order: 2;
+		overflow: auto;
 	}
 
 	& .cc-aside-container {
 		flex: 0 0 16em;
 		order: 3;
+		overflow: auto;
 	}
 }
