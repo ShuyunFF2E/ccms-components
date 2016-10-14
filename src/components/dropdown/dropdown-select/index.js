@@ -18,7 +18,8 @@ const dropdownSelectDDO = {
 		datalist: '<',
 		searchable: '<?',
 		disabled: '<?',
-		placeholder: '@?'
+		placeholder: '@?',
+		onSelectChange: '&?'
 	},
 	bindToController: true
 };
