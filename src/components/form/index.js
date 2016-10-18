@@ -53,7 +53,4 @@ export default angular
 	// 对built-in的表单添加额外逻辑
 	.directive('form', () => forbidFormNativeValidator)
 	.value('$ccValidator', ValidatorService)
-	.deprecatedDirective('validators', () => validatorsDDO)
-	.deprecatedDirective('validator', () => validatorDDO)
-	.deprecatedValue('$Validator', ValidatorService, '$Validator 服务将在8.30之后废弃,请尽早使用 $ccValidator 服务代替!')
 	.name;
