@@ -54,8 +54,7 @@ export default class GridCtrl {
 			this.rowCellTemplate = GRID_TEMPLATES[type][1];
 		}
 
-		// 排序
-		this.sortGridData(true);
+		this.sortGridData();
 	}
 
 	get $allSelected() {
@@ -67,10 +66,9 @@ export default class GridCtrl {
 	onPagerChange(pageNum, pageSize) {
 
 		const {opts} = this;
+		const queryParams = Object.assign(opts.queryParams || {}, {pageNum, pageSize});
 
-		GridHelper
-			.refresh(opts, Object.assign(opts.queryParams || {}, {pageNum, pageSize}))
-			.then(() => this.onRefresh && this.onRefresh({opts}));
+		this._refresh(opts, queryParams);
 	}
 
 	switchSelectAll(allSelected, selectedCollection) {
@@ -124,7 +122,7 @@ export default class GridCtrl {
 		}
 	}
 
-	sortGridData(isInit = false) {
+	sortGridData() {
 
 		const sortQueryParam = {
 			orders: [],
@@ -140,18 +138,14 @@ export default class GridCtrl {
 			}
 		});
 
-		GridHelper
-			.refresh(opts, Object.assign(opts.queryParams || {},
-				sortQueryParam.props.length > 0 ? {
-					pageNum: 1,
-					sortProps: sortQueryParam.props.toString(),
-					sortOrders: sortQueryParam.orders.toString()
-				} : {sortProps: '', sortOrders: ''}))
-			.then(() => {
-				if (!isInit && this.onRefresh) {
-					this.onRefresh({opts});
-				}
-			});
+		const queryParams = Object.assign(opts.queryParams || {},
+			sortQueryParam.props.length > 0 ? {
+				pageNum: 1,
+				sortProps: sortQueryParam.props.toString(),
+				sortOrders: sortQueryParam.orders.toString()
+			} : {sortProps: '', sortOrders: ''});
+
+		this._refresh(opts, queryParams);
 	}
 
 	toggleColumnByIndex(index) {
@@ -163,5 +157,11 @@ export default class GridCtrl {
 		return this.opts.columnsDef.reduce(
 			(count, col) => col.isHidden ? count : count + 1, 0
 		);
+	}
+
+	_refresh(opts, queryParams) {
+		GridHelper
+			.refresh(opts, queryParams)
+			.then(gridOptions => this.onRefresh && this.onRefresh({opts: gridOptions}));
 	}
 }

@@ -94,6 +94,8 @@ export default {
 					pager.pageSize = transformedData.pageSize;
 					pager.totals = transformedData.totals;
 					pager.totalPages = Math.ceil((transformedData.totals || 0) / pager.pageSize);
+
+					return gridOptions;
 				});
 
 		} else {
@@ -101,6 +103,7 @@ export default {
 			const finish = data => {
 				gridOptions.data = data;
 				gridOptions.loading = false;
+				return gridOptions;
 			};
 
 			if (isPromiseLike(gridOptions.externalData)) {
