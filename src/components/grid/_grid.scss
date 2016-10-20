@@ -14,7 +14,6 @@ $tr-hover-bg: #eef8fc;
 $icon-asc-sort-deg: 180deg;
 $init-color: #70a2c7;
 
-grid,
 cc-grid {
 
 	display: inline-block;
@@ -234,7 +233,6 @@ cc-grid {
 			}
 		}
 
-		& > pagination,
 		& > cc-pagination {
 			flex: 1;
 		}
