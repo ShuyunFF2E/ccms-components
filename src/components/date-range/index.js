@@ -11,5 +11,4 @@ import ddo from './DateRange';
 export default angular
 		.module('ccms.components.dateRange', ['ccms.components.datePicker'])
 		.directive('ccDateRange', () => ddo)
-		.deprecatedDirective('dateRange', () => ddo)
 		.name;

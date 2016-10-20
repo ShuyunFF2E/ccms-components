@@ -11,5 +11,4 @@ import ddo from './DatePicker';
 export default angular
 	.module('ccms.components.datePicker', ['ccms.components.calendar'])
 	.directive('ccDatePicker', () => ddo)
-	.deprecatedDirective('datePicker', () => ddo)
 	.name;
