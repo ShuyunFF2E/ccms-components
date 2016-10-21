@@ -26,6 +26,5 @@ const dropdownMultiselectDDO = {
 export default angular
 	.module('ccms.components.dropdownMultiselect', [bindHtml])
 	.directive('ccDropdownMultiselect', () => dropdownMultiselectDDO)
-	.deprecatedDirective('dropdownMultiselect', () => dropdownMultiselectDDO)
 	.name;
 

@@ -45,10 +45,7 @@ const dropdownPanelDDO = {
 export default angular
 	.module('ccms.components.dropdown', [])
 	.directive('ccDropdown', () => dropdownDDO)
-	.deprecatedDirective('dropdown', () => dropdownDDO)
 	.directive('ccDropdownToggle', () => dropdownToggleDDO)
-	.deprecatedDirective('dropdownToggle', () => dropdownToggleDDO)
 	.directive('ccDropdownPanel', () => dropdownPanelDDO)
-	.deprecatedDirective('dropdownPanel', () => dropdownPanelDDO)
 	.name;
 
