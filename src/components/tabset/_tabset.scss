@@ -19,7 +19,6 @@ $remove-btn-size: 12px;
 }
 
 // tab样式
-tabset,
 cc-tabset {
 	display: block;
 	overflow: hidden;
@@ -107,7 +106,6 @@ cc-tabset {
 			margin-right: 0;
 		}
 
-		& > tab,
 		& > cc-tab {
 			display: inline-block;
 			padding-right: 5px;
@@ -202,7 +200,6 @@ cc-tabset {
 		}
 
 		&.tabset-smaller {
-			tab > div,
 			cc-tab > div {
 				line-height: 24px;
 			}

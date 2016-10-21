@@ -59,9 +59,7 @@ const tabContentDDO = {
 export default angular
 	.module('ccms.components.tabsets', [])
 	.directive('ccTabset', () => tabsetDDO)
-	.deprecatedDirective('tabset', () => tabsetDDO)
 	.directive('ccTab', () => tabDDO)
-	.deprecatedDirective('tab', () => tabDDO)
 	.directive('tabTitleTransclude', () => tabTitleDDO)
 	.directive('tabContentTransclude', () => tabContentDDO)
 	.name;
