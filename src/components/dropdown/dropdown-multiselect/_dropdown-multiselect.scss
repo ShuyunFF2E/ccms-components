@@ -115,6 +115,9 @@ cc-dropdown-multiselect {
 				}
 				> label {
 					display: block;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 					cursor: pointer;
 					> input[type="checkbox"] {
 						margin-right: 5px;
