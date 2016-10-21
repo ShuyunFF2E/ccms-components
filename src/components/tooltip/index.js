@@ -26,6 +26,4 @@ const tooltipDDO = {
 export default angular.module('ccms.components.tooltip', [])
 	.directive('ccTooltip', () => tooltipDDO)
 	.value('$ccTooltip', Tooltip)
-	.deprecatedDirective('tooltip', () => tooltipDDO)
-	.deprecatedValue('Tooltip', Tooltip)
 	.name;
