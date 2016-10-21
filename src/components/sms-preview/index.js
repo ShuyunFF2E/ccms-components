@@ -11,5 +11,4 @@ import ddo from './SMSPreview';
 export default angular
 	.module('ccms.components.SMSPreview', ['ccms.components.tooltip'])
 	.directive('ccSmsPreview', () => ddo)
-	.deprecatedDirective('smsPreview', () => ddo)
 	.name;
