@@ -15,11 +15,11 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 		this.selectedItems = [];
 
 		this.refreshGrid = function() {
-			$ccGrid.refresh(this.pagerGridOptions).then(() => this.selectedItems.length = 0);
+			$ccGrid.refresh(this.pagerGridOptions).then(opts => this.selectedItems.length = 0);
 		};
 
 		this.refreshDataGrid = function() {
-			$ccGrid.refresh(this.dataGridOptions).then(() => console.log('data grid refreshed!'));
+			$ccGrid.refresh(this.dataGridOptions).then(opts => console.log('data grid refreshed!', opts));
 		};
 
 		this.onRefresh = function(opts) {
