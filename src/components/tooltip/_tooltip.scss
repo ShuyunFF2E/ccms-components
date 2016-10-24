@@ -7,9 +7,11 @@ $tooltip-arrow-color: #666666;
 $tooltip-error-color: #ff867c;
 
 %tooltip {
+	position: absolute;
+	top: 0;
+	left: 0;
 	box-sizing: border-box;
 	display: none;
-	position: absolute;
 	font-size: $font-size-text;
 	border-radius: 2px;
 	padding: 4px 8px;
@@ -41,6 +43,7 @@ $tooltip-error-color: #ff867c;
 	&.top:after {
 		bottom: 0;
 		left: 50%;
+		margin-left: -$tooltip-arrow-width;
 		margin-bottom: -$tooltip-arrow-width;
 		border-width: $tooltip-arrow-width $tooltip-arrow-width 0;
 		border-top-color: $tooltip-arrow-color;

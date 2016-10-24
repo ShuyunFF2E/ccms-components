@@ -14,7 +14,6 @@ export default {
 	bindToController: true,
 	controller: DatePickerCtrl,
 	controllerAs: 'ctrl',
-	name: 'ccDatePicker',
 	replace: true,
 	require: 'ngModel',
 	restrict: 'E',

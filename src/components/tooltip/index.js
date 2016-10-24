@@ -10,7 +10,8 @@ const tooltipDDO = {
 	controller: TooltipCtrl,
 	controllerAs: '$$tooltipCtrl',
 	bindToController: {
-		content: '<tooltip',
+		content: '<ccTooltip',
+		oldContent: '<?tooltip', // TODO needs remove after migration
 		trigger: '@?tooltipTrigger',
 		placement: '@?tooltipPlacement',
 		opened: '<?tooltipOpened',
@@ -23,6 +24,6 @@ const tooltipDDO = {
 };
 
 export default angular.module('ccms.components.tooltip', [])
-	.directive('tooltip', () => tooltipDDO)
-	.constant('Tooltip', Tooltip)
+	.directive('ccTooltip', () => tooltipDDO)
+	.value('$ccTooltip', Tooltip)
 	.name;

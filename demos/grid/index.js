@@ -15,11 +15,11 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 		this.selectedItems = [];
 
 		this.refreshGrid = function() {
-			$ccGrid.refresh(this.pagerGridOptions).then(() => this.selectedItems.length = 0);
+			$ccGrid.refresh(this.pagerGridOptions).then(opts => this.selectedItems.length = 0);
 		};
 
 		this.refreshDataGrid = function() {
-			$ccGrid.refresh(this.dataGridOptions).then(() => console.log('data grid refreshed!'));
+			$ccGrid.refresh(this.dataGridOptions).then(opts => console.log('data grid refreshed!', opts));
 		};
 
 		this.onRefresh = function(opts) {
@@ -35,14 +35,47 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			},
 			columnsDef: [
 				{
-					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" tooltip="entity.name" tooltip-append-to-body="true"></span>',
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
-					width: '100px'
+					width: '100px',
+					sortProp: 'name'
 				},
-				{field: 'age', displayName: '年龄', align: 'center'},
-				{field: 'gender', displayName: '性别', align: 'right'}
+				{field: 'age', displayName: '年龄', align: 'center', sortOrder: 'age'},
+				{field: 'gender', displayName: '性别', align: 'right', width: '100px', cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>'}
 			],
+			transformer: {
+				pageNum: 'currentPage',
+				totals: 'totalCount'
+			}
+			// transformer: function (res) {
+			// 	console.log(res);
+			// 	return [];
+			// }
+
+			//headerTpl: '/demos/grid/test.html'
+
+		};
+
+		this.pagerGridOptions2 = {
+
+			resource: $resource('/pages/1'),
+			response: null,
+			queryParams: {
+				pageNum: 2
+			},
+			columnsDef: [
+				{
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
+					displayName: '姓名',
+					align: 'center',
+					width: '100px',
+					sortProp: 'name'
+				},
+				{field: 'age', displayName: '年龄', align: 'center', sortOrder: 'age'},
+				{field: 'gender', displayName: '性别', align: 'right', width: '100px', cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>'}
+			],
+			rowTpl: '/demos/grid/customer-row.html',
 			transformer: {
 				pageNum: 'currentPage',
 				totals: 'totalCount'
@@ -74,6 +107,22 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 				{field: 'age', displayName: '年龄', align: 'center'},
 				{field: 'gender', displayName: '性别', align: 'right'}
 			],
+			showPagination: false
+		};
+
+		this.gridOption3 = {
+
+			externalData: [{name: 'kuitos', age: 10, gender: '男'}, {name: 'xxx', age: 11, gender: '女'}],
+			columnsDef: [
+				{
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
+					displayName: '姓名',
+					align: 'left'
+				},
+				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'gender', displayName: '性别', align: 'right', isHidden: true}
+			],
+			enableHiddenColumns: true,
 			showPagination: false
 		};
 

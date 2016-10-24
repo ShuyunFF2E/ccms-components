@@ -16,5 +16,5 @@ import CustomerDefinedAttributeEditor from './customer-defined-attribute-editor'
 
 export default angular
 	.module('ccms.components.customerProfileBoard', [bindHTML, CustomerProfileHeader, CustomerProfileViewMode, CustomerProfileListMode, CustomerDefinedAttributeEditor])
-	.service('$ccCustomerProfileBoard', $ccCustomerProfileBoard)
+	.provider('$ccCustomerProfileBoard', $ccCustomerProfileBoard)
 	.name;

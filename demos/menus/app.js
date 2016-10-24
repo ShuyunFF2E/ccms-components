@@ -4,129 +4,6 @@
  * @Author: maxsmu
  * @Date: 2016-03-04 10:36 AM
  */
-const menusList = [
-	{
-		"name": "忠诚度设置",
-		"state": "card",
-		"icon": "",
-		"children": [
-			{
-				"name": "积分类型",
-				"state": "card.point",
-				"icon": "",
-				"children": []
-			},
-			{
-				"name": "等级类型",
-				"state": "card.grade",
-				"icon": "",
-				"children": []
-			}
-		]
-	},
-	{
-		"name": "TAE会员专区",
-		"state": "views",
-		"icon": "",
-		"children": [
-			{
-				"name": "界面设置",
-				"state": "views.set",
-				"icon": "",
-				"children": [
-					{
-						"name": "手淘",
-						"state": "views.set.st",
-						"icon": "",
-						"children": []
-					}
-				]
-			},
-			{
-				"name": "赚积分",
-				"state": "views.point",
-				"icon": "",
-				"children": [
-					{
-						"name": "签到",
-						"state": "views.point.sign",
-						"icon": "",
-						"children": [
-							{
-								"name": "再签到",
-								"state": "views.point.sign.reload",
-								"icon": "",
-								"children": []
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		"name": "会员等级管理",
-		"state": "grade",
-		"icon": "",
-		"children": []
-	}
-];
-const shopsList = [
-	{
-		"name": "天猫店铺",
-		"value": "tb",
-		"active": true,
-		"child": [
-			{
-				"name": "小猫时尚旗舰店",
-				"active": true,
-				"value": "tb-cut",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
-			},
-			{
-				"name": "小狗时尚旗舰店",
-				"value": "tb-dog",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
-			},
-			{
-				"name": "小仔时尚旗舰店",
-				"value": "tb-cub",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
-			},
-			{
-				"name": "洋陽轩旗舰店",
-				"value": "tb-yy",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
-			}
-		]
-	},
-	{
-		"name": "京东店铺",
-		"value": "jd",
-		"child": [
-			{
-				"name": "小猫时尚旗舰店",
-				"value": "jd-cut",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
-			},
-			{
-				"name": "小狗时尚旗舰店",
-				"value": "jd-dog",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
-			},
-			{
-				"name": "小仔时尚旗舰店",
-				"value": "jd-cub",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
-			},
-			{
-				"name": "洋陽轩旗舰店",
-				"value": "jd-yy",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
-			}
-		]
-	}
-];
 angular
 	.module('componentsApp', ['ccms.components', 'ui.router', 'ngResource'])
 
@@ -184,7 +61,9 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.set.st', {
 			url: '/st',
-			template: '手机淘宝'
+			template: '手机淘宝<cc-date-picker ng-model="date"></cc-date-picker>',
+			controller: phoneTaoBaoController,
+			controllerAs: 'st'
 		})
 		.state('views.point', {
 			abstract: true,
@@ -198,17 +77,21 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.point.sign.reload', {
 			url: '/sign',
-			template: '签到绘声绘色'
+			template: '签到绘声绘色',
+			controller: pointSignReloadController,
+			controllerAs: 'reload'
 		})
 		.state('grade', {
 			url: '/grade',
-			template: '任性的一哥们儿'
+			template: '<span ng-click="manage.searchPlatShop()"> 任性的一哥们儿</span>',
+			controller: gradeManageController,
+			controllerAs: 'manage'
 		});
 	$urlRouterProvider.otherwise('views/point/sign/sign');
 }
 
 runConfig.$inject = ['$state', '$rootScope', '$ccMenus'];
-function runConfig($state, $rootScope, $ccMenus) {
+function runConfig($state, $rootScope) {
 	$rootScope.$state = $state;
 }
 
@@ -218,57 +101,28 @@ gradeController.$inject = ['$scope', '$ccMenus'];
 // - 关闭自动开启功能
 function gradeController($scope, $ccMenus) {
 
-	$scope.$on('shop:change', (event, current) => {
-		const serveCurrent = $ccMenus.getCurrentPlatShop();
-		// --TODO 执行其他操作
-		console.log('事件广播:', current.plat.name + '|' + current.shop.name);
-		console.log('服务接口:', serveCurrent.plat.name + '|' + serveCurrent.shop.name);
-
+	$ccMenus.getCurrentPlatShop().then(current => {
+		console.log('等级类型:(server)', current.plat.name + '|' + current.shop.name);
 	});
+
+	const change = $ccMenus.onShopChange(current => {
+		console.log('等级类型:(listener)', current.plat.name + '|' + current.shop.name);
+	}, $scope);
 }
 
 
-pointController.$inject = ['$scope', '$ccMenus'];
+pointController.$inject = ['$scope', '$ccMenus', '$ccModal'];
 
 // - 开启自动关闭功能
-function pointController($scope, $ccMenus) {
+function pointController($scope, $ccMenus, $ccModal) {
+
+	$ccMenus.getCurrentPlatShop().then(current => {
+		console.log('积分类型:(server)', current.plat.name + '|' + current.shop.name)
+	});
 
 	this.name = '老司机飙车速度疾';
 
 	let isChange = false;
-
-	$scope.$on('shop:changeStart', (event, defer) => {
-
-		if (isChange) {
-			const state = window.confirm('确定切换店铺?');
-			if (state) {
-				defer.resolve();
-			} else {
-				defer.reject();
-			}
-			isChange = false;
-		}
-	});
-
-	$scope.$on('shop:change', (event, current) => {
-		const serveCurrent = $ccMenus.getCurrentPlatShop();
-
-		if (isChange) {
-			const state = window.confirm('确定切换店铺?');
-			if (state) {
-				defer.resolve();
-			} else {
-				defer.reject();
-			}
-			isChange = false;
-		}
-	});
-
-	$scope.$on('shop:change', (event, current) => {
-		const serveCurrent = $ccMenus.getCurrentPlatShop();
-		console.log('事件广播:', current.plat.name + '|' + current.shop.name);
-		console.log('服务接口:', serveCurrent.plat.name + '|' + serveCurrent.shop.name);
-	});
 
 	/**
 	 * 表单修改
@@ -276,4 +130,76 @@ function pointController($scope, $ccMenus) {
 	this.formChange = () => {
 		isChange = true;
 	};
+
+	$ccMenus.onShopChange(current => {
+		console.log('积分类型:(listener)', current.plat.name + '|' + current.shop.name);
+	}, $scope);
+
+	$ccMenus.onShopChangeStart((defer, toShop)=> {
+		if (isChange) {
+
+			$ccModal.confirm('切换店铺中,确定要切换至' + toShop.plat.name + '下的' + toShop.shop.name + '吗?', {
+				onClose: function () {
+					console.log('close');
+				}
+			}).open().result.then(() => {
+				defer.resolve();
+				isChange = false;
+			}, () => {
+				defer.reject();
+			});
+		} else {
+
+			defer.resolve();
+		}
+	}, $scope);
+
+}
+
+
+gradeManageController.$inject = ['$scope', '$ccMenus'];
+function gradeManageController($scope, $ccMenus) {
+
+	$ccMenus.getCurrentPlatShop().then(current => {
+		console.log('1会员等级管理:(server)', current.plat.name + '|' + current.shop.name);
+	});
+
+
+	$ccMenus.onShopChange(current => {
+		console.log('会员等级管理:(listener)', current.plat.name + '|' + current.shop.name);
+
+		$ccMenus.getCurrentPlatShop().then(current => {
+			console.log('3会员等级管理:(server)', current.plat.name + '|' + current.shop.name);
+		});
+	}, $scope);
+
+	this.searchPlatShop = () => {
+		$ccMenus.getCurrentPlatShop().then(current => {
+			console.log('会员等级管理:(search)', current.plat.name + '|' + current.shop.name);
+		});
+	};
+
+}
+
+pointSignReloadController.$inject = ['$scope', '$ccMenus'];
+function pointSignReloadController($scope, $ccMenus) {
+
+	$ccMenus.getCurrentPlatShop().then(current => {
+		console.log('再签到:(server)', current.plat.name + '|' + current.shop.name);
+	}, $scope);
+
+	$ccMenus.onShopChange(current => {
+		console.log('再签到:(listener)', current.plat.name + '|' + current.shop.name);
+	}, $scope);
+}
+phoneTaoBaoController.$inject = ['$scope', '$ccMenus'];
+function phoneTaoBaoController($scope, $ccMenus) {
+
+	$ccMenus.getCurrentPlatShop().then(current => {
+		console.log('手机淘宝:(server)', current.plat.name + '|' + current.shop.name);
+	}, $scope);
+
+	$ccMenus.onShopChange(current => {
+		console.log('手机淘宝:(listener)', current.plat.name + '|' + current.shop.name);
+	}, $scope);
 }

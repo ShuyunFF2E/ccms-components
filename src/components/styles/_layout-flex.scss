@@ -1,0 +1,30 @@
+.cc-main-container {
+
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+
+	& .cc-side-container {
+		order: 1;
+		overflow: auto;
+	}
+
+	& cc-menu-bar {
+		position: relative;
+		z-index: 1;
+	}
+
+	& .cc-content-container {
+		flex: 1;
+		padding: 20px;
+		order: 2;
+		overflow: auto;
+	}
+
+	& .cc-aside-container {
+		flex: 0 0 16em;
+		order: 3;
+		overflow: auto;
+	}
+}

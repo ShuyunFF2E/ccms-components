@@ -1,15 +1,15 @@
-<section>
+<section class="cc-grid">
     <!--表格头部-->
-    <div class="ccms-table-wrapper">
+    <header class="ccms-table-wrapper">
         <table class="ccms-table">
             <thead>
             <tr cc-bind-html="$ctrl.headerTemplate"></tr>
             </thead>
         </table>
-    </div>
+    </header>
 
     <!--表格体-->
-    <div style="top:43px" class="ccms-table-wrapper">
+    <div style="top:43px" data-id="tbody" cc-nice-scroll class="ccms-table-wrapper">
 
         <table class="ccms-table">
             <tbody cc-bind-html="$ctrl.bodyTemplate">
@@ -24,7 +24,7 @@
     </div>
 
     <!--分页-->
-    <div class="footer" ng-if="$ctrl.opts.showPagination">
+    <footer class="footer" ng-if="$ctrl.opts.showPagination">
         <article class="page-con">
             <span ng-show="$ctrl.selectedItems.length">已选<span ng-bind="$ctrl.selectedItems.length"
                                                                class="font-num"></span>条</span>
@@ -42,6 +42,6 @@
                 page-size-list-disabled="$ctrl.opts.pager.pageSizeListDisabled"
                 on-change="$ctrl.onPagerChange(pageNum, pageSize)">
         </cc-pagination>
-    </div>
+    </footer>
 
 </section>

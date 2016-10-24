@@ -11,5 +11,4 @@ import ddo from './SMSEditor';
 export default angular
 		.module('ccms.components.smsEditor', [])
 		.directive('ccSmsEditor', () => ddo)
-		.deprecatedDirective('smsEditor', () => ddo)
 		.name;

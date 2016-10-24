@@ -13,7 +13,6 @@ export default {
 	bindToController: true,
 	controller: DateRangeCtrl,
 	controllerAs: 'ctrl',
-	name: 'ccDateRange',
 	replace: true,
 	restrict: 'E',
 	scope: {

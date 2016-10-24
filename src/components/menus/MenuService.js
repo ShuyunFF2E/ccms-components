@@ -1,24 +1,52 @@
 /**
- * CURRENT - 当前选中平台信息
- * @type {{CURRENT: {}}}
- */
-export let CONFIG = {
-	CURRENT: {}
-};
-
-/**
  * Created with MenuService.js
  * @Description:
  * @Author: maxsmu
  * @Date: 2016-03-10 8:11 PM
  */
+
+import EventBus from 'angular-es-utils/event-bus';
+import Deferred from 'angular-es-utils/deferred';
+
+let deferred = new Deferred();
+let isHadBeenInitialized = false;
+let currentShop = {};
+
+export function reset() {
+	currentShop = {};
+	isHadBeenInitialized = false;
+}
+export function setCurrentPlatShop(plat, shop) {
+
+	const selectedShop = {plat, shop};
+
+	currentShop = selectedShop;
+
+	if (isHadBeenInitialized) {
+		deferred = new Deferred();
+		dispatchShopChange(selectedShop);
+	}
+	deferred.resolve(currentShop);
+
+	isHadBeenInitialized = true;
+}
+export function dispatchMenuChange(...args) {
+	return EventBus.dispatch('cc:menuChange', ...args);
+}
+
+export function dispatchShopChange(...args) {
+	return EventBus.dispatch('cc:shopChange', ...args);
+}
+export function dispatchShopChangeStart(...args) {
+	return EventBus.dispatch('cc:shopChangeStart', ...args);
+}
+
+export function isHaveBindShopChangeStart() {
+	return EventBus.getListeners('cc:shopChangeStart').length > 0;
+}
+
 export default {
 
-	/**
-	 * 获取菜单列表
-	 * @param menusResource menus数据源
-	 * @returns {*}
-	 */
 	getMenus(menusResource) {
 		const isResource = menusResource && typeof menusResource.query === 'function',
 		// -如果是Resource则返回Resource,否则返回原数据
@@ -30,10 +58,6 @@ export default {
 		};
 	},
 
-	/**
-	 * 获取店铺列表
-	 * @param shopsResource shops数据源
-	 */
 	getShops(shopsResource) {
 
 		const isResource = shopsResource && typeof shopsResource.query === 'function',
@@ -47,27 +71,39 @@ export default {
 		};
 	},
 
-	/**
-	 * 初始化状态值
-	 */
-	init() {
-		CONFIG.CURRENT = {};
-	},
-
-	/**
-	 * 查询当前选中的平台及店铺
-	 * @returns {CURRENT|{}}
-	 */
 	getCurrentPlatShop() {
-		return CONFIG.CURRENT;
+		return deferred.promise;
 	},
 
-	/**
-	 * 设置当前选中平台及店铺
-	 * @param plat
-	 * @param shop
-	 */
-	setCurrentPlatShop(plat, shop) {
-		CONFIG.CURRENT = {plat, shop};
+	onMenuChange(listener, scope) {
+
+		const offListener = EventBus.once('cc:menuChange', listener);
+
+		if (scope) {
+			scope.$on('$destroy', offListener);
+		}
+
+		return offListener;
+	},
+
+	onShopChange(listener, scope) {
+		const offListener = EventBus.on('cc:shopChange', listener);
+
+		if (scope) {
+			scope.$on('$destroy', offListener);
+		}
+
+		return offListener;
+	},
+
+	onShopChangeStart(listener, scope) {
+		const offListener = EventBus.on('cc:shopChangeStart', listener);
+
+		if (scope) {
+			scope.$on('$destroy', offListener);
+		}
+
+		return offListener;
 	}
+
 };

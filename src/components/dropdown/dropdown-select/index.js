@@ -18,7 +18,8 @@ const dropdownSelectDDO = {
 		datalist: '<',
 		searchable: '<?',
 		disabled: '<?',
-		placeholder: '@?'
+		placeholder: '@?',
+		onSelectChange: '&?'
 	},
 	bindToController: true
 };
@@ -26,6 +27,5 @@ const dropdownSelectDDO = {
 export default angular
 	.module('ccms.components.dropdownSelect', [bindHtml])
 	.directive('ccDropdownSelect', () => dropdownSelectDDO)
-	.deprecatedDirective('dropdownSelect', () => dropdownSelectDDO)
 	.name;
 

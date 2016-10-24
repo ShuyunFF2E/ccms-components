@@ -4,10 +4,10 @@
  * @since 2016-01-04
  */
 
-
 import angular from 'angular';
 
 import grid from './grid';
+import niceScroll from './nice-scroll';
 import pagination from './pagination';
 import smsEditor from './sms-editor';
 import smsPreview from './sms-preview';
@@ -27,7 +27,6 @@ import dropdown from './dropdown';
 import dropdownSelect from './dropdown/dropdown-select';
 import dropdownMultiselect from './dropdown/dropdown-multiselect';
 import tabset from './tabset';
-import title from './title';
 import radio from './radio';
 import switchButton from './switch';
 import customerProfileBoard from './customer-profile-board';
@@ -41,6 +40,7 @@ export default angular
 		checkbox,
 		form,
 		grid,
+		niceScroll,
 		pagination,
 		smsEditor,
 		smsPreview,
@@ -54,7 +54,6 @@ export default angular
 		dateRange,
 		calendar,
 		tabset,
-		title,
 		radio,
 		switchButton,
 		customerProfileBoard

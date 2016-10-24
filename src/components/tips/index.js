@@ -26,6 +26,4 @@ export default angular
 	.module('ccms.components.tips', [bindHtml])
 	.component('ccTips', ddo)
 	.service('$ccTips', TipsService)
-	.deprecatedComponent('tips', ddo)
-	.deprecatedService('TipsService', TipsService, 'TipsService 服务将在8.30之后废弃,请使用 $ccTips 服务代替!')
 	.name;

@@ -14,7 +14,7 @@ const customer = {
 		attributeList: [{
 			attribute: 'full_name',
 			name: '姓名',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			type: 'text',
@@ -23,7 +23,7 @@ const customer = {
 		}, {
 			attribute: 'sex',
 			name: '性别',
-			defaultValue: '',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			type: 'radio',
@@ -120,11 +120,11 @@ const customer = {
 				validate: ['/^\\d{1, 6}$/']
 			}]
 		}]
-	}/* , {
+	}, {
 		title: '更多个人信息',
 		name: 'customerDefined',
 		attributeList: [
-			 {
+		/* {
 				attribute: 'job',
 				name: '职业',
 				defaultValue: '自由职业',
@@ -177,10 +177,9 @@ const customer = {
 					value: ''
 				}],
 				isInListMode: true
-			}
+			}*/
 		]
-	}*/
-	]
+	}]
 };
 
 const consumer = {
@@ -226,6 +225,29 @@ const consumer = {
 			attribute: 'buyer_credit_lev',
 			name: '信用等级',
 			defaultValue: '-',
+			valueMap: {
+				'0': '未分级',
+				'1': '一心',
+				'2': '二心',
+				'3': '三心',
+				'4': '四心',
+				'5': '五心',
+				'6': '一钻',
+				'7': '二钻',
+				'8': '三钻',
+				'9': '四钻',
+				'10': '五钻',
+				'11': '一皇冠',
+				'12': '二皇冠',
+				'13': '三皇冠',
+				'14': '四皇冠',
+				'15': '五皇冠',
+				'16': '一金冠',
+				'17': '二金冠',
+				'18': '三金冠',
+				'19': '四金冠',
+				'20': '五金冠'
+			},
 			unit: '',
 			editable: false
 		}, {
@@ -373,7 +395,7 @@ const other = {
 		attributeList: [{
 			attribute: 'cardGrade',
 			name: '会员等级',
-			defaultValue: '',
+			defaultValue: '-',
 			unit: '',
 			valueMap: {
 				1: '普通会员',

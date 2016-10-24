@@ -5,11 +5,22 @@
  */
 
 const browser = (function() {
-	let ua = navigator.userAgent, tem,
-		M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+	const ua = navigator.userAgent;
+
+	let OSName = 'Unknown OS';
+	if (navigator.appVersion.indexOf('Win') !== -1) OSName = 'Windows';
+	if (navigator.appVersion.indexOf('Mac') !== -1) OSName = 'MacOS';
+	if (navigator.appVersion.indexOf('X11') !== -1) OSName = 'UNIX';
+	if (navigator.appVersion.indexOf('Linux') !== -1) OSName = 'Linux';
+
+	let tem, M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
 	if (/trident/i.test(M[1])) {
 		tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-		return 'IE ' + (tem[1] || '');
+		return {
+			name: 'IE',
+			version: (tem[1] || ''),
+			os: OSName
+		};
 	}
 	if (M[1] === 'Chrome') {
 		tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
@@ -19,7 +30,8 @@ const browser = (function() {
 	if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
 	return {
 		name: M[0],
-		version: M[1]
+		version: M[1],
+		os: OSName
 	};
 }());
 

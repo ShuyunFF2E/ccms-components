@@ -15,46 +15,51 @@ import tabTitleTranscludeLink from './tabTitleTranscludeLink';
 import tabContentTranscludeLink from './tabContentTranscludeLink';
 
 const tabsetDDO = {
+	name: 'ccTabset',
 	transclude: true,
 	template: tabsetTemplate,
-	bindings: {
+	scope: {
 		active: '=?',
 		type: '@'
 	},
 	controller: TabsCtrl,
-	controllerAs: '$tabset'
+	controllerAs: '$tabset',
+	bindToController: true
 };
 
 const tabDDO = {
+	name: 'ccTab',
 	require: {
-		tabset: '^tabset'
+		tabset: '^ccTabset'
 	},
 	transclude: true,
-	bindings: {
+	scope: {
 		title: '@',
 		onSelect: '&'
 	},
+	controller: TabsCtrl,
 	controllerAs: '$tab',
+	bindToController: true,
 	template: tabTemplate
 };
 
 const tabTitleDDO = {
 	restrict: 'A',
-	require: '^tab',
+	require: '^ccTab',
 	link: tabTitleTranscludeLink
 };
 
 const tabContentDDO = {
 	restrict: 'A',
-	require: '^tabset',
+	require: '^ccTabset',
 	scope: {},
 	link: tabContentTranscludeLink
 };
 
 export default angular
 	.module('ccms.components.tabsets', [])
-	.component('tabset', tabsetDDO)
-	.component('tab', tabDDO)
+	.directive('ccTabset', () => tabsetDDO)
+	.directive('ccTab', () => tabDDO)
 	.directive('tabTitleTransclude', () => tabTitleDDO)
 	.directive('tabContentTransclude', () => tabContentDDO)
 	.name;

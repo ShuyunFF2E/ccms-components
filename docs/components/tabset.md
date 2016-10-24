@@ -7,7 +7,7 @@ maintainer: fengqiu.wu
 
 ## Tabset组件
 
-指令： tabset
+指令： cc-tabset
 
 参数说明：
 
@@ -16,7 +16,7 @@ maintainer: fengqiu.wu
 | active | 否 | 当前选中第几个选项，0开始 | Number |
 | type | 否 | 组件类型[smaller] | String |
 
-指令： tab
+指令： cc-tab
 
 | 参数名 | 是否必填 | 说明 | 类型 |
 | --- | --- | --- | --- |
