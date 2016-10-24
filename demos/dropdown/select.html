@@ -27,7 +27,8 @@
 					placeholder="哈哈哈"
 					model="ctrl.value1"
 					datalist="ctrl.datalist2"
-					mapping="ctrl.fieldsMap">
+					mapping="ctrl.fieldsMap"
+					on-select-change="ctrl.selectChange(model, oldModel)">
 			</cc-dropdown-select>
 			<div style="margin: 0.5em 0;">
 				<button class="btn-ok" ng-click="ctrl.value1 = '深圳'">选择深圳</button>
@@ -117,6 +118,10 @@
 			};
 			this.setList = function() {
 				this.value4 = ['nj', 'sh'];
+			};
+
+			this.selectChange = function(newValue, oldValue) {
+				console.log('on-select-change:', newValue, oldValue);
 			};
 
 			this.datalist2 = ['北京', '上海', '深圳', '广州'];

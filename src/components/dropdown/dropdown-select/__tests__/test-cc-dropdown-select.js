@@ -14,7 +14,8 @@ describe('cc-dropdown-select', () => {
 				placeholder="哈哈哈"
 				model="value1"
 				datalist="datalist1"
-				mapping="fieldsMap">
+				mapping="fieldsMap"
+				onSelectChange="selectChange(model, oldModel)">
 		</cc-dropdown-select>
 		`;
 
@@ -34,6 +35,10 @@ describe('cc-dropdown-select', () => {
 			displayField: 'title',
 			valueField: 'value'
 		};
+		scope.selectChange = (model, oldModel) => {
+			scope.newModel = model;
+			scope.oldModel = oldModel;
+		};
 
 		selectEl = _$compile_(html)(scope);
 		ctrl = selectEl.controller('ccDropdownSelect');
@@ -41,10 +46,16 @@ describe('cc-dropdown-select', () => {
 	}));
 
 	describe('DropdownSelectCtrl', () => {
-		it('.setModelValue()', () => {
+		it('.setModelValue()', done => {
 			ctrl.setModelValue('sh');
 			assert.strictEqual(ctrl.title, '上海');
 			assert.strictEqual(ctrl.model, 'sh');
+			ctrl.setModelValue('bj');
+			setTimeout(() => {
+				done();
+				assert.strictEqual(scope.newModel, 'bj');
+				assert.strictEqual(scope.oldModel, 'sh');
+			}, 0);
 		});
 
 		it('.focusUp()', () => {

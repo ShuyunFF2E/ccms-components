@@ -23,6 +23,8 @@ export default class DropdownSelectCtrl {
 		this.isActive = false;
 		this.oldText = '';
 
+		this.onSelectChange = () => {};
+
 		this._openFn = null;
 	}
 
@@ -43,6 +45,8 @@ export default class DropdownSelectCtrl {
 		if (typeof this.disabled === 'undefined') {
 			this.disabled = false;
 		}
+
+		this.onSelectChange = this.onSelectChange || (() => {});
 	}
 
 	_prepareWatches() {
@@ -61,6 +65,7 @@ export default class DropdownSelectCtrl {
 			if (!angular.equals(model, oldModel)) {
 				this.setModelValue(this.model);
 				this.focusAt(this.getItemIndexByItemValue(this.model, this.items));
+				this.onSelectChange({ model, oldModel });
 			}
 		});
 
@@ -163,20 +168,18 @@ export default class DropdownSelectCtrl {
 		}
 	}
 
+	getItemByValue(value) {
+		const valueField = this.mapping.valueField;
+		return this.items.find(item => angular.equals(item[valueField], value));
+	}
+
 	setModelValue(modelValue) {
-		if (modelValue !== null) {
-			let valueField = this.mapping.valueField;
-			let modelExisted = this.items.some(item => {
-				if (angular.equals(item[valueField], modelValue)) {
-					this.title = item[this.mapping.displayField];
-					this.model = modelValue;
-					return true;
-				}
-			});
-			if (!modelExisted) {
-				this.title = '';
-				this.model = null;
-			}
+		const displayField = this.mapping.displayField;
+		const newItem = this.getItemByValue(modelValue);
+
+		if (newItem) {
+			this.title = newItem[displayField];
+			this.model = modelValue;
 		} else {
 			this.title = '';
 			this.model = null;
