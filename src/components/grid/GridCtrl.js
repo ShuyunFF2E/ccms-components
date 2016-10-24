@@ -6,9 +6,11 @@
  */
 
 import angular from 'angular';
-import {Debounce} from 'angular-es-utils/decorators';
+import 'jquery.nicescroll';
 
-import rowCellTemplate from './tpls/row-cell.tpl.html';
+import { Debounce, Inject } from 'angular-es-utils/decorators';
+
+import rowTemplate from './tpls/row.tpl.html';
 import TplReqHelper from '../../common/utils/tpl-req-helper';
 
 import GRID_TEMPLATES from './Constant';
@@ -28,27 +30,31 @@ function findEntity(collection, entity) {
 	return collection.findIndex(item => angular.equals(item, entity));
 }
 
-const PLACEHOLDER = '{::cell-placeholder}';
+const SORT_ORDERS = ['asc', 'desc'];
 
+@Inject('$scope')
 export default class GridCtrl {
 
 	$onInit() {
-
+		this.$scope = this._$scope;
 		this.selectedItems = this.selectedItems || [];
 		const type = (this.type || 'default').toUpperCase();
 
 		GridHelper.fillOpts(this.opts);
 
-		const {headerTpl, emptyTipTpl, cellTpl} = this.opts;
+		const {headerTpl, emptyTipTpl, rowTpl} = this.opts;
 
 		this.headerTemplate = TplReqHelper.get(headerTpl || GRID_TEMPLATES[type][0]);
 		this.emptyTipsTemplate = TplReqHelper.get(emptyTipTpl || GRID_TEMPLATES[type][2]);
-		TplReqHelper.get(cellTpl || GRID_TEMPLATES[type][1]).then(tpl => {
-			this.bodyTemplate = rowCellTemplate.replace(PLACEHOLDER, tpl);
-		});
 
-		// 刷新页面
-		GridHelper.refresh(this.opts);
+		if (rowTpl) {
+			this.bodyTemplate = TplReqHelper.get(rowTpl);
+		} else {
+			this.bodyTemplate = rowTemplate;
+			this.rowCellTemplate = GRID_TEMPLATES[type][1];
+		}
+
+		this.sortGridData();
 	}
 
 	get $allSelected() {
@@ -60,10 +66,9 @@ export default class GridCtrl {
 	onPagerChange(pageNum, pageSize) {
 
 		const {opts} = this;
+		const queryParams = Object.assign(opts.queryParams || {}, {pageNum, pageSize});
 
-		GridHelper
-			.refresh(opts, Object.assign(opts.queryParams || {}, {pageNum, pageSize}))
-			.then(() => this.onRefresh && this.onRefresh({opts}));
+		this._refresh(opts, queryParams);
 	}
 
 	switchSelectAll(allSelected, selectedCollection) {
@@ -97,4 +102,66 @@ export default class GridCtrl {
 		return findEntity(this.selectedItems, entity) !== -1;
 	}
 
+	toggleSort(column) {
+		if (column.sortProp) {
+			switch (column.sortOrder) {
+				case 'asc':
+
+					column.sortOrder = 'desc';
+					break;
+				case 'desc':
+
+					column.sortOrder = undefined;
+					break;
+				default:
+
+					column.sortOrder = 'asc';
+					break;
+			}
+			this.sortGridData();
+		}
+	}
+
+	sortGridData() {
+
+		const sortQueryParam = {
+			orders: [],
+			props: []
+		};
+
+		const {opts} = this;
+
+		this.opts.columnsDef.forEach(column => {
+			if (column.sortProp && SORT_ORDERS.includes(column.sortOrder)) {
+				sortQueryParam.orders.push(column.sortOrder);
+				sortQueryParam.props.push(column.sortProp);
+			}
+		});
+
+		const queryParams = Object.assign(opts.queryParams || {},
+			sortQueryParam.props.length > 0 ? {
+				pageNum: 1,
+				sortProps: sortQueryParam.props.toString(),
+				sortOrders: sortQueryParam.orders.toString()
+			} : {sortProps: '', sortOrders: ''});
+
+		this._refresh(opts, queryParams);
+	}
+
+	toggleColumnByIndex(index) {
+		const column = this.opts.columnsDef[index];
+		column.isHidden = !column.isHidden;
+	}
+
+	getShownColumnsCount() {
+		return this.opts.columnsDef.reduce(
+			(count, col) => col.isHidden ? count : count + 1, 0
+		);
+	}
+
+	_refresh(opts, queryParams) {
+		GridHelper
+			.refresh(opts, queryParams)
+			.then(gridOptions => this.onRefresh && this.onRefresh({opts: gridOptions}));
+	}
 }

@@ -1,46 +1,42 @@
 /**
  * @author jianzhe.ding
  * @homepage https://github.com/discipled/
- * @since 2016-08-01 10:20
+ * @since 2016-08-15 11:39
  */
 
-/**
- * @name generatorQueryParam
- * @param {String} name
- * @param {String} fields
- * @param {Number} limit
- * generator query param of graphql query string
- */
-const generatorQueryParam = (name = '', fields = '[]', limit = 1) => `
+import { assert } from 'chai';
+
+import generatorQueryString from '../queryStringSchema.js';
+
+describe('queryStringSchema', () => {
+	it('queryStringSchema', () => {
+		const customerInformation = {
+			nickName: 's_peggy',
+			shopId: '62847409',
+			platName: 'taobao',
+			tenantId: 'dagouzi01'
+		};
+
+		const queryString = `{
+
+		customer:shuyun_searchapi_customer(
+			param:
 	{
 	  settings:{
-	    data_source: "${name}"
+	    data_source: "customer"
 	    query_id:"report-id"
 	    pagination:{
-	      limit: ${limit}
+	      limit: 1
 	      offset:0
 	    }
 	    return_format:"json"
 	  }
 	  filters:{
 	    type:"and"
-	    fields: ${fields}
+	    fields: [{ type:"str_selector" dimension:"customerno" value:"s_peggy" }]
 	  }
 	}
-	`;
 
-/**
- * @name generatorQueryString
- * @param {String} nick 用户昵称
- * @param {String} shopId 店铺id
- * @param {String} platName 平台名
- * @returns {String}
- * generator graphql query string
- */
-const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenantId = '') => {
-	const CustomerQuerySchema = `
-		customer:shuyun_searchapi_customer(
-			param: ${generatorQueryParam('customer', `[{ type:"str_selector" dimension:"customerno" value:"${nick}" }]`)}
 		){
 	    flag
 	    msg
@@ -55,11 +51,26 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
         }
 	    }
 	  }
-	`;
 
-	const RfmQuerySchema = `
-		rfm:shuyun_searchapi_rfm(
-	    param: ${generatorQueryParam('rfm', `[{ type:"str_selector" dimension:"dp_id" value:"${shopId}" } { type:"str_selector" dimension:"buyer_nick" value:"${nick}" }]`, 10)}
+	  rfm:shuyun_searchapi_rfm(
+	    param: {
+	  settings:{
+	    data_source: "rfm"
+	    query_id:"report-id"
+	    pagination:{
+	      limit: 10
+	      offset:0
+	    }
+	    return_format:"json"
+	  }
+	  filters:{
+	    type:"and"
+	    fields: [
+	      { type:"str_selector" dimension:"dp_id" value:"62847409" }
+	      { type:"str_selector" dimension:"buyer_nick" value:"s_peggy" }
+	    ]
+	  }
+	}
 	  ){
 	    flag
 	    msg
@@ -87,11 +98,25 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 	      }
 	    }
 	  }
-	`;
 
-	const TradeQuerySchema = `
 		trade:shuyun_searchapi_trade(
-	    param: ${generatorQueryParam('trade', `[{ type:"str_selector" dimension:"buyer_nick" value:"${nick}" }]`)}
+	    param:
+	{
+	  settings:{
+	    data_source: "trade"
+	    query_id:"report-id"
+	    pagination:{
+	      limit: 1
+	      offset:0
+	    }
+	    return_format:"json"
+	  }
+	  filters:{
+	    type:"and"
+	    fields: [{ type:"str_selector" dimension:"buyer_nick" value:"s_peggy" }]
+	  }
+	}
+
 	  ){
 	    flag
 	    msg
@@ -106,15 +131,13 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 	      }
 	    }
 	  }
-	`;
 
-	const TagQuerySchema = `
-		tags:shuyun_searchapi_tags(
+	  tags:shuyun_searchapi_tags(
 			param:{
         type:"buyer_nick"
-        value:"${nick}"
-        dp_id: "${shopId}"
-        buyer_nick:"${nick}"
+        value:"s_peggy"
+        dp_id: "62847409"
+        buyer_nick:"s_peggy"
       }){
 	      result{
           bfm
@@ -156,12 +179,10 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
           score
         }
 	    }
-	`;
 
-	const MemberInfoQuerySchema = `
 		loyalty_member_gpinfo(
-      platDpId:"${shopId}"
-      cardNo:"${nick}"
+      platDpId:"62847409"
+      cardNo:"s_peggy"
     ){
       cardGrade
       effectTime
@@ -170,8 +191,8 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
       totalGet
     }
 		memberInfo:loyalty_member_info(
-      platDpId:"${shopId}"
-      cardNo:"${nick}"
+      platDpId:"62847409"
+      cardNo:"s_peggy"
     ){
       actionInfo{
 				signCount
@@ -180,13 +201,11 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 				exchangeCount
       }
     }
-	`;
 
-	const WeChatQuerySchema = `
-		wechat:wxcrm_ccms(
-	    platCustNo: "${nick}"
-	    platId: "${platName}"
-	    platShopId: "${shopId}"
+    wechat:wxcrm_ccms(
+	    platCustNo: "s_peggy"
+	    platId: "taobao"
+	    platShopId: "62847409"
 	  ){
 	    platId
 	    platShopId
@@ -195,22 +214,18 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 	    openid
 	    wechatNick:nickName
 	  }
-	`;
 
-	const WeiBoQuerySchema = `
-		weibo:wxcrm_ccms_userinfo(
-			taobaoNick: "${nick}"
+	  weibo:wxcrm_ccms_userinfo(
+			taobaoNick: "s_peggy"
 		){
 			sinawbUserId
 			sinawbUserName
 		}
-	`;
 
-	const customPropertyCustomer = `
 		custom_property_customer(
-      customerNo:"${nick}"
-      tenantId:"${tenantId}"
-      platform:"${platName}"
+      customerNo:"s_peggy"
+      tenantId:"dagouzi01"
+      platform:"taobao"
     ){
       properties{
         id
@@ -220,22 +235,9 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
         value
       }
     }
-	`;
 
-	const queryString = `
-		{
-			${CustomerQuerySchema}
-			${RfmQuerySchema}
-			${TradeQuerySchema}
-			${TagQuerySchema}
-			${MemberInfoQuerySchema}
-			${WeChatQuerySchema}
-			${WeiBoQuerySchema}
-			${customPropertyCustomer}
-		}
-	`;
+		}`;
 
-	return queryString;
-};
-
-export default generatorQueryString;
+		assert.deepEqual(generatorQueryString(customerInformation.nickName, customerInformation.shopId, customerInformation.platName, customerInformation.tenantId).replace(/\s/g, ''), queryString.replace(/\s/g, ''));
+	});
+});

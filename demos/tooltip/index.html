@@ -8,49 +8,49 @@
 
 <input type="text" ng-model="tip" tooltip="tip" tooltip-trigger="click" tooltip-append-to-body="true">
 
-<button type="button" tooltip="'hello world hello world hello world hello world hello world hello world'"
+<button type="button" cc-tooltip="'hello world hello world hello world hello world hello world hello world'"
         tooltip-close-delay="500" tooltip-open-delay="200" style="margin-top: 50px">hover normal tooltip
 </button>
 
-<button type="button" tooltip="'hello world'" tooltip-type="error-minor" style="margin-top: 50px">hover error tooltip
+<button type="button" cc-tooltip="'hello world'" tooltip-type="error-minor" style="margin-top: 50px">hover error tooltip
 </button>
-<button type="button" tooltip="'hello world'" tooltip-type="error-minor" tooltip-placement="bottom-right" style="margin-top: 50px">hover error tooltip bottom-right
+<button type="button" cc-tooltip="'hello world'" tooltip-type="error-minor" tooltip-placement="bottom-right" style="margin-top: 50px">hover error tooltip bottom-right
 </button>
-<button type="button" tooltip="'hello world'" tooltip-type="error-minor" tooltip-placement="right" style="margin-top: 50px">hover error tooltip right
+<button type="button" cc-tooltip="'hello world'" tooltip-type="error-minor" tooltip-placement="right" style="margin-top: 50px">hover error tooltip right
 </button>
-<button type="button" tooltip="'hello world'" tooltip-type="error-minor" tooltip-placement="left" style="margin-top: 50px">hover error tooltip left
+<button type="button" cc-tooltip="'hello world'" tooltip-type="error-minor" tooltip-placement="left" style="margin-top: 50px">hover error tooltip left
 </button>
 
-<button type="button" tooltip="'click me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
-<button type="button" tooltip="'click me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
+<button type="button" cc-tooltip="'click me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
+<button type="button" cc-tooltip="'click me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzzclick me mdzz'" tooltip-trigger="click">click toggle tooltip</button>
 
-
-<div>
-	<a href="#" tooltip="'啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'" tooltip-append-to-body="true">详情</a>
-</div>
-<div>
-	<a href="#" tooltip="'不要不要不要不要不要不要不要不要不要不要不要不要'" tooltip-append-to-body="true">详情1</a>
-</div>
 
 <div>
-	<a href="#" tooltip="app.template" tooltip-compilable="true" tooltip-append-to-body="true">详情2</a>
+	<a href="#" cc-tooltip="'啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'" tooltip-append-to-body="true">详情</a>
+</div>
+<div>
+	<a href="#" cc-tooltip="'不要不要不要不要不要不要不要不要不要不要不要不要'" tooltip-append-to-body="true">详情1</a>
 </div>
 
-<button type="button" tooltip="'hello world xxxx'" tooltip-placement="top" tooltip-opened="app.opened" ng-click="app.opened=!app.opened">toggle tooltip manual top
+<div>
+	<a href="#" cc-tooltip="app.template" tooltip-compilable="true" tooltip-append-to-body="true">详情2</a>
+</div>
+
+<button type="button" cc-tooltip="'hello world xxxx'" tooltip-placement="top" tooltip-opened="app.opened" ng-click="app.opened=!app.opened">toggle tooltip manual top
 </button>
-<button type="button" tooltip="'hello world'" tooltip-placement="top-left" tooltip-opened="app.opened">tooltip top-left
+<button type="button" cc-tooltip="'hello world'" tooltip-placement="top-left" tooltip-opened="app.opened">tooltip top-left
 </button>
-<button type="button" tooltip="'hello world'" tooltip-placement="top-right" tooltip-opened="app.opened">tooltip top-right
+<button type="button" cc-tooltip="'hello world'" tooltip-placement="top-right" tooltip-opened="app.opened">tooltip top-right
 </button>
-<button type="button" tooltip="'hello world'" tooltip-placement="bottom" tooltip-opened="app.opened">tooltip bottom
+<button type="button" cc-tooltip="'hello world'" tooltip-placement="bottom" tooltip-opened="app.opened">tooltip bottom
 </button>
-<button type="button" tooltip="'hello world'" tooltip-placement="bottom-left" tooltip-opened="app.opened">tooltip bottom-left
+<button type="button" cc-tooltip="'hello world'" tooltip-placement="bottom-left" tooltip-opened="app.opened">tooltip bottom-left
 </button>
-<button type="button" tooltip="'hello world'" tooltip-placement="bottom-right" tooltip-opened="app.opened">tooltip bottom-right
+<button type="button" cc-tooltip="'hello world'" tooltip-placement="bottom-right" tooltip-opened="app.opened">tooltip bottom-right
 </button>
-<button type="button" tooltip="'hello world'" tooltip-placement="left" tooltip-opened="app.opened">tooltip left
+<button type="button" cc-tooltip="'hello world'" tooltip-placement="left" tooltip-opened="app.opened">tooltip left
 </button>
-<button type="button" tooltip="'hello world'" tooltip-placement="right" tooltip-opened="app.opened">tooltip right
+<button type="button" cc-tooltip="'hello world'" tooltip-placement="right" tooltip-opened="app.opened">tooltip right
 </button>
 
 <script src="/components.js"></script>

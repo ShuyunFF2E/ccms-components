@@ -5,7 +5,7 @@
 																																																		 ng-model="$ctrl.customerDefinedAttribute.name"
 																																																		 maxlength="20"
 																																																		 validator="attributeName,duplicate"></span><span
-				class="iconfont attribute-remark-icon" tooltip="$ctrl.customerDefinedAttribute.remark ? '此处已打备注' : '备注'"
+				class="iconfont attribute-remark-icon" cc-tooltip="$ctrl.customerDefinedAttribute.remark ? '此处已打备注' : '备注'"
 				ng-class="{'attribute-remark-icon--active': !!$ctrl.customerDefinedAttribute.remark}"
 				ng-click="$ctrl.toggleRemarkTextArea()">&#xe635;</span>
 		</li>

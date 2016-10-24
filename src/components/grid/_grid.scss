@@ -11,10 +11,9 @@ $td-padding: 0 $pagination-padding;
 $thead-bg: #f1f1f1;
 $tr-even-bg: #fafafa;
 $tr-hover-bg: #eef8fc;
-
+$icon-asc-sort-deg: 180deg;
 $init-color: #70a2c7;
 
-grid,
 cc-grid {
 
 	display: inline-block;
@@ -95,6 +94,58 @@ cc-grid {
 				padding-left: 0;
 			}
 		}
+
+		.hidden-columns {
+			position: relative;
+			width: 54px;
+			> span {
+				cursor: pointer;
+			}
+			[cc-dropdown-panel] {
+				position: absolute;
+				right: 1px;
+				z-index: 1;
+				padding: 10px;
+				border: solid 1px #ccc;
+				background-color: #fff;
+				&.hide {
+					display: none !important;
+				}
+				li {
+					white-space: nowrap;
+					cursor: pointer;
+					label {
+						cursor: inherit;
+					}
+				}
+			}
+		}
+	}
+
+	.column-sort {
+		cursor: pointer;
+	}
+
+	.column-sort-asc, .column-sort-desc, .column-sort-none {
+		font-size: 12px;
+		text-decoration: none;
+		display: inline-block;
+		color: blue;
+	}
+
+	.column-sort-none {
+		color: dimgray;
+	}
+
+	.column-sort-asc {
+		color: blue;
+		// 升序
+		transform: rotate($icon-asc-sort-deg);
+	}
+	.column-sort-desc {
+		color: blue;
+		// 降序
+		transform: rotate(0deg);
 	}
 
 	.init-msg {
@@ -125,7 +176,7 @@ cc-grid {
 		@extend %absolute-center;
 	}
 
-	.footer {
+	footer {
 		display: flex;
 		position: absolute;
 		bottom: 0;
@@ -182,7 +233,6 @@ cc-grid {
 			}
 		}
 
-		& > pagination,
 		& > cc-pagination {
 			flex: 1;
 		}

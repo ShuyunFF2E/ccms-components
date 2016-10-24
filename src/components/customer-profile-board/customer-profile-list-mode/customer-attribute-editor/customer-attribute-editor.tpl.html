@@ -8,7 +8,7 @@
 				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
 					<label class="attribute-item-label" ng-bind="attribute.name + '：'"></label><div class="attribute-item-content">
 						<span ng-bind="attribute.displayValue || attribute.defaultValue"></span><span class="iconfont icon-edit"
-																																ng-if="attribute.editable && !attribute.editingValue"
+																																ng-if="false && attribute.editable && !attribute.editingValue"
 																																ng-click="$ctrl.showAttributeModifyBlock(attribute, attribute.value)"></span>
 						<div class="attribute-data-modify-block" ng-if="attribute.editable && attribute.editingValue">
 							<div ng-form="$ctrl.attributeModify" validators="$ctrl.validators">
@@ -34,7 +34,7 @@
 						</div>
 					</div>
 				</dd>
-				<dd ng-if="attributeBlock.name === 'customerDefined'">
+				<dd ng-if="false && attributeBlock.name === 'customerDefined'">
 					<button class="add-attribute-button"
 									ng-click="$ctrl.changeCustomerDefinedBlockState(true)"
 									href=""> + 添加自定义属性

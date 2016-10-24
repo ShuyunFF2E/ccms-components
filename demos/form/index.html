@@ -8,8 +8,8 @@
 
 <br/><br/><br/><br/><br/>
 
-<input type="text" ng-model="msg" tooltip="msg" tooltip-trigger="click" required placeholder="tooltip常显">
-<button type="button" tooltip="'hello world'" tooltip-trigger="click">点击切换</button>
+<input type="text" ng-model="msg" cc-tooltip="msg" tooltip-trigger="click" required placeholder="tooltip常显">
+<button type="button" cc-tooltip="'hello world'" tooltip-trigger="click">点击切换</button>
 
 <br/>
 <br/>
@@ -57,6 +57,15 @@
 	<fieldset>
 		<label for="info3">错误提示</label>
 		<input type="text" class="error" cc-validator ng-model="info13" minlength="3">
+	</fieldset>
+
+	<fieldset>
+		<label for="info14">请选择</label>
+		<select ng-model="info14" id="info14" required cc-validator="handsome">
+			<option value="1">1</option>
+			<option value="kuitos">kuitos</option>
+			<option value="2">2</option>
+		</select>
 	</fieldset>
 
 	<fieldset>

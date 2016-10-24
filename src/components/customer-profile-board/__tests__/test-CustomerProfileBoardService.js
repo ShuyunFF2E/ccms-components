@@ -31,7 +31,7 @@ describe('CustomerProfileBoard', () => {
 		const ccCustomerProfileBoard = new $ccCustomerProfileBoard();
 
 		it('popProfileBoardModal', () => {
-			ccCustomerProfileBoard.popProfileBoardModal();
+			ccCustomerProfileBoard.$get().popProfileBoardModal();
 			scope.$$postDigest(() => {
 				assert.isNotNull(document.querySelector('.ccms-modal[data-uid="customer-profile-board"]'));
 			});
@@ -317,7 +317,7 @@ describe('CustomerProfileBoard', () => {
 				'trade_amount', 'trade_item_num', 'trade_avg_amount', 'trade_avg_item_num', 'trade_avg_buy_interval',
 				'trade_refund_count', 'trade_refund_amount', 'trade_avg_confirm_interval', 'trade_max_amount',
 				'trade_order_discount_fee', 'cardGrade', 'effectTime', 'expireTime', 'currentPoint', 'totalGet',
-				'signCount', 'exchangeCount', 'wechatNick', 'sinawbUserId'];
+				'signCount', 'exchangeCount', 'wechatNick', 'sinawbUserName'];
 
 			assert.deepEqual(customerProfileBoardService.getAttributeList(), result);
 		});

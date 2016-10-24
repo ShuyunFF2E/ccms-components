@@ -10,7 +10,6 @@ $pagination-linear-color-start: #fafafa;
 $pagination-linear-color-end: #f3f3f3;
 $pagination-input-height: 26px;
 
-pagination,
 cc-pagination {
 	display: inline-block;
 
@@ -51,6 +50,10 @@ cc-pagination {
 		font-family: $font-string;
 		font-size: 12px;
 		input {
+			width: auto;
+			max-width: 60px;
+			min-width: 34px;
+			padding: 0 4px;
 			background-color: #ffffff;
 			border: 1px solid #d9d9d9;
 			height: $pagination-input-height;
@@ -59,7 +62,6 @@ cc-pagination {
 			color: #3A3A3A;
 			position: relative;
 			text-align: center;
-			width: 35px;
 			margin-right: 8px;
 			font-family: $font-number;
 		}
@@ -104,7 +106,6 @@ cc-pagination {
 	}
 
 	input {
-		width: 35px;
 		height: $pagination-input-height;
 	}
 

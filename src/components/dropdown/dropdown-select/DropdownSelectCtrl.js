@@ -1,5 +1,5 @@
 import angular from 'angular';
-import {Inject, Bind} from 'angular-es-utils';
+import { Inject, Bind } from 'angular-es-utils';
 
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
@@ -21,6 +21,9 @@ export default class DropdownSelectCtrl {
 		this.focusIndex = 0;
 		this.isOpen = false;
 		this.isActive = false;
+		this.oldText = '';
+
+		this.onSelectChange = () => {};
 
 		this._openFn = null;
 	}
@@ -42,6 +45,8 @@ export default class DropdownSelectCtrl {
 		if (typeof this.disabled === 'undefined') {
 			this.disabled = false;
 		}
+
+		this.onSelectChange = this.onSelectChange || (() => {});
 	}
 
 	_prepareWatches() {
@@ -60,6 +65,7 @@ export default class DropdownSelectCtrl {
 			if (!angular.equals(model, oldModel)) {
 				this.setModelValue(this.model);
 				this.focusAt(this.getItemIndexByItemValue(this.model, this.items));
+				this.onSelectChange({ model, oldModel });
 			}
 		});
 
@@ -126,8 +132,9 @@ export default class DropdownSelectCtrl {
 		});
 	}
 
-	onSearchTextChange(text, oldText) {
-		if (text !== oldText) {
+	onSearchTextChange(text) {
+		if (text !== this.oldText) {
+			this.oldText = text;
 			text = text.trim();
 			if (!this.isOpen) {
 				this.open();
@@ -161,28 +168,27 @@ export default class DropdownSelectCtrl {
 		}
 	}
 
+	getItemByValue(value) {
+		const valueField = this.mapping.valueField;
+		return this.items.find(item => angular.equals(item[valueField], value));
+	}
+
 	setModelValue(modelValue) {
-		if (modelValue !== null) {
-			let valueField = this.mapping.valueField;
-			let modelExisted = this.items.some(item => {
-				if (angular.equals(item[valueField], this.model)) {
-					this.title = item[this.mapping.displayField];
-					return true;
-				}
-			});
-			if (!modelExisted) {
-				this.title = '';
-				this.model = null;
-			}
+		const displayField = this.mapping.displayField;
+		const newItem = this.getItemByValue(modelValue);
+
+		if (newItem) {
+			this.title = newItem[displayField];
+			this.model = modelValue;
 		} else {
 			this.title = '';
 			this.model = null;
+			this.items = this._clampedDatalist;
 		}
 	}
 
 	clear() {
 		this.setModelValue(null);
-		this.items = this._getClampedDatalist(this.datalist);
 		this.getInputElement().focus();
 		this.focusAt(0);
 	}
@@ -257,8 +263,8 @@ export default class DropdownSelectCtrl {
 
 	getItemElementAt(index) {
 		return this.getElement()
-				.querySelector('.dropdown-list')
-				.querySelectorAll('li:not(.empty-list-item)')[index];
+			.querySelector('.dropdown-list')
+			.querySelectorAll('li:not(.empty-list-item)')[index];
 	}
 
 	getScope() {
@@ -304,7 +310,7 @@ export default class DropdownSelectCtrl {
 			datalist.forEach(item => {
 				const fieldValue = item[field];
 				if (fieldValue.toString().indexOf(text) !== -1 &&
-						filteredItems.indexOf(item) === -1) {
+					filteredItems.indexOf(item) === -1) {
 
 					filteredItems.push(item);
 				}

@@ -223,6 +223,26 @@ function positionElements(hostElem, targetElem, placement, appendToBody) {
 	return targetElemPos;
 }
 
+/**
+ * Provides a way to adjust the top positioning after first
+ * render to correctly align element to top after content
+ * rendering causes resized element height
+ *
+ * @param {array} placements - The array of strings of classes
+ * element should have.
+ * @param {object} containerPosition - The object with container
+ * position information
+ * @param {number} initialHeight - The initial height for the elem.
+ * @param {number} currentHeight - The current height for the elem.
+ */
+function adjustTop(placements, containerPosition, initialHeight, currentHeight) {
+	if (placements.indexOf('top') !== -1 && initialHeight !== currentHeight) {
+		return {
+			top: containerPosition.top - currentHeight
+		};
+	}
+}
+
 function getViewportOffset(elem, useDocument, includePadding) {
 	includePadding = includePadding !== false;
 
@@ -386,5 +406,6 @@ export {
 	closestAttrParent,
 	position,
 	positionElements,
+	adjustTop,
 	offset
 };

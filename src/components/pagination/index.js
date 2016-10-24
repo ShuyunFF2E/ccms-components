@@ -31,6 +31,5 @@ const paginationDDO = {
 export default angular
 	.module('ccms.components.pagination', [ngEnter, ngDomValue])
 	.component('ccPagination', paginationDDO)
-	.deprecatedComponent('pagination', paginationDDO)
 	.name;
 

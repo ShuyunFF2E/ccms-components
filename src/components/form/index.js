@@ -20,7 +20,7 @@ const validatorsDDO = {
 	controller: ValidatorsCtrl,
 	controllerAs: '$$validatorsCtrl',
 	bindToController: {
-		validators: '<',
+		validators: '<ccValidators',
 		name: '@'
 	}
 };
@@ -35,7 +35,7 @@ const validatorDDO = {
 	controller: ValidatorCtrl,
 	controllerAs: '$$validatorCtrl',
 	bindToController: {
-		validator: '@'
+		validator: '@ccValidator'
 	}
 };
 
@@ -52,8 +52,5 @@ export default angular
 	.directive('ccValidator', () => validatorDDO)
 	// 对built-in的表单添加额外逻辑
 	.directive('form', () => forbidFormNativeValidator)
-	.value('$ccValidator', ValidatorService, '$Validator 服务将在8.30之后废弃,请尽早使用 $ccValidator 服务代替!')
-	.deprecatedDirective('validators', () => validatorsDDO)
-	.deprecatedDirective('validator', () => validatorDDO)
-	.deprecatedValue('$Validator', ValidatorService)
+	.value('$ccValidator', ValidatorService)
 	.name;

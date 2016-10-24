@@ -7,7 +7,7 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils';
 
-import CustomerAttributeSetting from './CustomerAttributeSetting.js';
+import CustomerAttributeSetting, {DEFAULT_ATTRIBUTE_SETTING} from './CustomerAttributeSetting.js';
 import CustomerProfileBoardService from './CustomerProfileBoardService.js';
 
 @Inject('$element', '$filter')
@@ -29,18 +29,22 @@ export default class CheckboxController {
 				this.customerData.marketingResponsivities = customerData.marketingResponsivities;
 				this.customerData.mobile = customerData.mobile;
 				this.customerAttributeSetting.forEach(setting =>
-					setting.attributeBlock.forEach(customerAttributeBlock =>
-						this.CustomerProfileBoardService.mappingDataIntoAttributeBlock(customerAttributeBlock, customerData)));
+					setting.attributeBlock.forEach(customerAttributeBlock => {
+						if (customerAttributeBlock.name === 'customerDefined') {
+							// 设置自定义属性
+							customerAttributeBlock.attributeList = (customerData.custom_property_customer || []).map(item => ({
+								...DEFAULT_ATTRIBUTE_SETTING,
+								...item,
+								attribute: item.name,
+								displayValue: item.type !== 'DATE_SELECT' ? item.value : this._$filter('date')(item.value, 'yyyy-MM-dd')
+							}));
+						} else {
+							// 设置默认属性
+							this.CustomerProfileBoardService.mappingDataIntoAttributeBlock(customerAttributeBlock, customerData);
+						}
+					})
+				);
 			})
-			/*
-			自定义属性调用方式修改
-			.then(() => this.CustomerProfileBoardService.getCustomerDefinedAttributeData(this.customerData))
-			.then(data => (this.customerAttributeSetting[0].attributeBlock[1].attributeList = (data.properties || []).map(item => ({
-				...DEFAULT_ATTRIBUTE_SETTING,
-				...item,
-				attribute: item.name,
-				displayValue: item.type !== 'DATE_SELECT' ? item.value : this._$filter('date')(item.value, 'yyyy-MM-dd')
-			}))))*/
 			.catch(err => console.error(err.message || err.data.message));
 	}
 

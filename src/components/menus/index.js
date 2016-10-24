@@ -28,8 +28,8 @@ const
 		bindings: {
 			unfold: '=',
 			onUnfold: '=',
-			menuSource: '=',
-			shopSource: '=',
+			menuSource: '<?',
+			shopSource: '<?',
 			searchPlaceholder: '='
 		}
 	},
@@ -48,9 +48,11 @@ const
 		controller: ShopSelectsCtrl,
 		controllerAs: 'shops',
 		bindings: {
-			shopList: '=',
+			shopSource: '<?',
 			shopInfo: '=',
-			collapsed: '=',
+			retract: '<?',
+			onRetract: '&?',
+			isInit: '<?',
 			placeholder: '<?'
 		}
 	};
@@ -58,11 +60,7 @@ const
 export default angular
 	.module('ccms.components.menus', [uiRouter, utils])
 	.component('ccMenuBar', menusBarDDO)
-	.deprecatedComponent('menuBar', menusBarDDO)
 	.component('ccMenuNode', menusNodeDDO)
-	.deprecatedComponent('menuNode', menusNodeDDO)
 	.component('ccShopSelect', shopSelectDDO)
-	.deprecatedComponent('shopSelect', shopSelectDDO)
 	.value('$ccMenus', $menus)
-	.deprecatedValue('$menus', $menus, '$menus 服务将在8.30之后废弃,请尽早使用 $ccGrid 服务代替!')
 	.name;
