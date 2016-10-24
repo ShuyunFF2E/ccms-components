@@ -330,7 +330,7 @@ describe('CustomerProfileBoard', () => {
 				name: '最后一次购买金额',
 				defaultValue: '0.00 元',
 				unit: ' 元',
-				currency: true,
+				fixed: 2,
 				editable: false,
 				isInListMode: true
 			};
@@ -364,13 +364,13 @@ describe('CustomerProfileBoard', () => {
 			assert.deepEqual(customerProfileBoardService.getAttributeValue(attribute2, {}), attribute2.valueMap[attribute2.defaultValue]);
 		});
 
-		it('formatCurrencyNumber', () => {
+		it('formatNumber', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber('a'), '0.00');
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber('0'), '0.00');
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber(0), '0.00');
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber(11.1), '11.10');
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber(123.456), '123.46');
+			assert.strictEqual(customerProfileBoardService.formatNumber('a'), '0.00');
+			assert.strictEqual(customerProfileBoardService.formatNumber('0'), '0.00');
+			assert.strictEqual(customerProfileBoardService.formatNumber(0), '0.00');
+			assert.strictEqual(customerProfileBoardService.formatNumber(11.1), '11.10');
+			assert.strictEqual(customerProfileBoardService.formatNumber(123.456), '123.46');
 		});
 	});
 });
