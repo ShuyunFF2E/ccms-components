@@ -124,6 +124,26 @@ describe('CustomerProfileBoard', () => {
 				}
 			};
 
+			const rfm = [{
+				period: 6,
+				period_label: '时间不限'
+			}, {
+				period: 1,
+				period_label: '最近30天'
+			}, {
+				period: 2,
+				period_label: '最近60天'
+			}, {
+				period: 3,
+				period_label: '最近90天'
+			}, {
+				period: 4,
+				period_label: '最近180天'
+			}, {
+				period: 5,
+				period_label: '最近360天'
+			}];
+
 			const result = {
 				customer: {
 					name: 'jack'
@@ -132,16 +152,16 @@ describe('CustomerProfileBoard', () => {
 					id: '123'
 				},
 				period: 6,
-				rfm: [{
-					period: 6,
-					period_label: '时间不限'
-				}],
+				period_label: '时间不限',
+				rfm,
 				tags: [],
 				member1: 'member1',
 				member2: 'member2',
 				marketingResponsivities: 1,
 				a: 'a'
 			};
+			console.log(customerProfileBoardService.generateCustomerData(data));
+			console.log(result);
 			assert.deepEqual(customerProfileBoardService.generateCustomerData(data), result);
 		});
 
@@ -201,18 +221,27 @@ describe('CustomerProfileBoard', () => {
 			}, {
 				period: 6
 			}];
-			const result = [{
+			const rfm = [{
 				period: 6,
 				period_label: '时间不限'
+			}, {
+				period: 1,
+				period_label: '最近30天'
 			}, {
 				period: 2,
 				period_label: '最近60天'
 			}, {
 				period: 3,
 				period_label: '最近90天'
+			}, {
+				period: 4,
+				period_label: '最近180天'
+			}, {
+				period: 5,
+				period_label: '最近360天'
 			}];
-			assert.deepEqual(customerProfileBoardService.setRfmLabel(data), result);
-			assert.deepEqual(customerProfileBoardService.setRfmLabel([]), []);
+			assert.deepEqual(customerProfileBoardService.setRfmLabel(data), rfm);
+			assert.deepEqual(customerProfileBoardService.setRfmLabel([]), rfm);
 		});
 
 		it('mappingDataIntoAttributeBlock', () => {
