@@ -16,8 +16,8 @@ const customer = {
 			name: '姓名',
 			defaultValue: '-',
 			unit: '',
-			editable: false,
-			type: 'text',
+			editable: true,
+			type: 'CHAR_INPUT',
 			validate: ['/^\\w{1, 50}$/'],
 			isInListMode: true
 		}, {
@@ -25,8 +25,9 @@ const customer = {
 			name: '性别',
 			defaultValue: '-',
 			unit: '',
-			editable: false,
-			type: 'radio',
+			editable: true,
+			type: 'CHAR_SELECT',
+			optional: ['男', '女', '未知'],
 			valueMap: {
 				m: '男',
 				f: '女',
@@ -39,8 +40,8 @@ const customer = {
 			name: '出生日期',
 			defaultValue: '-',
 			unit: '',
-			editable: false,
-			type: 'date',
+			editable: true,
+			type: 'DATE_SELECT',
 			validate: [],
 			isInListMode: true
 		}, {
@@ -48,15 +49,16 @@ const customer = {
 			name: '年龄',
 			defaultValue: '-',
 			unit: '岁',
-			editable: false,
+			editable: true,
+			type: 'NUMBER_INPUT',
 			isInListMode: true
 		}, {
 			attribute: 'mobile',
 			name: '常用手机',
 			defaultValue: '-',
 			unit: '',
-			editable: false,
-			type: 'text',
+			editable: true,
+			type: 'CHAR_INPUT',
 			validate: ['/^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9]){1}\\d{8}$/']
 		/* }, {
 			attribute: 'mobile',
@@ -76,8 +78,8 @@ const customer = {
 			name: 'email邮箱',
 			defaultValue: '-',
 			unit: '',
-			editable: false,
-			type: 'text',
+			editable: true,
+			type: 'CHAR_INPUT',
 			validate: ['/^\\w{1, 50}$/', '/@.+(.com|.cn)$/']
 		}, {
 			attribute: 'address_zip',

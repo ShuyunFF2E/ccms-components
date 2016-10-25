@@ -160,8 +160,6 @@ describe('CustomerProfileBoard', () => {
 				marketingResponsivities: 1,
 				a: 'a'
 			};
-			console.log(customerProfileBoardService.generateCustomerData(data));
-			console.log(result);
 			assert.deepEqual(customerProfileBoardService.generateCustomerData(data), result);
 		});
 

@@ -8,6 +8,9 @@ import { Inject } from 'angular-es-utils';
 
 import CustomerProfileBoardService from '../../CustomerProfileBoardService.js';
 
+const MONTH_ARRAY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const MONTH_DAY_ARRAY = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
 @Inject('$scope', '$ccValidator', '$filter')
 export default class CustomerAttributeEditorCtrl {
 	constructor() {
@@ -71,10 +74,23 @@ export default class CustomerAttributeEditorCtrl {
 	 * show attribute modify block
 	 * @name showAttributeModifyBlock
 	 * @param {object} attribute
-	 * @param {string} value
 	 */
-	showAttributeModifyBlock(attribute, value = '') {
-		this.tmpValue = attribute.type !== 'DATE_SELECT' ? value : new Date(value);
+	showAttributeModifyBlock(attribute) {
+		const value = typeof attribute.value !== 'undefined' ? attribute.value : attribute.displayValue || attribute.defaultValue || '';
+		if (attribute.type !== 'DATE_SELECT') {
+			this.tmpValue = value;
+		} else {
+			this.monthArray = MONTH_ARRAY;
+			const date = new Date(value);
+			if (date) {
+				this.tmpMonth = date.getMonth() + 1;
+				this.tmpDay = date.getDate();
+			} else {
+				this.tmpMonth = 1;
+				this.tmpDay = 1;
+			}
+			this.updateDayArray();
+		}
 		this.closeAllAttributeModifyBlock();
 		attribute.editingValue = true;
 	}
@@ -178,5 +194,16 @@ export default class CustomerAttributeEditorCtrl {
 			}))
 			.then(() => this.changeCustomerDefinedBlockState(false))
 			.catch(err => console.error(err));
+	}
+
+	isLeapYear(year) {
+		return !(year % (year % 100 ? 4 : 400));
+	}
+
+	updateDayArray() {
+		this.dayArray = [];
+		for (let day = 1, len = MONTH_DAY_ARRAY[this.tmpMonth - 1]; day <= len; day++) {
+			this.dayArray.push(day);
+		}
 	}
 }
