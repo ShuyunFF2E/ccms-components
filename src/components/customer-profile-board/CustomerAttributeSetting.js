@@ -58,13 +58,13 @@ const customer = {
 			editable: false,
 			type: 'text',
 			validate: ['/^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9]){1}\\d{8}$/']
-		}, {
+		/* }, {
 			attribute: 'mobile',
 			name: '支付手机',
 			defaultValue: '-',
 			unit: '',
 			editable: false,
-			isInListMode: true
+			isInListMode: true */
 		}, {
 			attribute: 'mobile',
 			name: '最新收货手机',
@@ -200,13 +200,13 @@ const consumer = {
 			unit: '',
 			editable: false,
 			isInListMode: true
-		}, {
+		/* }, {
 			attribute: '',
 			name: '客户类型',
 			defaultValue: '-',
 			unit: '',
 			editable: false,
-			isInListMode: false
+			isInListMode: false */
 		}, {
 			attribute: 'vip_info',
 			name: '淘宝全站等级',
