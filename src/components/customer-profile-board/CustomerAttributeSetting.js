@@ -190,9 +190,13 @@ const consumer = {
 		title: '基本消费指标',
 		name: 'base',
 		attributeList: [{
-			attribute: '',
+			attribute: 'platName',
 			name: '客户来源',
-			defaultValue: '淘宝',
+			defaultValue: '-',
+			valueMap: {
+				'taobao': '淘宝',
+				'jd': '京东'
+			},
 			unit: '',
 			editable: false,
 			isInListMode: true

@@ -213,11 +213,15 @@ class CustomerProfileBoardService {
 	 * set rfm label into every rfm item
 	 */
 	setRfmLabel(rfmList = []) {
-		if (!rfmList.length) return rfmList;
-		const tmp = rfmList.map(rfm => ({
-			...rfm,
-			period_label: RfmLabel[rfm.period]
-		})).sort((prev, next) => prev.period > next.period ? 1 : -1); // map method will change list order
+		// wiki http://wiki.yunat.com/pages/viewpage.action?pageId=37295845
+		const rfm_period_setting = 6;
+		const tmp = [];
+		for (let period = 1; period <= rfm_period_setting; period++) {
+			const rmfContent = rfmList.filter(rfm => rfm.period === period)[0] || {period};
+			rmfContent.period_label = RfmLabel[rmfContent.period];
+			tmp.push(rmfContent);
+		}
+		tmp.sort((prev, next) => prev.period > next.period ? 1 : -1);
 		tmp.unshift(tmp.pop());
 		return tmp;
 	}
