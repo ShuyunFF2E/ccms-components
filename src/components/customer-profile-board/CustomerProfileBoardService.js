@@ -262,7 +262,7 @@ class CustomerProfileBoardService {
 			if (attribute.valueMap) {
 				return attribute.valueMap[dataMapping[attribute.attribute]];
 			} else {
-				return (attribute.currency ? this.formatCurrencyNumber(dataMapping[attribute.attribute]) : dataMapping[attribute.attribute]) + attribute.unit;
+				return (typeof attribute.fixed !== 'undefined' ? this.formatNumber(dataMapping[attribute.attribute], attribute.fixed) : dataMapping[attribute.attribute]) + attribute.unit;
 			}
 		} else {
 			if (attribute.valueMap) {
@@ -289,10 +289,11 @@ class CustomerProfileBoardService {
 
 	/**
 	 * format currency number
-	 * @param {number} number
-	 * @returns {number} number
+	 * @param {Number} number
+	 * @param {number} fixed
+	 * @returns {string} number
 	 */
-	formatCurrencyNumber(number, fixed = 2) {
+	formatNumber(number, fixed = 2) {
 		number = parseFloat(number);
 		if (!number) number = 0;
 		return number.toFixed(fixed);
