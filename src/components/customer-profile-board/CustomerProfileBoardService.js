@@ -213,11 +213,15 @@ class CustomerProfileBoardService {
 	 * set rfm label into every rfm item
 	 */
 	setRfmLabel(rfmList = []) {
-		if (!rfmList.length) return rfmList;
-		const tmp = rfmList.map(rfm => ({
-			...rfm,
-			period_label: RfmLabel[rfm.period]
-		})).sort((prev, next) => prev.period > next.period ? 1 : -1); // map method will change list order
+		// wiki http://wiki.yunat.com/pages/viewpage.action?pageId=37295845
+		const rfm_period_setting = 6;
+		const tmp = [];
+		for (let period = 1; period <= rfm_period_setting; period++) {
+			const rmfContent = rfmList.filter(rfm => rfm.period === period)[0] || {period};
+			rmfContent.period_label = RfmLabel[rmfContent.period];
+			tmp.push(rmfContent);
+		}
+		tmp.sort((prev, next) => prev.period > next.period ? 1 : -1);
 		tmp.unshift(tmp.pop());
 		return tmp;
 	}
@@ -262,7 +266,7 @@ class CustomerProfileBoardService {
 			if (attribute.valueMap) {
 				return attribute.valueMap[dataMapping[attribute.attribute]];
 			} else {
-				return (attribute.currency ? this.formatCurrencyNumber(dataMapping[attribute.attribute]) : dataMapping[attribute.attribute]) + attribute.unit;
+				return (typeof attribute.fixed !== 'undefined' ? this.formatNumber(dataMapping[attribute.attribute], attribute.fixed) : dataMapping[attribute.attribute]) + attribute.unit;
 			}
 		} else {
 			if (attribute.valueMap) {
@@ -289,10 +293,11 @@ class CustomerProfileBoardService {
 
 	/**
 	 * format currency number
-	 * @param {number} number
-	 * @returns {number} number
+	 * @param {Number} number
+	 * @param {number} fixed
+	 * @returns {string} number
 	 */
-	formatCurrencyNumber(number, fixed = 2) {
+	formatNumber(number, fixed = 2) {
 		number = parseFloat(number);
 		if (!number) number = 0;
 		return number.toFixed(fixed);

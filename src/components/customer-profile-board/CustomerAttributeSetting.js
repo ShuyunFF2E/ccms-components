@@ -190,9 +190,13 @@ const consumer = {
 		title: '基本消费指标',
 		name: 'base',
 		attributeList: [{
-			attribute: '',
+			attribute: 'platName',
 			name: '客户来源',
-			defaultValue: '淘宝',
+			defaultValue: '-',
+			valueMap: {
+				'taobao': '淘宝',
+				'jd': '京东'
+			},
 			unit: '',
 			editable: false,
 			isInListMode: true
@@ -273,7 +277,7 @@ const consumer = {
 			name: '第一次购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false
 		}, {
 			attribute: 'trade_first_interval',
@@ -293,7 +297,7 @@ const consumer = {
 			name: '最后一次购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false,
 			isInListMode: true
 		}, {
@@ -319,7 +323,7 @@ const consumer = {
 			name: '累计购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false,
 			isInListMode: true
 		}, {
@@ -333,7 +337,7 @@ const consumer = {
 			name: '平均每次购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false,
 			isInListMode: true
 		}, {
@@ -341,12 +345,14 @@ const consumer = {
 			name: '平均每次购买件数',
 			defaultValue: '-',
 			unit: ' 件',
+			fixed: 0,
 			editable: false
 		}, {
 			attribute: 'trade_avg_buy_interval',
 			name: '平均每次购买间隔',
 			defaultValue: '-',
 			unit: ' 天',
+			fixed: 0,
 			editable: false
 		}, {
 			attribute: 'trade_refund_count',
@@ -359,27 +365,28 @@ const consumer = {
 			name: '退款金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false
 		}, {
 			attribute: 'trade_avg_confirm_interval',
 			name: '平均发货到确认收货间隔',
 			defaultValue: '-',
 			unit: ' 天',
+			fixed: 0,
 			editable: false
 		}, {
 			attribute: 'trade_max_amount',
 			name: '最大单笔订单购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false
 		}, {
 			attribute: 'trade_order_discount_fee',
 			name: '订单级优惠费用',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false
 		}]
 	}]
