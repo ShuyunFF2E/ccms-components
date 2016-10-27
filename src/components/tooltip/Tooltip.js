@@ -6,13 +6,13 @@
 
 import angular from 'angular';
 
-import {isElement} from 'angular-es-utils/type-auth';
+import { isElement } from 'angular-es-utils/type-auth';
 
 import Popup from '../../common/bases/Popup';
-import {positionElements, chopStyle2Num} from '../../common/utils/style-helper';
+import { positionElements, chopStyle2Num, offset, position, adjustTop } from '../../common/utils/style-helper';
 
 import template from './tooltip.tpl.html';
-import {TOOLTIP_TYPE} from './Contants';
+import { TOOLTIP_TYPE } from './Contants';
 
 const OPENED_CLASS = 'tooltip-opened';
 const ARROW_MARGIN = 2;
@@ -72,6 +72,8 @@ export default class Tooltip extends Popup {
 				let tooltip = this.element;
 
 				const ttPos = positionElements(this.hostEl, tooltip, this.placement, this.append2Body);
+				var hostElPos = this.append2Body ? offset(this.hostEl) : position(this.hostEl);
+				const initialHeight = tooltip.offsetHeight;
 
 				const placement = ttPos.placement.split('-');
 
@@ -101,6 +103,11 @@ export default class Tooltip extends Popup {
 
 				tooltip.style.top = `${ttOffset.top}px`;
 				tooltip.style.left = `${ttOffset.left}px`;
+
+				const adjustment = adjustTop(placement, hostElPos, initialHeight, tooltip.offsetHeight);
+				if (adjustment) {
+					tooltip.style.top = `${adjustment.top - arrowHeight - ARROW_MARGIN}px`;
+				}
 
 				tooltip.classList.add(ttPos.placement);
 

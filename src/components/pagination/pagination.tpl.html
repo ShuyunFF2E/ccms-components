@@ -8,7 +8,7 @@
 	</div>
 	<div class="p-group">
 		<span class="pcontrol">
-			<input type="text"
+			<input type="text" size="{{$ctrl.totalPages.toString().length}}"
 					ng-switch-when="normal"
                     ng-disabled="$ctrl.totalPages===1"
 					ng-blur="$ctrl.changePageNumByInput()"

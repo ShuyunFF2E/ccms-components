@@ -49,7 +49,7 @@ export default {
 
 	getMenus(menusResource) {
 		const isResource = menusResource && typeof menusResource.query === 'function',
-			// -如果是Resource则返回Resource,否则返回原数据
+		// -如果是Resource则返回Resource,否则返回原数据
 			resource = !isResource ? menusResource
 				: menusResource.query();
 		return {
@@ -62,7 +62,7 @@ export default {
 
 		const isResource = shopsResource && typeof shopsResource.query === 'function',
 
-			// -如果是Resource则返回Resource,否则返回原数据
+		// -如果是Resource则返回Resource,否则返回原数据
 			resource = !isResource ? shopsResource
 				: shopsResource.query();
 		return {

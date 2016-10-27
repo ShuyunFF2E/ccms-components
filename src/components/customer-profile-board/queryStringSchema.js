@@ -37,7 +37,7 @@ const generatorQueryParam = (name = '', fields = '[]', limit = 1) => `
  * @returns {String}
  * generator graphql query string
  */
-const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
+const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenantId = '') => {
 	const CustomerQuerySchema = `
 		customer:shuyun_searchapi_customer(
 			param: ${generatorQueryParam('customer', `[{ type:"str_selector" dimension:"customerno" value:"${nick}" }]`)}
@@ -113,6 +113,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
 			param:{
         type:"buyer_nick"
         value:"${nick}"
+        dp_id: "${shopId}"
         buyer_nick:"${nick}"
       }){
 	      result{
@@ -205,7 +206,23 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
 		}
 	`;
 
-	let queryString = `
+	const customPropertyCustomer = `
+		custom_property_customer(
+      customerNo:"${nick}"
+      tenantId:"${tenantId}"
+      platform:"${platName}"
+    ){
+      properties{
+        id
+        name
+        type
+        optional
+        value
+      }
+    }
+	`;
+
+	const queryString = `
 		{
 			${CustomerQuerySchema}
 			${RfmQuerySchema}
@@ -214,16 +231,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao') => {
 			${MemberInfoQuerySchema}
 			${WeChatQuerySchema}
 			${WeiBoQuerySchema}
-		}
-	`;
-
-	queryString = `
-		{
-			${CustomerQuerySchema}
-			${TradeQuerySchema}
-			${MemberInfoQuerySchema}
-			${WeChatQuerySchema}
-			${WeiBoQuerySchema}
+			${customPropertyCustomer}
 		}
 	`;
 

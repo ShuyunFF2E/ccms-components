@@ -14,41 +14,62 @@ import CustomerAttributeSetting, { TagsMapping, RfmLabel } from './CustomerAttri
 
 const MODAL_TITLE_STRING = '客户基本信息';
 const CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX = '/cc/customer-defined-attribute';
-const CUSTOMER_PROFILE_API_PREFIX = '/cc/customer-profile';
-const CUSTOMER_PROFILE_API = CUSTOMER_PROFILE_API_PREFIX + '/fullView';
 const CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer/:nickName';
 const CUSTOMER_DEFINED_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer';
 const CUSTOMER_DEFINED_PLATFORM_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/properties';
 
+let API_ADDRESS, API_VERSION;
+
 export class $ccCustomerProfileBoard {
 	/**
-	 * @name popProfileBoardModal
-	 * @param {Object} customerInformation
-	 * pop modal of customer profile board
+	 * set graphql api
+	 * @param {string} address
+	 * @param {string} version
 	 */
-	popProfileBoardModal(customerInformation = {}) {
-		const modalOptions = {
-			bindings: {
-				customerInformation
-			},
-			title: MODAL_TITLE_STRING,
-			style: {width: '640px', height: '460px', 'min-width': '640px', 'min-height': '460px', 'padding': 0},
-			__body: template,
-			controller: controller,
-			hasFooter: false,
-			uid: 'customer-profile-board'
-		};
+	setAPI(address = '', version = '1.0') {
+		API_ADDRESS = address;
+		API_VERSION = version;
+	}
 
-		return ModalService.modal(modalOptions).open();
+	$get() {
+		return {
+			/**
+			 * @name popProfileBoardModal
+			 * @param {Object} customerInformation
+			 * pop modal of customer profile board
+			 */
+			popProfileBoardModal(customerInformation = {}) {
+				const modalOptions = {
+					bindings: {
+						customerInformation
+					},
+					title: MODAL_TITLE_STRING,
+					style: {width: '640px', height: '460px', 'min-width': '640px', 'min-height': '460px', 'padding': 0},
+					__body: template,
+					controller: controller,
+					hasFooter: false,
+					uid: 'customer-profile-board'
+				};
+				ModalService.modal(modalOptions).open();
+			}
+		};
 	}
 }
 
 class CustomerProfileBoardService {
 	constructor() {
-		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API, true, undefined, undefined, {
+		const CUSTOMER_PROFILE_API = `${API_ADDRESS}/fullView/${API_VERSION}/`;
+		this.CustomerProfileResource = genresource(CUSTOMER_PROFILE_API, true, undefined, {
+			'graphql': {
+				method: 'POST',
+				withCredentials: true
+			}
+		}, {
 			headers: {
 				'Content-Type': 'application/graphql'
 			}
+		}, {
+			stripTrailingSlashes: false
 		});
 		this.CustomerDefinedAttributeGetDataResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API);
 		this.CustomerDefinedAttributeResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_API);
@@ -61,8 +82,8 @@ class CustomerProfileBoardService {
 	 * @returns {Promise}
 	 * using $resource to query customer profile data
 	 */
-	queryCustomerProfileData({nickName = '', shopId = '', platName = ''} = {}) {
-		return this.CustomerProfileResource.save(generatorQueryString(nickName, shopId, platName)).$promise;
+	queryCustomerProfileData({nickName = '', shopId = '', platName = '', tenantId = ''} = {}) {
+		return this.CustomerProfileResource.graphql(generatorQueryString(nickName, shopId, platName, tenantId)).$promise;
 	}
 
 	/**
@@ -132,6 +153,8 @@ class CustomerProfileBoardService {
 						};
 					case 'memberInfo':
 						return Object.keys(data[key]).map(k => data[key][k]).reduce((pre, curr) => ({...pre, ...curr}), {});
+					case 'custom_property_customer':
+						return { custom_property_customer: data[key].properties };
 					default:
 						return data[key];
 				}
@@ -190,11 +213,15 @@ class CustomerProfileBoardService {
 	 * set rfm label into every rfm item
 	 */
 	setRfmLabel(rfmList = []) {
-		if (!rfmList.length) return rfmList;
-		const tmp = rfmList.map(rfm => ({
-			...rfm,
-			period_label: RfmLabel[rfm.period]
-		})).sort((prev, next) => prev.period > next.period ? 1 : -1); // map method will change list order
+		// wiki http://wiki.yunat.com/pages/viewpage.action?pageId=37295845
+		const rfm_period_setting = 6;
+		const tmp = [];
+		for (let period = 1; period <= rfm_period_setting; period++) {
+			const rmfContent = rfmList.filter(rfm => rfm.period === period)[0] || {period};
+			rmfContent.period_label = RfmLabel[rmfContent.period];
+			tmp.push(rmfContent);
+		}
+		tmp.sort((prev, next) => prev.period > next.period ? 1 : -1);
 		tmp.unshift(tmp.pop());
 		return tmp;
 	}
@@ -239,7 +266,7 @@ class CustomerProfileBoardService {
 			if (attribute.valueMap) {
 				return attribute.valueMap[dataMapping[attribute.attribute]];
 			} else {
-				return (attribute.currency ? this.formatCurrencyNumber(dataMapping[attribute.attribute]) : dataMapping[attribute.attribute]) + attribute.unit;
+				return (typeof attribute.fixed !== 'undefined' ? this.formatNumber(dataMapping[attribute.attribute], attribute.fixed) : dataMapping[attribute.attribute]) + attribute.unit;
 			}
 		} else {
 			if (attribute.valueMap) {
@@ -266,10 +293,11 @@ class CustomerProfileBoardService {
 
 	/**
 	 * format currency number
-	 * @param {number} number
-	 * @returns {number} number
+	 * @param {Number} number
+	 * @param {number} fixed
+	 * @returns {string} number
 	 */
-	formatCurrencyNumber(number, fixed = 2) {
+	formatNumber(number, fixed = 2) {
 		number = parseFloat(number);
 		if (!number) number = 0;
 		return number.toFixed(fixed);

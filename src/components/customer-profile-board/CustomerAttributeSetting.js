@@ -14,7 +14,7 @@ const customer = {
 		attributeList: [{
 			attribute: 'full_name',
 			name: '姓名',
-			defaultValue: '无',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			type: 'text',
@@ -23,7 +23,7 @@ const customer = {
 		}, {
 			attribute: 'sex',
 			name: '性别',
-			defaultValue: '',
+			defaultValue: '-',
 			unit: '',
 			editable: false,
 			type: 'radio',
@@ -120,11 +120,11 @@ const customer = {
 				validate: ['/^\\d{1, 6}$/']
 			}]
 		}]
-	}/* , {
+	}, {
 		title: '更多个人信息',
 		name: 'customerDefined',
 		attributeList: [
-			 {
+		/* {
 				attribute: 'job',
 				name: '职业',
 				defaultValue: '自由职业',
@@ -177,10 +177,9 @@ const customer = {
 					value: ''
 				}],
 				isInListMode: true
-			}
+			}*/
 		]
-	}*/
-	]
+	}]
 };
 
 const consumer = {
@@ -191,9 +190,13 @@ const consumer = {
 		title: '基本消费指标',
 		name: 'base',
 		attributeList: [{
-			attribute: '',
+			attribute: 'platName',
 			name: '客户来源',
-			defaultValue: '淘宝',
+			defaultValue: '-',
+			valueMap: {
+				'taobao': '淘宝',
+				'jd': '京东'
+			},
 			unit: '',
 			editable: false,
 			isInListMode: true
@@ -226,6 +229,29 @@ const consumer = {
 			attribute: 'buyer_credit_lev',
 			name: '信用等级',
 			defaultValue: '-',
+			valueMap: {
+				'0': '未分级',
+				'1': '一心',
+				'2': '二心',
+				'3': '三心',
+				'4': '四心',
+				'5': '五心',
+				'6': '一钻',
+				'7': '二钻',
+				'8': '三钻',
+				'9': '四钻',
+				'10': '五钻',
+				'11': '一皇冠',
+				'12': '二皇冠',
+				'13': '三皇冠',
+				'14': '四皇冠',
+				'15': '五皇冠',
+				'16': '一金冠',
+				'17': '二金冠',
+				'18': '三金冠',
+				'19': '四金冠',
+				'20': '五金冠'
+			},
 			unit: '',
 			editable: false
 		}, {
@@ -251,7 +277,7 @@ const consumer = {
 			name: '第一次购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false
 		}, {
 			attribute: 'trade_first_interval',
@@ -271,7 +297,7 @@ const consumer = {
 			name: '最后一次购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false,
 			isInListMode: true
 		}, {
@@ -297,7 +323,7 @@ const consumer = {
 			name: '累计购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false,
 			isInListMode: true
 		}, {
@@ -311,7 +337,7 @@ const consumer = {
 			name: '平均每次购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false,
 			isInListMode: true
 		}, {
@@ -319,12 +345,14 @@ const consumer = {
 			name: '平均每次购买件数',
 			defaultValue: '-',
 			unit: ' 件',
+			fixed: 0,
 			editable: false
 		}, {
 			attribute: 'trade_avg_buy_interval',
 			name: '平均每次购买间隔',
 			defaultValue: '-',
 			unit: ' 天',
+			fixed: 0,
 			editable: false
 		}, {
 			attribute: 'trade_refund_count',
@@ -337,27 +365,28 @@ const consumer = {
 			name: '退款金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false
 		}, {
 			attribute: 'trade_avg_confirm_interval',
 			name: '平均发货到确认收货间隔',
 			defaultValue: '-',
 			unit: ' 天',
+			fixed: 0,
 			editable: false
 		}, {
 			attribute: 'trade_max_amount',
 			name: '最大单笔订单购买金额',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false
 		}, {
 			attribute: 'trade_order_discount_fee',
 			name: '订单级优惠费用',
 			defaultValue: '-',
 			unit: ' 元',
-			currency: true,
+			fixed: 2,
 			editable: false
 		}]
 	}]
@@ -373,7 +402,7 @@ const other = {
 		attributeList: [{
 			attribute: 'cardGrade',
 			name: '会员等级',
-			defaultValue: '',
+			defaultValue: '-',
 			unit: '',
 			valueMap: {
 				1: '普通会员',

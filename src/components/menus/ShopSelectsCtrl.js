@@ -44,14 +44,24 @@ export default class ShopSelectsCtrl {
 				.then(res => {
 					this.list = res || [];
 					this.tempList = angular.copy(this.list);
-					this._getActiveShop(this.list);
+					const platShop = this._getActiveShop(this.list);
+					// - 通知
+					this.shopInfo = platShop;
+					// 选择默认店铺
+					setCurrentPlatShop(platShop.plat, platShop.shop);
 				});
 
 		} else {
 			const resourceIsArray = Array.isArray(shops.resource);
 			this.list = resourceIsArray ? shops.resource : [];
 			this.tempList = angular.copy(this.list);
-			resourceIsArray && this._getActiveShop(this.list);
+			if (resourceIsArray) {
+				const platShop = this._getActiveShop(this.list);
+				// - 通知
+				this.shopInfo = platShop;
+				// 选择默认店铺
+				setCurrentPlatShop(platShop.plat, platShop.shop);
+			}
 		}
 	}
 
@@ -63,19 +73,22 @@ export default class ShopSelectsCtrl {
 	_getActiveShop(list) {
 		if (Array.isArray(list)) {
 			// -查询所在平台
-			const plat = list.find(plat => {
-					return plat.active;
-				}),
+			const plat = list.find(
+					plat => {
+						return plat.active;
+					}
+				) || {};
 			// -查询在平台中选中的店铺
-				shop = plat && Array.isArray(plat.child) ? plat.child.find(shop => {
+			const shop = plat &&
+				Array.isArray(plat.child) &&
+				plat.child.find(shop => {
 					return shop.active;
-				}) : {};
-			// - 通知
-			this.shopInfo = {
+				}) || {};
+
+			return {
 				plat,
 				shop
 			};
-			this.selectedShop(plat, shop);
 		}
 	}
 
@@ -89,6 +102,9 @@ export default class ShopSelectsCtrl {
 		const selectedShop = {plat, shop};
 
 		// - 选择同一个店铺,阻止事件广播
+		// - this.shopInfo.plat.value !== plat.value ==> 不同平台时
+		// - this.shopInfo.shop.value !== shop.value ==> 不同店铺时
+		// - this.isInit ==> 第一次初始化
 		if (this.shopInfo.plat.value !== plat.value || this.shopInfo.shop.value !== shop.value || this.isInit) {
 			const deferred = this._$q.defer();
 

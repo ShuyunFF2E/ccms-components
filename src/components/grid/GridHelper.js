@@ -33,11 +33,13 @@ export default {
 			response: null, // 对外暴露的response
 			queryParams: null, // 外部查询参数
 			columnsDef: [],   // 列定义,包括 field:字段 displayName:字段名 cellTemplate:单元格模板 align:文字对齐方式
+			enableHiddenColumns: false, // 自定义数据列，enum: false, Array(field)
 			externalData: null, // 来自外部表格数据
 			showPagination: true, // 是否展示分页
 			headerTpl: null, // 表头模板,允许 字符串 or 模板url
-			cellTpl: null, // 表格元素模板,允许 字符串 or 模板url
+			rowTpl: null, // 表格行模板,允许 字符串 or 模板url
 			emptyTipTpl: null,  // 表格为空时的提示 允许 字符串 or 模板url
+			transformer: null, // 数据格式转换方法 | 字段映射对象
 			pager: {
 				totals: 0,  // 总条数
 				totalPages: 1,  // 总页数
@@ -92,6 +94,8 @@ export default {
 					pager.pageSize = transformedData.pageSize;
 					pager.totals = transformedData.totals;
 					pager.totalPages = Math.ceil((transformedData.totals || 0) / pager.pageSize);
+
+					return gridOptions;
 				});
 
 		} else {
@@ -99,6 +103,7 @@ export default {
 			const finish = data => {
 				gridOptions.data = data;
 				gridOptions.loading = false;
+				return gridOptions;
 			};
 
 			if (isPromiseLike(gridOptions.externalData)) {

@@ -7,12 +7,12 @@
 import angular from 'angular';
 import { assert } from 'chai';
 import injector from 'angular-es-utils/injector';
-import ModalService from '../../modal/ModalService';
 import sinon from 'sinon';
 
-import CustomerProfileBoardService, { $ccCustomerProfileBoard } from '../CustomerProfileBoardService.js';
+import CustomerProfileBoardService, {$ccCustomerProfileBoard} from '../CustomerProfileBoardService.js';
 
 describe('CustomerProfileBoard', () => {
+	const scope = injector.get('$rootScope').$new();
 	let sandbox;
 
 	beforeEach(() => {
@@ -20,11 +20,6 @@ describe('CustomerProfileBoard', () => {
 		angular.mock.inject($injector => {
 			sandbox = sinon.sandbox.create();
 			sandbox.stub(injector, 'get', service => $injector.get(service));
-			sandbox.stub(ModalService, 'modal', v => ({
-				open() {
-					return v;
-				}
-			}));
 		});
 	});
 
@@ -33,35 +28,31 @@ describe('CustomerProfileBoard', () => {
 	});
 
 	describe('$ccCustomerProfileBoard', () => {
-
 		const ccCustomerProfileBoard = new $ccCustomerProfileBoard();
 
 		it('popProfileBoardModal', () => {
-			const modalInstance = ccCustomerProfileBoard.popProfileBoardModal();
-			assert.deepEqual(modalInstance.bindings, {customerInformation: {}});
+			ccCustomerProfileBoard.$get().popProfileBoardModal();
+			scope.$$postDigest(() => {
+				assert.isNotNull(document.querySelector('.ccms-modal[data-uid="customer-profile-board"]'));
+			});
 		});
 
+		after(() => {
+			document.body.removeChild(document.querySelector('.ccms-modal'));
+		});
 	});
 
 	describe('CustomerProfileBoardService', () => {
 		it('queryCustomerProfileData', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
 			assert.isFunction(customerProfileBoardService.queryCustomerProfileData().then);
-			assert.isFunction(customerProfileBoardService.queryCustomerProfileData({
-				nickName: 'a',
-				shopId: 'b',
-				platName: 'c'
-			}).then);
+			assert.isFunction(customerProfileBoardService.queryCustomerProfileData({nickName: 'a', shopId: 'b', platName: 'c'}).then);
 		});
 
 		it('getCustomerDefinedAttributeData', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
 			assert.isFunction(customerProfileBoardService.getCustomerDefinedAttributeData().then);
-			assert.isFunction(customerProfileBoardService.getCustomerDefinedAttributeData({
-				nickName: 'a',
-				tenantId: 'b',
-				platName: 'c'
-			}).then);
+			assert.isFunction(customerProfileBoardService.getCustomerDefinedAttributeData({nickName: 'a', tenantId: 'b', platName: 'c'}).then);
 		});
 
 		it('saveCustomerDefinedAttribute', () => {
@@ -133,6 +124,26 @@ describe('CustomerProfileBoard', () => {
 				}
 			};
 
+			const rfm = [{
+				period: 6,
+				period_label: '时间不限'
+			}, {
+				period: 1,
+				period_label: '最近30天'
+			}, {
+				period: 2,
+				period_label: '最近60天'
+			}, {
+				period: 3,
+				period_label: '最近90天'
+			}, {
+				period: 4,
+				period_label: '最近180天'
+			}, {
+				period: 5,
+				period_label: '最近360天'
+			}];
+
 			const result = {
 				customer: {
 					name: 'jack'
@@ -141,16 +152,16 @@ describe('CustomerProfileBoard', () => {
 					id: '123'
 				},
 				period: 6,
-				rfm: [{
-					period: 6,
-					period_label: '时间不限'
-				}],
+				period_label: '时间不限',
+				rfm,
 				tags: [],
 				member1: 'member1',
 				member2: 'member2',
 				marketingResponsivities: 1,
 				a: 'a'
 			};
+			console.log(customerProfileBoardService.generateCustomerData(data));
+			console.log(result);
 			assert.deepEqual(customerProfileBoardService.generateCustomerData(data), result);
 		});
 
@@ -210,18 +221,27 @@ describe('CustomerProfileBoard', () => {
 			}, {
 				period: 6
 			}];
-			const result = [{
+			const rfm = [{
 				period: 6,
 				period_label: '时间不限'
+			}, {
+				period: 1,
+				period_label: '最近30天'
 			}, {
 				period: 2,
 				period_label: '最近60天'
 			}, {
 				period: 3,
 				period_label: '最近90天'
+			}, {
+				period: 4,
+				period_label: '最近180天'
+			}, {
+				period: 5,
+				period_label: '最近360天'
 			}];
-			assert.deepEqual(customerProfileBoardService.setRfmLabel(data), result);
-			assert.deepEqual(customerProfileBoardService.setRfmLabel([]), []);
+			assert.deepEqual(customerProfileBoardService.setRfmLabel(data), rfm);
+			assert.deepEqual(customerProfileBoardService.setRfmLabel([]), rfm);
 		});
 
 		it('mappingDataIntoAttributeBlock', () => {
@@ -320,7 +340,7 @@ describe('CustomerProfileBoard', () => {
 		it('getAttributeList', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
 
-			const result = ['full_name', 'sex', 'birthday', 'age', 'mobile', 'buyer_email', 'address_zip',
+			const result = ['full_name', 'sex', 'birthday', 'age', 'mobile', 'buyer_email', 'address_zip', 'platName',
 				'', 'vip_info', 'buyer_credit_lev', 'trade_first_time', 'trade_first_amount', 'trade_first_interval',
 				'trade_last_time', 'trade_last_amount', 'trade_last_interval', 'trade_tidcount', 'trade_count',
 				'trade_amount', 'trade_item_num', 'trade_avg_amount', 'trade_avg_item_num', 'trade_avg_buy_interval',
@@ -339,7 +359,7 @@ describe('CustomerProfileBoard', () => {
 				name: '最后一次购买金额',
 				defaultValue: '0.00 元',
 				unit: ' 元',
-				currency: true,
+				fixed: 2,
 				editable: false,
 				isInListMode: true
 			};
@@ -373,13 +393,13 @@ describe('CustomerProfileBoard', () => {
 			assert.deepEqual(customerProfileBoardService.getAttributeValue(attribute2, {}), attribute2.valueMap[attribute2.defaultValue]);
 		});
 
-		it('formatCurrencyNumber', () => {
+		it('formatNumber', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber('a'), '0.00');
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber('0'), '0.00');
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber(0), '0.00');
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber(11.1), '11.10');
-			assert.strictEqual(customerProfileBoardService.formatCurrencyNumber(123.456), '123.46');
+			assert.strictEqual(customerProfileBoardService.formatNumber('a'), '0.00');
+			assert.strictEqual(customerProfileBoardService.formatNumber('0'), '0.00');
+			assert.strictEqual(customerProfileBoardService.formatNumber(0), '0.00');
+			assert.strictEqual(customerProfileBoardService.formatNumber(11.1), '11.10');
+			assert.strictEqual(customerProfileBoardService.formatNumber(123.456), '123.46');
 		});
 	});
 });

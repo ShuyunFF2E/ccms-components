@@ -20,5 +20,4 @@ const ddo = {
 export default angular
 	.module('ccms.components.loading', [])
 	.component('ccLoading', ddo)
-	.deprecatedComponent('loading', ddo)
 	.name;

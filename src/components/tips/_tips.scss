@@ -14,7 +14,6 @@
 	font-size: 12px;
 }
 
-tips,
 cc-tips {
 	display: inline-block;
 
@@ -103,6 +102,7 @@ cc-tips {
 	padding: 8px 14px 7px 20px;
 	max-height: 120px;
 	overflow: hidden;
+	margin-top: 1px;
 
 	&.tips-opening {
 		animation-name: fade-in, slide-down;
