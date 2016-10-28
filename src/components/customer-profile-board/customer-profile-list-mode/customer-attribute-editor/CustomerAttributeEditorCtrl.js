@@ -77,22 +77,27 @@ export default class CustomerAttributeEditorCtrl {
 	 */
 	showAttributeModifyBlock(attribute) {
 		const value = typeof attribute.value !== 'undefined' ? attribute.value : attribute.displayValue || attribute.defaultValue || '';
-		if (attribute.type !== 'DATE_SELECT') {
-			this.tmpValue = value;
-		} else {
-			this.monthArray = MONTH_ARRAY;
-			const date = new Date(value);
-			if (date) {
-				this.tmpMonth = date.getMonth() + 1;
-				this.tmpDay = date.getDate();
-			} else {
-				this.tmpMonth = 1;
-				this.tmpDay = 1;
-			}
-			this.updateDayArray();
+		switch (attribute.type) {
+			case 'DATE_SELECT':
+				break;
+			case 'MONTH_DAY':
+				this.monthArray = MONTH_ARRAY;
+				const date = new Date(value);
+				if (date) {
+					this.tmpMonth = date.getMonth() + 1;
+					this.tmpDay = date.getDate();
+				} else {
+					this.tmpMonth = 1;
+					this.tmpDay = 1;
+				}
+				this.updateDayArray();
+				break;
+			default:
+				this.tmpValue = value;
 		}
 		this.closeAllAttributeModifyBlock();
 		attribute.editingValue = true;
+		attribute.displayEditIcon = false;
 	}
 
 	/**
@@ -109,7 +114,7 @@ export default class CustomerAttributeEditorCtrl {
 					platName: this.customerData.platName,
 					tenantId: this.customerData.tenantId,
 					id: attribute.id,
-					value: attribute.type === 'NUMBER_SELECT' || attribute.type === 'NUMBER_INPUT' ? Number.parseFloat(value) : value
+					value: this.formatValue(value, attribute.type)
 				};
 				return this.CustomerProfileBoardService.updateCustomerDefinedAttributeData(params);
 			})

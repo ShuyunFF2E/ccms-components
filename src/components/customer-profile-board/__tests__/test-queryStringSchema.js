@@ -19,38 +19,41 @@ describe('queryStringSchema', () => {
 
 		const queryString = `{
 
-		customer:shuyun_searchapi_customer(
-			param:
-	{
-	  settings:{
-	    data_source: "customer"
-	    query_id:"report-id"
-	    pagination:{
-	      limit: 1
-	      offset:0
-	    }
-	    return_format:"json"
-	  }
-	  filters:{
-	    type:"and"
-	    fields: [{ type:"str_selector" dimension:"customerno" value:"s_peggy" }]
-	  }
-	}
+		custom_property_basic(
+			tenantId: "dagouzi01"
+  	  shopId: "62847409"
+  	  customerno: "s_peggy"
+    ){
+      message
+      username
+      sex
+      birthday
+      age
+      mobile
+      email
+      level
+      creditrating
+      favorablerate
+      province
+      city
+      locality
+      address
+      postcode
+    }
 
-		){
-	    flag
-	    msg
-	    data{
-	      data{
-          full_name
-          sex
-          birthday:birth_year
-          vip_info
-          buyer_credit_lev
-          mobile
-        }
-	    }
-	  }
+		custom_property_customer(
+      customerNo:"s_peggy"
+      tenantId:"dagouzi01"
+      platform:"taobao"
+    ){
+      properties{
+        id
+        name
+        type
+        optional
+        value
+      }
+    }
 
 	  rfm:shuyun_searchapi_rfm(
 	    param: {
@@ -95,39 +98,6 @@ describe('queryStringSchema', () => {
 	        trade_avg_confirm_interval
 	        trade_max_amount
 	        trade_order_discount_fee
-	      }
-	    }
-	  }
-
-		trade:shuyun_searchapi_trade(
-	    param:
-	{
-	  settings:{
-	    data_source: "trade"
-	    query_id:"report-id"
-	    pagination:{
-	      limit: 1
-	      offset:0
-	    }
-	    return_format:"json"
-	  }
-	  filters:{
-	    type:"and"
-	    fields: [{ type:"str_selector" dimension:"buyer_nick" value:"s_peggy" }]
-	  }
-	}
-
-	  ){
-	    flag
-	    msg
-	    data{
-	      data{
-	        buyer_email
-	        receiver_state
-	        receiver_city
-	        receiver_district
-	        receiver_address
-	        receiver_zip
 	      }
 	    }
 	  }
@@ -221,21 +191,6 @@ describe('queryStringSchema', () => {
 			sinawbUserId
 			sinawbUserName
 		}
-
-		custom_property_customer(
-      customerNo:"s_peggy"
-      tenantId:"dagouzi01"
-      platform:"taobao"
-    ){
-      properties{
-        id
-        name
-        type
-        optional
-        value
-      }
-    }
-
 		}`;
 
 		assert.deepEqual(generatorQueryString(customerInformation.nickName, customerInformation.shopId, customerInformation.platName, customerInformation.tenantId).replace(/\s/g, ''), queryString.replace(/\s/g, ''));

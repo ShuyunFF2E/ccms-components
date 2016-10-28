@@ -38,23 +38,44 @@ const generatorQueryParam = (name = '', fields = '[]', limit = 1) => `
  * generator graphql query string
  */
 const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenantId = '') => {
-	const CustomerQuerySchema = `
-		customer:shuyun_searchapi_customer(
-			param: ${generatorQueryParam('customer', `[{ type:"str_selector" dimension:"customerno" value:"${nick}" }]`)}
-		){
-	    flag
-	    msg
-	    data{
-	      data{
-          full_name
-          sex
-          birthday:birth_year
-          vip_info
-          buyer_credit_lev
-          mobile
-        }
-	    }
-	  }
+	const customPropertyBasic = `
+		custom_property_basic(
+			tenantId: "${tenantId}"
+  	  shopId: "${shopId}"
+  	  customerno: "${nick}"
+    ){
+      message
+      username
+      sex
+      birthday
+      age
+      mobile
+      email
+      level
+      creditrating
+      favorablerate
+      province
+      city
+      locality
+      address
+      postcode
+    }
+	`;
+
+	const customPropertyCustomer = `
+		custom_property_customer(
+      customerNo:"${nick}"
+      tenantId:"${tenantId}"
+      platform:"${platName}"
+    ){
+      properties{
+        id
+        name
+        type
+        optional
+        value
+      }
+    }
 	`;
 
 	const RfmQuerySchema = `
@@ -84,25 +105,6 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 	        trade_avg_confirm_interval
 	        trade_max_amount
 	        trade_order_discount_fee
-	      }
-	    }
-	  }
-	`;
-
-	const TradeQuerySchema = `
-		trade:shuyun_searchapi_trade(
-	    param: ${generatorQueryParam('trade', `[{ type:"str_selector" dimension:"buyer_nick" value:"${nick}" }]`)}
-	  ){
-	    flag
-	    msg
-	    data{
-	      data{
-	        buyer_email
-	        receiver_state
-	        receiver_city
-	        receiver_district
-	        receiver_address
-	        receiver_zip
 	      }
 	    }
 	  }
@@ -206,32 +208,15 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 		}
 	`;
 
-	const customPropertyCustomer = `
-		custom_property_customer(
-      customerNo:"${nick}"
-      tenantId:"${tenantId}"
-      platform:"${platName}"
-    ){
-      properties{
-        id
-        name
-        type
-        optional
-        value
-      }
-    }
-	`;
-
 	const queryString = `
 		{
-			${CustomerQuerySchema}
+			${customPropertyBasic}
+			${customPropertyCustomer}
 			${RfmQuerySchema}
-			${TradeQuerySchema}
 			${TagQuerySchema}
 			${MemberInfoQuerySchema}
 			${WeChatQuerySchema}
 			${WeiBoQuerySchema}
-			${customPropertyCustomer}
 		}
 	`;
 

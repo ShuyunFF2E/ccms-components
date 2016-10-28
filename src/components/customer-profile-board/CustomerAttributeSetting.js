@@ -14,7 +14,7 @@ const customer = {
 		title: '基本信息',
 		name: 'base',
 		attributeList: [{
-			attribute: 'full_name',
+			attribute: 'username',
 			name: '姓名',
 			defaultValue: DEFAULT_VALUE,
 			unit: '',
@@ -43,7 +43,7 @@ const customer = {
 			defaultValue: DEFAULT_VALUE,
 			unit: '',
 			editable: true,
-			type: 'DATE_SELECT',
+			type: 'MONTH_DAY',
 			validate: [],
 			isInListMode: true
 		}, {
@@ -76,7 +76,7 @@ const customer = {
 			unit: '',
 			editable: false
 		}, {
-			attribute: 'buyer_email',
+			attribute: 'email',
 			name: 'email邮箱',
 			defaultValue: DEFAULT_VALUE,
 			unit: '',
@@ -90,34 +90,34 @@ const customer = {
 			unit: '',
 			editable: false,
 			attributes: [{
-				attribute: 'receiver_state',
+				attribute: 'province',
 				name: '省份',
 				defaultValue: DEFAULT_VALUE,
 				unit: '',
 				type: 'select',
 				isInListMode: true
 			}, {
-				attribute: 'receiver_city',
+				attribute: 'city',
 				name: '城市',
 				defaultValue: DEFAULT_VALUE,
 				unit: '',
 				type: 'select',
 				isInListMode: true
 			}, {
-				attribute: 'receiver_district',
+				attribute: 'locality',
 				name: '区县',
 				defaultValue: DEFAULT_VALUE,
 				unit: '',
 				type: 'select',
 				isInListMode: true
 			}, {
-				attribute: 'receiver_address',
+				attribute: 'address',
 				type: 'text',
 				defaultValue: DEFAULT_VALUE,
 				unit: '',
 				validate: ['/^\\w{1, 50}$/']
 			}, {
-				attribute: 'receiver_zip',
+				attribute: 'postcode',
 				type: 'text',
 				defaultValue: DEFAULT_VALUE,
 				unit: '',
@@ -212,7 +212,7 @@ const consumer = {
 			editable: false,
 			isInListMode: false */
 		}, {
-			attribute: 'vip_info',
+			attribute: 'level',
 			name: '淘宝全站等级',
 			defaultValue: DEFAULT_VALUE,
 			valueMap: {
@@ -230,7 +230,7 @@ const consumer = {
 			editable: false,
 			isInListMode: true
 		}, {
-			attribute: 'buyer_credit_lev',
+			attribute: 'creditrating',
 			name: '信用等级',
 			defaultValue: DEFAULT_VALUE,
 			valueMap: {
@@ -259,7 +259,7 @@ const consumer = {
 			unit: '',
 			editable: false
 		}, {
-			attribute: '',
+			attribute: 'favorablerate',
 			name: '买家好评率',
 			defaultValue: DEFAULT_VALUE,
 			unit: '',

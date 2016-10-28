@@ -338,14 +338,14 @@ describe('CustomerProfileBoard', () => {
 
 		it('getAttributeList', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
-
-			const result = ['full_name', 'sex', 'birthday', 'age', 'mobile', 'buyer_email', 'address_zip', 'platName',
-				'vip_info', 'buyer_credit_lev', '', 'trade_first_time', 'trade_first_amount', 'trade_first_interval',
-				'trade_last_time', 'trade_last_amount', 'trade_last_interval', 'trade_tidcount', 'trade_count',
-				'trade_amount', 'trade_item_num', 'trade_avg_amount', 'trade_avg_item_num', 'trade_avg_buy_interval',
-				'trade_refund_count', 'trade_refund_amount', 'trade_avg_confirm_interval', 'trade_max_amount',
-				'trade_order_discount_fee', 'cardGrade', 'effectTime', 'expireTime', 'currentPoint', 'totalGet',
-				'signCount', 'exchangeCount', 'wechatNick', 'sinawbUserName'];
+			console.log(customerProfileBoardService.getAttributeList());
+			const result = ["username", "sex", "birthday", "age", "mobile", "email", "address_zip", "platName",
+				"level", "creditrating", "favorablerate", "trade_first_time", "trade_first_amount", "trade_first_interval",
+				"trade_last_time", "trade_last_amount", "trade_last_interval", "trade_tidcount", "trade_count", "trade_amount",
+				"trade_item_num", "trade_avg_amount", "trade_avg_item_num", "trade_avg_buy_interval", "trade_refund_count",
+				"trade_refund_amount", "trade_avg_confirm_interval", "trade_max_amount", "trade_order_discount_fee",
+				"cardGrade", "effectTime", "expireTime", "currentPoint", "totalGet", "signCount", "exchangeCount",
+				"wechatNick", "sinawbUserName"];
 
 			assert.deepEqual(customerProfileBoardService.getAttributeList(), result);
 		});
