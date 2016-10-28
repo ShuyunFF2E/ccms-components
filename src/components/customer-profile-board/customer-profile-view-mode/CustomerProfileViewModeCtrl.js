@@ -47,7 +47,7 @@ export default class CustomerProfileViewModeCtrl {
 				this._occupiedAreaOffset.push(this.getElementOuterOffset(label, tmpCoordinate));
 				this.appendUserLabelToDom(label, _LABEL_DISPLAY_CONFIG.colorList[index], tmpCoordinate);
 			} else {
-				console.log('Hide label: ', label);
+				console.info('Hide label: ', label);
 			}
 		});
 	}

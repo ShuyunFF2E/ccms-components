@@ -47,7 +47,7 @@
 													 disabled="false"></cc-date-picker>
 						</div>
 						<div class="button-row">
-							<button class="btn-remark-confirm" ng-click="$ctrl.modifyAttributeValue(attribute, $ctrl.tmpValue)">确定</button>
+							<button class="btn-remark-confirm" ng-click="$ctrl.modifyAttributeValue(attribute, $ctrl.tmpValue, attributeBlock.name === 'base')">确定</button>
 							<button class="btn-remark-cancel" ng-click="attribute.editingValue = false">取消</button>
 						</div>
 					</div>

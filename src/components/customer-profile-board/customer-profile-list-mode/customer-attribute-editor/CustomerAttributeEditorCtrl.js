@@ -79,6 +79,7 @@ export default class CustomerAttributeEditorCtrl {
 		const value = typeof attribute.value !== 'undefined' ? attribute.value : attribute.displayValue || attribute.defaultValue || '';
 		switch (attribute.type) {
 			case 'DATE_SELECT':
+				this.tmpValue = new Date(value);
 				break;
 			case 'MONTH_DAY':
 				this.monthArray = MONTH_ARRAY;
@@ -105,22 +106,37 @@ export default class CustomerAttributeEditorCtrl {
 	 * @name modifyAttributeValue
 	 * @param {object} attribute
 	 * @param {string} value
+	 * @param {boolean} basic
 	 */
-	modifyAttributeValue(attribute, value) {
+	modifyAttributeValue(attribute, value, basic) {
 		this._$ccValidator.validate(this.attributeModify)
 			.then(() => {
-				const params = {
-					nickName: this.customerData.nickName,
-					platName: this.customerData.platName,
-					tenantId: this.customerData.tenantId,
-					id: attribute.id,
-					value: this.formatValue(value, attribute.type)
-				};
-				return this.CustomerProfileBoardService.updateCustomerDefinedAttributeData(params);
+				if (attribute.type === 'MONTH_DAY') value = `${this.tmpMonth}-${this.tmpDay}`;
+				if (basic) {
+					const params = {
+						nickName: this.customerData.nickName,
+						tenantId: this.customerData.tenantId,
+						condition: attribute.type.match(/NUMBER/)
+							? `${attribute.attribute}: ${this.formatValue(value, attribute.type)}`
+							: `${attribute.attribute}: "${this.formatValue(value, attribute.type)}"`
+					};
+					// hack backend bug
+					if (attribute.attribute !== 'sex') params.condition += '\nsex: ""';
+					return this.CustomerProfileBoardService.updateCustomerDefinedBasicAttributeData(params);
+				} else {
+					const params = {
+						nickName: this.customerData.nickName,
+						platName: this.customerData.platName,
+						tenantId: this.customerData.tenantId,
+						id: attribute.id,
+						value: this.formatValue(value, attribute.type)
+					};
+					return this.CustomerProfileBoardService.updateCustomerDefinedAttributeData(params);
+				}
 			})
 			.then(result => {
 				// throw error
-				if (result.custom_property_customer) throw new Error('Create Customer Attribute Error: ' + result.custom_property_customer.message);
+				if (result.custom_property_basic_put) throw new Error('Create Customer Attribute Error: ' + result.custom_property_basic_put.message);
 			})
 			.then(() => {
 				attribute.value = value;

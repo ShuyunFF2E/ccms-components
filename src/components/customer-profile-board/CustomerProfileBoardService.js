@@ -13,11 +13,6 @@ import generatorQueryString from './queryStringSchema.js';
 import CustomerAttributeSetting, { TagsMapping, RfmLabel } from './CustomerAttributeSetting.js';
 
 const MODAL_TITLE_STRING = '客户基本信息';
-const CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX = '/cc/customer-defined-attribute';
-const CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer/:nickName';
-const CUSTOMER_DEFINED_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/customer';
-const CUSTOMER_DEFINED_PLATFORM_ATTRIBUTES_API = CUSTOMER_DEFINED_ATTRIBUTES_API_PREFIX + '/properties';
-
 let API_ADDRESS, API_VERSION;
 
 export class $ccCustomerProfileBoard {
@@ -71,9 +66,6 @@ class CustomerProfileBoardService {
 		}, {
 			stripTrailingSlashes: false
 		});
-		this.CustomerDefinedAttributeGetDataResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_GET_DATA_API);
-		this.CustomerDefinedAttributeResource = genresource(CUSTOMER_DEFINED_ATTRIBUTES_API);
-		this.CustomerDefinedPlatformAttributeResource = genresource(CUSTOMER_DEFINED_PLATFORM_ATTRIBUTES_API);
 	}
 
 	/**
@@ -84,15 +76,6 @@ class CustomerProfileBoardService {
 	 */
 	queryCustomerProfileData({nickName = '', shopId = '', platName = '', tenantId = ''} = {}) {
 		return this.CustomerProfileResource.graphql(generatorQueryString(nickName, shopId, platName, tenantId)).$promise;
-	}
-
-	/**
-	 * @name queryCustomerDefinedAttributeData
-	 * @param {Object} customerInfo
-	 * @returns {Promise}
-	 */
-	getCustomerDefinedAttributeData({nickName = '', tenantId = '', platName = 'taobao'} = {}) {
-		return this.CustomerDefinedAttributeGetDataResource.get({nickName, tenantId, platform: platName}).$promise;
 	}
 
 	/**
@@ -201,6 +184,26 @@ class CustomerProfileBoardService {
                 id:"${params.id}"
                 value:"${params.value}"
             }]
+        }
+      ){
+      	message
+      }
+		}`;
+		return this.CustomerProfileResource.graphql(graphql).$promise;
+	}
+
+	/**
+	 * @name updateCustomerDefinedBasicAttributeData
+	 * @param {object} params
+	 * @returns {promise}
+	 */
+	updateCustomerDefinedBasicAttributeData(params = {}) {
+		const graphql = `mutation{
+      custom_property_basic_put(
+        tenantId:"${params.tenantId}"
+        _i:{
+          customerno:"${params.nickName}"
+          ${params.condition}
         }
       ){
       	message
@@ -329,6 +332,7 @@ class CustomerProfileBoardService {
 	mappingDataIntoAttributeSetting(attributeList = [], dataMapping = {}) {
 		attributeList.map(attribute => {
 			typeof attribute.attributes !== 'undefined' && this.mappingDataIntoAttributeSetting(attribute.attributes, dataMapping);
+			attribute.value = dataMapping[attribute.attribute];
 			attribute.displayValue = this.getAttributeValue(attribute, dataMapping);
 			return attribute;
 		});
