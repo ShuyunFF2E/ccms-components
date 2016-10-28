@@ -1,10 +1,10 @@
-<form class="customer-defined-attribute-editor" name="$ctrl.attributeForm" validators="$ctrl.validators">
+<form class="customer-defined-attribute-editor" name="$ctrl.attributeForm" cc-validators="$ctrl.validators">
 	<ul class="customer-defined-attribute-editor-content">
 		<li class="attribute-editor-li">
 			<label class="attribute-editor-label">属性名称：</label><span class="attribute-editor-input"><input type="text"
 																																																		 ng-model="$ctrl.customerDefinedAttribute.name"
 																																																		 maxlength="20"
-																																																		 validator="attributeName,duplicate"></span><span
+																																																		 cc-validator="attributeName,duplicate"></span><span
 				class="iconfont attribute-remark-icon" cc-tooltip="$ctrl.customerDefinedAttribute.remark ? '此处已打备注' : '备注'"
 				ng-class="{'attribute-remark-icon--active': !!$ctrl.customerDefinedAttribute.remark}"
 				ng-click="$ctrl.toggleRemarkTextArea()">&#xe635;</span>

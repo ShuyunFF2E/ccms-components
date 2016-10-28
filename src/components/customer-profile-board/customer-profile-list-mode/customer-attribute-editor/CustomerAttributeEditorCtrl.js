@@ -9,7 +9,7 @@ import { Inject } from 'angular-es-utils';
 import CustomerProfileBoardService from '../../CustomerProfileBoardService.js';
 
 const MONTH_ARRAY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const MONTH_DAY_ARRAY = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const MONTH_DAY_ARRAY = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 @Inject('$scope', '$ccValidator', '$filter')
 export default class CustomerAttributeEditorCtrl {
@@ -105,21 +105,24 @@ export default class CustomerAttributeEditorCtrl {
 		this._$ccValidator.validate(this.attributeModify)
 			.then(() => {
 				const params = {
-					customerno: this.customerData.nickName,
-					platform: this.customerData.platName,
+					nickName: this.customerData.nickName,
+					platName: this.customerData.platName,
 					tenantId: this.customerData.tenantId,
-					properties: [{
-						id: attribute.id,
-						value: attribute.type === 'NUMBER_SELECT' || attribute.type === 'NUMBER_INPUT' ? Number.parseFloat(value) : value
-					}]
+					id: attribute.id,
+					value: attribute.type === 'NUMBER_SELECT' || attribute.type === 'NUMBER_INPUT' ? Number.parseFloat(value) : value
 				};
 				return this.CustomerProfileBoardService.updateCustomerDefinedAttributeData(params);
+			})
+			.then(result => {
+				// throw error
+				if (result.custom_property_customer) throw new Error('Create Customer Attribute Error: ' + result.custom_property_customer.message);
 			})
 			.then(() => {
 				attribute.value = value;
 				attribute.displayValue = this.formatValue(value, attribute.type);
 				this.closeAllAttributeModifyBlock();
-			});
+			})
+			.catch(err => console.info(err));
 	}
 
 	/**
@@ -164,7 +167,9 @@ export default class CustomerAttributeEditorCtrl {
 	 * @param {Object} attribute
 	 */
 	saveCustomerDefinedAttribute(attribute) {
+		const defaultValue = '-';
 		this.CustomerProfileBoardService.queryCustomerDefinedPlatformAttribute(this.customerData.tenantId)
+			.then((data = {}) => data.custom_property_properties && data.custom_property_properties.data)
 			.then((data = []) => data.filter(item => item.name === attribute.name)[0])
 			// tenant hasn't the attribute, add the attribute to tenant first
 			.then(item => item || this.CustomerProfileBoardService.saveCustomerDefinedPlatformAttribute({
@@ -175,25 +180,37 @@ export default class CustomerAttributeEditorCtrl {
 				isDisable: false,
 				remark: attribute.remark
 			}))
+			.then(attributeObject => {
+				if (attributeObject.custom_property_properties) {
+					// create
+					if (attributeObject.custom_property_properties.message) throw new Error('Create Platform Attribute Error: ' + attributeObject.custom_property_properties.message); // throw error
+					return Object.assign(attribute, attributeObject.custom_property_properties);
+				} else {
+					// exist
+					return Object.assign(attribute, attributeObject);
+				}
+			})
 			// connect the customer attribute with tenant attribute
-			.then(attributeObject => Object.assign(attribute, attributeObject) && this.CustomerProfileBoardService.saveCustomerDefinedAttribute({
-				customerno: this.customerData.nickName,
-				platform: this.customerData.platName,
+			.then(attribute => this.CustomerProfileBoardService.saveCustomerDefinedAttribute({
+				nickName: this.customerData.nickName,
+				platName: this.customerData.platName,
 				tenantId: this.customerData.tenantId,
-				properties: [{
-					id: attribute.id,
-					value: attribute.optional && attribute.optional[0] || ''
-				}]
+				id: attribute.id,
+				value: attribute.optional && attribute.optional[0] || defaultValue
 			}))
+			.then(result => {
+				// throw error
+				if (result.custom_property_customer) throw new Error('Create Customer Attribute Error: ' + result.custom_property_customer.message);
+			})
 			// save success, set value to display array
 			.then(() => this.attributeSetting.attributeBlock[1].attributeList.push({
 				...attribute,
 				attribute: attribute.name,
-				value: attribute.optional && attribute.optional[0] || '',
-				displayValue: attribute.optional && attribute.optional[0] || ''
+				value: attribute.optional && attribute.optional[0] || defaultValue,
+				displayValue: attribute.optional && attribute.optional[0] || defaultValue
 			}))
 			.then(() => this.changeCustomerDefinedBlockState(false))
-			.catch(err => console.error(err));
+			.catch(err => console.info(err));
 	}
 
 	isLeapYear(year) {
@@ -205,5 +222,6 @@ export default class CustomerAttributeEditorCtrl {
 		for (let day = 1, len = MONTH_DAY_ARRAY[this.tmpMonth - 1]; day <= len; day++) {
 			this.dayArray.push(day);
 		}
+		if (this.tmpDay > this.dayArray.length) this.tmpDay = this.dayArray.length;
 	}
 }

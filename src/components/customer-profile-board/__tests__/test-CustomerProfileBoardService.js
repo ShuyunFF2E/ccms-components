@@ -75,6 +75,7 @@ describe('CustomerProfileBoard', () => {
 
 		it('saveCustomerDefinedPlatformAttribute', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
+			customerProfileBoardService.getOperator = sinon.spy();
 			assert.isFunction(customerProfileBoardService.saveCustomerDefinedPlatformAttribute().then);
 		});
 

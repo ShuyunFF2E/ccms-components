@@ -96,12 +96,93 @@ class CustomerProfileBoardService {
 	}
 
 	/**
+	 * @name queryCustomerDefinedPlatformAttribute
+	 * @param {string} tenantId
+	 * @returns {promise}
+	 */
+	queryCustomerDefinedPlatformAttribute(tenantId = '') {
+		const graphql = `query{
+      custom_property_properties(
+        tenantId:"${tenantId}"
+      ){
+        data{
+          id
+          name
+          type
+          optional
+          tenantId
+          operator
+          createTime
+          isDisable
+          remark
+        }
+      }
+		}`;
+		return this.CustomerProfileResource.graphql(graphql).$promise;
+	}
+
+	/**
+	 * @name saveCustomerDefinedPlatformAttribute
+	 * @param {Object} attribute
+	 * @returns {Promise}
+	 */
+	saveCustomerDefinedPlatformAttribute({
+		tenantId = '',
+		name = '',
+		type = '',
+		optional = [],
+		isDisable = false,
+		remark = ''} = {}
+	) {
+		const graphql = `mutation{
+			custom_property_properties(
+				_i:{
+					tenantId:"${tenantId}"
+	        name:"${name}"
+			    type:"${type}"
+		      optional: [${optional}]
+		      isDisable: ${isDisable}
+		      remark: "${remark}"
+		      operator: "${this.getOperator()}"
+        }
+      ){
+      	message
+      	id
+     	  name
+        type
+        tenantId
+        optional
+        operator
+        isDisable
+        createTime
+        remark
+      }
+		}`;
+		return this.CustomerProfileResource.graphql(graphql).$promise;
+	}
+
+	/**
 	 * @name saveCustomerDefinedAttribute
 	 * @param {object} params
 	 * @returns {promise}
 	 */
 	saveCustomerDefinedAttribute(params = {}) {
-		return this.CustomerDefinedAttributeResource.save(params).$promise;
+		const graphql = `mutation{
+      custom_property_customer(
+        _i:{
+            customerno:"${params.nickName}"
+            tenantId:"${params.tenantId}"
+            platform:"${params.platName}"
+            properties:[{
+                id:"${params.id}"
+                value:"${params.value}"
+            }]
+        }
+      ){
+      	message
+      }
+		}`;
+		return this.CustomerProfileResource.graphql(graphql).$promise;
 	}
 
 	/**
@@ -110,25 +191,22 @@ class CustomerProfileBoardService {
 	 * @returns {promise}
 	 */
 	updateCustomerDefinedAttributeData(params = {}) {
-		return this.CustomerDefinedAttributeResource.update(params).$promise;
-	}
-
-	/**
-	 * @name queryCustomerDefinedPlatformAttribute
-	 * @param {string} tenantId
-	 * @returns {promise}
-	 */
-	queryCustomerDefinedPlatformAttribute(tenantId = '') {
-		return this.CustomerDefinedPlatformAttributeResource.query({tenantId}).$promise;
-	}
-
-	/**
-	 * @name saveCustomerDefinedAttribute
-	 * @param {Object} attribute
-	 * @returns {Promise}
-	 */
-	saveCustomerDefinedPlatformAttribute(attribute) {
-		return this.CustomerDefinedPlatformAttributeResource.save(attribute).$promise;
+		const graphql = `mutation{
+      custom_property_customer_put(
+        _i:{
+            customerno:"${params.nickName}"
+            tenantId:"${params.tenantId}"
+            platform:"${params.platName}"
+            properties:[{
+                id:"${params.id}"
+                value:"${params.value}"
+            }]
+        }
+      ){
+      	message
+      }
+		}`;
+		return this.CustomerProfileResource.graphql(graphql).$promise;
 	}
 
 	/**
@@ -303,6 +381,15 @@ class CustomerProfileBoardService {
 		return number.toFixed(fixed);
 	}
 
+	getOperator() {
+		const cre = JSON.parse(this.getCookie('ccmsRequestCredential'));
+		return cre.username;
+	}
+
+	getCookie(name) {
+		const reg = new RegExp(`(?:(?:^|.*;\\s*)${name}\\s*\\=\\s*([^;]*).*$)|^.*$`);
+		return decodeURIComponent(document.cookie.replace(reg, '$1'));
+	}
 }
 
 export default CustomerProfileBoardService;
