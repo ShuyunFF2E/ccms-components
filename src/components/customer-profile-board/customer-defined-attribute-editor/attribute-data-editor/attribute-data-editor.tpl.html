@@ -6,9 +6,9 @@
 	<div class="add-attribute-row">
 		<a ng-show="!$ctrl.addAttributeState" href="" ng-click="$ctrl.showAddAttributeInput()">新建可选值</a>
 
-		<div ng-if="$ctrl.addAttributeState" ng-form="$ctrl.data" validators="$ctrl.validators">
+		<div ng-if="$ctrl.addAttributeState" ng-form="$ctrl.data" cc-validators="$ctrl.validators">
 			<input type="text" class="attribute-value-input" maxlength="20" ng-model="$ctrl.attributeValue"
-						 validator="{{$ctrl.validator}}"><a class="attribute-value-operator" href=""
+						 cc-validator="{{$ctrl.validator}}"><a class="attribute-value-operator" href=""
 																								 ng-click="$ctrl.addAttribute()">添加</a><a
 				class="attribute-value-operator cancel" href="" ng-click="$ctrl.addAttributeState = false">取消</a>
 		</div>
