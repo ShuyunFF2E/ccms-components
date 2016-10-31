@@ -5,7 +5,9 @@
 			<dl class="attribute-block" ng-if="attributeBlock.type !== 'List'"
 					ng-show="$ctrl.attributeSetting.name !== 'customer' || !$ctrl.showCustomerAttributeEditor">
 				<dt class="attribute-block-title">{{attributeBlock.title}}</dt>
-				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
+				<dd class="attribute-block-item"
+						ng-show="attributeBlock.name !== 'customerDefined' || (attributeBlock.showMore || $index < 5)"
+						ng-repeat="attribute in attributeBlock.attributeList track by $index">
 					<label class="attribute-item-label" ng-bind="attribute.name + '：'"></label><div
 						class="attribute-item-content"
 						ng-mouseenter="attribute.displayEditIcon = true"
@@ -53,6 +55,11 @@
 					</div>
 				</dd>
 				<dd ng-if="attributeBlock.name === 'customerDefined'">
+					<p class="show-more__p" ng-if="attributeBlock.attributeList.length > 5">
+						<a href=""
+							 ng-click="attributeBlock.showMore = !attributeBlock.showMore"
+							 ng-bind="attributeBlock.showMore ? '收起' : '显示更多'"></a>
+					</p>
 					<button class="add-attribute-button"
 									ng-click="$ctrl.changeCustomerDefinedBlockState(true)"
 									href=""> + 添加自定义属性
