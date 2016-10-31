@@ -110,7 +110,7 @@ cc-customer-attribute-editor:last-child .customer-attribute-editor {
 
 		.attribute-item-content {
 			flex: 1;
-			height: 24px;
+			min-height: 24px;
 
 			.icon-edit {
 				color: #00aaf1;

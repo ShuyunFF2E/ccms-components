@@ -30,11 +30,11 @@ const customer = {
 			editable: true,
 			type: 'CHAR_SELECT',
 			optional: ['男', '女', '未知'],
-			valueMap: {
+			/* valueMap: {
 				m: '男',
 				f: '女',
 				'': '未知'
-			},
+			},*/
 			validate: [],
 			isInListMode: true
 		}, {
@@ -215,7 +215,7 @@ const consumer = {
 			attribute: 'level',
 			name: '淘宝全站等级',
 			defaultValue: DEFAULT_VALUE,
-			valueMap: {
+			/* valueMap: {
 				'asso_vip': '荣誉会员',
 				'c': '普通会员',
 				'vip1': 'VIP1',
@@ -225,7 +225,7 @@ const consumer = {
 				'vip5': 'VIP5',
 				'vip6': 'VIP6',
 				'-': '-'
-			},
+			},*/
 			unit: '',
 			editable: false,
 			isInListMode: true
@@ -233,7 +233,7 @@ const consumer = {
 			attribute: 'creditrating',
 			name: '信用等级',
 			defaultValue: DEFAULT_VALUE,
-			valueMap: {
+			/* valueMap: {
 				'0': '未分级',
 				'1': '一心',
 				'2': '二心',
@@ -255,7 +255,7 @@ const consumer = {
 				'18': '三金冠',
 				'19': '四金冠',
 				'20': '五金冠'
-			},
+			},*/
 			unit: '',
 			editable: false
 		}, {

@@ -222,9 +222,8 @@ class CustomerProfileBoardService {
 		return Object.keys(data)
 			.map(key => {
 				switch (key) {
-					case 'customer':
-					case 'trade':
-						return this.concatCustomerAddressZip(data[key].data.data[0]);
+					case 'custom_property_basic':
+						return this.concatCustomerAddressZip(data[key]);
 					case 'rfm':
 						return Object.assign({rfm: this.setRfmLabel(data[key].data.data)}, this.getLastRfmItem(data[key].data.data));
 					case 'tags':
@@ -250,16 +249,16 @@ class CustomerProfileBoardService {
 	 * concat address & zip data into address_zip attribute
 	 */
 	concatCustomerAddressZip(info = {}) {
-		if (!info.receiver_state && !info.receiver_city && !info.receiver_district && !info.receiver_address && !info.receiver_zip) return info;
+		if (!info.province && !info.city && !info.locality && !info.address && !info.postcode) return info;
 		return {
 			...info,
 			address_zip: [
-				info.receiver_state || '',
-				info.receiver_city || '',
-				info.receiver_district || '',
-				info.receiver_address || '',
+				info.province || '',
+				info.city || '',
+				info.locality || '',
+				info.address || '',
 				' ',
-				info.receiver_zip || ''
+				info.postcode || ''
 			].join('')
 		};
 	}
