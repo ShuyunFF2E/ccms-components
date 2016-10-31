@@ -123,7 +123,7 @@ class CustomerProfileBoardService {
 					tenantId:"${tenantId}"
 	        name:"${name}"
 			    type:"${type}"
-		      optional: [${optional}]
+		      optional: ${optional}
 		      isDisable: ${isDisable}
 		      remark: "${remark}"
 		      operator: "${this.getOperator()}"

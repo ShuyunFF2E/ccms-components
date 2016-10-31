@@ -30,11 +30,17 @@ const customer = {
 			editable: true,
 			type: 'CHAR_SELECT',
 			optional: ['男', '女', '未知'],
+			// 坑爹，显示直接传值，修改要传 mapping
 			/* valueMap: {
 				m: '男',
 				f: '女',
 				'': '未知'
 			},*/
+			optionalMap: {
+				m: '男',
+				f: '女',
+				'': '未知'
+			},
 			validate: [],
 			isInListMode: true
 		}, {

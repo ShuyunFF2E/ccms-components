@@ -93,6 +93,11 @@ export default class CustomerAttributeEditorCtrl {
 				}
 				this.updateDayArray();
 				break;
+			case 'NUMBER_SELECT':
+			case 'CHAR_SELECT':
+				if (attribute.optional.indexOf(value) > -1) this.tmpValue = value;
+				else this.tmpValue = attribute.optional[0];
+				break;
 			default:
 				this.tmpValue = value;
 		}
@@ -112,6 +117,11 @@ export default class CustomerAttributeEditorCtrl {
 		this._$ccValidator.validate(this.attributeModify)
 			.then(() => {
 				if (attribute.type === 'MONTH_DAY') value = `${this.tmpMonth}-${this.tmpDay}`;
+				else if (attribute.type === 'CHAR_SELECT' && attribute.optionalMap) {
+					value = Object
+						.keys(attribute.optionalMap)
+						.filter(key => attribute.optionalMap[key] === value)[0];
+				}
 				if (basic) {
 					const params = {
 						nickName: this.customerData.nickName,
@@ -136,11 +146,13 @@ export default class CustomerAttributeEditorCtrl {
 			})
 			.then(result => {
 				// throw error
-				if (result.custom_property_basic_put) throw new Error('Create Customer Attribute Error: ' + result.custom_property_basic_put.message);
+				if (!result) throw new Error('Update Attribute Error.');
+				if (result.message) throw new Error('Update Attribute Error: ' + result.message);
 			})
 			.then(() => {
 				attribute.value = value;
-				attribute.displayValue = this.formatValue(value, attribute.type);
+				if (attribute.type === 'CHAR_SELECT' && attribute.valueMap) attribute.displayValue = attribute.valueMap[value];
+				else attribute.displayValue = this.formatValue(value, attribute.type);
 				this.closeAllAttributeModifyBlock();
 			})
 			.catch(err => console.info(err));
@@ -188,29 +200,33 @@ export default class CustomerAttributeEditorCtrl {
 	 * @param {Object} attribute
 	 */
 	saveCustomerDefinedAttribute(attribute) {
-		const defaultValue = '-';
+		const defaultValue = this.getDefaultValue(attribute.type);
+		const tmpAttribute = {};
 		this.CustomerProfileBoardService.queryCustomerDefinedPlatformAttribute(this.customerData.tenantId)
 			.then((data = {}) => data.custom_property_properties && data.custom_property_properties.data)
 			.then((data = []) => data.filter(item => item.name === attribute.name)[0])
 			// tenant hasn't the attribute, add the attribute to tenant first
-			.then(item => item || this.CustomerProfileBoardService.saveCustomerDefinedPlatformAttribute({
-				tenantId: this.customerData.tenantId,
-				name: attribute.name,
-				type: attribute.type,
-				optional: attribute.optional,
-				isDisable: false,
-				remark: attribute.remark
-			}))
-			.then(attributeObject => {
-				if (attributeObject.custom_property_properties) {
-					// create
-					if (attributeObject.custom_property_properties.message) throw new Error('Create Platform Attribute Error: ' + attributeObject.custom_property_properties.message); // throw error
-					return Object.assign(attribute, attributeObject.custom_property_properties);
-				} else {
-					// exist
-					return Object.assign(attribute, attributeObject);
-				}
+			.then(item => {
+				if (item) return {custom_property_properties: item};
+				return this.CustomerProfileBoardService.saveCustomerDefinedPlatformAttribute({
+					tenantId: this.customerData.tenantId,
+					name: attribute.name,
+					type: attribute.type,
+					optional: JSON.stringify(attribute.optional),
+					isDisable: false,
+					remark: attribute.remark
+				});
 			})
+			.then(result => {
+				// throw error
+				if (!result.custom_property_properties) throw new Error('Create Platform Attribute Error: ' + result);
+				if (result.custom_property_properties.message) throw new Error('Create Platform Attribute Error: ' + result.custom_property_properties.message);
+				return result.custom_property_properties;
+			})
+			.then(attribute => Object.assign(tmpAttribute, {
+				...attribute,
+				value: attribute.optional && attribute.optional[0] || defaultValue
+			}))
 			// connect the customer attribute with tenant attribute
 			.then(attribute => this.CustomerProfileBoardService.saveCustomerDefinedAttribute({
 				nickName: this.customerData.nickName,
@@ -221,21 +237,29 @@ export default class CustomerAttributeEditorCtrl {
 			}))
 			.then(result => {
 				// throw error
-				if (result.custom_property_customer) throw new Error('Create Customer Attribute Error: ' + result.custom_property_customer.message);
+				if (result.message) throw new Error('Create Customer Attribute Error: ' + result.message);
 			})
 			// save success, set value to display array
 			.then(() => this.attributeSetting.attributeBlock[1].attributeList.push({
-				...attribute,
-				attribute: attribute.name,
-				value: attribute.optional && attribute.optional[0] || defaultValue,
-				displayValue: attribute.optional && attribute.optional[0] || defaultValue
+				...tmpAttribute,
+				editable: true,
+				attribute: tmpAttribute.name,
+				displayValue: tmpAttribute.optional && tmpAttribute.optional[0] || defaultValue
 			}))
 			.then(() => this.changeCustomerDefinedBlockState(false))
 			.catch(err => console.info(err));
 	}
 
-	isLeapYear(year) {
-		return !(year % (year % 100 ? 4 : 400));
+	getDefaultValue(type) {
+		switch (type) {
+			case 'NUMBER_SELECT':
+			case 'NUMBER_INPUT':
+				return 0;
+			case 'DATE_SELECT':
+				return this._$filter('date')(new Date(), 'yyyy-MM-dd');
+			default:
+				return '-';
+		}
 	}
 
 	updateDayArray() {
