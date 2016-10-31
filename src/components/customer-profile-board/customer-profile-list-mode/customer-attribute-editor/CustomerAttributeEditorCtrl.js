@@ -116,20 +116,29 @@ export default class CustomerAttributeEditorCtrl {
 	modifyAttributeValue(attribute, value, basic) {
 		this._$ccValidator.validate(this.attributeModify)
 			.then(() => {
-				if (attribute.type === 'MONTH_DAY') value = `${this.tmpMonth}-${this.tmpDay}`;
-				else if (attribute.type === 'CHAR_SELECT' && attribute.optionalMap) {
+				if (attribute.type === 'CHAR_SELECT' && attribute.optionalMap) {
 					value = Object
 						.keys(attribute.optionalMap)
 						.filter(key => attribute.optionalMap[key] === value)[0];
 				}
 				if (basic) {
-					const params = {
-						nickName: this.customerData.nickName,
-						tenantId: this.customerData.tenantId,
-						condition: attribute.type.match(/NUMBER/)
-							? `${attribute.attribute}: ${this.formatValue(value, attribute.type)}`
-							: `${attribute.attribute}: "${this.formatValue(value, attribute.type)}"`
-					};
+					let params;
+					if (attribute.type === 'MONTH_DAY') {
+						// hack MONTH_DAY type
+						params = {
+							nickName: this.customerData.nickName,
+							tenantId: this.customerData.tenantId,
+							condition: `month: ${this.tmpMonth} \n day: ${this.tmpDay}`
+						};
+					} else {
+						params = {
+							nickName: this.customerData.nickName,
+							tenantId: this.customerData.tenantId,
+							condition: attribute.type.match(/NUMBER/)
+								? `${attribute.attribute}: ${this.formatValue(value, attribute.type)}`
+								: `${attribute.attribute}: "${this.formatValue(value, attribute.type)}"`
+						};
+					}
 					// hack backend bug
 					if (attribute.attribute !== 'sex') params.condition += '\nsex: ""';
 					return this.CustomerProfileBoardService.updateCustomerDefinedBasicAttributeData(params);
@@ -150,9 +159,12 @@ export default class CustomerAttributeEditorCtrl {
 				if (result.message) throw new Error('Update Attribute Error: ' + result.message);
 			})
 			.then(() => {
-				attribute.value = value;
-				if (attribute.type === 'CHAR_SELECT' && attribute.valueMap) attribute.displayValue = attribute.valueMap[value];
-				else attribute.displayValue = this.formatValue(value, attribute.type);
+				if (attribute.type === 'MONTH_DAY') value = `${this.tmpMonth}-${this.tmpDay}`;
+				if (attribute.type === 'CHAR_SELECT' && attribute.optionalMap) {
+					attribute.displayValue = attribute.optionalMap[value];
+				} else {
+					attribute.displayValue = this.formatValue(value, attribute.type) + attribute.unit;
+				}
 				this.closeAllAttributeModifyBlock();
 			})
 			.catch(err => console.info(err));
