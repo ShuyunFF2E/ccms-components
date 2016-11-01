@@ -25,7 +25,7 @@ function publish_docs() {
 	git commit -m "chore(docs): generate documents"
 	git subtree split --prefix=docs/_gh_pages -b gh-pages
 	git push -f origin gh-pages:gh-pages
-	git reset $current_branch --hard
+	git checkout -f $current_branch
 	git branch -D gh-pages $tmp_branch
 }
 
