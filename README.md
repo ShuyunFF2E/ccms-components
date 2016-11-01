@@ -98,15 +98,48 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 
 ### 发布脚本
 
-发布正式版本：
+发布正式版本脚本
 
 ```bash
-npm run release -- <VERSION: major | minor | patch>
+npm run release -- <version_category: major | minor | patch>
 ```
 
-发布测试/分支版本
+发布测试版脚本
 
 ```bash
-npm run release -- <VERSION: major | minor | patch> --branch <BRANCH-NAME>
+npm run release -- <version_category: major | minor | patch> --branch <branch_name>
+```
+
+处理分支，打标签
+
+```bash
+# 以下脚本已包含在 release 脚本中，通常无需手动执行
+
+# 正式版本
+npm run prepare-production -- <version_category: major | minor | patch>
+
+# 测试版本
+npm run prepare-test -- <version_category: major | minor | patch> --branch <branch_name>
+```
+
+build
+
+```bash
+# 以下脚本已包含在 release 脚本中，通常无需手动执行
+npm run build
+```
+
+发布 npm 包
+
+```bash
+# 以下脚本已包含在 release 脚本中，通常无需手动执行
+npm run publish:package
+```
+
+发布文档
+
+```bash
+# 以下脚本已包含在 release 脚本中，通常无需手动执行
+npm run publish:docs -- <version_tag>
 ```
 
