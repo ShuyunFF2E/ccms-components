@@ -2,68 +2,18 @@
 
 set -e
 
-function publish() {
-	# publish to npmjs.org
-	npm publish dist
-
-	# cnpm sync ccms-components
-	curl -X PUT https://npm.taobao.org/sync/ccms-components
-}
-
-function release_production() {
-	version=$1
-
-	# release new version
-	git checkout dev
-	git pull --prune
-	git checkout master
-	git reset origin/master --hard
-	git merge dev --no-ff -m "chore(release): Merge branch 'dev' into master"
-	new_version=$(npm version $version -m "chore(release): v%s")
-	git checkout dev
-	git rebase master
-	git push origin master dev $new_version
-
-	# release docs
-	if [[ ! -d docs/_gh_pages ]]; then
-		jekyll build --source docs
-	fi
-	git add -f docs/_gh_pages
-	git commit -m "chore(docs): generate documents"
-	git subtree split --prefix=docs/_gh_pages -b gh-pages
-	git push -f origin gh-pages:gh-pages
-	git branch -D gh-pages
-	git reset $new_version --hard
-
-	$PWD/scripts/build.sh && publish
-}
-
-function release_branch() {
-	version="$1"
-	branch=$2
-
-	git fetch --prune
-	git checkout -B $branch origin/$branch
-	test_version=$(npm version $version -m "chore(release): v%s")
-	git push origin $branch $test_version
-
-	$PWD/scripts/build.sh && publish
-
-	git checkout dev
-}
-
 function release() {
-	version=""
+	version_category=""
 	branch=""
-	while [[ "$1" != "" ]]; do
+	while [[ -n "$1" ]]; do
 		case $1 in
 			major | minor | patch )
-				version="$1"
+				version_category="$1"
 				;;
 			--branch )
 				branch="$2"
 				if [[ "$branch" == "" ]]; then
-					echo "Missing parameter <BRANCH-NAME> for --branch"
+					echo "Missing parameter: <branch_name> for --branch"
 					exit 1;
 				fi
 				shift
@@ -76,15 +26,15 @@ function release() {
 		shift
 	done
 
-	if [[ "$version" == "" ]]; then
-		echo "Missing parameter <VERSION>: major | minor | patch"
+	if [[ "$version_category" == "" ]]; then
+		echo "Missing parameter: <version_category: major | minor | patch>"
 		exit 1
 	fi
 
-	if [[ "$branch" == "" ]]; then
-		release_production $version
+	if [[ -z "$branch" ]]; then
+		$PWD/scripts/release-production.sh $version_category
 	else
-		release_branch "pre$version" $branch
+		$PWD/scripts/release-test.sh $version_category $branch
 	fi
 }
 
@@ -92,13 +42,5 @@ function release() {
 # cd ccms-components/
 cd "$(dirname "$0")/.."
 
-if [[ $# < 1 ]]; then
-	echo "Missing parameters, read the document for details:"
-	echo
-	echo -e "\thttps://github.com/ShuyunFF2E/ccms-components#发布脚本"
-	echo
-	exit 0
-else
-	release $@
-fi
+release $@
 
