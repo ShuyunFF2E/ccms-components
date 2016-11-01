@@ -18,7 +18,9 @@ const dropdownMultiselectDDO = {
 		datalist: '<',
 		searchable: '<?',
 		confirmButton: '<?',
-		placeholder: '@?'
+		placeholder: '@?',
+		onDropdownOpen: '&?',
+		onDropdownClose: '&?'
 	},
 	bindToController: true
 };
