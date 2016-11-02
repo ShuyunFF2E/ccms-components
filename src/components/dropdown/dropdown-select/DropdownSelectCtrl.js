@@ -24,6 +24,8 @@ export default class DropdownSelectCtrl {
 		this.oldText = '';
 
 		this.onSelectChange = () => {};
+		this.onDropdownOpen = () => {};
+		this.onDropdownClose = () => {};
 
 		this._openFn = null;
 	}
@@ -157,6 +159,7 @@ export default class DropdownSelectCtrl {
 			this.focusAt(0);
 			scope.$root.$$phase || scope.$apply();
 		}
+		this.onDropdownOpen();
 	}
 
 	onClose() {
@@ -166,6 +169,7 @@ export default class DropdownSelectCtrl {
 			this.setModelValue(this.model);
 			scope.$root.$$phase || scope.$apply();
 		}
+		this.onDropdownClose();
 	}
 
 	getItemByValue(value) {

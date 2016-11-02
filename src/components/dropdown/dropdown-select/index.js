@@ -19,7 +19,9 @@ const dropdownSelectDDO = {
 		searchable: '<?',
 		disabled: '<?',
 		placeholder: '@?',
-		onSelectChange: '&?'
+		onSelectChange: '&?',
+		onDropdownOpen: '&?',
+		onDropdownClose: '&?'
 	},
 	bindToController: true
 };

@@ -28,7 +28,9 @@
 					model="ctrl.value1"
 					datalist="ctrl.datalist2"
 					mapping="ctrl.fieldsMap"
-					on-select-change="ctrl.selectChange(model, oldModel)">
+					on-select-change="ctrl.selectChange(model, oldModel)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
 			</cc-dropdown-select>
 			<div style="margin: 0.5em 0;">
 				<button class="btn-ok" ng-click="ctrl.value1 = '深圳'">选择深圳</button>
@@ -72,7 +74,9 @@
 					placeholder="快，快选我。。啊！"
 					model="ctrl.value3"
 					datalist="ctrl.datalist1"
-					mapping="ctrl.fieldsMap">
+					mapping="ctrl.fieldsMap"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
 			</cc-dropdown-multiselect>
 		</div>
 		<div class="demo">
@@ -122,6 +126,14 @@
 
 			this.selectChange = function(newValue, oldValue) {
 				console.log('on-select-change:', newValue, oldValue);
+			};
+
+			this.dropdownOpen = function() {
+				console.log('on-dropdown-open');
+			};
+
+			this.dropdownClose = function() {
+				console.log('on-dropdown-close');
 			};
 
 			this.datalist2 = ['北京', '上海', '深圳', '广州'];
