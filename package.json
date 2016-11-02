@@ -1,6 +1,6 @@
 {
   "name": "ccms-components",
-  "version": "2.1.1",
+  "version": "2.2.3",
   "description": "shuyun ccms components",
   "keywords": [
     "angular",
@@ -9,8 +9,12 @@
   ],
   "main": "./index.js",
   "scripts": {
-    "docs": "jekyll serve --source docs",
+    "build:prepare-production": "./scripts/build-prepare-production.sh",
+    "build:prepare-test": "./scripts/build-prepare-test.sh",
     "build": "./scripts/build.sh",
+    "docs": "jekyll serve --source docs",
+    "publish:package": "./scripts/publish-package.sh",
+    "publish:docs": "./scripts/publish-docs.sh",
     "release": "./scripts/release.sh",
     "update-dev-server": "./scripts/update-dev-server.sh",
     "start": "node server.js",

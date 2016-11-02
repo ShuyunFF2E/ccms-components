@@ -26,6 +26,9 @@ export default class DropdownMultiselectCtrl {
 		this.isActive = false;
 		this.oldText = '';
 
+		this.onDropdownOpen = () => {};
+		this.onDropdownClose = () => {};
+
 		this._openFn = null;
 	}
 
@@ -200,6 +203,7 @@ export default class DropdownMultiselectCtrl {
 			this._search(this.title);
 			scope.$root.$$phase || scope.$apply();
 		}
+		this.onDropdownOpen();
 	}
 
 	onClose() {
@@ -211,6 +215,7 @@ export default class DropdownMultiselectCtrl {
 		this.model = this.selection.map(item => item[this.mapping.valueField]);
 		this.updateTitle();
 		scope.$root.$$phase || scope.$apply();
+		this.onDropdownClose();
 	}
 
 	setValue(modelValue) {

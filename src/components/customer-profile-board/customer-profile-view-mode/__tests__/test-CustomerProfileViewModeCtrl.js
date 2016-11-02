@@ -97,8 +97,8 @@ describe('CustomerProfileViewModeCtrl', () => {
 		elementCoordinate = {
 			top: 0,
 			left: 0,
-			right: 29,
-			bottom: 19
+			right: 9,
+			bottom: 9
 		};
 		assert.equal(customerProfileViewModeCtrl.isOffsetConflict(elementCoordinate, occupiedArea), false);
 

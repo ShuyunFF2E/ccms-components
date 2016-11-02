@@ -14,11 +14,15 @@ const dropdownMultiselectDDO = {
 	controllerAs: '$ctrl',
 	scope: {
 		model: '=?',
+		isOpen: '<?',
+		autoClose: '<?',
 		mapping: '<?',
 		datalist: '<',
 		searchable: '<?',
 		confirmButton: '<?',
-		placeholder: '@?'
+		placeholder: '@?',
+		onDropdownOpen: '&?',
+		onDropdownClose: '&?'
 	},
 	bindToController: true
 };

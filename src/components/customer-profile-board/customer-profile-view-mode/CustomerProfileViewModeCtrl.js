@@ -6,10 +6,10 @@
 
 import { Inject } from 'angular-es-utils';
 
-const _LABELDISPLAYCONFIG = {
+const _LABEL_DISPLAY_CONFIG = {
 	size: {
 		margin: 10,
-		width: 100,
+		padding: 20,
 		height: 30
 	},
 	colorList: ['rgba(239,83,98,.7)', 'rgba(7,198,201,.7)', 'rgba(15,131,201,.7)', 'rgba(250,173,90,.7)', 'rgba(239,83,98,.4)', 'rgba(7,198,201,.4)', 'rgba(15,131,201,.4)', 'rgba(250,173,90,.4)']
@@ -34,20 +34,20 @@ export default class CustomerProfileViewModeCtrl {
 		const MAX_RANDOM_ATTEMPT_COUNT = 999;
 		let tmpCoordinate;
 		this._generateAreaOffset = this.getGenerateAreaOffset(labels.length);
-		this._occupiedAreaOffset = [this.getElementOuterOffset(this._$element[0].querySelector('.center-icon'))];
+		this._occupiedAreaOffset = [this.getElementOuterOffset(labels, this._$element[0].querySelector('.center-icon'))];
 
 		labels.forEach((label, index) => {
 			let attemptCount = 0;
-			tmpCoordinate = this.randomLabelCoordinate();
-			while (this.isOffsetConflict(this.getElementOuterOffset(tmpCoordinate), this._occupiedAreaOffset)) {
+			tmpCoordinate = this.randomLabelCoordinate(label);
+			while (this.isOffsetConflict(this.getElementOuterOffset(label, tmpCoordinate), this._occupiedAreaOffset)) {
 				if (attemptCount++ > MAX_RANDOM_ATTEMPT_COUNT) break; // 防止人品不好，随机次数过多，页面卡死
-				tmpCoordinate = this.randomLabelCoordinate();
+				tmpCoordinate = this.randomLabelCoordinate(label);
 			}
 			if (attemptCount < MAX_RANDOM_ATTEMPT_COUNT) {
-				this._occupiedAreaOffset.push(this.getElementOuterOffset(tmpCoordinate));
-				this.appendUserLabelToDom(label, _LABELDISPLAYCONFIG.colorList[index], tmpCoordinate);
+				this._occupiedAreaOffset.push(this.getElementOuterOffset(label, tmpCoordinate));
+				this.appendUserLabelToDom(label, _LABEL_DISPLAY_CONFIG.colorList[index], tmpCoordinate);
 			} else {
-				console.log('Hide label: ', label);
+				console.info('Hide label: ', label);
 			}
 		});
 	}
@@ -59,9 +59,9 @@ export default class CustomerProfileViewModeCtrl {
 	 * @param {Object} coordinate
 	 * append label into dom according coordinate
 	 */
-	appendUserLabelToDom(label = '', color = _LABELDISPLAYCONFIG.colorList[_LABELDISPLAYCONFIG.colorList.length - 1], coordinate = {
-		offsetTop: _LABELDISPLAYCONFIG.size.margin,
-		offsetLeft: _LABELDISPLAYCONFIG.size.margin
+	appendUserLabelToDom(label = '', color = _LABEL_DISPLAY_CONFIG.colorList[_LABEL_DISPLAY_CONFIG.colorList.length - 1], coordinate = {
+		offsetTop: _LABEL_DISPLAY_CONFIG.size.margin,
+		offsetLeft: _LABEL_DISPLAY_CONFIG.size.margin
 	}) {
 		this._$element.children().append(`<div class="customer-label" style="top: ${coordinate.offsetTop}px;left: ${coordinate.offsetLeft}px;background-color: ${color}">${label}</div>`);
 	}
@@ -85,13 +85,24 @@ export default class CustomerProfileViewModeCtrl {
 		};
 	}
 
+	getGenerateLabelWidth(label = '') {
+		return label.length * 13 + _LABEL_DISPLAY_CONFIG.size.padding * 2;
+	}
+
 	/**
 	 * get element offset coordinate(include margin)
 	 * @name getElementOuterOffset
+	 * @param {string} label
 	 * @param {Object} Offset
 	 * @returns {Object} Offset
 	 */
-	getElementOuterOffset({offsetTop = _LABELDISPLAYCONFIG.size.margin, offsetLeft = _LABELDISPLAYCONFIG.size.margin, offsetWidth = _LABELDISPLAYCONFIG.size.width, offsetHeight = _LABELDISPLAYCONFIG.size.height, margin = _LABELDISPLAYCONFIG.size.margin} = {}) {
+	getElementOuterOffset(label = '', {
+		offsetTop = _LABEL_DISPLAY_CONFIG.size.margin,
+		offsetLeft = _LABEL_DISPLAY_CONFIG.size.margin,
+		offsetWidth = this.getGenerateLabelWidth(label),
+		offsetHeight = _LABEL_DISPLAY_CONFIG.size.height,
+		margin = _LABEL_DISPLAY_CONFIG.size.margin
+	} = {}) {
 		return {
 			top: offsetTop - margin,
 			right: offsetLeft + offsetWidth + margin,
@@ -116,10 +127,10 @@ export default class CustomerProfileViewModeCtrl {
 	 * @returns {Object} labelCoordinate
 	 * generate random label coordinate
 	 */
-	randomLabelCoordinate() {
+	randomLabelCoordinate(label) {
 		return {
-			offsetTop: this.getRandomInt(this._generateAreaOffset.top + _LABELDISPLAYCONFIG.size.margin, this._generateAreaOffset.bottom - _LABELDISPLAYCONFIG.size.height - 2 * _LABELDISPLAYCONFIG.size.margin),
-			offsetLeft: this.getRandomInt(this._generateAreaOffset.left + _LABELDISPLAYCONFIG.size.margin, this._generateAreaOffset.right - _LABELDISPLAYCONFIG.size.width - 2 * _LABELDISPLAYCONFIG.size.margin)
+			offsetTop: this.getRandomInt(this._generateAreaOffset.top + _LABEL_DISPLAY_CONFIG.size.margin, this._generateAreaOffset.bottom - _LABEL_DISPLAY_CONFIG.size.height - 2 * _LABEL_DISPLAY_CONFIG.size.margin),
+			offsetLeft: this.getRandomInt(this._generateAreaOffset.left + _LABEL_DISPLAY_CONFIG.size.margin, this._generateAreaOffset.right - this.getGenerateLabelWidth(label) - 2 * _LABEL_DISPLAY_CONFIG.size.margin)
 		};
 	}
 
@@ -132,19 +143,25 @@ export default class CustomerProfileViewModeCtrl {
 	 */
 	isOffsetConflict(elementCoordinate = {}, occupiedArea = []) {
 		for (let area of occupiedArea) {
-			// top
+			if (elementCoordinate.top > area.bottom || elementCoordinate.bottom < area.top ||
+			elementCoordinate.left > area.right || elementCoordinate.right < area.left) continue;
+			// top line in block
 			if (area.top <= elementCoordinate.top && elementCoordinate.top <= area.bottom) {
-				// top left
+				// left line in block
 				if (area.left <= elementCoordinate.left && elementCoordinate.left <= area.right) return true;
-				// top right
+				// right line in block
 				if (area.left <= elementCoordinate.right && elementCoordinate.right <= area.right) return true;
+				// left line and right line at block two sides
+				if (elementCoordinate.left < area.left && elementCoordinate.right > area.right) return true;
 			}
-			// bottom
+			// bottom line in block
 			if (area.top <= elementCoordinate.bottom && elementCoordinate.bottom <= area.bottom) {
-				// bottom left
+				// left line in block
 				if (area.left <= elementCoordinate.left && elementCoordinate.left <= area.right) return true;
-				// bottom right
+				// right line in block
 				if (area.left <= elementCoordinate.right && elementCoordinate.right <= area.right) return true;
+				// left line and right line at block two sides
+				if (elementCoordinate.left < area.left && elementCoordinate.right > area.right) return true;
 			}
 		}
 		return false;

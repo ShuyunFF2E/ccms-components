@@ -29,8 +29,9 @@ cc-dropdown-select {
 		.dropdown-select-input {
 			flex: 1;
 			min-width: 0;
+			height: calc(#{$control-height} - 2px);
+			line-height: calc(#{$control-height} - 2px);
 			padding-right: 0;
-			line-height: $control-height;
 			vertical-align: top;
 			border: none;
 			background-color: inherit;
@@ -50,7 +51,7 @@ cc-dropdown-select {
 			@extend .iconfont;
 			display: inline-block;
 			padding-left: 8px;
-			line-height: $control-height;
+			line-height: calc(#{$control-height} - 2px);
 			cursor: pointer;
 			color: #c9c9c9;
 			&:last-child {
