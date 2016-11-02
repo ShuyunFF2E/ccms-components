@@ -7,13 +7,13 @@ function release_production() {
 	prepare_cmd="$PWD/scripts/build-prepare-production.sh $version_category"
 	version_tag="$($prepare_cmd | tail -1)"
 
-	echo "\n=> npm run build -- master\n"
+	printf "\n=> npm run build -- master\n"
 	$PWD/scripts/build.sh master
 
-	echo "\n=> npm run publish:package\n"
+	printf "\n=> npm run publish:package\n"
 	$PWD/scripts/publish-package.sh
 
-	echo "\n=> npm run publish:docs -- $version_tag\n"
+	printf "\n=> npm run publish:docs -- $version_tag\n"
 	$PWD/scripts/publish-docs.sh $version_tag
 }
 

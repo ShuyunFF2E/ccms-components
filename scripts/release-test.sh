@@ -8,10 +8,10 @@ function release_test() {
 
 	$PWD/scripts/build-prepare-test.sh $version_category $branch
 
-	echo "\n=> npm run build -- $branch\n"
+	printf "\n=> npm run build -- $branch\n"
 	$PWD/scripts/build.sh $branch
 
-	echo "\n=> npm run publish:package\n"
+	printf "\n=> npm run publish:package\n"
 	$PWD/scripts/publish-package.sh
 }
 
