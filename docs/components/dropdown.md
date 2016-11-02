@@ -35,6 +35,10 @@ maintainer: yazheng.yu
 * `searchable`: `Boolean` (default: false) 启用搜索功能
 * `disabled` `Boolean` (default: false) 禁用下拉选择
 * `on-select-change`: `Function`，(可选参数)，改变选择的回调
+* `is-open`: 类似 cc-dropdown，但是是单向绑定
+* `auto-close`: 同 cc-dropdown
+* `on-dropdown-open`: 同 cc-dropdown
+* `on-dropdown-close`: 同 cc-dropdown
 
 ### Examples
 
@@ -52,6 +56,10 @@ maintainer: yazheng.yu
 * `placeholder`: `String` (default: '') 提示文本
 * `searchable`: `Boolean` (default: false) 启用搜索功能
 * `confirm-button`: `Boolean` (default: false) 启用"确认/取消"选择的按钮
+* `is-open`: 类似 cc-dropdown，但是是单向绑定
+* `auto-close`: 同 cc-dropdown
+* `on-dropdown-open`: 同 cc-dropdown
+* `on-dropdown-close`: 同 cc-dropdown
 
 ### Examples
 
