@@ -125,21 +125,23 @@ npm run prepare-test -- <version_category: major | minor | patch> --branch <bran
 build
 
 ```bash
-# 以下脚本已包含在 release 脚本中，通常无需手动执行
-npm run build
+# build 代码，产出到 dist/ 中
+# 可以指定 git_revision 参数（如 master / v2.0.1 / 0abcdef），默认 build 当前 working tree 代码
+npm run build [-- <git_revision>]
 ```
 
 发布 npm 包
 
 ```bash
-# 以下脚本已包含在 release 脚本中，通常无需手动执行
+# 将 dist/ 中 build 好的代码上传到 npm 仓库
 npm run publish:package
 ```
 
 发布文档
 
 ```bash
-# 以下脚本已包含在 release 脚本中，通常无需手动执行
-npm run publish:docs -- <version_tag>
+# 发布 gh-pages 文档
+# 可以指定代码版本参数（如 v2.0.1），默认发布最新的代码版本
+npm run publish:docs [-- <version_tag>]
 ```
 

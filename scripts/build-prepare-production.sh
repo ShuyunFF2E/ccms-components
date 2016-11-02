@@ -12,6 +12,10 @@ function build_prepare_production() {
 	current_branch=${current_branch:-dev}
 
 	version_category=$1
+	if [[ -z "$version_category" ]]; then
+		echo "Missing parameter: <version_category: major | minor | patch>"
+		exit 1
+	fi
 
 	git checkout dev
 	git pull --prune
@@ -29,10 +33,5 @@ function build_prepare_production() {
 	echo $version_tag
 }
 
-if [[ $# < 1 ]]; then
-	echo "Missing parameter: <version_category: major | minor | patch>"
-	exit 1
-else
-	build_prepare_production $@
-fi
+build_prepare_production $@
 
