@@ -79,11 +79,11 @@ export default class CustomerAttributeEditorCtrl {
 		const value = typeof attribute.value !== 'undefined' ? attribute.value : attribute.displayValue || attribute.defaultValue || '';
 		switch (attribute.type) {
 			case 'DATE_SELECT':
-				this.tmpValue = new Date(value);
+				this.tmpValue = this.getDate(value);
 				break;
 			case 'MONTH_DAY':
 				this.monthArray = MONTH_ARRAY;
-				const date = new Date(value);
+				const date = this.getDate(value);
 				if (date) {
 					this.tmpMonth = date.getMonth() + 1;
 					this.tmpDay = date.getDate();
@@ -163,8 +163,9 @@ export default class CustomerAttributeEditorCtrl {
 				if (attribute.type === 'CHAR_SELECT' && attribute.optionalMap) {
 					attribute.displayValue = attribute.optionalMap[value];
 				} else {
-					attribute.displayValue = this.formatValue(value, attribute.type) + attribute.unit;
+					attribute.displayValue = this.formatValue(value, attribute.type) + (attribute.unit || '');
 				}
+				attribute.value = value;
 				this.closeAllAttributeModifyBlock();
 			})
 			.catch(err => console.info(err));
@@ -260,6 +261,11 @@ export default class CustomerAttributeEditorCtrl {
 			}))
 			.then(() => this.changeCustomerDefinedBlockState(false))
 			.catch(err => console.info(err));
+	}
+
+	getDate(value) {
+		const _date = new Date(value);
+		return Number.isNaN(_date.getDate()) ? new Date() : _date;
 	}
 
 	getDefaultValue(type) {
