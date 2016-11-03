@@ -62,6 +62,24 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
     }
 	`;
 
+	const customPropertyProperties = `
+		custom_property_properties(
+      tenantId:"${tenantId}"
+    ){
+      data{
+        id
+        name
+        type
+        optional
+        tenantId
+        operator
+        createTime
+        isDisable
+        remark
+      }
+    }
+	`;
+
 	const customPropertyCustomer = `
 		custom_property_customer(
       customerNo:"${nick}"
@@ -211,6 +229,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 	const queryString = `
 		{
 			${customPropertyBasic}
+			${customPropertyProperties}
 			${customPropertyCustomer}
 			${RfmQuerySchema}
 			${TagQuerySchema}
