@@ -104,7 +104,8 @@ describe('CustomerProfileListModeCtrl', () => {
 			.when('POST', 'undefined/fullView/undefined/')
 			.respond({});
 		const attribute = {
-			editingValue: true
+			editingValue: true,
+			unit: ''
 		};
 		const value = '1';
 		customerAttributeEditorCtrl.modifyAttributeValue(attribute, value);

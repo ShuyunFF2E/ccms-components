@@ -16,8 +16,8 @@
 		.controller('ctrl', function ($scope, $ccCustomerProfileBoard) {
 
 			$scope.customerInformation = {
-				nickName: 'zeng_fen',
-				shopId: '100571094',
+				nickName: 'xinlee0606',
+				shopId: '71677914',
 				tenantId: 'qiushi6',
 				platName: 'taobao'
 			};
