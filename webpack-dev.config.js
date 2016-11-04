@@ -34,7 +34,6 @@ module.exports = {
 		extensions: ['', '.js']
 	},
 	eslint: {
-		configFile: '.eslintrc',
 		emitWarning: true,
 		emitError: true,
 		formatter: require('eslint-friendly-formatter')
