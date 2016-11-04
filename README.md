@@ -98,50 +98,48 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 
 ### 发布脚本
 
-发布正式版本脚本
+release 脚本
 
 ```bash
+# 正式版本
 npm run release -- <version_category: major | minor | patch>
-```
 
-发布测试版脚本
-
-```bash
+# 测试版本
 npm run release -- <version_category: major | minor | patch> --branch <branch_name>
 ```
 
-处理分支，打标签
+以下是 release 脚本内部所执行的子任务，其中正式版本执行 [1, 2, 3, 4]，测试版本执行 [1, 2, 3]。当 release 脚本出错中断时，可以手动运行对应的脚本进行发布（需要注意参数）。
 
-```bash
-# 以下脚本已包含在 release 脚本中，通常无需手动执行
+1. 处理分支，打标签
 
-# 正式版本
-npm run prepare-production -- <version_category: major | minor | patch>
+	```bash
+	# 正式版本
+	npm run prepare-production -- <version_category: major | minor | patch>
 
-# 测试版本
-npm run prepare-test -- <version_category: major | minor | patch> --branch <branch_name>
-```
+	# 测试版本
+	npm run prepare-test -- <version_category: major | minor | patch> --branch <branch_name>
+	```
 
-build
+2. build
 
-```bash
-# build 代码，产出到 dist/ 中
-# 可以指定 git_revision 参数（如 master / v2.0.1 / 0abcdef），默认 build 当前 working tree 代码
-npm run build [-- <git_revision>]
-```
+	```bash
+	# build 代码，产出到 dist/ 中
+	# 可以指定 git_revision 参数（如 master / v2.0.1 / 0abcdef），默认 build 当前 working tree 代码
+	npm run build [-- <git_revision>]
+	```
 
-发布 npm 包
+3. 发布 npm 包
 
-```bash
-# 将 dist/ 中 build 好的代码上传到 npm 仓库
-npm run publish:package
-```
+	```bash
+	# 将 dist/ 中 build 好的代码上传到 npm 仓库
+	npm run publish:package
+	```
 
-发布文档
+4. 发布文档
 
-```bash
-# 发布 gh-pages 文档
-# 可以指定代码版本参数（如 v2.0.1），默认发布最新的代码版本
-npm run publish:docs [-- <version_tag>]
-```
+	```bash
+	# 发布 gh-pages 文档
+	# 可以指定代码版本参数（如 v2.0.1），默认发布最新的代码版本
+	npm run publish:docs [-- <version_tag>]
+	```
 
