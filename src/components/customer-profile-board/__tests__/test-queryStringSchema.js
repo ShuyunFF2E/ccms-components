@@ -41,6 +41,22 @@ describe('queryStringSchema', () => {
       postcode
     }
 
+    custom_property_properties(
+      tenantId:"dagouzi01"
+    ){
+      data{
+        id
+        name
+        type
+        optional
+        tenantId
+        operator
+        createTime
+        isDisable
+        remark
+      }
+    }
+
 		custom_property_customer(
       customerNo:"s_peggy"
       tenantId:"dagouzi01"

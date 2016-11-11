@@ -13,8 +13,6 @@ cc-customer-attribute-editor:nth-of-type(3) .attribute-editor-header {
 }
 
 cc-customer-attribute-editor:last-child .customer-attribute-editor {
-	margin-bottom: 40px;
-
 	li {
 		margin-bottom: 12px;
 	}
@@ -65,6 +63,10 @@ cc-customer-attribute-editor:last-child .customer-attribute-editor {
 			}
 		}
 
+		.show-more__p {
+			text-align: right;
+		}
+
 		.add-attribute-button {
 			color: #0097d7;
 			margin: 10px;
@@ -93,7 +95,6 @@ cc-customer-attribute-editor:last-child .customer-attribute-editor {
 		.attribute-block-item {
 			margin: 0;
 			display: flex;
-			height: 24px;
 			position: relative;
 
 			.icon-edit {
@@ -111,6 +112,7 @@ cc-customer-attribute-editor:last-child .customer-attribute-editor {
 
 		.attribute-item-content {
 			flex: 1;
+			min-height: 24px;
 
 			.icon-edit {
 				color: #00aaf1;
@@ -124,7 +126,7 @@ cc-customer-attribute-editor:last-child .customer-attribute-editor {
 			background: #f8f8f8;
 			box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
 			border-radius: 2px;
-			width: 220px;
+			width: 230px;
 			height: 85px;
 			padding: 10px;
 			z-index: 1;

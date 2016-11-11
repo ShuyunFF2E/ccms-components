@@ -76,24 +76,6 @@ describe('CustomerProfileBoard', () => {
 		it('generateCustomerData', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
 			const data = {
-				customer: {
-					data: {
-						data: [{
-							customer: {
-								name: 'jack'
-							}
-						}]
-					}
-				},
-				trade: {
-					data: {
-						data: [{
-							trade: {
-								id: '123'
-							}
-						}]
-					}
-				},
 				rfm: {
 					data: {
 						data: [{
@@ -140,12 +122,6 @@ describe('CustomerProfileBoard', () => {
 			}];
 
 			const result = {
-				customer: {
-					name: 'jack'
-				},
-				trade: {
-					id: '123'
-				},
 				period: 6,
 				period_label: '时间不限',
 				rfm,
@@ -163,11 +139,11 @@ describe('CustomerProfileBoard', () => {
 			assert.deepEqual(customerProfileBoardService.concatCustomerAddressZip(), {});
 
 			const data = {
-				receiver_state: 'a',
-				receiver_city: 'b',
-				receiver_district: 'c',
-				receiver_address: 'd',
-				receiver_zip: 'e'
+				province: 'a',
+				city: 'b',
+				locality: 'c',
+				address: 'd',
+				postcode: 'e'
 			};
 			const result = {
 				...data,
