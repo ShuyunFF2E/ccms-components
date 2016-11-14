@@ -19,8 +19,8 @@
 					</div>
 					<div class="attribute-data-modify-block" ng-if="attribute.editable && attribute.editingValue">
 						<div ng-form="$ctrl.attributeModify" cc-validators="$ctrl.validators">
-							<input type="text" ng-if="attribute.type === 'CHAR_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="length" maxlength="20">
-							<input type="text" ng-if="attribute.type === 'NUMBER_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="length,number" maxlength="20">
+							<input type="text" ng-if="attribute.type === 'CHAR_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="{{$ctrl.tmpValidate}}" maxlength="20">
+							<input type="text" ng-if="attribute.type === 'NUMBER_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="{{$ctrl.tmpValidate}}" maxlength="20">
 							<select ng-if="attribute.type === 'CHAR_SELECT' || attribute.type === 'NUMBER_SELECT'"
 											ng-options="value for value in attribute.optional"
 											required
