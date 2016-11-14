@@ -19,7 +19,7 @@
 				nickName: 'xinlee0606',
 				shopId: '71677914',
 				tenantId: 'qiushi6',
-				platName: 'taobao'
+				platName: '1'
 			};
 
 			$scope.pop = function() {

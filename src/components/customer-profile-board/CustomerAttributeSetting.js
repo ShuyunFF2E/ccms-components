@@ -215,8 +215,12 @@ const consumer = {
 			name: '客户来源',
 			defaultValue: DEFAULT_VALUE,
 			valueMap: {
-				'taobao': '淘宝',
-				'jd': '京东'
+				'1': '淘宝',
+				'101': '京东',
+				'401': '一号店',
+				'501': '拍拍',
+				'601': '当当',
+				'1001': '苏宁'
 			},
 			unit: '',
 			editable: false,
