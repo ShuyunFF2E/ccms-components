@@ -71,6 +71,34 @@ describe('queryStringSchema', () => {
       }
     }
 
+    trade:shuyun_searchapi_trade(
+	    param: {
+	  settings:{
+	    data_source: "trade"
+	    query_id:"report-id"
+	    pagination:{
+	      limit: 1
+	      offset:0
+	    }
+	    return_format:"json"
+	  }
+	  filters:{
+	    type:"and"
+	    fields: [
+	      { type:"str_selector" dimension:"buyer_nick" value:"s_peggy" }
+	    ]
+	  }
+	}
+	  ){
+	    flag
+	    msg
+	    data{
+	      data{
+	       receiver_mobile
+	      }
+	    }
+	  }
+
 	  rfm:shuyun_searchapi_rfm(
 	    param: {
 	  settings:{

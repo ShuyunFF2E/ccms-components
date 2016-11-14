@@ -312,7 +312,7 @@ describe('CustomerProfileBoard', () => {
 
 		it('getAttributeList', () => {
 			const customerProfileBoardService = new CustomerProfileBoardService();
-			const result = ['username', 'sex', 'birthday', 'age', 'mobile', 'email', 'address_zip', 'platName',
+			const result = ['username', 'sex', 'birthday', 'age', 'mobile', 'receiver_mobile', 'email', 'address_zip', 'platName',
 				'level', 'creditrating', 'favorablerate', 'trade_first_time', 'trade_first_amount', 'trade_first_interval',
 				'trade_last_time', 'trade_last_amount', 'trade_last_interval', 'trade_tidcount', 'trade_count', 'trade_amount',
 				'trade_item_num', 'trade_avg_amount', 'trade_avg_item_num', 'trade_avg_buy_interval', 'trade_refund_count',

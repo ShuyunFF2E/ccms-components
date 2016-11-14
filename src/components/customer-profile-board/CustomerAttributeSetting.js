@@ -59,6 +59,7 @@ const customer = {
 			unit: '岁',
 			editable: true,
 			type: 'NUMBER_INPUT',
+			validate: [],
 			isInListMode: true
 		}, {
 			attribute: 'mobile',
@@ -76,7 +77,7 @@ const customer = {
 			editable: false,
 			isInListMode: true */
 		}, {
-			attribute: 'mobile',
+			attribute: 'receiver_mobile',
 			name: '最新收货手机',
 			defaultValue: DEFAULT_VALUE,
 			unit: '',
