@@ -73,7 +73,7 @@ $confirm-icon-margin: 15px;
 		z-index: $modal-z-index;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.13);
 
-		header {
+		> header {
 
 			display: flex;
 			justify-content: space-between;
@@ -97,7 +97,7 @@ $confirm-icon-margin: 15px;
 
 		}
 
-		footer {
+		> footer {
 			@extend %border;
 			background: #f5f5f5;
 			box-shadow: 0px -1px 0 0 #f1f1f1;
