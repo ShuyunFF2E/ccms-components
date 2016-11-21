@@ -92,6 +92,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
         type
         optional
         value
+        isDisable
       }
     }
 	`;

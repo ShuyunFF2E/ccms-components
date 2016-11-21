@@ -13,9 +13,9 @@
 						ng-mouseenter="attribute.displayEditIcon = true"
 						ng-mouseleave="attribute.displayEditIcon = false"
 					><span ng-bind="attribute.displayValue || attribute.defaultValue"></span><span class="iconfont icon-edit"
-																																													ng-if="attribute.editable && !attribute.editingValue"
-																																													ng-show="attribute.displayEditIcon"
-																																													ng-click="$ctrl.showAttributeModifyBlock(attribute)"></span>
+																																												 ng-if="!attribute.isDisable && attribute.editable && !attribute.editingValue"
+																																												 ng-show="attribute.displayEditIcon"
+																																												 ng-click="$ctrl.showAttributeModifyBlock(attribute)"></span>
 					</div>
 					<div class="attribute-data-modify-block" ng-if="attribute.editable && attribute.editingValue">
 						<div ng-form="$ctrl.attributeModify" cc-validators="$ctrl.validators">
