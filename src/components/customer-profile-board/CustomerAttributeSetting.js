@@ -284,6 +284,7 @@ const consumer = {
 			name: '买家好评率',
 			defaultValue: DEFAULT_VALUE,
 			unit: '',
+			fixed: 2,
 			editable: false,
 			isInListMode: true
 		}]
