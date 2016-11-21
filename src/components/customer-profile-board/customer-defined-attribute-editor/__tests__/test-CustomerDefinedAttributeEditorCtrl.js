@@ -28,7 +28,7 @@ describe('CustomerProfileBoardCtrl', () => {
 		customerDefinedAttributeEditorCtrl.$onInit();
 		assert.deepEqual(customerDefinedAttributeEditorCtrl.validators, {
 			attributeName: {
-				msg: '属性名称必须为1-20个字符',
+				msg: '属性名称必须为1-20个数字、字母或文字',
 				regex: /^(\d|\w|[\u4e00-\u9fa5]){1,20}$/
 			},
 			duplicate: {

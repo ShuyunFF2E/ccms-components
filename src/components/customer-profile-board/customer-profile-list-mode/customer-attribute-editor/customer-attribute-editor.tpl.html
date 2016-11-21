@@ -2,7 +2,7 @@
 	<p class="attribute-editor-header" ng-bind="$ctrl.attributeSetting.title"></p>
 	<ul class="attribute-editor-content">
 		<li ng-repeat="attributeBlock in $ctrl.attributeSetting.attributeBlock track by $index">
-			<dl class="attribute-block" ng-if="attributeBlock.type !== 'List'"
+			<dl class="attribute-block" ng-if="attributeBlock.type !== 'List' && attributeBlock.attributeList.length > 0"
 					ng-show="$ctrl.attributeSetting.name !== 'customer' || !$ctrl.showCustomerAttributeEditor">
 				<dt class="attribute-block-title">{{attributeBlock.title}}</dt>
 				<dd class="attribute-block-item"
@@ -13,14 +13,14 @@
 						ng-mouseenter="attribute.displayEditIcon = true"
 						ng-mouseleave="attribute.displayEditIcon = false"
 					><span ng-bind="attribute.displayValue || attribute.defaultValue"></span><span class="iconfont icon-edit"
-																																													ng-if="attribute.editable && !attribute.editingValue"
-																																													ng-show="attribute.displayEditIcon"
-																																													ng-click="$ctrl.showAttributeModifyBlock(attribute)"></span>
+																																												 ng-if="!attribute.isDisable && attribute.editable && !attribute.editingValue"
+																																												 ng-show="attribute.displayEditIcon"
+																																												 ng-click="$ctrl.showAttributeModifyBlock(attribute)"></span>
 					</div>
 					<div class="attribute-data-modify-block" ng-if="attribute.editable && attribute.editingValue">
 						<div ng-form="$ctrl.attributeModify" cc-validators="$ctrl.validators">
-							<input type="text" ng-if="attribute.type === 'CHAR_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="length" maxlength="20">
-							<input type="text" ng-if="attribute.type === 'NUMBER_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="length,number" maxlength="20">
+							<input type="text" ng-if="attribute.type === 'CHAR_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="{{$ctrl.tmpValidate}}" maxlength="20">
+							<input type="text" ng-if="attribute.type === 'NUMBER_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="{{$ctrl.tmpValidate}}" maxlength="20">
 							<select ng-if="attribute.type === 'CHAR_SELECT' || attribute.type === 'NUMBER_SELECT'"
 											ng-options="value for value in attribute.optional"
 											required

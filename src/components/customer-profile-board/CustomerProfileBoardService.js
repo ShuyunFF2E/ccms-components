@@ -234,9 +234,12 @@ class CustomerProfileBoardService {
 					case 'memberInfo':
 						return Object.keys(data[key]).map(k => data[key][k]).reduce((pre, curr) => ({...pre, ...curr}), {});
 					case 'custom_property_properties':
-						return { custom_property_properties: data[key].data };
+						return { [key]: data[key].data };
+					case 'trade':
+						if (!data[key].data || !data[key].data.data || !data[key].data.data[0]) return {};
+						return data[key].data.data[0];
 					case 'custom_property_customer':
-						return { custom_property_customer: data[key].properties };
+						return { [key]: data[key].properties };
 					default:
 						return data[key];
 				}
