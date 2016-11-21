@@ -76,6 +76,14 @@ export default class CustomerAttributeEditorCtrl {
 	 * @param {object} attribute
 	 */
 	showAttributeModifyBlock(attribute) {
+		this.setTmpValue(attribute);
+		this.setTmpValidate(attribute);
+		this.closeAllAttributeModifyBlock();
+		attribute.editingValue = true;
+		attribute.displayEditIcon = false;
+	}
+
+	setTmpValue(attribute) {
 		const value = typeof attribute.value !== 'undefined' ? attribute.value : attribute.displayValue || attribute.defaultValue || '';
 		switch (attribute.type) {
 			case 'DATE_SELECT':
@@ -101,9 +109,28 @@ export default class CustomerAttributeEditorCtrl {
 			default:
 				this.tmpValue = value;
 		}
-		this.closeAllAttributeModifyBlock();
-		attribute.editingValue = true;
-		attribute.displayEditIcon = false;
+	}
+
+	setTmpValidate(attribute) {
+		const tmpValidate = [];
+		// set normal validate
+		switch (attribute.type) {
+			case 'NUMBER_INPUT':
+				tmpValidate.push('number');
+				tmpValidate.push('length');
+				break;
+			case 'CHAR_INPUT':
+			default:
+				tmpValidate.push('length');
+		}
+		if (attribute.validate) {
+			Object.keys(attribute.validate)
+				.forEach(key => {
+					this.validators[key] = attribute.validate[key];
+					tmpValidate.push(key);
+				});
+		}
+		this.tmpValidate = tmpValidate.join(',');
 	}
 
 	/**
@@ -180,9 +207,9 @@ export default class CustomerAttributeEditorCtrl {
 	 */
 	formatValue(value, type) {
 		switch (type) {
-			case 'NUMBER_SELECT':
+			/* case 'NUMBER_SELECT':
 			case 'NUMBER_INPUT':
-				return Number.parseFloat(value);
+				return Number.parseFloat(value);*/
 			case 'DATE_SELECT':
 				return this._$filter('date')(value, 'yyyy-MM-dd');
 			default:

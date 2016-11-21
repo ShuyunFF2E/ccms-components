@@ -3,14 +3,10 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-03-15
  */
-
 import angular from 'angular';
-
 import { isElement } from 'angular-es-utils/type-auth';
-
 import Popup from '../../common/bases/Popup';
 import { positionElements, chopStyle2Num, offset, position, adjustTop } from '../../common/utils/style-helper';
-
 import template from './tooltip.tpl.html';
 import { TOOLTIP_TYPE } from './Contants';
 
@@ -34,12 +30,7 @@ export default class Tooltip extends Popup {
 	}
 
 	setContent(content) {
-
-		if (isElement(content)) {
-			this.element.appendChild(content);
-		} else {
-			this.element.innerHTML = content;
-		}
+		this.element.innerHTML = isElement(content) ? content.outerHTML : content;
 	}
 
 	/**

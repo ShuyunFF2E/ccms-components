@@ -49,16 +49,6 @@ export default class TooltipCtrl {
 		return this._content;
 	}
 
-	// TODO needs remove after migration
-	set oldContent(content) {
-		this.content = content;
-	}
-
-	// TODO needs remove after migration
-	get oldContent() {
-		return this.content;
-	}
-
 	// watch opened
 	set opened(opened) {
 

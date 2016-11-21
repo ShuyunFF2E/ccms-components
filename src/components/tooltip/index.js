@@ -11,7 +11,6 @@ const tooltipDDO = {
 	controllerAs: '$$tooltipCtrl',
 	bindToController: {
 		content: '<ccTooltip',
-		oldContent: '<?tooltip', // TODO needs remove after migration
 		trigger: '@?tooltipTrigger',
 		placement: '@?tooltipPlacement',
 		opened: '<?tooltipOpened',
