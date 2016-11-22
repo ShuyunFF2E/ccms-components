@@ -33,7 +33,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use(jsonServer.defaults({static: path.resolve(__dirname)}));
 app.use(jsonServer.router(apiPrefix, filename));
 
-app.listen(8000, 'localhost', function(err) {
+app.listen(3000, 'localhost', function(err) {
 	if (err) {
 		console.log(err);
 		return;
