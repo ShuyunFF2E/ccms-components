@@ -26,7 +26,8 @@ export default {
 		rangeEnd: '=',
 		start: '=',
 		end: '=',
-		click: '&?'
+		onCalendarOpen: '&?',
+		onCalendarClose: '&?'
 	},
 	template,
 
