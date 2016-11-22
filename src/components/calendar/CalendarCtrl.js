@@ -71,6 +71,7 @@ export default class DatePickerCtrl {
 	close() {
 		this.$element[0].style.display = 'none';
 		document.removeEventListener('click', this.close, false);
+		this.onCalendarClose();
 	}
 
 
@@ -169,6 +170,7 @@ export default class DatePickerCtrl {
 		// 定位日历
 		calendar.style.display = 'block';
 		document.addEventListener('click', this.close, false);
+		this.onCalendarOpen();
 	}
 
 
