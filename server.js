@@ -33,11 +33,13 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use(jsonServer.defaults({static: path.resolve(__dirname)}));
 app.use(jsonServer.router(apiPrefix, filename));
 
-app.listen(3000, 'localhost', function(err) {
+const port = 3000;
+app.listen(port, 'localhost', function(err) {
 	if (err) {
 		console.log(err);
 		return;
 	}
 
-	console.log('Listening at http://localhost:3000');
+	console.log(`Listening at http://localhost:${port}`);
 });
+
