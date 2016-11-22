@@ -25,7 +25,8 @@ export default {
 		rangeStart: '=',
 		rangeEnd: '=',
 		start: '=',
-		end: '='
+		end: '=',
+		click: '&?'
 	},
 	template,
 

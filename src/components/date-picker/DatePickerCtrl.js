@@ -183,6 +183,7 @@ export default class DatePickerCtrl {
 		$event.stopPropagation();
 
 		if (!this.disabled) {
+			this.click();
 			this.calendar.open(this);
 
 			if (this.$element[0] === $event.target) {
