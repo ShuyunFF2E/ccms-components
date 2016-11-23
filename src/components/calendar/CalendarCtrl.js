@@ -69,9 +69,15 @@ export default class DatePickerCtrl {
 	 * 关闭日历
 	 */
 	close() {
+		if (this.$element[0].style.display !== 'none' && this.$element[0].style.display !== '') {
+			this.onCalendarClose();
+		}
 		this.$element[0].style.display = 'none';
+<<<<<<< refs/remotes/origin/dev
 		document.removeEventListener('click', this.close, false);
 		this.onCalendarClose();
+=======
+>>>>>>> 补充文档 给date-Range也支持接收此回调
 	}
 
 
