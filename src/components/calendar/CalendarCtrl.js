@@ -69,8 +69,10 @@ export default class DatePickerCtrl {
 	 * 关闭日历
 	 */
 	close() {
+		if (this.$element[0].style.display !== 'none' && this.$element[0].style.display !== '') {
+			this.onCalendarClose();
+		}
 		this.$element[0].style.display = 'none';
-		this.onCalendarClose();
 	}
 
 

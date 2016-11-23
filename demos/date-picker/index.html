@@ -3,35 +3,44 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Date Picker</title>
+	<style>
+		body{
+			padding-left: 50px;
+		}
+	</style>
 </head>
 <body ng-app="componentsApp" ng-controller="ctrl as app">
 
-<div>
-	<button type="button" ng-click="app.hideDates = !app.hideDates">显示 / 隐藏</button>
-</div>
+<h1>DEMO: 1 date-picker</h1>
 
-<p>日期时间选择器 ({{app.dateValue | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+<p>当前值 ({{app.dateValue | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+<p>触发打开事件: {{app.onCalendarOpenTimes}}次</p>
+<p>触发关闭日历事件: {{app.onCalendarCloseTimes}}次</p>
 
 <cc-date-picker ng-if="!app.hideDates"
-						 ng-model="app.dateValue"
-						 min-date="app.minDate"
-						 max-date="app.maxDate"
-						 required="true"
-						 date-only="false"
-						 disabled="false"></cc-date-picker>
-
-<p>日期时间选择器 ({{app.blankDate | date:'yyyy-MM-dd HH:mm:ss'}})</p>
-
-<cc-date-picker ng-model="app.blankDate"></cc-date-picker>
-
+				ng-model="app.dateValue"
+				min-date="app.minDate"
+				max-date="app.maxDate"
+				required="true"
+				date-only="false"
+				disabled="false"
+				on-calendar-open="app.onCalendarOpen()"
+				on-calendar-close="app.onCalendarClose()"></cc-date-picker>
 <pre>
-&lt;cc-date-picker ng-model="app.dateValue"
-	min-date="app.minDate"
-	max-date="app.maxDate"
-	required="true"
-	date-only="false"
-	disabled="false">&lt;/cc-date-picker>
-</pre>
+	  ng-model="app.dateValue"
+	  min-date="app.minDate"
+	  max-date="app.maxDate"
+	  required="true"
+	  date-only="false"
+	  disabled="false"
+	  on-calendar-open="app.onCalendarOpen()"
+	  on-calendar-close="app.onCalendarClose()"></pre>
+<h1>DEMO: 2 date-picker 仅日期</h1>
+
+<cc-date-picker ng-model="app.blankDate" date-only="true"></cc-date-picker>
+
+<h1>DEMO: 3 date-range</h1>
+
 
 <p>日期时间区间选择器 ({{app.dateRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
 
@@ -42,12 +51,11 @@
 
 <cc-date-range ng-if="!app.hideDates"
 						opts="app.dateRange"></cc-date-range>
-
 <p>日期时间区间选择器 ({{app.anotherRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.anotherRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
 
 <cc-date-range ng-if="!app.hideDates"
 							 opts="app.anotherRange"></cc-date-range>
-
+<h1>DEMO: 4 date-range 仅日期</h1>
 <p>日期时间区间选择器 ({{app.dateOnly.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateOnly.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
 
 <p>
@@ -79,8 +87,19 @@ self.dateRange = {
 <script src="/components.js"></script>
 <script>
 	angular.module('componentsApp', ['ccms.components'])
-		.controller('ctrl', function ($scope) {
+		.controller('ctrl', function ($scope, $timeout) {
 			var self = this;
+			self.onCalendarOpenTimes = 0;
+			self.onCalendarCloseTimes = 0;
+			self.onCalendarOpen = function () {
+				self.onCalendarOpenTimes += 1;
+			};
+			self.onCalendarClose = function () {
+				self.onCalendarCloseTimes += 1;
+				$timeout(function () {
+					$scope.$apply();
+				});
+			};
 
 			self.dateValue = new Date(2016, 1, 20);
 			self.minDate = new Date(2016, 1, 1);
