@@ -138,37 +138,36 @@ export default class CustomerAttributeEditorCtrl {
 	 * @name modifyAttributeValue
 	 * @param {object} attribute
 	 * @param {string} value
-	 * @param {boolean} basic
+	 * @param {object} attributeBlock
 	 */
-	modifyAttributeValue(attribute, value, basic) {
+	modifyAttributeValue(attribute, value, attributeBlock) {
 		this._$ccValidator.validate(this.attributeModify)
 			.then(() => {
-				if (attribute.type === 'CHAR_SELECT' && attribute.optionalMap) {
-					value = Object
-						.keys(attribute.optionalMap)
-						.filter(key => attribute.optionalMap[key] === value)[0];
-				}
-				if (basic) {
-					let params;
-					if (attribute.type === 'MONTH_DAY') {
-						// hack MONTH_DAY type
-						params = {
-							nickName: this.customerData.nickName,
-							tenantId: this.customerData.tenantId,
-							condition: `month: ${this.tmpMonth} \n day: ${this.tmpDay}`
-						};
-					} else {
-						params = {
-							nickName: this.customerData.nickName,
-							tenantId: this.customerData.tenantId,
-							condition: attribute.type.match(/NUMBER/)
-								? `${attribute.attribute}: ${this.formatValue(value, attribute.type)}`
-								: `${attribute.attribute}: "${this.formatValue(value, attribute.type)}"`
-						};
-					}
-					// hack backend bug
-					if (attribute.attribute !== 'sex') params.condition += '\nsex: ""';
-					return this.CustomerProfileBoardService.updateCustomerDefinedBasicAttributeData(params);
+				if (attributeBlock.name === 'base') {
+					const paramsArr = [];
+					paramsArr.push(`customerno:"${this.customerData.nickName}"\n`);
+					attributeBlock.attributeList.forEach(attr => {
+						const targetValue = attr.attribute === attribute.attribute ? value : attr.value;
+						if (attr.editable && !attr.isDisable) {
+							// can editable item
+							if (attr.type.match(/NUMBER/)) {
+								paramsArr.push(`${attr.attribute}: ${this.formatValue(targetValue, attr.type)}\n`);
+							} else if (attr.type === 'CHAR_SELECT' && attr.optionalMap) {
+								// 恶心的补丁，为代码遗留
+								paramsArr.push(`${attr.attribute}: "${Object
+									.keys(attr.optionalMap)
+									.filter(key => attr.optionalMap[key] === targetValue)[0]}"\n`);
+							} else if (attr.type === 'MONTH_DAY') {
+								// 恶心的补丁，为代码遗留
+								attribute.type === attr.type
+									? paramsArr.push(`month: ${this.tmpMonth} \n day: ${this.tmpDay}\n`)
+									: paramsArr.push(`month: ${targetValue.split('-')[0]} \n day: ${targetValue.split('-')[1]} \n`);
+							} else {
+								paramsArr.push(`${attr.attribute}: "${this.formatValue(targetValue, attr.type)}"\n`);
+							}
+						}
+					});
+					return this.CustomerProfileBoardService.updateCustomerDefinedBasicAttributeData(paramsArr, this.customerData.tenantId);
 				} else {
 					const params = {
 						nickName: this.customerData.nickName,
@@ -186,12 +185,9 @@ export default class CustomerAttributeEditorCtrl {
 				if (result.message) throw new Error('Update Attribute Error: ' + result.message);
 			})
 			.then(() => {
+				// 恶心的补丁，为代码遗留
 				if (attribute.type === 'MONTH_DAY') value = `${this.tmpMonth}-${this.tmpDay}`;
-				if (attribute.type === 'CHAR_SELECT' && attribute.optionalMap) {
-					attribute.displayValue = attribute.optionalMap[value];
-				} else {
-					attribute.displayValue = this.formatValue(value, attribute.type) + (attribute.unit || '');
-				}
+				attribute.displayValue = this.formatValue(value, attribute.type) + (attribute.unit || '');
 				attribute.value = value;
 				this.closeAllAttributeModifyBlock();
 			})
@@ -208,8 +204,8 @@ export default class CustomerAttributeEditorCtrl {
 	formatValue(value, type) {
 		switch (type) {
 			/* case 'NUMBER_SELECT':
-			case 'NUMBER_INPUT':
-				return Number.parseFloat(value);*/
+			 case 'NUMBER_INPUT':
+			 return Number.parseFloat(value);*/
 			case 'DATE_SELECT':
 				return this._$filter('date')(value, 'yyyy-MM-dd');
 			default:
