@@ -6,11 +6,10 @@
  */
 import { Inject } from 'angular-es-utils';
 import { dispatchMenuChange } from './MenuService';
-@Inject('$state', '$timeout')
+@Inject('$state', '$timeout', '$scope')
 export default class MenusNodeCtrl {
 
 	$onInit() {
-
 		this._$timeout(() => {
 
 			// -获取当前选择的菜单项(初始化时)
@@ -19,6 +18,13 @@ export default class MenusNodeCtrl {
 				dispatchMenuChange(menu);
 			}
 		}, 0);
+		this._$scope.$on('$stateChangeSuccess', (event, toState) => {
+			this.toggle = this
+					.list
+					.findIndex(item => {
+						return this._$state.includes(item.state);
+					}) >= 0;
+		});
 	}
 
 	/**
@@ -46,8 +52,6 @@ export default class MenusNodeCtrl {
 	 * @returns {*}
 	 */
 	getMenu(menus = []) {
-
-
 		return Array.isArray(menus) ? menus.find(item => {
 			return item.state === this._$state.current.name;
 		}) : {};
