@@ -30,7 +30,13 @@ export default class Tooltip extends Popup {
 	}
 
 	setContent(content) {
-		this.element.innerHTML = isElement(content) ? content.outerHTML : content;
+
+		if (isElement(content)) {
+			this.element.innerHTML = '';
+			this.element.appendChild(content);
+		} else {
+			this.element.innerHTML = content;
+		}
 	}
 
 	/**
