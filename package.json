@@ -1,6 +1,6 @@
 {
   "name": "ccms-components",
-  "version": "2.2.4",
+  "version": "2.2.6",
   "description": "shuyun ccms components",
   "keywords": [
     "angular",
@@ -25,7 +25,6 @@
     "test:unit": "karma start test/karma.unit.conf.js --single-run",
     "test:cover": "karma start test/karma.cover.conf.js --single-run"
   },
-  "author": "shuyun FE2E",
   "devDependencies": {
     "angular-mocks": "^1.5.7",
     "autoprefixer": "^6.3.6",
@@ -91,5 +90,12 @@
     "jquery": "1.11.0",
     "jquery.nicescroll": "^3.6.8",
     "normalize.css": "^4.1.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ShuyunFF2E/ccms-components"
   }
 }

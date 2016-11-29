@@ -41,7 +41,7 @@ const customer = {
 				f: '女',
 				'': '未知'
 			},
-			validate: [],
+			validate: null,
 			isInListMode: true
 		}, {
 			attribute: 'birthday',
@@ -50,7 +50,7 @@ const customer = {
 			unit: '',
 			editable: true,
 			type: 'MONTH_DAY',
-			validate: [],
+			validate: null,
 			isInListMode: true
 		}, {
 			attribute: 'age',
@@ -59,6 +59,7 @@ const customer = {
 			unit: '岁',
 			editable: true,
 			type: 'NUMBER_INPUT',
+			validate: null,
 			isInListMode: true
 		}, {
 			attribute: 'mobile',
@@ -67,7 +68,12 @@ const customer = {
 			unit: '',
 			editable: true,
 			type: 'CHAR_INPUT',
-			validate: ['/^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9]){1}\\d{8}$/']
+			validate: {
+				mobile: {
+					msg: '请输入正确的手机号',
+					regex: /^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9]){1}\d{8}$/
+				}
+			}
 		/* }, {
 			attribute: 'mobile',
 			name: '支付手机',
@@ -76,7 +82,7 @@ const customer = {
 			editable: false,
 			isInListMode: true */
 		}, {
-			attribute: 'mobile',
+			attribute: 'receiver_mobile',
 			name: '最新收货手机',
 			defaultValue: DEFAULT_VALUE,
 			unit: '',
@@ -88,7 +94,12 @@ const customer = {
 			unit: '',
 			editable: true,
 			type: 'CHAR_INPUT',
-			validate: ['/^\\w{1, 50}$/', '/@.+(.com|.cn)$/']
+			validate: {
+				email: {
+					msg: '请输入正确的email邮箱',
+					regex: /@.+(.com|.cn)$/
+				}
+			}
 		}, {
 			attribute: 'address_zip',
 			name: '常用地址',
@@ -204,8 +215,12 @@ const consumer = {
 			name: '客户来源',
 			defaultValue: DEFAULT_VALUE,
 			valueMap: {
-				'taobao': '淘宝',
-				'jd': '京东'
+				'1': '淘宝',
+				'101': '京东',
+				'401': '一号店',
+				'501': '拍拍',
+				'601': '当当',
+				'1001': '苏宁'
 			},
 			unit: '',
 			editable: false,
@@ -269,6 +284,7 @@ const consumer = {
 			name: '买家好评率',
 			defaultValue: DEFAULT_VALUE,
 			unit: '',
+			fixed: 2,
 			editable: false,
 			isInListMode: true
 		}]

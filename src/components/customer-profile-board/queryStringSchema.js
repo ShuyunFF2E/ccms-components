@@ -92,8 +92,23 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
         type
         optional
         value
+        isDisable
       }
     }
+	`;
+
+	const TradeQuerySchema = `
+		trade:shuyun_searchapi_trade(
+	    param: ${generatorQueryParam('trade', `[{ type:"str_selector" dimension:"buyer_nick" value:"${nick}" }]`)}
+	  ){
+	    flag
+	    msg
+	    data{
+	      data{
+	       receiver_mobile
+	      }
+	    }
+	  }
 	`;
 
 	const RfmQuerySchema = `
@@ -231,6 +246,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 			${customPropertyBasic}
 			${customPropertyProperties}
 			${customPropertyCustomer}
+			${TradeQuerySchema}
 			${RfmQuerySchema}
 			${TagQuerySchema}
 			${MemberInfoQuerySchema}

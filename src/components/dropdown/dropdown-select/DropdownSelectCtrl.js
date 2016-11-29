@@ -20,6 +20,7 @@ export default class DropdownSelectCtrl {
 		this.model = null;
 		this.focusIndex = 0;
 		this.isOpen = false;
+		this.autoClose = true;
 		this.isActive = false;
 		this.oldText = '';
 
@@ -43,6 +44,10 @@ export default class DropdownSelectCtrl {
 	_prepareOptions() {
 		const defaultMapping = DropdownSelectCtrl.defaultMapping;
 		this.mapping = Object.assign({}, defaultMapping, this.mapping);
+
+		if (typeof this.autoClose !== 'undefined' && this.autoClose !== false) {
+			this.autoClose = true;
+		}
 
 		if (typeof this.disabled === 'undefined') {
 			this.disabled = false;

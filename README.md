@@ -76,6 +76,17 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 	```
 6. 重复 2~5 的操作，创建新分支继续其它功能的开发
 
+### 发现 bug 怎么办
+
+1. [提交 issue](https://github.com/ShuyunFF2E/ccms-components/issues) 描述问题，与相关人员确认是否是 bug
+2. 确认是 bug
+   * 如果对 bug 修复时效不敏感，等待/提醒 组件库相关维护人员修复 bug 并发布版本。最后 portal 发布新版本组件库时，bug 自动修复。(周期通常较长，deprecated！)
+   * 如果对 bug 修复时效很敏感(影响产品发布时间)。遵照以下步骤（推荐）：
+     1. 将相应组件的代码 copy 到自己项目(通常为组件文件夹)，在原始组件代码基础上修复 bug，并给组件起一个别名(如 cc-menu 改为 cc-xxx-menu )，项目中改为使用 cc-xxx-menu。
+     2. 确认修复代码可行后，将代码提交给组件库，等待组件库合并代码。[提交步骤](ccms-components#开发步骤)
+     3. 组件库合并代码后发布版本，portal 更新组件库后发布。
+     4. 将项目里的 cc-xxx-menu 还原成 cc-menu。
+
 ### 提交代码、pull request 准则
 
 提交代码的 commit message 和 pull request 标题需按如下格式：
@@ -112,34 +123,34 @@ npm run release -- <version_category: major | minor | patch> --branch <branch_na
 
 1. 处理分支，打标签
 
-	```bash
-	# 正式版本
-	npm run prepare-production -- <version_category: major | minor | patch>
+   ```bash
+   # 正式版本
+   npm run prepare-production -- <version_category: major | minor | patch>
 
-	# 测试版本
-	npm run prepare-test -- <version_category: major | minor | patch> --branch <branch_name>
-	```
+   # 测试版本
+   npm run prepare-test -- <version_category: major | minor | patch> --branch <branch_name>
+   ```
 
 2. build
 
-	```bash
-	# build 代码，产出到 dist/ 中
-	# 可以指定 git_revision 参数（如 master / v2.0.1 / 0abcdef），默认 build 当前 working tree 代码
-	npm run build [-- <git_revision>]
-	```
+   ```bash
+   # build 代码，产出到 dist/ 中
+   # 可以指定 git_revision 参数（如 master / v2.0.1 / 0abcdef），默认 build 当前 working tree 代码
+   npm run build [-- <git_revision>]
+   ```
 
 3. 发布 npm 包
 
-	```bash
-	# 将 dist/ 中 build 好的代码上传到 npm 仓库
-	npm run publish:package
-	```
+   ```bash
+   # 将 dist/ 中 build 好的代码上传到 npm 仓库
+   npm run publish:package
+   ```
 
 4. 发布文档
 
-	```bash
-	# 发布 gh-pages 文档
-	# 可以指定代码版本参数（如 v2.0.1），默认发布最新的代码版本
-	npm run publish:docs [-- <version_tag>]
-	```
+   ```bash
+   # 发布 gh-pages 文档
+   # 可以指定代码版本参数（如 v2.0.1），默认发布最新的代码版本
+   npm run publish:docs [-- <version_tag>]
+   ```
 
