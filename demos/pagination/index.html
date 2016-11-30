@@ -45,6 +45,17 @@
 				total-pages="ctrl.pageOptions.totalPages"
 				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
 	</div>
+	<div class="demo">
+		<h3>normal &amp; hide pagesize list</h3>
+		<cc-pagination
+				page-num="ctrl.pageOptions.pageNum"
+				page-size="ctrl.pageOptions.pageSize"
+				page-size-list="ctrl.pageOptions.pageSizeList"
+				page-size-list-hide="true"
+				totals="ctrl.pageOptions.totals"
+				total-pages="ctrl.pageOptions.totalPages"
+				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
+	</div>
 </div>
 
 <script src="/components.js"></script>

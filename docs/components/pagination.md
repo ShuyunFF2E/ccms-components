@@ -19,6 +19,7 @@ maintainer: yazheng.yu
 * `page-size` `Integer` (default: 20) 每页显示条目数
 * `page-size-list` `Array(Integer)` (default: [10, 15, 20, 30, 50]) 每页显示条目数下拉选项
 * `page-size-list-disabled` `Boolean` (default: false) 禁止配置每页显示条目数(disabled not hidden)
+* `page-size-list-hide` `Boolean` (default: false)  隐藏配置每页显示条目数
 * `on-change` `Function` 翻页回调
 
 ## Examples
