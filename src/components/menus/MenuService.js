@@ -104,6 +104,14 @@ export default {
 		}
 
 		return offListener;
+	},
+
+	shopChangeEnable() {
+		EventBus.dispatch('cc:shopStatusChange', true);
+	},
+
+	shopChangeDisable() {
+		EventBus.dispatch('cc:shopStatusChange', false);
 	}
 
 };

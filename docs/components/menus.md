@@ -24,6 +24,10 @@ maintainer: chaoyang.mu
 
 * `const shopChange = $ccMenus.onShopChange((current => { // TODO 相关操作}));`：店铺切换成功后触发，回调中的current是指改变后的店铺信息。另外onShopChange返回值为一个function，即销毁函数(在页面销毁的时候请运行此函数销毁此次监听)。
 
+* `$ccMenus.shopChangeEnable();`：设置店铺切换可用。
+
+* `$ccMenus.shopChangeDisable();`：设置店铺切换不可用。
+
 详细情况调用请查看下面例子:
 
 ## Example
