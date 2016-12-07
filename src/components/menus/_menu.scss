@@ -8,150 +8,156 @@ $center-width: 200px;
 $right-width: 200px;
 $font: MicrosoftYaHei;
 
+// override container behavior
+.cc-main-container cc-menu-bar {
+	position: relative;
+	z-index: 1;
+}
+
 %list-icon {
-  position: absolute;
-  @extend .iconfont;
-  @extend .icon-arrow;
-  width: 7px;
-  height: 7px;
-  font-size: 10px;
-  transform: scale(0.8);
-  color: #cbcbcb;
+	position: absolute;
+	@extend .iconfont;
+	@extend .icon-arrow;
+	width: 7px;
+	height: 7px;
+	font-size: 10px;
+	transform: scale(0.8);
+	color: #cbcbcb;
 }
 
 %constract-icon {
-  @extend %list-icon;
-  color: #A7B3BA;
-  opacity: 0.6;
-  transform: scale(0.8) rotate(90deg);
+	@extend %list-icon;
+	color: #A7B3BA;
+	opacity: 0.6;
+	transform: scale(0.8) rotate(90deg);
 }
 
 //菜单展开时
 .menu-container {
-  width: $left-width;
-  height: 100%;
-  background: #E9EBEE;
-  overflow-y: auto;
-  & .expand {
-    height: 20px;
-    position: relative;
-    cursor: pointer;
-    background-color: rgba(181, 196, 205, 0.2);
-    &:hover {
-      background-color: rgba(181, 196, 205, 0.4);
-      .menu-constract-icon {
-        opacity: 1;
-      }
-    }
-  }
-  & .menu-list {
-    a {
-      display: block;
-      height: 35px;
-      line-height: 35px;
-      font-family: $font;
-      font-size: 12px;
-      color: #666666;
-      cursor: pointer;
-      text-decoration: none;
-      &:hover {
-        background: #dee1e5;
-        box-shadow: 0px 1px 0px 0px #E6E6E6;
-      }
-      &.active {
-        background-color: #fdfdfd;
-      }
-    }
-    .one-list {
-      height: 39px;
-      line-height: 39px;
-      padding-left: 20px;
-      color: #3A3A3A;
-      position: relative;
-      .down-icon {
-        @extend %list-icon;
-        top: 3px;
-        right: 20px;
-      }
-      .up-icon {
-        @extend %list-icon;
-        transform: scale(0.8) rotate(180deg);
-        top: 28px;
-        right: 15px;
-      }
-      &.one-content {
-        color: #666666 !important;
-      }
-    }
+	width: $left-width;
+	height: 100%;
+	background: #E9EBEE;
+	overflow-y: auto;
+	& .expand {
+		height: 20px;
+		position: relative;
+		cursor: pointer;
+		background-color: rgba(181, 196, 205, 0.2);
+		&:hover {
+			background-color: rgba(181, 196, 205, 0.4);
+			.menu-constract-icon {
+				opacity: 1;
+			}
+		}
+	}
+	& .menu-list {
+		a {
+			display: block;
+			height: 35px;
+			line-height: 35px;
+			font-family: $font;
+			font-size: 12px;
+			color: #666666;
+			cursor: pointer;
+			text-decoration: none;
+			&:hover {
+				background: #dee1e5;
+				box-shadow: 0px 1px 0px 0px #E6E6E6;
+			}
+			&.active {
+				background-color: #fdfdfd;
+			}
+		}
+		.one-list {
+			height: 39px;
+			line-height: 39px;
+			padding-left: 20px;
+			color: #3A3A3A;
+			position: relative;
+			.down-icon {
+				@extend %list-icon;
+				top: 3px;
+				right: 20px;
+			}
+			.up-icon {
+				@extend %list-icon;
+				transform: scale(0.8) rotate(180deg);
+				top: 28px;
+				right: 15px;
+			}
+			&.one-content {
+				color: #666666 !important;
+			}
+		}
 
-  }
+	}
 }
 
 //菜单展开时头部icon
 .menu-constract-icon {
-  @extend %constract-icon;
-  font-size: 10px !important;
-  top: 4px;
-  left: calc(50% - 9px);
+	@extend %constract-icon;
+	font-size: 10px !important;
+	top: 4px;
+	left: calc(50% - 9px);
 }
 
 @-moz-document url-prefix() {
-  .menu-constract-icon {
-    top: 3px;
-  }
+	.menu-constract-icon {
+		top: 3px;
+	}
 }
 
 //菜单收起时
 .ccms-left {
-  width: 30px;
-  & .expand {
-    background-color: rgba(212, 220, 224, 0.8);
-    cursor: pointer;
-    &:hover {
-      background-color: #D4DCE0;
-      .menu-constract-icon {
-        opacity: 1;
-      }
-    }
-  }
-  & .menu-list {
-    display: none;
-  }
+	width: 30px;
+	& .expand {
+		background-color: rgba(212, 220, 224, 0.8);
+		cursor: pointer;
+		&:hover {
+			background-color: #D4DCE0;
+			.menu-constract-icon {
+				opacity: 1;
+			}
+		}
+	}
+	& .menu-list {
+		display: none;
+	}
 }
 
 //菜单收起时 顶部icon
 .ccms-left .menu-constract-icon {
-  @extend %constract-icon;
-  transform: scale(0.8) rotate(-90deg);
-  top: 8px;
+	@extend %constract-icon;
+	transform: scale(0.8) rotate(-90deg);
+	top: 8px;
 }
 
 //菜单展开时店铺LOGO隐藏
 .retrack-shop {
-  width: 30px;
-  height: 40px;
-  background: #BAC7CD;
-  opacity: 0.8;
-  position: relative;
-  cursor: pointer;
-  display: none;
-  span {
-    @extend .iconfont;
-    @extend .icon-shop;
-    color: #ffffff;
-    font-size: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -15px;
-    margin-left: -10px;
-  }
-  &:hover {
-    opacity: 1;
-  }
+	width: 30px;
+	height: 40px;
+	background: #BAC7CD;
+	opacity: 0.8;
+	position: relative;
+	cursor: pointer;
+	display: none;
+	span {
+		@extend .iconfont;
+		@extend .icon-shop;
+		color: #ffffff;
+		font-size: 20px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -15px;
+		margin-left: -10px;
+	}
+	&:hover {
+		opacity: 1;
+	}
 }
 
 //菜单收起时店铺LOGO显示
 .ccms-left .retrack-shop {
-  display: block;
+	display: block;
 }
