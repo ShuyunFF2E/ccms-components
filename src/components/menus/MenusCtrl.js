@@ -6,11 +6,14 @@
  */
 import { Inject } from 'angular-es-utils';
 import $menus, { reset } from './MenuService';
+import EventBus from 'angular-es-utils/event-bus';
+
 @Inject('$timeout', '$state', '$rootScope', '$document', '$scope')
 export default class MenusCtrl {
 
 	constructor() {
 		this.active = {};
+		this.shopSelectAvailable = true;
 		this.retract = false;
 		this.isInitShopSelect = true;
 	}
@@ -27,6 +30,18 @@ export default class MenusCtrl {
 		this.createMenuList(menus);
 
 		this.anyClickShopSelectClosed();
+
+		// 店铺状态变更处理
+		this.shopStatusChange();
+	}
+
+	/**
+	 * 店铺状态变更处理
+	 */
+	shopStatusChange() {
+		EventBus.on('cc:shopStatusChange', status => {
+			this.shopSelectAvailable = status;
+		});
 	}
 
 	/**

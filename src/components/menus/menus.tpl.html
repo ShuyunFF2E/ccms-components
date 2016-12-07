@@ -17,6 +17,7 @@
 
 	<!-- 店铺 header -->
 	<div class="menu-shop-show"
+		 ng-class="{'disabled': !menus.shopSelectAvailable}"
 		 ng-click="menus.showShopSelect()"
 		 ng-if="menus.isShowShopInfo">
 		<div class="shop-wrapper"

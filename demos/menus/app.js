@@ -141,8 +141,8 @@ angular
 			unfoldClick: function (unfold) {
 				console.log('结果:', unfold);
 			},
-			//menusResource: $resource('/menus'),
-			menusResource: MENULIST,
+			menusResource: $resource('/menus'),
+			//menusResource: MENULIST,
 			shopsResource: $resource('/shops'),
 			searchPlaceholder: '请输入XXX'
 		};
@@ -198,7 +198,7 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.point.sign.reload', {
 			url: '/sign',
-			template: '签到绘声绘色',
+			template: '签到绘声绘色 <button class="btn-ok" ng-click="reload.shopChangeEnable()">开启店铺切换</button> <button class="btn-cancel" ng-click="reload.shopChangeDisable()">禁用店铺切换</button>',
 			controller: pointSignReloadController,
 			controllerAs: 'reload'
 		})
@@ -312,6 +312,12 @@ function pointSignReloadController($scope, $ccMenus) {
 	$ccMenus.onShopChange(current => {
 		console.log('再签到:(listener)', current.plat.name + '|' + current.shop.name);
 	}, $scope);
+
+	// 开启店铺切换
+	this.shopChangeEnable = $ccMenus.shopChangeEnable;
+
+	// 禁用店铺切换
+	this.shopChangeDisable = $ccMenus.shopChangeDisable;
 }
 phoneTaoBaoController.$inject = ['$scope', '$ccMenus'];
 function phoneTaoBaoController($scope, $ccMenus) {
