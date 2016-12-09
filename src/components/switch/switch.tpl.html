@@ -1,4 +1,4 @@
-<div class="switch-button-block" ng-click="$ctrl.ngDisabled || $ctrl.updateNgModel(!$ctrl._state)" ng-class="{'active': $ctrl._state, 'disabled': $ctrl.ngDisabled}">
+<div class="switch-button-block" ng-style="{width: $ctrl._width, fontSize:$ctrl.fontSize || 'inherit'}" ng-click="$ctrl.ngDisabled || $ctrl.updateNgModel(!$ctrl._state)" ng-class="{'active': $ctrl._state, 'disabled': $ctrl.ngDisabled}">
   <span class="switch-text open-text" ng-bind="$ctrl._state ? $ctrl.openText : ''"></span>
   <span class="switch-button"></span>
   <span class="switch-text close-text" ng-bind="$ctrl._state ? '' : $ctrl.closeText"></span>
