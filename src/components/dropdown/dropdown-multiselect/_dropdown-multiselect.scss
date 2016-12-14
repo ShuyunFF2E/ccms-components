@@ -91,7 +91,7 @@ cc-dropdown-multiselect {
 		}
 		.dropdown-list {
 			max-height: 152px;
-			overflow-y: scroll;
+			overflow-y: auto;
 			padding: 0;
 			list-style: none;
 			border-bottom: solid 1px $input-border;
