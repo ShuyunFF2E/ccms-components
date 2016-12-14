@@ -27,7 +27,7 @@
 				ng-switch-when="normal"
 				ng-click="$ctrl.changePageNumByShortcut('last')"></div>
 	</div>
-	<div class="p-group" ng-switch-when="normal">
+	<div class="p-group" ng-if="!$ctrl.pageSizeListHidden" ng-switch-when="normal">
 		<select
 				ng-disabled="$ctrl.pageSizeListDisabled"
 				ng-options="pageSize for pageSize in ::$ctrl.pageSizeList track by pageSize"
