@@ -88,14 +88,13 @@ cc-pagination {
 		@extend .iconfont;
 		@extend .icon-nextpage;
 		@include pagebtn;
-		margin: 0 11px;
+		margin-left: 11px;
 	}
 	.p-last {
 		@extend %p-button;
 		@extend .iconfont;
 		@extend .icon-lastpage;
 		@include pagebtn;
-		margin-right: 27px;
 	}
 
 	.p-group.disabled {
@@ -110,9 +109,8 @@ cc-pagination {
 	}
 
 	select {
-		width: 85%;
+		width: 100%;
 		height: $pagination-input-height;
-		margin-right: 11px;
 	}
 
 }
