@@ -4,8 +4,8 @@
  * @Author: maxsmu
  * @Date: 2016-03-16 9:04 AM
  */
-import { Inject } from 'angular-es-utils';
-import { dispatchMenuChange } from './MenuService';
+import {Inject} from 'angular-es-utils';
+import {dispatchMenuChange} from './MenuService';
 @Inject('$state', '$timeout', '$scope')
 export default class MenusNodeCtrl {
 
@@ -20,10 +20,10 @@ export default class MenusNodeCtrl {
 		}, 0);
 		this._$scope.$on('$stateChangeSuccess', (event, toState) => {
 			this.toggle = this
-					.list
-					.findIndex(item => {
-						return this._$state.includes(item.state);
-					}) >= 0;
+				.list
+				.some(item => {
+					return this._$state.includes(item.state);
+				});
 		});
 	}
 
