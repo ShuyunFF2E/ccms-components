@@ -197,13 +197,12 @@ class CustomerProfileBoardService {
 	 * @param {object} params
 	 * @returns {promise}
 	 */
-	updateCustomerDefinedBasicAttributeData(params = {}) {
+	updateCustomerDefinedBasicAttributeData(params = [], tenantId = '') {
 		const graphql = `mutation{
       custom_property_basic_put(
-        tenantId:"${params.tenantId}"
+        tenantId:"${tenantId}"
         _i:{
-          customerno:"${params.nickName}"
-          ${params.condition}
+					${params.join('')}
         }
       ){
       	message
