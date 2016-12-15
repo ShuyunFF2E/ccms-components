@@ -35,6 +35,10 @@ $normal-color:	#c9c9c9;
 		outline: 0;
 		padding: 0 1px;
 		width: 21px;
+
+		&.ng-not-empty + .delimiter {
+			color: #3d3d3d;
+		}
 	}
 
 	&.disabled .date-picker-input {
@@ -44,11 +48,11 @@ $normal-color:	#c9c9c9;
 
 	.date-picker-input-year {
 		padding-left: 8px;
-		width: 32px;
+		width: 28px;
 	}
 
 	.date-picker-input-month {
-		width: 21px;
+		width: 18px;
 	}
 
 	.date-picker-input-date {
