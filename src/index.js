@@ -5,9 +5,6 @@
  */
 import angular from 'angular';
 
-// 引入迁移adaptor
-import adaptor from './common/utils/adaptor';
-
 import LogicComponents from './common/utils';
 import UIComponents from './components';
 
