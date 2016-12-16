@@ -1,3 +1,5 @@
+$side-container-width: 180px;
+
 .cc-main-container {
 
 	position: relative;
@@ -8,11 +10,7 @@
 	& .cc-side-container {
 		order: 1;
 		overflow: auto;
-	}
-
-	& cc-menu-bar {
-		position: relative;
-		z-index: 1;
+		width: $side-container-width;
 	}
 
 	& .cc-content-container {
