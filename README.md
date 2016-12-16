@@ -78,7 +78,7 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 
 ### *发现 bug 怎么办*
 
-1. [提交 issue](https://github.com/ShuyunFF2E/ccms-components/issues) 描述问题，与相关人员确认是否是 bug
+1. [提交 issue](https://github.com/ShuyunFF2E/ccms-components/issues/new) 描述问题，与相关人员确认是否是 bug
 2. 确认是 bug
    * 如果对 bug 修复时效很敏感(影响产品发布时间)。遵照以下步骤（推荐）：
      1. 将相应组件的代码 copy 到自己项目(通常为组件文件夹)，在原始组件代码基础上修复 bug，并给组件起一个别名(如 cc-menu 改为 cc-xxx-menu )，项目中改为使用 cc-xxx-menu。
