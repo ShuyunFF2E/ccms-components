@@ -130,7 +130,7 @@ const shopsList = [
 angular
 	.module('componentsApp', ['ccms.components', 'ui.router', 'ngResource'])
 
-	.controller('ctrl', function ($scope, $timeout, $resource, MENULIST, SHOPLIST) {
+	.controller('ctrl', function ($scope, $timeout, $resource) {
 
 		var self = this;
 
@@ -148,8 +148,6 @@ angular
 		};
 	})
 	.config(routerConfig)
-	.constant('MENULIST', menusList)
-	.constant('SHOPLIST', shopsList)
 	.run(runConfig);
 
 routerConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
