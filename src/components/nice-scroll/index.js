@@ -3,11 +3,9 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-09-07
  */
-
 import angular from 'angular';
 import 'jquery.nicescroll';
 import { Bind, Inject, Debounce } from 'angular-es-utils/decorators';
-
 import browser from '../../common/utils/browser';
 
 const $ = window.NiceScroll.getjQuery();
@@ -40,7 +38,11 @@ class Controller {
 	@Bind
 	@Debounce(100)
 	resize() {
-		this.niceScroll.resize();
+		// windows firefox 环境下，可能因为渲染较慢(也可能 dom 监听机制不一样)导致 resize 事件在 removeEventListener 之前触发
+		// listener 回调却在 removeEventListener 之后执行
+		if (this.niceScroll.resize) {
+			this.niceScroll.resize();
+		}
 	}
 
 }

@@ -51,7 +51,6 @@
     "file-loader": "^0.9.0",
     "html-loader": "^0.4.0",
     "husky": "^0.10.1",
-    "image-webpack-loader": "^1.6.3",
     "imports-loader": "^0.6.5",
     "istanbul-instrumenter-loader": "^0.2.0",
     "json-mock-kuitos": "^1.1.4",
