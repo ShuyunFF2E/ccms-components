@@ -9,5 +9,5 @@ import LogicComponents from './common/utils';
 import UIComponents from './components';
 
 export default angular
-	.module('ccms.components', [UIComponents, LogicComponents, adaptor])
+	.module('ccms.components', [UIComponents, LogicComponents])
 	.name;
