@@ -175,3 +175,9 @@ $font: MicrosoftYaHei;
 	bottom: 0;
 	z-index: -2;
 }
+
+// 禁用店铺切换
+.menu-shop-show.disabled {
+  pointer-events: none;
+  opacity: .5;
+}
