@@ -16,8 +16,12 @@ angular
 
 		this.opened = true;
 
+		this.click = function(i) {
+			console.log(i);
+		};
+
 		this.template = '<div>' +
-			'<div ng-repeat="i in app.entity" ng-bind="i"></div>' +
+			'<div ng-repeat="i in app.entity" ng-bind="i" ng-click="app.click(i)"></div>' +
 			'</div>';
 
 	});
