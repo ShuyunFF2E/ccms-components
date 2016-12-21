@@ -19,11 +19,9 @@ export default class MenusNodeCtrl {
 			}
 		}, 0);
 		this._$scope.$on('$stateChangeSuccess', (event, toState) => {
-			this.toggle = this
-				.list
-				.some(item => {
-					return this._$state.includes(item.state);
-				});
+			if (Array.isArray(this.list)) {
+				this.toggle = this.list.some(item => this._$state.includes(item.state));
+			}
 		});
 	}
 
