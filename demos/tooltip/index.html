@@ -8,7 +8,7 @@
 
 <input type="text" ng-model="tip" tooltip="tip" tooltip-trigger="click" tooltip-append-to-body="true">
 
-<button type="button" cc-tooltip="'<span>hello world hello world hello world hello world hello world hello world</span>'"
+<button type="button" cc-tooltip="'<span ng-click=\'app.click($event)\'>hello world hello world hello world hello world hello world hello world</span>'"
 		tooltip-append-to-body="true"
 		tooltip-compilable="true"
 		tooltip-close-delay="2000" style="margin-top: 50px">hover normal tooltip
