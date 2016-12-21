@@ -6,7 +6,7 @@
 $left-width: 180px;
 $center-width: 200px;
 $right-width: 200px;
-$font: MicrosoftYaHei;
+$font: "Microsoft Yahei";
 
 // override container behavior
 .cc-main-container cc-menu-bar {
@@ -161,10 +161,11 @@ $font: MicrosoftYaHei;
 .ccms-left .retrack-shop {
 	display: block;
 }
+
 .container-shade {
 	position: fixed;
-	top:0;
-	left:0;
+	top: 0;
+	left: 0;
 	right: 0;
 	bottom: 0;
 	z-index: -2;
@@ -172,6 +173,6 @@ $font: MicrosoftYaHei;
 
 // 禁用店铺切换
 .menu-shop-show.disabled {
-  pointer-events: none;
-  opacity: .5;
+	pointer-events: none;
+	opacity: .5;
 }
