@@ -161,6 +161,12 @@ $font: MicrosoftYaHei;
 .ccms-left .retrack-shop {
 	display: block;
 }
+
+// 禁用店铺切换
+.menu-shop-show.disabled {
+  pointer-events: none;
+  opacity: .5;
+}
 .container-shade {
 	position: fixed;
 	top:0;
