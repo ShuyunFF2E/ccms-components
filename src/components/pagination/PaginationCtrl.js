@@ -53,6 +53,9 @@ export default class PaginationCtrl {
 
 	$onInit() {
 		let element = this.getElement();
+		if (element.hasAttribute('page-size-list-hidden') && this.pageSizeListHidden !== false) {
+			this.pageSizeListHidden = true;
+		}
 		if (element.hasAttribute('page-size-list-disabled') && this.pageSizeListDisabled !== false) {
 			this.pageSizeListDisabled = true;
 		}

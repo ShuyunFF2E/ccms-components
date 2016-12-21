@@ -92,7 +92,7 @@ cc-dropdown-select {
 			min-width: 100%;
 			max-width: 150%;
 			max-height: 152px;
-			overflow-y: scroll;
+			overflow-y: auto;
 			padding: 0;
 			list-style: none;
 			border: solid 1px $input-border;

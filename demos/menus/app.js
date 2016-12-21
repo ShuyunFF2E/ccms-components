@@ -4,10 +4,133 @@
  * @Author: maxsmu
  * @Date: 2016-03-04 10:36 AM
  */
+const menusList = [
+	{
+		"name": "忠诚度设置",
+		"state": "card",
+		"icon": "",
+		"children": [
+			{
+				"name": "积分类型",
+				"state": "card.point",
+				"icon": "",
+				"children": []
+			},
+			{
+				"name": "等级类型",
+				"state": "card.grade",
+				"icon": "",
+				"children": []
+			}
+		]
+	},
+	{
+		"name": "TAE会员专区",
+		"state": "views",
+		"icon": "",
+		"children": [
+			{
+				"name": "界面设置",
+				"state": "views.set",
+				"icon": "",
+				"children": [
+					{
+						"name": "手淘",
+						"state": "views.set.st",
+						"icon": "",
+						"children": []
+					}
+				]
+			},
+			{
+				"name": "赚积分",
+				"state": "views.point",
+				"icon": "",
+				"children": [
+					{
+						"name": "签到",
+						"state": "views.point.sign",
+						"icon": "",
+						"children": [
+							{
+								"name": "再签到",
+								"state": "views.point.sign.reload",
+								"icon": "",
+								"children": []
+							}
+						]
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "会员等级管理",
+		"state": "grade",
+		"icon": "",
+		"children": []
+	}
+];
+const shopsList = [
+	{
+		"name": "天猫店铺",
+		"value": "tb",
+		"active": true,
+		"child": [
+			{
+				"name": "小猫时尚旗舰店",
+				"active": true,
+				"value": "tb-cut",
+				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+			},
+			{
+				"name": "小狗时尚旗舰店",
+				"value": "tb-dog",
+				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+			},
+			{
+				"name": "小仔时尚旗舰店",
+				"value": "tb-cub",
+				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+			},
+			{
+				"name": "洋陽轩旗舰店",
+				"value": "tb-yy",
+				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+			}
+		]
+	},
+	{
+		"name": "京东店铺",
+		"value": "jd",
+		"child": [
+			{
+				"name": "小猫时尚旗舰店",
+				"value": "jd-cut",
+				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+			},
+			{
+				"name": "小狗时尚旗舰店",
+				"value": "jd-dog",
+				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+			},
+			{
+				"name": "小仔时尚旗舰店",
+				"value": "jd-cub",
+				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+			},
+			{
+				"name": "洋陽轩旗舰店",
+				"value": "jd-yy",
+				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+			}
+		]
+	}
+];
 angular
 	.module('componentsApp', ['ccms.components', 'ui.router', 'ngResource'])
 
-	.controller('ctrl', function ($scope, $timeout, $resource, MENULIST, SHOPLIST) {
+	.controller('ctrl', function ($scope, $timeout, $resource) {
 
 		var self = this;
 
@@ -19,14 +142,12 @@ angular
 				console.log('结果:', unfold);
 			},
 			menusResource: $resource('/menus'),
-			//menusResource: menus,
+			//menusResource: MENULIST,
 			shopsResource: $resource('/shops'),
 			searchPlaceholder: '请输入XXX'
 		};
 	})
 	.config(routerConfig)
-	.constant('MENULIST', menusList)
-	.constant('SHOPLIST', shopsList)
 	.run(runConfig);
 
 routerConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -61,7 +182,7 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.set.st', {
 			url: '/st',
-			template: '手机淘宝<cc-date-picker ng-model="date"></cc-date-picker>',
+			template: '手机淘宝<cc-date-picker ng-model="date"></cc-date-picker><a ui-sref="views.point.sign.reload">跳转</a> ',
 			controller: phoneTaoBaoController,
 			controllerAs: 'st'
 		})
@@ -77,7 +198,7 @@ function routerConfig($stateProvider, $urlRouterProvider) {
 		})
 		.state('views.point.sign.reload', {
 			url: '/sign',
-			template: '签到绘声绘色',
+			template: '签到绘声绘色 <button class="btn-ok" ng-click="reload.shopChangeEnable()">开启店铺切换</button> <button class="btn-cancel" ng-click="reload.shopChangeDisable()">禁用店铺切换</button>',
 			controller: pointSignReloadController,
 			controllerAs: 'reload'
 		})
@@ -191,6 +312,12 @@ function pointSignReloadController($scope, $ccMenus) {
 	$ccMenus.onShopChange(current => {
 		console.log('再签到:(listener)', current.plat.name + '|' + current.shop.name);
 	}, $scope);
+
+	// 开启店铺切换
+	this.shopChangeEnable = $ccMenus.shopChangeEnable;
+
+	// 禁用店铺切换
+	this.shopChangeDisable = $ccMenus.shopChangeDisable;
 }
 phoneTaoBaoController.$inject = ['$scope', '$ccMenus'];
 function phoneTaoBaoController($scope, $ccMenus) {
