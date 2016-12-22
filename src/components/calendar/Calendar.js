@@ -25,21 +25,6 @@ export default {
 
 		this._registerToDatePicker(ctrls[0]);
 		this._registerToRangePicker(ctrls[0], ctrls[1]);
-		this._registerCloseEvents($scope);
-	},
-
-
-	/**
-	 * 注册在 document 上的关闭事件
-	 * @param $scope
-	 * @private
-	 */
-	_registerCloseEvents($scope) {
-		document.addEventListener('click', $scope.ctrl.close, false);
-
-		$scope.$on('destroy', () => {
-			document.removeEventListener('click', $scope.ctrl.close, false);
-		});
 	},
 
 
