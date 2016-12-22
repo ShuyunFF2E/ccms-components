@@ -76,16 +76,16 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 	```
 6. 重复 2~5 的操作，创建新分支继续其它功能的开发
 
-### 发现 bug 怎么办
+### *发现 bug 怎么办*
 
-1. [提交 issue](https://github.com/ShuyunFF2E/ccms-components/issues) 描述问题，与相关人员确认是否是 bug
+1. [提交 issue](https://github.com/ShuyunFF2E/ccms-components/issues/new) 描述问题，与相关人员确认是否是 bug
 2. 确认是 bug
-   * 如果对 bug 修复时效不敏感，等待/提醒 组件库相关维护人员修复 bug 并发布版本。最后 portal 发布新版本组件库时，bug 自动修复。(周期通常较长，deprecated！)
    * 如果对 bug 修复时效很敏感(影响产品发布时间)。遵照以下步骤（推荐）：
      1. 将相应组件的代码 copy 到自己项目(通常为组件文件夹)，在原始组件代码基础上修复 bug，并给组件起一个别名(如 cc-menu 改为 cc-xxx-menu )，项目中改为使用 cc-xxx-menu。
-     2. 确认修复代码可行后，将代码提交给组件库，等待组件库合并代码。[提交步骤](ccms-components#开发步骤)
-     3. 组件库合并代码后发布版本，portal 更新组件库后发布。
+     2. 项目测试提交，确认修复代码可行后，将代码提交给组件库，等待组件库合并代码。[提交步骤](ccms-components#开发步骤)
+     3. 组件库合并提交代码后发布版本，portal 更新组件库后发布。
      4. 将项目里的 cc-xxx-menu 还原成 cc-menu。
+   * 如果对 bug 修复时效不敏感，等待/提醒 组件库相关维护人员修复 bug 并发布版本。最后 portal 发布新版本组件库时，bug 自动修复。(周期通常较长，deprecated！)
 
 ### 提交代码、pull request 准则
 

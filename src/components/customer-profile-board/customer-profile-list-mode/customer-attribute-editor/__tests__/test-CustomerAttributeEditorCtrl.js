@@ -107,15 +107,21 @@ describe('CustomerProfileListModeCtrl', () => {
 			editingValue: true,
 			unit: ''
 		};
+		const attributeBlock = {
+			name: 'base',
+			attributeList: [{
+				name: 'a'
+			}]
+		};
 		const value = '1';
-		customerAttributeEditorCtrl.modifyAttributeValue(attribute, value);
+		customerAttributeEditorCtrl.modifyAttributeValue(attribute, value, attributeBlock);
 		setTimeout(() => {
 			$httpBackend.flush();
 			setTimeout(() => {
 				assert.equal(attribute.displayValue, '1');
 				done();
 			}, 50);
-		}, 10);
+		});
 	});
 
 	it('formatValue', () => {
