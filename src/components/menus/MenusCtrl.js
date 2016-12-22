@@ -4,9 +4,10 @@
  * @Author: maxsmu
  * @Date: 2016-02-29 6:52 PM
  */
-import { Inject } from 'angular-es-utils';
-import $menus, { reset } from './MenuService';
+import {Inject} from 'angular-es-utils';
+import $menus, {reset} from './MenuService';
 import EventBus from 'angular-es-utils/event-bus';
+import logoUrl from '../../assets/images/logo-default.png';
 
 @Inject('$timeout', '$state', '$rootScope', '$document', '$scope')
 export default class MenusCtrl {
@@ -16,6 +17,7 @@ export default class MenusCtrl {
 		this.shopSelectAvailable = true;
 		this.retract = false;
 		this.isInitShopSelect = true;
+		this.imgDefaultUrl = logoUrl;
 	}
 
 	$onInit() {
