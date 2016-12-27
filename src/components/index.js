@@ -6,6 +6,7 @@
 
 import angular from 'angular';
 
+
 import grid from './grid';
 import niceScroll from './nice-scroll';
 import pagination from './pagination';
@@ -29,6 +30,7 @@ import dropdownMultiselect from './dropdown/dropdown-multiselect';
 import tabset from './tabset';
 import radio from './radio';
 import switchButton from './switch';
+import areaSelector from './area-selector';
 import customerProfileBoard from './customer-profile-board';
 
 export default angular
@@ -56,6 +58,7 @@ export default angular
 		tabset,
 		radio,
 		switchButton,
+		areaSelector,
 		customerProfileBoard
 	])
 	.name;

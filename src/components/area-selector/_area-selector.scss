@@ -1,0 +1,102 @@
+.area-selector {
+  background: #f8f8f8;
+  color: #666666;
+  font-family: MicrosoftYaHei;
+
+  .cc-checkbox-input {
+	width: 14px;
+	height: 14px;
+  }
+
+  .cc-checkbox.indeterminate .cc-checkbox-input:before {
+	left: 20%;
+	top: 20%;
+  }
+
+  cc-checkbox {
+	vertical-align: text-bottom;
+	text-align: center;
+  }
+
+  .selected {
+	background:#f0f3f5;
+  }
+
+  .icon-rightarrow {
+	float: right;
+	font-size: 12px;
+  }
+
+  .area-search {
+	width: 298px;
+	height: 28px;
+	padding: 8px 10px;
+	margin-bottom: 18px;
+  }
+
+  .selected-area {
+	height: 24px;
+	margin-bottom: 14px;
+	.selected-region {
+	  padding: 5px 8px;
+	  color: #0183ba;
+	  border: 1px solid #e7f3ff;
+	  border-radius: 1px;
+	  background: #eff7ff;
+	}
+	.icon-close {
+	  margin-left: 5px;
+	  font-size: 12px;
+	  color: #cdcdcd;
+	  line-height: 16px;
+	}
+	.icon-close:hover {
+	  cursor: pointer;
+	}
+  }
+
+  .common-areas {
+	.common-area-content {
+	  margin-top: 10px;
+	  .area {
+		font-size: 12px;
+		margin-right: 42px;
+	  }
+	  .cc-checkbox-input {
+		margin-right: 8px;
+	  }
+	}
+  }
+
+  .select-areas {
+	margin-top: 20px;
+	display: flex;
+	.select-area {
+	  width: 198px;
+	  height: 216px;
+	  margin-right: 12px;
+	  background: #ffffff;
+	  border: 1px solid #ededed;
+	   overflow-y: auto;
+	  overflow-x: hidden;
+	}
+	.area-title {
+	  margin-top: 10px;
+	  margin-bottom: 6px;
+	  color: #999999;
+	  text-align: center;
+	}
+	.area-body {
+	  .area {
+		width: 196px;
+		height: 30px;
+		padding-left: 18px;
+		line-height: 30px;
+	  }
+	  .province, .city {
+		display: inline-block;
+		width: 135px;
+	  }
+	}
+  }
+}

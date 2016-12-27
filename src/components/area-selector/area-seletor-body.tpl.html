@@ -1,0 +1,62 @@
+<div class="area-selector">
+
+	<input class="area-search" type="text"
+		   placeholder="请输入区域名称">
+
+	<section class="selected-area">
+		<span> 已选：{{ctrl.input}}</span>
+		<span class="selected-region">
+			{{$ctrl.selectedArea.province}} >
+			{{$ctrl.selectedArea.city}} >
+			{{$ctrl.selectedArea.district}}
+			<span class="iconfont icon-close"></span>
+		</span>
+	</section>
+
+	<section class="common-areas">
+		常用区域：
+		<div class="common-area-content">
+			<span class="area" ng-repeat="commonArea in $ctrl.commonAreas track by $index">
+				<cc-checkbox></cc-checkbox>{{commonArea}}
+			</span>
+		</div>
+	</section>
+
+	<section class="select-areas">
+
+		<div class="select-area province">
+			<div class="area-title">省选择</div>
+			<div class="area-body">
+				<div class="area" ng-repeat="province in $ctrl.provinces track by $index"
+					 ng-class="{'selected': province.selected}">
+					<cc-checkbox indeterminate="province.indeterminate"></cc-checkbox>
+					<span class="province">{{province.name}}
+						<span class="iconfont icon-rightarrow" ng-show="province.enter"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="select-area city">
+			<div class="area-title">市选择</div>
+			<div class="area-body">
+				<div class="area" ng-repeat="city in $ctrl.citys track by $index"
+					 ng-class="{'selected': city.selected}">
+					<cc-checkbox indeterminate="city.indeterminate"></cc-checkbox>
+					<span class="city">{{city.name}}<span class="iconfont icon-rightarrow"></span></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="select-area district">
+			<div class="area-title">区县选择</div>
+			<div class="area-body">
+				<div class="area" ng-repeat="district in $ctrl.districts track by $index"
+					 ng-class="{'selected': district.selected}">
+					<cc-checkbox ng-checked="district.selected"></cc-checkbox>{{district.name}}
+				</div>
+			</div>
+		</div>
+	</section>
+
+</div>
