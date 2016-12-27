@@ -13,6 +13,9 @@ export default class AreaSelectorCtrl {
 		this.initArea();
 	}
 
+	/**
+	 * @name initArea 初始化数据
+	 */
 	initArea() {
 		this.initProvinces();
 		this.commonAreas = COMMON_AREAS;
@@ -43,7 +46,7 @@ export default class AreaSelectorCtrl {
 	 */
 	analyzeProvince() {
 		const selectedProvinceId = this.setSelected(PROVINCES, INPUT.province);
-		this.getCitysByProviceId(selectedProvinceId);
+		this.getCitysByProvinceId(selectedProvinceId);
 	}
 
 	/**
@@ -79,17 +82,27 @@ export default class AreaSelectorCtrl {
 		return selectedProvinceId;
 	}
 
+	// 以下为后台交互,类resource方法
+
 	/**
-	 * 以下为后台交互,类resource方法
+	 * @name initProvinces 初始化省份数据
 	 */
 	initProvinces() {
 		this.provinces = PROVINCES;
 	}
 
-	getCitysByProviceId(provinceId) {
+	/**
+	 * @name getCitysByProvinceId 获得城市数据(通过省份ID)
+	 * @param provinceId <string> 省份ID
+	 */
+	getCitysByProvinceId(provinceId) {
 		this.citys = CITYS.find(item => item.id === provinceId).citys;
 	}
 
+	/**
+	 * @name getDistrictsByCityId 获得区县数据(通过城市ID)
+	 * @param cityId <string> 城市ID
+	 */
 	getDistrictsByCityId(cityId) {
 		this.districts = DISTRICTS.find(item => item.id === cityId).districts;
 	}
