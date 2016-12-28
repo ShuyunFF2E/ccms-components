@@ -8,7 +8,7 @@
 import angular from 'angular';
 import 'jquery.nicescroll';
 
-import { Debounce, Inject } from 'angular-es-utils/decorators';
+import {Debounce, Inject} from 'angular-es-utils/decorators';
 
 import rowTemplate from './tpls/row.tpl.html';
 import TplReqHelper from '../../common/utils/tpl-req-helper';
@@ -53,7 +53,6 @@ export default class GridCtrl {
 			this.bodyTemplate = rowTemplate;
 			this.rowCellTemplate = GRID_TEMPLATES[type][1];
 		}
-
 		this.sortGridData();
 	}
 
@@ -120,32 +119,37 @@ export default class GridCtrl {
 					column.sortOrder = 'asc';
 					break;
 			}
+			if (!this.opts.multipleFieldsSort) {
+				this.opts.columnsDef.forEach(columnDef => {
+					if (columnDef.sortProp !== column.sortProp) {
+						columnDef.sortOrder = undefined;
+					}
+				});
+			}
 			this.sortGridData();
 		}
 	}
 
 	sortGridData() {
-
-		const sortQueryParam = {
-			orders: [],
-			props: []
-		};
-
+		const sortQueryParam = {orders: [], props: []};
 		const {opts} = this;
+		let param = {sortProps: '', sortOrders: ''};
 
-		this.opts.columnsDef.forEach(column => {
-			if (column.sortProp && SORT_ORDERS.includes(column.sortOrder)) {
-				sortQueryParam.orders.push(column.sortOrder);
-				sortQueryParam.props.push(column.sortProp);
+		this.opts.columnsDef.forEach(columnDef => {
+			if (columnDef.sortProp && SORT_ORDERS.includes(columnDef.sortOrder)) {
+				sortQueryParam.orders.push(columnDef.sortOrder);
+				sortQueryParam.props.push(columnDef.sortProp);
 			}
 		});
 
-		const queryParams = Object.assign(opts.queryParams || {},
-			sortQueryParam.props.length > 0 ? {
+		if (sortQueryParam.props.length > 0) {
+			param = {
 				pageNum: 1,
 				sortProps: sortQueryParam.props.toString(),
 				sortOrders: sortQueryParam.orders.toString()
-			} : {sortProps: '', sortOrders: ''});
+			};
+		}
+		const queryParams = Object.assign(opts.queryParams || {}, param);
 
 		this._refresh(opts, queryParams);
 	}
