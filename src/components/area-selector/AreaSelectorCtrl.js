@@ -24,10 +24,9 @@ export default class AreaSelectorCtrl {
 	 * @name analyzeSelectedData 解析传入的已选择数据
 	 */
 	analyzeSelectedData() {
-		const that = this;
-		this.inputValue.map(function(element) {
+		this.inputValue.map(element => {
 			const selectedAreas = element.split(',');
-			that.analyzeArea(selectedAreas[0], selectedAreas, 0, that.areas);
+			this.analyzeArea(selectedAreas[0], selectedAreas, 0, this.areas);
 		});
 	}
 
@@ -56,7 +55,7 @@ export default class AreaSelectorCtrl {
 	 */
 	setSelectedValue(areas, value) {
 		if (areas) {
-			areas.map(function(element) {
+			areas.map(element => {
 				element.selected = value;
 			});
 		}
@@ -69,7 +68,7 @@ export default class AreaSelectorCtrl {
 	 */
 	setSelectedAllValue(areas, value) {
 		if (areas) {
-			areas.map(function(element) {
+			areas.map(element => {
 				element.selectedAll = value;
 			});
 		}
@@ -82,10 +81,10 @@ export default class AreaSelectorCtrl {
 	 * @param hasChild <boolean> 是否拥有孩子节点
 	 */
 	setAreaStatus(areaId, areas, hasChild) {
-		let selcetdArea = areas.find(item => item.id === areaId);
-		selcetdArea.selected = true;
-		selcetdArea.selectedAll = !hasChild;
-		return selcetdArea.children;
+		let selectedArea = areas.find(item => item.id === areaId);
+		selectedArea.selected = true;
+		selectedArea.selectedAll = !hasChild;
+		return selectedArea.children;
 	}
 
 	/**
@@ -94,12 +93,20 @@ export default class AreaSelectorCtrl {
 	 * @param areaLevel <boolean> 区域等级
 	 */
 	changeCheckboxStatus(area, areaLevel) {
+		this.changeChildrenStatus(area);
+		this.changeParentAreaStatus(areaLevel);
+	}
+
+	/**
+	 * @name changeChildrenStatus 改变孩子区域状态
+	 * @param area <object> 区域
+	 */
+	changeChildrenStatus(area) {
 		if (area.selectedAll) {
 			this.changeChildrenAreaStatus(area, false);
 		} else {
 			this.changeChildrenAreaStatus(area, true);
 		}
-		this.changeParentAreaStatus(areaLevel);
 	}
 
 	/**
