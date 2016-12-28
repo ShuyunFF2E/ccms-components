@@ -5,106 +5,159 @@
  */
 
 import { Inject } from 'angular-es-utils/decorators';
-import { CITYS, PROVINCES, DISTRICTS, COMMON_AREAS, INPUT } from './Constant';
+import { INPUT, AREAS } from './Constant';
 
 @Inject('$ccTips')
 export default class AreaSelectorCtrl {
 	constructor() {
-		this.initArea();
+		this.init();
+	}
+
+	init() {
+		this.areas = AREAS;
+		this.inputValue = INPUT;
+		this.analyzeSelectedData();
 	}
 
 	/**
-	 * @name initArea 初始化数据
+	 * @name analyzeSelectedData 解析传入的已选择数据
 	 */
-	initArea() {
-		this.initProvinces();
-		this.commonAreas = COMMON_AREAS;
-		this.analyzeProvince();
-		this.analyzeCity();
-		this.analyzeDistrict();
-		this.selectedArea = this.getSelectedArea();
-		console.log(this.selectedArea);
+	analyzeSelectedData() {
+		const that = this;
+		this.inputValue.map(function(element) {
+			const selectedAreas = element.split(',');
+			that.analyzeArea(selectedAreas[0], selectedAreas, 0, that.areas);
+		});
 	}
 
 	/**
-	 * @name getSelectedArea 得到已选区域的对象
+	 * @name analyzeArea 解析选中区域
+	 * @param areaId <string> 区域ID
+	 * @param selectedAreas <object> 选中区域
+	 * @param index <number> 下标
+	 * @param areas <object> 区域
 	 */
-	getSelectedArea() {
-		return {province: PROVINCES.find(this.isSelected).name, city: this.citys.find(this.isSelected).name, district: this.districts.find(this.isSelected).name};
+	analyzeArea(areaId, selectedAreas, index, areas) {
+		const hasChild = (index < selectedAreas.length - 1);
+		const subArea = this.setAreaStatus(areaId, areas, hasChild);
+		if (!hasChild) {
+			this.setSelectedValue(subArea, true);
+			return 0;
+		} else {
+			this.analyzeArea(selectedAreas[index + 1], selectedAreas, index + 1, subArea);
+		}
 	}
 
 	/**
-	 * @name isSelected 判断是否选择
-	 * @param element <object>
+	 * @name setSelectedValue 设置selected属性值
+	 * @param areas <object> 区域
+	 * @param value <boolean> true / false
+	 */
+	setSelectedValue(areas, value) {
+		if (areas) {
+			areas.map(function(element) {
+				element.selected = value;
+			});
+		}
+	}
+
+	/**
+	 * @name setSelectedAllValue 设置selectedAll属性值
+	 * @param areas <object> 区域
+	 * @param value <boolean> true / false
+	 */
+	setSelectedAllValue(areas, value) {
+		if (areas) {
+			areas.map(function(element) {
+				element.selectedAll = value;
+			});
+		}
+	}
+
+	/**
+	 * @name setAreaStatus 设置区域状态
+	 * @param areaId <string> 区域ID
+	 * @param areas <object> 区域等级
+	 * @param hasChild <boolean> 是否拥有孩子节点
+	 */
+	setAreaStatus(areaId, areas, hasChild) {
+		let selcetdArea = areas.find(item => item.id === areaId);
+		selcetdArea.selected = true;
+		selcetdArea.selectedAll = !hasChild;
+		return selcetdArea.children;
+	}
+
+	/**
+	 * @name changeCheckboxStatus 改变checkbox状态
+	 * @param area <object> 区域
+	 * @param areaLevel <boolean> 区域等级
+	 */
+	changeCheckboxStatus(area, areaLevel) {
+		if (area.selectedAll) {
+			this.changeChildrenAreaStatus(area, false);
+		} else {
+			this.changeChildrenAreaStatus(area, true);
+		}
+		this.changeParentAreaStatus(areaLevel);
+	}
+
+	/**
+	 * @name changeChildrenAreaStatus 改变孩子区域状态
+	 * @param area <object> 区域
+	 * @param value <boolean> 区域等级
+	 */
+	changeChildrenAreaStatus(area, value) {
+		area.selected = value;
+		area.selectedAll = value;
+		this.setSelectedValue(area.children, value);
+		this.setSelectedAllValue(area.children, value);
+	}
+
+	/**
+	 * @name changeParentAreaStatus 改变父亲区域状态
+	 * @param areaLevel <string> 区域等级
+	 */
+	changeParentAreaStatus(areaLevel) {
+		if (areaLevel === 'district') {
+			this.selectedCity.selected = this.selectedCity.children.some(this.isSelected);
+			this.selectedCity.selectedAll = this.selectedCity.children.every(this.isSelectedAll);
+		}
+		this.selectedProvince.selected = this.selectedProvince.children.some(this.isSelected);
+		this.selectedProvince.selectedAll = this.selectedProvince.children.every(this.isSelectedAll);
+	}
+
+	/**
+	 * @name isSelectedAll 是否被选全选
+	 * @param element <object> 子区域
+	 */
+	isSelectedAll(element) {
+		return element.selectedAll;
+	}
+
+	/**
+	 * @name isSelected 是否被选中
+	 * @param element <object> 子区域
 	 */
 	isSelected(element) {
 		return element.selected;
 	}
 
 	/**
-	 * @name analyzeProvince 解析省份,初始化城市
+	 * @name changeProvince 切换选中省份
+	 * @param province <object> 选中的省份
 	 */
-	analyzeProvince() {
-		const selectedProvinceId = this.setSelected(PROVINCES, INPUT.province);
-		this.getCitysByProvinceId(selectedProvinceId);
+	changeProvince(province) {
+		this.citys = province.children;
+		this.districts = [];
+		this.selectedProvince = province;
 	}
 
 	/**
-	 * @name analyzeCity 解析城市,初始化区县
+	 * @name changeCity 切换选中城市
+	 * @param city <object> 选中的城市
 	 */
-	analyzeCity() {
-		const selectedCityId = this.setSelected(this.citys, INPUT.city);
-		this.getDistrictsByCityId(selectedCityId);
+	changeCity(city) {
+		this.districts = city.children;
+		this.selectedCity = city;
 	}
-
-	/**
-	 * @name analyzeDistrict 解析区县
-	 */
-	analyzeDistrict() {
-		this.setSelected(this.districts, INPUT.district);
-	}
-
-	/**
-	 * @name setSelected 设置selector属性
-	 * @param area <array> 需要遍历的地区
-	 * @param value <string> 已被选中的区域
-	 */
-	setSelected(area, value) {
-		let selectedProvinceId = '';
-		area.map(function(element) {
-			if (element.name === value) {
-				element.selected = true;
-				selectedProvinceId = element.id;
-			} else {
-				element.selected = false;
-			}
-		});
-		return selectedProvinceId;
-	}
-
-	// 以下为后台交互,类resource方法
-
-	/**
-	 * @name initProvinces 初始化省份数据
-	 */
-	initProvinces() {
-		this.provinces = PROVINCES;
-	}
-
-	/**
-	 * @name getCitysByProvinceId 获得城市数据(通过省份ID)
-	 * @param provinceId <string> 省份ID
-	 */
-	getCitysByProvinceId(provinceId) {
-		this.citys = CITYS.find(item => item.id === provinceId).citys;
-	}
-
-	/**
-	 * @name getDistrictsByCityId 获得区县数据(通过城市ID)
-	 * @param cityId <string> 城市ID
-	 */
-	getDistrictsByCityId(cityId) {
-		this.districts = DISTRICTS.find(item => item.id === cityId).districts;
-	}
-
 }

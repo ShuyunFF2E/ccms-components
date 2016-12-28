@@ -77,7 +77,7 @@
 	  margin-right: 12px;
 	  background: #ffffff;
 	  border: 1px solid #ededed;
-	   overflow-y: auto;
+	  overflow-y: auto;
 	  overflow-x: hidden;
 	}
 	.area-title {
@@ -92,6 +92,10 @@
 		height: 30px;
 		padding-left: 18px;
 		line-height: 30px;
+	  }
+	  .area:hover {
+		background: #f0f3f5;
+		cursor: pointer;
 	  }
 	  .province, .city {
 		display: inline-block;
