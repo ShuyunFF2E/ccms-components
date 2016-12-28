@@ -127,9 +127,17 @@ export default class AreaSelectorCtrl {
 	 */
 	changeParentAreaStatus(areaLevel) {
 		if (areaLevel === 'district') {
-			this.selectedCity.selected = this.selectedCity.children.some(this.isSelected);
-			this.selectedCity.selectedAll = this.selectedCity.children.every(this.isSelectedAll);
+			this.matchCitySelectedStatus();
 		}
+		this.matchProvinceSelectedStatus();
+	}
+
+	matchCitySelectedStatus() {
+		this.selectedCity.selected = this.selectedCity.children.some(this.isSelected);
+		this.selectedCity.selectedAll = this.selectedCity.children.every(this.isSelectedAll);
+	}
+
+	matchProvinceSelectedStatus() {
 		this.selectedProvince.selected = this.selectedProvince.children.some(this.isSelected);
 		this.selectedProvince.selectedAll = this.selectedProvince.children.every(this.isSelectedAll);
 	}
