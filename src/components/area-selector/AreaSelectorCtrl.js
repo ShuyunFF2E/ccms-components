@@ -5,7 +5,7 @@
  */
 
 import { Inject } from 'angular-es-utils/decorators';
-import { INPUT, AREAS } from './Constant';
+import { INPUT, AREAS, COMMON_AREAS } from './Constant';
 
 @Inject('$ccTips')
 export default class AreaSelectorCtrl {
@@ -16,6 +16,7 @@ export default class AreaSelectorCtrl {
 	init() {
 		this.areas = AREAS;
 		this.inputValue = INPUT;
+		this.commonAreas = COMMON_AREAS;
 		this.analyzeSelectedData();
 	}
 
