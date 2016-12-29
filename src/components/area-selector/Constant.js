@@ -5,8 +5,13 @@
  */
 
 export const INPUT = [
-	'310000,310100,310101',
-	'310000,310100,310104',
+	// '310000,310100,310101',
+	// '310000,310100,310104',
+	// '310000,310100,310105',
+	// '310000,310100,310106',
+	// '310000,310100,310107',
+	// '310000,310100,310108',
+	// '110000',
 	'320000,320100',
 	'320000,321300',
 	'320000,321200,321281'
@@ -46,6 +51,40 @@ export const AREAS =
 					'name': '县',
 					'children': [
 						{'id': '310230', 'name': '崇明县', 'children': null}]
+				}
+			]
+		},
+		{
+			'id': '110000',
+			'name': '北京',
+			'children': [
+				{
+					'id': '110100',
+					'name': '市辖区',
+					'children': [
+						{'id': '110101', 'name': '东城区', 'children': null},
+						{'id': '110102', 'name': '西城区', 'children': null},
+						{'id': '110103', 'name': '崇文区', 'children': null},
+						{'id': '110104', 'name': '宣武区', 'children': null},
+						{'id': '110105', 'name': '朝阳区', 'children': null},
+						{'id': '110106', 'name': '丰台区', 'children': null},
+						{'id': '110107', 'name': '石景山区', 'children': null},
+						{'id': '110108', 'name': '海淀区', 'children': null},
+						{'id': '110109', 'name': '门头沟区', 'children': null},
+						{'id': '110111', 'name': '房山区', 'children': null},
+						{'id': '110112', 'name': '通州区', 'children': null},
+						{'id': '110113', 'name': '顺义区', 'children': null},
+						{'id': '110114', 'name': '昌平区', 'children': null},
+						{'id': '110115', 'name': '大兴区', 'children': null},
+						{'id': '110116', 'name': '怀柔区', 'children': null},
+						{'id': '110117', 'name': '平谷区', 'children': null}]
+				},
+				{
+					'id': '110200',
+					'name': '县',
+					'children': [
+						{'id': '110228', 'name': '密云县', 'children': null},
+						{'id': '110229', 'name': '延庆县', 'children': null}]
 				}
 			]
 		},

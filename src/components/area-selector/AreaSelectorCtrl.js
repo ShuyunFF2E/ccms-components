@@ -4,6 +4,7 @@
  * @since 12/23/16
  */
 
+import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import { INPUT, AREAS, COMMON_AREAS } from './Constant';
 
@@ -16,6 +17,7 @@ export default class AreaSelectorCtrl {
 	init() {
 		this.areas = AREAS;
 		this.inputValue = INPUT;
+		this.selectedAreas = [];
 		this.commonAreas = COMMON_AREAS;
 		this.analyzeSelectedData();
 	}
@@ -25,8 +27,9 @@ export default class AreaSelectorCtrl {
 	 */
 	analyzeSelectedData() {
 		this.inputValue.map(element => {
+			this.selectedAreaArray = [];
 			const selectedAreas = element.split(',');
-			this.analyzeArea(selectedAreas[0], selectedAreas, 0, this.areas);
+			this.analyzeArea(selectedAreas, 0, this.areas);
 		});
 	}
 
@@ -37,14 +40,15 @@ export default class AreaSelectorCtrl {
 	 * @param index <number> 下标
 	 * @param areas <object> 区域
 	 */
-	analyzeArea(areaId, selectedAreas, index, areas) {
+	analyzeArea(selectedAreas, index, areas) {
 		const hasChild = (index < selectedAreas.length - 1);
-		const subArea = this.setAreaStatus(areaId, areas, hasChild);
+		const subArea = this.setAreaStatus(selectedAreas[index], areas, hasChild);
 		if (!hasChild) {
+			this.selectedAreas.push(this.selectedAreaArray);
 			this.setSelectedValue(subArea, true);
-			return 0;
+			this.setSelectedAllValue(subArea, true);
 		} else {
-			this.analyzeArea(selectedAreas[index + 1], selectedAreas, index + 1, subArea);
+			this.analyzeArea(selectedAreas, index + 1, subArea);
 		}
 	}
 
@@ -57,6 +61,7 @@ export default class AreaSelectorCtrl {
 		if (areas) {
 			areas.map(element => {
 				element.selected = value;
+				this.setSelectedValue(element.children, value);
 			});
 		}
 	}
@@ -70,6 +75,7 @@ export default class AreaSelectorCtrl {
 		if (areas) {
 			areas.map(element => {
 				element.selectedAll = value;
+				this.setSelectedAllValue(element.children, value);
 			});
 		}
 	}
@@ -84,6 +90,7 @@ export default class AreaSelectorCtrl {
 		let selectedArea = areas.find(item => item.id === areaId);
 		selectedArea.selected = true;
 		selectedArea.selectedAll = !hasChild;
+		this.selectedAreaArray.push({ name: selectedArea.name, id: selectedArea.id });
 		return selectedArea.children;
 	}
 
@@ -94,7 +101,24 @@ export default class AreaSelectorCtrl {
 	 */
 	changeCheckboxStatus(area, areaLevel) {
 		this.changeChildrenStatus(area);
-		this.changeParentAreaStatus(areaLevel);
+		this.changeParentAreaStatus(areaLevel, this.selectedProvince, this.selectedCity);
+		this.selectedAreas = [];
+		this.getSelectedAreas(this.areas, []);
+	}
+
+	getSelectedAreas(areas, selectedArray) {
+		areas.map(item => {
+			if (item.selectedAll) {
+				selectedArray.push({id: item.id, name: item.name});
+				const pushedArea = angular.copy(selectedArray);
+				this.selectedAreas.push(pushedArea);
+				selectedArray.pop();
+			} else if (item.selected && item.children) {
+				selectedArray.push({id: item.id, name: item.name});
+				this.getSelectedAreas(item.children, selectedArray);
+			}
+		});
+		selectedArray.pop();
 	}
 
 	/**
@@ -125,21 +149,21 @@ export default class AreaSelectorCtrl {
 	 * @name changeParentAreaStatus 改变父亲区域状态
 	 * @param areaLevel <string> 区域等级
 	 */
-	changeParentAreaStatus(areaLevel) {
+	changeParentAreaStatus(areaLevel, selectedProvince, selectedCity) {
 		if (areaLevel === 'district') {
-			this.matchCitySelectedStatus();
+			this.matchCitySelectedStatus(selectedCity);
 		}
-		this.matchProvinceSelectedStatus();
+		this.matchProvinceSelectedStatus(selectedProvince);
 	}
 
-	matchCitySelectedStatus() {
-		this.selectedCity.selected = this.selectedCity.children.some(this.isSelected);
-		this.selectedCity.selectedAll = this.selectedCity.children.every(this.isSelectedAll);
+	matchCitySelectedStatus(selectedCity) {
+		selectedCity.selected = selectedCity.children.some(this.isSelected);
+		selectedCity.selectedAll = selectedCity.children.every(this.isSelectedAll);
 	}
 
-	matchProvinceSelectedStatus() {
-		this.selectedProvince.selected = this.selectedProvince.children.some(this.isSelected);
-		this.selectedProvince.selectedAll = this.selectedProvince.children.every(this.isSelectedAll);
+	matchProvinceSelectedStatus(selectedProvince) {
+		selectedProvince.selected = selectedProvince.children.some(this.isSelected);
+		selectedProvince.selectedAll = selectedProvince.children.every(this.isSelectedAll);
 	}
 
 	/**
@@ -175,5 +199,30 @@ export default class AreaSelectorCtrl {
 	changeCity(city) {
 		this.districts = city.children;
 		this.selectedCity = city;
+	}
+
+	/**
+	 * @name deleteArea 删除已选区域
+	 * @param area <object> 被删除的区域
+	 */
+	deleteArea(area, index) {
+		let deleteAreaArray = [];
+		this.selectedAreas.splice(index, 1);
+		this.getAreaById(area, 0, this.areas, deleteAreaArray);
+	}
+
+	getAreaById(area, areaIndex, areas, deleteAreaArray) {
+		const selectedArea = areas.find(item => item.id === area[areaIndex].id);
+		deleteAreaArray.push(selectedArea);
+		if (areaIndex === area.length - 1) {
+			selectedArea.selected = false;
+			selectedArea.selectedAll = false;
+			this.setSelectedValue(selectedArea.children, false);
+			this.setSelectedAllValue(selectedArea.children, false);
+			const areaStatus = area.length === 3 ? 'district' : '';
+			this.changeParentAreaStatus(areaStatus, deleteAreaArray[0], deleteAreaArray[1]);
+		} else {
+			this.getAreaById(area, areaIndex + 1, selectedArea.children, deleteAreaArray);
+		}
 	}
 }
