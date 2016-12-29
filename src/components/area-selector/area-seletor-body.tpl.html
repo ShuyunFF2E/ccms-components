@@ -32,11 +32,11 @@
 			<div class="area-title">省选择</div>
 			<div class="area-body">
 				<div class="area" ng-repeat="province in $ctrl.areas track by $index"
-					 ng-class="{'selected': province.selected}" ng-click="$ctrl.changeProvince(province)">
+					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province)">
 					<cc-checkbox indeterminate="province.selected && !province.selectedAll"
 								 ng-checked="province.selectedAll" ng-click="$ctrl.changeCheckboxStatus(province)">
 					</cc-checkbox>
-					<span class="province">{{province.name}}
+					<span class="province">{{province.name}}<span>{{selectedProvince.id}}</span>
 						<span class="iconfont icon-rightarrow"></span>
 					</span>
 				</div>
@@ -47,7 +47,7 @@
 			<div class="area-title">市选择</div>
 			<div class="area-body">
 				<div class="area" ng-repeat="city in $ctrl.citys track by $index"
-					 ng-class="{'selected': city.selected}" ng-click="$ctrl.changeCity(city)">
+					 ng-class="{'selected': city.id === $ctrl.selectedCity.id}" ng-click="$ctrl.changeCity(city)">
 					<cc-checkbox indeterminate="city.selected && !city.selectedAll " ng-checked="city.selectedAll"
 								 ng-click="$ctrl.changeCheckboxStatus(city, 'city')"></cc-checkbox>
 					<span class="city">{{city.name}}<span class="iconfont icon-rightarrow"></span></span>
@@ -59,7 +59,8 @@
 			<div class="area-title">区县选择</div>
 			<div class="area-body">
 				<div class="area" ng-repeat="district in $ctrl.districts track by $index"
-					 ng-class="{'selected': district.selected}">
+					 ng-class="{'selected': district.id === $ctrl.selectedDistrict.id}"
+					 ng-click="$ctrl.selectDistrict(district)">
 					<cc-checkbox ng-checked="district.selected"
 								 ng-click="$ctrl.changeCheckboxStatus(district, 'district')">
 					</cc-checkbox>{{district.name}}

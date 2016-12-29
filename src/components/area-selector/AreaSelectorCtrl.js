@@ -227,4 +227,8 @@ export default class AreaSelectorCtrl {
 		area.selected = selectedValue;
 		area.selectedAll = selectedAllValue;
 	}
+
+	selectDistrict(district) {
+		this.selectedDistrict = district;
+	}
 }
