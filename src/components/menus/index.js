@@ -30,7 +30,7 @@ const
 			onUnfold: '=?',
 			menuSource: '<',
 			shopSource: '<?',
-			searchPlaceholder: '=?'
+			searchPlaceholder: '<?'
 		}
 	},
 	menusNodeDDO = {
