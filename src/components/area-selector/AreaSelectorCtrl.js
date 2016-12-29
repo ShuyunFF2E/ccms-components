@@ -88,8 +88,7 @@ export default class AreaSelectorCtrl {
 	 */
 	setAreaStatus(areaId, areas, hasChild) {
 		let selectedArea = areas.find(item => item.id === areaId);
-		selectedArea.selected = true;
-		selectedArea.selectedAll = !hasChild;
+		this.setSelectedAndSelectedAll(selectedArea, true, !hasChild);
 		this.selectedAreaArray.push({ name: selectedArea.name, id: selectedArea.id });
 		return selectedArea.children;
 	}
@@ -139,8 +138,7 @@ export default class AreaSelectorCtrl {
 	 * @param value <boolean> 区域等级
 	 */
 	changeChildrenAreaStatus(area, value) {
-		area.selected = value;
-		area.selectedAll = value;
+		this.setSelectedAndSelectedAll(area, value, value);
 		this.setSelectedValue(area.children, value);
 		this.setSelectedAllValue(area.children, value);
 	}
@@ -215,8 +213,7 @@ export default class AreaSelectorCtrl {
 		const selectedArea = areas.find(item => item.id === area[areaIndex].id);
 		deleteAreaArray.push(selectedArea);
 		if (areaIndex === area.length - 1) {
-			selectedArea.selected = false;
-			selectedArea.selectedAll = false;
+			this.setSelectedAndSelectedAll(selectedArea, false, false);
 			this.setSelectedValue(selectedArea.children, false);
 			this.setSelectedAllValue(selectedArea.children, false);
 			const areaStatus = area.length === 3 ? 'district' : '';
@@ -224,5 +221,10 @@ export default class AreaSelectorCtrl {
 		} else {
 			this.getAreaById(area, areaIndex + 1, selectedArea.children, deleteAreaArray);
 		}
+	}
+
+	setSelectedAndSelectedAll(area, selectedValue, selectedAllValue) {
+		area.selected = selectedValue;
+		area.selectedAll = selectedAllValue;
 	}
 }
