@@ -101,6 +101,17 @@ cc-grid {
 			> span {
 				cursor: pointer;
 			}
+			[cc-dropdown-toggle] {
+				color: #0083ba;
+				> .icon-set-up {
+					font-size: 20px;
+				}
+				> .icon-arrow {
+					margin-left: 2px;
+					vertical-align: 3px;
+					font-size: 12px;
+				}
+			}
 			[cc-dropdown-panel] {
 				position: absolute;
 				right: 1px;
