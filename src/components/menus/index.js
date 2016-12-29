@@ -26,11 +26,11 @@ const
 		controller: MenusCtrl,
 		controllerAs: 'menus',
 		bindings: {
-			unfold: '=',
-			onUnfold: '=',
-			menuSource: '<?',
+			unfold: '=?',
+			onUnfold: '=?',
+			menuSource: '<',
 			shopSource: '<?',
-			searchPlaceholder: '='
+			searchPlaceholder: '=?'
 		}
 	},
 	menusNodeDDO = {
