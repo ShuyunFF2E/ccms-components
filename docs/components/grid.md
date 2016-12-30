@@ -33,7 +33,6 @@ maintainer: yazheng.yu, chaoyang.mu, kui.liu
 		* pageNum `Number`(default:1) 当前页码
 		* pageSize `Number`(default:20) 每页数据条数
 		* pageSizeList `Array`(default:[10, 15, 20, 30, 50]) 可选的每页数据条数
-		* pageSizeListDisabled `Boolean`(default:false) 是否禁用每页数据条数切换
 * selectedItems `Array`(default:[]) 选中的数据集合
 * type `String`(default:'default') 表格类型 目前支持'selectable'(带checkbox)配置。
 
