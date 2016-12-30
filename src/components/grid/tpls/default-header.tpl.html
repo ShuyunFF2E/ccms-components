@@ -17,13 +17,10 @@
 	<div class="dropdown-panel hide" cc-dropdown-panel>
 		<ul>
 			<li ng-repeat="column in $ctrl.opts.columnsDef track by $index">
-				<label>
-					<input type="checkbox"
-							ng-disabled="!column.isHidden && $ctrl.getShownColumnsCount() === 1"
-							ng-checked="!column.isHidden"
-							ng-click="$ctrl.toggleColumnByIndex($index)">
-					<span ng-bind="column.displayName"></span>
-				</label>
+				<cc-checkbox
+						ng-disabled="!column.isHidden && $ctrl.getShownColumnsCount() === 1"
+						ng-checked="!column.isHidden"
+						ng-click="$ctrl.toggleColumnByIndex($index)">{{ column.displayName }}</cc-checkbox>
 			</li>
 		</ul>
 	</div>

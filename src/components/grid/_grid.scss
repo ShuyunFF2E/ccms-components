@@ -114,19 +114,24 @@ cc-grid {
 			}
 			[cc-dropdown-panel] {
 				position: absolute;
-				right: 1px;
+				top: 100%;
+				right: -1px;
 				z-index: 1;
-				padding: 10px;
+				width: 156px;
 				border: solid 1px #ccc;
 				background-color: #fff;
 				&.hide {
 					display: none !important;
 				}
 				li {
+					padding: 8px;
 					white-space: nowrap;
 					cursor: pointer;
-					label {
-						cursor: inherit;
+					&:hover {
+						background: #eef8fc;
+					}
+					cc-checkbox {
+						width: 100%;
 					}
 				}
 			}
