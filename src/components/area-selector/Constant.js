@@ -16,7 +16,39 @@ export const INPUT = [
 	'320000,321200,321281'
 ];
 
-export const COMMON_AREAS = ['江浙沪', '珠三角', '京津翼', '东三省', '港澳台', '江浙沪皖'];
+export const COMMON_AREAS =
+	[
+		{
+			'id': 1,
+			'name': '江浙沪',
+			'children': ['', '', '']
+		},
+		{
+			'id': 2,
+			'name': '珠三角',
+			'children': ['', '', '']
+		},
+		{
+			'id': 3,
+			'name': '京津翼',
+			'children': ['', '', '']
+		},
+		{
+			'id': 4,
+			'name': '东三省',
+			'children': ['', '', '']
+		},
+		{
+			'id': 5,
+			'name': '港澳台',
+			'children': ['', '', '']
+		},
+		{
+			'id': 6,
+			'name': '江浙沪皖',
+			'children': ['', '', '']
+		}
+	];
 
 export const AREAS =
 	[
