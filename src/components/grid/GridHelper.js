@@ -3,9 +3,9 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-01-04
  */
-import angular from 'angular';
 import injector from 'angular-es-utils/injector';
 import { isPromiseLike, isObject, isFunction } from 'angular-es-utils/type-auth';
+
 import filter from '../../common/utils/object/filter';
 
 function transformer(response, mapping) {
@@ -50,7 +50,7 @@ export default {
 			} // 分页配置 @see pagination component
 		};
 
-		return Object.assign(gridOptions, angular.merge(DEFAULT_CONFIGS, gridOptions));
+		return Object.assign(gridOptions, Object.assign(DEFAULT_CONFIGS, gridOptions));
 	},
 
 	refresh(gridOptions, queryParams) {
