@@ -35,7 +35,6 @@ export default class AreaSelectorCtrl {
 
 	/**
 	 * @name analyzeArea 解析选中区域
-	 * @param areaId <string> 区域ID
 	 * @param selectedAreas <object> 选中区域
 	 * @param index <number> 下标
 	 * @param areas <object> 区域
@@ -94,18 +93,26 @@ export default class AreaSelectorCtrl {
 	}
 
 	/**
-	 * @name changeCheckboxStatus 改变checkbox状态
-	 * @param area <object> 区域
+	 * @name changeCheckboxStatus 选择checkbox状态
+	 * @param area <object> 被选择checkbox的区域
 	 * @param areaLevel <boolean> 区域等级
 	 */
 	changeCheckboxStatus(area, areaLevel) {
+		if (areaLevel === 'province') {
+			this.selectedProvince = area;
+		}
 		this.changeChildrenStatus(area);
 		this.changeParentAreaStatus(areaLevel, this.selectedProvince, this.selectedCity);
 		this.selectedAreas = [];
-		this.getSelectedAreas(this.areas, []);
+		this.getSelectedAreasByAreaMap(this.areas, []);
 	}
 
-	getSelectedAreas(areas, selectedArray) {
+	/**
+	 * @name getSelectedAreasByAreaMap 获得已选区域的状态通过AreaMap(递归)
+	 * @param areas <object> 递归出来不同等级的区域
+	 * @param selectedArray <array> 存放被选择的区域
+	 */
+	getSelectedAreasByAreaMap(areas, selectedArray) {
 		areas.map(item => {
 			if (item.selectedAll) {
 				selectedArray.push({id: item.id, name: item.name});
@@ -114,7 +121,7 @@ export default class AreaSelectorCtrl {
 				selectedArray.pop();
 			} else if (item.selected && item.children) {
 				selectedArray.push({id: item.id, name: item.name});
-				this.getSelectedAreas(item.children, selectedArray);
+				this.getSelectedAreasByAreaMap(item.children, selectedArray);
 			}
 		});
 		selectedArray.pop();
@@ -146,22 +153,23 @@ export default class AreaSelectorCtrl {
 	/**
 	 * @name changeParentAreaStatus 改变父亲区域状态
 	 * @param areaLevel <string> 区域等级
+	 * @param selectedProvince <object> 选中的省份
+	 * @param selectedCity <object> 选中的城市
 	 */
 	changeParentAreaStatus(areaLevel, selectedProvince, selectedCity) {
 		if (areaLevel === 'district') {
-			this.matchCitySelectedStatus(selectedCity);
+			this.analyzeAreaSelectedStatusByChildren(selectedCity);
 		}
-		this.matchProvinceSelectedStatus(selectedProvince);
+		this.analyzeAreaSelectedStatusByChildren(selectedProvince);
 	}
 
-	matchCitySelectedStatus(selectedCity) {
-		selectedCity.selected = selectedCity.children.some(this.isSelected);
-		selectedCity.selectedAll = selectedCity.children.every(this.isSelectedAll);
-	}
-
-	matchProvinceSelectedStatus(selectedProvince) {
-		selectedProvince.selected = selectedProvince.children.some(this.isSelected);
-		selectedProvince.selectedAll = selectedProvince.children.every(this.isSelectedAll);
+	/**
+	 * @name analyzeAreaSelectedStatusByChildren 解析区域selected状态通过所有孩子区域
+	 * @param selectedArea <object> 被解析的区域
+	 */
+	analyzeAreaSelectedStatusByChildren(selectedArea) {
+		selectedArea.selected = selectedArea.children.some(this.isSelected);
+		selectedArea.selectedAll = selectedArea.children.every(this.isSelectedAll);
 	}
 
 	/**
@@ -200,34 +208,61 @@ export default class AreaSelectorCtrl {
 	}
 
 	/**
-	 * @name deleteArea 删除已选区域
+	 * @name deleteArea 删除某个已选区域
 	 * @param area <object> 被删除的区域
+	 * @param index <number> 被删除区域的下标
 	 */
 	deleteArea(area, index) {
 		let deleteAreaArray = [];
 		this.selectedAreas.splice(index, 1);
-		this.getAreaById(area, 0, this.areas, deleteAreaArray);
+		this.deleteAreaById(area, 0, this.areas, deleteAreaArray);
 	}
 
-	getAreaById(area, areaIndex, areas, deleteAreaArray) {
+	/**
+	 * @name deleteAreaById 删除Area在下方选择框的状态(递归)
+	 * @param area <object> 需要被删除的区域
+	 * @param areaIndex <boolean> 需要被删除的区域的下标(循环)
+	 * @param areas <boolean> 全局维护的Areas Map
+	 * @param deleteAreaArray <array> 存放被删除的区域(每个array是object类型)
+	 */
+	deleteAreaById(area, areaIndex, areas, deleteAreaArray) {
 		const selectedArea = areas.find(item => item.id === area[areaIndex].id);
 		deleteAreaArray.push(selectedArea);
 		if (areaIndex === area.length - 1) {
-			this.setSelectedAndSelectedAll(selectedArea, false, false);
-			this.setSelectedValue(selectedArea.children, false);
-			this.setSelectedAllValue(selectedArea.children, false);
+			this.setAreaAndChildrenSelectedStatus(selectedArea, false);
 			const areaStatus = area.length === 3 ? 'district' : '';
 			this.changeParentAreaStatus(areaStatus, deleteAreaArray[0], deleteAreaArray[1]);
 		} else {
-			this.getAreaById(area, areaIndex + 1, selectedArea.children, deleteAreaArray);
+			this.deleteAreaById(area, areaIndex + 1, selectedArea.children, deleteAreaArray);
 		}
 	}
 
+	/**
+	 * @name setAreaAndChildrenSelectedStatus 设置一个区域以及它孩子区域的selected状态
+	 * @param selectedArea <object> 需要被设置的区域
+	 * @param value <boolean> selected值
+	 */
+	setAreaAndChildrenSelectedStatus(selectedArea, value) {
+		this.setSelectedAndSelectedAll(selectedArea, value, value);
+		this.setSelectedValue(selectedArea.children, value);
+		this.setSelectedAllValue(selectedArea.children, value);
+	}
+
+	/**
+	 * @name setSelectedAndSelectedAll 设置一个区域的selected和selectedAll属性值
+	 * @param area <object> 需要被设置的区域
+	 * @param selectedValue <boolean> selected值
+	 * @param selectedAllValue <boolean> selectedAll值
+	 */
 	setSelectedAndSelectedAll(area, selectedValue, selectedAllValue) {
 		area.selected = selectedValue;
 		area.selectedAll = selectedAllValue;
 	}
 
+	/**
+	 * @name selectDistrict 选中某一个区县
+	 * @param district <object> 区县
+	 */
 	selectDistrict(district) {
 		this.selectedDistrict = district;
 	}

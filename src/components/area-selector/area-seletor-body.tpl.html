@@ -34,7 +34,7 @@
 				<div class="area" ng-repeat="province in $ctrl.areas track by $index"
 					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province)">
 					<cc-checkbox indeterminate="province.selected && !province.selectedAll"
-								 ng-checked="province.selectedAll" ng-click="$ctrl.changeCheckboxStatus(province)">
+								 ng-checked="province.selectedAll" ng-click="$ctrl.changeCheckboxStatus(province, 'province')">
 					</cc-checkbox>
 					<span class="province">{{province.name}}<span>{{selectedProvince.id}}</span>
 						<span class="iconfont icon-rightarrow"></span>
