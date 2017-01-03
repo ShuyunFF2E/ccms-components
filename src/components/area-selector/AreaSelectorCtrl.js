@@ -19,18 +19,30 @@ export default class AreaSelectorCtrl {
 		this.provinces = this.areas;
 		this.selectedVaule = INPUT;
 		this.selectedAreas = [];
-		this.initCommonAreas();
 		this.analyzeSelectedData();
+		this.initCommonAreas();
 	}
-
 
 	/**
 	 * @name initCommonAreas 初始化常用区域
 	 */
 	initCommonAreas() {
 		this.commonAreas = COMMON_AREAS;
+		this.getCommonAreaSelectedStatus();
+	}
+
+	/**
+	 * @name getCommonAreaSelectedStatus 获得常用区域选中状态
+	 */
+	getCommonAreaSelectedStatus() {
 		this.commonAreas.map(commonArea => {
-			commonArea.selected = false;
+			let areaTrees = [];
+			commonArea.subArea.map(areaId => {
+				const area = this.areas.find(item => item.id === areaId);
+				areaTrees.push({id: area.id, name: area.name, selected: area.selected, selectedAll: area.selectedAll});
+			});
+			commonArea.children = areaTrees;
+			this.analyzeAreaSelectedStatusByChildren(commonArea);
 		});
 	}
 
@@ -117,6 +129,7 @@ export default class AreaSelectorCtrl {
 		this.changeParentAreaStatus(areaLevel, this.selectedProvince, this.selectedCity);
 		this.selectedAreas = [];
 		this.getSelectedAreasByAreaMap(this.areas, []);
+		this.getCommonAreaSelectedStatus();
 	}
 
 	/**
@@ -228,6 +241,7 @@ export default class AreaSelectorCtrl {
 		let deleteAreaArray = [];
 		this.selectedAreas.splice(index, 1);
 		this.deleteAreaById(area, 0, this.areas, deleteAreaArray);
+		this.getCommonAreaSelectedStatus();
 	}
 
 	/**

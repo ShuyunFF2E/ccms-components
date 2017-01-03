@@ -1,7 +1,7 @@
 <div class="area-selector">
 
-	<input class="area-search" type="text"
-		   placeholder="请输入区域名称">
+	<!--<input class="area-search" type="text"-->
+		   <!--placeholder="请输入区域名称">-->
 
 	<section class="selected-area">
 		<div> 已选：</div>
@@ -21,7 +21,8 @@
 		常用区域：
 		<div class="common-area-content">
 			<span class="area" ng-repeat="commonArea in $ctrl.commonAreas track by $index">
-				<cc-checkbox ng-click="$ctrl.selectedCommonArea(commonArea);"></cc-checkbox>{{commonArea.name}}
+				<cc-checkbox ng-checked="commonArea.selectedAll" ng-click="$ctrl.selectedCommonArea(commonArea);"
+							 indeterminate="commonArea.selected && !commonArea.selectedAll"></cc-checkbox>{{commonArea.name}}
 			</span>
 		</div>
 	</section>

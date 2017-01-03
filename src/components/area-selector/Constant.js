@@ -21,27 +21,27 @@ export const COMMON_AREAS =
 		{
 			'id': 1,
 			'name': '江浙沪',
-			'children': ['310000', '320000']
+			'subArea': ['310000', '320000']
 		},
 		{
 			'id': 2,
 			'name': '珠三角',
-			'children': []
+			'subArea': ['440000']
 		},
 		{
 			'id': 3,
 			'name': '京津翼',
-			'children': ['110000']
+			'subArea': ['110000']
 		},
 		{
 			'id': 4,
 			'name': '东三省',
-			'children': ['210000']
+			'subArea': ['210000']
 		},
 		{
 			'id': 5,
 			'name': '港澳台',
-			'children': ['710000', '810000', '820000']
+			'subArea': ['710000', '810000', '820000']
 		}
 	];
 
@@ -698,6 +698,276 @@ export const AREAS =
 						{'id': '611024', 'name': '山阳县', 'children': null},
 						{'id': '611025', 'name': '镇安县', 'children': null},
 						{'id': '611026', 'name': '柞水县', 'children': null}
+					]
+				}
+			]
+		},
+		{
+			'id': '440000',
+			'name': '广东省',
+			'children': [
+				{
+					'id': '440100',
+					'name': '广州市',
+					'children': [
+						{'id': '440101', 'name': '市辖区', 'children': null},
+						{'id': '440102', 'name': '东山区', 'children': null},
+						{'id': '440103', 'name': '荔湾区', 'children': null},
+						{'id': '440104', 'name': '越秀区', 'children': null},
+						{'id': '440105', 'name': '海珠区', 'children': null},
+						{'id': '440106', 'name': '天河区', 'children': null},
+						{'id': '440107', 'name': '芳村区', 'children': null},
+						{'id': '440111', 'name': '白云区', 'children': null},
+						{'id': '440112', 'name': '黄埔区', 'children': null},
+						{'id': '440113', 'name': '番禺区', 'children': null},
+						{'id': '440114', 'name': '花都区', 'children': null},
+						{'id': '440183', 'name': '增城市', 'children': null},
+						{'id': '440184', 'name': '从化市', 'children': null}
+					]
+				},
+				{
+					'id': '440200',
+					'name': '韶关市',
+					'children': [
+						{'id': '440201', 'name': '市辖区', 'children': null},
+						{'id': '440203', 'name': '武江区', 'children': null},
+						{'id': '440204', 'name': '浈江区', 'children': null},
+						{'id': '440205', 'name': '曲江区', 'children': null},
+						{'id': '440222', 'name': '始兴县', 'children': null},
+						{'id': '440224', 'name': '仁化县', 'children': null},
+						{'id': '440229', 'name': '翁源县', 'children': null},
+						{'id': '440232', 'name': '乳源瑶族自治县', 'children': null},
+						{'id': '440233', 'name': '新丰县', 'children': null},
+						{'id': '440281', 'name': '乐昌市', 'children': null},
+						{'id': '440282', 'name': '南雄市', 'children': null}
+					]
+				},
+				{
+					'id': '440300',
+					'name': '深圳市',
+					'children': [
+						{'id': '440301', 'name': '市辖区', 'children': null},
+						{'id': '440303', 'name': '罗湖区', 'children': null},
+						{'id': '440304', 'name': '福田区', 'children': null},
+						{'id': '440305', 'name': '南山区', 'children': null},
+						{'id': '440306', 'name': '宝安区', 'children': null},
+						{'id': '440307', 'name': '龙岗区', 'children': null},
+						{'id': '440308', 'name': '盐田区', 'children': null}
+					]
+				},
+				{
+					'id': '440400',
+					'name': '珠海市',
+					'children': [
+						{'id': '440401', 'name': '市辖区', 'children': null},
+						{'id': '440402', 'name': '香洲区', 'children': null},
+						{'id': '440403', 'name': '斗门区', 'children': null},
+						{'id': '440404', 'name': '金湾区', 'children': null}
+					]
+				},
+				{
+					'id': '440500',
+					'name': '汕头市',
+					'children': [
+						{'id': '440501', 'name': '市辖区', 'children': null},
+						{'id': '440507', 'name': '龙湖区', 'children': null},
+						{'id': '440511', 'name': '金平区', 'children': null},
+						{'id': '440512', 'name': '濠江区', 'children': null},
+						{'id': '440513', 'name': '潮阳区', 'children': null},
+						{'id': '440514', 'name': '潮南区', 'children': null},
+						{'id': '440515', 'name': '澄海区', 'children': null},
+						{'id': '440523', 'name': '南澳县', 'children': null}
+					]
+				},
+				{
+					'id': '440600',
+					'name': '佛山市',
+					'children': [
+						{'id': '440601', 'name': '市辖区', 'children': null},
+						{'id': '440604', 'name': '禅城区', 'children': null},
+						{'id': '440605', 'name': '南海区', 'children': null},
+						{'id': '440606', 'name': '顺德区', 'children': null},
+						{'id': '440607', 'name': '三水区', 'children': null},
+						{'id': '440608', 'name': '高明区', 'children': null}
+					]
+				},
+				{
+					'id': '440700',
+					'name': '江门市',
+					'children': [
+						{'id': '440701', 'name': '市辖区', 'children': null},
+						{'id': '440703', 'name': '蓬江区', 'children': null},
+						{'id': '440704', 'name': '江海区', 'children': null},
+						{'id': '440705', 'name': '新会区', 'children': null},
+						{'id': '440781', 'name': '台山市', 'children': null},
+						{'id': '440783', 'name': '开平市', 'children': null},
+						{'id': '440784', 'name': '鹤山市', 'children': null},
+						{'id': '440785', 'name': '恩平市', 'children': null}
+					]
+				},
+				{
+					'id': '440800',
+					'name': '湛江市',
+					'children': [
+						{'id': '440801', 'name': '市辖区', 'children': null},
+						{'id': '440802', 'name': '赤坎区', 'children': null},
+						{'id': '440803', 'name': '霞山区', 'children': null},
+						{'id': '440804', 'name': '坡头区', 'children': null},
+						{'id': '440811', 'name': '麻章区', 'children': null},
+						{'id': '440823', 'name': '遂溪县', 'children': null},
+						{'id': '440825', 'name': '徐闻县', 'children': null},
+						{'id': '440881', 'name': '廉江市', 'children': null},
+						{'id': '440882', 'name': '雷州市', 'children': null},
+						{'id': '440883', 'name': '吴川市', 'children': null}
+					]
+				},
+				{
+					'id': '440900',
+					'name': '茂名市',
+					'children': [
+						{'id': '440901', 'name': '市辖区', 'children': null},
+						{'id': '440902', 'name': '茂南区', 'children': null},
+						{'id': '440903', 'name': '茂港区', 'children': null},
+						{'id': '440923', 'name': '电白县', 'children': null},
+						{'id': '440981', 'name': '高州市', 'children': null},
+						{'id': '440982', 'name': '化州市', 'children': null},
+						{'id': '440983', 'name': '信宜市', 'children': null}
+					]
+				},
+				{
+					'id': '441200',
+					'name': '肇庆市',
+					'children': [
+						{'id': '441201', 'name': '市辖区', 'children': null},
+						{'id': '441202', 'name': '端州区', 'children': null},
+						{'id': '441203', 'name': '鼎湖区', 'children': null},
+						{'id': '441223', 'name': '广宁县', 'children': null},
+						{'id': '441224', 'name': '怀集县', 'children': null},
+						{'id': '441225', 'name': '封开县', 'children': null},
+						{'id': '441226', 'name': '德庆县', 'children': null},
+						{'id': '441283', 'name': '高要市', 'children': null},
+						{'id': '441284', 'name': '四会市', 'children': null}
+					]
+				},
+				{
+					'id': '441300',
+					'name': '惠州市',
+					'children': [
+						{'id': '441301', 'name': '市辖区', 'children': null},
+						{'id': '441302', 'name': '惠城区', 'children': null},
+						{'id': '441303', 'name': '惠阳区', 'children': null},
+						{'id': '441322', 'name': '博罗县', 'children': null},
+						{'id': '441323', 'name': '惠东县', 'children': null},
+						{'id': '441324', 'name': '龙门县', 'children': null}
+					]
+				},
+				{
+					'id': '441400',
+					'name': '梅州市',
+					'children': [
+						{'id': '441401', 'name': '市辖区', 'children': null},
+						{'id': '441402', 'name': '梅江区', 'children': null},
+						{'id': '441421', 'name': '梅　县', 'children': null},
+						{'id': '441422', 'name': '大埔县', 'children': null},
+						{'id': '441423', 'name': '丰顺县', 'children': null},
+						{'id': '441424', 'name': '五华县', 'children': null},
+						{'id': '441426', 'name': '平远县', 'children': null},
+						{'id': '441427', 'name': '蕉岭县', 'children': null},
+						{'id': '441481', 'name': '兴宁市', 'children': null}
+					]
+				},
+				{
+					'id': '441500',
+					'name': '汕尾市',
+					'children': [
+						{'id': '441501', 'name': '市辖区', 'children': null},
+						{'id': '441502', 'name': '城　区', 'children': null},
+						{'id': '441521', 'name': '海丰县', 'children': null},
+						{'id': '441523', 'name': '陆河县', 'children': null},
+						{'id': '441581', 'name': '陆丰市', 'children': null}
+					]
+				},
+				{
+					'id': '441600',
+					'name': '河源市',
+					'children': [
+						{'id': '441601', 'name': '市辖区', 'children': null},
+						{'id': '441602', 'name': '源城区', 'children': null},
+						{'id': '441621', 'name': '紫金县', 'children': null},
+						{'id': '441622', 'name': '龙川县', 'children': null},
+						{'id': '441623', 'name': '连平县', 'children': null},
+						{'id': '441624', 'name': '和平县', 'children': null},
+						{'id': '441625', 'name': '东源县', 'children': null}
+					]
+				},
+				{
+					'id': '441700',
+					'name': '阳江市',
+					'children': [
+						{'id': '441701', 'name': '市辖区', 'children': null},
+						{'id': '441702', 'name': '江城区', 'children': null},
+						{'id': '441721', 'name': '阳西县', 'children': null},
+						{'id': '441723', 'name': '阳东县', 'children': null},
+						{'id': '441781', 'name': '阳春市', 'children': null}
+					]
+				},
+				{
+					'id': '441800',
+					'name': '清远市',
+					'children': [
+						{'id': '441801', 'name': '市辖区', 'children': null},
+						{'id': '441802', 'name': '清城区', 'children': null},
+						{'id': '441821', 'name': '佛冈县', 'children': null},
+						{'id': '441823', 'name': '阳山县', 'children': null},
+						{'id': '441825', 'name': '连山壮族瑶族自治县', 'children': null},
+						{'id': '441826', 'name': '连南瑶族自治县', 'children': null},
+						{'id': '441827', 'name': '清新县', 'children': null},
+						{'id': '441881', 'name': '英德市', 'children': null},
+						{'id': '441882', 'name': '连州市', 'children': null}
+					]
+				},
+				{
+					'id': '441900',
+					'name': '东莞市',
+					'children': null
+				},
+				{
+					'id': '442000',
+					'name': '中山市',
+					'children': null
+				},
+				{
+					'id': '445100',
+					'name': '潮州市',
+					'children': [
+						{'id': '445101', 'name': '市辖区', 'children': null},
+						{'id': '445102', 'name': '湘桥区', 'children': null},
+						{'id': '445121', 'name': '潮安县', 'children': null},
+						{'id': '445122', 'name': '饶平县', 'children': null}
+					]
+				},
+				{
+					'id': '445200',
+					'name': '揭阳市',
+					'children': [
+						{'id': '445201', 'name': '市辖区', 'children': null},
+						{'id': '445202', 'name': '榕城区', 'children': null},
+						{'id': '445221', 'name': '揭东县', 'children': null},
+						{'id': '445222', 'name': '揭西县', 'children': null},
+						{'id': '445224', 'name': '惠来县', 'children': null},
+						{'id': '445281', 'name': '普宁市', 'children': null}
+					]
+				},
+				{
+					'id': '445300',
+					'name': '云浮市',
+					'children': [
+						{'id': '445301', 'name': '市辖区', 'children': null},
+						{'id': '445302', 'name': '云城区', 'children': null},
+						{'id': '445321', 'name': '新兴县', 'children': null},
+						{'id': '445322', 'name': '郁南县', 'children': null},
+						{'id': '445323', 'name': '云安县', 'children': null},
+						{'id': '445381', 'name': '罗定市', 'children': null}
 					]
 				}
 			]
