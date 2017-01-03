@@ -19,18 +19,30 @@ export default class AreaSelectorCtrl {
 		this.provinces = this.areas;
 		this.selectedVaule = INPUT;
 		this.selectedAreas = [];
-		this.initCommonAreas();
 		this.analyzeSelectedData();
+		this.initCommonAreas();
 	}
-
 
 	/**
 	 * @name initCommonAreas 初始化常用区域
 	 */
 	initCommonAreas() {
 		this.commonAreas = COMMON_AREAS;
+		this.getCommonAreaSelectedStatus();
+	}
+
+	/**
+	 * @name getCommonAreaSelectedStatus 获得常用区域选中状态
+	 */
+	getCommonAreaSelectedStatus() {
 		this.commonAreas.map(commonArea => {
-			commonArea.selected = false;
+			let areaTrees = [];
+			commonArea.subArea.map(areaId => {
+				const area = this.areas.find(item => item.id === areaId);
+				areaTrees.push({id: area.id, name: area.name, selected: area.selected, selectedAll: area.selectedAll});
+			});
+			commonArea.children = areaTrees;
+			this.analyzeAreaSelectedStatusByChildren(commonArea);
 		});
 	}
 
@@ -117,6 +129,7 @@ export default class AreaSelectorCtrl {
 		this.changeParentAreaStatus(areaLevel, this.selectedProvince, this.selectedCity);
 		this.selectedAreas = [];
 		this.getSelectedAreasByAreaMap(this.areas, []);
+		this.getCommonAreaSelectedStatus();
 	}
 
 	/**
@@ -180,8 +193,10 @@ export default class AreaSelectorCtrl {
 	 * @param selectedArea <object> 被解析的区域
 	 */
 	analyzeAreaSelectedStatusByChildren(selectedArea) {
-		selectedArea.selected = selectedArea.children.some(this.isSelected);
-		selectedArea.selectedAll = selectedArea.children.every(this.isSelectedAll);
+		if (selectedArea.children) {
+			selectedArea.selected = selectedArea.children.some(this.isSelected);
+			selectedArea.selectedAll = selectedArea.children.every(this.isSelectedAll);
+		}
 	}
 
 	/**
@@ -228,6 +243,7 @@ export default class AreaSelectorCtrl {
 		let deleteAreaArray = [];
 		this.selectedAreas.splice(index, 1);
 		this.deleteAreaById(area, 0, this.areas, deleteAreaArray);
+		this.getCommonAreaSelectedStatus();
 	}
 
 	/**
@@ -241,23 +257,12 @@ export default class AreaSelectorCtrl {
 		const selectedArea = areas.find(item => item.id === area[areaIndex].id);
 		deleteAreaArray.push(selectedArea);
 		if (areaIndex === area.length - 1) {
-			this.setAreaAndChildrenSelectedStatus(selectedArea, false);
+			this.changeChildrenAreaStatus(selectedArea, false);
 			const areaStatus = area.length === 3 ? 'district' : '';
 			this.changeParentAreaStatus(areaStatus, deleteAreaArray[0], deleteAreaArray[1]);
 		} else {
 			this.deleteAreaById(area, areaIndex + 1, selectedArea.children, deleteAreaArray);
 		}
-	}
-
-	/**
-	 * @name setAreaAndChildrenSelectedStatus 设置一个区域以及它孩子区域的selected状态
-	 * @param selectedArea <object> 需要被设置的区域
-	 * @param value <boolean> selected值
-	 */
-	setAreaAndChildrenSelectedStatus(selectedArea, value) {
-		this.setSelectedAndSelectedAll(selectedArea, value, value);
-		this.setSelectedValue(selectedArea.children, value);
-		this.setSelectedAllValue(selectedArea.children, value);
 	}
 
 	/**
@@ -296,12 +301,14 @@ export default class AreaSelectorCtrl {
 	 * @param commonArea <object> 被选择的常用区域
 	 */
 	selectedCommonArea(commonArea) {
-		commonArea.selected = !commonArea.selected;
-		commonArea.children.map(areaId => {
-			let selectCommonArea = this.areas.find(item => item.id === areaId);
-			this.setSelectedAndSelectedAll(selectCommonArea, commonArea.selected, commonArea.selected);
-			this.setSelectedValue(selectCommonArea.children, commonArea.selected);
-			this.setSelectedAllValue(selectCommonArea.children, commonArea.selected);
+		if (commonArea.selectedAll) {
+			this.setSelectedAndSelectedAll(commonArea, false, false);
+		} else {
+			this.setSelectedAndSelectedAll(commonArea, true, true);
+		}
+		commonArea.children.map(area => {
+			let selectCommonArea = this.areas.find(item => item.id === area.id);
+			this.changeChildrenAreaStatus(selectCommonArea, commonArea.selected);
 		});
 		this.selectedAreas = [];
 		this.getSelectedAreasByAreaMap(this.areas, []);
