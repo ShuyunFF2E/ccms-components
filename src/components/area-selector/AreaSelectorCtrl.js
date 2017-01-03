@@ -16,10 +16,22 @@ export default class AreaSelectorCtrl {
 
 	init() {
 		this.areas = AREAS;
+		this.provinces = this.areas;
 		this.inputValue = INPUT;
 		this.selectedAreas = [];
-		this.commonAreas = COMMON_AREAS;
+		this.initCommonAreas();
 		this.analyzeSelectedData();
+	}
+
+
+	/**
+	 * @name initCommonAreas 初始化常用区域
+	 */
+	initCommonAreas() {
+		this.commonAreas = COMMON_AREAS;
+		this.commonAreas.map(commonArea => {
+			commonArea.selected = false;
+		});
 	}
 
 	/**
@@ -265,5 +277,33 @@ export default class AreaSelectorCtrl {
 	 */
 	selectDistrict(district) {
 		this.selectedDistrict = district;
+	}
+
+	/**
+	 * @name changeProvinceArea 在常用区域选择对应省份
+	 * @param commonArea <object> 选中的常用区域
+	 */
+	changeProvinceArea(commonArea) {
+		this.provinces = [];
+		commonArea.map(area => {
+			const province = this.areas.find(item => item.id === area);
+			this.provinces.push(province);
+		});
+	}
+
+	/**
+	 * @name selectedCommonArea 选择常用区域
+	 * @param commonArea <object> 被选择的常用区域
+	 */
+	selectedCommonArea(commonArea) {
+		commonArea.selected = !commonArea.selected;
+		commonArea.children.map(areaId => {
+			let selectCommonArea = this.areas.find(item => item.id === areaId);
+			this.setSelectedAndSelectedAll(selectCommonArea, commonArea.selected, commonArea.selected);
+			this.setSelectedValue(selectCommonArea.children, commonArea.selected);
+			this.setSelectedAllValue(selectCommonArea.children, commonArea.selected);
+		});
+		this.selectedAreas = [];
+		this.getSelectedAreasByAreaMap(this.areas, []);
 	}
 }
