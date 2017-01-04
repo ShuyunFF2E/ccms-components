@@ -27,16 +27,18 @@
 			];
 
 
-			$scope.open = function (INPUT) {
+			$scope.open = function () {
 
 				var areaSelectorInstance = $ccAreaSelector
 
 					.areaSelector({
 						scope: $scope,
-						bindings: self
+						locals: {
+							selectedData: INPUT
+						}
 					})
 
-					.open(INPUT).result.then(function(response) {
+					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
 					}, function() {
