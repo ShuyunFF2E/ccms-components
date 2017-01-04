@@ -4,8 +4,8 @@
  * @Author: maxsmu
  * @Date: 2016-02-29 6:52 PM
  */
-import { Inject } from 'angular-es-utils';
-import $menus, { reset } from './MenuService';
+import {Inject} from 'angular-es-utils';
+import $menus, {reset} from './MenuService';
 import EventBus from 'angular-es-utils/event-bus';
 
 @Inject('$timeout', '$state', '$rootScope', '$document', '$scope')
@@ -33,6 +33,19 @@ export default class MenusCtrl {
 
 		// 店铺状态变更处理
 		this.shopStatusChange();
+
+		this._$scope.$on('$stateChangeSuccess', (event, toState) => {
+			if (Array.isArray(this.menuList)) {
+				this.updateList(this.menuList);
+			}
+		});
+	}
+
+	updateList(list) {
+		list.forEach(item => {
+			item.toggle = item.toggleNode = this._$state.includes(item.state);
+			this.updateList(item.children);
+		});
 	}
 
 	/**
