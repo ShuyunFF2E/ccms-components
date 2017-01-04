@@ -9,7 +9,7 @@ import { Inject } from 'angular-es-utils/decorators';
 import { INPUT, COMMON_AREAS } from './Constant';
 import areas from './areas.json';
 
-@Inject('$ccTips')
+@Inject('$ccTips', 'modalInstance')
 export default class AreaSelectorCtrl {
 	constructor() {
 		this.init();
@@ -313,5 +313,33 @@ export default class AreaSelectorCtrl {
 		});
 		this.selectedAreas = [];
 		this.getSelectedAreasByAreaMap(this.areas, []);
+	}
+
+	/**
+	 * @name getSelectedValue 将已选择的数据解析为ID-String传入格式
+	 * @param area <object> 被选择的区域
+	 * @param index <number> 下标
+	 */
+	getSelectedValue(area, index) {
+		if (index < area.length - 1) {
+			this.selectedAreaString += area[index].id + ',';
+			this.getSelectedValue(area, index + 1);
+		} else if (index === area.length - 1) {
+			this.selectedAreaString += area[index].id;
+			this.getSelectedValue(area, index + 1);
+		}
+	}
+
+	/**
+	 * @name ok 点击确认按钮
+	 */
+	ok() {
+		let selectedValue = [];
+		this.selectedAreas.map(area => {
+			this.selectedAreaString = '';
+			this.getSelectedValue(area, 0);
+			selectedValue.push(this.selectedAreaString);
+		});
+		this._modalInstance.ok(selectedValue);
 	}
 }
