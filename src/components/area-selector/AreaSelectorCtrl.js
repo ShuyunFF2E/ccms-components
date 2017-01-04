@@ -6,7 +6,8 @@
 
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
-import { INPUT, AREAS, COMMON_AREAS } from './Constant';
+import { INPUT, COMMON_AREAS } from './Constant';
+import areas from './areas.json';
 
 @Inject('$ccTips')
 export default class AreaSelectorCtrl {
@@ -15,7 +16,7 @@ export default class AreaSelectorCtrl {
 	}
 
 	init() {
-		this.areas = AREAS;
+		this.areas = areas;
 		this.provinces = this.areas;
 		this.selectedVaule = INPUT;
 		this.selectedAreas = [];

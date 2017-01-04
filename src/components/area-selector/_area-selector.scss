@@ -6,8 +6,14 @@
   .cc-checkbox-input {
 	width: 14px;
 	height: 14px;
+	margin-right: 1px;
   }
 
+  .district {
+	.cc-checkbox-input {
+	  margin-right: 8px;
+	}
+  }
   .cc-checkbox.indeterminate .cc-checkbox-input:before {
 	left: 20%;
 	top: 20%;
@@ -93,13 +99,11 @@
 	margin-top: 20px;
 	display: flex;
 	.select-area {
-	  width: 198px;
-	  height: 216px;
+	  width: 200px;
+	  height: 218px;
 	  margin-right: 12px;
 	  background: #ffffff;
 	  border: 1px solid #ededed;
-	  overflow-y: auto;
-	  overflow-x: hidden;
 	}
 	.area-title {
 	  margin-top: 10px;
@@ -108,8 +112,11 @@
 	  text-align: center;
 	}
 	.area-body {
+	  overflow-y: auto;
+	  overflow-x: hidden;
+	  height: 180px;
 	  .area {
-		width: 196px;
+		width: 198px;
 		height: 30px;
 		padding-left: 18px;
 		line-height: 30px;
@@ -120,7 +127,7 @@
 	  }
 	  .province, .city {
 		display: inline-block;
-		width: 135px;
+		width: 142px;
 	  }
 	}
   }

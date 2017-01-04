@@ -21,7 +21,10 @@ module.exports = [
 		query: {interpolate: true},
 		exclude: /(node_modules|bower_components)/
 	},
-
+	{
+		test: /\areas\.json$/,
+		loader: 'json-loader'
+	},
 	{
 		test: /\.(jpe?g|png|gif)$/i,
 		loaders: [
