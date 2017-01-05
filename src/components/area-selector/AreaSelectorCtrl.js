@@ -6,9 +6,10 @@
 
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
-import { INPUT, COMMON_AREAS } from './Constant';
+import { COMMON_AREAS } from './Constant';
 
-@Inject('$ccTips', 'modalInstance')
+
+@Inject('$ccTips', 'modalInstance', 'selectedData')
 export default class AreaSelectorCtrl {
 	constructor() {
 		this.init();
@@ -17,7 +18,7 @@ export default class AreaSelectorCtrl {
 	init() {
 		this.areas = this.getAreasFromLocalStorage();
 		this.provinces = this.areas;
-		this.selectedVaule = INPUT;
+		this.selectedVaule = this._selectedData;
 		this.selectedAreas = [];
 		this.analyzeSelectedData();
 		this.initCommonAreas();
