@@ -32,18 +32,19 @@ export default class DropdownCtrl {
 	}
 
 	_setOpenState(openState) {
+		const element = angular.element(this.getElement());
+
+		// 设置 open / close 标记类
+		element.toggleClass('dropdown-opened', openState);
+		element.toggleClass('dropdown-closed', !openState);
+
+		// 记录打开状态
 		this._isOpen = openState;
 
 		// 设置 _phase 避免进入 set isOpen 循环
 		this._phase = openState ? 'opening' : 'closing';
 		this.isOpen = openState;
 		this._phase = '';
-	}
-
-	_setOpenStateClass(openState) {
-		const element = angular.element(this.getElement());
-		element.toggleClass('dropdown-opened', openState);
-		element.toggleClass('dropdown-closed', !openState);
 	}
 
 	get isOpen() {
@@ -73,14 +74,12 @@ export default class DropdownCtrl {
 
 	open() {
 		dropdownService.open(this);
-		this._setOpenStateClass(true);
 		this._setOpenState(true);
 		this.onDropdownOpen && this.onDropdownOpen();
 	}
 
 	close() {
 		dropdownService.close(this);
-		this._setOpenStateClass(false);
 		this._setOpenState(false);
 		this.onDropdownClose && this.onDropdownClose();
 	}
