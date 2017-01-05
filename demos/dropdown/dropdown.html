@@ -24,9 +24,6 @@
     padding: .5em;
     border: solid 1px #ccc;
   }
-	.hide {
-		display: none;
-	}
 }
 </style>
 
@@ -38,14 +35,10 @@
 				<div style="height: 50px;">
 					<textarea class="log" style="width: 100%">1号下拉回调日志: </textarea>
 				</div>
-				<cc-dropdown
-						on-dropdown-open="ctrl.log('打开')"
-						on-dropdown-close="ctrl.log('关闭')">
-					<div>
-						<button cc-dropdown-toggle>1号下拉</button>
-						<div class="hide" cc-dropdown-panel>
-							<div>1号辣条</div>
-						</div>
+				<cc-dropdown on-dropdown-open="ctrl.log('打开')" on-dropdown-close="ctrl.log('关闭')">
+					<button cc-dropdown-toggle>1号下拉</button>
+					<div cc-dropdown-panel>
+						<div>1号辣条</div>
 					</div>
 				</cc-dropdown>
 			</div>
@@ -54,11 +47,9 @@
 					<button ng-click="ctrl.setOpenState(!ctrl.isOpen)">2号下拉遥控器</button>
 				</div>
 				<cc-dropdown auto-close="false" is-open="ctrl.isOpen">
-					<div>
-						<button cc-dropdown-toggle>2号下拉</button>
-						<div class="hide" cc-dropdown-panel>
-							<div>2号辣条</div>
-						</div>
+					<button cc-dropdown-toggle>2号下拉</button>
+					<div cc-dropdown-panel>
+						<div>2号辣条</div>
 					</div>
 				</cc-dropdown>
 			</div>

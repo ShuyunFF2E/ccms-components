@@ -15,8 +15,16 @@ export default class DropdownCtrl {
 			this.autoClose = true;
 		}
 
+		// 设置初始样式
+		this._initStyles();
+
 		// 设置初始状态
 		this.isOpen ? this.open() : this.close();
+	}
+
+	_initStyles() {
+		const element = angular.element(this.getElement());
+		element.toggleClass('dropdown', true);
 	}
 
 	getElement() {
@@ -49,7 +57,7 @@ export default class DropdownCtrl {
 			return;
 		}
 
-		// 设置 isOpen 变量的时候需会调用此 setter，按需执行 open/close 操作
+		// 设置 isOpen 变量的时候需会调用此 setter，然后按需执行 open/close 操作
 		// 为向组件外层反馈 isOpen 状态，实现双向绑定，
 		// 调用 open/close 时也会设置 isOpen 变量
 		// 为了避免如此循环，使用 _phase 记录状态，如果正在进行操作，就跳出循环
