@@ -67,11 +67,7 @@ export default class DropdownCtrl {
 
 		// 改变 isOpen 状态时，按需执行 open/close 操作
 		if (this.isOpen !== openState) {
-			if (openState) {
-				this.open();
-			} else {
-				this.close();
-			}
+			openState ? this.open() : this.close();
 		}
 	}
 
