@@ -11,6 +11,11 @@ module.exports = [
 		exclude: /(node_modules|bower_components)/
 	},
 	{
+		test: /\.json$/,
+		loaders: ['json'],
+		exclude: /(node_modules|bower_components)/
+	},
+	{
 		// for fucking jquery plugin
 		test: /node_modules(\/\\)jquery\.nicescroll\1jquery\.nicescroll\.js/,
 		loader: 'imports?define=>false'
