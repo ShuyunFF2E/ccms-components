@@ -6,14 +6,9 @@
   .cc-checkbox-input {
 	width: 14px;
 	height: 14px;
-	margin-right: 1px;
+	margin-right: 2px;
   }
 
-  .district {
-	.cc-checkbox-input {
-	  margin-right: 8px;
-	}
-  }
   .cc-checkbox.indeterminate .cc-checkbox-input:before {
 	left: 20%;
 	top: 20%;
@@ -125,7 +120,9 @@
 		background: #f0f3f5;
 		cursor: pointer;
 	  }
-	  .province, .city {
+	  .province,
+	  .city,
+	  .district {
 		display: inline-block;
 		width: 142px;
 	  }

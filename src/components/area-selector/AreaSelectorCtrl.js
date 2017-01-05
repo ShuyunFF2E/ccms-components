@@ -7,7 +7,6 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import { INPUT, COMMON_AREAS } from './Constant';
-import areas from './areas.json';
 
 @Inject('$ccTips', 'modalInstance')
 export default class AreaSelectorCtrl {
@@ -16,12 +15,24 @@ export default class AreaSelectorCtrl {
 	}
 
 	init() {
-		this.areas = areas;
+		this.areas = this.getAreasFromLocalStorage();
 		this.provinces = this.areas;
 		this.selectedVaule = INPUT;
 		this.selectedAreas = [];
 		this.analyzeSelectedData();
 		this.initCommonAreas();
+	}
+
+
+	/**
+	 * @name getAreasFromLocalStorage 从localStorage获取全部省、市、区县信息
+	 */
+	getAreasFromLocalStorage() {
+		if (!localStorage.getItem('CCMS_COMPONENTS_AREA_SELECTOR_DATA')) {
+			const areas = require('./areas.json');
+			localStorage.setItem('CCMS_COMPONENTS_AREA_SELECTOR_DATA', angular.toJson(areas));
+		}
+		return angular.fromJson(localStorage.getItem('CCMS_COMPONENTS_AREA_SELECTOR_DATA'));
 	}
 
 	/**

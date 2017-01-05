@@ -28,7 +28,7 @@
 	</section>
 
 	<section class="select-areas">
-		<div class="select-area province">
+		<div class="select-area">
 			<div class="area-title">省选择</div>
 			<div class="area-body">
 				<div class="area" ng-repeat="province in $ctrl.provinces track by $index"
@@ -43,7 +43,7 @@
 			</div>
 		</div>
 
-		<div class="select-area city">
+		<div class="select-area">
 			<div class="area-title">市选择</div>
 			<div class="area-body">
 				<div class="area" ng-repeat="city in $ctrl.citys track by $index"
@@ -55,7 +55,7 @@
 			</div>
 		</div>
 
-		<div class="select-area district">
+		<div class="select-area">
 			<div class="area-title">区县选择</div>
 			<div class="area-body">
 				<div class="area" ng-repeat="district in $ctrl.districts track by $index"
@@ -63,7 +63,8 @@
 					 ng-click="$ctrl.selectDistrict(district)">
 					<cc-checkbox ng-checked="district.selected"
 								 ng-click="$ctrl.changeCheckboxStatus(district, 'district')">
-					</cc-checkbox>{{district.name}}
+					</cc-checkbox>
+					<span class="district">{{district.name}}</span>
 				</div>
 			</div>
 		</div>
