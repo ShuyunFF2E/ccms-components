@@ -9,7 +9,7 @@ import { Inject } from 'angular-es-utils/decorators';
 import { COMMON_AREAS } from './Constant';
 
 
-@Inject('$ccTips', 'modalInstance', 'selectedData')
+@Inject('modalInstance', 'selectedData')
 export default class AreaSelectorCtrl {
 	constructor() {
 		this.init();
@@ -23,7 +23,6 @@ export default class AreaSelectorCtrl {
 		this.analyzeSelectedData();
 		this.initCommonAreas();
 	}
-
 
 	/**
 	 * @name getAreasFromLocalStorage 从localStorage获取全部省、市、区县信息
