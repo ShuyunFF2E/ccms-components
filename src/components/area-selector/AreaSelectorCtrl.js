@@ -324,6 +324,7 @@ export default class AreaSelectorCtrl {
 		});
 		this.selectedAreas = [];
 		this.getSelectedAreasByAreaMap(this.areas, []);
+		this.getCommonAreaSelectedStatus();
 	}
 
 	/**
