@@ -1,7 +1,7 @@
 .area-selector {
   background: #f8f8f8;
   color: #666666;
-  font-family: MicrosoftYaHei;
+  font-family: "Microsoft Yahei", Tahoma, sans-serif;
 
   .cc-checkbox-input {
 	width: 14px;
@@ -10,7 +10,7 @@
   }
 
   .cc-checkbox.indeterminate .cc-checkbox-input:before {
-	left: 20%;
+	left: 18%;
 	top: 20%;
   }
 
