@@ -18,7 +18,7 @@ export default class AreaSelectorCtrl {
 	init() {
 		this.areas = this.getAreasFromLocalStorage();
 		this.provinces = this.areas;
-		this.selectedVaule = this._selectedData;
+		this.selectedValue = this._selectedData;
 		this.selectedAreas = [];
 		this.analyzeSelectedData();
 		this.initCommonAreas();
@@ -63,7 +63,7 @@ export default class AreaSelectorCtrl {
 	 * @name analyzeSelectedData 解析传入的已选择数据
 	 */
 	analyzeSelectedData() {
-		this.selectedVaule.map(element => {
+		this.selectedValue.map(element => {
 			this.selectedAreaArray = [];
 			const selectedAreas = element.split(',');
 			this.analyzeArea(selectedAreas, 0, this.areas);
