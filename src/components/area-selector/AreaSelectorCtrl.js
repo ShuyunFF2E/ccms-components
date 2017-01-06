@@ -58,6 +58,11 @@ export default class AreaSelectorCtrl {
 		});
 	}
 
+	/**
+	 * @name getCommonAreasTree 得到选中区域Tree
+	 * @param areaIdArray <array> 被逗号分隔后的数组
+	 * @param areaTrees <object> 存放选中区域的Tree
+	 */
 	getCommonAreasTree(areaIdArray, areaTrees) {
 		const area = this.areas.find(item => item.id === areaIdArray[0]);
 		if (areaIdArray.length === 1) {
@@ -346,6 +351,10 @@ export default class AreaSelectorCtrl {
 			}
 			this.changeChildrenAreaStatus(selectCommonArea, commonArea.selected);
 		});
+		if (commonArea.children[0].parentId) {
+			const selectedProvince = this.areas.find(item => item.id === commonArea.children[0].parentId);
+			this.analyzeAreaSelectedStatusByChildren(selectedProvince);
+		}
 		this.selectedAreas = [];
 		this.getSelectedAreasByAreaMap(this.areas, []);
 		this.getCommonAreaSelectedStatus();
