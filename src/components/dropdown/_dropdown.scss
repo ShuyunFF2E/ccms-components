@@ -1,0 +1,13 @@
+cc-dropdown, [cc-dropdown] {
+	&.dropdown-opened {
+		> .dropdown-panel {
+			display: block;
+		}
+	}
+	&.dropdown-closed {
+		> .dropdown-panel {
+			display: none;
+		}
+	}
+}
+
