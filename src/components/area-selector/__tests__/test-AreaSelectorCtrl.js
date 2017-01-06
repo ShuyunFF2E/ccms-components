@@ -24,7 +24,7 @@ describe('AreaSelectorCtrl', () => {
 		$controller = null;
 	});
 
-	xit('#analyzeAreaSelectedStatusByChildren', () => {
+	it('#analyzeAreaSelectedStatusByChildren', () => {
 
 		const areaSelectorCtrl = $controller(AreaSelectorCtrl, {'modalInstance': {}, 'selectedData': []});
 		const selectedArea = {
