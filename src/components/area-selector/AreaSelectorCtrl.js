@@ -351,6 +351,18 @@ export default class AreaSelectorCtrl {
 		} else {
 			this.setSelectedAndSelectedAll(commonArea, true, true);
 		}
+		this.setCommonAreaStatus(commonArea);
+		this.getParentSelectedStatus(commonArea);
+		this.selectedAreas = [];
+		this.getSelectedAreasByAreaMap(this.areas, []);
+		this.getCommonAreaSelectedStatus();
+	}
+
+	/**
+	 * @name setCommonAreaStatus 设置被选择常用区域的状态
+	 * @param commonArea <object> 被选择的常用区域
+	 */
+	setCommonAreaStatus(commonArea) {
 		commonArea.children.map(area => {
 			let selectCommonArea = {};
 			if (area.parentId) {
@@ -361,10 +373,6 @@ export default class AreaSelectorCtrl {
 			}
 			this.changeChildrenAreaStatus(selectCommonArea, commonArea.selected);
 		});
-		this.getParentSelectedStatus(commonArea);
-		this.selectedAreas = [];
-		this.getSelectedAreasByAreaMap(this.areas, []);
-		this.getCommonAreaSelectedStatus();
 	}
 
 	/**
