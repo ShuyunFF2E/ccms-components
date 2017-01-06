@@ -50,12 +50,30 @@ export default class AreaSelectorCtrl {
 		this.commonAreas.map(commonArea => {
 			let areaTrees = [];
 			commonArea.subArea.map(areaId => {
-				const area = this.areas.find(item => item.id === areaId);
-				areaTrees.push({id: area.id, name: area.name, selected: area.selected, selectedAll: area.selectedAll});
+				const areaIdArray = areaId.split(',');
+				this.getCommonAreasTree(areaIdArray, areaTrees);
 			});
 			commonArea.children = areaTrees;
 			this.analyzeAreaSelectedStatusByChildren(commonArea);
 		});
+	}
+
+	getCommonAreasTree(areaIdArray, areaTrees) {
+		const area = this.areas.find(item => item.id === areaIdArray[0]);
+		if (areaIdArray.length === 1) {
+			areaTrees.push({id: area.id, name: area.name, selected: area.selected, selectedAll: area.selectedAll});
+		} else {
+			const subArea = area.children.find(item => item.id === areaIdArray[1]);
+			areaTrees.push(
+				{
+					id: subArea.id,
+					name: subArea.name,
+					selected: subArea.selected,
+					selectedAll: subArea.selectedAll,
+					parentId: area.id
+				}
+			);
+		}
 	}
 
 	/**
@@ -319,7 +337,13 @@ export default class AreaSelectorCtrl {
 			this.setSelectedAndSelectedAll(commonArea, true, true);
 		}
 		commonArea.children.map(area => {
-			let selectCommonArea = this.areas.find(item => item.id === area.id);
+			let selectCommonArea = {};
+			if (area.parentId) {
+				const selectedProvince = this.areas.find(item => item.id === area.parentId);
+				selectCommonArea = selectedProvince.children.find(item => item.id === area.id);
+			} else {
+				selectCommonArea = this.areas.find(item => item.id === area.id);
+			}
 			this.changeChildrenAreaStatus(selectCommonArea, commonArea.selected);
 		});
 		this.selectedAreas = [];
