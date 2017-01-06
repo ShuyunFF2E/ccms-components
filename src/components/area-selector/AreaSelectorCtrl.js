@@ -69,15 +69,7 @@ export default class AreaSelectorCtrl {
 			areaTrees.push({id: area.id, name: area.name, selected: area.selected, selectedAll: area.selectedAll});
 		} else {
 			const subArea = area.children.find(item => item.id === areaIdArray[1]);
-			areaTrees.push(
-				{
-					id: subArea.id,
-					name: subArea.name,
-					selected: subArea.selected,
-					selectedAll: subArea.selectedAll,
-					parentId: area.id
-				}
-			);
+			areaTrees.push({id: subArea.id, name: subArea.name, selected: subArea.selected, selectedAll: subArea.selectedAll, parentId: area.id});
 		}
 	}
 
