@@ -5,8 +5,8 @@
  */
 
 const DEFAULT_OPTIONS = {
-	openText: '开',
-	closeText: '关'
+	openText: '已开启',
+	closeText: '已关闭'
 };
 
 export default class SwitchButtonController {
@@ -24,6 +24,11 @@ export default class SwitchButtonController {
 
 	get _state() {
 		return this.ngModel === this.ngTrueValue;
+	}
+	get _width() {
+		let openTextWidth = (this.openText.replace(/[\u4e00-\u9fa5]/g, '**')).length;
+		let closeTextWidth = (this.closeText.replace(/[\u4e00-\u9fa5]/g, '**')).length;
+		return (Math.floor(Math.max(openTextWidth, closeTextWidth) / 2) + 3) + 'em';
 	}
 
 	/**
