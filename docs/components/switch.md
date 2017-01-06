@@ -18,7 +18,6 @@ maintainer: jianzhe.ding
 * ng-false-value `Any` (default: false) [Ref Angular Doc](https://docs.angularjs.org)
 * open-text `string` text of switch opened
 * close-text `string` text of switch closed
-* fontSize `string` font size
 
 ## Note
 * `ng-model` is required.

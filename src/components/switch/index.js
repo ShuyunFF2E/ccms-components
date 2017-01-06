@@ -20,8 +20,7 @@ const componentSetting = {
 		ngFalseValue: '<?',
 		ngDisabled: '<?',
 		openText: '@?',
-		closeText: '@?',
-		fontSize: '@?'
+		closeText: '@?'
 	},
 	require: {
 		ngModelController: '?ngModel'
