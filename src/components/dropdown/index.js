@@ -1,5 +1,7 @@
 import angular from 'angular';
 
+import './_dropdown.scss';
+
 import DropdownCtrl from './DropdownCtrl';
 import DropdownToggleCtrl from './DropdownToggleCtrl';
 import DropdownPanelCtrl from './DropdownPanelCtrl';

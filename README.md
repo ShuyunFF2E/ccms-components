@@ -39,13 +39,21 @@ angular.module('app', [ngResource, uiRouter, ccmsComponents]);
 <script src='/node_modules/ccms-components.js'></script>
 ```
 
-> #### 使用 ccms-portal 的项目不需要重复打包 ccms-components
+### 注意事项
 
-> 由于 ccms-portal 中已经引入 ccms-components，所以相关项目在使用 webpack 打包时可忽略 ccms-components，配置如下：
+* 使用 ccms-portal 的项目不需要重复打包 ccms-components。
 
-> ```js
-> externals: {'ccms-components': '\'ccms.components\''}
-> ```
+  由于 ccms-portal 中已经引入 ccms-components，所以相关项目在使用 webpack 打包时可忽略 ccms-components，配置如下：
+
+  ```js
+  externals: {'ccms-components': '\'ccms.components\''}
+  ```
+
+* 在 console 中运行下面这条语句可以查看 ccms-components 版本：
+
+  ```
+  angular.module('ccms.components').version
+  ```
 
 ## 贡献代码
 

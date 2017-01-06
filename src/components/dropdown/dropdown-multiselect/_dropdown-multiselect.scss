@@ -75,9 +75,6 @@ cc-dropdown-multiselect {
 	}
 
 	.dropdown-panel {
-		&.hide {
-			display: none !important;
-		}
 		> .content {
 			position: absolute;
 			top: 100%;

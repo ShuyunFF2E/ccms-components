@@ -1,9 +1,20 @@
+import angular from 'angular';
 import { Inject, Bind } from 'angular-es-utils';
 
 @Inject('$element')
 export default class DropdownToggleCtrl {
+	$onInit() {
+		// 设置初始样式
+		this._initStyles();
+	}
+
 	$postLink() {
 		this.getElement().addEventListener('click', this.toggle);
+	}
+
+	_initStyles() {
+		const element = angular.element(this.getElement());
+		element.toggleClass('dropdown-toggle', true);
 	}
 
 	getElement() {
