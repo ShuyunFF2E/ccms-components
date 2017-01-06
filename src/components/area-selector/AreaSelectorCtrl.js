@@ -351,13 +351,21 @@ export default class AreaSelectorCtrl {
 			}
 			this.changeChildrenAreaStatus(selectCommonArea, commonArea.selected);
 		});
+		this.getParentSelectedStatus(commonArea);
+		this.selectedAreas = [];
+		this.getSelectedAreasByAreaMap(this.areas, []);
+		this.getCommonAreaSelectedStatus();
+	}
+
+	/**
+	 * @name getParentSelectedStatus 获得父亲节点的选择状态
+	 * @param commonArea <object> 常选区域
+	 */
+	getParentSelectedStatus(commonArea) {
 		if (commonArea.children[0].parentId) {
 			const selectedProvince = this.areas.find(item => item.id === commonArea.children[0].parentId);
 			this.analyzeAreaSelectedStatusByChildren(selectedProvince);
 		}
-		this.selectedAreas = [];
-		this.getSelectedAreasByAreaMap(this.areas, []);
-		this.getCommonAreaSelectedStatus();
 	}
 
 	/**
