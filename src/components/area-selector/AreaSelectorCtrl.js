@@ -224,6 +224,15 @@ export default class AreaSelectorCtrl {
 	}
 
 	/**
+	 * @name changeNoLimitStatus 改变“不限”的checkbox的状态
+	 * @param noLimit <object> 被选择的“不限”数据信息
+	 */
+	changeNoLimitStatus(noLimit) {
+		this.changeProvince(noLimit, null);
+		this.selectedCommonArea(noLimit);
+	}
+
+	/**
 	 * @name analyzeAreaSelectedStatusByChildren 解析区域selected状态通过所有孩子区域
 	 * @param selectedArea <object> 被解析的区域
 	 */
@@ -253,9 +262,10 @@ export default class AreaSelectorCtrl {
 	/**
 	 * @name changeProvince 切换选中省份
 	 * @param province <object> 选中的省份
+	 * @param cities <object> 省份对应的城市
 	 */
-	changeProvince(province) {
-		this.citys = province.children;
+	changeProvince(province, cities) {
+		this.citys = cities;
 		this.districts = [];
 		this.selectedProvince = province;
 	}

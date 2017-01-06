@@ -4412,9 +4412,7 @@
 		  {
 			"id": "310101",
 			"name": "黄浦区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "310103",
@@ -4424,37 +4422,27 @@
 		  {
 			"id": "310104",
 			"name": "徐汇区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "310105",
 			"name": "长宁区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "310106",
 			"name": "静安区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "310107",
 			"name": "普陀区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "310108",
 			"name": "闸北区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "310109",
@@ -4511,9 +4499,7 @@
 			"name": "奉贤区",
 			"children": null
 		  }
-		],
-		"selected": true,
-		"selectedAll": false
+		]
 	  },
 	  {
 		"id": "310200",
@@ -4526,9 +4512,7 @@
 		  }
 		]
 	  }
-	],
-	"selected": true,
-	"selectedAll": false
+	]
   },
   {
 	"id": "320000",
@@ -4541,104 +4525,74 @@
 		  {
 			"id": "320101",
 			"name": "市辖区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320102",
 			"name": "玄武区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320103",
 			"name": "白下区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320104",
 			"name": "秦淮区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320105",
 			"name": "建邺区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320106",
 			"name": "鼓楼区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320107",
 			"name": "下关区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320111",
 			"name": "浦口区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320113",
 			"name": "栖霞区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320114",
 			"name": "雨花台区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320115",
 			"name": "江宁区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320116",
 			"name": "六合区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320124",
 			"name": "溧水县",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "320125",
 			"name": "高淳县",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  }
-		],
-		"selected": true,
-		"selectedAll": true
+		]
 	  },
 	  {
 		"id": "320200",
@@ -5182,9 +5136,7 @@
 		  {
 			"id": "321281",
 			"name": "兴化市",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "321282",
@@ -5201,9 +5153,7 @@
 			"name": "姜堰市",
 			"children": null
 		  }
-		],
-		"selected": true,
-		"selectedAll": false
+		]
 	  },
 	  {
 		"id": "321300",
@@ -5212,52 +5162,36 @@
 		  {
 			"id": "321301",
 			"name": "市辖区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "321302",
 			"name": "宿城区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "321311",
 			"name": "宿豫区",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "321322",
 			"name": "沭阳县",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "321323",
 			"name": "泗阳县",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  },
 		  {
 			"id": "321324",
 			"name": "泗洪县",
-			"children": null,
-			"selected": true,
-			"selectedAll": true
+			"children": null
 		  }
-		],
-		"selected": true,
-		"selectedAll": true
+		]
 	  }
-	],
-	"selected": true,
-	"selectedAll": false
+	]
   },
   {
 	"id": "330000",

@@ -20,7 +20,7 @@
 	<section class="common-areas">
 		常用区域：
 		<div class="common-area-content">
-			<div class="common-area" ng-repeat="commonArea in $ctrl.commonAreas track by $index">
+			<div class="common-area" ng-repeat="commonArea in $ctrl.commonAreas | limitTo : 6 track by $index">
 				<cc-checkbox ng-checked="commonArea.selectedAll"
 							 ng-click="$ctrl.selectedCommonArea(commonArea);"
 							 indeterminate="commonArea.selected && !commonArea.selectedAll">
@@ -34,8 +34,17 @@
 		<div class="select-area">
 			<div class="area-title">省选择</div>
 			<div class="area-body">
+				<span>{{$ctrl.noLimitSelected}}</span>
+				<div class="area"
+					 ng-class="{'selected': $ctrl.commonAreas[6].id === $ctrl.selectedProvince.id}"
+					 ng-click="$ctrl.changeProvince($ctrl.commonAreas[6], null)">
+					<cc-checkbox ng-checked="$ctrl.commonAreas[6].selectedAll"
+								 indeterminate="$ctrl.commonAreas[6].selected && !$ctrl.commonAreas[6].selectedAll"
+								 ng-click="$ctrl.changeNoLimitStatus($ctrl.commonAreas[6])"></cc-checkbox>
+					<span ng-bind="$ctrl.commonAreas[6].name"></span>
+				</div>
 				<div class="area" ng-repeat="province in $ctrl.provinces track by $index"
-					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province)">
+					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province, province.children)">
 					<cc-checkbox indeterminate="province.selected && !province.selectedAll"
 								 ng-checked="province.selectedAll" ng-click="$ctrl.changeCheckboxStatus(province, 'province')">
 					</cc-checkbox>
