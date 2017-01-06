@@ -97,16 +97,27 @@ cc-grid {
 
 		.hidden-columns {
 			position: relative;
-			width: 54px;
+			width: 56px;
 			> span {
 				cursor: pointer;
 			}
 			[cc-dropdown-toggle] {
 				color: #0083ba;
-				> .icon-set-up {
+				> .main-icon {
+					@extend .iconfont;
+					@extend .icon-set-up;
 					font-size: 20px;
 				}
-				> .icon-arrow {
+				> .state-icon {
+					@extend .iconfont;
+					@at-root cc-grid .hidden-columns.dropdown-opened .state-icon {
+						@extend .icon-arrow;
+						transform: rotate(180deg);
+					}
+					@at-root cc-grid .hidden-columns.dropdown-closed .state-icon {
+						@extend .icon-arrow;
+					}
+					display: inline-block;
 					margin-left: 2px;
 					vertical-align: 3px;
 					font-size: 12px;
