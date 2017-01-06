@@ -20,10 +20,13 @@
 	<section class="common-areas">
 		常用区域：
 		<div class="common-area-content">
-			<span class="area" ng-repeat="commonArea in $ctrl.commonAreas track by $index">
-				<cc-checkbox ng-checked="commonArea.selectedAll" ng-click="$ctrl.selectedCommonArea(commonArea);"
-							 indeterminate="commonArea.selected && !commonArea.selectedAll"></cc-checkbox>{{commonArea.name}}
-			</span>
+			<div class="common-area" ng-repeat="commonArea in $ctrl.commonAreas track by $index">
+				<cc-checkbox ng-checked="commonArea.selectedAll"
+							 ng-click="$ctrl.selectedCommonArea(commonArea);"
+							 indeterminate="commonArea.selected && !commonArea.selectedAll">
+				</cc-checkbox>
+				<span>{{commonArea.name}}</span>
+   			</div>
 		</div>
 	</section>
 

@@ -9,13 +9,12 @@
 	margin-right: 2px;
   }
 
+  .cc-checkbox.checked .cc-checkbox-input:before {
+	left: 26%;
+  }
   .cc-checkbox.indeterminate .cc-checkbox-input:before {
 	left: 18%;
 	top: 20%;
-  }
-
-  .area:hover {
-	cursor: pointer;
   }
 
   cc-checkbox {
@@ -79,13 +78,11 @@
 
   .common-areas {
 	.common-area-content {
+	  display: flex;
 	  margin-top: 10px;
-	  .area {
+	  .common-area {
 		font-size: 12px;
 		margin-right: 42px;
-	  }
-	  .cc-checkbox-input {
-		margin-right: 8px;
 	  }
 	}
   }
