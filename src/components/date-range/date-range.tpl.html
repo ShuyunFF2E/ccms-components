@@ -6,8 +6,8 @@
 					date-only="ctrl.opts.dateOnly"
 					disabled="ctrl.opts.disabled"
 					range-start="true"
-					on-calendar-open="ctrl.onCalendarOpen(0)"
-					on-calendar-close="ctrl.onCalendarClose(0)"></cc-date-picker>
+					on-calendar-open="ctrl.onCalendarOpen()"
+					on-calendar-close="ctrl.onCalendarClose()"></cc-date-picker>
 	<span class="date-range-sep">-</span>
 	<cc-date-picker ng-model="ctrl.opts.end"
 					min-date="ctrl.opts.start || ctrl.opts.minDate"
@@ -16,6 +16,6 @@
 					date-only="ctrl.opts.dateOnly"
 					disabled="ctrl.opts.disabled"
 					range-end="true"
-					on-calendar-open="ctrl.onCalendarOpen(1)"
-					on-calendar-close="ctrl.onCalendarClose(1)"></cc-date-picker>
+					on-calendar-open="ctrl.onCalendarOpen()"
+					on-calendar-close="ctrl.onCalendarClose()"></cc-date-picker>
 </div>

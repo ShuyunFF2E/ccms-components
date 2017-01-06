@@ -26,6 +26,12 @@
 				disabled="false"
 				on-calendar-open="app.onCalendarOpen()"
 				on-calendar-close="app.onCalendarClose()"></cc-date-picker>
+
+<cc-date-range ng-if="!app.hideDates"
+			   opts="app.anotherRange"
+			   on-calendar-open="app.onCalendarOpen()"
+			   on-calendar-close="app.onCalendarClose()"></cc-date-range>
+
 <pre>
 	  ng-model="app.dateValue"
 	  min-date="app.minDate"
@@ -96,9 +102,6 @@ self.dateRange = {
 			};
 			self.onCalendarClose = function () {
 				self.onCalendarCloseTimes += 1;
-				$timeout(function () {
-					$scope.$apply();
-				});
 			};
 
 			self.dateValue = new Date(2016, 1, 20);

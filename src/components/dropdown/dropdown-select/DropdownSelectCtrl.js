@@ -124,7 +124,7 @@ export default class DropdownSelectCtrl {
 					default:
 				}
 			}
-			scope.$root.$$phase || scope.$apply();
+			scope.$root.$$phase || scope.$digest();
 		};
 
 		this.getScope().$watch(() => this.isActive, (isActive, oldState) => {

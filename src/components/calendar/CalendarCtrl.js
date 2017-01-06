@@ -75,6 +75,7 @@ export default class DatePickerCtrl {
 		this.$element[0].style.display = 'none';
 		document.removeEventListener('click', this.close, false);
 		this.onCalendarClose();
+		this._$scope.$root.$$phase || this._$scope.$apply();
 	}
 
 
@@ -174,6 +175,7 @@ export default class DatePickerCtrl {
 		calendar.style.display = 'block';
 		document.addEventListener('click', this.close, false);
 		this.onCalendarOpen();
+		this._$scope.$root.$$phase || this._$scope.$apply();
 	}
 
 
