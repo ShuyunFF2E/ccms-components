@@ -10,7 +10,6 @@ import ModalService from '../modal/ModalService';
 import bodyTemplate from './area-seletor-body.tpl.html';
 import AreaSelectorController from './AreaSelectorCtrl';
 
-
 const noop = () => {
 };
 
@@ -19,12 +18,21 @@ const noop = () => {
  */
 const AreaSelectorService = {
 
-	areaSelector({scope, title = '地区选择', style = {'max-width': '680px', 'min-height': '420px'}, fullscreen = false, hasFooter = true, body, uid, __body = bodyTemplate, footer, locals, controller = AreaSelectorController, controllerAs = '$ctrl', bindings, onClose = noop}) {
-		return ModalService.modal({ scope, title, style, fullscreen, hasFooter, body, uid, __body, footer, locals, controller, controllerAs, bindings, onClose });
-	},
-
-	confirm(message, onClose = noop) {
-		return ModalService.confirm(message, onClose = noop);
+	areaSelector({scope, locals}) {
+		return ModalService.modal(
+			{
+				scope,
+				title: '地区选择',
+				style: {'max-width': '680px', 'min-height': '420px'},
+				fullscreen: false,
+				hasFooter: true,
+				__body: bodyTemplate,
+				locals,
+				controller: AreaSelectorController,
+				controllerAs: '$ctrl',
+				onClose: noop
+			}
+		);
 	}
 };
 
