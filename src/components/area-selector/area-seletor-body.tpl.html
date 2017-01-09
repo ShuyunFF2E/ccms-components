@@ -1,0 +1,85 @@
+<div class="area-selector">
+
+	<!--<input class="area-search" type="text"-->
+		   <!--placeholder="请输入区域名称">-->
+
+	<section class="selected-area">
+		<div> 已选：</div>
+		<div class="selected-body">
+			<span class="selected-region" ng-repeat="(index, selectedArea) in $ctrl.selectedAreas">
+				<span ng-repeat="area in selectedArea">
+					<span ng-bind="area.name"></span>
+					<span class="separator" ng-show="$index !== selectedArea.length - 1">></span>
+					<span class="iconfont icon-close" ng-show="$index === selectedArea.length - 1"
+						  ng-click="$ctrl.deleteArea(selectedArea, index)"></span>
+				</span>
+			</span>
+		</div>
+	</section>
+
+	<section class="common-areas">
+		常用区域：
+		<div class="common-area-content">
+			<div class="common-area" ng-repeat="commonArea in $ctrl.commonAreas | limitTo : 6 track by $index">
+				<cc-checkbox ng-checked="commonArea.selectedAll"
+							 ng-click="$ctrl.selectedCommonArea(commonArea);"
+							 indeterminate="commonArea.selected && !commonArea.selectedAll">
+				</cc-checkbox>
+				<span>{{commonArea.name}}</span>
+   			</div>
+		</div>
+	</section>
+
+	<section class="select-areas">
+		<div class="select-area">
+			<div class="area-title">省选择</div>
+			<div class="area-body">
+				<span>{{$ctrl.noLimitSelected}}</span>
+				<div class="area"
+					 ng-class="{'selected': $ctrl.commonAreas[6].id === $ctrl.selectedProvince.id}"
+					 ng-click="$ctrl.changeProvince($ctrl.commonAreas[6], null)">
+					<cc-checkbox ng-checked="$ctrl.commonAreas[6].selectedAll"
+								 indeterminate="$ctrl.commonAreas[6].selected && !$ctrl.commonAreas[6].selectedAll"
+								 ng-click="$ctrl.changeNoLimitStatus($ctrl.commonAreas[6])"></cc-checkbox>
+					<span ng-bind="$ctrl.commonAreas[6].name"></span>
+				</div>
+				<div class="area" ng-repeat="province in $ctrl.provinces track by $index"
+					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province, province.children)">
+					<cc-checkbox indeterminate="province.selected && !province.selectedAll"
+								 ng-checked="province.selectedAll" ng-click="$ctrl.changeCheckboxStatus(province, 'province')">
+					</cc-checkbox>
+					<span class="province">{{province.name}}<span>{{selectedProvince.id}}</span>
+						<span class="iconfont icon-rightarrow"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="select-area">
+			<div class="area-title">市选择</div>
+			<div class="area-body">
+				<div class="area" ng-repeat="city in $ctrl.citys track by $index"
+					 ng-class="{'selected': city.id === $ctrl.selectedCity.id}" ng-click="$ctrl.changeCity(city)">
+					<cc-checkbox indeterminate="city.selected && !city.selectedAll " ng-checked="city.selectedAll"
+								 ng-click="$ctrl.changeCheckboxStatus(city, 'city')"></cc-checkbox>
+					<span class="city">{{city.name}}<span class="iconfont icon-rightarrow"></span></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="select-area">
+			<div class="area-title">区县选择</div>
+			<div class="area-body">
+				<div class="area" ng-repeat="district in $ctrl.districts track by $index"
+					 ng-class="{'selected': district.id === $ctrl.selectedDistrict.id}"
+					 ng-click="$ctrl.selectDistrict(district)">
+					<cc-checkbox ng-checked="district.selected"
+								 ng-click="$ctrl.changeCheckboxStatus(district, 'district')">
+					</cc-checkbox>
+					<span class="district">{{district.name}}</span>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</div>
