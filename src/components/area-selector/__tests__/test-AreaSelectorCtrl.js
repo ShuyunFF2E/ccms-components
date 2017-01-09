@@ -8,11 +8,13 @@ import AreaSelectorCtrl from '../AreaSelectorCtrl';
 import angular from 'angular';
 
 import {assert} from 'chai';
+import sinon from 'sinon';
 
 describe('AreaSelectorCtrl', () => {
 
 	let $controller;
 	let areaSelectorCtrl;
+	let spy;
 
 	beforeEach(() => {
 		angular.mock.module('app');
@@ -20,6 +22,7 @@ describe('AreaSelectorCtrl', () => {
 			$controller = _$controller_;
 		});
 		areaSelectorCtrl = $controller(AreaSelectorCtrl, {'modalInstance': {}, 'selectedData': []});
+		spy = sinon.spy();
 	});
 
 	afterEach(() => {
@@ -58,5 +61,7 @@ describe('AreaSelectorCtrl', () => {
 	it('#initCommonAreas', () => {
 		areaSelectorCtrl.initCommonAreas();
 		assert.lengthOf(areaSelectorCtrl.commonAreas, 7);
+		spy(areaSelectorCtrl, 'getCommonAreaSelectedStatus');
+		sinon.assert.calledOnce(spy);
 	});
 });
