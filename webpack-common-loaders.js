@@ -27,10 +27,6 @@ module.exports = [
 		exclude: /(node_modules|bower_components)/
 	},
 	{
-		test: /\.json$/,
-		loader: 'json-loader'
-	},
-	{
 		test: /\.(jpe?g|png|gif)$/i,
 		loaders: [
 			'file?hash=sha512&digest=hex&name=[hash:8].[ext]'
