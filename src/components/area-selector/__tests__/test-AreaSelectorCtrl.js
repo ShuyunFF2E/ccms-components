@@ -12,12 +12,14 @@ import {assert} from 'chai';
 describe('AreaSelectorCtrl', () => {
 
 	let $controller;
+	let areaSelectorCtrl;
 
 	beforeEach(() => {
 		angular.mock.module('app');
 		angular.mock.inject(_$controller_ => {
 			$controller = _$controller_;
 		});
+		areaSelectorCtrl = $controller(AreaSelectorCtrl, {'modalInstance': {}, 'selectedData': []});
 	});
 
 	afterEach(() => {
@@ -25,8 +27,6 @@ describe('AreaSelectorCtrl', () => {
 	});
 
 	it('#analyzeAreaSelectedStatusByChildren', () => {
-
-		const areaSelectorCtrl = $controller(AreaSelectorCtrl, {'modalInstance': {}, 'selectedData': []});
 		const selectedArea = {
 			children: [
 				{id: '310000', name: '上海市', selected: true, selectedAll: false},
@@ -39,5 +39,24 @@ describe('AreaSelectorCtrl', () => {
 		areaSelectorCtrl.analyzeAreaSelectedStatusByChildren(selectedArea);
 		assert.isTrue(selectedArea.selected);
 		assert.isFalse(selectedArea.selectedAll);
+	});
+
+	it('#isSelected', () => {
+		const elementSelected = { id: '1100', selected: true };
+		const elementNotSelected = { id: '1100', selected: false };
+		assert.isTrue(areaSelectorCtrl.isSelected(elementSelected));
+		assert.isFalse(areaSelectorCtrl.isSelected(elementNotSelected));
+	});
+
+	it('#isSelectedAll', () => {
+		const elementSelectedAll = { id: '1100', selectedAll: true };
+		const elementNotSelectedAll = { id: '1100', selectedAll: false };
+		assert.isTrue(areaSelectorCtrl.isSelectedAll(elementSelectedAll));
+		assert.isFalse(areaSelectorCtrl.isSelectedAll(elementNotSelectedAll));
+	});
+
+	it('#initCommonAreas', () => {
+		areaSelectorCtrl.initCommonAreas();
+		assert.lengthOf(areaSelectorCtrl.commonAreas, 7);
 	});
 });
