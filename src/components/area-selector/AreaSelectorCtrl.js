@@ -79,7 +79,7 @@ export default class AreaSelectorCtrl {
 	analyzeSelectedData() {
 		this.selectedValue.map(element => {
 			this.selectedAreaArray = [];
-			const selectedAreas = element.split(',');
+			const selectedAreas = element.id.split(',');
 			this.analyzeArea(selectedAreas, 0, this.areas);
 		});
 	}
