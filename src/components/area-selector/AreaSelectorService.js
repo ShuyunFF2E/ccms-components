@@ -18,16 +18,16 @@ const noop = () => {
  */
 const AreaSelectorService = {
 
-	areaSelector({scope, areaSelectorData}) {
+	areaSelector({areaSelectorData}) {
+
 		return ModalService.modal(
 			{
-				scope,
 				title: '地区选择',
 				style: {'max-width': '680px', 'min-height': '420px'},
 				fullscreen: false,
 				hasFooter: true,
 				__body: bodyTemplate,
-				locals: areaSelectorData,
+				locals: {selectedData: areaSelectorData},
 				controller: AreaSelectorController,
 				controllerAs: '$ctrl',
 				onClose: noop

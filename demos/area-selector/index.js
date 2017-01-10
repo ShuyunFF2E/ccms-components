@@ -44,10 +44,8 @@
 				var areaSelectorInstance = $ccAreaSelector
 
 					.areaSelector({
-						scope: $scope,
-						areaSelectorData: {
-							selectedData: INPUT
-						}
+						areaSelectorData: INPUT
+
 					})
 
 					.open().result.then(function(response) {
