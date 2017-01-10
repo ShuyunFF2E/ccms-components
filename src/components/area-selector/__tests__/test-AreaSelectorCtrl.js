@@ -380,4 +380,55 @@ describe('AreaSelectorCtrl', () => {
 			'selectedAll': true
 		});
 	});
+
+	it('#selectedCommonArea', () => {
+		areaSelectorCtrl.setSelectedAndSelectedAll = sinon.spy();
+		areaSelectorCtrl.setCommonAreaStatus = sinon.spy();
+		areaSelectorCtrl.getParentSelectedStatus = sinon.spy();
+		areaSelectorCtrl.getSelectedAreasByAreaMap = sinon.spy();
+		areaSelectorCtrl.getCommonAreaSelectedStatus = sinon.spy();
+		areaSelectorCtrl.selectedCommonArea({id: '310000', selectedAll: true});
+		assert.deepEqual(areaSelectorCtrl.selectedAreas, []);
+		sinon.assert.calledWith(areaSelectorCtrl.setSelectedAndSelectedAll, {id: '310000', selectedAll: true}, false, false);
+		sinon.assert.calledOnce(areaSelectorCtrl.setCommonAreaStatus);
+		sinon.assert.calledOnce(areaSelectorCtrl.getParentSelectedStatus);
+		sinon.assert.calledOnce(areaSelectorCtrl.getSelectedAreasByAreaMap);
+		sinon.assert.calledOnce(areaSelectorCtrl.getCommonAreaSelectedStatus);
+		areaSelectorCtrl.selectedCommonArea({id: '310000', selectedAll: false});
+		sinon.assert.calledWith(areaSelectorCtrl.setSelectedAndSelectedAll, {id: '310000', selectedAll: false}, true, true);
+	});
+
+	it('#setCommonAreaStatus', () => {
+		const commonAreas = [
+			{
+				'id': 1,
+				'name': '江浙沪',
+				'subArea': ['310000'],
+				'children': [{'id': '310000'}],
+				selected: true
+			},
+			{
+				'id': 2,
+				'name': '珠三角',
+				'subArea': ['310000,310100'],
+				'children': [{'id': '310100', 'parentId': '310000'}],
+				selected: false
+			}
+		];
+		areaSelectorCtrl.changeChildrenAreaStatus = sinon.spy();
+		areaSelectorCtrl.areas = areas;
+		areaSelectorCtrl.setCommonAreaStatus(commonAreas[0]);
+		sinon.assert.calledWith(areaSelectorCtrl.changeChildrenAreaStatus, areas[0], true);
+		areaSelectorCtrl.setCommonAreaStatus(commonAreas[1]);
+		sinon.assert.calledWith(areaSelectorCtrl.changeChildrenAreaStatus, areas[0].children[0], false);
+	});
+
+	it('#getAreasFromLocalStorage', () => {
+		localStorage.getItem = sinon.stub();
+		localStorage.setItem = sinon.spy();
+		localStorage.getItem.withArgs('CCMS_COMPONENTS_AREA_SELECTOR_DATA').onFirstCall().returns(null).onSecondCall().returns(2);
+		assert.equal(areaSelectorCtrl.getAreasFromLocalStorage(), 2);
+		sinon.assert.calledTwice(localStorage.getItem);
+		sinon.assert.calledOnce(localStorage.setItem);
+	});
 });
