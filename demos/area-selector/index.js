@@ -45,7 +45,7 @@
 
 					.areaSelector({
 						scope: $scope,
-						locals: {
+						areaSelectorData: {
 							selectedData: INPUT
 						}
 					})
