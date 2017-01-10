@@ -220,7 +220,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
 	const WeChatQuerySchema = `
 		wechat:wxcrm_ccms(
 	    platCustNo: "${nick}"
-	    platId: "${platName}"
+	    platId: "taobao"
 	    platShopId: "${shopId}"
 	  ){
 	    platId
