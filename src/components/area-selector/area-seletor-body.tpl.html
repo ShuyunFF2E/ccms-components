@@ -5,7 +5,7 @@
 
 	<section class="selected-area">
 		<div> 已选：</div>
-		<div class="selected-body">
+		<div class="selected-body" cc-nice-scroll>
 			<span class="selected-region" ng-repeat="(index, selectedArea) in $ctrl.selectedAreas">
 				<span ng-repeat="area in selectedArea">
 					<span ng-bind="area.name"></span>
@@ -33,7 +33,7 @@
 	<section class="select-areas">
 		<div class="select-area">
 			<div class="area-title">省选择</div>
-			<div class="area-body">
+			<div class="area-body" cc-nice-scroll>
 				<span>{{$ctrl.noLimitSelected}}</span>
 				<div class="area"
 					 ng-class="{'selected': $ctrl.commonAreas[6].id === $ctrl.selectedProvince.id}"
@@ -57,7 +57,7 @@
 
 		<div class="select-area">
 			<div class="area-title">市选择</div>
-			<div class="area-body">
+			<div class="area-body" cc-nice-scroll>
 				<div class="area" ng-repeat="city in $ctrl.citys track by $index"
 					 ng-class="{'selected': city.id === $ctrl.selectedCity.id}" ng-click="$ctrl.changeCity(city)">
 					<cc-checkbox indeterminate="city.selected && !city.selectedAll " ng-checked="city.selectedAll"
@@ -69,7 +69,7 @@
 
 		<div class="select-area">
 			<div class="area-title">区县选择</div>
-			<div class="area-body">
+			<div class="area-body" cc-nice-scroll>
 				<div class="area" ng-repeat="district in $ctrl.districts track by $index"
 					 ng-class="{'selected': district.id === $ctrl.selectedDistrict.id}"
 					 ng-click="$ctrl.selectDistrict(district)">
