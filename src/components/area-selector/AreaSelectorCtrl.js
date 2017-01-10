@@ -322,18 +322,6 @@ export default class AreaSelectorCtrl {
 	}
 
 	/**
-	 * @name changeProvinceArea 在常用区域选择对应省份
-	 * @param commonArea <object> 选中的常用区域
-	 */
-	changeProvinceArea(commonArea) {
-		this.provinces = [];
-		commonArea.map(area => {
-			const province = this.areas.find(item => item.id === area);
-			this.provinces.push(province);
-		});
-	}
-
-	/**
 	 * @name selectedCommonArea 选择常用区域
 	 * @param commonArea <object> 被选择的常用区域
 	 */
