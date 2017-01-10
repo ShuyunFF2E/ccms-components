@@ -123,14 +123,14 @@ describe('AreaSelectorCtrl', () => {
 
 	it('#initCommonAreas', () => {
 		areaSelectorCtrl.initCommonAreas();
-		assert.lengthOf(areaSelectorCtrl.commonAreas, 7);
+		assert.lengthOf(areaSelectorCtrl.commonAreas, 6);
 		spy(areaSelectorCtrl, 'getCommonAreaSelectedStatus');
 		sinon.assert.calledOnce(spy);
 	});
 
 	it('#initCommonAreas', () => {
 		areaSelectorCtrl.initCommonAreas();
-		assert.lengthOf(areaSelectorCtrl.commonAreas, 7);
+		assert.lengthOf(areaSelectorCtrl.commonAreas, 6);
 		spy(areaSelectorCtrl, 'getCommonAreaSelectedStatus');
 		sinon.assert.calledOnce(spy);
 	});
@@ -214,19 +214,6 @@ describe('AreaSelectorCtrl', () => {
 		areaSelectorCtrl.changeCity(city);
 		assert.deepEqual(areaSelectorCtrl.districts, city.children);
 		assert.deepEqual(areaSelectorCtrl.selectedCity, city);
-	});
-
-	it('#changeNoLimitStatus', () => {
-		areaSelectorCtrl.changeProvince = sinon.spy();
-		areaSelectorCtrl.selectedCommonArea = sinon.spy();
-		const noLimit = {
-			'id': 7,
-			'name': '不限',
-			'subArea': ['110000', '120000', '130000', '140000', '150000', '210000', '220000', '230000']
-		};
-		areaSelectorCtrl.changeNoLimitStatus(noLimit);
-		sinon.assert.calledOnce(areaSelectorCtrl.changeProvince);
-		sinon.assert.calledOnce(areaSelectorCtrl.selectedCommonArea);
 	});
 
 	it('#changeParentAreaStatus', () => {
