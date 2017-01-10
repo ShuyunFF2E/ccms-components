@@ -34,17 +34,8 @@
 		<div class="select-area">
 			<div class="area-title">省选择</div>
 			<div class="area-body" cc-nice-scroll>
-				<span>{{$ctrl.noLimitSelected}}</span>
-				<div class="area"
-					 ng-class="{'selected': $ctrl.commonAreas[6].id === $ctrl.selectedProvince.id}"
-					 ng-click="$ctrl.changeProvince($ctrl.commonAreas[6], null)">
-					<cc-checkbox ng-checked="$ctrl.commonAreas[6].selectedAll"
-								 indeterminate="$ctrl.commonAreas[6].selected && !$ctrl.commonAreas[6].selectedAll"
-								 ng-click="$ctrl.changeNoLimitStatus($ctrl.commonAreas[6])"></cc-checkbox>
-					<span ng-bind="$ctrl.commonAreas[6].name"></span>
-				</div>
 				<div class="area" ng-repeat="province in $ctrl.provinces track by $index"
-					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province, province.children)">
+					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province)">
 					<cc-checkbox indeterminate="province.selected && !province.selectedAll"
 								 ng-checked="province.selectedAll" ng-click="$ctrl.changeCheckboxStatus(province, 'province')">
 					</cc-checkbox>
