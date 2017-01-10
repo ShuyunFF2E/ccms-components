@@ -11,7 +11,7 @@ export default class DropdownCtrl {
 	}
 
 	$onInit() {
-		if (typeof this.autoClose !== 'undefined' && this.autoClose !== false) {
+		if (this.autoClose !== false) {
 			this.autoClose = true;
 		}
 
