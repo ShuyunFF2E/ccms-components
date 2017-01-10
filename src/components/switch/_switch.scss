@@ -20,6 +20,7 @@ cc-switch-button {
 	flex-flow: row nowrap;
 	font-size: $defaultFontSize;
 	width: 6em;
+	line-height: 1.67em;
 	min-width: $minWidth;
 	min-height: $minHeight;
 	justify-content: space-between;
