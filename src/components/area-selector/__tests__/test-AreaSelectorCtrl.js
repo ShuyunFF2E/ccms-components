@@ -22,7 +22,7 @@ describe('AreaSelectorCtrl', () => {
 		angular.mock.inject(_$controller_ => {
 			$controller = _$controller_;
 		});
-		areaSelectorCtrl = $controller(AreaSelectorCtrl, {'modalInstance': { ok: function() {}}, 'selectedData': []});
+		areaSelectorCtrl = $controller(AreaSelectorCtrl, {'modalInstance': {ok: function() {}}, 'selectedData': []});
 		spy = sinon.spy();
 		areas = [
 			{
