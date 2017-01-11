@@ -22,7 +22,7 @@ describe('AreaSelectorCtrl', () => {
 		angular.mock.inject(_$controller_ => {
 			$controller = _$controller_;
 		});
-		areaSelectorCtrl = $controller(AreaSelectorCtrl, {'modalInstance': {}, 'selectedData': []});
+		areaSelectorCtrl = $controller(AreaSelectorCtrl, {'modalInstance': { ok: function() {}}, 'selectedData': []});
 		spy = sinon.spy();
 		areas = [
 			{
@@ -291,7 +291,7 @@ describe('AreaSelectorCtrl', () => {
 		sinon.assert.callCount(areaSelectorCtrl.changeParentAreaStatus, 1);
 	});
 
-	xit('#ok', () => {
+	it('#ok', () => {
 		areaSelectorCtrl.getSelectedValue = sinon.spy();
 		areaSelectorCtrl.selectedAreas = [
 			[{id: '310000'}, {id: '310100'}, {id: '310101'}],
