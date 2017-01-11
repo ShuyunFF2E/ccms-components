@@ -398,6 +398,34 @@ describe('AreaSelectorCtrl', () => {
 		sinon.assert.calledWith(areaSelectorCtrl.setSelectedAndSelectedAll, {id: '310000', selectedAll: false}, true, true);
 	});
 
+	it('#getSelectedAreasByAreaMap', () => {
+		const areasArr = [
+			{
+				'id': '310000',
+				'name': '上海市',
+				'selected': true,
+				'selectedAll': false,
+				'children': [
+					{
+						'id': '310100',
+						'name': '市辖区',
+						'selected': false,
+						'selectedAll': true
+					}
+				]
+			},
+			{
+				'id': '320000',
+				'name': '江苏省',
+				'selected': true,
+				'selectedAll': true
+			}
+		];
+		areaSelectorCtrl.selectedAreas = [];
+		areaSelectorCtrl.getSelectedAreasByAreaMap(areasArr, []);
+		assert.deepEqual(areaSelectorCtrl.selectedAreas, [[{id: '310000', name: '上海市'}, {id: '310100', name: '市辖区'}], [{id: '320000', name: '江苏省'}]]);
+	});
+
 	it('#setCommonAreaStatus', () => {
 		const commonAreas = [
 			{
@@ -431,4 +459,5 @@ describe('AreaSelectorCtrl', () => {
 		sinon.assert.calledTwice(localStorage.getItem);
 		sinon.assert.calledOnce(localStorage.setItem);
 	});
+
 });
