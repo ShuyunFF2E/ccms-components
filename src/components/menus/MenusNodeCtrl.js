@@ -18,11 +18,6 @@ export default class MenusNodeCtrl {
 				dispatchMenuChange(menu);
 			}
 		}, 0);
-		this._$scope.$on('$stateChangeSuccess', (event, toState) => {
-			if (Array.isArray(this.list)) {
-				this.toggle = this.list.some(item => this._$state.includes(item.state));
-			}
-		});
 	}
 
 	/**
@@ -50,8 +45,12 @@ export default class MenusNodeCtrl {
 	 * @returns {*}
 	 */
 	getMenu(menus = []) {
-		return Array.isArray(menus) ? menus.find(item => {
-			return item.state === this._$state.current.name;
-		}) : {};
+		if (Array.isArray(menus)) {
+			return menus.find(item => {
+				return item.state === this._$state.current.name;
+			});
+		} else {
+			return {};
+		}
 	}
 }

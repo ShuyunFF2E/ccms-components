@@ -97,15 +97,38 @@ cc-grid {
 
 		.hidden-columns {
 			position: relative;
-			width: 54px;
+			width: 56px;
 			> span {
 				cursor: pointer;
 			}
+			[cc-dropdown-toggle] {
+				color: #0083ba;
+				> .main-icon {
+					@extend .iconfont;
+					@extend .icon-set-up;
+					font-size: 20px;
+				}
+				> .state-icon {
+					@extend .iconfont;
+					@at-root cc-grid .hidden-columns.dropdown-opened .state-icon {
+						@extend .icon-arrow;
+						transform: rotate(180deg);
+					}
+					@at-root cc-grid .hidden-columns.dropdown-closed .state-icon {
+						@extend .icon-arrow;
+					}
+					display: inline-block;
+					margin-left: 2px;
+					vertical-align: 3px;
+					font-size: 12px;
+				}
+			}
 			[cc-dropdown-panel] {
 				position: absolute;
-				right: 1px;
+				top: 100%;
+				right: -1px;
 				z-index: 1;
-				padding: 10px;
+				width: 156px;
 				border: solid 1px #ccc;
 				background-color: #fff;
 				&.hide {
@@ -114,8 +137,12 @@ cc-grid {
 				li {
 					white-space: nowrap;
 					cursor: pointer;
-					label {
-						cursor: inherit;
+					&:hover {
+						background: #eef8fc;
+					}
+					cc-checkbox {
+						width: 100%;
+						padding: 8px;
 					}
 				}
 			}

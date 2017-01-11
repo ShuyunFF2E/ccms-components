@@ -13,17 +13,14 @@
 	></span>
 </th>
 <th class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns" cc-dropdown>
-	<span cc-dropdown-toggle><span class="iconfont icon-set-up"></span><span class="iconfont icon-arrow"></span></span>
-	<div class="dropdown-panel hide" cc-dropdown-panel>
+	<span cc-dropdown-toggle><span class="main-icon"></span><span class="state-icon"></span></span>
+	<div cc-dropdown-panel>
 		<ul>
 			<li ng-repeat="column in $ctrl.opts.columnsDef track by $index">
-				<label>
-					<input type="checkbox"
-							ng-disabled="!column.isHidden && $ctrl.getShownColumnsCount() === 1"
-							ng-checked="!column.isHidden"
-							ng-click="$ctrl.toggleColumnByIndex($index)">
-					<span ng-bind="column.displayName"></span>
-				</label>
+				<cc-checkbox
+						ng-disabled="!column.isHidden && $ctrl.getShownColumnsCount() === 1"
+						ng-checked="!column.isHidden"
+						ng-click="$ctrl.toggleColumnByIndex($index)">{{ column.displayName }}</cc-checkbox>
 			</li>
 		</ul>
 	</div>
