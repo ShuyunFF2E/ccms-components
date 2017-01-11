@@ -15,10 +15,11 @@
 
   .cc-checkbox.checked .cc-checkbox-input:before {
 	left: 26%;
+	top: 0;
   }
   .cc-checkbox.indeterminate .cc-checkbox-input:before {
 	left: 18%;
-	top: 20%;
+	top: 18%;
   }
 
   cc-checkbox {
