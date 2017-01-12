@@ -12,20 +12,29 @@ import { COMMON_AREAS } from './Constant';
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData')
 export default class AreaSelectorCtrl {
 
-	constructor() {
-		this.init();
-		this._modalInstance._renderDeferred.promise.then(() => {
-			this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
-		});
-	}
-
-	init() {
+	$onInit() {
 		this.areas = this.getAreasFromLocalStorage();
 		this.provinces = this.areas;
 		this.selectedValue = this._selectedData;
 		this.selectedAreas = [];
 		this.analyzeSelectedData();
 		this.initCommonAreas();
+		this.validateAreasData();
+	}
+
+	validateAreasData() {
+		setTimeout(() => {
+			this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
+		}, 0);
+	}
+
+	/**
+	 * @name showErrorMessage 展示错误信息
+	 */
+	showErrorMessage() {
+		this._modalInstance._renderDeferred.promise.then(() => {
+			this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
+		});
 	}
 
 	/**

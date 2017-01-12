@@ -22,7 +22,22 @@ describe('AreaSelectorCtrl', () => {
 		angular.mock.inject(_$controller_ => {
 			$controller = _$controller_;
 		});
-		areaSelectorCtrl = $controller(AreaSelectorCtrl, {'modalInstance': {ok: function() {}}, 'selectedData': []});
+
+		areaSelectorCtrl = $controller(AreaSelectorCtrl, {
+			'modalInstance': {
+				ok: function() {},
+				_renderDeferred: {
+					promise: () => Promise.resolve()
+				}
+			},
+			'selectedData': [],
+			'$ccTips': {
+				error: () => Promise.resolve()
+			},
+			$element: {
+
+			}
+		});
 		spy = sinon.spy();
 		areas = [
 			{
@@ -92,7 +107,7 @@ describe('AreaSelectorCtrl', () => {
 		$controller = null;
 	});
 
-	xit('#analyzeAreaSelectedStatusByChildren', () => {
+	it('#analyzeAreaSelectedStatusByChildren', () => {
 		const selectedArea = {
 			children: [
 				{id: '310000', name: '上海市', selected: true, selectedAll: false},
@@ -151,7 +166,7 @@ describe('AreaSelectorCtrl', () => {
 	it('#setAreaStatus', () => {
 		areaSelectorCtrl.selectedAreaArray = [];
 		spy(areaSelectorCtrl, 'setSelectedAndSelectedAll');
-		assert.lengthOf(areaSelectorCtrl.setAreaStatus('310000', areas, true), 2);
+		assert.lengthOf(areaSelectorCtrl.setAreaStatus('310000', areas, true, ''), 2);
 		assert.lengthOf(areaSelectorCtrl.selectedAreaArray, 1);
 		sinon.assert.calledOnce(spy);
 	});
@@ -266,7 +281,7 @@ describe('AreaSelectorCtrl', () => {
 		areaSelectorCtrl.setAreaStatus = sinon.spy();
 		areaSelectorCtrl.setSelectedValue = sinon.spy();
 		areaSelectorCtrl.setSelectedAllValue = sinon.spy();
-		areaSelectorCtrl.analyzeArea(['110000', '110100', '110103'], 0, areaSelectorCtrl.areas);
+		areaSelectorCtrl.analyzeArea(['110000', '110100', '110103'], 0, areaSelectorCtrl.areas, '');
 		sinon.assert.callCount(areaSelectorCtrl.setAreaStatus, 3);
 		sinon.assert.callCount(areaSelectorCtrl.setSelectedValue, 1);
 		sinon.assert.callCount(areaSelectorCtrl.setSelectedAllValue, 1);
