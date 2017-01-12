@@ -25,15 +25,10 @@
 
     <!--分页-->
     <footer class="footer" ng-if="$ctrl.opts.showPagination">
-        <article class="page-con">
-            <span ng-show="$ctrl.selectedItems.length">已选<span ng-bind="$ctrl.selectedItems.length"
-                                                               class="font-num"></span>条</span>
-            <span>共<span ng-bind="$ctrl.opts.pager.totals" class="font-num"></span>条</span>
-            <div class="reload" ng-click="$ctrl.onPagerChange($ctrl.opts.pager.pageNum, $ctrl.opts.pager.pageSize)">
-                <p class="p-reload-icon"></p>
-                <p>刷新</p>
-            </div>
-        </article>
+		<span class="selected-items-count" ng-show="$ctrl.selectedItems.length">已选<span ng-bind="$ctrl.selectedItems.length"></span>条</span>
+		<span class="total-items-count">共<span ng-bind="$ctrl.opts.pager.totals"></span>条</span>
+		<span class="reload" ng-click="$ctrl.onPagerChange($ctrl.opts.pager.pageNum, $ctrl.opts.pager.pageSize)">刷新</span>
+		<span class="delimiter"></span>
         <cc-pagination
                 page-num="$ctrl.opts.pager.pageNum"
                 page-size="$ctrl.opts.pager.pageSize"
