@@ -37,6 +37,10 @@ export default class PaginationCtrl {
 			this.isFirstPage = pageNum === 1;
 			this.isLastPage = pageNum === this.totalPages;
 		});
+
+		scope.$watch(() => this.totalPages, totalPages => {
+			this.isLastPage = this.pageNum === this.totalPages;
+		});
 	}
 
 	get totalPages() {
