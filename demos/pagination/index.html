@@ -5,6 +5,9 @@
 	[ng-app] {
 		margin: 1em;
 	}
+	.demo {
+		margin: 3em 1em;
+	}
 	.demo grid {
 		width: 400px;
 		height: 240px;
@@ -13,7 +16,7 @@
 
 <div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 	<div class="demo">
-		<h3>normal</h3>
+		<h3>type: normal</h3>
 		<cc-pagination
 				type="normal"
 				page-num="ctrl.pageOptions.pageNum"
@@ -24,7 +27,7 @@
 				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
 	</div>
 	<div class="demo">
-		<h3>simple</h3>
+		<h3>type: simple</h3>
 		<cc-pagination
 				type="simple"
 				page-num="ctrl.pageOptions.pageNum"
@@ -35,7 +38,7 @@
 				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
 	</div>
 	<div class="demo">
-		<h3>normal &amp; disable pagesize list</h3>
+		<h3>type: normal &amp; disable pagesize list</h3>
 		<cc-pagination
 				page-num="ctrl.pageOptions.pageNum"
 				page-size="ctrl.pageOptions.pageSize"
@@ -46,7 +49,7 @@
 				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
 	</div>
 	<div class="demo">
-		<h3>normal &amp; hide pagesize list</h3>
+		<h3>type: normal &amp; hide pagesize list</h3>
 		<cc-pagination
 				page-num="ctrl.pageOptions.pageNum"
 				page-size="ctrl.pageOptions.pageSize"

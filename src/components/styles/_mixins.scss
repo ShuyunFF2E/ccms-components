@@ -57,13 +57,6 @@
   text-overflow: ellipsis;
 }
 
-//pagination
-@mixin pagebtn {
-  color: #929292;
-  font-size: 14px;
-  top: 0px;
-}
-
 // area-select
 @mixin normalfont {
   font-size: 12px;
