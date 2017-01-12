@@ -26,11 +26,13 @@ export default class AreaSelectorCtrl {
 	 * @name validateAreasData 展示错误信息
 	 */
 	validateAreasData() {
-		setTimeout(() => {
-			this._modalInstance._renderDeferred.promise.then(() => {
-				this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
-			});
-		}, 0);
+		if (this.errorMessage) {
+			setTimeout(() => {
+				this._modalInstance._renderDeferred.promise.then(() => {
+					this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
+				});
+			}, 0);
+		}
 	}
 
 	/**
