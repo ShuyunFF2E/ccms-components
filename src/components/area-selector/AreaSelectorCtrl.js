@@ -9,10 +9,14 @@ import { Inject } from 'angular-es-utils/decorators';
 import { COMMON_AREAS } from './Constant';
 
 
-@Inject('modalInstance', 'selectedData')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData')
 export default class AreaSelectorCtrl {
+
 	constructor() {
 		this.init();
+		this._modalInstance._renderDeferred.promise.then(() => {
+			this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
+		});
 	}
 
 	init() {
@@ -80,7 +84,7 @@ export default class AreaSelectorCtrl {
 		this.selectedValue.map(element => {
 			this.selectedAreaArray = [];
 			const selectedAreas = element.id.split(',');
-			this.analyzeArea(selectedAreas, 0, this.areas);
+			this.analyzeArea(selectedAreas, 0, this.areas, element.name);
 		});
 	}
 
@@ -89,16 +93,17 @@ export default class AreaSelectorCtrl {
 	 * @param selectedAreas <object> 选中区域
 	 * @param index <number> 下标
 	 * @param areas <object> 区域
+	 * @param areaName <string> 选中区域的名称
 	 */
-	analyzeArea(selectedAreas, index, areas) {
+	analyzeArea(selectedAreas, index, areas, areaName) {
 		const hasChild = (index < selectedAreas.length - 1);
-		const subArea = this.setAreaStatus(selectedAreas[index], areas, hasChild);
+		const subArea = this.setAreaStatus(selectedAreas[index], areas, hasChild, areaName);
 		if (!hasChild) {
 			this.selectedAreas.push(this.selectedAreaArray);
 			this.setSelectedValue(subArea, true);
 			this.setSelectedAllValue(subArea, true);
 		} else {
-			this.analyzeArea(selectedAreas, index + 1, subArea);
+			this.analyzeArea(selectedAreas, index + 1, subArea, areaName);
 		}
 	}
 
@@ -136,11 +141,15 @@ export default class AreaSelectorCtrl {
 	 * @param areas <object> 区域等级
 	 * @param hasChild <boolean> 是否拥有孩子节点
 	 */
-	setAreaStatus(areaId, areas, hasChild) {
+	setAreaStatus(areaId, areas, hasChild, areaName) {
 		let selectedArea = areas.find(item => item.id === areaId);
-		this.setSelectedAndSelectedAll(selectedArea, true, !hasChild);
-		this.selectedAreaArray.push({ name: selectedArea.name, id: selectedArea.id });
-		return selectedArea.children;
+		if (!selectedArea) {
+			this.errorMessage = '因行政区域变动，您原有的设置 [' + areaName + '] 已被删除';
+		} else {
+			this.setSelectedAndSelectedAll(selectedArea, true, !hasChild);
+			this.selectedAreaArray.push({ name: selectedArea.name, id: selectedArea.id });
+			return selectedArea.children;
+		}
 	}
 
 	/**
