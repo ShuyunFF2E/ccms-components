@@ -17,6 +17,7 @@ export default class AreaSelectorCtrl {
 		this.provinces = this.areas;
 		this.selectedValue = this._selectedData;
 		this.selectedAreas = [];
+		this.errorMessages = [];
 		this.analyzeSelectedData();
 		this.initCommonAreas();
 		this.validateAreasData();
@@ -26,10 +27,12 @@ export default class AreaSelectorCtrl {
 	 * @name validateAreasData 展示错误信息
 	 */
 	validateAreasData() {
-		if (this.errorMessage) {
+		if (this.errorMessages.length) {
 			setTimeout(() => {
 				this._modalInstance._renderDeferred.promise.then(() => {
-					this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
+					this.errorMessages.forEach(errorMessage => {
+						this._$ccTips.error(errorMessage, this._$element[0].querySelector('.modal-body'));
+					});
 				});
 			}, 0);
 		}
@@ -153,7 +156,7 @@ export default class AreaSelectorCtrl {
 	setAreaStatus(areaId, areas, hasChild, areaName) {
 		let selectedArea = areas.find(item => item.id === areaId);
 		if (!selectedArea) {
-			this.errorMessage = '因行政区域变动，您原有的设置 [' + areaName + '] 已被删除';
+			this.errorMessages.push('因行政区域变动，您原有的设置 [' + areaName + '] 已被删除');
 		} else {
 			this.setSelectedAndSelectedAll(selectedArea, true, !hasChild);
 			this.selectedAreaArray.push({ name: selectedArea.name, id: selectedArea.id });
