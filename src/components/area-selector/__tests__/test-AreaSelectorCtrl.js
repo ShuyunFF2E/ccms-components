@@ -35,7 +35,6 @@ describe('AreaSelectorCtrl', () => {
 				error: () => Promise.resolve()
 			},
 			$element: {
-
 			}
 		});
 		spy = sinon.spy();
@@ -137,13 +136,7 @@ describe('AreaSelectorCtrl', () => {
 	});
 
 	it('#initCommonAreas', () => {
-		areaSelectorCtrl.initCommonAreas();
-		assert.lengthOf(areaSelectorCtrl.commonAreas, 6);
-		spy(areaSelectorCtrl, 'getCommonAreaSelectedStatus');
-		sinon.assert.calledOnce(spy);
-	});
-
-	it('#initCommonAreas', () => {
+		areaSelectorCtrl.areas = areas;
 		areaSelectorCtrl.initCommonAreas();
 		assert.lengthOf(areaSelectorCtrl.commonAreas, 6);
 		spy(areaSelectorCtrl, 'getCommonAreaSelectedStatus');
@@ -281,6 +274,7 @@ describe('AreaSelectorCtrl', () => {
 		areaSelectorCtrl.setAreaStatus = sinon.spy();
 		areaSelectorCtrl.setSelectedValue = sinon.spy();
 		areaSelectorCtrl.setSelectedAllValue = sinon.spy();
+		areaSelectorCtrl.selectedAreas = [];
 		areaSelectorCtrl.analyzeArea(['110000', '110100', '110103'], 0, areaSelectorCtrl.areas, '');
 		sinon.assert.callCount(areaSelectorCtrl.setAreaStatus, 3);
 		sinon.assert.callCount(areaSelectorCtrl.setSelectedValue, 1);
@@ -290,6 +284,7 @@ describe('AreaSelectorCtrl', () => {
 	it('#deleteArea', () => {
 		areaSelectorCtrl.deleteAreaById = sinon.spy();
 		areaSelectorCtrl.getCommonAreaSelectedStatus = sinon.spy();
+		areaSelectorCtrl.selectedAreas = [{id: 1}, {id: 2}, {id: 3}];
 		areaSelectorCtrl.deleteArea({id: '120000', name: '天津市'}, 20);
 		sinon.assert.calledWith(areaSelectorCtrl.deleteAreaById, {
 			id: '120000',
@@ -301,7 +296,7 @@ describe('AreaSelectorCtrl', () => {
 	it('#deleteAreaById', () => {
 		areaSelectorCtrl.changeChildrenAreaStatus = sinon.spy();
 		areaSelectorCtrl.changeParentAreaStatus = sinon.spy();
-		areaSelectorCtrl.deleteAreaById([{id: '110000'}, {id: '110100'}, {id: '110103'}], 0, areaSelectorCtrl.areas, []);
+		areaSelectorCtrl.deleteAreaById([{id: '110000'}], 0, areas, []);
 		sinon.assert.callCount(areaSelectorCtrl.changeChildrenAreaStatus, 1);
 		sinon.assert.callCount(areaSelectorCtrl.changeParentAreaStatus, 1);
 	});
@@ -319,6 +314,7 @@ describe('AreaSelectorCtrl', () => {
 	it('#getParentSelectedStatus', () => {
 		areaSelectorCtrl.analyzeAreaSelectedStatusByChildren = sinon.spy();
 		const commonAreaA = {id: '310000', children: [{id: '310100'}]};
+		areaSelectorCtrl.areas = areas;
 		areaSelectorCtrl.getParentSelectedStatus(commonAreaA);
 		sinon.assert.notCalled(areaSelectorCtrl.analyzeAreaSelectedStatusByChildren);
 		const commonAreaB = {id: '310000', children: [{id: '310100', parentId: '310000'}]};

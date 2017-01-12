@@ -22,19 +22,15 @@ export default class AreaSelectorCtrl {
 		this.validateAreasData();
 	}
 
+	/**
+	 * @name validateAreasData 展示错误信息
+	 */
 	validateAreasData() {
 		setTimeout(() => {
-			this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
+			this._modalInstance._renderDeferred.promise.then(() => {
+				this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
+			});
 		}, 0);
-	}
-
-	/**
-	 * @name showErrorMessage 展示错误信息
-	 */
-	showErrorMessage() {
-		this._modalInstance._renderDeferred.promise.then(() => {
-			this._$ccTips.error(this.errorMessage, this._$element[0].querySelector('.modal-body'));
-		});
 	}
 
 	/**
@@ -78,11 +74,13 @@ export default class AreaSelectorCtrl {
 	 */
 	getCommonAreasTree(areaIdArray, areaTrees) {
 		const area = this.areas.find(item => item.id === areaIdArray[0]);
-		if (areaIdArray.length === 1) {
-			areaTrees.push({id: area.id, name: area.name, selected: area.selected, selectedAll: area.selectedAll});
-		} else {
-			const subArea = area.children.find(item => item.id === areaIdArray[1]);
-			areaTrees.push({id: subArea.id, name: subArea.name, selected: subArea.selected, selectedAll: subArea.selectedAll, parentId: area.id});
+		if (area) {
+			if (areaIdArray.length === 1) {
+				areaTrees.push({id: area.id, name: area.name, selected: area.selected, selectedAll: area.selectedAll});
+			} else {
+				const subArea = area.children.find(item => item.id === areaIdArray[1]);
+				areaTrees.push({id: subArea.id, name: subArea.name, selected: subArea.selected, selectedAll: subArea.selectedAll, parentId: area.id});
+			}
 		}
 	}
 
