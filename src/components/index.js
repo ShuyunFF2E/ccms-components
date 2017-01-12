@@ -27,6 +27,7 @@ import instantSearch from './instant-search';
 import dropdown from './dropdown';
 import dropdownSelect from './dropdown/dropdown-select';
 import dropdownMultiselect from './dropdown/dropdown-multiselect';
+import dropdownProvinceSelect from './dropdown/dropdown-province-select';
 import tabset from './tabset';
 import radio from './radio';
 import switchButton from './switch';
@@ -38,6 +39,7 @@ export default angular
 		dropdown,
 		dropdownSelect,
 		dropdownMultiselect,
+		dropdownProvinceSelect,
 		instantSearch,
 		checkbox,
 		form,

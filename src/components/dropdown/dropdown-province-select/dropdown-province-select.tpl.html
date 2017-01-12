@@ -1,0 +1,35 @@
+<div class="dropdown-province-select" cc-dropdown auto-close="$ctrl.autoClose"
+		is-open="$ctrl.isOpen"
+		ng-class="{active: $ctrl.isActive}">
+	<div class="dropdown-select-input-wrap" style="{{$ctrl.style}}">
+		<input type="text" class="dropdown-select-input" placeholder="{{$ctrl.placeholder}}"
+				ng-readonly="true"
+				ng-focus="$ctrl.setActiveState(true)"
+				ng-blur="$ctrl.setActiveState(false)"
+				ng-model="$ctrl.title">
+		<div class="dropdown-select-icons">
+			<span class="dropdown-select-down"></span>
+		</div>
+	</div>
+	<div class="dropdown-panel hide" cc-dropdown-panel >
+		<div class="dropdown-areas">
+			<dl>
+				<dt style="float: none;"><div>支持选择多个省份</div></dt>
+			</dl>
+			<dl ng-repeat="area in $ctrl.data"
+				ng-style="$last && {'border-bottom': 'none'}">
+				<dt ng-click="$ctrl.toggleAreaSelection(area.name)">{{::area.name}}：</dt>
+				<dd>
+					<a href="javascript:void(0);" ng-click="$ctrl.toggleSelection(name)"
+					   ng-class="{selected: $ctrl.isSelected(name)}"
+					   ng-repeat="name in area.value" >{{::name}}
+					</a>
+				</dd>
+			</dl>
+		</div>
+		<div class="confirm-buttons">
+			<button class="btn-ok-normal" ng-click="$ctrl.confirmSelection()">确认</button>
+			<button class="btn-cancel-normal" ng-click="$ctrl.cancelSelection()">取消</button>
+		</div>
+	</div>
+</div>

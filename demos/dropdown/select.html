@@ -101,6 +101,20 @@
 			</div>
 		</div>
 	</div>
+	<div class="group">
+		<div class="demo">
+			<h3>收货省份选择</h3>
+			<span>当前值: <span ng-bind="ctrl.value5 | json"></span></span>
+			<cc-dropdown-province-select
+						placeholder="请选择收货省份"
+						model="ctrl.value5"
+						style="width: 280px;">
+			</cc-dropdown-province-select>
+			<div style="margin: 0.5em 0;">
+				<button class="btn-ok" ng-click="ctrl.value5.push('海外')">添加海外</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script src="/components.js"></script>
@@ -111,6 +125,7 @@
 			this.value2 = null;
 			this.value3 = [];
 			this.value4 = ['xa', 'sh'];
+			this.value5 = ['浙江省','湖北省'];
 			this.datalist1 = [
 				{title: '北京', value: 'bj'},
 				{title: '上海', value: 'sh'},

@@ -8,3 +8,4 @@ dist/
 docs/_gh_pages/
 dev-server-path
 coverage
+npm-debug.log
