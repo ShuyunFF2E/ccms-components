@@ -32,7 +32,7 @@ import radio from './radio';
 import switchButton from './switch';
 import areaSelector from './area-selector';
 import customerProfileBoard from './customer-profile-board';
-import imgError from './img-error';
+import altSrc from './alt-src';
 
 export default angular
 	.module('ccms.components.ui', [
@@ -61,7 +61,7 @@ export default angular
 		switchButton,
 		customerProfileBoard,
 		areaSelector,
-		imgError
+		altSrc
 	])
 	.name;
 
