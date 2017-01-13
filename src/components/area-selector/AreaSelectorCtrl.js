@@ -18,7 +18,11 @@ export default class AreaSelectorCtrl {
 		this.selectedValue = this._selectedData;
 		this.selectedAreas = [];
 		this.errorMessages = [];
+		this.provinceNumber = 0;
+		this.areaNumber = 0;
+		this.districtNumber = 0;
 		this.analyzeSelectedData();
+		this.getSelectedAreaNumber();
 		this.initCommonAreas();
 		this.validateAreasData();
 	}
@@ -178,6 +182,7 @@ export default class AreaSelectorCtrl {
 		this.selectedAreas = [];
 		this.getSelectedAreasByAreaMap(this.areas, []);
 		this.getCommonAreaSelectedStatus();
+		this.getSelectedAreaNumber();
 	}
 
 	/**
@@ -348,6 +353,7 @@ export default class AreaSelectorCtrl {
 		this.selectedAreas = [];
 		this.getSelectedAreasByAreaMap(this.areas, []);
 		this.getCommonAreaSelectedStatus();
+		this.getSelectedAreaNumber();
 	}
 
 	/**
@@ -404,5 +410,48 @@ export default class AreaSelectorCtrl {
 			selectedValue.push(this.selectedAreaString);
 		});
 		this._modalInstance.ok(selectedValue);
+	}
+
+	/**
+	 * @name getSelectedAreaNumber 获得选择的区域的数量
+	 */
+	getSelectedAreaNumber() {
+		this.provinceNumber = 0;
+		this.areaNumber = 0;
+		this.districtNumber = 0;
+		this.countAreaNumber(this.areas, 1);
+	}
+
+	/**
+	 * @name countAreaNumber 统计区域数量(递归)
+	 * @param area <object> 被统计的区域
+	 * @param areaLevel <number> 区域等级 1:省份 2:城市 3:区县
+	 */
+	countAreaNumber(area, areaLevel) {
+		area.forEach(value => {
+			if (value.selected) {
+				this.increaseAreaNumber(areaLevel);
+				if (value.children) {
+					this.countAreaNumber(value.children, areaLevel + 1);
+				}
+			}
+		});
+	}
+
+	/**
+	 * @name increaseAreaNumber
+	 * @param areaLevel <number> 区域等级 1:省份 2:城市 3:区县
+	 */
+	increaseAreaNumber(areaLevel) {
+		switch (areaLevel) {
+			case 1:
+				this.provinceNumber ++;
+				break;
+			case 2:
+				this.areaNumber ++;
+				break;
+			case 3:
+				this.districtNumber ++;
+		}
 	}
 }
