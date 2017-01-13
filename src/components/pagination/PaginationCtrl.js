@@ -7,7 +7,7 @@
 
 import {Inject} from 'angular-es-utils';
 
-@Inject('$element')
+@Inject('$scope', '$element')
 export default class PaginationCtrl {
 
 	constructor() {
@@ -16,6 +16,31 @@ export default class PaginationCtrl {
 		this.type = 'normal';
 
 		this.pageSizeListDisabled = undefined;
+	}
+
+	$onInit() {
+		let element = this.getElement();
+		if (element.hasAttribute('page-size-list-hidden') && this.pageSizeListHidden !== false) {
+			this.pageSizeListHidden = true;
+		}
+		if (element.hasAttribute('page-size-list-disabled') && this.pageSizeListDisabled !== false) {
+			this.pageSizeListDisabled = true;
+		}
+
+		this._prepareWatches();
+	}
+
+	_prepareWatches() {
+		const scope = this.getScope();
+
+		scope.$watch(() => this.pageNum, pageNum => {
+			this.isFirstPage = pageNum === 1;
+			this.isLastPage = pageNum === this.totalPages;
+		});
+
+		scope.$watch(() => this.totalPages, totalPages => {
+			this.isLastPage = this.pageNum === this.totalPages;
+		});
 	}
 
 	get totalPages() {
@@ -51,18 +76,12 @@ export default class PaginationCtrl {
 		this._pageSizeList = value;
 	}
 
-	$onInit() {
-		let element = this.getElement();
-		if (element.hasAttribute('page-size-list-hidden') && this.pageSizeListHidden !== false) {
-			this.pageSizeListHidden = true;
-		}
-		if (element.hasAttribute('page-size-list-disabled') && this.pageSizeListDisabled !== false) {
-			this.pageSizeListDisabled = true;
-		}
-	}
-
 	getElement() {
 		return this._$element[0];
+	}
+
+	getScope() {
+		return this._$scope;
 	}
 
 	changePageNumByShortcut(type) {
@@ -133,6 +152,5 @@ export default class PaginationCtrl {
 		// 通知外部分页内容已发生变更
 		this.onChange(pagerInfo);
 	}
-
 }
 
