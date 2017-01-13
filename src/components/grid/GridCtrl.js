@@ -66,6 +66,8 @@ export default class GridCtrl {
 	onPagerChange(pageNum, pageSize) {
 
 		const {opts} = this;
+		opts.pager.pageNum = pageNum;
+		opts.pager.pageSize = pageSize;
 		const queryParams = Object.assign(opts.queryParams || {}, {pageNum, pageSize});
 
 		this._refresh(opts, queryParams);
