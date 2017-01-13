@@ -16,7 +16,10 @@ export default {
 	replace: true,
 	require: ['^ccDatePicker', '^^?ccDateRange'],
 	restrict: 'E',
-	scope: true,
+	scope: {
+		onCalendarOpen: '&?',
+		onCalendarClose: '&?'
+	},
 	template,
 
 
