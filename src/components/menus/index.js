@@ -27,10 +27,10 @@ const
 		controllerAs: 'menus',
 		bindings: {
 			unfold: '=',
-			onUnfold: '=',
-			menuSource: '<?',
+			onUnfold: '=?',
+			menuSource: '<',
 			shopSource: '<?',
-			searchPlaceholder: '='
+			searchPlaceholder: '<?'
 		}
 	},
 	menusNodeDDO = {
