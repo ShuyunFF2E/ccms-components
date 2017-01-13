@@ -5,8 +5,8 @@
 
 $table-border: 1px solid #e8e8e8;
 $table-bottom-height: 39px;
-$pagination-padding: 11px;
-$td-padding: 0 $pagination-padding;
+$td-padding-x: 11px;
+$td-padding: 0 $td-padding-x;
 
 $thead-bg: #f1f1f1;
 $tr-even-bg: #fafafa;
@@ -204,63 +204,55 @@ cc-grid {
 	}
 
 	footer {
-		display: flex;
 		position: absolute;
 		bottom: 0;
 		left: 0;
 		right: 0;
-		height: 39px;
+		display: flex;
+		align-items: center;
+		padding: 6px $td-padding-x;
 		background-color: #f6f6f6;
 		border: 1px solid #e8e8e8;
 		color: #666666;
 		white-space: nowrap;
 
-		.page-con {
-			@include fonts;
-			display: flex;
-			flex: 1;
-			align-items: center;
-			color: #666666;
-			padding-left: $pagination-padding;
+		%number {
+			font-family: $font-number;
+			margin: 0 1px;
+		}
 
-			span {
-				margin-right: 18px;
+		> span + span {
+			margin-left: 18px;
+		}
+
+		> .selected-items-count {
+			> span {
+				@extend %number;
 			}
 
-			.font-num {
-				font-family: $font-number;
-				margin-right: 0;
-			}
-
-			.reload {
-				display: flex;
-				align-items: center;
-				cursor: pointer;
-			}
-
-			.p-reload-icon {
-				@extend .iconfont;
-				@extend .icon-refresh;
-				border: 0 none;
-
-				color: #929292;
-				cursor: pointer;
-
-				&:hover {
-					color: #828282;
-				}
-				font-size: 14px;
-				margin-right: 5px;
-			}
-
-			@-moz-document url-prefix() {
-				.p-reload {
-					top: -2px;
-				}
+			&.ng-hide + span {
+				margin-left: 0;
 			}
 		}
 
-		& > cc-pagination {
+		> .total-items-count {
+			> span {
+				@extend %number;
+			}
+		}
+
+		> .reload {
+			@extend .iconfont;
+			@extend .icon-refresh;
+			font-size: 12px;
+			cursor: pointer;
+
+			&::before {
+				margin-right: 3px;
+			}
+		}
+
+		> .delimiter {
 			flex: 1;
 		}
 	}
