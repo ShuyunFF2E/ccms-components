@@ -11,11 +11,10 @@ const DDo = {
 	restrict: 'A',
 	link,
 	scope: {
-		ccImgOnerror: '&',
-		ccImgDefault: '<?'
+		ccAltSrc: '<'
 	}
 };
 export default angular
-	.module('components.img-error', [])
-	.directive('ccImgDefault', () => DDo)
+	.module('components.imgAltSrc', [])
+	.directive('ccAltSrc', () => DDo)
 	.name;

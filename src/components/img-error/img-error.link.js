@@ -7,7 +7,6 @@
 export default (scope, element, attrs) => {
 	const imgElement = element[0];
 	imgElement.onerror = event => {
-		event.target.src = scope.ccImgDefault;
-		typeof scope.ccImgOnerror === 'function' && scope.ccImgOnerror({event});
+		event.target.src = scope.ccAltSrc;
 	};
 };
