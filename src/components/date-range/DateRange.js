@@ -16,7 +16,9 @@ export default {
 	replace: true,
 	restrict: 'E',
 	scope: {
-		opts: '='
+		opts: '=',
+		onCalendarOpen: '&?',
+		onCalendarClose: '&?'
 	},
 	template
 };

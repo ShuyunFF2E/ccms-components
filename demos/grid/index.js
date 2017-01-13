@@ -6,7 +6,7 @@
 
 angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
-	.controller('ctrl', function($scope, $resource, $ccGrid) {
+	.controller('ctrl', function ($scope, $resource, $ccGrid) {
 
 		this.click = () => {
 			console.log(this);
@@ -14,15 +14,15 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
 		this.selectedItems = [];
 
-		this.refreshGrid = function() {
+		this.refreshGrid = function () {
 			$ccGrid.refresh(this.pagerGridOptions).then(opts => this.selectedItems.length = 0);
 		};
 
-		this.refreshDataGrid = function() {
+		this.refreshDataGrid = function () {
 			$ccGrid.refresh(this.dataGridOptions).then(opts => console.log('data grid refreshed!', opts));
 		};
 
-		this.onRefresh = function(opts) {
+		this.onRefresh = function (opts) {
 			console.log(opts);
 		};
 
@@ -33,16 +33,29 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			queryParams: {
 				pageNum: 2
 			},
+			// enableMultipleFieldsSort:true,
 			columnsDef: [
 				{
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
 					width: '100px',
-					sortProp: 'name'
+					sortProp: 'name',
+					sortOrder:'asc'
 				},
-				{field: 'age', displayName: '年龄', align: 'center', sortOrder: 'age'},
-				{field: 'gender', displayName: '性别', align: 'right', width: '100px', cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>'}
+				{
+					field: 'age',
+					displayName: '年龄', align: 'center',
+					sortProp: 'age',
+					sortOrder:'asc'
+				},
+				{
+					field: 'gender',
+					displayName: '性别',
+					align: 'right',
+					width: '100px',
+					cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>'
+				}
 			],
 			transformer: {
 				pageNum: 'currentPage',
@@ -73,7 +86,13 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					sortProp: 'name'
 				},
 				{field: 'age', displayName: '年龄', align: 'center', sortOrder: 'age'},
-				{field: 'gender', displayName: '性别', align: 'right', width: '100px', cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>'}
+				{
+					field: 'gender',
+					displayName: '性别',
+					align: 'right',
+					width: '100px',
+					cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>'
+				}
 			],
 			rowTpl: '/demos/grid/customer-row.html',
 			transformer: {

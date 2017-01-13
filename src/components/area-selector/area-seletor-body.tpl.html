@@ -32,7 +32,7 @@
 
 	<section class="select-areas">
 		<div class="select-area">
-			<div class="area-title">省选择</div>
+			<div class="area-title">省选择 ( <span>{{$ctrl.provinceNumber}}</span> ) </div>
 			<div class="area-body" cc-nice-scroll>
 				<div class="area" ng-repeat="province in $ctrl.provinces track by $index"
 					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province)">
@@ -47,7 +47,7 @@
 		</div>
 
 		<div class="select-area">
-			<div class="area-title">市选择</div>
+			<div class="area-title">市选择 ( <span>{{$ctrl.areaNumber}}</span> ) </div>
 			<div class="area-body" cc-nice-scroll>
 				<div class="area" ng-repeat="city in $ctrl.citys track by $index"
 					 ng-class="{'selected': city.id === $ctrl.selectedCity.id}" ng-click="$ctrl.changeCity(city)">
@@ -59,7 +59,7 @@
 		</div>
 
 		<div class="select-area">
-			<div class="area-title">区县选择</div>
+			<div class="area-title">区县选择 ( <span>{{$ctrl.districtNumber}}</span> ) </div>
 			<div class="area-body" cc-nice-scroll>
 				<div class="area" ng-repeat="district in $ctrl.districts track by $index"
 					 ng-class="{'selected': district.id === $ctrl.selectedDistrict.id}"

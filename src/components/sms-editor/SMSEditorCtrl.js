@@ -281,10 +281,13 @@ export default class SMSEditorCtrl {
 	 * 往富文本编辑器中插入标签
 	 * @param {string} text - 标签名
 	 * @param {string} type - 标签类型
+	 * @param {boolean} disabled -标签是否禁用
 	 */
-	insertKeyword(text, type) {
-		this.reFocus();
-		document.execCommand('insertHTML', false, this.createInput(text, type));
+	insertKeyword(text, type, disabled) {
+		if (!disabled) {
+			this.reFocus();
+			document.execCommand('insertHTML', false, this.createInput(text, type));
+		}
 	}
 
 

@@ -25,7 +25,9 @@ export default {
 		rangeStart: '=',
 		rangeEnd: '=',
 		start: '=',
-		end: '='
+		end: '=',
+		onCalendarOpen: '&?',
+		onCalendarClose: '&?'
 	},
 	template,
 

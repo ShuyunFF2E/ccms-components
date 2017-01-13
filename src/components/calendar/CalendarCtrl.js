@@ -69,8 +69,13 @@ export default class DatePickerCtrl {
 	 * 关闭日历
 	 */
 	close() {
+		if (this.$element[0].style.display !== 'none' && this.$element[0].style.display !== '') {
+			this.onCalendarClose();
+		}
 		this.$element[0].style.display = 'none';
 		document.removeEventListener('click', this.close, false);
+		this.onCalendarClose();
+		this._$scope.$root.$$phase || this._$scope.$apply();
 	}
 
 
@@ -169,6 +174,8 @@ export default class DatePickerCtrl {
 		// 定位日历
 		calendar.style.display = 'block';
 		document.addEventListener('click', this.close, false);
+		this.onCalendarOpen();
+		this._$scope.$root.$$phase || this._$scope.$apply();
 	}
 
 
