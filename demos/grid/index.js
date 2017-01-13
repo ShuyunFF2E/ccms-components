@@ -33,7 +33,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			queryParams: {
 				pageNum: 2
 			},
-			// multipleFieldsSort:true,
+			// enableMultipleFieldsSort:true,
 			columnsDef: [
 				{
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',

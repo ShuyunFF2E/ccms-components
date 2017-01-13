@@ -119,10 +119,10 @@ export default class GridCtrl {
 					column.sortOrder = 'asc';
 					break;
 			}
-			if (!this.opts.multipleFieldsSort) {
+			if (!this.opts.enableMultipleFieldsSort) {
 				this.opts.columnsDef.forEach(columnDef => {
 					if (columnDef.sortProp !== column.sortProp) {
-						columnDef.sortOrder = undefined;
+						delete columnDef.sortOrder;
 					}
 				});
 			}
