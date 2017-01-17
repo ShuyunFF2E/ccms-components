@@ -84,7 +84,7 @@ cc-checkbox{
 	  border-color: $checked-hover-border-color;
 
 	  &:before{
-		border-color: $checked-hover-border-color;
+		border-color: $normal-hover-border-color;
 	  }
 	}
   }
@@ -96,7 +96,7 @@ cc-checkbox{
 	  width: 0;
 	  height: 0;
 	  transform: rotate(0deg);
-	  border: (4 / $font-size-number) + em solid $checked-border-color;
+	  border: (4 / $font-size-number) + em solid $normal-border-color;
 	  left: (3 / $font-size-number) + em;
 	  top: (3 / $font-size-number) + em;
 	}
