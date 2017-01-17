@@ -129,6 +129,8 @@ cc-grid {
 				right: -1px;
 				z-index: 1;
 				width: 156px;
+				max-height: 162px;
+				overflow: auto;
 				border: solid 1px #ccc;
 				background-color: #fff;
 				&.hide {
