@@ -5,14 +5,29 @@
 	[ng-app] {
 		margin: 1em;
 	}
+	.demo {
+		margin: 3em 1em;
+	}
 </style>
 
 <div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<instant-search model="ctrl.selectItem" options="ctrl.options">
-	</instant-search>
-	<div style="line-height: 1.8em;font-size: 0.8em;"
-			ng-bind-template="{{ctrl.selectItem.value}}|{{ctrl.selectItem.title}}"
-			ng-show="ctrl.selectItem">
+	<div class="demo">
+		<h3>local data</h3>
+		<instant-search
+				model="ctrl.selectItem1"
+				options="ctrl.options1"></instant-search>
+		<div style="line-height: 1.8em;font-size: 0.8em;"
+				ng-bind-template="{{ctrl.selectItem1.value}}|{{ctrl.selectItem1.title}}"
+				ng-show="ctrl.selectItem1"></div>
+	</div>
+	<div class="demo">
+		<h3>remote data</h3>
+		<instant-search
+				model="ctrl.selectItem2"
+				options="ctrl.options2"></instant-search>
+		<div style="line-height: 1.8em;font-size: 0.8em;"
+				ng-bind-template="{{ctrl.selectItem2.value}}|{{ctrl.selectItem2.title}}"
+				ng-show="ctrl.selectItem2"></div>
 	</div>
 </div>
 
@@ -20,13 +35,9 @@
 <script>
 	angular.module('demoApp', ['ccms.components'])
 		.controller('DemoCtrl', function($scope) {
-			this.options = {
+			this.options1 = {
 				placeholderText: '请输入区域名称',
 
-				// 使用远程数据源
-				url: '/instant-search/',
-
-				/*
 				// 不使用远程数据源
 				datalist: [
 					{title: '上海', value: 'sh'},
@@ -34,17 +45,25 @@
 					{title: '深圳', value: 'sz'},
 					{title: '广州', value: 'gz'},
 					{title: '南京', value: 'nj'}
-				]
-				*/
+				],
+
+				valueField: 'value',
+				displayField: 'title',
+
+				// 本地过滤顺序
+				localFilterFields: ['value', 'title'],
+			};
+			this.options2 = {
+				placeholderText: '请输入区域名称',
+
+				// 使用远程数据源
+				url: '/instant-search/',
 
 				valueField: 'value',
 				displayField: 'title',
 
 				// 服务端搜索参数名
 				//remoteSearchParamKey: 'value',
-
-				// 本地过滤顺序
-				localFilterFields: ['value', 'title'],
 			};
 		});
 </script>

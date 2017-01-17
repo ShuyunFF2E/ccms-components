@@ -45,6 +45,7 @@ export default class InstantSearchCtrl {
 			}
 
 			// 设置数据来源
+			this.remoteSearch = true;
 			this.resource = $resource(options.url, null, {
 				query: {
 					method: 'GET',
@@ -67,25 +68,26 @@ export default class InstantSearchCtrl {
 	}
 
 	search(text) {
-		this.resource.query()
-			.$promise.then(datalist => {
-				if (this.remoteSearch) {
+		if (this.remoteSearch) {
+			this.resource.query()
+				.$promise.then(datalist => {
 					this.datalist = datalist;
-				} else {
-					// 使用本地搜索
-					let searchResult = [];
-					this.options.localFilterFields.forEach(field => {
-						for (let i = datalist.length - 1; i > -1; i--) {
-							let item = datalist[i];
-							if (item[field].indexOf(text) !== -1) {
-								searchResult.push(item);
-								datalist.splice(i, 1);
-							}
-						}
-					});
-					this.datalist = searchResult;
+				});
+		} else {
+			// 使用本地搜索
+			const datalist = [...this.options.datalist];
+			const searchResult = [];
+			this.options.localFilterFields.forEach(field => {
+				for (let i = datalist.length - 1; i > -1; i--) {
+					let item = datalist[i];
+					if (item[field].indexOf(text) !== -1) {
+						searchResult.push(item);
+						datalist.splice(i, 1);
+					}
 				}
 			});
+			this.datalist = searchResult;
+		}
 	}
 
 	selectItem(item) {
