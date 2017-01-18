@@ -14,20 +14,21 @@
 	<div class="demo">
 		<h3>local data</h3>
 		<instant-search
-				model="ctrl.selectItem1"
+				model="ctrl.selectedItem1"
+				on-select="ctrl.onSelect(model)"
 				options="ctrl.options1"></instant-search>
 		<div style="line-height: 1.8em;font-size: 0.8em;"
-				ng-bind-template="{{ctrl.selectItem1.value}}|{{ctrl.selectItem1.title}}"
-				ng-show="ctrl.selectItem1"></div>
+				ng-bind-template="{{ctrl.selectedItem1.value}}|{{ctrl.selectedItem1.title}}"
+				ng-show="ctrl.selectedItem1"></div>
 	</div>
 	<div class="demo">
 		<h3>remote data</h3>
 		<instant-search
-				model="ctrl.selectItem2"
+				model="ctrl.selectedItem2"
 				options="ctrl.options2"></instant-search>
 		<div style="line-height: 1.8em;font-size: 0.8em;"
-				ng-bind-template="{{ctrl.selectItem2.value}}|{{ctrl.selectItem2.title}}"
-				ng-show="ctrl.selectItem2"></div>
+				ng-bind-template="{{ctrl.selectedItem2.value}}|{{ctrl.selectedItem2.title}}"
+				ng-show="ctrl.selectedItem2"></div>
 	</div>
 </div>
 
@@ -64,6 +65,9 @@
 
 				// 服务端搜索参数名
 				//remoteSearchParamKey: 'value',
+			};
+			this.onSelect = (args) => {
+				console.log(args);
 			};
 		});
 </script>
