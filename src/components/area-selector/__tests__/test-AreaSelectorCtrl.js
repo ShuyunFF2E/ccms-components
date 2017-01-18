@@ -568,4 +568,28 @@ describe('AreaSelectorCtrl', () => {
 		assert.lengthOf(matchedMap[0], 2);
 		assert.equal(matchedMap[0][0].id, '310000');
 	});
+
+	it('#getMatchedAreaList', () => {
+
+		const matchedMap =
+			[
+				[
+					{id: '220000', name: '吉林省'},
+					{id: '220400', name: '辽源市'},
+					{id: '220403', name: '西安区'}
+				],
+				[
+					{id: '230000', name: '黑龙江省'},
+					{id: '231000', name: '牡丹江市'},
+					{id: '231005', name: '西安区'}
+				],
+				[
+					{id: '610000', name: '陕西省'},
+					{id: '610100', name: '西安市'}
+				]
+			];
+		const searchList = areaSelectorCtrl.getMatchedAreaList(matchedMap);
+		assert.lengthOf(searchList, 3);
+		assert.equal(searchList[0].value, '220000,220400,220403');
+	});
 });

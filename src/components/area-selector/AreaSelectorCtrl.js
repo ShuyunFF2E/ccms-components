@@ -456,6 +456,16 @@ export default class AreaSelectorCtrl {
 	}
 
 	/**
+	 * @name searchAreaByKeyword 通过关键字获得匹配的地址信息
+	 */
+	searchAreaByKeyword() {
+		let currentArea = [];
+		let matchedMap = [];
+		this.getMatchedAreaByKeyword(this.areas, currentArea, matchedMap, this.keyword);
+		this.searchList = this.getMatchedAreaList(matchedMap);
+	}
+
+	/**
 	 * @name getMatchedAreaByKeyword 获得
 	 * @param areas <object> 搜索的区域
 	 * @param currentArea <array> 目前选中的省市区
@@ -477,5 +487,24 @@ export default class AreaSelectorCtrl {
 			}
 			currentArea.pop();
 		});
+	}
+
+	/**
+	 * @name getMatchedAreaList 获得匹配到的地区列表
+	 * @param matchedMap <array> 匹配到的Map
+	 */
+	getMatchedAreaList(matchedMap) {
+		const areaList = [];
+		matchedMap.forEach(areas => {
+			let areaInfo = {value: '', title: ''};
+			areas.forEach(area => {
+				areaInfo.value += area.id + ',';
+				areaInfo.title += area.name + ' > ';
+			});
+			areaInfo.value = areaInfo.value.substring(0, areaInfo.value.length - 1);
+			areaInfo.title = areaInfo.title.substring(0, areaInfo.title.length - 3);
+			areaList.push(areaInfo);
+		});
+		return areaList;
 	}
 }
