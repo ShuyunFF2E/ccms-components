@@ -454,4 +454,28 @@ export default class AreaSelectorCtrl {
 				this.districtNumber ++;
 		}
 	}
+
+	/**
+	 * @name getMatchedAreaByKeyword 获得
+	 * @param areas <object> 搜索的区域
+	 * @param currentArea <array> 目前选中的省市区
+	 * @param matchedMap <array> 匹配到的Map
+	 * @param keyWord <string> 用户输入的关键字
+	 */
+	getMatchedAreaByKeyword(areas, currentArea, matchedMap, keyWord) {
+		areas.forEach(area => {
+			currentArea.push({name: area.name, id: area.id});
+			if (area.name.includes(keyWord)) {
+				const matchedArea = angular.copy(currentArea);
+				matchedMap.push(matchedArea);
+				if (matchedMap.length >= 10) {
+					return;
+				}
+			}
+			if (area.children) {
+				this.getMatchedAreaByKeyword(area.children, currentArea, matchedMap, keyWord);
+			}
+			currentArea.pop();
+		});
+	}
 }

@@ -550,7 +550,7 @@ describe('AreaSelectorCtrl', () => {
 		assert.equal(areaSelectorCtrl.districtNumber, 1);
 	});
 
-	it('#countAreaNumber', () => {
+	it('#getSelectedAreaNumber', () => {
 
 		areaSelectorCtrl.areas = areas;
 		areaSelectorCtrl.getSelectedAreaNumber();
@@ -558,5 +558,14 @@ describe('AreaSelectorCtrl', () => {
 		assert.equal(areaSelectorCtrl.provinceNumber, 0);
 		assert.equal(areaSelectorCtrl.areaNumber, 0);
 		assert.equal(areaSelectorCtrl.districtNumber, 0);
+	});
+
+	it('#getMatchedAreaByKeyword', () => {
+
+		let matchedMap = [];
+		areaSelectorCtrl.getMatchedAreaByKeyword(areas, [], matchedMap, '辖');
+		assert.lengthOf(matchedMap, 4);
+		assert.lengthOf(matchedMap[0], 2);
+		assert.equal(matchedMap[0][0].id, '310000');
 	});
 });
