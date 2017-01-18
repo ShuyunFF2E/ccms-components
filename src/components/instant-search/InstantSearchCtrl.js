@@ -1,16 +1,10 @@
+import angular from 'angular';
 import { Inject } from 'angular-es-utils';
-
-let $resource;
 
 @Inject('$scope', '$element', '$resource')
 export default class InstantSearchCtrl {
 
-	constructor($scope, $element, resource) {
-		$resource = resource;
-
-		this.$scope = $scope;
-		this.$element = $element;
-		this.options = this.$scope.options;
+	constructor() {
 		this.datalist = this.options.datalist || [];
 		this.searchText = '';
 		this.remoteSearch = false;
@@ -46,7 +40,7 @@ export default class InstantSearchCtrl {
 
 			// 设置数据来源
 			this.remoteSearch = true;
-			this.resource = $resource(options.url, null, {
+			this.resource = this.getResource()(options.url, null, {
 				query: {
 					method: 'GET',
 					isArray: true,
@@ -59,11 +53,52 @@ export default class InstantSearchCtrl {
 		}
 
 		// 监视搜索关键字变化
-		this.$scope.$watch('$ctrl.searchText', searchText => {
+		this.getScope().$watch(() => this.searchText, searchText => {
 			searchText = searchText.trim();
 			if (searchText.length) {
 				this.search(searchText);
 			}
+		});
+
+		this._prepareWatches();
+	}
+
+	$postLink() {
+		const scope = this.getScope();
+		angular.element(this.getElement()).find('input')
+			.on('focus', () => {
+				this.openHintList();
+				scope.$root.$$phase || scope.$apply();
+			})
+
+			.on('blur', () => {
+				this.closeHintList();
+				scope.$root.$$phase || scope.$apply();
+			})
+
+			.on('keydown', event => {
+				switch (event.keyCode) {
+					case 13: // enter
+						this.selectFocusedItem();
+						break;
+					case 38: // up
+						this.focusPreviousHint();
+						event.preventDefault();
+						break;
+					case 40: // down
+						this.focusNextHint();
+						event.preventDefault();
+						break;
+					default:
+						this.focusFirstHint();
+				}
+				scope.$root.$$phase || scope.$apply();
+			});
+	}
+
+	_prepareWatches() {
+		this.getScope().$watch(() => this.selectedItem, model => {
+			this.onSelect && this.onSelect({model});
 		});
 	}
 
@@ -92,7 +127,7 @@ export default class InstantSearchCtrl {
 
 	selectItem(item) {
 		this.searchText = item[this.options.displayField];
-		this.$scope.selectedItem = item;
+		this.selectedItem = item;
 		this.closeHintList();
 	}
 
@@ -128,4 +163,15 @@ export default class InstantSearchCtrl {
 		this.isHintOpen = false;
 	}
 
+	getResource() {
+		return this._$resource;
+	}
+
+	getScope() {
+		return this._$scope;
+	}
+
+	getElement() {
+		return this._$element[0];
+	}
 }
