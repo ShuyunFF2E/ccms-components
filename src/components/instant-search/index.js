@@ -5,23 +5,25 @@
 import angular from 'angular';
 import ngResource from 'angular-resource';
 
+import './_instant-search.scss';
 import template from './instant-search.tpl.html';
 import InstantSearchCtrl from './InstantSearchCtrl';
-import instantSearchLink from './instantSearchLink';
 
-const ddo = {
+const DDO = {
+	restrict: 'E',
 	template,
 	controller: InstantSearchCtrl,
 	controllerAs: '$ctrl',
-	link: instantSearchLink,
 	scope: {
 		selectedItem: '=model',
-		options: '<'
-	}
+		options: '<',
+		onSelect: '&?'
+	},
+	bindToController: true
 };
 
 export default angular
 	.module('ccms.components.instantSearch', [ngResource])
-	.directive('instantSearch', () => ddo)
+	.directive('instantSearch', () => DDO)
 	.name;
 
