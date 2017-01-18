@@ -394,10 +394,12 @@ export default class AreaSelectorCtrl {
 	 */
 	getSelectedValue(area, index) {
 		if (index < area.length - 1) {
-			this.selectedAreaString += area[index].id + ',';
+			this.selectedAreaIds += area[index].id + ',';
+			this.selectedAreaNames += area[index].name + ' > ';
 			this.getSelectedValue(area, index + 1);
 		} else if (index === area.length - 1) {
-			this.selectedAreaString += area[index].id;
+			this.selectedAreaIds += area[index].id;
+			this.selectedAreaNames += area[index].name;
 			this.getSelectedValue(area, index + 1);
 		}
 	}
@@ -408,9 +410,10 @@ export default class AreaSelectorCtrl {
 	ok() {
 		let selectedValue = [];
 		this.selectedAreas.map(area => {
-			this.selectedAreaString = '';
+			this.selectedAreaIds = '';
+			this.selectedAreaNames = '';
 			this.getSelectedValue(area, 0);
-			selectedValue.push(this.selectedAreaString);
+			selectedValue.push({id: this.selectedAreaIds, name: this.selectedAreaNames});
 		});
 		this._modalInstance.ok(selectedValue);
 	}

@@ -359,10 +359,10 @@ describe('AreaSelectorCtrl', () => {
 
 	it('#getSelectedValue', () => {
 
-		const area = [{id: '310000'}, {id: '310100'}, {id: '310101'}];
-		areaSelectorCtrl.selectedAreaString = '';
+		const area = [{id: '440000', name: '广东省'}, {id: '440300', name: '深圳市'}];
+		areaSelectorCtrl.selectedAreaIds = '';
 		areaSelectorCtrl.getSelectedValue(area, 0);
-		assert.equal(areaSelectorCtrl.selectedAreaString, '310000,310100,310101');
+		assert.equal(areaSelectorCtrl.selectedAreaIds, '440000,440300');
 	});
 
 	it('#getCommonAreaSelectedStatus', () => {
