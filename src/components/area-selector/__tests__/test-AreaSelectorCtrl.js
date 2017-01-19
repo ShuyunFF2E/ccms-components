@@ -592,4 +592,23 @@ describe('AreaSelectorCtrl', () => {
 		assert.lengthOf(searchList, 3);
 		assert.equal(searchList[0].value, '220000,220400,220403');
 	});
+
+	it('#findAreaByIds', () => {
+
+		const selectedIdArray = ['310000', '310100'];
+		areaSelectorCtrl.selectedLevelArray = [];
+		areaSelectorCtrl.findAreaByIds(selectedIdArray, 0, areas);
+		assert.lengthOf(areaSelectorCtrl.selectedArea.children, 2);
+		assert.equal(areaSelectorCtrl.selectedArea.name, '市辖区');
+		assert.equal(areaSelectorCtrl.selectedArea.id, '310100');
+	});
+
+	it('#initInstantSearch', () => {
+
+		areaSelectorCtrl.options = {};
+		areaSelectorCtrl.initInstantSearch();
+		assert.equal(areaSelectorCtrl.options.placeholderText, '请输入区域名称');
+		assert.equal(areaSelectorCtrl.options.valueField, 'value');
+		assert.equal(areaSelectorCtrl.options.displayField, 'title');
+	});
 });
