@@ -5,10 +5,10 @@
 	</div>
 
 	<section class="selected-area">
-		<div> 已选：</div>
+		<div class="selected-title"> 已选：</div>
 		<div class="selected-body" cc-nice-scroll>
 			<span class="selected-region" ng-repeat="(index, selectedArea) in $ctrl.selectedAreas">
-				<span ng-repeat="area in selectedArea">
+				<span class="selected-region-content" ng-repeat="area in selectedArea">
 					<span ng-bind="area.name"></span>
 					<span class="separator" ng-show="$index !== selectedArea.length - 1">></span>
 					<span class="iconfont icon-close" ng-show="$index === selectedArea.length - 1"

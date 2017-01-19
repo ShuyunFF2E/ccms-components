@@ -48,6 +48,9 @@
 	display: flex;
 	height: 60px;
 	margin-bottom: 4px;
+	.selected-title {
+	  margin-top: 5px;
+	}
 	.selected-body {
 	  display: flex;
 	  flex-wrap: wrap;
@@ -64,6 +67,9 @@
 	  border: 1px solid #e7f3ff;
 	  border-radius: 1px;
 	  background: #eff7ff;
+	}
+	.selected-region-content {
+	  line-height: 20px;
 	}
 	.icon-close {
 	  margin-left: 5px;
