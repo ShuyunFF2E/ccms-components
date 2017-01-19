@@ -23,6 +23,7 @@ cc-pagination {
 		text-decoration: none;
 		color: #929292;
 		cursor: pointer;
+		overflow: hidden;
 
 		&%disabled {
 			color: #d1d1d1;
@@ -32,13 +33,11 @@ cc-pagination {
 		@at-root .first-page#{&} {
 			&.first, &.previous {
 				@extend %disabled;
-				overflow: hidden;
 			}
 		}
 		@at-root .last-page#{&} {
 			&.next, &.last {
 				@extend %disabled;
-				overflow: hidden;
 			}
 		}
 

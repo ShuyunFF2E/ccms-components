@@ -15,8 +15,8 @@ const DDO = {
 	controller: InstantSearchCtrl,
 	controllerAs: '$ctrl',
 	scope: {
-		selectedItem: '=model',
 		options: '<',
+		onSearch: '&?',
 		onSelect: '&?'
 	},
 	bindToController: true
