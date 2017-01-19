@@ -18,6 +18,8 @@ export default class AreaSelectorCtrl {
 		this.selectedValue = this._selectedData;
 		this.selectedAreas = [];
 		this.errorMessages = [];
+		this.searchList = [];
+		this.selectedLevelArray = [];
 		this.provinceNumber = 0;
 		this.areaNumber = 0;
 		this.districtNumber = 0;
@@ -25,6 +27,7 @@ export default class AreaSelectorCtrl {
 		this.getSelectedAreaNumber();
 		this.initCommonAreas();
 		this.validateAreasData();
+		this.initInstantSearch();
 	}
 
 	/**
@@ -506,5 +509,66 @@ export default class AreaSelectorCtrl {
 			areaList.push(areaInfo);
 		});
 		return areaList;
+	}
+
+	/**
+	 * @name initInstantSearch 初始化搜索框
+	 */
+	initInstantSearch() {
+		this.options = {
+			placeholderText: '请输入区域名称',
+
+			// 不使用远程数据源
+			datalist: [
+				{title: '吉林省 > 辽源市 > 西安区', value: '220000,220400,220403'},
+				{title: '黑龙江省 > 牡丹江市 > 西安区', value: '230000,231000,231005'},
+				{title: '陕西省 > 西安市', value: '610000,610100'}
+			],
+
+			valueField: 'value',
+			displayField: 'title',
+
+			// 本地过滤顺序
+			localFilterFields: ['value', 'title']
+		};
+	}
+
+	/**
+	 * @name onSelect 在搜索框中选中区域
+	 * @param selectedData <object> 在搜索框选中的区域信息
+	 */
+	onSelect(selectedData) {
+		if (selectedData) {
+			const selectedIdArray = selectedData.value.split(',');
+			this.findAreaByIds(selectedIdArray, 0, this.areas);
+			this.changeChildrenAreaStatus(this.selectedArea, true);
+			if (selectedIdArray.length === 3) {
+				this.changeParentAreaStatus('district', this.selectedLevelArray[0], this.selectedLevelArray[1]);
+			} else if (selectedIdArray.length === 2) {
+				this.changeParentAreaStatus('', this.selectedLevelArray[0]);
+			}
+			this.selectedAreas = [];
+			this.getSelectedAreasByAreaMap(this.areas, []);
+			this.getCommonAreaSelectedStatus();
+			this.getSelectedAreaNumber();
+		}
+	}
+
+	/**
+	 * @name findAreaByIds 通过ID的字符串获得地区
+	 * @param selectedIdArray <array> 在搜索框选中的区域
+	 * @param index <number> selectedIdArray下标
+	 * @param areas <object> 待筛选的地区
+	 */
+	findAreaByIds(selectedIdArray, index, areas) {
+		if (index <= selectedIdArray.length) {
+			const area = areas.find(item => item.id === selectedIdArray[index]);
+			this.selectedLevelArray.push(area);
+			if (index === selectedIdArray.length - 1) {
+				this.selectedArea = area;
+			} else {
+				this.findAreaByIds(selectedIdArray, index + 1, area.children);
+			}
+		}
 	}
 }

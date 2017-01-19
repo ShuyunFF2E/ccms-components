@@ -1,7 +1,8 @@
 <div class="area-selector">
 
-	<!--<input class="area-search" type="text"-->
-		   <!--placeholder="请输入区域名称">-->
+	<div class="area-search">
+		<instant-search model="$ctrl.keyword" options="$ctrl.options" on-select="$ctrl.onSelect(model)"></instant-search>
+	</div>
 
 	<section class="selected-area">
 		<div> 已选：</div>
