@@ -611,4 +611,11 @@ describe('AreaSelectorCtrl', () => {
 		assert.equal(areaSelectorCtrl.options.valueField, 'value');
 		assert.equal(areaSelectorCtrl.options.displayField, 'title');
 	});
+
+	it('#onSearch', () => {
+
+		areaSelectorCtrl.areas = areas;
+		areaSelectorCtrl.onSearch([], {searchText: '辖'});
+		assert.lengthOf(areaSelectorCtrl.datalist, 4);
+	});
 });

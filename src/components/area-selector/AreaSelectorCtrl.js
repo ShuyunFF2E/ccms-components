@@ -464,10 +464,10 @@ export default class AreaSelectorCtrl {
 	/**
 	 * @name searchAreaByKeyword 通过关键字获得匹配的地址信息
 	 */
-	searchAreaByKeyword() {
+	searchAreaByKeyword(keyword) {
 		let currentArea = [];
 		let matchedMap = [];
-		this.getMatchedAreaByKeyword(this.areas, currentArea, matchedMap, this.keyword);
+		this.getMatchedAreaByKeyword(this.areas, currentArea, matchedMap, keyword);
 		this.searchList = this.getMatchedAreaList(matchedMap);
 	}
 
@@ -479,20 +479,21 @@ export default class AreaSelectorCtrl {
 	 * @param keyWord <string> 用户输入的关键字
 	 */
 	getMatchedAreaByKeyword(areas, currentArea, matchedMap, keyWord) {
-		areas.forEach(area => {
+		for (let area of areas) {
 			currentArea.push({name: area.name, id: area.id});
 			if (area.name.includes(keyWord)) {
 				const matchedArea = angular.copy(currentArea);
-				matchedMap.push(matchedArea);
-				if (matchedMap.length >= 10) {
-					return;
+				if (matchedMap.length < 10) {
+					matchedMap.push(matchedArea);
+				} else {
+					break;
 				}
 			}
 			if (area.children) {
 				this.getMatchedAreaByKeyword(area.children, currentArea, matchedMap, keyWord);
 			}
 			currentArea.pop();
-		});
+		}
 	}
 
 	/**
@@ -573,5 +574,15 @@ export default class AreaSelectorCtrl {
 				this.findAreaByIds(selectedIdArray, index + 1, area.children);
 			}
 		}
+	}
+
+	/**
+	 * @name onSearch 监听用户输入变化
+	 * @param datalist <array> 在搜索框选中的区域
+	 * @param context <object> 用户输入的值
+	 */
+	onSearch(datalist, context) {
+		this.searchAreaByKeyword(context.searchText);
+		this.datalist = this.searchList;
 	}
 }
