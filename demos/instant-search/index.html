@@ -13,22 +13,19 @@
 <div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 	<div class="demo">
 		<h3>local data</h3>
+		<div ng-bind="ctrl.result1 || {} | json"></div>
 		<instant-search
-				model="ctrl.selectedItem1"
-				on-select="ctrl.onSelect(model)"
+				on-search="ctrl.onSearch(datalist,context)"
+				on-select="ctrl.onSelect1(item,context)"
 				options="ctrl.options1"></instant-search>
-		<div style="line-height: 1.8em;font-size: 0.8em;"
-				ng-bind-template="{{ctrl.selectedItem1.value}}|{{ctrl.selectedItem1.title}}"
-				ng-show="ctrl.selectedItem1"></div>
 	</div>
 	<div class="demo">
 		<h3>remote data</h3>
+		<div ng-bind="ctrl.result2 || {} | json"></div>
 		<instant-search
-				model="ctrl.selectedItem2"
+				on-search="ctrl.onSearch(datalist,context)"
+				on-select="ctrl.onSelect2(item,context)"
 				options="ctrl.options2"></instant-search>
-		<div style="line-height: 1.8em;font-size: 0.8em;"
-				ng-bind-template="{{ctrl.selectedItem2.value}}|{{ctrl.selectedItem2.title}}"
-				ng-show="ctrl.selectedItem2"></div>
 	</div>
 </div>
 
@@ -66,8 +63,17 @@
 				// 服务端搜索参数名
 				//remoteSearchParamKey: 'value',
 			};
-			this.onSelect = (args) => {
-				console.log(args);
+			this.onSelect1 = (item, context) => {
+				this.result1 = { item, context };
+				console.log('onSelect:', this.result1);
 			};
+			this.onSelect2 = (item, context) => {
+				this.result2 = { item, context };
+				console.log('onSelect:', this.result2);
+			};
+
+			this.onSearch = (datalist, context) => {
+				console.log('onSearch:', {datalist, context});
+			}
 		});
 </script>
