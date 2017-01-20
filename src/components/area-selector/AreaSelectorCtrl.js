@@ -302,6 +302,7 @@ export default class AreaSelectorCtrl {
 		this.selectedAreas.splice(index, 1);
 		this.deleteAreaById(area, 0, this.areas, deleteAreaArray);
 		this.getCommonAreaSelectedStatus();
+		this.getSelectedAreaNumber();
 	}
 
 	/**

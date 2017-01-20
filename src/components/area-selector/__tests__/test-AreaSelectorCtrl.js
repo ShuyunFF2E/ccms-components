@@ -317,6 +317,7 @@ describe('AreaSelectorCtrl', () => {
 		areaSelectorCtrl.deleteAreaById = sinon.spy();
 		areaSelectorCtrl.getCommonAreaSelectedStatus = sinon.spy();
 		areaSelectorCtrl.selectedAreas = [{id: 1}, {id: 2}, {id: 3}];
+		areaSelectorCtrl.areas = areas;
 
 		areaSelectorCtrl.deleteArea({id: '120000', name: '天津市'}, 20);
 		sinon.assert.calledWith(areaSelectorCtrl.deleteAreaById, {id: '120000', name: '天津市'}, 0, areaSelectorCtrl.areas, []);
