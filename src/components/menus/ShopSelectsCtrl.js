@@ -6,8 +6,8 @@
  */
 
 import angular from 'angular';
-import { Inject } from 'angular-es-utils';
-import $menus, { dispatchShopChangeStart, isHaveBindShopChangeStart, setCurrentPlatShop } from './MenuService';
+import {Inject} from 'angular-es-utils';
+import $menus, {dispatchShopChangeStart, isHaveBindShopChangeStart, setCurrentPlatShop} from './MenuService';
 @Inject('$q')
 export default class ShopSelectsCtrl {
 
@@ -159,7 +159,7 @@ export default class ShopSelectsCtrl {
 			Array.isArray(list) && list.forEach((plats, index) => {
 				plats.result = [];
 				Array.isArray(plats.child) && plats.child.forEach(shop => {
-					if (shop.name.includes(name)) {
+					if (shop.name.indexOf(name) > -1) {
 						plats.result.push(shop);
 					}
 				});
