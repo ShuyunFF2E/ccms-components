@@ -59,8 +59,6 @@ export default class InstantSearchCtrl {
 				this.search(searchText);
 			}
 		});
-
-		this._prepareWatches();
 	}
 
 	$postLink() {
@@ -96,17 +94,14 @@ export default class InstantSearchCtrl {
 			});
 	}
 
-	_prepareWatches() {
-		this.getScope().$watch(() => this.selectedItem, model => {
-			this.onSelect && this.onSelect({model});
-		});
-	}
-
 	search(text) {
 		if (this.remoteSearch) {
 			this.resource.query()
 				.$promise.then(datalist => {
 					this.datalist = datalist;
+					if (this.onSearch) {
+						this.onSearch({ datalist, context: { searchText: this.searchText } });
+					}
 				});
 		} else {
 			// 使用本地搜索
@@ -122,13 +117,17 @@ export default class InstantSearchCtrl {
 				}
 			});
 			this.datalist = searchResult;
+			if (this.onSearch) {
+				this.onSearch({ datalist: searchResult, context: { searchText: this.searchText } });
+			}
 		}
 	}
 
 	selectItem(item) {
-		this.searchText = item[this.options.displayField];
-		this.selectedItem = item;
 		this.closeHintList();
+		if (this.onSelect) {
+			this.onSelect({ item, context: { searchText: this.searchText } });
+		}
 	}
 
 	// 选择当前高亮的列表项目
