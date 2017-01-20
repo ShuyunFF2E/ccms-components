@@ -16,6 +16,7 @@ const DDO = {
 	controllerAs: '$ctrl',
 	scope: {
 		options: '<',
+		datalist: '<?',
 		onSearch: '&?',
 		onSelect: '&?'
 	},
