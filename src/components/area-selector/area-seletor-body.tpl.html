@@ -1,8 +1,8 @@
 <div class="area-selector">
 
 	<div class="area-search">
-		<instant-search model="$ctrl.keyword" options="$ctrl.options"
-						on-select="$ctrl.onSelect(model)" on-search="$ctrl.onSearch(datalist,context)"></instant-search>
+		<instant-search datalist="$ctrl.datalist" options="$ctrl.options"
+						on-select="$ctrl.onSelect(item,context)" on-search="$ctrl.onSearch(datalist,context)"></instant-search>
 	</div>
 
 	<section class="selected-area">

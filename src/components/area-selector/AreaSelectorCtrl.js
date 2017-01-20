@@ -20,6 +20,7 @@ export default class AreaSelectorCtrl {
 		this.errorMessages = [];
 		this.searchList = [];
 		this.selectedLevelArray = [];
+		this.datalist = [];
 		this.provinceNumber = 0;
 		this.areaNumber = 0;
 		this.districtNumber = 0;
@@ -522,13 +523,6 @@ export default class AreaSelectorCtrl {
 		this.options = {
 			placeholderText: '请输入区域名称',
 
-			// 不使用远程数据源
-			datalist: [
-				{title: '吉林省 > 辽源市 > 西安区', value: '220000,220400,220403'},
-				{title: '黑龙江省 > 牡丹江市 > 西安区', value: '230000,231000,231005'},
-				{title: '陕西省 > 西安市', value: '610000,610100'}
-			],
-
 			valueField: 'value',
 			displayField: 'title',
 
@@ -543,6 +537,7 @@ export default class AreaSelectorCtrl {
 	 */
 	onSelect(selectedData) {
 		if (selectedData) {
+			this.selectedLevelArray = [];
 			const selectedIdArray = selectedData.value.split(',');
 			this.findAreaByIds(selectedIdArray, 0, this.areas);
 			this.changeChildrenAreaStatus(this.selectedArea, true);
