@@ -6,6 +6,7 @@ export default class InstantSearchCtrl {
 
 	constructor() {
 		this.searchText = '';
+		this.searchResult = [];
 		this._remoteSearch = false;
 		this.isHintOpen = false;
 		this.focusIndex = 0;
@@ -98,30 +99,35 @@ export default class InstantSearchCtrl {
 	}
 
 	search(text) {
+		this.searchResult = [];
 		if (this._remoteSearch) {
 			this.resource.query()
 				.$promise.then(datalist => {
-					this.datalist = datalist;
+					this.searchResult = datalist;
 					if (this.onSearch) {
-						this.onSearch({ datalist, context: { searchText: this.searchText } });
+						this.onSearch({
+							datalist: this.searchResult,
+							context: { searchText: this.searchText }
+						});
 					}
 				});
 		} else {
 			// 使用本地搜索
 			const datalist = [...this.datalist];
-			const searchResult = [];
 			this.options.localFilterFields.forEach(field => {
 				for (let i = datalist.length - 1; i > -1; i--) {
 					let item = datalist[i];
 					if (item[field].indexOf(text) !== -1) {
-						searchResult.push(item);
+						this.searchResult.push(item);
 						datalist.splice(i, 1);
 					}
 				}
 			});
-			this.datalist = searchResult;
 			if (this.onSearch) {
-				this.onSearch({ datalist: searchResult, context: { searchText: this.searchText } });
+				this.onSearch({
+					datalist: this.searchResult,
+					context: { searchText: this.searchText }
+				});
 			}
 		}
 	}
