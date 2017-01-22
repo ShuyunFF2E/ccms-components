@@ -18,6 +18,9 @@ export default class AreaSelectorCtrl {
 		this.selectedValue = this._selectedData;
 		this.selectedAreas = [];
 		this.errorMessages = [];
+		this.searchList = [];
+		this.selectedLevelArray = [];
+		this.datalist = [];
 		this.provinceNumber = 0;
 		this.areaNumber = 0;
 		this.districtNumber = 0;
@@ -25,6 +28,7 @@ export default class AreaSelectorCtrl {
 		this.getSelectedAreaNumber();
 		this.initCommonAreas();
 		this.validateAreasData();
+		this.initInstantSearch();
 	}
 
 	/**
@@ -298,6 +302,7 @@ export default class AreaSelectorCtrl {
 		this.selectedAreas.splice(index, 1);
 		this.deleteAreaById(area, 0, this.areas, deleteAreaArray);
 		this.getCommonAreaSelectedStatus();
+		this.getSelectedAreaNumber();
 	}
 
 	/**
@@ -391,10 +396,12 @@ export default class AreaSelectorCtrl {
 	 */
 	getSelectedValue(area, index) {
 		if (index < area.length - 1) {
-			this.selectedAreaString += area[index].id + ',';
+			this.selectedAreaIds += area[index].id + ',';
+			this.selectedAreaNames += area[index].name + ' > ';
 			this.getSelectedValue(area, index + 1);
 		} else if (index === area.length - 1) {
-			this.selectedAreaString += area[index].id;
+			this.selectedAreaIds += area[index].id;
+			this.selectedAreaNames += area[index].name;
 			this.getSelectedValue(area, index + 1);
 		}
 	}
@@ -405,9 +412,10 @@ export default class AreaSelectorCtrl {
 	ok() {
 		let selectedValue = [];
 		this.selectedAreas.map(area => {
-			this.selectedAreaString = '';
+			this.selectedAreaIds = '';
+			this.selectedAreaNames = '';
 			this.getSelectedValue(area, 0);
-			selectedValue.push(this.selectedAreaString);
+			selectedValue.push({id: this.selectedAreaIds, name: this.selectedAreaNames});
 		});
 		this._modalInstance.ok(selectedValue);
 	}
@@ -453,5 +461,124 @@ export default class AreaSelectorCtrl {
 			case 3:
 				this.districtNumber ++;
 		}
+	}
+
+	/**
+	 * @name searchAreaByKeyword 通过关键字获得匹配的地址信息
+	 */
+	searchAreaByKeyword(keyword) {
+		let currentArea = [];
+		let matchedMap = [];
+		this.getMatchedAreaByKeyword(this.areas, currentArea, matchedMap, keyword);
+		this.searchList = this.getMatchedAreaList(matchedMap);
+	}
+
+	/**
+	 * @name getMatchedAreaByKeyword 获得
+	 * @param areas <object> 搜索的区域
+	 * @param currentArea <array> 目前选中的省市区
+	 * @param matchedMap <array> 匹配到的Map
+	 * @param keyWord <string> 用户输入的关键字
+	 */
+	getMatchedAreaByKeyword(areas, currentArea, matchedMap, keyWord) {
+		for (let area of areas) {
+			currentArea.push({name: area.name, id: area.id});
+			if (area.name.includes(keyWord)) {
+				const matchedArea = angular.copy(currentArea);
+				if (matchedMap.length < 10) {
+					matchedMap.push(matchedArea);
+				} else {
+					break;
+				}
+			}
+			if (area.children) {
+				this.getMatchedAreaByKeyword(area.children, currentArea, matchedMap, keyWord);
+			}
+			currentArea.pop();
+		}
+	}
+
+	/**
+	 * @name getMatchedAreaList 获得匹配到的地区列表
+	 * @param matchedMap <array> 匹配到的Map
+	 */
+	getMatchedAreaList(matchedMap) {
+		const areaList = [];
+		matchedMap.forEach(areas => {
+			let areaInfo = {value: '', title: ''};
+			areas.forEach(area => {
+				areaInfo.value += area.id + ',';
+				areaInfo.title += area.name + ' > ';
+			});
+			areaInfo.value = areaInfo.value.substring(0, areaInfo.value.length - 1);
+			areaInfo.title = areaInfo.title.substring(0, areaInfo.title.length - 3);
+			areaList.push(areaInfo);
+		});
+		return areaList;
+	}
+
+	/**
+	 * @name initInstantSearch 初始化搜索框
+	 */
+	initInstantSearch() {
+		this.options = {
+			placeholderText: '请输入区域名称',
+
+			valueField: 'value',
+			displayField: 'title',
+
+			// 本地过滤顺序
+			localFilterFields: ['value', 'title']
+		};
+	}
+
+	/**
+	 * @name onSelect 在搜索框中选中区域
+	 * @param selectedData <object> 在搜索框选中的区域信息
+	 */
+	onSelect(selectedData) {
+		if (selectedData) {
+			this.selectedLevelArray = [];
+			const selectedIdArray = selectedData.value.split(',');
+			this.findAreaByIds(selectedIdArray, 0, this.areas);
+			this.changeChildrenAreaStatus(this.selectedArea, true);
+			if (selectedIdArray.length === 3) {
+				this.changeParentAreaStatus('district', this.selectedLevelArray[0], this.selectedLevelArray[1]);
+			} else if (selectedIdArray.length === 2) {
+				this.changeParentAreaStatus('', this.selectedLevelArray[0]);
+			}
+			this.selectedAreas = [];
+			this.getSelectedAreasByAreaMap(this.areas, []);
+			this.getCommonAreaSelectedStatus();
+			this.getSelectedAreaNumber();
+		}
+	}
+
+	/**
+	 * @name findAreaByIds 通过ID的字符串获得地区
+	 * @param selectedIdArray <array> 在搜索框选中的区域
+	 * @param index <number> selectedIdArray下标
+	 * @param areas <object> 待筛选的地区
+	 */
+	findAreaByIds(selectedIdArray, index, areas) {
+		if (index <= selectedIdArray.length) {
+			const area = areas.find(item => item.id === selectedIdArray[index]);
+			this.selectedLevelArray.push(area);
+			if (index === selectedIdArray.length - 1) {
+				this.selectedArea = area;
+			} else {
+				this.findAreaByIds(selectedIdArray, index + 1, area.children);
+			}
+		}
+	}
+
+	/**
+	 * @name onSearch 监听用户输入变化
+	 * @param datalist <array> 在搜索框选中的区域
+	 * @param context <object> 用户输入的值
+	 */
+	onSearch(datalist, context) {
+		this.searchAreaByKeyword(context.searchText);
+		this.datalist = this.searchList;
 	}
 }
