@@ -91,11 +91,18 @@ export default class InstantSearchCtrl {
 
 		// 监视搜索关键字变化
 		scope.$watch(() => this.searchText, searchText => {
-			searchText = searchText.trim();
 			if (searchText.length) {
 				this.search(searchText);
 			}
 		});
+
+		// 动态改变数据源时，按需执行搜索
+		scope.$watch(() => this.datalist, datalist => {
+			const searchText = this.searchText;
+			if (searchText.length) {
+				this.search(searchText);
+			}
+		}, true);
 	}
 
 	search(text) {
