@@ -5,60 +5,17 @@ import { Inject } from 'angular-es-utils';
 export default class InstantSearchCtrl {
 
 	constructor() {
-		this.datalist = this.options.datalist || [];
 		this.searchText = '';
-		this.remoteSearch = false;
+		this.searchResult = [];
+		this._remoteSearch = false;
 		this.isHintOpen = false;
 		this.focusIndex = 0;
 		this.resource = null;
 	}
 
 	$onInit() {
-		let options = this.options;
-
-		options.valueField = options.valueField || 'value';
-		options.displayField = options.displayField || 'title';
-
-		let params = {};
-		if ((this.remoteSearch = !!options.remoteSearchParamKey)) {
-			// 设置服务器端搜索查询参数
-			params = {
-				[options.remoteSearchParamKey]: () => {
-					return this.searchText;
-				}
-			};
-		} else {
-			// 默认本地过滤 [valueField, displayField]
-			options.localFilterFields = options.localFilterFields ||
-					[options.valueField, options.displayField];
-		}
-
-		if (!this.datalist.length) {
-			if (!options.url) {
-				throw new Error('no options.datalist or options.url specified.');
-			}
-
-			// 设置数据来源
-			this.remoteSearch = true;
-			this.resource = this.getResource()(options.url, null, {
-				query: {
-					method: 'GET',
-					isArray: true,
-					cache: true,
-					params
-				}
-			}, {
-				stripTrailingSlashes: false
-			});
-		}
-
-		// 监视搜索关键字变化
-		this.getScope().$watch(() => this.searchText, searchText => {
-			searchText = searchText.trim();
-			if (searchText.length) {
-				this.search(searchText);
-			}
-		});
+		this._prepareOptions();
+		this._prepareWatches();
 	}
 
 	$postLink() {
@@ -94,31 +51,90 @@ export default class InstantSearchCtrl {
 			});
 	}
 
+	_prepareOptions() {
+		let options = this.options;
+
+		options.valueField = options.valueField || 'value';
+		options.displayField = options.displayField || 'title';
+
+		if (options.url) {
+			let params = {};
+
+			this._remoteSearch = true;
+
+			// 设置服务器端搜索查询参数
+			params = {
+				[options.remoteSearchParamKey]: () => {
+					return this.searchText;
+				}
+			};
+
+			this.resource = this.getResource()(options.url, null, {
+				query: {
+					method: 'GET',
+					isArray: true,
+					cache: true,
+					params
+				}
+			}, {
+				stripTrailingSlashes: false
+			});
+		} else {
+			// 默认本地过滤 [valueField, displayField]
+			options.localFilterFields = options.localFilterFields ||
+					[options.valueField, options.displayField];
+		}
+	}
+
+	_prepareWatches() {
+		const scope = this.getScope();
+
+		// 监视搜索关键字变化
+		scope.$watch(() => this.searchText, searchText => {
+			if (searchText.length) {
+				this.search(searchText);
+			}
+		});
+
+		// 动态改变数据源时，按需执行搜索
+		scope.$watch(() => this.datalist, datalist => {
+			const searchText = this.searchText;
+			if (searchText.length) {
+				this.search(searchText);
+			}
+		}, true);
+	}
+
 	search(text) {
-		if (this.remoteSearch) {
+		this.searchResult = [];
+		if (this._remoteSearch) {
 			this.resource.query()
 				.$promise.then(datalist => {
-					this.datalist = datalist;
+					this.searchResult = datalist;
 					if (this.onSearch) {
-						this.onSearch({ datalist, context: { searchText: this.searchText } });
+						this.onSearch({
+							datalist: this.searchResult,
+							context: { searchText: this.searchText }
+						});
 					}
 				});
 		} else {
 			// 使用本地搜索
-			const datalist = [...this.options.datalist];
-			const searchResult = [];
+			const datalist = [...this.datalist];
 			this.options.localFilterFields.forEach(field => {
 				for (let i = datalist.length - 1; i > -1; i--) {
 					let item = datalist[i];
 					if (item[field].indexOf(text) !== -1) {
-						searchResult.push(item);
+						this.searchResult.push(item);
 						datalist.splice(i, 1);
 					}
 				}
 			});
-			this.datalist = searchResult;
 			if (this.onSearch) {
-				this.onSearch({ datalist: searchResult, context: { searchText: this.searchText } });
+				this.onSearch({
+					datalist: this.searchResult,
+					context: { searchText: this.searchText }
+				});
 			}
 		}
 	}

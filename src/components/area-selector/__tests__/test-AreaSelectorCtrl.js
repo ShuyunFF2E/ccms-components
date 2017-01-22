@@ -317,6 +317,7 @@ describe('AreaSelectorCtrl', () => {
 		areaSelectorCtrl.deleteAreaById = sinon.spy();
 		areaSelectorCtrl.getCommonAreaSelectedStatus = sinon.spy();
 		areaSelectorCtrl.selectedAreas = [{id: 1}, {id: 2}, {id: 3}];
+		areaSelectorCtrl.areas = areas;
 
 		areaSelectorCtrl.deleteArea({id: '120000', name: '天津市'}, 20);
 		sinon.assert.calledWith(areaSelectorCtrl.deleteAreaById, {id: '120000', name: '天津市'}, 0, areaSelectorCtrl.areas, []);
@@ -359,10 +360,10 @@ describe('AreaSelectorCtrl', () => {
 
 	it('#getSelectedValue', () => {
 
-		const area = [{id: '310000'}, {id: '310100'}, {id: '310101'}];
-		areaSelectorCtrl.selectedAreaString = '';
+		const area = [{id: '440000', name: '广东省'}, {id: '440300', name: '深圳市'}];
+		areaSelectorCtrl.selectedAreaIds = '';
 		areaSelectorCtrl.getSelectedValue(area, 0);
-		assert.equal(areaSelectorCtrl.selectedAreaString, '310000,310100,310101');
+		assert.equal(areaSelectorCtrl.selectedAreaIds, '440000,440300');
 	});
 
 	it('#getCommonAreaSelectedStatus', () => {
@@ -550,7 +551,7 @@ describe('AreaSelectorCtrl', () => {
 		assert.equal(areaSelectorCtrl.districtNumber, 1);
 	});
 
-	it('#countAreaNumber', () => {
+	it('#getSelectedAreaNumber', () => {
 
 		areaSelectorCtrl.areas = areas;
 		areaSelectorCtrl.getSelectedAreaNumber();
@@ -558,5 +559,64 @@ describe('AreaSelectorCtrl', () => {
 		assert.equal(areaSelectorCtrl.provinceNumber, 0);
 		assert.equal(areaSelectorCtrl.areaNumber, 0);
 		assert.equal(areaSelectorCtrl.districtNumber, 0);
+	});
+
+	it('#getMatchedAreaByKeyword', () => {
+
+		let matchedMap = [];
+		areaSelectorCtrl.getMatchedAreaByKeyword(areas, [], matchedMap, '辖');
+		assert.lengthOf(matchedMap, 4);
+		assert.lengthOf(matchedMap[0], 2);
+		assert.equal(matchedMap[0][0].id, '310000');
+	});
+
+	it('#getMatchedAreaList', () => {
+
+		const matchedMap =
+			[
+				[
+					{id: '220000', name: '吉林省'},
+					{id: '220400', name: '辽源市'},
+					{id: '220403', name: '西安区'}
+				],
+				[
+					{id: '230000', name: '黑龙江省'},
+					{id: '231000', name: '牡丹江市'},
+					{id: '231005', name: '西安区'}
+				],
+				[
+					{id: '610000', name: '陕西省'},
+					{id: '610100', name: '西安市'}
+				]
+			];
+		const searchList = areaSelectorCtrl.getMatchedAreaList(matchedMap);
+		assert.lengthOf(searchList, 3);
+		assert.equal(searchList[0].value, '220000,220400,220403');
+	});
+
+	it('#findAreaByIds', () => {
+
+		const selectedIdArray = ['310000', '310100'];
+		areaSelectorCtrl.selectedLevelArray = [];
+		areaSelectorCtrl.findAreaByIds(selectedIdArray, 0, areas);
+		assert.lengthOf(areaSelectorCtrl.selectedArea.children, 2);
+		assert.equal(areaSelectorCtrl.selectedArea.name, '市辖区');
+		assert.equal(areaSelectorCtrl.selectedArea.id, '310100');
+	});
+
+	it('#initInstantSearch', () => {
+
+		areaSelectorCtrl.options = {};
+		areaSelectorCtrl.initInstantSearch();
+		assert.equal(areaSelectorCtrl.options.placeholderText, '请输入区域名称');
+		assert.equal(areaSelectorCtrl.options.valueField, 'value');
+		assert.equal(areaSelectorCtrl.options.displayField, 'title');
+	});
+
+	it('#onSearch', () => {
+
+		areaSelectorCtrl.areas = areas;
+		areaSelectorCtrl.onSearch([], {searchText: '辖'});
+		assert.lengthOf(areaSelectorCtrl.datalist, 4);
 	});
 });

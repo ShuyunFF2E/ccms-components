@@ -15,6 +15,7 @@
 		<h3>local data</h3>
 		<div ng-bind="ctrl.result1 || {} | json"></div>
 		<instant-search
+				datalist="ctrl.datalist"
 				on-search="ctrl.onSearch(datalist,context)"
 				on-select="ctrl.onSelect1(item,context)"
 				options="ctrl.options1"></instant-search>
@@ -23,6 +24,7 @@
 		<h3>remote data</h3>
 		<div ng-bind="ctrl.result2 || {} | json"></div>
 		<instant-search
+				datalist="ctrl.datalist"
 				on-search="ctrl.onSearch(datalist,context)"
 				on-select="ctrl.onSelect2(item,context)"
 				options="ctrl.options2"></instant-search>
@@ -33,17 +35,15 @@
 <script>
 	angular.module('demoApp', ['ccms.components'])
 		.controller('DemoCtrl', function($scope) {
+			this.datalist = [
+				{title: '上海', value: 'sh'},
+				{title: '北京', value: 'bj'},
+				{title: '深圳', value: 'sz'},
+				{title: '广州', value: 'gz'},
+				{title: '南京', value: 'nj'}
+			];
 			this.options1 = {
 				placeholderText: '请输入区域名称',
-
-				// 不使用远程数据源
-				datalist: [
-					{title: '上海', value: 'sh'},
-					{title: '北京', value: 'bj'},
-					{title: '深圳', value: 'sz'},
-					{title: '广州', value: 'gz'},
-					{title: '南京', value: 'nj'}
-				],
 
 				valueField: 'value',
 				displayField: 'title',
