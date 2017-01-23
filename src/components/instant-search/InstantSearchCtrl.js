@@ -125,7 +125,7 @@ export default class InstantSearchCtrl {
 				for (let i = datalist.length - 1; i > -1; i--) {
 					let item = datalist[i];
 					if (item[field].indexOf(text) !== -1) {
-						this.searchResult.push(item);
+						this.searchResult.unshift(item);
 						datalist.splice(i, 1);
 					}
 				}
@@ -148,7 +148,7 @@ export default class InstantSearchCtrl {
 
 	// 选择当前高亮的列表项目
 	selectFocusedItem() {
-		let item = this.datalist[this.focusIndex];
+		let item = this.searchResult[this.focusIndex];
 		this.selectItem(item);
 	}
 
@@ -159,7 +159,7 @@ export default class InstantSearchCtrl {
 	}
 
 	focusNextHint() {
-		let listCount = this.datalist.length;
+		let listCount = this.searchResult.length;
 		if (++this.focusIndex > listCount - 1) {
 			this.focusIndex = listCount - 1;
 		}
