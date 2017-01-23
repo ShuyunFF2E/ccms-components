@@ -125,7 +125,7 @@ export default class InstantSearchCtrl {
 				for (let i = datalist.length - 1; i > -1; i--) {
 					let item = datalist[i];
 					if (item[field].indexOf(text) !== -1) {
-						this.searchResult.push(item);
+						this.searchResult.unshift(item);
 						datalist.splice(i, 1);
 					}
 				}
