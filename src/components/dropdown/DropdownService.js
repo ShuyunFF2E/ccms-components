@@ -30,13 +30,13 @@ class DropdownService {
 				element.removeEventListener('click', avoidAutoCloseFn);
 				this.lastDropdownCtrl.close();
 			};
-			document.addEventListener('click', this.autoCloseFn);
+			document.addEventListener('click', this.autoCloseFn, true);
 		}
 	}
 
 	close(dropdownCtrl) {
 		if (dropdownCtrl.autoClose) {
-			document.removeEventListener('click', this.autoCloseFn);
+			document.removeEventListener('click', this.autoCloseFn, true);
 			this.lastDropdownCtrl = null;
 			this.autoCloseFn = null;
 		}
