@@ -1,11 +1,12 @@
 $default-font-size: 12px !default;
-$font-size-number: 12;
+$checkbox-size: 14;
 $text-color: #3d3d3d !default;
 $default-border-width: 2px;
 $normal-border-color: #929292;
 $normal-hover-border-color: #828282;
 $checked-border-color: #0083BA;
 $checked-hover-border-color: #00AAF1;
+$checked-indeterminate-color: #cbcbcb;
 $disabled-color: #D1D1D1;
 
 cc-checkbox{
@@ -33,9 +34,10 @@ cc-checkbox{
 	border: solid 1px $normal-border-color;
 	border-radius: $default-border-width;
 	position: relative;
-	width: (16 / $font-size-number) + em;
-	height: (16 / $font-size-number) + em;
-	margin-right: 1em;
+	width: #{$checkbox-size}px;
+	height: #{$checkbox-size}px;
+	margin-right: (10 / $checkbox-size) + em;
+	font-size: #{$checkbox-size}px;
 
 	&:before{
 	  position: absolute;
@@ -64,16 +66,16 @@ cc-checkbox{
 	border-color: $checked-border-color;
 
 	&:before{
-	  width: (4 / $font-size-number) + em;
-	  height: (8 / $font-size-number) + em;
+	  width: (3 / $checkbox-size) + em;
+	  height: (7 / $checkbox-size) + em;
 	  transform: rotate(45deg);
 	  border-width: $default-border-width;
 	  border-style: solid;
 	  border-color: $checked-border-color;
 	  border-left: 0;
 	  border-top: 0;
-	  left: (4 / $font-size-number) + em;
-	  top: (1 / $font-size-number) + em;
+	  left: (4 / $checkbox-size) + em;
+	  top: 0;
 	}
   }
 }
@@ -82,10 +84,6 @@ cc-checkbox{
   &:hover{
 	.cc-checkbox-input{
 	  border-color: $checked-hover-border-color;
-
-	  &:before{
-		border-color: $normal-hover-border-color;
-	  }
 	}
   }
 
@@ -96,9 +94,9 @@ cc-checkbox{
 	  width: 0;
 	  height: 0;
 	  transform: rotate(0deg);
-	  border: (4 / $font-size-number) + em solid $normal-border-color;
-	  left: (3 / $font-size-number) + em;
-	  top: (3 / $font-size-number) + em;
+	  border: (3 / $checkbox-size) + em solid $checked-indeterminate-color;
+	  left: (3 / $checkbox-size) + em;
+	  top: (3 / $checkbox-size) + em;
 	}
   }
 }
@@ -128,3 +126,4 @@ cc-checkbox{
 	color: $disabled-color;
   }
 }
+
