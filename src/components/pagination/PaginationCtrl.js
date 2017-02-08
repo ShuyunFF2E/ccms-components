@@ -84,44 +84,36 @@ export default class PaginationCtrl {
 		return this._$scope;
 	}
 
-	changePageNumByShortcut(type) {
+	first() {
+		this.pageNum = 1;
+		this.onPageChange();
+	}
 
-		let {pageNum, totalPages, pageSize} = this;
+	last() {
+		this.pageNum = this.totalPages;
+		this.onPageChange();
+	}
 
-		switch (type) {
-
-			case 'first':
-				pageNum = 1;
-				break;
-
-			case 'prev':
-
-				if (!--pageNum) {
-					pageNum = 1;
-				}
-
-				break;
-
-			case 'next':
-
-				if (++pageNum > totalPages) {
-					pageNum = totalPages;
-				}
-
-				break;
-
-			case 'last':
-				pageNum = totalPages;
-				break;
-
-			// no default
+	previous() {
+		if (this.pageNum > 1) {
+			this.pageNum--;
 		}
+		this.onPageChange();
+	}
 
-		if (pageNum !== this.pageNum) {
-			this.pageNum = pageNum;
-			this.changePager({pageNum, pageSize});
+	next() {
+		const { pageNum, totalPages } = this;
+		if (pageNum < totalPages) {
+			this.pageNum++;
+		} else {
+			this.pageNum = totalPages;
 		}
+		this.onPageChange();
+	}
 
+	onPageChange() {
+		const { pageNum, pageSize } = this;
+		this.onChange({ pageNum, pageSize });
 	}
 
 	changePageNumByInput() {
