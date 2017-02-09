@@ -77,30 +77,19 @@ export default class PaginationCtrl {
 	}
 
 	first() {
-		this.pageNum = 1;
-		this.onPageChange();
+		this.goto(1);
 	}
 
 	last() {
-		this.pageNum = this.totalPages;
-		this.onPageChange();
+		this.goto(this.totalPages);
 	}
 
 	previous() {
-		if (this.pageNum > 1) {
-			this.pageNum--;
-		}
-		this.onPageChange();
+		this.goto(this.pageNum - 1);
 	}
 
 	next() {
-		const { pageNum, totalPages } = this;
-		if (pageNum < totalPages) {
-			this.pageNum++;
-		} else {
-			this.pageNum = totalPages;
-		}
-		this.onPageChange();
+		this.goto(this.pageNum + 1);
 	}
 
 	goto(pageNum) {
@@ -116,7 +105,6 @@ export default class PaginationCtrl {
 	onPageChange() {
 		const { pageNum, pageSize } = this;
 		this.onChange({ pageNum, pageSize });
-		console.log('onPageChange...');
 	}
 
 	setPageSize(pageSize) {
