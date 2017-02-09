@@ -8,9 +8,9 @@
 		<input size="{{$ctrl.totalPages.toString().length}}"
 				ng-switch-when="normal"
 				ng-disabled="$ctrl.totalPages === 1"
-				ng-blur="$ctrl.changePageNumByInput()"
-				ng-enter="$ctrl.changePageNumByInput()"
-				ng-model="$ctrl._tmpPageNum">
+				ng-blur="$ctrl.inputPage = $ctrl.pageNum"
+				ng-enter="$ctrl.goto($ctrl.inputPage) || ( $ctrl.inputPage = $ctrl.pageNum )"
+				ng-model="$ctrl.inputPage">
 		<span ng-switch-when="simple" ng-bind="$ctrl.pageNum"></span> / 共<span ng-bind="$ctrl.totalPages"></span>页
 	</span>
 	<a class="next" ng-click="!$ctrl.isLastPage && $ctrl.next()"><span>next</span></a>
@@ -18,7 +18,7 @@
 	<select ng-if="!$ctrl.pageSizeListHidden"
 			ng-options="pageSize for pageSize in ::$ctrl.pageSizeList track by pageSize"
 			ng-model="$ctrl.pageSize"
-			ng-change="$ctrl.changePageSize($ctrl.pageSize)"
+			ng-change="$ctrl.setPageSize($ctrl.pageSize)"
 			ng-disabled="$ctrl.pageSizeListDisabled">
 	</select>
 </div>
