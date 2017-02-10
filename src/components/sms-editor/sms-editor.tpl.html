@@ -9,7 +9,8 @@
 		<ul ng-class="'sms-keywords' + (ctrl._showAllKeywords ? ' expanded': '')">
 			<li class="sms-keyword"
 				ng-repeat="keyword in ctrl.opts.keywords | filter:{_display: true}"
-				ng-click="ctrl.insertKeyword(keyword.text, keyword.type)">#{{keyword.text}}
+				ng-class="{'sms-disabled-keyword': keyword.disabled}"
+				ng-click="ctrl.insertKeyword(keyword.text, keyword.type, keyword.disabled)">#{{keyword.text}}
 			</li>
 		</ul>
 

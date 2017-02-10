@@ -40,13 +40,15 @@ angular.module('componentsApp', ['ccms.components'])
 					{
 						type: 'taobao',
 						name: 'XMJDWMRZ',
-						text: '姓名京东无默认值'
+						text: '姓名京东无默认值',
+						disabled: true
 					},
 					{
 						type: 'taobao',
 						name: 'DDBH',
 						text: '订单编号',
-						defaultValue: '6666666666'
+						defaultValue: '6666666666',
+						disabled: true
 					},
 					{
 						type: 'taobao',
@@ -89,7 +91,7 @@ angular.module('componentsApp', ['ccms.components'])
 				//useUnsubscribe: true,
 				content: '亲爱的$$_[taobao]XMTB_$$ / $$_[taobao]XMJDWMRZ_$$, 您的订单$$_[taobao]DDBH_$$正在派送.  ($$ $ $$) 签名: $$_XBL_$$ http://www.taobao.com# {emo-5}',
 				signature: '[通道签名 1]',
-				disabled: true
+				disabled: false
 			},
 			{
 				name: 'GatewayType 1',

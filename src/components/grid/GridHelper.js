@@ -32,7 +32,8 @@ export default {
 			resource: null, // 资源$resource
 			response: null, // 对外暴露的response
 			queryParams: null, // 外部查询参数
-			columnsDef: [],   // 列定义,包括 field:字段 displayName:字段名 cellTemplate:单元格模板 align:文字对齐方式
+			enableMultipleFieldsSort: false, // 多字段排序(默认关闭). true -> 开启
+			columnsDef: [],   // 列定义,包括 field:字段 displayName:字段名 cellTemplate:单元格模板 align:文字对齐方式 sortProp: 排序字段 sortOrder：排序规则
 			enableHiddenColumns: false, // 自定义数据列，enum: false, Array(field)
 			externalData: null, // 来自外部表格数据
 			showPagination: true, // 是否展示分页

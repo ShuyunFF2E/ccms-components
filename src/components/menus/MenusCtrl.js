@@ -7,6 +7,7 @@
 import {Inject} from 'angular-es-utils';
 import $menus, {reset} from './MenuService';
 import EventBus from 'angular-es-utils/event-bus';
+import logoUrl from '../../assets/images/logo-default.png';
 
 @Inject('$timeout', '$state', '$rootScope', '$document', '$scope')
 export default class MenusCtrl {
@@ -16,6 +17,7 @@ export default class MenusCtrl {
 		this.shopSelectAvailable = true;
 		this.retract = false;
 		this.isInitShopSelect = true;
+		this.imgDefaultUrl = logoUrl;
 	}
 
 	$onInit() {
@@ -132,7 +134,8 @@ export default class MenusCtrl {
 				// -!targetName.includes('shop-list-btn') 清除点击查看全部收齐问题
 				if (shopClosest === null &&
 					retrackShopClosest == null &&
-					menusClosest === null && !targetName.includes('shop-search-clear') && !targetName.includes('menu-constract-icon') && !targetName.includes('expand') && !targetName.includes('shop-list-btn')) {
+					menusClosest === null && targetName.indexOf('shop-search-clear') < 0 && targetName.indexOf('menu-constract-icon') < 0 && targetName.indexOf('expand') < 0 && targetName.indexOf('shop-list-btn') < 0
+				) {
 					if (this.retract) {
 						this.retract = false;
 						this._$scope.$digest();

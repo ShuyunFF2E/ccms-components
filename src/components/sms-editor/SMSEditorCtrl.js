@@ -238,7 +238,7 @@ export default class SMSEditorCtrl {
 				return `{{${$2}}}`;
 			});
 
-		// 图片, 关键字高亮, URL 及电话号码下划线
+		// 图片, 关键字高亮, URL, 手机及固话号码下划线
 		this.opts.preview = SMSEditorCtrl.flatCode(this._tempHolder.textContent
 				.trim())
 				.replace(/\{\{([^}]+)}}/g, (result, $1) => {
@@ -250,8 +250,11 @@ export default class SMSEditorCtrl {
 				.replace(REG_URL_HASH, result => {
 					return `<a href="javascript: void(0);">${result.slice(0, result.length - 1)}</a>#`;
 				})
-				.replace(/((\D|\b)1[3-9]\d-?\d{4}-?\d{4}(\D|\b))|((\D)([08][1-9]\d{1,2}-?)?[2-9]\d{6,7}(\D))/g, (result, $1, $2, $3) => {
-					return `${$2}<a href="javascript: void(0);">${result.slice(1, result.length - 1)}</a>${$3}`;
+				.replace(/(\D|\b)(1[3-9]\d-?\d{4}-?\d{4})(\D|\b)/g, (match, p1, p2, p3) => {
+					return `${p1}<a href="javascript: void(0);">${p2}</a>${p3}`;
+				})
+				.replace(/(\D)((?:[08][1-9]\d{1,2}-?)?[2-9]\d{6,7})(\D)/g, (match, p1, p2, p3) => {
+					return `${p1}<a href="javascript: void(0);">${p2}</a>${p3}`;
 				});
 
 		this.opts.text = parsed
@@ -281,10 +284,13 @@ export default class SMSEditorCtrl {
 	 * 往富文本编辑器中插入标签
 	 * @param {string} text - 标签名
 	 * @param {string} type - 标签类型
+	 * @param {boolean} disabled -标签是否禁用
 	 */
-	insertKeyword(text, type) {
-		this.reFocus();
-		document.execCommand('insertHTML', false, this.createInput(text, type));
+	insertKeyword(text, type, disabled) {
+		if (!disabled) {
+			this.reFocus();
+			document.execCommand('insertHTML', false, this.createInput(text, type));
+		}
 	}
 
 

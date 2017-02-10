@@ -1,13 +1,15 @@
 <div class="area-selector">
 
-	<!--<input class="area-search" type="text"-->
-		   <!--placeholder="请输入区域名称">-->
+	<div class="area-search">
+		<instant-search datalist="$ctrl.datalist" options="$ctrl.options"
+						on-select="$ctrl.onSelect(item,context)" on-search="$ctrl.onSearch(datalist,context)"></instant-search>
+	</div>
 
 	<section class="selected-area">
-		<div> 已选：</div>
-		<div class="selected-body">
+		<div class="selected-title"> 已选：</div>
+		<div class="selected-body" cc-nice-scroll>
 			<span class="selected-region" ng-repeat="(index, selectedArea) in $ctrl.selectedAreas">
-				<span ng-repeat="area in selectedArea">
+				<span class="selected-region-content" ng-repeat="area in selectedArea">
 					<span ng-bind="area.name"></span>
 					<span class="separator" ng-show="$index !== selectedArea.length - 1">></span>
 					<span class="iconfont icon-close" ng-show="$index === selectedArea.length - 1"
@@ -32,19 +34,10 @@
 
 	<section class="select-areas">
 		<div class="select-area">
-			<div class="area-title">省选择</div>
-			<div class="area-body">
-				<span>{{$ctrl.noLimitSelected}}</span>
-				<div class="area"
-					 ng-class="{'selected': $ctrl.commonAreas[6].id === $ctrl.selectedProvince.id}"
-					 ng-click="$ctrl.changeProvince($ctrl.commonAreas[6], null)">
-					<cc-checkbox ng-checked="$ctrl.commonAreas[6].selectedAll"
-								 indeterminate="$ctrl.commonAreas[6].selected && !$ctrl.commonAreas[6].selectedAll"
-								 ng-click="$ctrl.changeNoLimitStatus($ctrl.commonAreas[6])"></cc-checkbox>
-					<span ng-bind="$ctrl.commonAreas[6].name"></span>
-				</div>
+			<div class="area-title">省选择 ( <span>{{$ctrl.provinceNumber}}</span> ) </div>
+			<div class="area-body" cc-nice-scroll>
 				<div class="area" ng-repeat="province in $ctrl.provinces track by $index"
-					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province, province.children)">
+					 ng-class="{'selected': province.id === $ctrl.selectedProvince.id}" ng-click="$ctrl.changeProvince(province)">
 					<cc-checkbox indeterminate="province.selected && !province.selectedAll"
 								 ng-checked="province.selectedAll" ng-click="$ctrl.changeCheckboxStatus(province, 'province')">
 					</cc-checkbox>
@@ -56,8 +49,8 @@
 		</div>
 
 		<div class="select-area">
-			<div class="area-title">市选择</div>
-			<div class="area-body">
+			<div class="area-title">市选择 ( <span>{{$ctrl.areaNumber}}</span> ) </div>
+			<div class="area-body" cc-nice-scroll>
 				<div class="area" ng-repeat="city in $ctrl.citys track by $index"
 					 ng-class="{'selected': city.id === $ctrl.selectedCity.id}" ng-click="$ctrl.changeCity(city)">
 					<cc-checkbox indeterminate="city.selected && !city.selectedAll " ng-checked="city.selectedAll"
@@ -68,8 +61,8 @@
 		</div>
 
 		<div class="select-area">
-			<div class="area-title">区县选择</div>
-			<div class="area-body">
+			<div class="area-title">区县选择 ( <span>{{$ctrl.districtNumber}}</span> ) </div>
+			<div class="area-body" cc-nice-scroll>
 				<div class="area" ng-repeat="district in $ctrl.districts track by $index"
 					 ng-class="{'selected': district.id === $ctrl.selectedDistrict.id}"
 					 ng-click="$ctrl.selectDistrict(district)">

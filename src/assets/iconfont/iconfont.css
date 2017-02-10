@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1482132132502'); /* IE9*/
-  src: url('iconfont.eot?t=1482132132502#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1482132132502') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1482132132502') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1482132132502#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1484731149999'); /* IE9*/
+  src: url('iconfont.eot?t=1484731149999#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1484731149999') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1484731149999') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1484731149999#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -12,7 +12,6 @@
   font-size:16px;
   font-style:normal;
   -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -77,6 +76,8 @@
 .icon-calendar:before { content: "\e660"; }
 
 .icon-ticket:before { content: "\e680"; }
+
+.icon-dele:before { content: "\e688"; }
 
 .icon-home:before { content: "\e66d"; }
 
@@ -299,4 +300,40 @@
 .icon-reserve:before { content: "\e6f0"; }
 
 .icon-part:before { content: "\e6f1"; }
+
+.icon-taobao-fill:before { content: "\e6f2"; }
+
+.icon-RMB:before { content: "\e683"; }
+
+.icon-consume:before { content: "\e684"; }
+
+.icon-mail:before { content: "\e685"; }
+
+.icon-gain:before { content: "\e686"; }
+
+.icon-goods:before { content: "\e687"; }
+
+.icon-checked-tri:before { content: "\e6f3"; }
+
+.icon-single-sign-on:before { content: "\e6f4"; }
+
+.icon-Final-Payment:before { content: "\e6f5"; }
+
+.icon-forward-sale:before { content: "\e6f6"; }
+
+.icon-perspective:before { content: "\e6f7"; }
+
+.icon-pen:before { content: "\e6f9"; }
+
+.icon-process:before { content: "\e6fd"; }
+
+.icon-zhihangzhong:before { content: "\e6fe"; }
+
+.icon-pend:before { content: "\e701"; }
+
+.icon-complete:before { content: "\e704"; }
+
+.icon-warning:before { content: "\e705"; }
+
+.icon-evaluate:before { content: "\e706"; }
 

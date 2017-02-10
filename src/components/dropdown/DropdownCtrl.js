@@ -3,7 +3,7 @@ import { Inject } from 'angular-es-utils';
 
 import dropdownService from './DropdownService';
 
-@Inject('$element')
+@Inject('$scope', '$element')
 export default class DropdownCtrl {
 	constructor() {
 		this._isOpen = false;
@@ -29,6 +29,10 @@ export default class DropdownCtrl {
 
 	getElement() {
 		return this._$element[0];
+	}
+
+	getScope() {
+		return this._$scope;
 	}
 
 	_setOpenState(openState) {
@@ -73,15 +77,19 @@ export default class DropdownCtrl {
 	}
 
 	open() {
+		const scope = this.getScope();
 		dropdownService.open(this);
 		this._setOpenState(true);
 		this.onDropdownOpen && this.onDropdownOpen();
+		scope.$root.$$phase || scope.$apply();
 	}
 
 	close() {
+		const scope = this.getScope();
 		dropdownService.close(this);
 		this._setOpenState(false);
 		this.onDropdownClose && this.onDropdownClose();
+		scope.$root.$$phase || scope.$apply();
 	}
 }
 
