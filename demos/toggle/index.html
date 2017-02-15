@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>switch</title>
+<style>
+	.demo {
+		margin: 1em;
+	}
+</style>
+
+<div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+	<div class="demo" ng-init="isChecked = false">
+		HARD 模式: <cc-toggle ng-model="isChecked"></cc-toggle>
+	</div>
+</div>
+
+<script src="/components.js"></script>
+<script>
+	angular
+			.module('demoApp', ['ccms.components'])
+			.controller('DemoCtrl', DemoCtrl);
+
+	DemoCtrl.$inject = [];
+	function DemoCtrl() {
+
+	}
+
+</script>
+

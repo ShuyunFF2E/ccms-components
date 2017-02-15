@@ -33,6 +33,7 @@ import switchButton from './switch';
 import areaSelector from './area-selector';
 import customerProfileBoard from './customer-profile-board';
 import altSrc from './alt-src';
+import toggle from './toggle';
 
 export default angular
 	.module('ccms.components.ui', [
@@ -61,7 +62,8 @@ export default angular
 		switchButton,
 		customerProfileBoard,
 		areaSelector,
-		altSrc
+		altSrc,
+		toggle
 	])
 	.name;
 
