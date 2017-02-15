@@ -19,3 +19,17 @@ ul, li, p {
 li {
 	list-style: none;
 }
+
+a {
+	text-decoration: none;
+	color: #0083ba;
+
+	&:link {
+		color: #0083ba;
+	}
+
+	&:hover {
+		color: #00aaf1;
+	}
+}
+
