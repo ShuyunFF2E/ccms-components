@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<title>switch</title>
+<title>开关组件 cc-toggle</title>
 <style>
 	.demo {
 		margin: 1em;
@@ -10,6 +10,9 @@
 <div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 	<div class="demo" ng-init="isChecked = false">
 		HARD 模式: <cc-toggle ng-model="isChecked"></cc-toggle>
+	</div>
+	<div class="demo" ng-init="isChecked2 = true">
+		HARD 模式: <cc-toggle ng-model="isChecked2"></cc-toggle>
 	</div>
 </div>
 

@@ -8,6 +8,7 @@ cc-toggle {
 
 .cc-toggle {
 	position: relative;
+	overflow: hidden;
 	height: $size;
 	border-radius: $size / 2;
 	font-size: 12px;
@@ -50,18 +51,47 @@ cc-toggle {
 		outline: none;
 		cursor: inherit;
 
+		@keyframes slide-on {
+			from { left: $gap; } to { left: calc(100% - #{$size - $gap}); }
+		}
+
+		@keyframes slide-off {
+			from { left: calc(100% - #{$size - $gap}); } to { left: $gap; }
+		}
+
 		@at-root .on#{&} {
-			right: $gap;
+			animation: slide-on 0.5s ease-in-out forwards;
 		}
 
 		@at-root .off#{&} {
-			left: $gap;
+			animation: slide-off 0.5s ease-in-out forwards;
+		}
+	}
+
+	@keyframes slide-text-on {
+		from {
+			transform: translateX(-100%);
+		} to {
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes slide-text-off {
+		// 保留 translateY 否则会丢失原有的 translateY
+		from {
+			transform: translateX(100%) translateY(-100%);
+		} to {
+			transform: translateX(0) translateY(-100%);
 		}
 	}
 
 	&::before {
 		@extend %text;
 		content: attr(data-text-on);
+
+		@at-root .on#{&} {
+			animation: slide-text-on 0.5s ease-in-out forwards;
+		}
 
 		@at-root .off#{&} {
 			visibility: hidden;
@@ -72,10 +102,14 @@ cc-toggle {
 		@extend %text;
 
 		content: attr(data-text-off);
-		transform: translate(0, -100%);
+		transform: translateY(-100%);
 
 		@at-root .on#{&} {
 			visibility: hidden;
+		}
+
+		@at-root .off#{&} {
+			animation: slide-text-off 0.5s ease-in-out forwards;
 		}
 	}
 }
