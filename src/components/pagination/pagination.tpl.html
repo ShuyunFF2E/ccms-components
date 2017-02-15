@@ -15,7 +15,8 @@
 	</span>
 	<a class="next" ng-click="!$ctrl.isLastPage && $ctrl.next()"><span>next</span></a>
 	<a class="last" ng-switch-when="normal" ng-click="!$ctrl.isLastPage && $ctrl.last()"><span>last</span></a>
-	<select ng-if="!$ctrl.pageSizeListHidden"
+	<select ng-switch-when="normal"
+			ng-if="!$ctrl.pageSizeListHidden"
 			ng-options="pageSize for pageSize in ::$ctrl.pageSizeList track by pageSize"
 			ng-model="$ctrl.pageSize"
 			ng-change="$ctrl.setPageSize($ctrl.pageSize)"
