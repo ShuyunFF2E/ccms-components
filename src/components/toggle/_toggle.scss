@@ -39,7 +39,9 @@ cc-toggle {
 		color: #fff;
 	}
 
-	input[type="checkbox"] {
+	.checkbox {
+		// firefox checkbox "appearance: none" 表现与 chrome 不同
+		// see: https://bugzilla.mozilla.org/show_bug.cgi?id=605985
 		position: absolute;
 		top: $gap;
 		width: calc(#{$size} - #{$gap * 2});
@@ -47,9 +49,6 @@ cc-toggle {
 		vertical-align: middle;
 		border-radius: calc(#{$size / 2} - #{$gap});
 		background: #f1f1f1;
-		appearance: none;
-		outline: none;
-		cursor: inherit;
 
 		@keyframes slide-on {
 			from { left: $gap; } to { left: calc(100% - #{$size - $gap}); }
