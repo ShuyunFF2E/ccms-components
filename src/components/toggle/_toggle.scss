@@ -1,77 +1,82 @@
-$size: 1.65em;
+$size: 1.66667em;
+$gap: 0.1em;
+
+cc-toggle {
+	display: inline-block;
+	vertical-align: middle;
+}
 
 .cc-toggle {
-  display: inline-block;
-  position: relative;
-  height: $size;
-  border-radius: $size / 2;
-  font-size: 12px;
-  cursor: pointer;
-
-  &.on {
-	padding-left: $size / 2;
-	padding-right: $size * 1.2;
-	background: #47cf5f;
-  }
-
-  &.off {
-	padding-right: $size / 2;
-	padding-left: $size * 1.2;
-	background: #c2c2c2;
-  }
-
-  &.disabled {
-	cursor: not-allowed;
-  }
-
-  @at-root %text {
-	display: block;
+	position: relative;
 	height: $size;
-	line-height: $size;
-	vertical-align: middle;
-	text-align: center;
-	color: #fff;
-  }
+	border-radius: $size / 2;
+	font-size: 12px;
+	cursor: pointer;
 
-  input[type="checkbox"] {
-	position: absolute;
-	top: 0.1em;
-	width: $size - 0.2em;
-	height: $size - 0.2em;
-	vertical-align: middle;
-	border-radius: $size / 2 - 0.1em;
-	background: #f1f1f1;
-	appearance: none;
-	outline: none;
-	cursor: inherit;
-
-	@at-root .on#{&} {
-	  right: 0.1em;
+	&.on {
+		padding-left: $size / 2;
+		padding-right: $size * 1.2;
+		background: #47cf5f;
 	}
 
-	@at-root .off#{&} {
-	  left: 0.1em;
+	&.off {
+		padding-right: $size / 2;
+		padding-left: $size * 1.2;
+		background: #c2c2c2;
 	}
-  }
 
-  &::before {
-	@extend %text;
-	content: attr(data-text-on);
-
-	@at-root .off#{&} {
-	  visibility: hidden;
+	&.disabled {
+		cursor: not-allowed;
 	}
-  }
 
-  &::after {
-	@extend %text;
-
-	content: attr(data-text-off);
-	transform: translate(0, -100%);
-
-	@at-root .on#{&} {
-	  visibility: hidden;
+	@at-root %text {
+		display: block;
+		height: 100%;
+		line-height: $size;
+		vertical-align: middle;
+		text-align: center;
+		color: #fff;
 	}
-  }
+
+	input[type="checkbox"] {
+		position: absolute;
+		top: $gap;
+		width: calc(#{$size} - #{$gap * 2});
+		height: calc(100% - #{$gap * 2});
+		vertical-align: middle;
+		border-radius: calc(#{$size / 2} - #{$gap});
+		background: #f1f1f1;
+		appearance: none;
+		outline: none;
+		cursor: inherit;
+
+		@at-root .on#{&} {
+			right: $gap;
+		}
+
+		@at-root .off#{&} {
+			left: $gap;
+		}
+	}
+
+	&::before {
+		@extend %text;
+		content: attr(data-text-on);
+
+		@at-root .off#{&} {
+			visibility: hidden;
+		}
+	}
+
+	&::after {
+		@extend %text;
+
+		content: attr(data-text-off);
+		transform: translate(0, -100%);
+
+		@at-root .on#{&} {
+			visibility: hidden;
+		}
+	}
 }
 
