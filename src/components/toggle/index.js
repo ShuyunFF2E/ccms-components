@@ -13,11 +13,11 @@ const DDO = {
 	template,
 	bindings: {
 		ngModel: '<',
-		valueOn: '<?ngTrueValue',
-		valueOff: '<?ngFalseValue',
+		valueOn: '<?',
+		valueOff: '<?',
 		disabled: '<?ngDisabled',
-		textOn: '@?openText',
-		textOff: '@?closeText'
+		textOn: '@?',
+		textOff: '@?'
 	},
 	require: {
 		ngModelController: '?ngModel'
