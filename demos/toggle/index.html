@@ -3,17 +3,31 @@
 <title>开关组件 cc-toggle</title>
 <style>
 	.demo {
-		margin: 1em;
+		margin: 5em;
 	}
 </style>
 
-<div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<div class="demo" ng-init="isChecked = false">
-		HARD 模式: <cc-toggle ng-model="isChecked"></cc-toggle>
-	</div>
-	<div class="demo" ng-init="isChecked2 = true">
-		HARD 模式: <cc-toggle ng-model="isChecked2"></cc-toggle>
-	</div>
+<div ng-app="demoApp" ng-controller="DemoCtrl as ctrl" class="demo">
+
+	<h2>Demo1</h2>
+	<p>value: {{demo1}}</p>
+	<cc-toggle ng-model="demo1"></cc-toggle>
+
+	<p>value: {{demo1}}</p>
+	<cc-toggle ng-model="demo1" open-text="long-long-words" close-text="short-words"></cc-toggle>
+
+	<p>value: {{demo1}}</p>
+	<cc-toggle id="demo1" ng-model="demo1" open-text="long-words" close-text="short-words"></cc-toggle>
+
+	<h2>Demo2</h2>
+	<p>value: {{demo2}} | disabled: {{demo2Disabled}}</p>
+	<cc-toggle ng-model="demo2" ng-disabled="demo2Disabled"></cc-toggle>
+	<button ng-click="demo2Disabled=!demo2Disabled">change disabled</button>
+
+	<h2>Demo3</h2>
+	<cc-toggle ng-model="demo3" ng-true-value="'开'" ng-false-value="'关'"></cc-toggle>
+
+
 </div>
 
 <script src="/components.js"></script>

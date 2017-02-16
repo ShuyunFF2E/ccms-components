@@ -1,6 +1,6 @@
 /**
  * @author Arz
- * @since 2/14/17
+ * @homepage https://github.com/arzyu
  */
 
 import angular from 'angular';
@@ -13,13 +13,11 @@ const DDO = {
 	template,
 	bindings: {
 		ngModel: '<',
-		ngTrueValue: '<?',
-		ngFalseValue: '<?',
-		ngDisabled: '<?',
-		textOn: '@?',
-		textOff: '@?',
-		openText: '@?textOn',
-		closeText: '@?textOff'
+		valueOn: '<?ngTrueValue',
+		valueOff: '<?ngFalseValue',
+		disabled: '<?ngDisabled',
+		textOn: '@?openText',
+		textOff: '@?closeText'
 	},
 	require: {
 		ngModelController: '?ngModel'
@@ -27,7 +25,7 @@ const DDO = {
 	controller
 };
 
-export default angular.module('ccms.components.arzSwitch', [])
+export default angular.module('ccms.components.toggle', [])
 	.component('ccToggle', DDO)
 	.name;
 

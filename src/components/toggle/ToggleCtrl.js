@@ -1,7 +1,12 @@
 /**
  * @author Arz
- * @since 2/14/17
+ * @homepage https://github.com/arzyu
  */
+
+const DEFAULT_OPTIONS = {
+	textOn: '已开启',
+	textOff: '已关闭'
+};
 
 export default class ToggleController {
 	$onInit() {
@@ -10,18 +15,18 @@ export default class ToggleController {
 	}
 
 	_prepareOptions() {
-		this.ngTrueValue = true;
-		this.ngFalseValue = false;
-		this.textOn = '已开启 HARD 模式';
-		this.textOff = '已关闭';
+		this.valueOn = this.ngModelController ? (typeof this.valueOn === 'undefined' ? true : this.valueOn) : true;
+		this.valueOff = this.ngModelController ? (typeof this.valueOff === 'undefined' ? false : this.valueOff) : false;
+		this.textOn = typeof this.textOn === 'undefined' ? DEFAULT_OPTIONS.textOn : this.textOn;
+		this.textOff = typeof this.textOff === 'undefined' ? DEFAULT_OPTIONS.textOff : this.textOff;
 	}
 
 	get state() {
-		return this.ngModel === this.ngTrueValue;
+		return this.ngModel === this.valueOn;
 	}
 
 	updateNgModel(state) {
-		const viewValue = state ? this.ngTrueValue : this.ngFalseValue;
+		const viewValue = state ? this.valueOn : this.valueOff;
 		this.ngModelController.$setViewValue(viewValue);
 	}
 }
