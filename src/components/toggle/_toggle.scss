@@ -44,6 +44,7 @@ cc-toggle {
 		// see: https://bugzilla.mozilla.org/show_bug.cgi?id=605985
 		position: absolute;
 		top: $gap;
+		z-index: 1;
 		width: calc(#{$size} - #{$gap * 2});
 		height: calc(100% - #{$gap * 2});
 		vertical-align: middle;
@@ -69,7 +70,7 @@ cc-toggle {
 
 	@keyframes slide-text-on {
 		from {
-			transform: translateX(-100%);
+			transform: translateX(-150%);
 		} to {
 			transform: translateX(0);
 		}
@@ -78,7 +79,7 @@ cc-toggle {
 	@keyframes slide-text-off {
 		// 保留 translateY 否则会丢失原有的 translateY
 		from {
-			transform: translateX(100%) translateY(-100%);
+			transform: translateX(150%) translateY(-100%);
 		} to {
 			transform: translateX(0) translateY(-100%);
 		}
