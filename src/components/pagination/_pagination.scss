@@ -62,8 +62,9 @@ cc-pagination {
 
 		> span {
 			display: inline-block;
-			text-indent: -99999px;
 			direction: ltr;
+			text-align: left;
+			text-indent: -99999px;
 		}
 	}
 	.jump input {
