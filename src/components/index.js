@@ -29,7 +29,6 @@ import dropdownSelect from './dropdown/dropdown-select';
 import dropdownMultiselect from './dropdown/dropdown-multiselect';
 import tabset from './tabset';
 import radio from './radio';
-import switchButton from './switch';
 import areaSelector from './area-selector';
 import customerProfileBoard from './customer-profile-board';
 import altSrc from './alt-src';
@@ -59,7 +58,6 @@ export default angular
 		calendar,
 		tabset,
 		radio,
-		switchButton,
 		customerProfileBoard,
 		areaSelector,
 		altSrc,
