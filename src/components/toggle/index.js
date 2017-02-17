@@ -1,6 +1,5 @@
 /**
- * @author Arz
- * @homepage https://github.com/arzyu
+ * @author arzyu <https://github.com/arzyu>
  */
 
 import angular from 'angular';
@@ -13,9 +12,13 @@ const DDO = {
 	template,
 	bindings: {
 		ngModel: '<',
+		ngTrueValue: '<?',
+		ngFalseValue: '<?',
 		valueOn: '<?',
 		valueOff: '<?',
 		disabled: '<?ngDisabled',
+		openText: '@?',
+		closeText: '@?',
 		textOn: '@?',
 		textOff: '@?'
 	},
@@ -26,6 +29,7 @@ const DDO = {
 };
 
 export default angular.module('ccms.components.toggle', [])
+	.deprecatedComponent('ccSwitch', DDO, 'cc-switch 已废弃，请使用 cc-toggle 代替。')
 	.component('ccToggle', DDO)
 	.name;
 
