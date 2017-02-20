@@ -5,24 +5,25 @@
 	<title>Area Selector</title>
 	<link rel="import" href="../demos-menu.html">
 	<style>
-		section {
-			margin-left: 250px;
+		.area-selector-section {
+			margin-left: 270px;
+			padding-top: 20px;
 		}
 	</style>
 </head>
 <body ng-app="app" ng-controller="ctrl as Ctrl" style="height: 10000px">
 
 	<aside></aside>
-	<section>
+	<div class="area-selector-section">
 		<button type="button" ng-click="open()">Open Area Selector</button>
-	</section>
+	</div>
 
 <script src="/components.js"></script>
 <script src="index.js"></script>
 <script>
 	var link = document.querySelector('link[rel="import"]');
 	var content = link.import;
-	var aside = content.querySelector('aside');
+	var aside = content.querySelector('.side-bar');
 	document.querySelector('aside').appendChild(aside.cloneNode(true));
 </script>
 

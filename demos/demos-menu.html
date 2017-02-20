@@ -2,18 +2,18 @@
 <meta charset="UTF-8">
 <style>
 
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
 	body {
 		color: #4A5668;
 		background: #f1f2f6;
-	}
-
-	main {
-		margin-top: 1em;
-		margin-left: 0;
 		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", SimSun, sans-serif;
 	}
 
-	aside {
+	.side-bar {
 		position: fixed;
 		width: 240px;
 		color: #666;
@@ -64,7 +64,7 @@
 </style>
 
 <main ng-app='componentsApp' ng-controller="ctrl as app">
-	<aside>
+	<div class="side-bar">
 		<ul>
 			<li>
 				<div class="category">
@@ -110,6 +110,6 @@
 				</ul>
 			</li>
 		</ul>
-	</aside>
+	</div>
 </main>
 

@@ -9,81 +9,9 @@
 		section {
 			margin-left: 250px;
 		}
-
-		cc-switch + cc-switch .switch-button-block {
-			margin-top: 10px;
-		}
-
 		p span {
 			margin-left: 30px;
 			color: #666666;
-		}
-		.menu {
-			width: 200px;
-			margin: 10px;
-			background: #fff;
-			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-			border-radius: 5px;
-			float: left;
-		}
-
-		.menu__header {
-			background: #4B4F55;
-			border-bottom: 1px solid #353A40;
-			border-radius: 5px 5px 0 0;
-		}
-
-		.menu__header-title {
-			color: #fff;
-			padding: 15px;
-			font-size: 2em;
-			text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-		}
-
-		.menu__body {
-			border-radius: 0 0 5px 5px;
-		}
-
-		.nav {
-			list-style: none;
-		}
-
-		.nav__item {
-			position: relative;
-		}
-
-		.nav__item-link {
-			padding: 10px 15px;
-			text-decoration: none;
-			color: #8B8E93;
-			display: block;
-			border-bottom: 1px solid #F0F0F0;
-		}
-		.nav__item-link:hover {
-			background: #f0f0f0;
-		}
-		.nav__item-link.is-active {
-			background: #6E757F;
-			color: #fff;
-			border-bottom-color: #4B4F55;
-			box-shadow: 0 1px 0 #7A828D inset;
-		}
-		.nav__item-link.is-active:after {
-			content: '';
-			display: block;
-			position: absolute;
-			top: 50%;
-			right: -6px;
-			margin-top: -6px;
-			border-top: 6px solid transparent;
-			border-bottom: 6px solid transparent;
-			border-left: 6px solid #6E757F;
-		}
-		.nav__item-link.is-active .nav__item-icon {
-			color: #fff;
-		}
-		.nav__item:last-child .nav__item-link {
-			border-bottom: none;
 		}
 		.content {
 			flex: 1;
@@ -99,33 +27,6 @@
 <aside></aside>
 <section>
 	<div style="display: flex">
-		<div class="menu">
-			<header class="menu__header">
-				<span class="menu__header-title">MENU</span>
-			</header>
-			<div class="menu__body">
-				<ul class="nav">
-					<li class="nav__item"><a class="nav__item-link " href="../styles/index.html"><span class="nav__item-text"></span>样式 - 张阿十临时调整<span class="nav__item-text"></span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../grid/index.html"><span class="nav__item-text">表格</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../loading/index.html"><span class="nav__item-text">loading</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../pagination/index.html"><span class="nav__item-text">分页/pagination</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../sms-editor/index.html"><span class="nav__item-text">短信编辑器</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../modal/index.html"><span class="nav__item-text">弹框</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../tips/index.html"><span class="nav__item-text">提示</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../date-picker/index.html"><span class="nav__item-text">日期选择器</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../form/index.html"><span class="nav__item-text"></span>表单校验</a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../tooltip/index.html"><span class="nav__item-text">工具提示/tooltip</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../menus/menus.html"><span class="nav__item-text">Menu菜单</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../instant-search/index.html"><span class="nav__item-text">智能搜索/instant-search</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../dropdown/dropdown.html"><span class="nav__item-text">下拉/dropdown</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../dropdown/select.html"><span class="nav__item-text">下拉单选/dropdown-select, 下拉多选/dropdown-multiselect</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../checkbox/index.html"><span class="nav__item-text">复选框/cc-checkbox</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../radio-button/index.html"><span class="nav__item-text">单选框/cc-radio</span></a></li>
-					<li class="nav__item"><a class="nav__item-link is-active" href="../switch-button/index.html"><span class="nav__item-text">开关/cc-switch</span></a></li>
-					<li class="nav__item"><a class="nav__item-link " href="../customer-profile-board/index.html"><span class="nav__item-text">用户全视图/customer-profile-board</span></a></li>
-				</ul>
-			</div>
-		</div>
 		<div class="content">
 			<div ng-init="demo1 = true">
 				<h1>开关 cc-switch</h1>
@@ -179,7 +80,7 @@
 <script>
 	var link = document.querySelector('link[rel="import"]');
 	var content = link.import;
-	var aside = content.querySelector('aside');
+	var aside = content.querySelector('.side-bar');
 	document.querySelector('aside').appendChild(aside.cloneNode(true));
 </script>
 </body>

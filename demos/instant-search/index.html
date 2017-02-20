@@ -3,19 +3,17 @@
 <title>instant search demo</title>
 <link rel="import" href="../demos-menu.html">
 <style>
-
-	[ng-app] {
-		margin: 1em;
-	}
 	section {
-		margin-left: 250px;
+		margin-left: 270px;
 	}
 	.demo {
-		margin: 3em 1em;
+		margin-top: 0;
+		margin-bottom: 3em;
+		padding-top: 30px;
 	}
 </style>
 
-<div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+<body ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 
 	<aside></aside>
 	<section>
@@ -38,7 +36,7 @@
 					options="ctrl.options2"></instant-search>
 		</div>
 	</section>
-</div>
+</body>
 
 <script src="/components.js"></script>
 <script>
@@ -89,6 +87,6 @@
 <script>
 	var link = document.querySelector('link[rel="import"]');
 	var content = link.import;
-	var aside = content.querySelector('aside');
+	var aside = content.querySelector('.side-bar');
 	document.querySelector('aside').appendChild(aside.cloneNode(true));
 </script>

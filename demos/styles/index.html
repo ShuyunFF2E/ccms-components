@@ -7,7 +7,8 @@
 
 	<style>
 		article {
-			margin-left: 250px;
+			margin-left: 270px;
+			padding-top: 20px;
 		}
 		li {
 			list-style: decimal;
@@ -123,6 +124,7 @@
 
 			<p>按大小</p>
 			<pre>%btn-base, %btn-large, %btn-small, %btn-auto-width</pre>
+		</section>
 	</article>
 
 <script src="/components.js"></script>
@@ -130,7 +132,7 @@
 <script>
 	var link = document.querySelector('link[rel="import"]');
 	var content = link.import;
-	var aside = content.querySelector('aside');
+	var aside = content.querySelector('.side-bar');
 	document.querySelector('aside').appendChild(aside.cloneNode(true));
 </script>
 </body>
