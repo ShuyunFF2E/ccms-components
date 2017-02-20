@@ -37,14 +37,12 @@ export default class MenusCtrl {
 		this.shopStatusChange();
 
 		this._$scope.$on('$stateChangeSuccess', (event, toState) => {
-			if (Array.isArray(this.menuList)) {
-				this.updateList(this.menuList);
-			}
+			this.updateList(this.menuList);
 		});
 	}
 
 	updateList(list) {
-		list.forEach(item => {
+		Array.isArray(list) && list.forEach(item => {
 			item.toggle = item.toggleNode = this._$state.includes(item.state);
 			this.updateList(item.children);
 		});
