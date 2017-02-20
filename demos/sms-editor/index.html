@@ -3,33 +3,49 @@
 <head>
 	<meta charset="UTF-8">
 	<title>sms-editor</title>
+	<link rel="import" href="../demos-menu.html">
+	<style>
+		section {
+			margin-left: 250px;
+		}
+	</style>
 </head>
 <body ng-app="componentsApp" ng-controller="ctrl as app">
-	<select style="display: block; clear: both; margin-bottom: 10px;"
-			ng-options="channel.name for channel in app.channelInfo"
-			ng-model="app.channel"></select>
 
-	<div style="float: left;">
-		<cc-sms-editor opts="app.channel"></cc-sms-editor>
+	<aside></aside>
+	<section>
+		<select style="display: block; clear: both; margin-bottom: 10px;"
+				ng-options="channel.name for channel in app.channelInfo"
+				ng-model="app.channel"></select>
 
-		<input type="text"
-			   placeholder="签名"
-			   ng-model="app.channel.customSignature">
+		<div style="float: left;">
+			<cc-sms-editor opts="app.channel"></cc-sms-editor>
 
-		<label><input type="checkbox" ng-model="app.channel.useUnsubscribe"> <span ng-bind="app.smsEditorOptions.unsubscribeText"></span></label>
-	</div>
+			<input type="text"
+				   placeholder="签名"
+				   ng-model="app.channel.customSignature">
 
-	<div style="float: left; margin-left: 50px;">
-		<cc-sms-preview opts="app.channel"></cc-sms-preview>
-	</div>
+			<label><input type="checkbox" ng-model="app.channel.useUnsubscribe"> <span ng-bind="app.smsEditorOptions.unsubscribeText"></span></label>
+		</div>
 
-	<div style="clear: both;">
-		<h2>短信编辑器结果：</h2>
-		<div ng-bind="app.channel.text" style="border: 1px solid; padding: 10px; width: 500px;"></div>
-	</div>
+		<div style="float: left; margin-left: 50px;">
+			<cc-sms-preview opts="app.channel"></cc-sms-preview>
+		</div>
+
+		<div style="clear: both;">
+			<h2>短信编辑器结果：</h2>
+			<div ng-bind="app.channel.text" style="border: 1px solid; padding: 10px; width: 500px;"></div>
+		</div>
+	</section>
 
 	<script src="/components.js"></script>
 	<script src="/node_modules/angular-resource/angular-resource.min.js"></script>
 	<script src="index.js"></script>
+	<script>
+		var link = document.querySelector('link[rel="import"]');
+		var content = link.import;
+		var aside = content.querySelector('aside');
+		document.querySelector('aside').appendChild(aside.cloneNode(true));
+	</script>
 </body>
 </html>

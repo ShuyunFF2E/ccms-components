@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>loading</title>
+	<link rel="import" href="../demos-menu.html">
 
 	<style>
 
@@ -11,12 +12,19 @@
 
 		}
 
+		 section {
+			 margin-left: 250px;
+		 }
+
 	</style>
 </head>
 <body ng-app="app">
 
-<cc-loading class="grid"></cc-loading>
-<cc-loading type="layer">请耐心等待</cc-loading>
+	<aside></aside>
+	<section>
+		<cc-loading class="grid"></cc-loading>
+		<cc-loading type="layer">请耐心等待</cc-loading>
+	</section>
 
 <script src="/components.js"></script>
 
@@ -26,6 +34,11 @@
 <script>
 	angular.module('app', ['ccms.components']);
 </script>
-
+<script>
+	var link = document.querySelector('link[rel="import"]');
+	var content = link.import;
+	var aside = content.querySelector('aside');
+	document.querySelector('aside').appendChild(aside.cloneNode(true));
+</script>
 </body>
 </html>

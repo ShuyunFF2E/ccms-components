@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <title>分页(cc-pagination)</title>
+<link rel="import" href="../demos-menu.html">
 <style>
+	section {
+		margin-left: 250px;
+	}
 	[ng-app] {
 		margin: 1em;
 	}
@@ -15,51 +19,56 @@
 </style>
 
 <div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<div class="demo">
-		<h3>type: normal</h3>
-		<cc-pagination
-				type="normal"
-				page-num="ctrl.pageOptions.pageNum"
-				page-size="ctrl.pageOptions.pageSize"
-				page-size-list="ctrl.pageOptions.pageSizeList"
-				totals="ctrl.pageOptions.totals"
-				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
-	</div>
-	<div class="demo">
-		<h3>type: simple</h3>
-		<cc-pagination
-				type="simple"
-				page-num="ctrl.pageOptions.pageNum"
-				page-size="ctrl.pageOptions.pageSize"
-				page-size-list="ctrl.pageOptions.pageSizeList"
-				totals="ctrl.pageOptions.totals"
-				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
-	</div>
-	<div class="demo">
-		<h3>type: normal &amp; disable pagesize list</h3>
-		<cc-pagination
-				page-num="ctrl.pageOptions.pageNum"
-				page-size="ctrl.pageOptions.pageSize"
-				page-size-list="ctrl.pageOptions.pageSizeList"
-				page-size-list-disabled
-				totals="ctrl.pageOptions.totals"
-				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
-	</div>
-	<div class="demo">
-		<h3>type: normal &amp; hide pagesize list</h3>
-		<cc-pagination
-				page-num="ctrl.pageOptions.pageNum"
-				page-size="ctrl.pageOptions.pageSize"
-				page-size-list="ctrl.pageOptions.pageSizeList"
-				page-size-list-hidden="true"
-				totals="ctrl.pageOptions.totals"
-				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
-	</div>
+
+	<aside></aside>
+	<section>
+		<div class="demo">
+			<h3>type: normal</h3>
+			<cc-pagination
+					type="normal"
+					page-num="ctrl.pageOptions.pageNum"
+					page-size="ctrl.pageOptions.pageSize"
+					page-size-list="ctrl.pageOptions.pageSizeList"
+					totals="ctrl.pageOptions.totals"
+					total-pages="ctrl.pageOptions.totalPages"
+					on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
+		</div>
+		<div class="demo">
+			<h3>type: simple</h3>
+			<cc-pagination
+					type="simple"
+					page-num="ctrl.pageOptions.pageNum"
+					page-size="ctrl.pageOptions.pageSize"
+					page-size-list="ctrl.pageOptions.pageSizeList"
+					totals="ctrl.pageOptions.totals"
+					total-pages="ctrl.pageOptions.totalPages"
+					on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
+		</div>
+		<div class="demo">
+			<h3>type: normal &amp; disable pagesize list</h3>
+			<cc-pagination
+					page-num="ctrl.pageOptions.pageNum"
+					page-size="ctrl.pageOptions.pageSize"
+					page-size-list="ctrl.pageOptions.pageSizeList"
+					page-size-list-disabled
+					totals="ctrl.pageOptions.totals"
+					total-pages="ctrl.pageOptions.totalPages"
+					on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
+		</div>
+		<div class="demo">
+			<h3>type: normal &amp; hide pagesize list</h3>
+			<cc-pagination
+					page-num="ctrl.pageOptions.pageNum"
+					page-size="ctrl.pageOptions.pageSize"
+					page-size-list="ctrl.pageOptions.pageSizeList"
+					page-size-list-hidden="true"
+					totals="ctrl.pageOptions.totals"
+					total-pages="ctrl.pageOptions.totalPages"
+					on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
+		</div>
+	</section>
 </div>
+
 
 <script src="/components.js"></script>
 <script>
@@ -87,5 +96,11 @@
 			pageOptions.totalPages = Math.ceil(pageOptions.totals / pageSize);
 		}
 	}
+</script>
+<script>
+	var link = document.querySelector('link[rel="import"]');
+	var content = link.import;
+	var aside = content.querySelector('aside');
+	document.querySelector('aside').appendChild(aside.cloneNode(true));
 </script>
 

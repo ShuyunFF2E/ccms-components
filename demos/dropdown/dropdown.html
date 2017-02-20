@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <title>下拉</title>
+<link rel="import" href="../demos-menu.html">
 <style>
 	[ng-app] {
 		width: 500px;
 		margin: 1em;
+	}
+	section {
+		margin-left: 250px;
 	}
 	.group {
 		display: flex;
@@ -29,31 +33,36 @@
 
 <div ng-app="demoApp">
 	<div ng-controller="DemoCtrl as ctrl">
-		<h1>下拉</h1>
-		<div class="demos">
-			<div class="demo">
-				<div style="height: 50px;">
-					<textarea class="log" style="width: 100%">1号下拉回调日志: </textarea>
-				</div>
-				<cc-dropdown on-dropdown-open="ctrl.log('打开')" on-dropdown-close="ctrl.log('关闭')">
-					<button cc-dropdown-toggle>1号下拉</button>
-					<div cc-dropdown-panel>
-						<div>1号辣条</div>
+
+		<aside></aside>
+		<section>
+			<h1>下拉</h1>
+			<div class="demos">
+				<div class="demo">
+					<div style="height: 50px;">
+						<textarea class="log" style="width: 100%">1号下拉回调日志: </textarea>
 					</div>
-				</cc-dropdown>
-			</div>
-			<div class="demo">
-				<div style="height: 50px;">
-					<button ng-click="ctrl.setOpenState(!ctrl.isOpen)">2号下拉遥控器</button>
+					<cc-dropdown on-dropdown-open="ctrl.log('打开')" on-dropdown-close="ctrl.log('关闭')">
+						<button cc-dropdown-toggle>1号下拉</button>
+						<div cc-dropdown-panel>
+							<div>1号辣条</div>
+						</div>
+					</cc-dropdown>
 				</div>
-				<cc-dropdown auto-close="false" is-open="ctrl.isOpen">
-					<button cc-dropdown-toggle>2号下拉</button>
-					<div cc-dropdown-panel>
-						<div>2号辣条</div>
+				<div class="demo">
+					<div style="height: 50px;">
+						<button ng-click="ctrl.setOpenState(!ctrl.isOpen)">2号下拉遥控器</button>
 					</div>
-				</cc-dropdown>
+					<cc-dropdown auto-close="false" is-open="ctrl.isOpen">
+						<button cc-dropdown-toggle>2号下拉</button>
+						<div cc-dropdown-panel>
+							<div>2号辣条</div>
+						</div>
+					</cc-dropdown>
+				</div>
 			</div>
-		</div>
+		</section>
+
 	</div>
 </div>
 
@@ -74,4 +83,11 @@
 		};
 	}
 </script>
+<script>
+	var link = document.querySelector('link[rel="import"]');
+	var content = link.import;
+	var aside = content.querySelector('aside');
+	document.querySelector('aside').appendChild(aside.cloneNode(true));
+</script>
+
 

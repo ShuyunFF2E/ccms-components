@@ -3,7 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>switch-button</title>
+	<link rel="import" href="../demos-menu.html">
 	<style>
+
+		section {
+			margin-left: 250px;
+		}
+
 		cc-switch + cc-switch .switch-button-block {
 			margin-top: 10px;
 		}
@@ -90,83 +96,91 @@
 	</style>
 </head>
 <body ng-app="app" ng-controller="ctrl">
-<div style="display: flex">
-	<div class="menu">
-		<header class="menu__header">
-			<span class="menu__header-title">MENU</span>
-		</header>
-		<div class="menu__body">
-			<ul class="nav">
-				<li class="nav__item"><a class="nav__item-link " href="../styles/index.html"><span class="nav__item-text"></span>样式 - 张阿十临时调整<span class="nav__item-text"></span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../grid/index.html"><span class="nav__item-text">表格</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../loading/index.html"><span class="nav__item-text">loading</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../pagination/index.html"><span class="nav__item-text">分页/pagination</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../sms-editor/index.html"><span class="nav__item-text">短信编辑器</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../modal/index.html"><span class="nav__item-text">弹框</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../tips/index.html"><span class="nav__item-text">提示</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../date-picker/index.html"><span class="nav__item-text">日期选择器</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../form/index.html"><span class="nav__item-text"></span>表单校验</a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../tooltip/index.html"><span class="nav__item-text">工具提示/tooltip</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../menus/menus.html"><span class="nav__item-text">Menu菜单</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../instant-search/index.html"><span class="nav__item-text">智能搜索/instant-search</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../dropdown/dropdown.html"><span class="nav__item-text">下拉/dropdown</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../dropdown/select.html"><span class="nav__item-text">下拉单选/dropdown-select, 下拉多选/dropdown-multiselect</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../checkbox/index.html"><span class="nav__item-text">复选框/cc-checkbox</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../radio-button/index.html"><span class="nav__item-text">单选框/cc-radio</span></a></li>
-				<li class="nav__item"><a class="nav__item-link is-active" href="../switch-button/index.html"><span class="nav__item-text">开关/cc-switch</span></a></li>
-				<li class="nav__item"><a class="nav__item-link " href="../customer-profile-board/index.html"><span class="nav__item-text">用户全视图/customer-profile-board</span></a></li>
-			</ul>
+<aside></aside>
+<section>
+	<div style="display: flex">
+		<div class="menu">
+			<header class="menu__header">
+				<span class="menu__header-title">MENU</span>
+			</header>
+			<div class="menu__body">
+				<ul class="nav">
+					<li class="nav__item"><a class="nav__item-link " href="../styles/index.html"><span class="nav__item-text"></span>样式 - 张阿十临时调整<span class="nav__item-text"></span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../grid/index.html"><span class="nav__item-text">表格</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../loading/index.html"><span class="nav__item-text">loading</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../pagination/index.html"><span class="nav__item-text">分页/pagination</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../sms-editor/index.html"><span class="nav__item-text">短信编辑器</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../modal/index.html"><span class="nav__item-text">弹框</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../tips/index.html"><span class="nav__item-text">提示</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../date-picker/index.html"><span class="nav__item-text">日期选择器</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../form/index.html"><span class="nav__item-text"></span>表单校验</a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../tooltip/index.html"><span class="nav__item-text">工具提示/tooltip</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../menus/menus.html"><span class="nav__item-text">Menu菜单</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../instant-search/index.html"><span class="nav__item-text">智能搜索/instant-search</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../dropdown/dropdown.html"><span class="nav__item-text">下拉/dropdown</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../dropdown/select.html"><span class="nav__item-text">下拉单选/dropdown-select, 下拉多选/dropdown-multiselect</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../checkbox/index.html"><span class="nav__item-text">复选框/cc-checkbox</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../radio-button/index.html"><span class="nav__item-text">单选框/cc-radio</span></a></li>
+					<li class="nav__item"><a class="nav__item-link is-active" href="../switch-button/index.html"><span class="nav__item-text">开关/cc-switch</span></a></li>
+					<li class="nav__item"><a class="nav__item-link " href="../customer-profile-board/index.html"><span class="nav__item-text">用户全视图/customer-profile-board</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="content">
+			<div ng-init="demo1 = true">
+				<h1>开关 cc-switch</h1>
+				<hr>
+				<h2>2016年12月9日 更新 by李文杰</h2>
+				<p>1 支持根据文字内容来自动调整宽度 <span>open-text="English" close-text="中文"</span></p>
+				<cc-switch ng-model="demo1" open-text="English" close-text="中文"></cc-switch>
+				<cc-switch ng-model="demo1" open-text="开" close-text="关"></cc-switch>
+				<p style="color: #47cf5f">2 默认颜色从蓝色改为了绿色 #47cf5f</p>
+				<p>3 默认文字从原来的'开'/'关 改为了:'已开启'/'已关闭'</p>
+				<cc-switch ng-model="demo1"></cc-switch>
+				<hr>
+				<p>Support Attribute</p>
+				<ul style="list-style: disc">
+					<li style="list-style: inside">*ng-model</li>
+					<li style="list-style: inside">ng-disabled</li>
+					<li style="list-style: inside">ng-true-value</li>
+					<li style="list-style: inside">ng-false-value</li>
+					<li style="list-style: inside">open-text</li>
+					<li style="list-style: inside">close-text</li>
+					<li style="list-style: inside">font-size</li>
+				</ul>
+				<h2>Demo1</h2>
+				<p>ng-model is required. If you just wanna have a fun, bind a useless model.</p>
+				<p>value: {{demo1}}</p>
+				<cc-switch ng-model="demo1"></cc-switch>
+
+				<p>If you want change component size, rewrite <b>font-size</b> of the 'switch-button-block' class.</p>
+				<cc-switch ng-model="demo1"></cc-switch>
+
+				<p>If you want change component width, rewrite <b>width</b> of the 'switch-button-block' class. Using 'em' unit
+					is recommended.</p>
+				<cc-switch id="demo3" ng-model="demo1" open-text="long-words" close-text="short-words"></cc-switch>
+
+				<h2>Demo2</h2>
+				<p>value: {{demo2}} | disabled: {{demo2Disabled}}</p>
+				<cc-switch ng-model="demo2" ng-disabled="demo2Disabled"></cc-switch>
+				<button ng-click="demo2Disabled=!demo2Disabled">change disabled</button>
+
+				<h2>Demo3</h2>
+				<p>Work with ng-true-value & ng-false-value</p>
+				<p>value: {{demo3}} </p>
+				<cc-switch ng-model="demo3" ng-true-value="'开'" ng-false-value="'关'"></cc-switch>
+			</div>
 		</div>
 	</div>
-	<div class="content">
-		<div ng-init="demo1 = true">
-			<h1>开关 cc-switch</h1>
-			<hr>
-			<h2>2016年12月9日 更新 by李文杰</h2>
-			<p>1 支持根据文字内容来自动调整宽度 <span>open-text="English" close-text="中文"</span></p>
-			<cc-switch ng-model="demo1" open-text="English" close-text="中文"></cc-switch>
-			<cc-switch ng-model="demo1" open-text="开" close-text="关"></cc-switch>
-			<p style="color: #47cf5f">2 默认颜色从蓝色改为了绿色 #47cf5f</p>
-			<p>3 默认文字从原来的'开'/'关 改为了:'已开启'/'已关闭'</p>
-			<cc-switch ng-model="demo1"></cc-switch>
-			<hr>
-			<p>Support Attribute</p>
-			<ul style="list-style: disc">
-				<li style="list-style: inside">*ng-model</li>
-				<li style="list-style: inside">ng-disabled</li>
-				<li style="list-style: inside">ng-true-value</li>
-				<li style="list-style: inside">ng-false-value</li>
-				<li style="list-style: inside">open-text</li>
-				<li style="list-style: inside">close-text</li>
-				<li style="list-style: inside">font-size</li>
-			</ul>
-			<h2>Demo1</h2>
-			<p>ng-model is required. If you just wanna have a fun, bind a useless model.</p>
-			<p>value: {{demo1}}</p>
-			<cc-switch ng-model="demo1"></cc-switch>
-
-			<p>If you want change component size, rewrite <b>font-size</b> of the 'switch-button-block' class.</p>
-			<cc-switch ng-model="demo1"></cc-switch>
-
-			<p>If you want change component width, rewrite <b>width</b> of the 'switch-button-block' class. Using 'em' unit
-				is recommended.</p>
-			<cc-switch id="demo3" ng-model="demo1" open-text="long-words" close-text="short-words"></cc-switch>
-
-			<h2>Demo2</h2>
-			<p>value: {{demo2}} | disabled: {{demo2Disabled}}</p>
-			<cc-switch ng-model="demo2" ng-disabled="demo2Disabled"></cc-switch>
-			<button ng-click="demo2Disabled=!demo2Disabled">change disabled</button>
-
-			<h2>Demo3</h2>
-			<p>Work with ng-true-value & ng-false-value</p>
-			<p>value: {{demo3}} </p>
-			<cc-switch ng-model="demo3" ng-true-value="'开'" ng-false-value="'关'"></cc-switch>
-		</div>
-	</div>
-</div>
+</section>
 
 <script src="/components.js"></script>
-
 <script src="index.js"></script>
+<script>
+	var link = document.querySelector('link[rel="import"]');
+	var content = link.import;
+	var aside = content.querySelector('aside');
+	document.querySelector('aside').appendChild(aside.cloneNode(true));
+</script>
 </body>
 </html>

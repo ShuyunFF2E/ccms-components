@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>grid</title>
+	<link rel="import" href="../demos-menu.html">
 
 	<style>
 
@@ -22,6 +23,10 @@
 			overflow: auto;
 		}
 
+		section {
+			margin-left: 250px;
+		}
+
 		.info span {
 			display: block;
 		}
@@ -37,52 +42,55 @@
 
 <main>
 
-	<div class="pager-grid">
+	<aside></aside>
+	<section>
+		<div class="pager-grid">
 
-		<strong style="display: block;">表格宽高由用户设定,默认继承自父容器 | 自定义返回列表数据字段名</strong>
-		<button type="button" ng-click="app.refreshGrid()">refresh</button>
-		<cc-grid opts="app.pagerGridOptions" selected-items="app.selectedItems" type="selectable" on-refresh="app.onRefresh(opts)" style="height: 200px;width: 600px;"></cc-grid>
+			<strong style="display: block;">表格宽高由用户设定,默认继承自父容器 | 自定义返回列表数据字段名</strong>
+			<button type="button" ng-click="app.refreshGrid()">refresh</button>
+			<cc-grid opts="app.pagerGridOptions" selected-items="app.selectedItems" type="selectable" on-refresh="app.onRefresh(opts)" style="height: 200px;width: 600px;"></cc-grid>
 
-		<div class="info">
+			<div class="info">
 
-			<span>查询参数</span>
-			<span ng-bind="app.pagerGridOptions.queryParams|json"></span>
+				<span>查询参数</span>
+				<span ng-bind="app.pagerGridOptions.queryParams|json"></span>
 
-			<span>选中数据</span>
-			<span ng-bind="app.selectedItems|json"></span>
+				<span>选中数据</span>
+				<span ng-bind="app.selectedItems|json"></span>
+			</div>
+
 		</div>
 
-	</div>
+		<div class="pager-grid">
 
-	<div class="pager-grid">
+			<strong style="display: block;">表格宽高由用户设定,默认继承自父容器 | 自定义行元素</strong>
+			<button type="button" ng-click="app.refreshGrid()">refresh</button>
+			<cc-grid opts="app.pagerGridOptions2" selected-items="app.selectedItems" type="selectable" on-refresh="app.onRefresh(opts)" style="height: 200px;width: 600px;"></cc-grid>
 
-		<strong style="display: block;">表格宽高由用户设定,默认继承自父容器 | 自定义行元素</strong>
-		<button type="button" ng-click="app.refreshGrid()">refresh</button>
-		<cc-grid opts="app.pagerGridOptions2" selected-items="app.selectedItems" type="selectable" on-refresh="app.onRefresh(opts)" style="height: 200px;width: 600px;"></cc-grid>
+			<div class="info">
 
-		<div class="info">
+				<span>查询参数</span>
+				<span ng-bind="app.pagerGridOptions.queryParams|json"></span>
 
-			<span>查询参数</span>
-			<span ng-bind="app.pagerGridOptions.queryParams|json"></span>
+				<span>选中数据</span>
+				<span ng-bind="app.selectedItems|json"></span>
+			</div>
 
-			<span>选中数据</span>
-			<span ng-bind="app.selectedItems|json"></span>
 		</div>
 
-	</div>
+		<div class="data-grid">
 
-	<div class="data-grid">
+			<strong style="display: block;">无分页的表格</strong>
+			<button type="button" ng-click="app.refreshDataGrid()">refresh</button>
+			<cc-grid opts="app.dataGridOptions" style="height: 400px;width: 600px;"></cc-grid>
 
-		<strong style="display: block;">无分页的表格</strong>
-		<button type="button" ng-click="app.refreshDataGrid()">refresh</button>
-		<cc-grid opts="app.dataGridOptions" style="height: 400px;width: 600px;"></cc-grid>
+		</div>
 
-	</div>
-
-	<div class="demo">
-		<h3>grid(自定义隐藏列)</h3>
-		<cc-grid opts="app.gridOption3" style="height: 400px;width: 600px;"></cc-grid>
-	</div>
+		<div class="demo">
+			<h3>grid(自定义隐藏列)</h3>
+			<cc-grid opts="app.gridOption3" style="height: 400px;width: 600px;"></cc-grid>
+		</div>
+	</section>
 
 </main>
 
@@ -95,6 +103,13 @@
 
 <script src="/components.js"></script>
 <script src="index.js"></script>
+
+<script>
+	var link = document.querySelector('link[rel="import"]');
+	var content = link.import;
+	var aside = content.querySelector('aside');
+	document.querySelector('aside').appendChild(aside.cloneNode(true));
+</script>
 
 </body>
 </html>

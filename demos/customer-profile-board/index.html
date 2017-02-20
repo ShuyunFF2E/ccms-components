@@ -3,26 +3,41 @@
 <head>
 	<meta charset="UTF-8">
 	<title>customer-profile-board</title>
+	<link rel="import" href="../demos-menu.html">
+	<style>
+		section {
+			margin-left: 250px;
+		}
+	</style>
 </head>
 <body ng-app="app" ng-controller="ctrl" style="padding: 20px">
-<h1>Customer profile board Demo</h1>
 
-<div>
-	<h2>Demo</h2>
-	<fieldset>
-		<legend>customerInformation</legend>
-		<label>nickName(用户昵称): </label><input type="text" ng-model="customerInformation.nickName">
-		<label>shopId(店铺ID): </label><input type="text" ng-model="customerInformation.shopId">
-		<label>tenantId(租户Id): </label><input type="text" ng-model="customerInformation.tenantId">
-		<label>platName(平台名): </label><input type="text" ng-model="customerInformation.platName">
-	</fieldset>
-	<br>
-	<button ng-click="pop()">popProfileBoardModal</button>
-</div>
+	<aside></aside>
+	<section>
+		<h1>Customer profile board Demo</h1>
+
+		<div>
+			<h2>Demo</h2>
+			<fieldset>
+				<legend>customerInformation</legend>
+				<label>nickName(用户昵称): </label><input type="text" ng-model="customerInformation.nickName">
+				<label>shopId(店铺ID): </label><input type="text" ng-model="customerInformation.shopId">
+				<label>tenantId(租户Id): </label><input type="text" ng-model="customerInformation.tenantId">
+				<label>platName(平台名): </label><input type="text" ng-model="customerInformation.platName">
+			</fieldset>
+			<br>
+			<button ng-click="pop()">popProfileBoardModal</button>
+		</div>
+	</section>
 
 <script src="/components.js"></script>
 
 <script src="index.js"></script>
-
+<script>
+	var link = document.querySelector('link[rel="import"]');
+	var content = link.import;
+	var aside = content.querySelector('aside');
+	document.querySelector('aside').appendChild(aside.cloneNode(true));
+</script>
 </body>
 </html>
