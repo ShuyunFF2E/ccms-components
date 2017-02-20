@@ -160,6 +160,7 @@ export default class AreaSelectorCtrl {
 	 * @param areaId <string> 区域ID
 	 * @param areas <object> 区域等级
 	 * @param hasChild <boolean> 是否拥有孩子节点
+	 * @param areaName <string> 区域名称
 	 */
 	setAreaStatus(areaId, areas, hasChild, areaName) {
 		let selectedArea = areas.find(item => item.id === areaId);
@@ -275,7 +276,6 @@ export default class AreaSelectorCtrl {
 	/**
 	 * @name changeProvince 切换选中省份
 	 * @param province <object> 选中的省份
-	 * @param cities <object> 省份对应的城市
 	 */
 	changeProvince(province) {
 		this.citys = province.children;

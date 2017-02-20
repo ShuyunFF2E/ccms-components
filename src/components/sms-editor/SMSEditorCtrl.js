@@ -426,6 +426,6 @@ export default class SMSEditorCtrl {
 		e.preventDefault();
 		this._hasInvalidStr = BRACKET_REG.test(textContent);
 		this._invalidStrClosed = !this._hasInvalidStr;
-		document.execCommand('insertHTML', false, textContent.replace(BRACKET_REG, ''));
+		document.execCommand('insertText', false, textContent.replace(BRACKET_REG, ''));
 	}
 }
