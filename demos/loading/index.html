@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>loading</title>
-	<link rel="import" href="../demos-menu.html">
+	<head>
+		<meta charset="UTF-8">
+		<title>loading</title>
+		<link rel="import" href="../demos-menu.html">
 
-	<style>
+		<style>
 
-		.grid {
-			width: 60px;
+			.grid {
+				width: 60px;
 
-		}
+			}
 
-		 section {
-			 margin-left: 160px;
-			 padding-top: 20px;
-		 }
+			 section {
+				 margin-left: 160px;
+				 padding-top: 20px;
+			 }
 
-	</style>
-</head>
-<body ng-app="app">
+		</style>
+	</head>
 
-	<aside></aside>
-	<section>
-		<cc-loading class="grid"></cc-loading>
-		<cc-loading type="layer">请耐心等待</cc-loading>
-	</section>
+	<body ng-app="app">
 
-<script src="/components.js"></script>
+		<aside></aside>
+		<section>
+			<cc-loading class="grid"></cc-loading>
+			<cc-loading type="layer">请耐心等待</cc-loading>
+		</section>
 
-<!--<script src="/node_modules/angular/angular.min.js"></script>-->
-<!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->
-<!--<script src="/dist/ccms_components.js"></script>-->
-<script>
-	angular.module('app', ['ccms.components']);
-</script>
-<script>
-	var link = document.querySelector('link[rel="import"]');
-	var content = link.import;
-	var aside = content.querySelector('.side-bar');
-	document.querySelector('aside').appendChild(aside.cloneNode(true));
-</script>
-</body>
+	<script src="/components.js"></script>
+
+	<!--<script src="/node_modules/angular/angular.min.js"></script>-->
+	<!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->
+	<!--<script src="/dist/ccms_components.js"></script>-->
+	<script>
+		angular.module('app', ['ccms.components']);
+	</script>
+	<script>
+		var link = document.querySelector('link[rel="import"]');
+		var content = link.import;
+		var aside = content.querySelector('.side-bar');
+		document.querySelector('aside').appendChild(aside.cloneNode(true));
+	</script>
+	</body>
 </html>

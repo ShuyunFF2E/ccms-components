@@ -1,70 +1,82 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<style>
 
-	* {
-		margin: 0;
-		padding: 0;
-	}
+		* {
+			margin: 0;
+			padding: 0;
+		}
 
-	body {
-		color: #4A5668;
-		background: #f1f2f6;
-		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", SimSun, sans-serif;
-	}
+		body {
+			color: #4A5668;
+			background: #f1f2f6;
+			font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", SimSun, sans-serif;
+		}
 
-	.side-bar {
-		position: fixed;
-		width: 240px;
-		color: #666;
-		background: #ffffff;
-		height: 100%;
-		overflow: scroll;
-	}
+		.side-bar {
+			position: fixed;
+			width: 240px;
+			color: #666;
+			background: #ffffff;
+			height: 100%;
+			overflow: scroll;
+		}
 
-	ul {
-		margin: 0;
-		padding-left: 0;
-		line-height: 1.6em;
-		list-style: none;
-	}
+		ul {
+			margin: 0;
+			padding-left: 0;
+			line-height: 1.6em;
+			list-style: none;
+		}
 
-	.category {
-		background: #E4F0FD;
-		height: 40px;
-	}
+		.category {
+			background: #E4F0FD;
+			height: 40px;
+		}
 
-	h4 {
-		display: inline-block;
-		margin: 0;
-		padding: 0 0 0 24px;
-		line-height: 40px;
-	}
+		h4 {
+			display: inline-block;
+			margin: 0;
+			padding: 0 0 0 30px;
+			font-size: 14px;
+			line-height: 40px;
+		}
 
-	.item {
-		padding-left: 20px;
-		height: 40px;
-		line-height: 40px;
-		background: #ffffff;
-	}
+		.item {
+			padding-left: 30px;
+			height: 40px;
+			line-height: 40px;
+			background: #ffffff;
+		}
 
-	.item:hover {
-		background: #0894ec;
-	}
+		.item:hover {
+			color: #ffffff;
+			background: #0894ec;
+		}
 
-	a:link, a:visited {
-		color: #666;
-		text-decoration: none;
-	}
+		a:link, a:visited {
+			color: #666;
+			text-decoration: none;
+		}
 
-	.item:hover a{
-		color: #fff;
-	}
+		.item:hover a{
+			color: #fff;
+		}
 
-</style>
+		.selected {
+			background: orangered;
+		}
 
-<main ng-app='componentsApp' ng-controller="ctrl as app">
+	</style>
+</head>
+
+<body ng-app="app" ng-controller="demoCtrl as ctrl">
 	<div class="side-bar">
+		<ul>
+			<li ng-bind="ctrl.abc"></li>
+		</ul>
 		<ul>
 			<li>
 				<div class="category">
@@ -111,5 +123,20 @@
 			</li>
 		</ul>
 	</div>
-</main>
+	<script src="/components.js"></script>
+	<script>
+
+		angular
+			.module('app', ['ccms.components'])
+			.controller('demoCtrl', function() {
+
+				this.abc = 'sss';
+				var href = window.location.href;
+				this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+				console.log('---------------');
+				console.log(this.highlight_item);
+			});
+	</script>
+</body>
+</html>
 
