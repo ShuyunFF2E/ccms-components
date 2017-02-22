@@ -4,7 +4,26 @@ $board-background: #f3f3f3;
   overflow: initial;
 }
 
-.customer-profile-board{
+.customer-profile-board {
   height: 100%;
   background: $board-background;
+
+  .customer-profile-info-block {
+	display: flex;
+	height: calc(100% - 60px);
+	align-items: center;
+	justify-content: center;
+
+	.customer-profile-error-row {
+	  color: #999;
+	  display: flex;
+	  font-size: 16px;
+	  align-items: center;
+
+	  .icon-caution {
+		font-size: 32px;
+		margin-right: 8px;
+	  }
+	}
+  }
 }

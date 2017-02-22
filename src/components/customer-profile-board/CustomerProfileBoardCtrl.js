@@ -21,6 +21,9 @@ export default class CheckboxController {
 			viewType: 'list' // useless now
 		};
 
+		this._loadingData = true;
+		this._loadingDataError = false;
+
 		this.CustomerProfileBoardService
 			.queryCustomerProfileData(this.customerData)
 			.then(data => Object.assign({}, this.customerData, this.CustomerProfileBoardService.generateCustomerData(data)))
@@ -45,7 +48,12 @@ export default class CheckboxController {
 					})
 				);
 			})
-			.catch(err => console.error(err.message || err.data.message));
+			.then(() => this._loadingData = false)
+			.catch(err => {
+				console.error(err.message || err.data.message);
+				this._loadingData = false;
+				this._loadingDataError = true;
+			});
 	}
 
 	/**
@@ -61,6 +69,7 @@ export default class CheckboxController {
 	 * set viewMode true to change view into view mode
 	 */
 	changeToViewMode() {
+		if (this._loadingData || this._loadingDataError) return;
 		this.viewMode = true;
 	}
 
@@ -69,6 +78,7 @@ export default class CheckboxController {
 	 * set viewMode false to change view into list mode
 	 */
 	changeToListMode() {
+		if (this._loadingData || this._loadingDataError) return;
 		this.viewMode = false;
 	}
 
