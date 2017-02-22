@@ -11,11 +11,6 @@ class DropdownService {
 	}
 
 	open(dropdownCtrl) {
-		// 关闭之前的下拉
-		if (this.lastDropdownCtrl) {
-			this.autoCloseFn();
-		}
-
 		// 为需要自动关闭的下拉注册处理事件
 		if (dropdownCtrl.autoClose) {
 			this.lastDropdownCtrl = dropdownCtrl;
