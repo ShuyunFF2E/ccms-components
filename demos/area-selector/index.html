@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Area Selector</title>
 	<link rel="import" href="../demos-menu.html">
+	<link rel="import" href="../import.html">
 	<style>
 		.area-selector-section {
 			margin-left: 270px;
@@ -17,14 +18,8 @@
 	<div class="area-selector-section">
 		<button type="button" ng-click="open()">Open Area Selector</button>
 	</div>
-	
+
 <script src="index.js"></script>
-<script>
-	var link = document.querySelector('link[rel="import"]');
-	var content = link.import;
-	var aside = content.querySelector('.side-bar');
-	document.querySelector('aside').appendChild(aside.cloneNode(true));
-</script>
 
 </body>
 </html>

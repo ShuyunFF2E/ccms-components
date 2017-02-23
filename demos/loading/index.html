@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>loading</title>
 		<link rel="import" href="../demos-menu.html">
+		<link rel="import" href="../import.html">
 
 		<style>
 
@@ -31,18 +32,12 @@
 	<!--<script src="/node_modules/angular/angular.min.js"></script>-->
 	<!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->
 	<!--<script src="/dist/ccms_components.js"></script>-->
-		<script>
-			angular.module('demoApp', ['ccms.components'])
-					.controller('DemoCtrl', function() {
-						var href = window.location.href;
-						this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
-					});
-		</script>
 	<script>
-		var link = document.querySelector('link[rel="import"]');
-		var content = link.import;
-		var aside = content.querySelector('.side-bar');
-		document.querySelector('aside').appendChild(aside.cloneNode(true));
+		angular.module('demoApp', ['ccms.components'])
+				.controller('DemoCtrl', function() {
+					var href = window.location.href;
+					this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+				});
 	</script>
 	</body>
 </html>

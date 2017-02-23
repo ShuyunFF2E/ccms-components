@@ -1,0 +1,6 @@
+<script>
+	var link = document.querySelector('link[rel="import"]');
+	var content = link.import;
+	var aside = content.querySelector('.side-bar');
+	document.querySelector('aside').appendChild(aside.cloneNode(true));
+</script>
