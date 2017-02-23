@@ -8,6 +8,10 @@ angular
 	.module('app', ['ccms.components'])
 	.controller('appCtrl', function() {
 
+		var href = window.location.href;
+
+		this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+
 		this.entity = ['A', 'B', 'C'];
 
 		this.join = function(entity) {

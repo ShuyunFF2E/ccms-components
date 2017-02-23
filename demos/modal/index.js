@@ -190,6 +190,9 @@
 			//$scope.array = [1, 2, 3, 4, 5];
 
 			var self = this;
+			var href = window.location.href;
+
+			$scope.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
 
 			this.array = [1, 2, 3];
 

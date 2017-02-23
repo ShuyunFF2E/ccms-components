@@ -11,6 +11,10 @@
 		.module('app', ['ccms.components'])
 		.controller('appCtrl', function($ccValidator) {
 
+			var href = window.location.href;
+
+			this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+
 			this.validators = {
 
 				required: '要填东西哦亲!',

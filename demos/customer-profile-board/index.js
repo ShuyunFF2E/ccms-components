@@ -15,6 +15,10 @@
 		}])
 		.controller('ctrl', function ($scope, $ccCustomerProfileBoard) {
 
+			var href = window.location.href;
+
+			$scope.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+
 			$scope.customerInformation = {
 				nickName: 'xinlee0606',
 				shopId: '71677914',

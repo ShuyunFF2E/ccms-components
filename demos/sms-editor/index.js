@@ -7,8 +7,11 @@
 angular.module('componentsApp', ['ccms.components'])
 
 	.controller('ctrl', function ($timeout) {
+
 		var self = this;
 
+		var href = window.location.href;
+		self.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
 
 		/*
 			0: 短信 + 【自定义签名】

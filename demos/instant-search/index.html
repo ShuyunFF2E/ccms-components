@@ -42,6 +42,11 @@
 <script>
 	angular.module('demoApp', ['ccms.components'])
 		.controller('DemoCtrl', function($scope) {
+
+			var href = window.location.href;
+
+			this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+
 			this.datalist = [
 				{title: '上海', value: 'sh'},
 				{title: '北京', value: 'bj'},

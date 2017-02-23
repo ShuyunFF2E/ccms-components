@@ -66,13 +66,13 @@
 		}
 
 		.selected {
-			background: orangered;
+			background: #e5f9ff;
 		}
 
 	</style>
 </head>
 
-<body ng-app="app" ng-controller="demoCtrl as ctrl">
+<body>
 	<div class="side-bar">
 		<ul>
 			<li ng-bind="ctrl.abc"></li>
@@ -83,20 +83,48 @@
 					<h4>Components</h4>
 				</div>
 				<ul>
-					<li class="item"><a href="../styles/index.html">样式 - 张阿十临时调整</a></li>
-					<li class="item"><a href="../grid/index.html">表格/grid</a></li>
-					<li class="item"><a href="../pagination/index.html">分页/pagination</a></li>
-					<li class="item"><a href="../modal/index.html">弹框/modal</a></li>
-					<li class="item"><a href="../tips/index.html">提示/tips</a></li>
-					<li class="item"><a href="../date-picker/index.html">日期选择器/date-picker</a></li>
-					<li class="item"><a href="../form/index.html">表单校验/form</a></li>
-					<li class="item"><a href="../tooltip/index.html">工具提示/tooltip</a></li>
-					<li class="item"><a href="../instant-search/index.html">智能搜索/instant-search</a></li>
-					<li class="item"><a href="../dropdown/dropdown.html">下拉/dropdown</a></li>
-					<li class="item"><a href="../dropdown/select.html">下拉(单选/多选)/dropdown-select</a></li>
-					<li class="item"><a href="../checkbox/index.html">复选框/checkbox</a></li>
-					<li class="item"><a href="../radio-button/index.html">单选框/radio</a></li>
-					<li class="item"><a href="../switch-button/index.html">开关/switch</a></li>
+					<li class="item" ng-class="{selected: ctrl.highlight_item === 'styles'}">
+						<a href="../styles/index.html">样式 - 张阿十临时调整</a>
+					</li>
+					<li class="item" ng-class="{selected: app.highlight_item === 'grid'}">
+						<a href="../grid/index.html">表格/grid</a>
+					</li>
+					<li class="item" ng-class="{selected: ctrl.highlight_item === 'pagination'}">
+						<a href="../pagination/index.html">分页/pagination</a>
+					</li>
+					<li class="item" ng-class="{selected: highlight_item === 'modal'}">
+						<a href="../modal/index.html">弹框/modal</a>
+					</li>
+					<li class="item" ng-class="{selected: highlight_item === 'tips'}">
+						<a href="../tips/index.html">提示/tips</a>
+					</li>
+					<li class="item" ng-class="{selected: app.highlight_item === 'date-picker'}">
+						<a href="../date-picker/index.html">日期选择器/date-picker</a>
+					</li>
+					<li class="item" ng-class="{selected: app.highlight_item === 'form'}">
+						<a href="../form/index.html">表单校验/form</a>
+					</li>
+					<li class="item" ng-class="{selected: app.highlight_item === 'tooltip'}">
+						<a href="../tooltip/index.html">工具提示/tooltip</a>
+					</li>
+					<li class="item" ng-class="{selected: ctrl.highlight_item === 'instant-search'}">
+						<a href="../instant-search/index.html">智能搜索/instant-search</a>
+					</li>
+					<li class="item" ng-class="{selected: ctrl.highlight_item === 'dropdown'}">
+						<a href="../dropdown/index.html">下拉/dropdown</a>
+					</li>
+					<li class="item" ng-class="{selected: ctrl.highlight_item === 'select'}">
+						<a href="../select/index.html">下拉(单选/多选)/dropdown-select</a>
+					</li>
+					<li class="item" ng-class="{selected: highlight_item === 'checkbox'}">
+						<a href="../checkbox/index.html">复选框/checkbox</a>
+					</li>
+					<li class="item" ng-class="{selected: highlight_item === 'radio-button'}">
+						<a href="../radio-button/index.html">单选框/radio</a>
+					</li>
+					<li class="item" ng-class="{selected: highlight_item === 'switch-button'}">
+						<a href="../switch-button/index.html">开关/switch</a>
+					</li>
 				</ul>
 			</li>
 			<li>
@@ -104,11 +132,21 @@
 					<h4>Business</h4>
 				</div>
 				<ul>
-					<li class="item"><a href="../loading/index.html">等待提示/loading</a></li>
-					<li class="item"><a href="../sms-editor/index.html">短信编辑器/sms-editor</a></li>
-					<li class="item"><a href="../menus/menus.html">菜单/menu</a></li>
-					<li class="item"><a href="../customer-profile-board/index.html">用户全视图/customer-profile</a></li>
-					<li class="item"><a href="../area-selector/index.html">地址选择器/area-selector</a></li>
+					<li class="item" ng-class="{selected: ctrl.highlight_item === 'loading'}">
+						<a href="../loading/index.html">等待提示/loading</a>
+					</li>
+					<li class="item" ng-class="{selected: app.highlight_item === 'sms-editor'}">
+						<a href="../sms-editor/index.html">短信编辑器/sms-editor</a>
+					</li>
+					<li class="item" ng-class="{selected: ctrl.highlight_item === 'menus'}">
+						<a href="../menus/menus.html">菜单/menu</a>
+					</li>
+					<li class="item" ng-class="{selected: highlight_item === 'customer-profile-board'}">
+						<a href="../customer-profile-board/index.html">用户全视图/customer-profile</a>
+					</li>
+					<li class="item" ng-class="{selected: highlight_item === 'area-selector'}">
+						<a href="../area-selector/index.html">地址选择器/area-selector</a>
+					</li>
 				</ul>
 			</li>
 			<li>
@@ -124,19 +162,6 @@
 		</ul>
 	</div>
 	<script src="/components.js"></script>
-	<script>
-
-		angular
-			.module('app', ['ccms.components'])
-			.controller('demoCtrl', function() {
-
-				this.abc = 'sss';
-				var href = window.location.href;
-				this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
-				console.log('---------------');
-				console.log(this.highlight_item);
-			});
-	</script>
 </body>
 </html>
 

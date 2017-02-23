@@ -39,6 +39,10 @@
 
 			let tips = null;
 
+			var href = window.location.href;
+
+			$scope.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.indexOf('index.html') - 1);
+
 			$scope.showSuccess = function() {
 				$ccTips.success('成功提示');
 			};

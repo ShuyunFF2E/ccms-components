@@ -3,9 +3,6 @@
 <title>下拉</title>
 <link rel="import" href="../demos-menu.html">
 <style>
-	[ng-app] {
-		width: 500px;
-	}
 	section {
 		margin-left: 270px;
 	}
@@ -77,6 +74,11 @@
 
 	DemoCtrl.$inject = [];
 	function DemoCtrl() {
+
+		var href = window.location.href;
+
+		this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+
 		this.log = (text) => {
 			textAreaEl = document.querySelector('textarea.log');
 			textAreaEl.value += text + ',';

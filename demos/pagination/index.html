@@ -75,6 +75,10 @@
 
 	DemoCtrl.$inject = [];
 	function DemoCtrl() {
+
+		var href = window.location.href;
+		this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+
 		this.pageOptions = {
 			pageNum: 1,
 			pageSize: 8,

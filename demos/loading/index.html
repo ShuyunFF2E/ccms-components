@@ -20,7 +20,7 @@
 		</style>
 	</head>
 
-	<body ng-app="app">
+	<body ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 
 		<aside></aside>
 		<section>
@@ -33,9 +33,13 @@
 	<!--<script src="/node_modules/angular/angular.min.js"></script>-->
 	<!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->
 	<!--<script src="/dist/ccms_components.js"></script>-->
-	<script>
-		angular.module('app', ['ccms.components']);
-	</script>
+		<script>
+			angular.module('demoApp', ['ccms.components'])
+					.controller('DemoCtrl', function() {
+						var href = window.location.href;
+						this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+					});
+		</script>
 	<script>
 		var link = document.querySelector('link[rel="import"]');
 		var content = link.import;

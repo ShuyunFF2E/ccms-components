@@ -8,6 +8,9 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
 	.controller('ctrl', function ($scope, $resource, $ccGrid) {
 
+		var href = window.location.href;
+		this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
+
 		this.click = () => {
 			console.log(this);
 		};
