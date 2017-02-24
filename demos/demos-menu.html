@@ -163,7 +163,10 @@
 <script src="/components.js"></script>
 <script>
 	var importDoc = document.currentScript.ownerDocument;
-	importDoc.querySelector(`a[href*="${location.pathname}"]`).classList.add('current-menu');
+	var currentItem = importDoc.querySelector(`a[href*="${location.pathname}"]`);
+	if (currentItem) {
+		currentItem.classList.add('current-menu');
+	}
 	var aside = importDoc.querySelector('.side-bar');
     document.querySelector('aside').appendChild(aside.cloneNode(true));
 </script>
