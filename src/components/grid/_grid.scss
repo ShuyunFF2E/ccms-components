@@ -203,6 +203,7 @@ cc-grid {
 		> .reload {
 			@extend .iconfont;
 			@extend .icon-refresh;
+			padding: 5px 0;
 			font-size: 12px;
 			cursor: pointer;
 
