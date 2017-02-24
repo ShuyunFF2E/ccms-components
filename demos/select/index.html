@@ -112,8 +112,6 @@
 <script>
 	angular.module('demoApp', ['ccms.components'])
 		.controller('DemoCtrl', function() {
-			var href = window.location.href;
-			this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
 			this.value1 = '上海';
 			this.value2 = null;
 			this.value3 = [];

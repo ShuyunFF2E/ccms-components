@@ -12,10 +12,6 @@
 		.module('app', ['ccms.components'])
 		.controller('ctrl', function ($scope) {
 
-			var href = window.location.href;
-
-			$scope.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
-
 			$scope.demo2 = false;
 			$scope.demo3 = {
 				trueValue: 'up',

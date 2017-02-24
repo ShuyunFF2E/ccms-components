@@ -10,9 +10,6 @@ angular.module('componentsApp', ['ccms.components'])
 
 		var self = this;
 
-		var href = window.location.href;
-		self.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
-
 		/*
 			0: 短信 + 【自定义签名】
 			1: 短信 + 备案签名 + 【自定义签名】

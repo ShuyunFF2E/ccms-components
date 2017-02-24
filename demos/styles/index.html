@@ -22,7 +22,7 @@
 		}
 	</style>
 </head>
-<body ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+<body>
 	<aside></aside>
 	<article>
 		<h2>文本框</h2>
@@ -129,12 +129,5 @@
 	</article>
 
 <script src="/node_modules/angular-resource/angular-resource.min.js"></script>
-<script>
-	angular.module('demoApp', ['ccms.components'])
-			.controller('DemoCtrl', function() {
-				var href = window.location.href;
-				this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
-			});
-</script>
 </body>
 </html>

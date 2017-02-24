@@ -106,8 +106,6 @@
 	angular.module('componentsApp', ['ccms.components'])
 		.controller('ctrl', function ($scope, $timeout) {
 			var self = this;
-			var href = window.location.href;
-			self.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
 			self.onCalendarOpenTimes = 0;
 			self.onCalendarCloseTimes = 0;
 			self.onCalendarOpen = function () {

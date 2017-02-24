@@ -75,10 +75,6 @@
 	DemoCtrl.$inject = [];
 	function DemoCtrl() {
 
-		var href = window.location.href;
-
-		this.highlight_item = href.substring(href.indexOf('/demos/') + 7, href.lastIndexOf('/'));
-
 		this.log = (text) => {
 			textAreaEl = document.querySelector('textarea.log');
 			textAreaEl.value += text + ',';
