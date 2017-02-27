@@ -4,13 +4,20 @@
 			view-mode="$ctrl.viewMode"
 			change-to-view="$ctrl.changeToViewMode()"
 			change-to-list="$ctrl.changeToListMode()"></cc-customer-profile-header>
+	<div ng-show="$ctrl._loadingData || $ctrl._loadingDataError" class="customer-profile-info-block">
+		<cc-loading ng-show="$ctrl._loadingData"></cc-loading>
+		<div class="customer-profile-error-row" ng-show="$ctrl._loadingDataError">
+			<div class="iconfont icon-caution"></div>加载超时，请重试。
+		</div>
+	</div>
+
 	<cc-customer-profile-list-mode
-			ng-if="!$ctrl.viewMode"
+			ng-if="!$ctrl._loadingData && !$ctrl._loadingDataError && !$ctrl.viewMode"
 			attributes-setting="$ctrl.customerAttributeSetting"
 			customer-data="$ctrl.customerData"
 			scroll-to-attribute-block="$ctrl.scrollToAttributeBlock(index)"></cc-customer-profile-list-mode>
 	<cc-customer-profile-view-mode
-			ng-if="$ctrl.viewMode"
+			ng-if="!$ctrl._loadingData && !$ctrl._loadingDataError && $ctrl.viewMode"
 			customer-tags="$ctrl.customerTags"
 			attributes-setting="$ctrl.customerAttributeSetting"
 			change-to-specific-attribute-block="$ctrl.changeToSpecificAttributeBlock(name)"></cc-customer-profile-view-mode>

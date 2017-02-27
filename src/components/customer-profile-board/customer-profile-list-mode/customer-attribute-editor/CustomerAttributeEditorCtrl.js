@@ -147,7 +147,7 @@ export default class CustomerAttributeEditorCtrl {
 					const paramsArr = [];
 					paramsArr.push(`customerno:"${this.customerData.nickName}"\n`);
 					attributeBlock.attributeList.forEach(attr => {
-						const targetValue = attr.attribute === attribute.attribute ? value : attr.value;
+						const targetValue = attr.attribute === attribute.attribute ? value : (attr.value || '');
 						if (attr.editable && !attr.isDisable) {
 							// can editable item
 							if (attr.type.match(/NUMBER/)) {

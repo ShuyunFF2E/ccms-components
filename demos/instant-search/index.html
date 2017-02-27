@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <title>instant search demo</title>
+<link rel="import" href="../demos-menu.html">
 <style>
-	[ng-app] {
-		margin: 1em;
+	section {
+		margin-left: 270px;
 	}
 	.demo {
-		margin: 3em 1em;
+		margin-top: 0;
+		margin-bottom: 3em;
+		padding-top: 30px;
 	}
 </style>
 
-<div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<div class="demo">
-		<h3>local data</h3>
-		<div ng-bind="ctrl.result1 || {} | json"></div>
-		<instant-search
-				datalist="ctrl.datalist"
-				on-search="ctrl.onSearch(datalist,context)"
-				on-select="ctrl.onSelect1(item,context)"
-				options="ctrl.options1"></instant-search>
-	</div>
-	<div class="demo">
-		<h3>remote data</h3>
-		<div ng-bind="ctrl.result2 || {} | json"></div>
-		<instant-search
-				datalist="ctrl.datalist"
-				on-search="ctrl.onSearch(datalist,context)"
-				on-select="ctrl.onSelect2(item,context)"
-				options="ctrl.options2"></instant-search>
-	</div>
-</div>
+<body ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 
-<script src="/components.js"></script>
+	<aside></aside>
+	<section>
+		<div class="demo">
+			<h3>local data</h3>
+			<div ng-bind="ctrl.result1 || {} | json"></div>
+			<instant-search
+					datalist="ctrl.datalist"
+					on-search="ctrl.onSearch(datalist,context)"
+					on-select="ctrl.onSelect1(item,context)"
+					options="ctrl.options1"></instant-search>
+		</div>
+		<div class="demo">
+			<h3>remote data</h3>
+			<div ng-bind="ctrl.result2 || {} | json"></div>
+			<instant-search
+					datalist="ctrl.datalist"
+					on-search="ctrl.onSearch(datalist,context)"
+					on-select="ctrl.onSelect2(item,context)"
+					options="ctrl.options2"></instant-search>
+		</div>
+	</section>
+</body>
+
 <script>
 	angular.module('demoApp', ['ccms.components'])
 		.controller('DemoCtrl', function($scope) {
+
 			this.datalist = [
 				{title: '上海', value: 'sh'},
 				{title: '北京', value: 'bj'},
@@ -77,3 +84,4 @@
 			}
 		});
 </script>
+

@@ -8,7 +8,6 @@
 		<input size="{{$ctrl.totalPages.toString().length}}"
 				ng-switch-when="normal"
 				ng-disabled="$ctrl.totalPages === 1"
-				ng-blur="$ctrl.inputPage = $ctrl.pageNum"
 				ng-enter="$ctrl.goto($ctrl.inputPage) || ( $ctrl.inputPage = $ctrl.pageNum )"
 				ng-model="$ctrl.inputPage">
 		<span ng-switch-when="simple" ng-bind="$ctrl.pageNum"></span> / 共<span ng-bind="$ctrl.totalPages"></span>页

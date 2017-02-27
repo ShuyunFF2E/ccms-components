@@ -12,8 +12,6 @@
 
 		.controller('ctrl', function ($scope, $ccAreaSelector) {
 
-			var self = this;
-
 			var INPUT = [
 				{ id: '310000,310100,310101', name: '上海市 > 市辖区 > 黄浦区' },
 				{ id: '310000,310100,3101011', name: '上海市 > 市辖区 > 沈阳市' },

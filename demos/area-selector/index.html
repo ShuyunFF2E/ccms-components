@@ -3,12 +3,21 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Area Selector</title>
+	<link rel="import" href="../demos-menu.html">
+	<style>
+		.area-selector-section {
+			margin-left: 270px;
+			padding-top: 20px;
+		}
+	</style>
 </head>
 <body ng-app="app" ng-controller="ctrl as Ctrl" style="height: 10000px">
 
-<button type="button" ng-click="open()">Open Area Selector</button>
+	<aside></aside>
+	<div class="area-selector-section">
+		<button type="button" ng-click="open()">Open Area Selector</button>
+	</div>
 
-<script src="/components.js"></script>
 <script src="index.js"></script>
 
 </body>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <title>分页(cc-pagination)</title>
+<link rel="import" href="../demos-menu.html">
 <style>
-	[ng-app] {
-		margin: 1em;
+	section {
+		margin-left: 280px;
+		padding-top: 20px;
 	}
 	.demo {
-		margin: 3em 1em;
+		margin-bottom: 3em;
 	}
 	.demo grid {
 		width: 400px;
@@ -14,54 +16,56 @@
 	}
 </style>
 
-<div ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<div class="demo">
-		<h3>type: normal</h3>
-		<cc-pagination
-				type="normal"
-				page-num="ctrl.pageOptions.pageNum"
-				page-size="ctrl.pageOptions.pageSize"
-				page-size-list="ctrl.pageOptions.pageSizeList"
-				totals="ctrl.pageOptions.totals"
-				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
-	</div>
-	<div class="demo">
-		<h3>type: simple</h3>
-		<cc-pagination
-				type="simple"
-				page-num="ctrl.pageOptions.pageNum"
-				page-size="ctrl.pageOptions.pageSize"
-				page-size-list="ctrl.pageOptions.pageSizeList"
-				totals="ctrl.pageOptions.totals"
-				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
-	</div>
-	<div class="demo">
-		<h3>type: normal &amp; disable pagesize list</h3>
-		<cc-pagination
-				page-num="ctrl.pageOptions.pageNum"
-				page-size="ctrl.pageOptions.pageSize"
-				page-size-list="ctrl.pageOptions.pageSizeList"
-				page-size-list-disabled
-				totals="ctrl.pageOptions.totals"
-				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
-	</div>
-	<div class="demo">
-		<h3>type: normal &amp; hide pagesize list</h3>
-		<cc-pagination
-				page-num="ctrl.pageOptions.pageNum"
-				page-size="ctrl.pageOptions.pageSize"
-				page-size-list="ctrl.pageOptions.pageSizeList"
-				page-size-list-hidden="true"
-				totals="ctrl.pageOptions.totals"
-				total-pages="ctrl.pageOptions.totalPages"
-				on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
-	</div>
-</div>
+<body ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 
-<script src="/components.js"></script>
+	<aside></aside>
+	<section>
+		<div class="demo">
+			<h3>type: normal</h3>
+			<cc-pagination
+					type="normal"
+					page-num="ctrl.pageOptions.pageNum"
+					page-size="ctrl.pageOptions.pageSize"
+					totals="ctrl.pageOptions.totals"
+					total-pages="ctrl.pageOptions.totalPages"
+					on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
+		</div>
+		<div class="demo">
+			<h3>type: simple</h3>
+			<cc-pagination
+					type="simple"
+					page-num="ctrl.pageOptions.pageNum"
+					page-size="ctrl.pageOptions.pageSize"
+					page-size-list="ctrl.pageOptions.pageSizeList"
+					totals="ctrl.pageOptions.totals"
+					total-pages="ctrl.pageOptions.totalPages"
+					on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
+		</div>
+		<div class="demo">
+			<h3>type: normal &amp; disable pagesize list</h3>
+			<cc-pagination
+					page-num="ctrl.pageOptions.pageNum"
+					page-size="ctrl.pageOptions.pageSize"
+					page-size-list="ctrl.pageOptions.pageSizeList"
+					page-size-list-disabled
+					totals="ctrl.pageOptions.totals"
+					total-pages="ctrl.pageOptions.totalPages"
+					on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
+		</div>
+		<div class="demo">
+			<h3>type: normal &amp; hide pagesize list</h3>
+			<cc-pagination
+					page-num="ctrl.pageOptions.pageNum"
+					page-size="ctrl.pageOptions.pageSize"
+					page-size-list="ctrl.pageOptions.pageSizeList"
+					page-size-list-hidden="true"
+					totals="ctrl.pageOptions.totals"
+					total-pages="ctrl.pageOptions.totalPages"
+					on-change="ctrl.onPageChange(pageNum, pageSize)"></cc-pagination>
+		</div>
+	</section>
+</body>
+
 <script>
 	angular
 		.module('demoApp', ['ccms.components'])
@@ -69,10 +73,11 @@
 
 	DemoCtrl.$inject = [];
 	function DemoCtrl() {
+
 		this.pageOptions = {
 			pageNum: 1,
-			pageSize: 20,
-			pageSizeList: [10, 15, 20, 30, 50],
+			pageSize: 8,
+			pageSizeList: [8],
 			totals: 50,
 			totalPages: 3
 		};

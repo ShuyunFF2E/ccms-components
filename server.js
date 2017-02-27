@@ -34,12 +34,13 @@ app.use(jsonServer.defaults({static: path.resolve(__dirname)}));
 app.use(jsonServer.router(apiPrefix, filename));
 
 const port = 3000;
-app.listen(port, 'localhost', function(err) {
+const host = '0.0.0.0';
+app.listen(port, host, function(err) {
 	if (err) {
 		console.log(err);
 		return;
 	}
 
-	console.log(`Listening at http://localhost:${port}`);
+	console.log(`Listening at http://${host}:${port}\n`);
 });
 

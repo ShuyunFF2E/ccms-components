@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<meta charset="UTF-8">
+<style>
+
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		color: #4A5668;
+		background: #f1f2f6;
+		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", SimSun, sans-serif;
+	}
+
+	.side-bar {
+		position: fixed;
+		width: 240px;
+		color: #666;
+		background: #ffffff;
+		height: 100%;
+		overflow: scroll;
+		overflow-x: hidden;
+	}
+
+	.side-bar ul {
+		margin: 0;
+		padding-left: 0;
+		line-height: 1.6em;
+		list-style: none;
+	}
+
+	.side-bar .category {
+		background: #E4F0FD;
+		height: 30px;
+	}
+
+	.side-bar h4 {
+		display: inline-block;
+		margin: 0;
+		padding: 0 0 0 30px;
+		font-size: 14px;
+		line-height: 30px;
+	}
+
+	.side-bar .item {
+		height: 32px;
+		line-height: 32px;
+		background: #ffffff;
+	}
+
+	.side-bar .item:hover {
+		color: #ffffff;
+		background: #0894ec;
+	}
+
+	.side-bar a {
+		display: inline-block;
+		padding-left: 30px;
+		width: 100%;
+	}
+
+	.side-bar a:link, a:visited {
+		color: #666;
+		text-decoration: none;
+	}
+
+	.side-bar .item:hover a{
+		color: #fff;
+	}
+
+	.side-bar a[target="_blank"]::after {
+		content: '↗';
+		display: inline-block;
+		width: 12px;
+		height: 12px;
+		margin-left: .5em;
+		line-height: 12px;
+		text-align: center;
+		border-radius: 3px;
+		border: solid 1px #666;
+		color: #666;
+	}
+	.side-bar .item:hover a[target="_blank"]::after {
+		border-color: #fff;
+		color: #fff;
+	}
+
+	.current-menu {
+		background: #e5f9ff;
+	}
+
+</style>
+
+<div class="side-bar">
+	<ul>
+		<li>
+			<div class="category">
+				<h4>Components</h4>
+			</div>
+			<ul>
+				<li class="item">
+					<a href="/demos/styles/index.html">样式 - 张阿十临时调整</a>
+				</li>
+				<li class="item">
+					<a href="/demos/grid/index.html">表格/grid</a>
+				</li>
+				<li class="item">
+					<a href="/demos/pagination/index.html">分页/pagination</a>
+				</li>
+				<li class="item">
+					<a href="/demos/modal/index.html">弹框/modal</a>
+				</li>
+				<li class="item">
+					<a href="/demos/tips/index.html">提示/tips</a>
+				</li>
+				<li class="item">
+					<a href="/demos/date-picker/index.html">日期选择器/date-picker</a>
+				</li>
+				<li class="item">
+					<a href="/demos/form/index.html">表单校验/form</a>
+				</li>
+				<li class="item">
+					<a href="/demos/tooltip/index.html">工具提示/tooltip</a>
+				</li>
+				<li class="item">
+					<a href="/demos/instant-search/index.html">智能搜索/instant-search</a>
+				</li>
+				<li class="item">
+					<a href="/demos/dropdown/index.html">下拉/dropdown</a>
+				</li>
+				<li class="item">
+					<a href="/demos/select/index.html">下拉(单选/多选)/dropdown-select</a>
+				</li>
+				<li class="item">
+					<a href="/demos/checkbox/index.html">复选框/checkbox</a>
+				</li>
+				<li class="item">
+					<a href="/demos/radio-button/index.html">单选框/radio</a>
+				</li>
+				<li class="item">
+					<a href="/demos/switch-button/index.html">开关/switch</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="category">
+				<h4>Business</h4>
+			</div>
+			<ul>
+				<li class="item">
+					<a href="/demos/loading/index.html">等待提示/loading</a>
+				</li>
+				<li class="item">
+					<a href="/demos/sms-editor/index.html">短信编辑器/sms-editor</a>
+				</li>
+				<li class="item">
+					<a target="_blank" href="/demos/menus/menus.html">菜单/menu</a>
+				</li>
+				<li class="item">
+					<a href="/demos/customer-profile-board/index.html">用户全视图/customer-profile</a>
+				</li>
+				<li class="item">
+					<a href="/demos/area-selector/index.html">地址选择器/area-selector</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="category">
+				<h4>Style</h4>
+			</div>
+			<ul>
+				<li class="item"><a target="_blank" href="/src/assets/iconfont/demo_fontclass.html">fontclass</a></li>
+				<li class="item"><a target="_blank" href="/src/assets/iconfont/demo_symbol.html">symbol</a></li>
+				<li class="item"><a target="_blank" href="/src/assets/iconfont/demo_unicode.html">unicode</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+<script src="/components.js"></script>
+<script>
+	var importDoc = document.currentScript.ownerDocument;
+	var currentItem = importDoc.querySelector(`a[href*="${location.pathname}"]`);
+	if (currentItem) {
+		currentItem.classList.add('current-menu');
+	}
+	var aside = importDoc.querySelector('.side-bar');
+    document.querySelector('aside').appendChild(aside.cloneNode(true));
+</script>
+

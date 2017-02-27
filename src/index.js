@@ -7,10 +7,14 @@ import angular from 'angular';
 
 import { version } from '../package.json';
 
+// 组件兼容服务
+import adaptor from './common/utils/adaptor';
+
 import LogicComponents from './common/utils';
 import UIComponents from './components';
 
 const ccmsComponents = angular.module('ccms.components', [
+	adaptor,
 	UIComponents,
 	LogicComponents
 ]);

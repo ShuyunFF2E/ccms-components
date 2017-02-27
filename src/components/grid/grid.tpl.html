@@ -1,42 +1,35 @@
-<section class="cc-grid">
-    <!--表格头部-->
-    <header class="ccms-table-wrapper">
-        <table class="ccms-table">
-            <thead>
-            <tr cc-bind-html="$ctrl.headerTemplate"></tr>
-            </thead>
-        </table>
-    </header>
+<div class="cc-grid">
+	<table class="cc-grid-header cc-grid-table">
+		<thead><tr cc-bind-html="$ctrl.headerTemplate"></tr></thead>
+	</table>
 
-    <!--表格体-->
-    <div style="top:43px" data-id="tbody" cc-nice-scroll class="ccms-table-wrapper">
+	<div class="cc-grid-body">
+		<div class="datalist" cc-nice-scroll>
+			<table class="cc-grid-table">
+				<tbody cc-bind-html="$ctrl.bodyTemplate"></tbody>
+			</table>
+		</div>
+		<div class="no-data-message"
+			 ng-if="!$ctrl.opts.loading && !$ctrl.opts.data.length"
+			 cc-bind-html="$ctrl.emptyTipsTemplate">
+		</div>
+		<div class="loading-mask" ng-show="$ctrl.opts.loading">
+			<cc-loading></cc-loading>
+		</div>
+	</div>
 
-        <table class="ccms-table">
-            <tbody cc-bind-html="$ctrl.bodyTemplate">
-            </tbody>
-        </table>
-
-        <!--表格没数据的提示信息-->
-        <div ng-if="!$ctrl.opts.loading && !$ctrl.opts.data.length" cc-bind-html="$ctrl.emptyTipsTemplate"></div>
-
-        <cc-loading ng-show="$ctrl.opts.loading" class="grid-loading"></cc-loading>
-
-    </div>
-
-    <!--分页-->
-    <footer class="footer" ng-if="$ctrl.opts.showPagination">
+	<div class="cc-grid-footer" ng-if="$ctrl.opts.showPagination">
 		<span class="selected-items-count" ng-show="$ctrl.selectedItems.length">已选<span ng-bind="$ctrl.selectedItems.length"></span>条</span>
 		<span class="total-items-count">共<span ng-bind="$ctrl.opts.pager.totals"></span>条</span>
 		<span class="reload" ng-click="$ctrl.onPagerChange($ctrl.opts.pager.pageNum, $ctrl.opts.pager.pageSize)">刷新</span>
 		<span class="delimiter"></span>
-        <cc-pagination
-                page-num="$ctrl.opts.pager.pageNum"
-                page-size="$ctrl.opts.pager.pageSize"
-                page-size-list="$ctrl.opts.pager.pageSizeList"
-                total-pages="$ctrl.opts.pager.totalPages"
-                page-size-list-disabled="$ctrl.opts.pager.pageSizeListDisabled"
-                on-change="$ctrl.onPagerChange(pageNum, pageSize)">
-        </cc-pagination>
-    </footer>
-
-</section>
+		<cc-pagination
+				page-num="$ctrl.opts.pager.pageNum"
+				page-size="$ctrl.opts.pager.pageSize"
+				page-size-list="$ctrl.opts.pager.pageSizeList"
+				total-pages="$ctrl.opts.pager.totalPages"
+				page-size-list-disabled="$ctrl.opts.pager.pageSizeListDisabled"
+				on-change="$ctrl.onPagerChange(pageNum, pageSize)">
+		</cc-pagination>
+	</div>
+</div>

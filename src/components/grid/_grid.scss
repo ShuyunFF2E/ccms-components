@@ -15,34 +15,19 @@ $icon-asc-sort-deg: 180deg;
 $init-color: #70a2c7;
 
 cc-grid {
-
 	display: inline-block;
+	vertical-align: middle;
+}
 
-	position: relative;
+.cc-grid {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
 	width: 100%;
 	height: 100%;
+	border: $table-border;
 
-	.non-pager-grid .ccms-table-wrapper {
-		bottom: 0;
-	}
-
-	.ccms-table-wrapper {
-		background-color: #fff;
-		border: $table-border;
-		overflow: auto;
-		position: absolute;
-		bottom: $table-bottom-height;
-		left: 0;
-		right: 0;
-		top: 0;
-
-		&,
-		& * {
-			box-sizing: border-box;
-		}
-	}
-
-	.ccms-table {
+	.cc-grid-table {
 		background-color: #fff;
 		border-collapse: collapse;
 		color: $color-text;
@@ -54,6 +39,10 @@ cc-grid {
 		tr {
 			border-bottom: $table-border;
 			height: 42px;
+
+			&:last-child {
+				border-bottom: none;
+			}
 
 			&:nth-child(even) {
 				background-color: $tr-even-bg;
@@ -151,6 +140,83 @@ cc-grid {
 		}
 	}
 
+	> .cc-grid-header {
+		border-bottom: $table-border;
+	}
+
+	> .cc-grid-body {
+		position: relative;
+		flex: 1;
+
+		> * {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+
+			&:not(.datalist) {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+
+		> .datalist {
+			overflow: auto;
+		}
+	}
+
+	> .cc-grid-footer {
+		display: flex;
+		align-items: center;
+		padding: 6px $td-padding-x;
+		background-color: #f6f6f6;
+		border-top: $table-border;
+		color: #666666;
+		white-space: nowrap;
+
+		%number {
+			font-family: $font-number;
+			margin: 0 1px;
+		}
+
+		> span + span {
+			margin-left: 18px;
+		}
+
+		> .selected-items-count {
+			> span {
+				@extend %number;
+			}
+
+			&.ng-hide + span {
+				margin-left: 0;
+			}
+		}
+
+		> .total-items-count {
+			> span {
+				@extend %number;
+			}
+		}
+
+		> .reload {
+			@extend .iconfont;
+			@extend .icon-refresh;
+			padding: 5px 0;
+			font-size: 12px;
+			cursor: pointer;
+
+			&::before {
+				margin-right: 3px;
+			}
+		}
+
+		> .delimiter {
+			flex: 1;
+		}
+	}
+
 	.column-sort {
 		cursor: pointer;
 	}
@@ -198,64 +264,6 @@ cc-grid {
 				@extend .iconfont;
 				@extend .icon-caution;
 			}
-		}
-	}
-
-	.grid-loading {
-		@extend %absolute-center;
-	}
-
-	footer {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		display: flex;
-		align-items: center;
-		padding: 6px $td-padding-x;
-		background-color: #f6f6f6;
-		border: 1px solid #e8e8e8;
-		color: #666666;
-		white-space: nowrap;
-
-		%number {
-			font-family: $font-number;
-			margin: 0 1px;
-		}
-
-		> span + span {
-			margin-left: 18px;
-		}
-
-		> .selected-items-count {
-			> span {
-				@extend %number;
-			}
-
-			&.ng-hide + span {
-				margin-left: 0;
-			}
-		}
-
-		> .total-items-count {
-			> span {
-				@extend %number;
-			}
-		}
-
-		> .reload {
-			@extend .iconfont;
-			@extend .icon-refresh;
-			font-size: 12px;
-			cursor: pointer;
-
-			&::before {
-				margin-right: 3px;
-			}
-		}
-
-		> .delimiter {
-			flex: 1;
 		}
 	}
 
