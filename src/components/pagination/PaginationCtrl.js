@@ -36,6 +36,7 @@ export default class PaginationCtrl {
 		scope.$watch(() => this.pageNum, pageNum => {
 			this.isFirstPage = pageNum === 1;
 			this.isLastPage = pageNum === this.totalPages;
+			this.inputPage = pageNum;
 		});
 
 		scope.$watch(() => this.totalPages, totalPages => {
@@ -49,15 +50,6 @@ export default class PaginationCtrl {
 
 	set totalPages(value) {
 		this._totalPages = value;
-	}
-
-	get pageNum() {
-		return this._pageNum || 1;
-	}
-
-	set pageNum(value) {
-		this._pageNum = value;
-		this._tmpPageNum = value;
 	}
 
 	get pageSize() {
@@ -84,73 +76,41 @@ export default class PaginationCtrl {
 		return this._$scope;
 	}
 
-	changePageNumByShortcut(type) {
-
-		let {pageNum, totalPages, pageSize} = this;
-
-		switch (type) {
-
-			case 'first':
-				pageNum = 1;
-				break;
-
-			case 'prev':
-
-				if (!--pageNum) {
-					pageNum = 1;
-				}
-
-				break;
-
-			case 'next':
-
-				if (++pageNum > totalPages) {
-					pageNum = totalPages;
-				}
-
-				break;
-
-			case 'last':
-				pageNum = totalPages;
-				break;
-
-			// no default
-		}
-
-		if (pageNum !== this.pageNum) {
-			this.pageNum = pageNum;
-			this.changePager({pageNum, pageSize});
-		}
-
+	first() {
+		this.goto(1);
 	}
 
-	changePageNumByInput() {
-
-		const value = this._tmpPageNum;
-
-		let {pageNum, totalPages, pageSize} = this;
-
-		// 如果是非数字 or 输入页码大于总页码 则回滚成之前的值
-		if (isNaN(value) || value > totalPages || value <= 0) {
-			this._tmpPageNum = pageNum;
-		} else {
-			pageNum = Number(value);
-		}
-
-		if (pageNum !== this.pageNum) {
-			this.pageNum = pageNum;
-			this.changePager({pageNum, pageSize});
-		}
-
+	last() {
+		this.goto(this.totalPages);
 	}
 
-	changePageSize(pageSize) {
-		this.changePager({pageNum: 1, pageSize});
+	previous() {
+		this.goto(this.pageNum - 1);
 	}
 
-	changePager(pagerInfo) {
-		// 通知外部分页内容已发生变更
-		this.onChange(pagerInfo);
+	next() {
+		this.goto(this.pageNum + 1);
+	}
+
+	goto(pageNum) {
+		pageNum = Number(pageNum);
+		if (!Number.isInteger(pageNum) || pageNum < 1 || pageNum > this.totalPages) {
+			return false;
+		}
+		this.pageNum = pageNum;
+		this.onPageChange();
+		return true;
+	}
+
+	onPageChange() {
+		const { pageNum, pageSize } = this;
+		this.onChange({ pageNum, pageSize });
+	}
+
+	setPageSize(pageSize) {
+		this.pageSize = pageSize;
+		this.pageNum = 1;
+		this.onPageChange();
 	}
 }
 
