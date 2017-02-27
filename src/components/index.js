@@ -6,62 +6,61 @@
 
 import angular from 'angular';
 
-
-import grid from './grid';
-import niceScroll from './nice-scroll';
-import pagination from './pagination';
-import smsEditor from './sms-editor';
-import smsPreview from './sms-preview';
-import tooltip from './tooltip';
-import ngEnter from './ng-enter';
-import loading from './loading';
-import modal from './modal';
-import menuBar from './menus';
+import altSrc from './alt-src';
+import areaSelector from './area-selector';
+import calendar from './calendar';
+import checkbox from './checkbox';
+import customerProfileBoard from './customer-profile-board';
 import datePicker from './date-picker';
 import dateRange from './date-range';
-import calendar from './calendar';
-import tips from './tips';
-import form from './form';
-import checkbox from './checkbox';
-import instantSearch from './instant-search';
 import dropdown from './dropdown';
-import dropdownSelect from './dropdown/dropdown-select';
 import dropdownMultiselect from './dropdown/dropdown-multiselect';
-import tabset from './tabset';
+import dropdownSelect from './dropdown/dropdown-select';
+import form from './form';
+import grid from './grid';
+import instantSearch from './instant-search';
+import loading from './loading';
+import menuBar from './menus';
+import modal from './modal';
+import ngEnter from './ng-enter';
+import niceScroll from './nice-scroll';
+import pagination from './pagination';
 import radio from './radio';
-import areaSelector from './area-selector';
-import customerProfileBoard from './customer-profile-board';
-import altSrc from './alt-src';
+import smsEditor from './sms-editor';
+import smsPreview from './sms-preview';
+import tabset from './tabset';
+import tips from './tips';
 import toggle from './toggle';
+import tooltip from './tooltip';
 
 export default angular
 	.module('ccms.components.ui', [
-		dropdown,
-		dropdownSelect,
-		dropdownMultiselect,
-		instantSearch,
+		altSrc,
+		areaSelector,
+		calendar,
 		checkbox,
+		customerProfileBoard,
+		datePicker,
+		dateRange,
+		dropdown,
+		dropdownMultiselect,
+		dropdownSelect,
 		form,
 		grid,
-		niceScroll,
-		pagination,
-		smsEditor,
-		smsPreview,
-		tooltip,
-		ngEnter,
+		instantSearch,
 		loading,
 		menuBar,
 		modal,
-		tips,
-		datePicker,
-		dateRange,
-		calendar,
-		tabset,
+		ngEnter,
+		niceScroll,
+		pagination,
 		radio,
-		customerProfileBoard,
-		areaSelector,
-		altSrc,
-		toggle
+		smsEditor,
+		smsPreview,
+		tabset,
+		tips,
+		toggle,
+		tooltip
 	])
 	.name;
 
