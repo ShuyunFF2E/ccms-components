@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>loading</title>
+	<head>
+		<meta charset="UTF-8">
+		<title>loading</title>
+		<link rel="import" href="../demos-menu.html">
 
-	<style>
+		<style>
 
-		.grid {
-			width: 60px;
+			.grid {
+				width: 60px;
 
-		}
+			}
 
-	</style>
-</head>
-<body ng-app="app">
+			 section {
+				 margin-left: 160px;
+				 padding-top: 20px;
+			 }
 
-<cc-loading class="grid"></cc-loading>
-<cc-loading type="layer">请耐心等待</cc-loading>
+		</style>
+	</head>
 
-<script src="/components.js"></script>
+	<body ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 
-<!--<script src="/node_modules/angular/angular.min.js"></script>-->
-<!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->
-<!--<script src="/dist/ccms_components.js"></script>-->
-<script>
-	angular.module('app', ['ccms.components']);
-</script>
+		<aside></aside>
+		<section>
+			<cc-loading class="grid"></cc-loading>
+			<cc-loading type="layer">请耐心等待</cc-loading>
+		</section>
 
-</body>
+	<!--<script src="/node_modules/angular/angular.min.js"></script>-->
+	<!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->
+	<!--<script src="/dist/ccms_components.js"></script>-->
+	<script>
+		angular.module('demoApp', ['ccms.components'])
+				.controller('DemoCtrl', function() {
+				});
+	</script>
+	</body>
 </html>

@@ -7,8 +7,8 @@
 angular.module('componentsApp', ['ccms.components'])
 
 	.controller('ctrl', function ($timeout) {
-		var self = this;
 
+		var self = this;
 
 		/*
 			0: 短信 + 【自定义签名】
