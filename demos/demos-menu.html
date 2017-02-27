@@ -70,6 +70,23 @@
 		color: #fff;
 	}
 
+	.side-bar a[target="_blank"]::after {
+		content: '↗';
+		display: inline-block;
+		width: 12px;
+		height: 12px;
+		margin-left: .5em;
+		line-height: 12px;
+		text-align: center;
+		border-radius: 3px;
+		border: solid 1px #666;
+		color: #666;
+	}
+	.side-bar .item:hover a[target="_blank"]::after {
+		border-color: #fff;
+		color: #fff;
+	}
+
 	.current-menu {
 		background: #e5f9ff;
 	}
@@ -139,7 +156,7 @@
 					<a href="/demos/sms-editor/index.html">短信编辑器/sms-editor</a>
 				</li>
 				<li class="item">
-					<a href="/demos/menus/menus.html">菜单/menu</a>
+					<a target="_blank" href="/demos/menus/menus.html">菜单/menu</a>
 				</li>
 				<li class="item">
 					<a href="/demos/customer-profile-board/index.html">用户全视图/customer-profile</a>
@@ -154,9 +171,9 @@
 				<h4>Style</h4>
 			</div>
 			<ul>
-				<li class="item"><a href="/src/assets/iconfont/demo_fontclass.html">fontclass</a></li>
-				<li class="item"><a href="/src/assets/iconfont/demo_symbol.html">symbol</a></li>
-				<li class="item"><a href="/src/assets/iconfont/demo_unicode.html">unicode</a></li>
+				<li class="item"><a target="_blank" href="/src/assets/iconfont/demo_fontclass.html">fontclass</a></li>
+				<li class="item"><a target="_blank" href="/src/assets/iconfont/demo_symbol.html">symbol</a></li>
+				<li class="item"><a target="_blank" href="/src/assets/iconfont/demo_unicode.html">unicode</a></li>
 			</ul>
 		</li>
 	</ul>
