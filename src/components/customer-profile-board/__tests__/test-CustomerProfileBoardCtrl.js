@@ -34,12 +34,14 @@ describe('CustomerProfileBoardCtrl', () => {
 
 	it('changeToViewMode', () => {
 		const customerProfileBoardCtrl = new CustomerProfileBoardCtrl();
+		customerProfileBoardCtrl._loadingData = false;
 		customerProfileBoardCtrl.changeToViewMode();
 		assert.equal(customerProfileBoardCtrl.viewMode, true);
 	});
 
 	it('changeToListMode', () => {
 		const customerProfileBoardCtrl = new CustomerProfileBoardCtrl();
+		customerProfileBoardCtrl._loadingData = false;
 		customerProfileBoardCtrl.$onInit();
 		assert.equal(customerProfileBoardCtrl.viewMode, true);
 		customerProfileBoardCtrl.changeToListMode();
@@ -51,6 +53,7 @@ describe('CustomerProfileBoardCtrl', () => {
 		const blockElement = document.createElement('div');
 		const attributeBlock1 = document.createElement('cc-customer-attribute-editor');
 		const attributeBlock2 = document.createElement('cc-customer-attribute-editor');
+		customerProfileBoardCtrl._loadingData = false;
 		blockElement.appendChild(attributeBlock1);
 		blockElement.appendChild(attributeBlock2);
 		customerProfileBoardCtrl._$element = [blockElement];
