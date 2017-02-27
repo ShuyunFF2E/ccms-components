@@ -1,0 +1,116 @@
+$size: 1.66667em;
+$gap: 0.08333em;
+
+cc-toggle, cc-switch {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.cc-toggle {
+	position: relative;
+	overflow: hidden;
+	height: $size;
+	border-radius: $size / 2;
+	font-size: 12px;
+	cursor: pointer;
+
+	&.on {
+		padding-left: $size / 2;
+		padding-right: $size * 1.2;
+		background: #47cf5f;
+	}
+
+	&.off {
+		padding-right: $size / 2;
+		padding-left: $size * 1.2;
+		background: #c2c2c2;
+	}
+
+	&.disabled {
+		cursor: not-allowed;
+	}
+
+	@at-root %text {
+		display: block;
+		height: 100%;
+		line-height: $size;
+		vertical-align: middle;
+		text-align: center;
+		color: #fff;
+	}
+
+	.checkbox {
+		// firefox checkbox "appearance: none" 表现与 chrome 不同
+		// see: https://bugzilla.mozilla.org/show_bug.cgi?id=605985
+		position: absolute;
+		top: $gap;
+		z-index: 1;
+		width: calc(#{$size} - #{$gap * 2});
+		height: calc(100% - #{$gap * 2});
+		vertical-align: middle;
+		border-radius: calc(#{$size / 2} - #{$gap});
+		background: #f1f1f1;
+
+		@keyframes slide-on {
+			from { left: $gap; } to { left: calc(100% - #{$size - $gap}); }
+		}
+
+		@keyframes slide-off {
+			from { left: calc(100% - #{$size - $gap}); } to { left: $gap; }
+		}
+
+		@at-root .on#{&} {
+			animation: slide-on 0.5s ease-in-out forwards;
+		}
+
+		@at-root .off#{&} {
+			animation: slide-off 0.5s ease-in-out forwards;
+		}
+	}
+
+	@keyframes slide-text-on {
+		from {
+			transform: translateX(-150%);
+		} to {
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes slide-text-off {
+		// 保留 translateY 否则会丢失原有的 translateY
+		from {
+			transform: translateX(150%) translateY(-100%);
+		} to {
+			transform: translateX(0) translateY(-100%);
+		}
+	}
+
+	&::before {
+		@extend %text;
+		content: attr(data-text-on);
+
+		@at-root .on#{&} {
+			animation: slide-text-on 0.5s ease-in-out forwards;
+		}
+
+		@at-root .off#{&} {
+			visibility: hidden;
+		}
+	}
+
+	&::after {
+		@extend %text;
+
+		content: attr(data-text-off);
+		transform: translateY(-100%);
+
+		@at-root .on#{&} {
+			visibility: hidden;
+		}
+
+		@at-root .off#{&} {
+			animation: slide-text-off 0.5s ease-in-out forwards;
+		}
+	}
+}
+
