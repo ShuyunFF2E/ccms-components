@@ -13,7 +13,7 @@
 			width: 240px;
 		}
 
-		section {
+		.main {
 			order: 1;
 			padding: 0 0 0 20px;
 		}
@@ -31,7 +31,7 @@
 <body ng-app="app" ng-controller="ctrl">
 
 	<aside></aside>
-	<section>
+	<div class="main">
 		<h1>Radio button Demo</h1>
 		<p>Support Attribute</p>
 		<ul style="list-style: disc">
@@ -50,7 +50,7 @@
 			<button ng-click="generatorValues()">generator value</button>
 			<button ng-click="demo.disabled = !demo.disabled">toggle disable</button>
 		</div>
-	</section>
+	</div>
 
 <!--<script src="/node_modules/angular/angular.min.js"></script>-->
 <!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->

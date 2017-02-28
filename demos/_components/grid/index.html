@@ -15,9 +15,9 @@
 			width: 240px;
 		}
 
-		section {
+		.main {
 			order: 1;
-			padding: 0 0 0 20px;
+			padding: 20px 0 0 260px;
 		}
 
 		main {
@@ -35,12 +35,7 @@
 			/*width: 40%;*/
 			overflow: auto;
 		}
-
-		section {
-			margin-left: 270px;
-			padding-top: 20px;
-		}
-
+		
 		.info span {
 			display: block;
 		}
@@ -57,7 +52,7 @@
 <main>
 
 	<aside></aside>
-	<section>
+	<div class="main">
 		<div class="pager-grid">
 
 			<strong style="display: block;">表格宽高由用户设定,默认继承自父容器 | 自定义返回列表数据字段名</strong>
@@ -104,7 +99,7 @@
 			<h3>grid(自定义隐藏列)</h3>
 			<cc-grid opts="app.gridOption3" style="height: 400px;width: 600px;"></cc-grid>
 		</div>
-	</section>
+	</div>
 
 </main>
 

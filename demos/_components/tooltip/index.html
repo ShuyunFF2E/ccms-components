@@ -13,7 +13,7 @@
 			width: 240px;
 		}
 
-		section {
+		.main {
 			order: 1;
 			padding: 0 0 0 20px;
 		}
@@ -22,7 +22,7 @@
 <body ng-app="app" ng-controller="appCtrl as app">
 
 	<aside></aside>
-	<section>
+	<div class="main">
 		<input type="text" ng-model="tip" tooltip="tip" tooltip-trigger="click" tooltip-append-to-body="true">
 
 		<button type="button" cc-tooltip="'<span ng-click=\'app.click($event)\'>hello world hello world hello world hello world hello world hello world</span>'"
@@ -71,7 +71,7 @@
 		</button>
 		<button type="button" cc-tooltip="'hello world'" tooltip-placement="right" tooltip-opened="app.opened">tooltip right
 		</button>
-	</section>
+	</div>
 
 <script src="index.js"></script>
 

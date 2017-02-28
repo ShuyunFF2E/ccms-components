@@ -13,7 +13,7 @@
 			width: 240px;
 		}
 
-		section {
+		.main {
 			order: 1;
 			padding: 20px 0 0 20px;
 		}
@@ -22,7 +22,7 @@
 <body ng-app="app" ng-controller="ctrl">
 
 <aside></aside>
-<section>
+<div class="main">
 	<cc-tips msg="普通常显<span style='color:red;display:inline-block'>提示</span>"></cc-tips>
 
 	<cc-tips style="max-width: 300px"
@@ -37,7 +37,7 @@
 	<button type="button" ng-click="showError()">show error</button>
 
 	<button type="button" ng-click="showModal()">show modal</button>
-</section>
+</div>
 
 <ui-view></ui-view>
 

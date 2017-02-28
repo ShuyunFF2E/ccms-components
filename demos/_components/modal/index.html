@@ -13,7 +13,7 @@
 			width: 240px;
 		}
 
-		section {
+		.main {
 			order: 1;
 			padding: 0 0 0 20px;
 		}
@@ -22,7 +22,7 @@
 <body ng-app="app" ng-controller="ctrl as Ctrl" style="height: 10000px">
 
 <aside></aside>
-<section>
+<div class="main">
 	<button type="button" style="margin-top: 500px" ng-click="openBase()">open base modal</button>
 
 	<button type="button" style="margin-top: 500px" ng-click="open()">open modal</button>
@@ -30,7 +30,7 @@
 	<button type="button" ng-click="confirm()">confirm</button>
 
 	<div ng-repeat="a in Ctrl.array" ng-bind="a"></div>
-</section>
+</div>
 
 <!--<script src="/node_modules/angular/angular.min.js"></script>-->
 <!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->

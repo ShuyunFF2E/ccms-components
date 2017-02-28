@@ -14,8 +14,8 @@
 			width: 240px;
 		}
 
-		section {
-			order: 1;
+		.main {
+			flex: 1;
 			padding: 20px 0 0 20px;
 		}
 
@@ -24,9 +24,9 @@
 <body ng-app="app" ng-controller="ctrl as Ctrl">
 
 	<aside></aside>
-	<section>
+	<div class="main">
 		<button type="button" ng-click="open()">Open Area Selector</button>
-	</section>
+	</div>
 
 <script src="index.js"></script>
 </body>

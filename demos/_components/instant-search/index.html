@@ -11,7 +11,7 @@
 		width: 240px;
 	}
 
-	section {
+	.main {
 		order: 1;
 		padding: 0 0 0 20px;
 	}
@@ -26,7 +26,7 @@
 <body ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 
 	<aside></aside>
-	<section>
+	<div class="main">
 		<div class="demo">
 			<h3>local data</h3>
 			<div ng-bind="ctrl.result1 || {} | json"></div>
@@ -45,7 +45,7 @@
 					on-select="ctrl.onSelect2(item,context)"
 					options="ctrl.options2"></instant-search>
 		</div>
-	</section>
+	</div>
 </body>
 
 <script>

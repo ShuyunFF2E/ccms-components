@@ -14,7 +14,7 @@
 			width: 240px;
 		}
 
-		section {
+		.main {
 			order: 1;
 			padding: 0 0 0 20px;
 		}
@@ -24,7 +24,7 @@
 <body ng-app="componentsApp" ng-controller="ctrl as app">
 
 	<aside></aside>
-	<section>
+	<div class="main">
 		<h1>DEMO: 1 date-picker</h1>
 
 		<p>当前值 ({{app.dateValue | date:'yyyy-MM-dd HH:mm:ss'}})</p>
@@ -103,7 +103,7 @@
 			dateOnly: false
 		};
 		</pre>
-	</section>
+	</div>
 
 <script>
 	angular.module('componentsApp', ['ccms.components'])
