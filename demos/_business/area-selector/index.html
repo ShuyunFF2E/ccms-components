@@ -5,20 +5,29 @@
 	<title>Area Selector</title>
 	<link rel="import" href="../../common/demos-menu.html">
 	<style>
-		.area-selector-section {
-			margin-left: 270px;
-			padding-top: 20px;
+
+		body {
+			display: flex;
 		}
+
+		aside {
+			width: 240px;
+		}
+
+		section {
+			order: 1;
+			padding: 20px 0 0 20px;
+		}
+
 	</style>
 </head>
-<body ng-app="app" ng-controller="ctrl as Ctrl" style="height: 10000px">
+<body ng-app="app" ng-controller="ctrl as Ctrl">
 
 	<aside></aside>
-	<div class="area-selector-section">
+	<section>
 		<button type="button" ng-click="open()">Open Area Selector</button>
-	</div>
+	</section>
 
 <script src="index.js"></script>
-
 </body>
 </html>

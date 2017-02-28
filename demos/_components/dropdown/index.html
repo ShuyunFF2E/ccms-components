@@ -3,9 +3,20 @@
 <title>下拉</title>
 <link rel="import" href="../../common/demos-menu.html">
 <style>
-	section {
-		margin-left: 270px;
+
+	.drop-down {
+		display: flex;
 	}
+
+	aside {
+		width: 240px;
+	}
+
+	section {
+		order: 1;
+		padding: 0 0 0 20px;
+	}
+
 	.group {
 		display: flex;
 	}
@@ -33,7 +44,7 @@
 </style>
 
 <div ng-app="demoApp">
-	<div ng-controller="DemoCtrl as ctrl">
+	<div class="drop-down" ng-controller="DemoCtrl as ctrl">
 
 		<aside></aside>
 		<section>
