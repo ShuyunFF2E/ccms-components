@@ -179,7 +179,9 @@
 	if (currentItem) {
 		currentItem.classList.add('current-menu');
 	}
-	var aside = importDoc.querySelector('.side-bar');
-    document.querySelector('aside').appendChild(aside.cloneNode(true));
+	var sideBar = importDoc.querySelector('.side-bar');
+    var aside = document.querySelector('aside');
+	aside.appendChild(sideBar.cloneNode(true));
+	aside.style.width = "240px";
 </script>
 
