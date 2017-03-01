@@ -3,7 +3,7 @@
 <title>tooltip</title>
 <link rel="import" href="../../common/layout.html">
 
-<main class="demos" ng-app="app" ng-controller="appCtrl as app">
+<main ng-app="app" ng-controller="appCtrl as app">
 	<input type="text" ng-model="tip" tooltip="tip" tooltip-trigger="click" tooltip-append-to-body="true">
 
 	<button type="button" cc-tooltip="'<span ng-click=\'app.click($event)\'>hello world hello world hello world hello world hello world hello world</span>'"

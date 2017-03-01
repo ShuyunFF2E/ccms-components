@@ -3,7 +3,7 @@
 <title>sms-editor</title>
 <link rel="import" href="../../common/layout.html">
 
-<main class="demos" ng-app="componentsApp" ng-controller="ctrl as app">
+<main ng-app="componentsApp" ng-controller="ctrl as app">
 	<select style="display: block; clear: both; margin-bottom: 10px;"
 			ng-options="channel.name for channel in app.channelInfo"
 			ng-model="app.channel"></select>
