@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>External data grid</title>
+<link rel="import" href="../../common/layout.html">
+
+<style>
+
+	.pager-grid {
+		height: 100%;
+		width: 100%;
+	}
+
+	.info span {
+		display: block;
+	}
+
+	.demo {
+		margin: .5em;
+	}
+
+</style>
+
+<main class="demos" ng-app="componentsApp" ng-controller="ctrl as app">
+
+	<div class="pager-grid">
+
+		<strong style="display: block;">表格宽高由用户设定,默认继承自父容器 | 自定义返回列表数据字段名</strong>
+		姓名：<input type="text" ng-model="userName"> <button type="button" ng-click="app.onSearch(userName)">搜索</button>
+		<cc-grid opts="app.dataGridOptions" selected-items="app.selectedItems" type="selectable" on-refresh="app.onRefresh(opts)"
+				 style="height: 400px;width: 600px;"></cc-grid>
+
+		<p>{{app.selectedItems}}</p>
+	</div>
+
+</main>
+
+
+<!--<script src="/node_modules/angular/angular.js"></script>-->
+<!--<script src="/node_modules/angular-resource/angular-resource.js"></script>-->
+<!--<script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>-->
+<!--<script src="/dist/ccms-components.min.js"></script>-->
+<!--<script src="index.js"></script>-->
+
+<script src="/components.js"></script>
+<script src="external-data-grid.js"></script>
+

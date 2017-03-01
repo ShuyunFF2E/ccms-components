@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Title组件</title>
+<link rel="import" href="../../common/layout.html">
+
+<main class="demos" ng-app="app" ng-controller="ctrl">
+	<nav-title name="name"></nav-title>
+	<div>
+		不配置name属性的使用请移步 <a href="../../_business/menus/menus.html">Menus</a>
+	</div>
+</main>
+
+<script src="/components.js"></script>
+<script>
+    (function(angular, undefined) {
+        'use strict';
+        angular.module('app', ['ccms.components'])
+                .controller('ctrl', function($scope) {
+                    $scope.name = "我就是一个栗子";
+                });
+    })(window.angular);
+</script>
+

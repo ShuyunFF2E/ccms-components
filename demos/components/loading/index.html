@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>loading</title>
+<link rel="import" href="../../common/layout.html">
+
+<style>
+
+	body {
+		display: flex;
+	}
+
+	.main {
+		flex: 1;
+		padding: 20px 0 0 20px;
+	}
+
+	.grid {
+		width: 60px;
+
+	}
+
+</style>
+
+<div class="main" ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+	<cc-loading class="grid"></cc-loading>
+	<cc-loading type="layer">请耐心等待</cc-loading>
+</div>
+
+<!--<script src="/node_modules/angular/angular.min.js"></script>-->
+<!--<script src="/node_modules/angular-resource/angular-resource.min.js"></script>-->
+<!--<script src="/dist/ccms_components.js"></script>-->
+<script src="/components.js"></script>
+<script>
+	angular.module('demoApp', ['ccms.components'])
+			.controller('DemoCtrl', function() {
+			});
+</script>
+
