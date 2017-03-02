@@ -31,7 +31,24 @@
 				{ id: '130000', name: '河北省' }
 			];
 
-			$scope.open = function () {
+			$scope.responseWithIdAndName = function () {
+
+				var areaSelectorInstance = $ccAreaSelector
+
+					.areaSelector({
+						areaSelectorData: INPUT,
+						responseWithIdAndName: true
+					})
+
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+			$scope.responseWithName = function () {
 
 				var areaSelectorInstance = $ccAreaSelector
 

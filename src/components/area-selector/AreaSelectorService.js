@@ -18,7 +18,7 @@ const noop = () => {
  */
 const AreaSelectorService = {
 
-	areaSelector({areaSelectorData}) {
+	areaSelector({areaSelectorData, responseWithIdAndName}) {
 
 		return ModalService.modal(
 			{
@@ -27,7 +27,7 @@ const AreaSelectorService = {
 				fullscreen: false,
 				hasFooter: true,
 				__body: bodyTemplate,
-				locals: {selectedData: areaSelectorData},
+				locals: {selectedData: areaSelectorData, responseWithIdAndName: responseWithIdAndName},
 				controller: AreaSelectorController,
 				controllerAs: '$ctrl',
 				onClose: noop
