@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
+
+	.demos-nav {
+		position: relative;
+		width: 240px;
+		background: #ffffff;
+		color: #666;
+		font-family: Tahoma, "Microsoft Yahei", sans-serif;
+		font-size: 12px;
+	}
+
+	.demos-nav ul {
+		margin: 0;
+		padding-left: 0;
+		line-height: 1.6em;
+		list-style: none;
+	}
+
+	.demos-nav > ul {
+		position: fixed;
+		box-sizing: border-box;
+		width: inherit;
+		height: 100%;
+		overflow-y: scroll;
+		padding-bottom: 2em;
+		box-shadow: 0 0 10px #666;
+	}
+
+	.demos-nav h3 {
+		height: 30px;
+		line-height: 30px;
+		margin: 0;
+		padding: 0 0 0 30px;
+		background: #E4F0FD;
+		font-size: 14px;
+	}
+
+	.demos-nav .item {
+		height: 32px;
+		line-height: 32px;
+		background: #ffffff;
+	}
+
+	.demos-nav .item:hover {
+		color: #ffffff;
+		background: #0894ec;
+	}
+
+	.demos-nav a {
+		display: inline-block;
+		box-sizing: border-box;
+		width: 100%;
+		padding-left: 30px;
+	}
+
+	.demos-nav .item:not(:hover) a.active {
+		background: #e5f9ff;
+	}
+
+	.demos-nav a:link, a:visited {
+		color: #666;
+		text-decoration: none;
+	}
+
+	.demos-nav .item:hover a {
+		color: #fff;
+	}
+
+	.demos-nav a[target="_blank"]::after {
+		content: '↗';
+		display: inline-block;
+		width: 12px;
+		height: 12px;
+		margin-left: .5em;
+		line-height: 12px;
+		text-align: center;
+		border-radius: 3px;
+		border: solid 1px #666;
+		color: #666;
+	}
+	.demos-nav .item:hover a[target="_blank"]::after {
+		border-color: #fff;
+		color: #fff;
+	}
+
+</style>
+
+<div class="demos-nav">
+	<ul>
+		<li>
+			<h3>通用组件</h3>
+			<ul>
+				<li class="item">
+					<a href="/demos/components/styles/index.html">样式 - 张阿十临时调整</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/grid/index.html">表格/grid</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/pagination/index.html">分页/pagination</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/modal/index.html">弹框/modal</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/tips/index.html">提示/tips</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/tabset/index.html">tabset</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/title/index.html">title</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/date-picker/index.html">日期选择器/date-picker</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/form/index.html">表单校验/form</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/tooltip/index.html">工具提示/tooltip</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/instant-search/index.html">智能搜索/instant-search</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/dropdown/index.html">下拉/dropdown</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/select/index.html">下拉(单选/多选)/dropdown-select</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/checkbox/index.html">复选框/checkbox</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/radio-button/index.html">单选框/radio</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/toggle/index.html">开关/toggle</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/loading/index.html">等待提示/loading</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<h3>业务组件</h3>
+			<ul>
+				<li class="item">
+					<a href="/demos/components/area-selector/index.html">地址选择器/area-selector</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/customer-profile-board/index.html">用户全视图/customer-profile</a>
+				</li>
+				<li class="item">
+					<a href="/demos/components/sms-editor/index.html">短信编辑器/sms-editor</a>
+				</li>
+				<li class="item">
+					<a target="_blank" href="/demos/components/menus/menus.html">菜单/menu</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<h3>图标</h3>
+			<ul>
+				<li class="item"><a target="_blank" href="/src/assets/iconfont/demo_fontclass.html">fontclass</a></li>
+				<li class="item"><a target="_blank" href="/src/assets/iconfont/demo_symbol.html">symbol</a></li>
+				<li class="item"><a target="_blank" href="/src/assets/iconfont/demo_unicode.html">unicode</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+<script>
+	const navDoc = document.currentScript.ownerDocument;
+
+	// 标记当前链接
+	const activeLink = navDoc.querySelector(`a[href*="${location.pathname}"]`);
+	if (activeLink) {
+		activeLink.classList.add('active');
+	}
+
+	// 将导航菜单追加到主文档
+	document.body.prepend(navDoc.querySelector('.demos-nav'));
+</script>
+
