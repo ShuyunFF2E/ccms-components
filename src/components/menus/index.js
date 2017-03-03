@@ -27,7 +27,7 @@ const
 		controllerAs: 'menus',
 		bindings: {
 			unfold: '=',
-			onUnfold: '=?',
+			onUnfold: '&?',
 			menuSource: '<',
 			shopSource: '<?',
 			searchPlaceholder: '<?'
