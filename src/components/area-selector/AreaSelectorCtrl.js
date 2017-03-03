@@ -13,10 +13,12 @@ import { COMMON_AREAS } from './Constant';
 export default class AreaSelectorCtrl {
 
 	$onInit() {
-		this.areas = this.getAreasFromLocalStorage();
-		this.provinces = this.areas;
+
+		// 外部调用参数初始化
 		this.selectedValue = this._selectedData;
 		this.responseWithIdAndName = this._responseWithIdAndName;
+
+		// 辅助变量初始化以及初始化参数
 		this.selectedAreas = [];
 		this.errorMessages = [];
 		this.searchList = [];
@@ -25,6 +27,8 @@ export default class AreaSelectorCtrl {
 		this.provinceNumber = 0;
 		this.areaNumber = 0;
 		this.districtNumber = 0;
+		this.areas = this.getAreasFromLocalStorage();
+		this.provinces = this.areas;
 		this.analyzeSelectedData();
 		this.getSelectedAreaNumber();
 		this.initCommonAreas();
