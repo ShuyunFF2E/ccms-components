@@ -58,6 +58,7 @@ export default {
 
 		this.fillOpts(gridOptions);
 		gridOptions.loading = true;
+		gridOptions.errorMessage = '';
 
 		// 如果不存在外部表格数据则请求接口拿数据
 		if (!gridOptions.externalData && gridOptions.resource) {
@@ -97,6 +98,10 @@ export default {
 					pager.totalPages = Math.ceil((transformedData.totals || 0) / pager.pageSize);
 
 					return gridOptions;
+				})
+				.catch(res => {
+					gridOptions.errorMessage = `${res.status} ${res.statusText}`;
+					gridOptions.loading = false;
 				});
 
 		} else {

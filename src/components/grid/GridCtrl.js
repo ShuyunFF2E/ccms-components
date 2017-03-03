@@ -11,6 +11,7 @@ import 'jquery.nicescroll';
 import {Debounce, Inject} from 'angular-es-utils/decorators';
 
 import rowTemplate from './tpls/row.tpl.html';
+import errorMessageTpl from './tpls/error.tpl.html';
 import TplReqHelper from '../../common/utils/tpl-req-helper';
 
 import GRID_TEMPLATES from './Constant';
@@ -46,6 +47,7 @@ export default class GridCtrl {
 
 		this.headerTemplate = TplReqHelper.get(headerTpl || GRID_TEMPLATES[type][0]);
 		this.emptyTipsTemplate = TplReqHelper.get(emptyTipTpl || GRID_TEMPLATES[type][2]);
+		this.errorMessageTpl = errorMessageTpl;
 
 		if (rowTpl) {
 			this.bodyTemplate = TplReqHelper.get(rowTpl);

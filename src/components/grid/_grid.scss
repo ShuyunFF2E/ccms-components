@@ -166,6 +166,23 @@ cc-grid {
 		> .datalist {
 			overflow: auto;
 		}
+
+		> .error-message {
+			background: #fff;
+
+			> .default {
+				@extend .iconfont;
+				@extend .icon-caution;
+
+				color: #999;
+
+				&::before {
+					margin-right: 10px;
+					vertical-align: middle;
+					font-size: 40px;
+				}
+			}
+		}
 	}
 
 	> .cc-grid-footer {
