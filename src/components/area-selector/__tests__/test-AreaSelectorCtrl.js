@@ -612,4 +612,5 @@ describe('AreaSelectorCtrl', () => {
 		areaSelectorCtrl.onSearch([], {searchText: '辖'});
 		assert.lengthOf(areaSelectorCtrl.datalist, 4);
 	});
+
 });

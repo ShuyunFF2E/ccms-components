@@ -429,17 +429,35 @@ export default class AreaSelectorCtrl {
 		let selectedValue = [];
 		this.selectedAreas.map(area => {
 			if (this.responseWithIdAndName) {
-				this.selectedAreaIds = '';
-				this.selectedAreaNames = '';
-				this.getSelectedIdAndName(area, 0);
-				selectedValue.push({id: this.selectedAreaIds, name: this.selectedAreaNames});
+				this.getResponseIdAndName(selectedValue, area);
 			} else {
-				this.selectedAreaString = '';
-				this.getSelectedId(area, 0);
-				selectedValue.push(this.selectedAreaString);
+				this.getResponseId(selectedValue, area);
 			}
 		});
 		this._modalInstance.ok(selectedValue);
+	}
+
+	/**
+	 * @name getResponseIdAndName 得到需要返回的Id和Name的数组
+	 * @param selectedValue <array> 被选中的值
+	 * @param area <array> 遍历出的被选中的地区信息
+	 */
+	getResponseIdAndName(selectedValue, area) {
+		this.selectedAreaIds = '';
+		this.selectedAreaNames = '';
+		this.getSelectedIdAndName(area, 0);
+		selectedValue.push({id: this.selectedAreaIds, name: this.selectedAreaNames});
+	}
+
+	/**
+	 * @name getResponseId 得到需要返回的Id的数组
+	 * @param selectedValue <array> 被选中的值
+	 *  @param area <array> 遍历出的被选中的地区信息
+	 */
+	getResponseId(selectedValue, area) {
+		this.selectedAreaString = '';
+		this.getSelectedId(area, 0);
+		selectedValue.push(this.selectedAreaString);
 	}
 
 	/**
