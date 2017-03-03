@@ -64,9 +64,7 @@ export default class MenusCtrl {
 		this.unfold = !this.unfold;
 
 		// -判断是否为function 是则执行函数   否则不作为
-		if (typeof this.onUnfold === 'function') {
-			this.onUnfold({unfold: this.unfold});
-		}
+		this.onUnfold && this.onUnfold({unfold: this.unfold});
 	};
 
 	/**
