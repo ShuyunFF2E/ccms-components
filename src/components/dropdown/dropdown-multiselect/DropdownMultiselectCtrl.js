@@ -35,6 +35,7 @@ export default class DropdownMultiselectCtrl {
 	$onInit() {
 		this._prepareOptions();
 		this._prepareWatches();
+		this._prepareSelection();
 	}
 
 	$postLink() {
@@ -78,6 +79,11 @@ export default class DropdownMultiselectCtrl {
 		scope.$watchCollection(() => this.selection, () => {
 			this.updateTitle();
 		});
+	}
+
+	_prepareSelection() {
+		this._clampedDatalist = this._getClampedDatalist(this.datalist || []);
+		this.selection.push(...this._getItemsByValues(this.model));
 	}
 
 	_prepareMouseEvents() {

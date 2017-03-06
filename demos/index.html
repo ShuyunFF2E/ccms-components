@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<link rel="import" href="/demos/demos-menu.html">
-</head>
-<body>
-	<aside></aside>
-</body>
-</html>
+<meta charset="UTF-8">
+<title>新版 demos 页面</title>
+<link rel="import" href="common/layout.html">
+
+<style>
+	pre {
+		line-height: 1.5em;
+		padding: .5em;
+		border: solid 1px #ccc;
+	}
+</style>
+
+<main class="demos">
+	<p>导航菜单文件: <code>/demos/common/nav.html</code></p>
+	<p>组件 demos 路径: <code>/demos/components</code></p>
+	<p>创建新的组件 demo 请使用以下模板：</p>
+	<pre>
+&lt;!DOCTYPE html&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;组件名称&lt;/title&gt;
+&lt;link rel=&quot;import&quot; href=&quot;/demos/common/layout.html&quot;&gt;
+
+&lt;style&gt;
+  /* demo css */
+&lt;/style&gt;
+
+&lt;main ng-app=&quot;...&quot; ng-controller=&quot;...&quot;&gt;
+  &lt;!-- demo html --&gt;
+&lt;/main&gt;
+
+&lt;script src=&quot;/components.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  // demo js
+&lt;/script&gt;
+	</pre>
+</main>
+
