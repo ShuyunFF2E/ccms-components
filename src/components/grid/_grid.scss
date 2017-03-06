@@ -38,6 +38,10 @@ cc-grid {
 		table-layout: fixed;
 		width: 100%;
 
+		* {
+			box-sizing: border-box;
+		}
+
 		tr {
 			border-bottom: $table-border;
 			height: 42px;
