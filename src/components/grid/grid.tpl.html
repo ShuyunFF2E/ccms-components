@@ -10,7 +10,7 @@
 			</table>
 		</div>
 		<div class="no-data-message"
-				ng-if="!$ctrl.opts.loading && $ctrl.opts.data && !$ctrl.opts.data.length"
+				ng-if="!$ctrl.opts.loading && !$ctrl.opts.data.length"
 				cc-bind-html="$ctrl.emptyTipsTemplate"></div>
 		<div class="error-message"
 				ng-if="$ctrl.opts.errorMessage.length"
