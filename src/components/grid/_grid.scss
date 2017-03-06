@@ -46,10 +46,6 @@ cc-grid {
 			border-bottom: $table-border;
 			height: 42px;
 
-			&:last-child {
-				border-bottom: none;
-			}
-
 			&:nth-child(even) {
 				background-color: $tr-even-bg;
 			}
