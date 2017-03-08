@@ -28,9 +28,9 @@ cc-grid {
 	width: 100%;
 	height: 100%;
 	border: $table-border;
+	background: #fff;
 
 	.cc-grid-table {
-		background-color: #fff;
 		border-collapse: collapse;
 		color: $color-text;
 		font-family: $font-family;
@@ -168,8 +168,6 @@ cc-grid {
 		}
 
 		> .error-message {
-			background: #fff;
-
 			> .default {
 				@extend .iconfont;
 				@extend .icon-caution;
