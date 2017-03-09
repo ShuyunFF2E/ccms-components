@@ -37,7 +37,7 @@
 
 					.areaSelector({
 						areaSelectorData: INPUT,
-						valueTemplate: $ccAreaSelector.ID_ONLY
+						valueFormat: $ccAreaSelector.ID_ONLY
 					})
 
 					.open().result.then(function(response) {
@@ -53,7 +53,8 @@
 				var areaSelectorInstance = $ccAreaSelector
 
 					.areaSelector({
-						areaSelectorData: INPUT
+						areaSelectorData: INPUT,
+						valueFormat: $ccAreaSelector.ID_NAME
 					})
 
 					.open().result.then(function(response) {

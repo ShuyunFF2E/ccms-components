@@ -32,7 +32,7 @@ describe('AreaSelectorCtrl', () => {
 				}
 			},
 			'selectedData': [],
-			'valueTemplate': [],
+			'valueFormat': [],
 			'$ccTips': {
 				error: () => Promise.resolve()
 			},
@@ -337,13 +337,14 @@ describe('AreaSelectorCtrl', () => {
 
 	it('#ok', () => {
 
-		areaSelectorCtrl.getSelectedId = sinon.spy();
+		areaSelectorCtrl.getResponseIdAndName = sinon.spy();
 		areaSelectorCtrl.selectedAreas = [
 			[{id: '310000'}, {id: '310100'}, {id: '310101'}],
 			[{id: '310000'}, {id: '310200'}], [{id: '320000'}]
 		];
+		areaSelectorCtrl.valueFormat = 1;
 		areaSelectorCtrl.ok();
-		sinon.assert.callCount(areaSelectorCtrl.getSelectedId, 3);
+		sinon.assert.callCount(areaSelectorCtrl.getResponseIdAndName, 3);
 	});
 
 	it('#getParentSelectedStatus', () => {
