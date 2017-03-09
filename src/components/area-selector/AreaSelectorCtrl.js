@@ -9,14 +9,16 @@ import { Inject } from 'angular-es-utils/decorators';
 import { COMMON_AREAS } from './Constant';
 
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'responseWithIdAndName')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'valueTemplate')
 export default class AreaSelectorCtrl {
+
+	static ID_ONLY = true;
 
 	$onInit() {
 
 		// 外部调用参数初始化
 		this.selectedValue = this._selectedData;
-		this.responseWithIdAndName = this._responseWithIdAndName;
+		this.valueTemplate = this._valueTemplate;
 
 		// 辅助变量初始化以及初始化参数
 		this.selectedAreas = [];
@@ -432,7 +434,7 @@ export default class AreaSelectorCtrl {
 	ok() {
 		let selectedValue = [];
 		this.selectedAreas.map(area => {
-			if (this.responseWithIdAndName) {
+			if (this.valueTemplate) {
 				this.getResponseIdAndName(selectedValue, area);
 			} else {
 				this.getResponseId(selectedValue, area);

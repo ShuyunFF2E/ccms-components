@@ -37,7 +37,7 @@
 
 					.areaSelector({
 						areaSelectorData: INPUT,
-						responseWithIdAndName: true
+						valueTemplate: $ccAreaSelector.ID_ONLY
 					})
 
 					.open().result.then(function(response) {
