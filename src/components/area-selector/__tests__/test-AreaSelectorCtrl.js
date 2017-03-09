@@ -32,7 +32,7 @@ describe('AreaSelectorCtrl', () => {
 				}
 			},
 			'selectedData': [],
-			'responseWithIdAndName': [],
+			'valueTemplate': [],
 			'$ccTips': {
 				error: () => Promise.resolve()
 			},
