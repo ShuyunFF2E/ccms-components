@@ -434,9 +434,9 @@ export default class AreaSelectorCtrl {
 	ok() {
 		let selectedValue = [];
 		this.selectedAreas.map(area => {
-			if (this.valueFormat === 1) {
+			if (this.valueFormat === AreaSelectorCtrl.ID_ONLY) {
 				this.getResponseIdAndName(selectedValue, area);
-			} else if (this.valueFormat === 2) {
+			} else if (this.valueFormat === AreaSelectorCtrl.ID_NAME) {
 				this.getResponseId(selectedValue, area);
 			}
 		});
