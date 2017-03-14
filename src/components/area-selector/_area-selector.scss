@@ -3,30 +3,6 @@
   color: #666666;
   font-family: "Microsoft Yahei", Tahoma, sans-serif;
 
-  .cc-checkbox-input {
-	width: 14px;
-	height: 14px;
-	margin-right: 2px;
-  }
-
-  .icon-rightarrow {
-	color: #c9c9c9;
-  }
-
-  .cc-checkbox.checked .cc-checkbox-input:before {
-	left: 26%;
-	top: 0;
-  }
-  .cc-checkbox.indeterminate .cc-checkbox-input:before {
-	left: 18%;
-	top: 18%;
-  }
-
-  cc-checkbox {
-	vertical-align: text-bottom;
-	text-align: center;
-  }
-
   .selected {
 	background:#f0f3f5;
   }
@@ -90,7 +66,7 @@
 	  margin-top: 10px;
 	  .common-area {
 		font-size: 12px;
-		margin-right: 42px;
+		margin-right: 30px;
 	  }
 	}
   }

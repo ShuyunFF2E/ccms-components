@@ -9,13 +9,18 @@ import { Inject } from 'angular-es-utils/decorators';
 import { COMMON_AREAS } from './Constant';
 
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'valueFormat')
 export default class AreaSelectorCtrl {
+	static ID_ONLY = 1;
+	static ID_NAME = 2;
 
 	$onInit() {
-		this.areas = this.getAreasFromLocalStorage();
-		this.provinces = this.areas;
+
+		// 外部调用参数初始化
 		this.selectedValue = this._selectedData;
+		this.valueFormat = this._valueFormat;
+
+		// 辅助变量初始化以及初始化参数
 		this.selectedAreas = [];
 		this.errorMessages = [];
 		this.searchList = [];
@@ -24,6 +29,8 @@ export default class AreaSelectorCtrl {
 		this.provinceNumber = 0;
 		this.areaNumber = 0;
 		this.districtNumber = 0;
+		this.areas = this.getAreasFromLocalStorage();
+		this.provinces = this.areas;
 		this.analyzeSelectedData();
 		this.getSelectedAreaNumber();
 		this.initCommonAreas();
@@ -390,19 +397,34 @@ export default class AreaSelectorCtrl {
 	}
 
 	/**
-	 * @name getSelectedValue 将已选择的数据解析为ID-String传入格式
+	 * @name getSelectedIdAndName 将已选择的数据解析为ID-String传入格式
 	 * @param area <object> 被选择的区域
 	 * @param index <number> 下标
 	 */
-	getSelectedValue(area, index) {
+	getSelectedIdAndName(area, index) {
 		if (index < area.length - 1) {
 			this.selectedAreaIds += area[index].id + ',';
 			this.selectedAreaNames += area[index].name + ' > ';
-			this.getSelectedValue(area, index + 1);
+			this.getSelectedIdAndName(area, index + 1);
 		} else if (index === area.length - 1) {
 			this.selectedAreaIds += area[index].id;
 			this.selectedAreaNames += area[index].name;
-			this.getSelectedValue(area, index + 1);
+			this.getSelectedIdAndName(area, index + 1);
+		}
+	}
+
+	/**
+	 * @name getSelectedId 将已选择的数据解析为ID-String传入格式
+	 * @param area <object> 被选择的区域
+	 * @param index <number> 下标
+	 */
+	getSelectedId(area, index) {
+		if (index < area.length - 1) {
+			this.selectedAreaString += area[index].id + ',';
+			this.getSelectedId(area, index + 1);
+		} else if (index === area.length - 1) {
+			this.selectedAreaString += area[index].id;
+			this.getSelectedId(area, index + 1);
 		}
 	}
 
@@ -412,12 +434,36 @@ export default class AreaSelectorCtrl {
 	ok() {
 		let selectedValue = [];
 		this.selectedAreas.map(area => {
-			this.selectedAreaIds = '';
-			this.selectedAreaNames = '';
-			this.getSelectedValue(area, 0);
-			selectedValue.push({id: this.selectedAreaIds, name: this.selectedAreaNames});
+			if (this.valueFormat === AreaSelectorCtrl.ID_ONLY) {
+				this.getResponseIdAndName(selectedValue, area);
+			} else if (this.valueFormat === AreaSelectorCtrl.ID_NAME) {
+				this.getResponseId(selectedValue, area);
+			}
 		});
 		this._modalInstance.ok(selectedValue);
+	}
+
+	/**
+	 * @name getResponseIdAndName 得到需要返回的Id和Name的数组
+	 * @param selectedValue <array> 被选中的值
+	 * @param area <array> 遍历出的被选中的地区信息
+	 */
+	getResponseIdAndName(selectedValue, area) {
+		this.selectedAreaIds = '';
+		this.selectedAreaNames = '';
+		this.getSelectedIdAndName(area, 0);
+		selectedValue.push({id: this.selectedAreaIds, name: this.selectedAreaNames});
+	}
+
+	/**
+	 * @name getResponseId 得到需要返回的Id的数组
+	 * @param selectedValue <array> 被选中的值
+	 *  @param area <array> 遍历出的被选中的地区信息
+	 */
+	getResponseId(selectedValue, area) {
+		this.selectedAreaString = '';
+		this.getSelectedId(area, 0);
+		selectedValue.push(this.selectedAreaString);
 	}
 
 	/**
