@@ -32,6 +32,7 @@ describe('AreaSelectorCtrl', () => {
 				}
 			},
 			'selectedData': [],
+			'valueFormat': [],
 			'$ccTips': {
 				error: () => Promise.resolve()
 			},
@@ -336,13 +337,14 @@ describe('AreaSelectorCtrl', () => {
 
 	it('#ok', () => {
 
-		areaSelectorCtrl.getSelectedValue = sinon.spy();
+		areaSelectorCtrl.getResponseIdAndName = sinon.spy();
 		areaSelectorCtrl.selectedAreas = [
 			[{id: '310000'}, {id: '310100'}, {id: '310101'}],
 			[{id: '310000'}, {id: '310200'}], [{id: '320000'}]
 		];
+		areaSelectorCtrl.valueFormat = 1;
 		areaSelectorCtrl.ok();
-		sinon.assert.callCount(areaSelectorCtrl.getSelectedValue, 3);
+		sinon.assert.callCount(areaSelectorCtrl.getResponseIdAndName, 3);
 	});
 
 	it('#getParentSelectedStatus', () => {
@@ -356,14 +358,6 @@ describe('AreaSelectorCtrl', () => {
 		const commonAreaB = {id: '310000', children: [{id: '310100', parentId: '310000'}]};
 		areaSelectorCtrl.getParentSelectedStatus(commonAreaB);
 		sinon.assert.calledOnce(areaSelectorCtrl.analyzeAreaSelectedStatusByChildren);
-	});
-
-	it('#getSelectedValue', () => {
-
-		const area = [{id: '440000', name: '广东省'}, {id: '440300', name: '深圳市'}];
-		areaSelectorCtrl.selectedAreaIds = '';
-		areaSelectorCtrl.getSelectedValue(area, 0);
-		assert.equal(areaSelectorCtrl.selectedAreaIds, '440000,440300');
 	});
 
 	it('#getCommonAreaSelectedStatus', () => {
@@ -619,4 +613,5 @@ describe('AreaSelectorCtrl', () => {
 		areaSelectorCtrl.onSearch([], {searchText: '辖'});
 		assert.lengthOf(areaSelectorCtrl.datalist, 4);
 	});
+
 });
