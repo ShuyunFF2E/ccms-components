@@ -1,4 +1,5 @@
 .sass-cache/
+.vscode/
 dist/
 docs/_gh_pages/
 node_modules/

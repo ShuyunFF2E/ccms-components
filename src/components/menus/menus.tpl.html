@@ -7,7 +7,8 @@
 
     </div>
 
-    <div class="retrack-shop"
+    <div class="retrack-shop shop-switch"
+         ng-class="{'disabled': !menus.shopSelectAvailable}"
          ng-if="menus.isShowShopInfo"
          ng-click="menus.showShopSelect()">
         <span></span>
@@ -16,7 +17,7 @@
 
 
     <!-- 店铺 header -->
-    <div class="menu-shop-show"
+    <div class="menu-shop-show shop-switch"
          ng-class="{'disabled': !menus.shopSelectAvailable}"
          ng-click="menus.showShopSelect()"
          ng-if="menus.isShowShopInfo">
