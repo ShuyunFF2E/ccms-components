@@ -60,10 +60,18 @@ cc-toggle, cc-switch {
 		}
 
 		@at-root .on#{&} {
+			left: calc(100% - #{$size - $gap});
+		}
+
+		@at-root :not(.no-animation).on#{&} {
 			animation: slide-on 0.5s ease-in-out forwards;
 		}
 
 		@at-root .off#{&} {
+			left: $gap;
+		}
+
+		@at-root :not(.no-animation).off#{&} {
 			animation: slide-off 0.5s ease-in-out forwards;
 		}
 	}
@@ -89,7 +97,7 @@ cc-toggle, cc-switch {
 		@extend %text;
 		content: attr(data-text-on);
 
-		@at-root .on#{&} {
+		@at-root :not(.no-animation).on#{&} {
 			animation: slide-text-on 0.5s ease-in-out forwards;
 		}
 
@@ -108,7 +116,7 @@ cc-toggle, cc-switch {
 			visibility: hidden;
 		}
 
-		@at-root .off#{&} {
+		@at-root :not(.no-animation).off#{&} {
 			animation: slide-text-off 0.5s ease-in-out forwards;
 		}
 	}
