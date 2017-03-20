@@ -172,7 +172,7 @@ $font: "Microsoft Yahei";
 }
 
 // 禁用店铺切换
-.menu-shop-show.disabled {
+.shop-switch.disabled {
 	pointer-events: none;
 	opacity: .5;
 }
