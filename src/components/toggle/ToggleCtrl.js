@@ -1,5 +1,7 @@
 import angular from 'angular';
+import { Inject } from 'angular-es-utils';
 
+@Inject('$element')
 export default class ToggleController {
 	static valueOn = true;
 	static valueOff = false;
@@ -9,6 +11,20 @@ export default class ToggleController {
 	$onInit() {
 		this._prepareOptions();
 		this.updateNgModel(this.state);
+	}
+
+	$onChanges(changedObjects) {
+		// 使用 .no-animation 来禁用初始动画
+		// 在手动触发 ngModel 变化时移除 .no-animation
+		const ngModelObject = changedObjects.ngModel;
+		if (ngModelObject &&
+				!ngModelObject.isFirstChange() &&
+				angular.isDefined(ngModelObject.previousValue)) {
+
+			angular
+				.element(this.getElement().querySelector('.cc-toggle'))
+				.toggleClass('no-animation', false);
+		}
 	}
 
 	_prepareOptions() {
@@ -56,5 +72,9 @@ export default class ToggleController {
 	updateNgModel(state) {
 		const viewValue = state ? this.valueOn : this.valueOff;
 		this.ngModelController.$setViewValue(viewValue);
+	}
+
+	getElement() {
+		return this._$element[0];
 	}
 }
