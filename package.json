@@ -26,7 +26,7 @@
     "test:cover": "karma start test/karma.cover.conf.js --single-run"
   },
   "devDependencies": {
-    "angular-mocks": "^1.5.7",
+    "angular-mocks": "1.5.8",
     "autoprefixer": "^6.3.6",
     "babel-cli": "^6.9.0",
     "babel-core": "^6.9.0",
@@ -78,15 +78,15 @@
     "webpack-hot-middleware": "^2.4.1"
   },
   "peerDependencies": {
-    "angular": "^1.5.8",
-    "angular-ui-router": "^0.2.18",
-    "angular-resource": "^1.5.8"
+    "angular": "1.5.8",
+    "angular-resource": "1.5.8",
+    "angular-ui-router": "0.2.18"
   },
   "dependencies": {
-    "angular": "^1.5.8",
+    "angular": "1.5.8",
     "angular-es-utils": "^2.1.2",
-    "angular-resource": "^1.5.8",
-    "angular-ui-router": "^0.2.18",
+    "angular-resource": "1.5.8",
+    "angular-ui-router": "0.2.18",
     "jquery": "1.11.0",
     "jquery.nicescroll": "^3.6.8",
     "normalize.css": "^4.1.1"
