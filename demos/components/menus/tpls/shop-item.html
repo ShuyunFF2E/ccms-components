@@ -1,0 +1,15 @@
+<!--店铺列表-->
+<li ng-repeat="shop in plat.child track by $index"
+    ng-class="{'active': $ctrl.shopInfo.plat.value === plat.value && $ctrl.shopInfo.shop.value === shop.value}"
+    ng-click="$ctrl.onSelected(plat,shop)">
+
+    <span class="shop-name" ng-bind="shop.name"></span>
+    <span class="shop-name" ng-bind="shop.name"></span>
+    <span class="wechat-box iconfont icon-wechat">
+        <div class="tooltip-box">
+            公众号：{{shop.name}}
+        </div>
+    </span>
+    <span class="checked"></span>
+</li>
+<!--店铺列表 end-->

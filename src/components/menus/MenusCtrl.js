@@ -39,6 +39,16 @@ export default class MenusCtrl {
 		this._$scope.$on('$stateChangeSuccess', (event, toState) => {
 			this.updateList(this.menuList);
 		});
+
+		if (this.shopLogoSubConfig) {
+			this.shopLogoSubStyle = this.shopLogoSubConfig.style || {};
+			this._$scope.$watch(() => this.active.shop, shop => {
+				const config = this.shopLogoSubConfig.getSubImg(shop);
+				this.shopLogoSubImg = config.img;
+				this.shopLogoSubOpened = config.opened;
+			});
+		}
+
 	}
 
 	updateList(list) {
