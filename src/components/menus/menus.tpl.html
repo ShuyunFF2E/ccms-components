@@ -25,10 +25,20 @@
              ng-if="!menus.active.shop.logo">
             <span></span>
         </div>
-        <img ng-if="menus.active.shop.logo"
-             ng-src="{{menus.active.shop.logo}}"
-             cc-alt-src="menus.imgDefaultUrl"
-             class="img-wrapper">
+        <div class="logo-box">
+            <img ng-if="menus.active.shop.logo"
+                 ng-class="{'sub-closed':menus.shopLogoSubOpened}"
+                 ng-style="menus.shopLogoStyle"
+                 ng-src="{{menus.active.shop.logo}}"
+                 cc-alt-src="menus.imgDefaultUrl"
+                 class="img-wrapper">
+
+            <img class="logo-sub"
+                 ng-style="menus.shopLogoSubStyle"
+                 ng-if="menus.active.shop.logo && menus.shopLogoSubConfig"
+                 ng-src="{{menus.shopLogoSubImg}}">
+
+        </div>
 
         <p class="shop-name">
 
@@ -54,6 +64,7 @@
                     ng-if="menus.isShowShopInfo"
                     shop-info="menus.active"
                     placeholder="menus.searchPlaceholder"
+                    shop-item-tpl="menus.shopItemTpl"
                     shop-source="menus.shopSource">
     </cc-shop-select>
 </div>
