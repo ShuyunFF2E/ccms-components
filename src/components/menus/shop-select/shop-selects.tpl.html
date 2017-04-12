@@ -1,0 +1,33 @@
+<div class="shop-choose-wrapper"
+     ng-class="{'shop-choose-none':$ctrl.list.length <= 0,'shop-select-show':!$ctrl.isInit&&$ctrl.retract,'shop-select-hide': !$ctrl.isInit&&!$ctrl.retract}">
+    <div class="shop-search">
+        <input type="search" placeholder="{{$ctrl.placeholder}}"
+               ng-model="$ctrl.searchName"
+               ng-keyup="$ctrl.onSearchShop($event,'keyup',$ctrl.searchName)">
+
+        <span class="shop-search-clear"
+              ng-if="$ctrl.searchName"
+              ng-click="$ctrl.onResetSearchValue()"></span>
+
+        <span class="shop-search-icon"
+              ng-class="{'active':$ctrl.searchName}"
+              ng-click="$ctrl.onSearchShop(null,'click',$ctrl.searchName)"></span>
+    </div>
+
+    <div class="shop-info-wrapper">
+        <!--平台列表-->
+        <div class="plat-list" ng-repeat="plat in $ctrl.list track by $index">
+            <p class="plat-name" ng-bind="plat.name"></p>
+            <ul class="shop-list" cc-bind-html="$ctrl.shopItemTpl">
+            </ul>
+        </div>
+        <!--平台列表 end-->
+    </div>
+
+    <div ng-if="$ctrl.list.length <= 0" class="shop-info-none">
+        <p>没有搜索结果</p>
+        <p>请重新输入关键字或者<a href="javascript:void(0);" class="shop-list-btn"
+                        ng-click="$ctrl.onSearchShop(null,'click',''); $ctrl.searchName='';">查看全部</a>
+        </p>
+    </div>
+</div>

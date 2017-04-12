@@ -7,10 +7,12 @@
 
 import angular from 'angular';
 import {Inject} from 'angular-es-utils';
-import $menus, {dispatchShopChangeStart, isHaveBindShopChangeStart, setCurrentPlatShop} from './MenuService';
+import TplReqHelper from '../../../common/utils/tpl-req-helper';
+import shopItemTpl from './tpls/shop-item.tpl.html';
+import $menus, {dispatchShopChangeStart, isHaveBindShopChangeStart, setCurrentPlatShop} from '../MenuService';
+
 @Inject('$q')
 export default class ShopSelectsCtrl {
-
 	constructor() {
 		// - 搜索结果
 		this.searchName = '';
@@ -19,14 +21,14 @@ export default class ShopSelectsCtrl {
 	}
 
 	$onInit() {
-
+		this.shopItemTpl = TplReqHelper.get(this.shopItemTpl || shopItemTpl);
 		this.createShopList();
 	}
 
 	$onChanges(bindings) {
 		if (bindings.retract) {
 			// - 订阅店铺列表收起时触发重置列表
-			this.resetSearchValue();
+			this.onResetSearchValue();
 		}
 	}
 
@@ -97,7 +99,7 @@ export default class ShopSelectsCtrl {
 	 * @param plat
 	 * @param shop
 	 */
-	selectedShop(plat, shop) {
+	onSelected(plat, shop) {
 		// - 本次点击店铺信息
 		const selectedShop = {plat, shop};
 
@@ -140,7 +142,7 @@ export default class ShopSelectsCtrl {
 	 * @param type
 	 * @param name
 	 */
-	searchShop(event, type, name) {
+	onSearchShop(event, type, name) {
 		if (type === 'reset' || type === 'click' || (type === 'keyup' && event.keyCode === 13)) {
 			this.list = this.filterShop(angular.copy(this.tempList), name);
 		}
@@ -182,8 +184,8 @@ export default class ShopSelectsCtrl {
 	/**
 	 * 重置查询参数
 	 */
-	resetSearchValue() {
+	onResetSearchValue() {
 		this.searchName = '';
-		this.searchShop(null, 'reset');
+		this.onSearchShop(null, 'reset');
 	}
 }

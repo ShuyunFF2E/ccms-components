@@ -134,6 +134,7 @@ angular
 
 		var self = this;
 
+		let index = 0;
 		self.titleName = '头部XXX';
 
 		self.menusOptions = {
@@ -142,8 +143,19 @@ angular
 				console.log('结果:', unfold);
 			},
 			menusResource: $resource('/menus'),
-			//menusResource: MENULIST,
 			shopsResource: $resource('/shops'),
+			shopItemTpl: './tpls/shop-item.html',
+			shopLogoStyle: {border: 'solid 1px #08bb08'},
+			shopLogoSubConfig: {
+				getSubImg: shop => {
+					index++;
+					return {
+						opened: index % 2 === 0, // sub 选中状态
+						img: 'http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg' // 显示图片
+					};
+				},
+				style: {borderRadius: '50%'}
+			},
 			searchPlaceholder: '请输入XXX'
 		};
 	})
@@ -256,7 +268,7 @@ function pointController($scope, $ccMenus, $ccModal) {
 		console.log('积分类型:(listener)', current.plat.name + '|' + current.shop.name);
 	}, $scope);
 
-	$ccMenus.onShopChangeStart((defer, toShop)=> {
+	$ccMenus.onShopChangeStart((defer, toShop) => {
 		if (isChange) {
 
 			$ccModal.confirm('切换店铺中,确定要切换至' + toShop.plat.name + '下的' + toShop.shop.name + '吗?', {

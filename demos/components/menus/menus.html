@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <title>菜单栏</title>
+<link rel="stylesheet" href="./tpls/shop-item.css">
 
 <main ng-app="componentsApp" ng-controller="ctrl as app">
-	<div class="ccmsc-main-container" ng-class="{'contract-left':!app.menusOptions.unfold}">
-		<div class="left-container">
-			<cc-menu-bar
-					unfold="app.menusOptions.unfold"
-					on-unfold="app.menusOptions.unfoldClick"
-					menu-source="app.menusOptions.menusResource"
-					shop-source="app.menusOptions.shopsResource"
-					search-placeholder="app.menusOptions.searchPlaceholder">
-			</cc-menu-bar>
-		</div>
+    <div class="ccmsc-main-container" ng-class="{'contract-left':!app.menusOptions.unfold}">
+        <div class="left-container">
+            <cc-menu-bar
+                    unfold="app.menusOptions.unfold"
+                    on-unfold="app.menusOptions.unfoldClick"
+                    menu-source="app.menusOptions.menusResource"
+                    shop-source="app.menusOptions.shopsResource"
+                    shop-item-tpl="app.menusOptions.shopItemTpl"
+                    shop-logo-style="app.menusOptions.shopLogoStyle"
+                    shop-logo-sub-config="app.menusOptions.shopLogoSubConfig"
+                    search-placeholder="app.menusOptions.searchPlaceholder">
+            </cc-menu-bar>
+        </div>
 
-		<div class="center-container " ui-view>
-			<!--<nav-title name="app.titleName"></nav-title>-->
-		</div>
-		<div class="right-container">
-			right
-		</div>
-	</div>
+        <div class="center-container " ui-view>
+            <!--<nav-title name="app.titleName"></nav-title>-->
+        </div>
+        <div class="right-container">
+            right
+        </div>
+    </div>
 </main>
 
 <script src="/components.js"></script>

@@ -16,12 +16,9 @@ import MenusCtrl from './MenusCtrl';
 import menuNodeTemplate from './menus-node.tpl.html';
 import MenusNodeCtrl from './MenusNodeCtrl';
 
-import './_shop-selector.scss';
-import shopSelectTemplate from './shop-selects.tpl.html';
-import ShopSelectsCtrl from './ShopSelectsCtrl';
+import shopSelect from './shop-select';
 
-const
-	menusBarDDO = {
+const menusBarDDO = {
 		template: menuBarTemplate,
 		controller: MenusCtrl,
 		controllerAs: 'menus',
@@ -30,7 +27,10 @@ const
 			onUnfold: '&?',
 			menuSource: '<',
 			shopSource: '<?',
-			searchPlaceholder: '<?'
+			searchPlaceholder: '<?',
+			shopItemTpl: '<?', // 店铺模板
+			shopLogoStyle: '<?', // logo样式
+			shopLogoSubConfig: '<?' //  角标配置
 		}
 	},
 	menusNodeDDO = {
@@ -42,25 +42,11 @@ const
 			toggle: '=',
 			level: '='
 		}
-	},
-	shopSelectDDO = {
-		template: shopSelectTemplate,
-		controller: ShopSelectsCtrl,
-		controllerAs: 'shops',
-		bindings: {
-			shopSource: '<?',
-			shopInfo: '=',
-			retract: '<?',
-			onRetract: '&?',
-			isInit: '<?',
-			placeholder: '<?'
-		}
 	};
 
 export default angular
-	.module('ccms.components.menus', [uiRouter, utils])
+	.module('ccms.components.menus', [uiRouter, utils, shopSelect])
 	.component('ccMenuBar', menusBarDDO)
 	.component('ccMenuNode', menusNodeDDO)
-	.component('ccShopSelect', shopSelectDDO)
 	.value('$ccMenus', $menus)
 	.name;

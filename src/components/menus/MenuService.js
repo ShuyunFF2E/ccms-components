@@ -14,8 +14,10 @@ let currentShop = {};
 
 export function reset() {
 	currentShop = {};
+	deferred = new Deferred();
 	isHadBeenInitialized = false;
 }
+
 export function setCurrentPlatShop(plat, shop) {
 
 	const selectedShop = {plat, shop};
@@ -30,6 +32,7 @@ export function setCurrentPlatShop(plat, shop) {
 
 	isHadBeenInitialized = true;
 }
+
 export function dispatchMenuChange(...args) {
 	return EventBus.dispatch('cc:menuChange', ...args);
 }
@@ -37,6 +40,7 @@ export function dispatchMenuChange(...args) {
 export function dispatchShopChange(...args) {
 	return EventBus.dispatch('cc:shopChange', ...args);
 }
+
 export function dispatchShopChangeStart(...args) {
 	return EventBus.dispatch('cc:shopChangeStart', ...args);
 }
@@ -49,7 +53,7 @@ export default {
 
 	getMenus(menusResource) {
 		const isResource = menusResource && typeof menusResource.query === 'function',
-		// -如果是Resource则返回Resource,否则返回原数据
+			// -如果是Resource则返回Resource,否则返回原数据
 			resource = !isResource ? menusResource
 				: menusResource.query();
 		return {
@@ -62,7 +66,7 @@ export default {
 
 		const isResource = shopsResource && typeof shopsResource.query === 'function',
 
-		// -如果是Resource则返回Resource,否则返回原数据
+			// -如果是Resource则返回Resource,否则返回原数据
 			resource = !isResource ? shopsResource
 				: shopsResource.query();
 		return {
