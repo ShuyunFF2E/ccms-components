@@ -1,6 +1,7 @@
 .wechat-box {
 	font-size: 14px;
 	color: #08bb0b;
+	display: inline-block;
 	position: relative;
 }
 
@@ -12,7 +13,7 @@
 	width: 500px;
 	height: 100px;
 	border: solid 1px red;
-	z-index: 1;
+	z-index: 45;
 }
 
 .wechat-box:hover .tooltip-box {

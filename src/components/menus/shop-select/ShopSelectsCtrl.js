@@ -11,7 +11,7 @@ import TplReqHelper from '../../../common/utils/tpl-req-helper';
 import shopItemTpl from './tpls/shop-item.tpl.html';
 import $menus, {dispatchShopChangeStart, isHaveBindShopChangeStart, setCurrentPlatShop} from '../MenuService';
 
-@Inject('$q')
+@Inject('$q', '$scope')
 export default class ShopSelectsCtrl {
 	constructor() {
 		// - 搜索结果
