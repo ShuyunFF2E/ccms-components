@@ -4,11 +4,11 @@
  * @since 2016-03-15
  */
 import angular from 'angular';
-import { isElement } from 'angular-es-utils/type-auth';
+import {isElement} from 'angular-es-utils/type-auth';
 import Popup from '../../common/bases/Popup';
-import { positionElements, chopStyle2Num, offset, position, adjustTop } from '../../common/utils/style-helper';
+import {positionElements, chopStyle2Num, offset, position, adjustTop} from '../../common/utils/style-helper';
 import template from './tooltip.tpl.html';
-import { TOOLTIP_TYPE } from './Contants';
+import {TOOLTIP_TYPE} from './Contants';
 
 const OPENED_CLASS = 'tooltip-opened';
 const ARROW_MARGIN = 2;
@@ -17,7 +17,7 @@ const DEFAULT_PLACEMENT = 'auto top-left';
 
 export default class Tooltip extends Popup {
 
-	constructor(hostEl, type = TOOLTIP_TYPE.NORMAL, append2Body, placement = DEFAULT_PLACEMENT) {
+	constructor(hostEl, type = TOOLTIP_TYPE.NORMAL, append2Body, placement = DEFAULT_PLACEMENT, style = {}) {
 
 		let toolTipEl = TOOLTIP_EL.cloneNode(false);
 		toolTipEl.classList.add(`${type}-tooltip`);
@@ -27,6 +27,7 @@ export default class Tooltip extends Popup {
 		this.type = type;
 		this.append2Body = !!append2Body;
 		this.placement = placement;
+		this.style = style;
 	}
 
 	setContent(content) {
@@ -67,7 +68,6 @@ export default class Tooltip extends Popup {
 
 				/* ------------------为tooltip设置合适的位置------------------- */
 				let tooltip = this.element;
-
 				const ttPos = positionElements(this.hostEl, tooltip, this.placement, this.append2Body);
 				var hostElPos = this.append2Body ? offset(this.hostEl) : position(this.hostEl);
 				const initialHeight = tooltip.offsetHeight;
@@ -101,6 +101,10 @@ export default class Tooltip extends Popup {
 				tooltip.style.top = `${ttOffset.top}px`;
 				tooltip.style.left = `${ttOffset.left}px`;
 
+				const keys = Object.keys(this.style || {});
+				keys.forEach(key => {
+					tooltip.style[key] = this.style[key];
+				});
 				const adjustment = adjustTop(placement, hostElPos, initialHeight, tooltip.offsetHeight);
 				if (adjustment) {
 					tooltip.style.top = `${adjustment.top - arrowHeight - ARROW_MARGIN}px`;
