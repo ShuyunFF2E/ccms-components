@@ -158,6 +158,8 @@ angular
 			},
 			searchPlaceholder: '请输入XXX'
 		};
+		$scope.info = '<div style="width: 500px; z-index:200;">sjsjsjsjsjsjsjsj</div>';
+
 	})
 	.config(routerConfig)
 	.run(runConfig);

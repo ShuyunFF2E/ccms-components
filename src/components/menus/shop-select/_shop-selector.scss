@@ -27,8 +27,13 @@ $shop-wrap-width: 344px;
 	z-index: -1;
 	//overflow-y: auto;
 	transform: translateX(-#{$shop-wrap-width});
+
+	display: flex;
+	flex-flow: column nowrap;
+
 	//搜索框
 	.shop-search {
+		flex: 0 0 30px;
 		width: 294px;
 		height: 30px;
 		position: relative;
@@ -74,6 +79,8 @@ $shop-wrap-width: 344px;
 		}
 	}
 	.shop-info-wrapper {
+		flex: auto;
+		overflow-y: auto;
 		margin-top: 20px;
 		p {
 			font-size: 12px;
@@ -91,6 +98,10 @@ $shop-wrap-width: 344px;
 				padding-left: 25px;
 				color: #666666;
 				cursor: pointer;
+
+				display: flex;
+				flex-flow: row nowrap;
+
 				&.active {
 					background: #f0f0f0;
 					span.checked {
@@ -99,9 +110,22 @@ $shop-wrap-width: 344px;
 						color: #23B74A;
 						font-size: 16px;
 						float: right;
-						margin-right: 18px;
+						//margin-right: 18px;
 						margin-top: 1px;
 					}
+				}
+				.checked {
+					flex: 0 0 40px;
+				}
+				.shop-name {
+					flex: auto;
+				}
+				.text-overflow {
+					display: inline-block;
+					max-width: 277px;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 				}
 			}
 		}
