@@ -25,7 +25,6 @@ function transformer(response, mapping) {
  * 表格服务,对外提供刷新服务
  */
 export default {
-
 	fillOpts(gridOptions) {
 
 		let DEFAULT_CONFIGS = {
@@ -63,6 +62,8 @@ export default {
 		// 如果不存在外部表格数据则请求接口拿数据
 		if (!gridOptions.externalData && gridOptions.resource) {
 
+			gridOptions.lastRequest && gridOptions.lastRequest.$cancelRequest && gridOptions.lastRequest.$cancelRequest();
+
 			const pageParams = {
 				pageNum: gridOptions.pager.pageNum,
 				pageSize: gridOptions.pager.pageSize
@@ -70,7 +71,9 @@ export default {
 
 			const params = filter(Object.assign({}, pageParams, gridOptions.queryParams, queryParams), value => !!value);
 
-			return gridOptions.resource.get(params).$promise
+			gridOptions.lastRequest = gridOptions.resource.get(params);
+
+			return gridOptions.lastRequest.$promise
 
 				.then(res => {
 
