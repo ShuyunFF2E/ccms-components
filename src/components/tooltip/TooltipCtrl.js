@@ -4,9 +4,9 @@
  * @since 2016-03-16
  */
 
-import { Bind } from 'angular-es-utils/decorators';
+import {Bind} from 'angular-es-utils/decorators';
 import Tooltip from './Tooltip';
-import { TOOLTIP_TYPE } from './Contants';
+import {TOOLTIP_TYPE} from './Contants';
 
 export default class TooltipCtrl {
 
@@ -80,7 +80,7 @@ export default class TooltipCtrl {
 
 	open() {
 		if (!this.tooltip) {
-			this.tooltip = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody, this.placement);
+			this.tooltip = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody, this.placement, this.style);
 		}
 
 		let compiledContent = this.content;
