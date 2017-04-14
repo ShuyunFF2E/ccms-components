@@ -4,7 +4,7 @@ set -e
 
 function build_prepare_production() {
 	if [[ -n "$(git status --porcelain)" ]]; then
-		echo "Working tree *NOT* clean."
+		echo "Working tree *NOT* clean. Please stash/commit your changes before any operations."
 		exit 1
 	fi
 
@@ -29,8 +29,6 @@ function build_prepare_production() {
 	git rebase master
 	git push origin dev master $version_tag
 	git checkout $current_branch
-
-	echo $version_tag
 }
 
 build_prepare_production $@
