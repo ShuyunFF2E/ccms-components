@@ -60,7 +60,6 @@
     "karma-coverage": "^1.1.0",
     "karma-mocha": "^1.1.1",
     "karma-mocha-reporter": "^2.0.4",
-    "karma-phantomjs-launcher": "^1.0.1",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.5.3",
     "node-dir": "^0.1.11",
