@@ -6,6 +6,11 @@
 
 angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
+	.config(function($resourceProvider) {
+		// 开启 cancelRequest 功能
+		$resourceProvider.defaults.cancellable = true;
+	})
+
 	.controller('ctrl', function ($scope, $resource, $ccGrid) {
 
 		this.click = () => {
@@ -39,15 +44,11 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
-					width: '100px',
-					sortProp: 'name',
-					sortOrder:'asc'
+					width: '100px'
 				},
 				{
 					field: 'age',
-					displayName: '年龄', align: 'center',
-					sortProp: 'age',
-					sortOrder:'asc'
+					displayName: '年龄', align: 'center'
 				},
 				{
 					field: 'gender',
