@@ -18,7 +18,16 @@
         <!--平台列表-->
         <div class="plat-list" ng-repeat="plat in $ctrl.list track by $index">
             <p class="plat-name" ng-bind="plat.name"></p>
-            <ul class="shop-list" cc-bind-html="$ctrl.shopItemTpl">
+            <ul class="shop-list">
+
+                <!--店铺列表-->
+                <li ng-repeat="shop in plat.child track by $index"
+                    ng-class="{'active': $ctrl.shopInfo.plat.value === plat.value && $ctrl.shopInfo.shop.value === shop.value}"
+                    ng-click="$ctrl.onSelected(plat,shop)">
+                    <div class="shop-name" cc-bind-html="$ctrl.shopItemTpl"></div>
+                    <span class="checked"></span>
+                </li>
+                <!--店铺列表 end-->
             </ul>
         </div>
         <!--平台列表 end-->
