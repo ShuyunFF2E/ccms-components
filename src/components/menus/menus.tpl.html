@@ -21,9 +21,13 @@
          ng-class="{'disabled': !menus.shopSelectAvailable}"
          ng-click="menus.showShopSelect()"
          ng-if="menus.isShowShopInfo">
-        <div class="shop-wrapper"
+        <div class="shop-wrapper" ng-style="menus.shopLogoStyle"
              ng-if="!menus.active.shop.logo">
             <span></span>
+			 <img class="logo-sub"
+                 ng-style="menus.shopLogoSubStyle"
+                 ng-if="menus.shopLogoSubConfig"
+                 ng-src="{{menus.shopLogoSubImg}}">
         </div>
         <div class="logo-box">
             <img ng-if="menus.active.shop.logo"
