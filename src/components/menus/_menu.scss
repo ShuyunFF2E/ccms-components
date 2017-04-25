@@ -110,7 +110,8 @@ $font: "Microsoft Yahei";
 		text-align: center;
 		.logo-box {
 			text-align: center;
-			height: 40px;
+			max-height: 40px;
+			height: auto;
 		}
 		.img-wrapper {
 			@extend %shop-wrap;
@@ -138,6 +139,9 @@ $font: "Microsoft Yahei";
 				line-height: 30px;
 				top: calc(50% - 14px);
 				left: calc(50% - 15px);
+			}
+			.logo-sub {
+				transform: translateY(25px) translateX(20px);
 			}
 		}
 		.shop-name {
