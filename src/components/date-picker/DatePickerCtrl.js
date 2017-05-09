@@ -191,6 +191,27 @@ export default class DatePickerCtrl {
 		}
 	}
 
+	/**
+	 * 转换日期格式
+	 * from parts to dateValue
+	 * */
+	toDateValue(parts) {
+		const allDateHasValue = parts.year && parts.month && parts.date,
+			allTimeHasValue = parts.hour && parts.minute && parts.second;
+
+		if ((!this.dateOnly && allDateHasValue && allTimeHasValue) || (this.dateOnly && allDateHasValue)) {
+			return new Date(
+				parseNumber(parts.year),
+				parseNumber(parts.month) - 1,
+				parseNumber(parts.date),
+				parseNumber(parts.hour),
+				parseNumber(parts.minute),
+				parseNumber(parts.second)
+			);
+		} else {
+			return null;
+		}
+	}
 
 	/**
 	 * 更新日期值
@@ -199,24 +220,10 @@ export default class DatePickerCtrl {
 		const input = $event.target,
 			parts = this.parts;
 
-		let dateValue = null;
+		let dateValue = this.toDateValue(parts);
 
 		input.value = addZero(input.value);
 		setTextWidth(input);
-
-		const allDateHasValue = parts.year && parts.month && parts.date,
-			allTimeHasValue = parts.hour && parts.minute && parts.second;
-
-		if ((!this.dateOnly && allDateHasValue && allTimeHasValue) || (this.dateOnly && allDateHasValue)) {
-			dateValue = new Date(
-				parseNumber(parts.year),
-				parseNumber(parts.month) - 1,
-				parseNumber(parts.date),
-				parseNumber(parts.hour),
-				parseNumber(parts.minute),
-				parseNumber(parts.second)
-			);
-		}
 
 		this.checkValidity(dateValue);
 
