@@ -146,4 +146,34 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			showPagination: false
 		};
 
+		this.gridOption4 = {
+
+			resource: $resource('/pages/10'),
+			columnsDef: [
+				{
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
+					displayName: '姓名',
+					align: 'left'
+				},
+				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'gender', displayName: '性别', align: 'right', isHidden: true}
+			],
+			enableHiddenColumns: true
+		};
+
+		this.gridOption5 = {
+
+			externalData: [],
+			columnsDef: [
+				{
+					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
+					displayName: '姓名',
+					align: 'left'
+				},
+				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'gender', displayName: '性别', align: 'right', isHidden: true}
+			],
+			enableHiddenColumns: true
+		};
+
 	});

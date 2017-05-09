@@ -4,4 +4,4 @@ docs/_gh_pages/
 node_modules/
 test/coverage/
 npm-debug.log
-
+.idea/
