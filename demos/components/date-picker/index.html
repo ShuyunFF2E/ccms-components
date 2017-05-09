@@ -10,6 +10,12 @@
 	<p>触发打开事件: {{app.onCalendarOpenTimes}}次</p>
 	<p>触发关闭日历事件: {{app.onCalendarCloseTimes}}次</p>
 
+	<p>
+		<button type="button" ng-click="app.dateValue = null;">重置 date</button>
+		<button type="button" ng-click="app.setDateError()">设置 date 为 2012/8/10 (该值不在有效范围内)</button>
+		<button type="button" ng-click="app.setDateRight()">设置 date 为 2016/1/11</button>
+	</p>
+
 	<cc-date-picker ng-if="!app.hideDates"
 					ng-model="app.dateValue"
 					min-date="app.minDate"
@@ -46,6 +52,8 @@
 	<p>
 		<button type="button" ng-click="app.dateRange.start = null;">重置 start</button>
 		<button type="button" ng-click="app.dateRange.end = null">重置 end</button>
+		<button type="button" ng-click="app.setStartError()">设置 start 为 2012/8/10 (该值不在有效范围内)</button>
+		<button type="button" ng-click="app.setStartRight()">设置 start 为 2016/8/11</button>
 	</p>
 
 	<cc-date-range ng-if="!app.hideDates"
@@ -102,6 +110,14 @@
 			self.minDate = new Date(2016, 1, 1);
 			self.maxDate = new Date(2016, 1, 28);
 
+			self.setDateError = function() {
+				self.dateValue = new Date(2012, 7, 10);
+			};
+
+			self.setDateRight = function() {
+				self.dateValue = new Date(2016, 1, 11);
+			};
+
 			self.dateRange = {
 				start: new Date(2016, 7, 10),
 				end: new Date(2016, 7, 20),
@@ -114,6 +130,14 @@
 
 				// 是否显示时间 (true)
 				dateOnly: false
+			};
+
+			self.setStartError = function() {
+				self.dateRange.start = new Date(2012, 7, 10);
+			};
+
+			self.setStartRight = function() {
+				self.dateRange.start = new Date(2016, 7, 11);
 			};
 
 			self.anotherRange = {

@@ -37,13 +37,12 @@ export default {
 
 		this.setAllInputsWidth($scope);
 
-
 		/**
 		 * 根据日期渲染模板
 		 */
 		ngModelCtrl.$render = () => {
 			$scope.ctrl.parts = destructDate(ngModelCtrl.$viewValue ? new Date(ngModelCtrl.$viewValue) : null, $scope.ctrl.dateOnly);
-
+			$scope.ctrl.checkValidity($scope.ctrl.toDateValue($scope.ctrl.parts));
 			this.setAllInputsWidth($scope);
 		};
 	},
