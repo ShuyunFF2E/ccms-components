@@ -86,6 +86,10 @@ export default class SMSEditorCtrl {
 		.replace(/</g, '&lt;');
 	}
 
+	static wrap(keyword, arg = {}) {
+		const obj = Object.assign({prefix: '', suffix: ''}, arg);
+		return `${obj.prefix}${keyword}${obj.suffix}`;
+	}
 
 	/**
 	 * 整理关键词数据, 确定默认显示的关键词分类
@@ -153,12 +157,12 @@ export default class SMSEditorCtrl {
 	 * @param {string} type - 标签类型
 	 * @returns {string}
 	 */
-	createInput(text, type = DEFAULT_TYPE_NAME) {
+	createInput(text, type = DEFAULT_TYPE_NAME, prefix = '', suffix = '') {
 		// 暂时不需要
 		// const padding = (this.keywordTypes.length < 1 || !type) ? 0 : 1.5;
 
 		// return `&nbsp;<input class="sms-keyword-inserted ${padding ? type : DEFAULT_TYPE_NAME}" value="${text}" style="width: ${padding + text.length}em" disabled>&nbsp;`;
-		return `<input class="sms-keyword-inserted ${type}" value="${text}" style="width: ${text.length}em" disabled>`;
+		return `${prefix}<input class="sms-keyword-inserted ${type}" value="${text}" style="width: ${text.length}em" disabled>${suffix}`;
 	}
 
 
@@ -179,7 +183,8 @@ export default class SMSEditorCtrl {
 	 */
 	parseTag(text = '') {
 		return SMSEditorCtrl.flatCode(text).replace(/\$\$_(?:\[(\S*?)])?(.+?)_\$\$/g, (result, $1, $2) => {
-			return this.createInput(this.keywordTextNameConvert($2, false), $1);
+			const keyword = this.getKeywordConfig($2, false);
+			return this.createInput(this.keywordTextNameConvert($2, false), $1, keyword && keyword.prefix, keyword && keyword.suffix);
 		});
 	}
 
@@ -204,6 +209,25 @@ export default class SMSEditorCtrl {
 		return matchedKeyword ? matchedKeyword[argIsText ? 'name' : 'text'] : arg;
 	}
 
+	/**
+	 * get keyword config
+	 * @param arg
+	 * @param argIsText
+	 * - true: 通过 text, 获取 keyword
+	 * - false: 通过 name, 获取 keyword
+	 * */
+
+	getKeywordConfig(arg, argIsText = true) {
+		const keywords = this.opts.keywords;
+
+		let matchedKeyword;
+
+		if (keywords && keywords.length) {
+			matchedKeyword = keywords.find(keyword => keyword[argIsText ? 'text' : 'name'] === arg);
+		}
+
+		return matchedKeyword;
+	}
 
 	/**
 	 * 将短信数据中的表情转化为 img
@@ -239,8 +263,7 @@ export default class SMSEditorCtrl {
 			});
 
 		// 图片, 关键字高亮, URL, 手机及固话号码下划线
-		this.opts.preview = SMSEditorCtrl.flatCode(this._tempHolder.textContent
-				.trim())
+		this.opts.preview = SMSEditorCtrl.flatCode(this._tempHolder.textContent)
 				.replace(/\{\{([^}]+)}}/g, (result, $1) => {
 					return `<img src="${$1}">`;
 				})
@@ -275,8 +298,7 @@ export default class SMSEditorCtrl {
 					'&gt;': '>',
 					'&amp;': '&'
 				}[result];
-			})
-			.trim();
+			});
 	}
 
 
@@ -285,11 +307,13 @@ export default class SMSEditorCtrl {
 	 * @param {string} text - 标签名
 	 * @param {string} type - 标签类型
 	 * @param {boolean} disabled -标签是否禁用
+	 * @param {string} prefix - 前缀
+	 * @param {string} suffix - 后缀
 	 */
-	insertKeyword(text, type, disabled) {
+	insertKeyword(text, type, disabled, prefix, suffix) {
 		if (!disabled) {
 			this.reFocus();
-			document.execCommand('insertHTML', false, this.createInput(text, type));
+			document.execCommand('insertHTML', false, this.createInput(text, type, prefix, suffix));
 		}
 	}
 

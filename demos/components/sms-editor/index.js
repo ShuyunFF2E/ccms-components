@@ -33,8 +33,24 @@ angular.module('componentsApp', ['ccms.components'])
 					// },
 					{
 						type: 'taobao',
+						name: 'QZ',
+						text: '前缀测试',
+						prefix: '前缀-',
+						defaultValue: '前缀测试'
+					},
+					{
+						type: 'taobao',
+						name: 'HZ',
+						text: '后缀测试',
+						suffix: '-后缀',
+						defaultValue: '后缀测试'
+					},
+					{
+						type: 'taobao',
 						name: 'XMTB',
 						text: '姓名淘宝',
+						prefix: 'HH',
+						suffix: 'HH',
 						defaultValue: '西凉少女Ash'
 					},
 					{
@@ -42,6 +58,14 @@ angular.module('componentsApp', ['ccms.components'])
 						name: 'XMJDWMRZ',
 						text: '姓名京东无默认值',
 						disabled: true
+					},
+					{
+						type: 'taobao',
+						name: 'shortlink',
+						text: '淘短链',
+						prefix: '&nbsp;',
+						suffix: '&nbsp;',
+						defaultValue: 'c.tb.cn/c.0zYeW#'
 					},
 					{
 						type: 'taobao',
