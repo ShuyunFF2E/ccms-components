@@ -2,7 +2,7 @@
  * Created by AshZhang on 2016/1/18.
  */
 
-
+import angular from 'angular';
 import { Inject } from 'angular-es-utils';
 
 const regUrlBase = '((([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[-;:&=\\+\\$,\\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\\+\\$,\\w]+@)[A-Za-z0-9.-]+)((?:\\/[\\+~%\\/.\\w-_]*)?\\??(?:[-\\+=&;%@.\\w_]*)#?(?:[.\\!\\/\\\\w]*))?)';
@@ -31,6 +31,7 @@ export default class SMSEditorCtrl {
 
 		// 初始化编辑框及显示
 		this.opts || (this.opts = {});
+		this.trimContent = angular.isDefined(this.opts.trimContent) ? this.opts.trimContent : true;
 
 		this._content = $element[0].querySelector('[data-content]');
 		this._tempHolder = $element[0].querySelector('.sms-temp');
@@ -280,25 +281,48 @@ export default class SMSEditorCtrl {
 					return `${p1}<a href="javascript: void(0);">${p2}</a>${p3}`;
 				});
 
-		this.opts.text = parsed
-			.replace(inputReg, (result, $1, $2) => {
-				if ($1 === DEFAULT_TYPE_NAME) {
-					return `$$_${this.keywordTextNameConvert($2)}_$$`;
-				}
-				return `$$_[${$1}]${this.keywordTextNameConvert($2)}_$$`;
-			})
-			.replace(imgReg, (result, $1) => {
-				return `{${$1}}`;
-			})
-			.replace(/<[^>]+>/g, '')
-			.replace(/(&nbsp;)|(&lt;)|(&gt;)|(&amp;)/g, result => {
-				return {
-					'&nbsp;': ' ',
-					'&lt;': '<',
-					'&gt;': '>',
-					'&amp;': '&'
-				}[result];
-			});
+		// 稍后重构
+		if (this.trimContent) {
+			this.opts.text = parsed
+				.replace(inputReg, (result, $1, $2) => {
+					if ($1 === DEFAULT_TYPE_NAME) {
+						return `$$_${this.keywordTextNameConvert($2)}_$$`;
+					}
+					return `$$_[${$1}]${this.keywordTextNameConvert($2)}_$$`;
+				})
+				.replace(imgReg, (result, $1) => {
+					return `{${$1}}`;
+				})
+				.replace(/<[^>]+>/g, '')
+				.replace(/(&nbsp;)|(&lt;)|(&gt;)|(&amp;)/g, result => {
+					return {
+						'&nbsp;': ' ',
+						'&lt;': '<',
+						'&gt;': '>',
+						'&amp;': '&'
+					}[result];
+				}).trim();
+		} else {
+			this.opts.text = parsed
+				.replace(inputReg, (result, $1, $2) => {
+					if ($1 === DEFAULT_TYPE_NAME) {
+						return `$$_${this.keywordTextNameConvert($2)}_$$`;
+					}
+					return `$$_[${$1}]${this.keywordTextNameConvert($2)}_$$`;
+				})
+				.replace(imgReg, (result, $1) => {
+					return `{${$1}}`;
+				})
+				.replace(/<[^>]+>/g, '')
+				.replace(/(&nbsp;)|(&lt;)|(&gt;)|(&amp;)/g, result => {
+					return {
+						'&nbsp;': ' ',
+						'&lt;': '<',
+						'&gt;': '>',
+						'&amp;': '&'
+					}[result];
+				});
+		}
 	}
 
 

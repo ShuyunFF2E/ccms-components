@@ -114,6 +114,7 @@ angular.module('componentsApp', ['ccms.components'])
 				unsubscribeText: '退订回复TD',
 				//useUnsubscribe: true,
 				content: '亲爱的$$_[taobao]XMTB_$$ / $$_[taobao]XMJDWMRZ_$$, 您的订单$$_[taobao]DDBH_$$正在派送.  ($$ $ $$) 签名: $$_XBL_$$ http://www.taobao.com# {emo-5}',
+				// trimContent: false, // 是否 trim content 两边的空格, 默认是 true, 注意 目前标准版是 trim 的. B 版不期望处理, 没办法你懂得, 真心不期望这样做, 期望产品经理可以统一行为
 				signature: '[通道签名 1]',
 				disabled: false
 			},
