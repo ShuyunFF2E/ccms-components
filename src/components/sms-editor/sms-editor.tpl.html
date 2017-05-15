@@ -10,7 +10,7 @@
 			<li class="sms-keyword"
 				ng-repeat="keyword in ctrl.opts.keywords | filter:{_display: true}"
 				ng-class="{'sms-disabled-keyword': keyword.disabled}"
-				ng-click="ctrl.insertKeyword(keyword.text, keyword.type, keyword.disabled)">#{{keyword.text}}
+				ng-click="ctrl.insertKeyword(keyword.text, keyword.type, keyword.disabled, keyword.prefix, keyword.suffix)">#{{keyword.text}}
 			</li>
 		</ul>
 
