@@ -184,8 +184,7 @@ export default class SMSEditorCtrl {
 	 */
 	parseTag(text = '') {
 		return SMSEditorCtrl.flatCode(text).replace(/\$\$_(?:\[(\S*?)])?(.+?)_\$\$/g, (result, $1, $2) => {
-			const keyword = this.getKeywordConfig($2, false);
-			return this.createInput(this.keywordTextNameConvert($2, false), $1, keyword && keyword.prefix, keyword && keyword.suffix);
+			return this.createInput(this.keywordTextNameConvert($2, false), $1);
 		});
 	}
 
