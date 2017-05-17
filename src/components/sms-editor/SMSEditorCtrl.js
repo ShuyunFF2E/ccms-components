@@ -80,11 +80,18 @@ export default class SMSEditorCtrl {
 	 * @param text
 	 * @returns {string}
 	 */
-	static flatCode(text = '') {
-		return text.replace(/(&nbsp;?)|(&lt;?)|(&gt;?)|(&amp;?)/g, result => {
-			return '&amp;' + result.slice(1);
-		})
-		.replace(/</g, '&lt;');
+	static flatCode(text = '', trimContent = true) {
+		// 待重构
+		if (trimContent) {
+			return text.replace(/(&nbsp;?)|(&lt;?)|(&gt;?)|(&amp;?)/g, result => {
+				return '&amp;' + result.slice(1);
+			}).replace(/</g, '&lt;');
+		} else {
+			// 针对文本前后空格不 trim 的设置, 将空格转成 &nbsp; 因为 html 不显示文本的前后空格
+			return text.replace(/(&nbsp;?)|(&lt;?)|(&gt;?)|(&amp;?)/g, result => {
+				return '&amp;' + result.slice(1);
+			}).replace(/</g, '&lt;').replace(/\s/g, '&nbsp;');
+		}
 	}
 
 	static wrap(keyword, arg = {}) {
@@ -183,7 +190,7 @@ export default class SMSEditorCtrl {
 	 * @returns {string}
 	 */
 	parseTag(text = '') {
-		return SMSEditorCtrl.flatCode(text).replace(/\$\$_(?:\[(\S*?)])?(.+?)_\$\$/g, (result, $1, $2) => {
+		return SMSEditorCtrl.flatCode(text, this.trimContent).replace(/\$\$_(?:\[(\S*?)])?(.+?)_\$\$/g, (result, $1, $2) => {
 			return this.createInput(this.keywordTextNameConvert($2, false), $1);
 		});
 	}
@@ -263,7 +270,7 @@ export default class SMSEditorCtrl {
 			});
 
 		// 图片, 关键字高亮, URL, 手机及固话号码下划线
-		this.opts.preview = SMSEditorCtrl.flatCode(this._tempHolder.textContent)
+		this.opts.preview = SMSEditorCtrl.flatCode(this._tempHolder.textContent, this.trimContent)
 				.replace(/\{\{([^}]+)}}/g, (result, $1) => {
 					return `<img src="${$1}">`;
 				})
