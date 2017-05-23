@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Thu May 11 15:15:29 2017
+Created by FontForge 20120731 at Tue May 23 10:35:30 2017
  By admin
 </metadata>
 <defs>
@@ -16,10 +16,10 @@ Created by FontForge 20120731 at Thu May 11 15:15:29 2017
     ascent="896"
     descent="-128"
     x-height="792"
-    bbox="2 -113 1291 878"
+    bbox="0 -113 1291 896"
     underline-thickness="0"
     underline-position="0"
-    unicode-range="U+0078-E733"
+    unicode-range="U+0078-E734"
   />
 <missing-glyph 
  />
@@ -643,5 +643,9 @@ q0 -83 31.5 -158.5t90.5 -133.5q57 -57 133 -89t160 -32h1q55 0 106 14l-15 54q-43 -
     <glyph glyph-name="square-spot" unicode="&#xe733;" 
 d="M925 226l-359 125q-10 4 -14 -0.5t-1 -13.5l135 -337q4 -9 9.5 -9.5t10.5 8.5q33 67 62 109l88 -85q7 -6 16 -6q8 0 15 6l20 19q7 6 7 15q0 8 -6 14l-88 85q19 11 45.5 24t43.5 20l17 8q10 4 9.5 9t-10.5 9v0zM572 71h-425v685h714v-399l16 -4l41 -11v471h-829v-799h498
 l-11 40z" />
+    <glyph glyph-name="message" unicode="&#xe734;" 
+d="M717 455q0 -25 17 -42t42 -17t42 17t17 41.5t-17 42t-42 17.5t-42 -17.5t-17 -41.5v0zM455 455q0 -25 17 -42t41.5 -17t42 17t17.5 41.5t-17.5 42t-42 17.5t-41.5 -17.5t-17 -41.5v0zM193 455q0 -25 17 -42t41.5 -17t42 17t17.5 41.5t-17.5 42t-42 17.5t-41.5 -17.5
+t-17 -41.5v0zM512 55h-1q-83 0 -161 24l-37 -34l3 -1l-70 -49l-1 90v41q-93 55 -146.5 141t-53.5 186q0 108 62.5 200t170 145.5t234.5 53.5t234.5 -53.5t170 -145.5t62.5 -200t-62.5 -200t-170 -145t-234.5 -53v0zM512 896q-104 0 -199 -35t-163.5 -94.5t-109 -141.5
+t-40.5 -172q0 -105 53.5 -197t146.5 -154v-187l168 113q70 -18 144 -18q104 0 199 35t163.5 94.5t109 141.5t40.5 172t-40.5 172t-109 141.5t-163.5 94.5t-199 35z" />
   </font>
 </defs></svg>
