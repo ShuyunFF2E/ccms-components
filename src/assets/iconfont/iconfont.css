@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1495506930803'); /* IE9*/
-  src: url('iconfont.eot?t=1495506930803#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1495506930803') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1495506930803') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1495506930803#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1497945442233'); /* IE9*/
+  src: url('iconfont.eot?t=1497945442233#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1497945442233') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1497945442233') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1497945442233#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -364,4 +364,12 @@
 .icon-square-spot:before { content: "\e733"; }
 
 .icon-message:before { content: "\e734"; }
+
+.icon-statistics:before { content: "\e736"; }
+
+.icon-cry:before { content: "\e739"; }
+
+.icon-normal:before { content: "\e73a"; }
+
+.icon-smile:before { content: "\e73b"; }
 
