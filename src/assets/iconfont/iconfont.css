@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1497945442233'); /* IE9*/
-  src: url('iconfont.eot?t=1497945442233#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1497945442233') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1497945442233') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1497945442233#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1500270843268'); /* IE9*/
+  src: url('iconfont.eot?t=1500270843268#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1500270843268') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1500270843268') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1500270843268#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -372,4 +372,16 @@
 .icon-normal:before { content: "\e73a"; }
 
 .icon-smile:before { content: "\e73b"; }
+
+.icon-share:before { content: "\e73f"; }
+
+.icon-shop11:before { content: "\e747"; }
+
+.icon-diannao:before { content: "\e689"; }
+
+.icon-tips:before { content: "\e68a"; }
+
+.icon-dengluerweima:before { content: "\e68b"; }
+
+.icon-dengludiannao:before { content: "\e68c"; }
 
