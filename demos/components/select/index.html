@@ -97,6 +97,20 @@
 			</div>
 		</div>
 	</div>
+	<div class="group">
+		<div class="demo">
+			<h3>单选（带icon）</h3>
+			<span>当前值: {{ctrl.value5}}</span>
+			<cc-dropdown-select
+					placeholder="我默认"
+					model="ctrl.value5"
+					datalist="ctrl.datalist5"
+					searchable="true"
+					mapping="ctrl.fieldsMap"
+			>
+			</cc-dropdown-select>
+		</div>
+	</div>
 </main>
 
 <script src="/components.js"></script>
@@ -107,6 +121,7 @@
 			this.value2 = null;
 			this.value3 = [];
 			this.value4 = ['xa', 'sh'];
+			this.value5 = '上海';
 			this.datalist1 = [
 				{title: '北京', value: 'bj'},
 				{title: '上海', value: 'sh'},
@@ -118,6 +133,18 @@
 				{title: '武汉', value: 'wh'},
 				{title: '重庆', value: 'cq'},
 				{title: '广州', value: 'gz'}
+			];
+			this.datalist5 = [
+				{title: '北京', value: 'bj', icon: 'icon-phone'},
+				{title: '上海', value: 'sh', icon: 'icon-phone'},
+				{title: '123789', value: 123789, icon: 'icon-phone'},
+				{title: '123456', value: 123456, icon: 'icon-phone'},
+				{title: '深圳', value: 'sz', icon: 'icon-phone'},
+				{title: '西安', value: 'xa', icon: 'icon-phone'},
+				{title: '南京', value: 'nj', icon: 'icon-phone'},
+				{title: '武汉', value: 'wh', icon: 'icon-phone'},
+				{title: '重庆', value: 'cq', icon: 'icon-phone'},
+				{title: '广州', value: 'gz', icon: 'icon-phone'}
 			];
 			this.setValue = function(newValue) {
 				this.value2 = newValue;
@@ -146,7 +173,8 @@
 			this.datalist2 = ['北京', '上海', '深圳', '广州'];
 			this.fieldsMap = {
 				valueField: 'value',
-				displayField: 'title'
+				displayField: 'title',
+				iconField: 'icon'
 			};
 		});
 </script>
