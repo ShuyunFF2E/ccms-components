@@ -6,7 +6,8 @@ export default class DropdownSelectCtrl {
 	// 选项 item 字段映射
 	static defaultMapping = {
 		valueField: 'value',
-		displayField: 'title'
+		displayField: 'title',
+		iconField: 'icon'
 	};
 
 	constructor() {
@@ -184,14 +185,17 @@ export default class DropdownSelectCtrl {
 
 	setModelValue(modelValue) {
 		const displayField = this.mapping.displayField;
+		const iconField = this.mapping.iconField;
 		const newItem = this.getItemByValue(modelValue);
 
 		if (newItem) {
 			this.title = newItem[displayField];
 			this.model = modelValue;
+			this.icon = newItem[iconField];
 		} else {
 			this.title = '';
 			this.model = null;
+			this.icon = false;
 			this.items = this._clampedDatalist;
 		}
 	}
@@ -226,6 +230,7 @@ export default class DropdownSelectCtrl {
 		if (item) {
 			this.title = item[this.mapping.displayField];
 			this.model = item[this.mapping.valueField];
+			this.icon = item[this.mapping.iconField];
 			this.focusAt(index);
 			this.close();
 		}
