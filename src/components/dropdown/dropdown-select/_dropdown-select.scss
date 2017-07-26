@@ -17,6 +17,10 @@ cc-dropdown-select {
 		background-color: #fff;
 		border: solid 1px $input-border-color;
 
+	  	i.iconfont {
+			line-height: 28px;
+		}
+
 		@at-root .active#{&} {
 			border-color: $input-active-border;
 		}
@@ -76,6 +80,14 @@ cc-dropdown-select {
 			@extend %action-icon;
 			@extend .icon-arrow;
 			font-size: 12px;
+		}
+	}
+
+  	.dropdown-select-input-wrap.has-icon {
+	  	padding-left: 9px;
+
+	  	input {
+		  padding-left: 4px;
 		}
 	}
 
