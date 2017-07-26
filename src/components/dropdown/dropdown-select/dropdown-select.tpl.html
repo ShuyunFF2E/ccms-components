@@ -5,7 +5,7 @@
 		on-dropdown-open="$ctrl.onOpen()"
 		on-dropdown-close="$ctrl.onClose()">
 	<div class="dropdown-select-input-wrap" ng-class="{ 'has-icon': $ctrl.icon }">
-		<i class="iconfont {{$ctrl.icon}}" ng-show="$ctrl.icon"></i>
+		<i class="iconfont {{$ctrl.icon}}" ng-if="$ctrl.icon"></i>
 		<input type="text" class="dropdown-select-input" placeholder="{{$ctrl.placeholder}}"
 				ng-readonly="!$ctrl.searchable"
 				ng-focus="$ctrl.isActive = true"
