@@ -44,18 +44,21 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
-					width: '100px'
+					width: '100px',
+					tooltip: '这是一个tooltip!'
 				},
 				{
 					field: 'age',
-					displayName: '年龄', align: 'center'
+					displayName: '年龄', align: 'center',
+					tooltip: '这是一个tooltip!'
 				},
 				{
 					field: 'gender',
 					displayName: '性别',
 					align: 'right',
 					width: '100px',
-					cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>'
+					cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>',
+					tooltip: '这是一个tooltip!'
 				}
 			],
 			transformer: {
@@ -84,7 +87,8 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					displayName: '姓名',
 					align: 'center',
 					width: '100px',
-					sortProp: 'name'
+					sortProp: 'name',
+					tooltip: '这是一个测试'
 				},
 				{field: 'age', displayName: '年龄', align: 'center', sortOrder: 'age'},
 				{
@@ -140,7 +144,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					align: 'left'
 				},
 				{field: 'age', displayName: '年龄', align: 'center'},
-				{field: 'gender', displayName: '性别', align: 'right', isHidden: true}
+				{field: 'gender', displayName: '性别', align: 'right', isHidden: true, tooltip: '这是一个测试'}
 			],
 			enableHiddenColumns: true,
 			showPagination: false
