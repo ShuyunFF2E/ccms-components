@@ -2,14 +2,20 @@
 <th ng-repeat="column in $ctrl.opts.columnsDef track by $index"
 	ng-if="!column.isHidden"
 	ng-class="{'column-sort':column.sortProp}"
-	ng-click="$ctrl.toggleSort(column)"
 	ng-style="{width:column.width, 'text-align':column.align}">
 
-	<span ng-bind="column.displayName"></span>
+	<span ng-click="$ctrl.toggleSort(column)">
+		<span ng-bind="column.displayName"></span>
 
-	<span class="iconfont icon-sort"
-	   ng-class="{'column-sort-none':column.sortOrder===undefined,'column-sort-asc':column.sortOrder==='asc','column-sort-desc':column.sortOrder==='desc'}"
-	   ng-if="column.sortProp"
+		<span class="iconfont icon-sort"
+		   ng-class="{'column-sort-none':column.sortOrder===undefined,'column-sort-asc':column.sortOrder==='asc','column-sort-desc':column.sortOrder==='desc'}"
+		   ng-if="column.sortProp"
+		></span>
+	</span>
+
+	<span ng-if="column.tooltip"
+		  cc-tooltip="column.tooltip"
+		  class="iconfont icon-question-mark tooltip"
 	></span>
 </th>
 <th class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns" cc-dropdown>
