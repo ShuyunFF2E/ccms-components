@@ -68,6 +68,11 @@ cc-grid {
 			font-weight: 400;
 			padding: $td-padding;
 			text-align: left;
+			.tooltip {
+				color: rgba(40, 135, 223, 0.40);
+				font-size: 14px;
+				vertical-align: text-top;
+			}
 		}
 
 		td {
