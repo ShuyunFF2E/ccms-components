@@ -5,7 +5,7 @@
 		on-dropdown-open="$ctrl.onOpen()"
 		on-dropdown-close="$ctrl.onClose()">
 	<div class="dropdown-select-input-wrap" ng-class="{ 'has-icon': $ctrl.icon }">
-		<i class="iconfont {{$ctrl.icon}}" ng-if="$ctrl.icon"></i>
+		<cc-icon ng-if="$ctrl.icon" symbol="{{$ctrl.icon}}"></cc-icon>
 		<input type="text" class="dropdown-select-input" placeholder="{{$ctrl.placeholder}}"
 				ng-readonly="!$ctrl.searchable"
 				ng-focus="$ctrl.isActive = true"
@@ -25,7 +25,7 @@
 			<li ng-repeat="item in $ctrl.items track by $index"
 					ng-click="$ctrl.selectItemAt($index);"
 					ng-class="{focus: $index === $ctrl.focusIndex}">
-				<i class="iconfont {{item.icon}}" ng-if="item.icon"></i>
+				<cc-icon ng-if="item.icon" symbol="{{item.icon}}"></cc-icon>
 				<span cc-bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
 			</li>
 			<li class="empty-list-item"

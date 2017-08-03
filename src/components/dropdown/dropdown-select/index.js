@@ -5,6 +5,7 @@ import bindHtml from '../../bind-html';
 import './_dropdown-select.scss';
 import template from './dropdown-select.tpl.html';
 import DropdownSelectCtrl from './DropdownSelectCtrl';
+import icon from '../../icon';
 
 const dropdownSelectDDO = {
 	restrict: 'E',
@@ -29,7 +30,7 @@ const dropdownSelectDDO = {
 };
 
 export default angular
-	.module('ccms.components.dropdownSelect', [bindHtml])
+	.module('ccms.components.dropdownSelect', [bindHtml, icon])
 	.directive('ccDropdownSelect', () => dropdownSelectDDO)
 	.name;
 

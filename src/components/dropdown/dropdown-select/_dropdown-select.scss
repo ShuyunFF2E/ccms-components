@@ -16,10 +16,7 @@ cc-dropdown-select {
 		display: flex;
 		background-color: #fff;
 		border: solid 1px $input-border-color;
-
-	  	i.iconfont {
-			line-height: 28px;
-		}
+		align-items: center;
 
 		@at-root .active#{&} {
 			border-color: $input-active-border;
@@ -108,9 +105,11 @@ cc-dropdown-select {
 			background-color: #fff;
 			li {
 				@include cut-long-text;
+				display: flex;
+				align-items: center;
 				box-sizing: border-box;
 				height: 30px;
-				line-height: 30px;
+				line-height: 1;
 				padding: 0 9px;
 				font-size: 12px;
 				background: #fff;
