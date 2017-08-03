@@ -12,7 +12,7 @@ import './index.scss';
 const ddo = {
 	template,
 	bindings: {
-		id: '@',
+		symbol: '@',
 		className: '@'
 	}
 };
