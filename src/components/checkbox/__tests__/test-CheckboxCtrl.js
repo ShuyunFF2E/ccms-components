@@ -9,7 +9,7 @@ import { assert } from 'chai';
 import CheckboxCtrl from '../CheckboxCtrl.js';
 
 describe('CheckboxCtrl', () => {
-	let checkboxCtrl, bindings;
+	let checkboxCtrl, bindings, $event, marked;
 
 	before(() => {
 		checkboxCtrl = new CheckboxCtrl();
@@ -18,6 +18,14 @@ describe('CheckboxCtrl', () => {
 		checkboxCtrl.ngModelController = {
 			$setViewValue: function(value) {
 				checkboxCtrl.ngModel = value;
+			}
+		};
+
+		marked = 0;
+
+		$event = {
+			stopImmediatePropagation() {
+				marked++;
 			}
 		};
 	});
@@ -54,7 +62,8 @@ describe('CheckboxCtrl', () => {
 
 	it('toggleClick', () => {
 		assert.deepEqual(checkboxCtrl.ngChecked, true);
-		checkboxCtrl.toggleClick();
+		checkboxCtrl.toggleClick($event);
+		assert.equal(marked, 0);
 		assert.deepEqual(checkboxCtrl.ngChecked, false);
 		assert.deepEqual(checkboxCtrl.ngModel, 'f');
 
@@ -62,7 +71,8 @@ describe('CheckboxCtrl', () => {
 			ngDisabled: true
 		};
 		Object.assign(checkboxCtrl, bindings);
-		checkboxCtrl.toggleClick();
+		checkboxCtrl.toggleClick($event);
+		assert.equal(marked, 1);
 		assert.deepEqual(checkboxCtrl.ngChecked, false);
 		assert.deepEqual(checkboxCtrl.ngModel, 'f');
 
@@ -72,7 +82,8 @@ describe('CheckboxCtrl', () => {
 		};
 		Object.assign(checkboxCtrl, bindings);
 		assert.deepEqual(checkboxCtrl.indeterminate, true);
-		checkboxCtrl.toggleClick();
+		checkboxCtrl.toggleClick($event);
+		assert.equal(marked, 1);
 		assert.deepEqual(checkboxCtrl.indeterminate, false);
 		assert.deepEqual(checkboxCtrl.ngChecked, true);
 		assert.deepEqual(checkboxCtrl.ngModel, 't');
