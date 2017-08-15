@@ -26,7 +26,7 @@
 				<cc-checkbox
 						ng-disabled="!column.isHidden && $ctrl.getShownColumnsCount() === 1"
 						ng-checked="!column.isHidden"
-						ng-click="$ctrl.toggleColumnByIndex($index)">{{ column.displayName }}</cc-checkbox>
+						ng-click="$ctrl.toggleColumnByIndex($index)" title={{column.displayName}}>{{ column.displayName }}</cc-checkbox>
 			</li>
 		</ul>
 	</div>

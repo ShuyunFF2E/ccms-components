@@ -124,7 +124,7 @@ cc-grid {
 				top: 100%;
 				right: -1px;
 				z-index: 1;
-				width: 156px;
+				width: 168px;
 				max-height: 162px;
 				overflow: auto;
 				border: solid 1px #ccc;
@@ -141,6 +141,11 @@ cc-grid {
 					cc-checkbox {
 						width: 100%;
 						padding: 8px;
+						span {
+							width: 118px;
+							display: inline-block;
+							@include cut-long-text;
+						}
 					}
 				}
 			}
