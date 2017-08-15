@@ -71,7 +71,7 @@ cc-grid {
 			.tooltip {
 				color: rgba(40, 135, 223, 0.40);
 				font-size: 14px;
-				vertical-align: text-top;
+				vertical-align: baseline;
 			}
 		}
 
@@ -124,7 +124,7 @@ cc-grid {
 				top: 100%;
 				right: -1px;
 				z-index: 1;
-				width: 156px;
+				width: 168px;
 				max-height: 162px;
 				overflow: auto;
 				border: solid 1px #ccc;
@@ -141,6 +141,11 @@ cc-grid {
 					cc-checkbox {
 						width: 100%;
 						padding: 8px;
+						span {
+							width: 118px;
+							display: inline-block;
+							@include cut-long-text;
+						}
 					}
 				}
 			}

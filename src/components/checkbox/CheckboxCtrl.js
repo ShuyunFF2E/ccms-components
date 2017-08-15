@@ -28,8 +28,12 @@ export default class CheckboxController {
 	 * @name toggleClick
 	 * toggle the checked value when user click the checkbox
 	 */
-	toggleClick() {
-		if (this.ngDisabled) return false;
+	toggleClick($event) {
+		if (this.ngDisabled) {
+			// 当 checkbox 不可用时, 阻止其它注册的 click listener
+			$event.stopImmediatePropagation();
+			return false;
+		}
 		this.indeterminate = false;
 		this.ngChecked = !this.ngChecked;
 		this.ngModelController && this.updateNgModel(this.ngChecked);
