@@ -260,12 +260,12 @@ cc-grid {
 	}
 
 	.column-sort-asc {
-		color: blue;
+		color: #0083BA;
 		// 升序
 		transform: rotate($icon-asc-sort-deg);
 	}
 	.column-sort-desc {
-		color: blue;
+		color: #0083BA;
 		// 降序
 		transform: rotate(0deg);
 	}
