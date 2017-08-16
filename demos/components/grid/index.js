@@ -144,6 +144,16 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					align: 'left'
 				},
 				{field: 'age', displayName: '年龄', align: 'center'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
+				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'},
 				{field: 'gender', displayName: '性别(这是一个超长的 column 名称)', align: 'right', isHidden: true, tooltip: '这是一个测试'}
 			],
 			enableHiddenColumns: true,
