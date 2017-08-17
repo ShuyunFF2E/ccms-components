@@ -181,19 +181,24 @@ cc-grid {
 			font-family: $font-family;
 			font-size: $font-size-large;
 			color: $font-color-comment;
-			> .default {
-				@extend .iconfont;
-				@extend .icon-caution;
 
-				> .msg {
-					font-size: 14px;
+			span {
+				font-family: $font-family;
+				font-size: $font-size-large;
+				height: 40px;
+				line-height: 40px;
+				color: $font-color-comment;
+				vertical-align: middle;
+
+				&.msg {
+					margin-left: 15px;
 				}
 
-				&::before {
+				&.warning {
 					color: #DDD;
-					margin-right: 10px;
-					vertical-align: middle;
 					font-size: 40px;
+					@extend .iconfont;
+					@extend .icon-caution;
 				}
 			}
 		}
@@ -234,14 +239,16 @@ cc-grid {
 		}
 
 		> .reload {
-			@extend .iconfont;
-			@extend .icon-refresh;
 			padding: 5px 0;
-			font-size: 12px;
 			cursor: pointer;
 
-			&::before {
-				margin-right: 3px;
+			.icon-refresh {
+				font-size: 12px;
+				@extend .iconfont;
+				@extend .icon-refresh;
+				&::before {
+					margin-right: 3px;
+				}
 			}
 		}
 
