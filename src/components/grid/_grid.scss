@@ -124,7 +124,7 @@ cc-grid {
 				top: 100%;
 				right: -1px;
 				z-index: 1;
-				width: 168px;
+				width: 178px;
 				max-height: 162px;
 				overflow: auto;
 				border: solid 1px #ccc;
@@ -135,12 +135,12 @@ cc-grid {
 				li {
 					white-space: nowrap;
 					cursor: pointer;
+					padding: 8px;
 					&:hover {
 						background: #eef8fc;
 					}
 					cc-checkbox {
 						width: 100%;
-						padding: 8px;
 						span {
 							width: 118px;
 							display: inline-block;
@@ -178,16 +178,27 @@ cc-grid {
 		}
 
 		> .error-message {
-			> .default {
-				@extend .iconfont;
-				@extend .icon-caution;
+			font-family: $font-family;
+			font-size: $font-size-large;
+			color: $font-color-comment;
 
-				color: #999;
+			span {
+				font-family: $font-family;
+				font-size: $font-size-large;
+				height: 40px;
+				line-height: 40px;
+				color: $font-color-comment;
+				vertical-align: middle;
 
-				&::before {
-					margin-right: 10px;
-					vertical-align: middle;
+				&.msg {
+					margin-left: 15px;
+				}
+
+				&.warning {
+					color: #DDD;
 					font-size: 40px;
+					@extend .iconfont;
+					@extend .icon-caution;
 				}
 			}
 		}
@@ -228,14 +239,16 @@ cc-grid {
 		}
 
 		> .reload {
-			@extend .iconfont;
-			@extend .icon-refresh;
 			padding: 5px 0;
-			font-size: 12px;
 			cursor: pointer;
 
-			&::before {
-				margin-right: 3px;
+			.icon-refresh {
+				font-size: 12px;
+				@extend .iconfont;
+				@extend .icon-refresh;
+				&::before {
+					margin-right: 3px;
+				}
 			}
 		}
 
@@ -260,12 +273,12 @@ cc-grid {
 	}
 
 	.column-sort-asc {
-		color: blue;
+		color: #0083BA;
 		// 升序
 		transform: rotate($icon-asc-sort-deg);
 	}
 	.column-sort-desc {
-		color: blue;
+		color: #0083BA;
 		// 降序
 		transform: rotate(0deg);
 	}
@@ -287,7 +300,8 @@ cc-grid {
 			}
 
 			&.warning {
-				font-size: 44px;
+				color: #DDD;
+				font-size: 40px;
 				@extend .iconfont;
 				@extend .icon-caution;
 			}

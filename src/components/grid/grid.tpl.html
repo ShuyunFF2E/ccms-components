@@ -23,7 +23,9 @@
 	<div class="cc-grid-footer" ng-if="$ctrl.opts.showPagination">
 		<span class="selected-items-count" ng-show="$ctrl.selectedItems.length">已选<span ng-bind="$ctrl.selectedItems.length"></span>条</span>
 		<span class="total-items-count">共<span ng-bind="$ctrl.opts.pager.totals"></span>条</span>
-		<span class="reload" ng-click="$ctrl.onPagerChange($ctrl.opts.pager.pageNum, $ctrl.opts.pager.pageSize)">刷新</span>
+		<span class="reload" ng-click="$ctrl.onPagerChange($ctrl.opts.pager.pageNum, $ctrl.opts.pager.pageSize)">
+			<span class="icon-refresh"></span>刷新
+		</span>
 		<span class="delimiter"></span>
 		<cc-pagination
 				page-num="$ctrl.opts.pager.pageNum"
