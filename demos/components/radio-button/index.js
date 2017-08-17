@@ -14,7 +14,7 @@
 
 			$scope.demo = {
 				value: 'a',
-				setting: ['a', 'b', 'c', 'd'],
+				setting: ['a', 'b', 'c'],
 				disabled: false
 			};
 

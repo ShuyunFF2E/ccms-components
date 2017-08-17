@@ -41,7 +41,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			// enableMultipleFieldsSort:true,
 			columnsDef: [
 				{
-					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
+					cellTemplate: '<span style="color:#145681" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
 					width: '100px',
@@ -83,7 +83,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			},
 			columnsDef: [
 				{
-					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
+					cellTemplate: '<span style="color:#145681" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
 					displayName: '姓名',
 					align: 'center',
 					width: '100px',
@@ -124,7 +124,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			// response: null,
 			columnsDef: [
 				{
-					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
+					cellTemplate: '<span style="color:#145681" ng-bind="entity.name" ng-click="app.click()"></span>',
 					displayName: '姓名',
 					align: 'left'
 				},
@@ -139,7 +139,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			externalData: [{name: 'kuitos', age: 10, gender: '男'}, {name: 'xxx', age: 11, gender: '女'}],
 			columnsDef: [
 				{
-					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
+					cellTemplate: '<span style="color:#145681" ng-bind="entity.name" ng-click="app.click()"></span>',
 					displayName: '姓名',
 					align: 'left'
 				},
@@ -165,7 +165,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			resource: $resource('/pages/10'),
 			columnsDef: [
 				{
-					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
+					cellTemplate: '<span style="color:#145681" ng-bind="entity.name" ng-click="app.click()"></span>',
 					displayName: '姓名',
 					align: 'left'
 				},
@@ -180,7 +180,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			externalData: [],
 			columnsDef: [
 				{
-					cellTemplate: '<span style="color:blue" ng-bind="entity.name" ng-click="app.click()"></span>',
+					cellTemplate: '<span style="color:#145681" ng-bind="entity.name" ng-click="app.click()"></span>',
 					displayName: '姓名',
 					align: 'left'
 				},
