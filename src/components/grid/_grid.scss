@@ -178,13 +178,19 @@ cc-grid {
 		}
 
 		> .error-message {
+			font-family: $font-family;
+			font-size: $font-size-large;
+			color: $font-color-comment;
 			> .default {
 				@extend .iconfont;
 				@extend .icon-caution;
 
-				color: #999;
+				> .msg {
+					font-size: 14px;
+				}
 
 				&::before {
+					color: #DDD;
 					margin-right: 10px;
 					vertical-align: middle;
 					font-size: 40px;
@@ -287,7 +293,8 @@ cc-grid {
 			}
 
 			&.warning {
-				font-size: 44px;
+				color: #DDD;
+				font-size: 40px;
 				@extend .iconfont;
 				@extend .icon-caution;
 			}
