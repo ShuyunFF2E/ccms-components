@@ -6,7 +6,7 @@
 
 import angular from 'angular';
 import template from './index.tpl.html';
-import '../../assets/iconfont/iconfont';
+import 'ccms-icons';
 import './index.scss';
 
 const ddo = {
