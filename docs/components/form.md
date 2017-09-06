@@ -65,7 +65,7 @@ form标签
 | name(可选)  |string|表单控制器名称,供手动校验表单时使用|
 | ng-form(可选)  |string|ngForm指令|
 | tooltip-type(可选)  |string|校验提示的展现形式。minor: 默认以tooltip的形式展示，应用于表单比较紧凑空间不足的场景;major: 空间足够则以输入框后追加文字提示信息的方式展示错误信息。 默认为minor|
-| placement(可选)  |string|校验提示的展现位置。auto: 位置自适应;top-left: 处于验证的高顶部(滚动条出现建议加上此属性)。 默认为auto|
+| tooltip-placement(可选)  |string|校验提示的展现位置。auto: 位置自适应;top-left: 处于验证的高顶部(滚动条出现建议加上此属性)。 默认为auto|
 
 {% callout info %}
 当angular内置的校验器够用时，不需要在表单上使用`validators`指令声明，直接在输入控件上用`validator`即可，且validator不需要做任何初始化。

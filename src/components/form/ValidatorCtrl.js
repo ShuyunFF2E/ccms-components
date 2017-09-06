@@ -72,7 +72,7 @@ export default class ValidatorCtrl {
 		this.tooltip = null;
 
 		this.tooltipType = this.formCtrl.element.getAttribute('tooltip-type');
-		this.placement = this.formCtrl.element.getAttribute('placement');
+		this.tooltipPlacement = this.formCtrl.element.getAttribute('tooltip-placement');
 
 		// 根据当前元素绑定的验证器id,将相应的validator赋给ctrl.$validators
 		// angular private api
@@ -156,7 +156,7 @@ export default class ValidatorCtrl {
 	}
 
 	_openTooltip(msg) {
-		this.tooltip = this.tooltip || new Tooltip(this._$element[0], this.tooltipType ? `error-${this.tooltipType}` : TOOLTIP_TYPE.ERROR_MINOR, null, this.placement ? this.placement : undefined);
+		this.tooltip = this.tooltip || new Tooltip(this._$element[0], this.tooltipType ? `error-${this.tooltipType}` : TOOLTIP_TYPE.ERROR_MINOR, null, this.tooltipPlacement ? this.tooltipPlacement : undefined);
 		this.tooltip.open(msg);
 	}
 
