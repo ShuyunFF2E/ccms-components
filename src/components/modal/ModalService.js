@@ -40,7 +40,7 @@ const ModalService = {
 	 *
 	 * @returns {Modal}
 	 */
-	modal({scope, title, style, fullscreen = false, hasFooter = true, body, uid, __body, footer, locals, controller, controllerAs = '$ctrl', bindings, onClose = noop}) {
+	modal({scope, title, style, fullscreen = false, hasFooter = true, body, uid, __body, header, footer, locals, controller, controllerAs = '$ctrl', bindings, onClose = noop}) {
 
 		const $compile = injector.get('$compile');
 		const $rootScope = injector.get('$rootScope');
@@ -64,9 +64,10 @@ const ModalService = {
 		// 私有属性 __body 允许配置字符串模板
 		let tplPromises = {
 			bodyTpl: __body ? $q.resolve(__body) : $templateRequest(body),
-			footerTpl: footer ? $templateRequest(footer) : $q.resolve(null)
+			footerTpl: footer ? $templateRequest(footer) : $q.resolve(null),
+			headerTpl: header ? $templateRequest(header) : $q.resolve(null)
 		};
-		$q.all(tplPromises).then(({bodyTpl, footerTpl}) => {
+		$q.all(tplPromises).then(({bodyTpl, footerTpl, headerTpl}) => {
 
 			// 复制modal的scope中支持的属性
 			modalScope.title = title;
@@ -122,6 +123,9 @@ const ModalService = {
 			modalHTMLElement.querySelector(CONSTANT.BODY_SELECTOR).innerHTML = bodyTpl;
 			if (footerTpl) {
 				modalHTMLElement.querySelector(CONSTANT.FOOTER_SELECTOR).innerHTML = footerTpl;
+			}
+			if (headerTpl) {
+				modalHTMLElement.querySelector(CONSTANT.HEADER_SELECTOR).innerHTML = headerTpl;
 			}
 
 			// 如果配置了没有底部,则手动将底部块移除.这里不采用ng-if的指令方式是因为$compile是一个异步过程,会导致后面的计算出问题
