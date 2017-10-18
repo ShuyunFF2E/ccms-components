@@ -132,7 +132,7 @@ export default class MenusCtrl {
 			// -点击非有效区域自动关闭shopSelect
 			this._$document.bind('click', event => {
 				const target = event.target,
-					targetName = target.className,
+					targetClassList = target.classList,
 					shopClosest = target.closest('.shop-choose-wrapper'),
 					retrackShopClosest = target.closest('.retrack-shop'),
 					menusClosest = target.closest('.menu-shop-show');
@@ -140,7 +140,7 @@ export default class MenusCtrl {
 				// -!targetName.includes('shop-list-btn') 清除点击查看全部收齐问题
 				if (shopClosest === null &&
 					retrackShopClosest == null &&
-					menusClosest === null && targetName.indexOf('shop-search-clear') < 0 && targetName.indexOf('menu-constract-icon') < 0 && targetName.indexOf('expand') < 0 && targetName.indexOf('shop-list-btn') < 0
+					menusClosest === null && !targetClassList.contains('shop-search-clear') && !targetClassList.contains('menu-constract-icon') && !targetClassList.contains('expand') && !targetClassList.contains('shop-list-btn')
 				) {
 					if (this.retract) {
 						this.retract = false;
