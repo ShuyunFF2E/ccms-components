@@ -32,6 +32,7 @@ const ModalService = {
 	 *  hasFooter: {boolean} 是否有底部按钮,默认有
 	 *  body:   {string} 模板url,modal主体内容区
 	 *  footer: {string} 模板url,modal footer按钮区
+	 *  header: {string} 模板url,modal header头部区
 	 *  locals: {object} 需要传递到modal控制器中的数据,以服务的方式注入
 	 *  controller: {function|string} 控制器
 	 *  controllerAs: {string} 控制器别名,默认为$ctrl
