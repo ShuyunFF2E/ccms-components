@@ -249,6 +249,7 @@
 						},
 						body: '/demos/components/modal/modal-body.tpl.html',
 						footer: '/demos/components/modal/modal-footer.tpl.html',
+						header: '/demos/components/modal/modal-header.tpl.html',
 						controller: Controller,
 						bindings: self
 					})
