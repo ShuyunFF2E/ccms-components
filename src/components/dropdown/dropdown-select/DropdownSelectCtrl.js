@@ -44,6 +44,9 @@ export default class DropdownSelectCtrl {
 
 	_prepareOptions() {
 		const defaultMapping = DropdownSelectCtrl.defaultMapping;
+		// TODO: https://github.com/ShuyunFF2E/ccms-components/issues/397, 原因待调研, 一个临时方案:
+		// 在 _prepareWatches 中的第一个 watch 回调函数中访问 this.model 时, 为 null, 所以临时保存一份, 用于初始化值
+		this.initModelValue = this.model;
 		this.mapping = Object.assign({}, defaultMapping, this.mapping);
 
 		if (typeof this.autoClose !== 'undefined' && this.autoClose !== false) {
@@ -64,7 +67,7 @@ export default class DropdownSelectCtrl {
 			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
 
 			// 选中预设值
-			this.setModelValue(this.model);
+			this.setModelValue(this.model || this.initModelValue);
 			// 设置预设值的 focusIndex
 			this.focusAt(this.getItemIndexByItemValue(this.model, this.items));
 		});
