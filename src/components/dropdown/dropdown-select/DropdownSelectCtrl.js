@@ -45,6 +45,7 @@ export default class DropdownSelectCtrl {
 	_prepareOptions() {
 		const defaultMapping = DropdownSelectCtrl.defaultMapping;
 		this.mapping = Object.assign({}, defaultMapping, this.mapping);
+		this.items = this._getClampedDatalist(this.datalist || []);
 
 		if (typeof this.autoClose !== 'undefined' && this.autoClose !== false) {
 			this.autoClose = true;
@@ -62,7 +63,6 @@ export default class DropdownSelectCtrl {
 
 		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
 			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
-
 			// 选中预设值
 			this.setModelValue(this.model);
 			// 设置预设值的 focusIndex
