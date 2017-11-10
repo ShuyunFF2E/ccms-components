@@ -86,7 +86,7 @@
     "angular-es-utils": "^2.1.2",
     "angular-resource": "1.5.8",
     "angular-ui-router": "0.2.18",
-    "ccms-icons": "^0.0.1",
+    "ccms-icons": "latest",
     "jquery": "1.11.0",
     "jquery.nicescroll": "^3.6.8",
     "normalize.css": "^4.1.1"
