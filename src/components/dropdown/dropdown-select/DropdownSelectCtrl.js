@@ -323,9 +323,8 @@ export default class DropdownSelectCtrl {
 		searchFields.forEach(field => {
 			datalist.forEach(item => {
 				const fieldValue = item[field];
-				if (fieldValue.toString().indexOf(text) !== -1 &&
+				if (fieldValue.toString().toLocaleUpperCase().indexOf(text && text.toLocaleUpperCase()) !== -1 &&
 					filteredItems.indexOf(item) === -1) {
-
 					filteredItems.push(item);
 				}
 			});
