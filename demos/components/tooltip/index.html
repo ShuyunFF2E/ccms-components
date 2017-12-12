@@ -4,8 +4,9 @@
 <link rel="import" href="../../common/layout.html">
 
 <main ng-app="app" ng-controller="appCtrl as app">
+	<cc-icon symbol="icon-question-mark" cc-tooltip="'拖拽热点到图片中'"></cc-icon>
 	<input type="text" ng-model="tip" tooltip="tip" tooltip-trigger="click" tooltip-append-to-body="true">
-
+	<cc-icon symbol="icon-question-mark" cc-tooltip="'测试点击事件'" ng-click="app.click($event)"></cc-icon>
 	<button type="button" cc-tooltip="'<span ng-click=\'app.click($event)\'>hello world hello world hello world hello world hello world hello world</span>'"
 			tooltip-append-to-body="true"
 			tooltip-compilable="true"
