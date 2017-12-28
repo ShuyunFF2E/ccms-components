@@ -13,16 +13,17 @@ const DEFAULT_TYPE_NAME = 'default';
 const BRACKET_REG = /[【】]/g;
 
 
-@Inject('$scope', '$element')
+@Inject('$scope', '$element', '$timeout')
 export default class SMSEditorCtrl {
-
-	constructor($scope, $element) {
+	constructor($scope, $element, $timeout) {
+		$scope.$timeout = $timeout;
 		this.createInput = this.createInput.bind(this);
 		this.parseHTML = this.parseHTML.bind(this);
 		this.insertKeyword = this.insertKeyword.bind(this);
 		this.reFocus = this.reFocus.bind(this);
 		this.rememberFocus = this.rememberFocus.bind(this);
 		this.onChange = this.onChange.bind(this);
+		this.checkoutShortLink = this.checkoutShortLink.bind(this);
 
 		this.EMO_BASE_URL = '../src/components/sms-editor/emo/';
 
@@ -140,8 +141,8 @@ export default class SMSEditorCtrl {
 			ARROW_PADDING = 45,
 			keywordLength = this.opts.keywords.reduce((result, keyword) => {
 				return result + (keyword._display
-					? keyword.text.length * 12 + HASH_WIDTH + PADDING + MARGIN
-					: 0);
+						? keyword.text.length * 12 + HASH_WIDTH + PADDING + MARGIN
+						: 0);
 			}, 0);
 
 		return keywordLength > this._content.clientWidth - ARROW_PADDING;
@@ -153,11 +154,32 @@ export default class SMSEditorCtrl {
 	 * @param {string} content - 初始文字
 	 */
 	initContent(content) {
+		this._$scope.showTips = false;
 		this._content.innerHTML = this.parseImage(this.parseTag(content));
 		this.checkEmpty();
 		this.parseHTML();
-	}
+		this.initShortLink();
 
+	}
+	/**
+	 * 有手动输入的淘短链时，初始化淘短链tips框的显示
+	 * @param {string} content - 初始文字
+	 */
+	initShortLink() {
+		const shortLinkReg = new RegExp(/(?:c\.tb\.cn|vcrm\.me|t\.cn)[^<&\s\u4e00-\u9fa5]*/, 'g');
+		if (shortLinkReg.test(this._content.innerHTML) && this.opts.shortLinkTip) {
+			this._content.innerHTML = this._content.innerHTML.replace(shortLinkReg, result => `<a class="shortLinkTips" href=" ">${result}</a>`);
+			const shortLinkTags = document.querySelectorAll('.shortLinkTips');
+			if (shortLinkTags.length > 0) {
+				// 只让第一个逃短链在打开时候自动弹出提
+				for (let i = 0; i < shortLinkTags.length; i++) {
+					const currentTag = document.getElementsByClassName('shortLinkTips')[i];
+					this.handleTooltip(currentTag, false);
+				}
+				this.handleTooltip(document.getElementsByClassName('shortLinkTips')[0], true);
+			}
+		}
+	}
 
 	/**
 	 * 构造插入到文本编辑器的 input 标签
@@ -190,11 +212,11 @@ export default class SMSEditorCtrl {
 	 * @returns {string}
 	 */
 	parseTag(text = '') {
-		return SMSEditorCtrl.flatCode(text, this.trimContent).replace(/\$\$_(?:\[(\S*?)])?(.+?)_\$\$/g, (result, $1, $2) => {
-			return this.createInput(this.keywordTextNameConvert($2, false), $1);
-		});
+		return SMSEditorCtrl.flatCode(text, this.trimContent)
+			.replace(/\$\$_(?:\[(\S*?)])?(.+?)_\$\$/g, (result, $1, $2) => {
+				return this.createInput(this.keywordTextNameConvert($2, false), $1);
+			});
 	}
-
 
 	/**
 	 * Keyword name 和 text 字段转换
@@ -271,21 +293,21 @@ export default class SMSEditorCtrl {
 
 		// 图片, 关键字高亮, URL, 手机及固话号码下划线
 		this.opts.preview = SMSEditorCtrl.flatCode(this._tempHolder.textContent, this.trimContent)
-				.replace(/\{\{([^}]+)}}/g, (result, $1) => {
-					return `<img src="${$1}">`;
-				})
-				.replace(/%([^%]+)%/g, (result, $1) => {
-					return `<span class="sms-tag-preview">${$1.trim()}</span>`;
-				})
-				.replace(REG_URL_HASH, result => {
-					return `<a href="javascript: void(0);">${result.slice(0, result.length - 1)}</a>#`;
-				})
-				.replace(/(\D|\b)(1[3-9]\d-?\d{4}-?\d{4})(\D|\b)/g, (match, p1, p2, p3) => {
-					return `${p1}<a href="javascript: void(0);">${p2}</a>${p3}`;
-				})
-				.replace(/(\D)((?:[08][1-9]\d{1,2}-?)?[2-9]\d{6,7})(\D)/g, (match, p1, p2, p3) => {
-					return `${p1}<a href="javascript: void(0);">${p2}</a>${p3}`;
-				});
+			.replace(/\{\{([^}]+)}}/g, (result, $1) => {
+				return `<img src="${$1}">`;
+			})
+			.replace(/%([^%]+)%/g, (result, $1) => {
+				return `<span class="sms-tag-preview">${$1.trim()}</span>`;
+			})
+			.replace(REG_URL_HASH, result => {
+				return `<a href="javascript: void(0);">${result.slice(0, result.length - 1)}</a>#`;
+			})
+			.replace(/(\D|\b)(1[3-9]\d-?\d{4}-?\d{4})(\D|\b)/g, (match, p1, p2, p3) => {
+				return `${p1}<a href="javascript: void(0);">${p2}</a>${p3}`;
+			})
+			.replace(/(\D)((?:[08][1-9]\d{1,2}-?)?[2-9]\d{6,7})(\D)/g, (match, p1, p2, p3) => {
+				return `${p1}<a href="javascript: void(0);">${p2}</a>${p3}`;
+			});
 
 		// 稍后重构
 		if (this.trimContent) {
@@ -367,9 +389,16 @@ export default class SMSEditorCtrl {
 
 		if (this._range) {
 			const selection = window.getSelection();
-
 			selection.removeAllRanges();
-			selection.addRange(this._range);
+			if (this._range.commonAncestorContainer.parentNode.nodeName === 'A') {
+				const range = document.createRange();
+				range.selectNodeContents(this._content);
+				range.collapse(false);
+				selection.removeAllRanges();
+				selection.addRange(range);
+			} else {
+				selection.addRange(this._range);
+			}
 		} else {
 			this._content.focus();
 
@@ -460,9 +489,52 @@ export default class SMSEditorCtrl {
 			this.parseHTML();
 			this.checkEmpty();
 			this._hasUrl = REG_URL.test(this.opts.text) && !REG_URL_HASH.test(this.opts.text);
+			if (this.opts.shortLinkTip) {
+				this.checkoutShortLink();
+			}
+
 		}
 	}
-
+	/**
+	 * 添加短链提示效果
+	 * @param currentTag 包含当前复制内容的元素
+	 */
+	handleTooltip(currentTag) {
+		// 计时
+		this.setToolTip(currentTag, true);
+		const showTip = this._$scope.$timeout(() => {
+			clearTimeout(showTip);
+			this.setToolTip(currentTag, false);
+		}, 10000);
+		// 鼠标划入显示
+		currentTag.onmouseenter = () => {
+			clearTimeout(showTip);
+			this.setToolTip(currentTag, true);
+		};
+		// 鼠标划出不显示
+		currentTag.onmouseleave = () => {
+			clearTimeout(showTip);
+			this.setToolTip(currentTag, false);
+		};
+	}
+	/**
+	 * 设置是否显示提示信息
+	 * @param tag 包含短链内容的元素
+	 * @param showFlag 是否显示
+	 */
+	setToolTip(currentTag, showFlag = true) {
+		const a = document.querySelector('#sms-content');
+		const showTip = this._$scope.$timeout(() => {
+			clearTimeout(showTip);
+			this._$scope.showTips = showFlag;
+			if (showFlag) {
+				this._$scope.tipsPosition = {
+					left: currentTag.offsetLeft - 12 + 'px',
+					top: a.scrollTop > 0 ? currentTag.offsetTop - a.scrollTop - 70 + 'px' : currentTag.offsetTop - 70 + 'px'
+				};
+			}
+		}, 0);
+	}
 
 	/**
 	 * 不许贴图片和乱七八糟的 html, 也不许贴【 和 】
@@ -472,14 +544,71 @@ export default class SMSEditorCtrl {
 	onPaste(e) {
 		const event = e.originalEvent || e,
 			htmlContent = event.clipboardData.getData('text/html');
-
 		if (htmlContent.indexOf('sms-keyword-inserted') > -1 || htmlContent.indexOf('data-emo-name') > -1) return;
-
-		const textContent = event.clipboardData.getData('text/plain');
-
 		e.preventDefault();
-		this._hasInvalidStr = BRACKET_REG.test(textContent);
-		this._invalidStrClosed = !this._hasInvalidStr;
-		document.execCommand('insertText', false, textContent.replace(BRACKET_REG, ''));
+		const textContent = event.clipboardData.getData('text/plain');
+		if (this.opts.shortLinkTip && this.includedShortLink(htmlContent)) {
+			// 插入a标签
+			document.execCommand('CreateLink', false, textContent);
+			const selection = document.getSelection();
+			// 使光标指向最后
+			selection.collapse(selection.anchorNode, selection.focusOffset);
+			// 添加提示信息
+			this.handleTooltip(selection.anchorNode.parentNode);
+		} else {
+			this._hasInvalidStr = BRACKET_REG.test(textContent);
+			this._invalidStrClosed = !this._hasInvalidStr;
+			document.execCommand('insertText', false, textContent.replace(BRACKET_REG, ''));
+		}
+	}
+	checkoutShortLink() {
+		let showTip = null;
+		window.requestAnimationFrame(() => {
+			if (!this.includedShortLink(this._content.innerHTML)) {
+				showTip = this._$scope.$timeout(() => {
+					clearTimeout(showTip);
+					this._$scope.showTips = false;
+				}, 0);
+				return;
+			}
+			const selection = document.getSelection();
+			const shortLinkHead = this.includedShortLink(selection.focusNode.textContent);
+			const startOffset = selection.focusNode.textContent.indexOf(shortLinkHead);
+			if (startOffset === -1) {
+				showTip = this._$scope.$timeout(() => {
+					clearTimeout(showTip);
+					this._$scope.showTips = false;
+				}, 0);
+				return;
+			}
+			if (selection.focusNode.parentNode.nodeName === 'A' || selection.focusNode.className === 'sms-content') {
+				return;
+			}
+			this.transformToATag(selection, startOffset, shortLinkHead.length);
+		});
+	}
+
+	transformToATag(selection, startOffset, contentLength) {
+		const insertRange = document.createRange();
+		insertRange.setStart(selection.focusNode, startOffset);
+		insertRange.setEnd(selection.focusNode, startOffset + contentLength);
+		selection.removeAllRanges();
+		selection.addRange(insertRange);
+		document.execCommand('CreateLink', false, ' ');
+		const currentNode = selection.focusNode.parentNode;
+		this.handleTooltip(currentNode);
+		selection.collapse(selection.focusNode, selection.focusOffset);
+	}
+	includedShortLink(string) {
+		if (string.indexOf('c.tb.cn') > -1) {
+			return 'c.tb.cn';
+		}
+		if (string.indexOf('vcrm.me') > -1) {
+			return 'vcrm.me';
+		}
+		if (string.indexOf('t.cn') > -1) {
+			return 't.cn';
+		}
+		return false;
 	}
 }
