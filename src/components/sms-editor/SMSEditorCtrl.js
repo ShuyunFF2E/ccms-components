@@ -489,10 +489,6 @@ export default class SMSEditorCtrl {
 			this.parseHTML();
 			this.checkEmpty();
 			this._hasUrl = REG_URL.test(this.opts.text) && !REG_URL_HASH.test(this.opts.text);
-			if (this.opts.shortLinkTip) {
-				this.checkoutShortLink();
-			}
-
 		}
 	}
 	/**
@@ -547,14 +543,12 @@ export default class SMSEditorCtrl {
 		if (htmlContent.indexOf('sms-keyword-inserted') > -1 || htmlContent.indexOf('data-emo-name') > -1) return;
 		e.preventDefault();
 		const textContent = event.clipboardData.getData('text/plain');
-		if (this.opts.shortLinkTip && this.includedShortLink(htmlContent)) {
-			// 插入a标签
-			document.execCommand('CreateLink', false, textContent);
-			const selection = document.getSelection();
-			// 使光标指向最后
-			selection.collapse(selection.anchorNode, selection.focusOffset);
-			// 添加提示信息
-			this.handleTooltip(selection.anchorNode.parentNode);
+		const selection = document.getSelection();
+		const shortLinkHead = this.includedShortLink(textContent);
+		if (this.opts.shortLinkTip && shortLinkHead) {
+			document.execCommand('insertHTML', false, `<span>${textContent}</span>`);
+			const startSetOff = selection.focusNode.textContent.indexOf(shortLinkHead);
+			this.transformToATag(selection, startSetOff, shortLinkHead.length);
 		} else {
 			this._hasInvalidStr = BRACKET_REG.test(textContent);
 			this._invalidStrClosed = !this._hasInvalidStr;
@@ -562,30 +556,32 @@ export default class SMSEditorCtrl {
 		}
 	}
 	checkoutShortLink() {
-		let showTip = null;
-		window.requestAnimationFrame(() => {
-			if (!this.includedShortLink(this._content.innerHTML)) {
-				showTip = this._$scope.$timeout(() => {
-					clearTimeout(showTip);
-					this._$scope.showTips = false;
-				}, 0);
-				return;
-			}
-			const selection = document.getSelection();
-			const shortLinkHead = this.includedShortLink(selection.focusNode.textContent);
-			const startOffset = selection.focusNode.textContent.indexOf(shortLinkHead);
-			if (startOffset === -1) {
-				showTip = this._$scope.$timeout(() => {
-					clearTimeout(showTip);
-					this._$scope.showTips = false;
-				}, 0);
-				return;
-			}
-			if (selection.focusNode.parentNode.nodeName === 'A' || selection.focusNode.className === 'sms-content') {
-				return;
-			}
-			this.transformToATag(selection, startOffset, shortLinkHead.length);
-		});
+		if (this.opts.shortLinkTip) {
+			let showTip = null;
+			window.requestAnimationFrame(() => {
+				if (!this.includedShortLink(this._content.innerHTML)) {
+					showTip = this._$scope.$timeout(() => {
+						clearTimeout(showTip);
+						this._$scope.showTips = false;
+					}, 0);
+					return;
+				}
+				const selection = document.getSelection();
+				const shortLinkHead = this.includedShortLink(selection.focusNode.textContent);
+				const startOffset = selection.focusNode.textContent.indexOf(shortLinkHead);
+				if (startOffset === -1) {
+					showTip = this._$scope.$timeout(() => {
+						clearTimeout(showTip);
+						this._$scope.showTips = false;
+					}, 0);
+					return;
+				}
+				if (selection.focusNode.parentNode.nodeName === 'A' || selection.focusNode.className === 'sms-content') {
+					return;
+				}
+				this.transformToATag(selection, startOffset, shortLinkHead.length);
+			});
+		}
 	}
 
 	transformToATag(selection, startOffset, contentLength) {
@@ -597,7 +593,11 @@ export default class SMSEditorCtrl {
 		document.execCommand('CreateLink', false, ' ');
 		const currentNode = selection.focusNode.parentNode;
 		this.handleTooltip(currentNode);
-		selection.collapse(selection.focusNode, selection.focusOffset);
+		if (currentNode.nextSibling) {
+			selection.collapse(currentNode.nextSibling, currentNode.nextSibling.length);
+		} else {
+			selection.collapse(selection.focusNode, selection.focusOffset);
+		}
 	}
 	includedShortLink(string) {
 		if (string.indexOf('c.tb.cn') > -1) {

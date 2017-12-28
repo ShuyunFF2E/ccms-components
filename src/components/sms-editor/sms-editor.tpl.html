@@ -24,6 +24,7 @@
 			 data-content
 			 ng-keyup="ctrl.onChange()"
 			 ng-mouseup="ctrl.onChange()"
+			 ng-keypress="ctrl.checkoutShortLink()"
 			 ng-class="'sms-content' + (ctrl.keywordTypes.length <= 1 ? ' sms-no-keyword-types' : '')"
 			 ng-paste="ctrl.onPaste($event)"
 			 id="sms-content" >
