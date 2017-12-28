@@ -19,7 +19,7 @@
     "update-dev-server": "./scripts/update-dev-server.sh",
     "start": "node server.js",
     "prepush": "npm test",
-    "codecheck": "NODE_EVN=test eslint src/components",
+    "codecheck": "cross-env NODE_EVN=test eslint src/components",
     "start:test": "karma start test/karma.unit.conf.js",
     "test": "npm run codecheck & npm run test:cover",
     "test:unit": "karma start test/karma.unit.conf.js --single-run",
