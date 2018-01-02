@@ -531,7 +531,7 @@ export default class SMSEditorCtrl {
 			this._$timeout.cancel(showTip);
 			this.showTips = showFlag;
 			if (showFlag) {
-				this._$scope.tipsPosition = {
+				this.tipsPosition = {
 					left: currentTag.offsetLeft - 12 + 'px',
 					top: a.scrollTop > 0 ? currentTag.offsetTop - a.scrollTop - 70 + 'px' : currentTag.offsetTop - 70 + 'px'
 				};
