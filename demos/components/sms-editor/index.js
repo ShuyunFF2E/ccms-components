@@ -113,6 +113,9 @@ angular.module('componentsApp', ['ccms.components'])
 				],
 				unsubscribeText: '退订回复TD',
 				//useUnsubscribe: true,
+				/*
+				 * 配置淘短链tips
+				 */
 				shortLinkTip: '系统判断该短链为手动添加，为保证短链顺利打开请末尾加#号，前后分别加一个空格，例： c.tb.cn/c.2cmrV# 共18字。',
 				content: '亲爱t.cn的$$_[taobao]XMTB_$$ / $$_[taobao]XMJDWMRZ_$$, 您的订单$$_[taobao]DDBH_$$t.cn$$_[taobao]DDBH_$$正在派送.  c.tb.cn($$ $ $$) 签名: $$_XBL_$$ http://www.taobao.com# {emo-5}',
 				// trimContent: false, // 是否 trim content 两边的空格, 默认是 true, 注意 目前标准版是 trim 的. B 版不期望处理, 没办法你懂得, 真心不期望这样做, 期望产品经理可以统一行为

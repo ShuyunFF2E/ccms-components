@@ -521,22 +521,22 @@ export default class SMSEditorCtrl {
 	}
 	/**
 	 * 设置是否显示提示信息
+	 * 异步加载，初始化短信编辑器时，#sms-content已存在，但内容未渲染到页面上，定位不精准，$$phase存在，$applyAsync无法更新dom。因此选用$timeout（）更新。
 	 * @param tag 包含短链内容的元素
 	 * @param showFlag 是否显示
 	 */
-	setToolTip(currentTag, showFlag = true) {
-		this._$scope.$applyAsync();
-		const a = document.querySelector('#sms-content');
-		this.showTips = showFlag;
-		if (showFlag) {
-			this._$scope.tipsPosition = {
-				left: currentTag.offsetLeft - 12 + 'px',
-				top: a.scrollTop > 0 ? currentTag.offsetTop - a.scrollTop - 70 + 'px' : currentTag.offsetTop - 70 + 'px'
-			};
-		}
-		if (!this._$scope.$$phase) {
-			this._$scope.$applyAsync();
-		}
+	setToolTip(currentTag, showFlag) {
+		const a = document.getElementById('sms-content-holder').querySelector('#sms-content');
+		const showTip = this._$timeout(() => {
+			this._$timeout.cancel(showTip);
+			this.showTips = showFlag;
+			if (showFlag) {
+				this._$scope.tipsPosition = {
+					left: currentTag.offsetLeft - 12 + 'px',
+					top: a.scrollTop > 0 ? currentTag.offsetTop - a.scrollTop - 70 + 'px' : currentTag.offsetTop - 70 + 'px'
+				};
+			}
+		}, 0);
 	}
 
 	/**
