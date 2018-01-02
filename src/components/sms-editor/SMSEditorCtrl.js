@@ -15,8 +15,8 @@ const BRACKET_REG = /[【】]/g;
 
 @Inject('$scope', '$element', '$timeout')
 export default class SMSEditorCtrl {
-	constructor($scope, $element, $timeout) {
-		$scope.$timeout = $timeout;
+	constructor($scope, $element) {
+		this.showTips = false;
 		this.createInput = this.createInput.bind(this);
 		this.parseHTML = this.parseHTML.bind(this);
 		this.insertKeyword = this.insertKeyword.bind(this);
@@ -34,8 +34,8 @@ export default class SMSEditorCtrl {
 		this.opts || (this.opts = {});
 		this.trimContent = angular.isDefined(this.opts.trimContent) ? this.opts.trimContent : true;
 
-		this._content = $element[0].querySelector('[data-content]');
-		this._tempHolder = $element[0].querySelector('.sms-temp');
+		this._content = this._$element[0].querySelector('[data-content]');
+		this._tempHolder = this._$element[0].querySelector('.sms-temp');
 		this.initKeywords();
 		this.initContent(this.opts.content);
 
@@ -154,12 +154,12 @@ export default class SMSEditorCtrl {
 	 * @param {string} content - 初始文字
 	 */
 	initContent(content) {
-		this._$scope.showTips = false;
 		this._content.innerHTML = this.parseImage(this.parseTag(content));
 		this.checkEmpty();
 		this.parseHTML();
-		this.initShortLink();
-
+		if (this.opts.shortLinkTip) {
+			this.initShortLink();
+		}
 	}
 	/**
 	 * 有手动输入的淘短链时，初始化淘短链tips框的显示
@@ -167,16 +167,18 @@ export default class SMSEditorCtrl {
 	 */
 	initShortLink() {
 		const shortLinkReg = new RegExp(/(?:c\.tb\.cn|vcrm\.me|t\.cn)[^<&\s\u4e00-\u9fa5]*/, 'g');
-		if (shortLinkReg.test(this._content.innerHTML) && this.opts.shortLinkTip) {
+		if (shortLinkReg.test(this._content.innerHTML)) {
 			this._content.innerHTML = this._content.innerHTML.replace(shortLinkReg, result => `<a class="shortLinkTips" href=" ">${result}</a>`);
-			const shortLinkTags = document.querySelectorAll('.shortLinkTips');
+			const shortLinkTags = document.getElementById('sms-content').querySelectorAll('.shortLinkTips');
 			if (shortLinkTags.length > 0) {
 				// 只让第一个逃短链在打开时候自动弹出提
 				for (let i = 0; i < shortLinkTags.length; i++) {
-					const currentTag = document.getElementsByClassName('shortLinkTips')[i];
-					this.handleTooltip(currentTag, false);
+					if (i === 0) {
+						this.handleTooltip(shortLinkTags[i], true);
+					} else {
+						this.handleTooltip(shortLinkTags[i], false);
+					}
 				}
-				this.handleTooltip(document.getElementsByClassName('shortLinkTips')[0], true);
 			}
 		}
 	}
@@ -495,21 +497,25 @@ export default class SMSEditorCtrl {
 	 * 添加短链提示效果
 	 * @param currentTag 包含当前复制内容的元素
 	 */
-	handleTooltip(currentTag) {
+	handleTooltip(currentTag, autoShow = true) {
+		let showTip = null;
 		// 计时
-		this.setToolTip(currentTag, true);
-		const showTip = this._$scope.$timeout(() => {
-			clearTimeout(showTip);
-			this.setToolTip(currentTag, false);
-		}, 10000);
+		if (autoShow) {
+			this.setToolTip(currentTag, true);
+			showTip = this._$timeout(() => {
+				this._$timeout.cancel(showTip);
+				this.setToolTip(currentTag, false);
+			}, 10000);
+		}
+
 		// 鼠标划入显示
 		currentTag.onmouseenter = () => {
-			clearTimeout(showTip);
+			this._$timeout.cancel(showTip);
 			this.setToolTip(currentTag, true);
 		};
 		// 鼠标划出不显示
 		currentTag.onmouseleave = () => {
-			clearTimeout(showTip);
+			this._$timeout.cancel(showTip);
 			this.setToolTip(currentTag, false);
 		};
 	}
@@ -519,17 +525,18 @@ export default class SMSEditorCtrl {
 	 * @param showFlag 是否显示
 	 */
 	setToolTip(currentTag, showFlag = true) {
+		this._$scope.$applyAsync();
 		const a = document.querySelector('#sms-content');
-		const showTip = this._$scope.$timeout(() => {
-			clearTimeout(showTip);
-			this._$scope.showTips = showFlag;
-			if (showFlag) {
-				this._$scope.tipsPosition = {
-					left: currentTag.offsetLeft - 12 + 'px',
-					top: a.scrollTop > 0 ? currentTag.offsetTop - a.scrollTop - 70 + 'px' : currentTag.offsetTop - 70 + 'px'
-				};
-			}
-		}, 0);
+		this.showTips = showFlag;
+		if (showFlag) {
+			this._$scope.tipsPosition = {
+				left: currentTag.offsetLeft - 12 + 'px',
+				top: a.scrollTop > 0 ? currentTag.offsetTop - a.scrollTop - 70 + 'px' : currentTag.offsetTop - 70 + 'px'
+			};
+		}
+		if (!this._$scope.$$phase) {
+			this._$scope.$applyAsync();
+		}
 	}
 
 	/**
@@ -557,26 +564,25 @@ export default class SMSEditorCtrl {
 	}
 	checkoutShortLink() {
 		if (this.opts.shortLinkTip) {
-			let showTip = null;
 			window.requestAnimationFrame(() => {
 				if (!this.includedShortLink(this._content.innerHTML)) {
-					showTip = this._$scope.$timeout(() => {
-						clearTimeout(showTip);
-						this._$scope.showTips = false;
-					}, 0);
+					this.showTips = false;
+					if (!this._$scope.$$phase) {
+						this._$scope.$applyAsync();
+					}
 					return;
 				}
 				const selection = document.getSelection();
 				const shortLinkHead = this.includedShortLink(selection.focusNode.textContent);
 				const startOffset = selection.focusNode.textContent.indexOf(shortLinkHead);
 				if (startOffset === -1) {
-					showTip = this._$scope.$timeout(() => {
-						clearTimeout(showTip);
-						this._$scope.showTips = false;
-					}, 0);
+					this.showTips = false;
+					if (!this._$scope.$$phase) {
+						this._$scope.$applyAsync();
+					}
 					return;
 				}
-				if (selection.focusNode.parentNode.nodeName === 'A' || selection.focusNode.className === 'sms-content') {
+				if (selection.focusNode.parentNode.nodeName.toUpperCase() === 'A' || selection.focusNode.className === 'sms-content') {
 					return;
 				}
 				this.transformToATag(selection, startOffset, shortLinkHead.length);
