@@ -34,8 +34,8 @@ export default class SMSEditorCtrl {
 		this.opts || (this.opts = {});
 		this.trimContent = angular.isDefined(this.opts.trimContent) ? this.opts.trimContent : true;
 
-		this._content = this._$element[0].querySelector('[data-content]');
-		this._tempHolder = this._$element[0].querySelector('.sms-temp');
+		this._content = $element[0].querySelector('[data-content]');
+		this._tempHolder = $element[0].querySelector('.sms-temp');
 		this.initKeywords();
 		this.initContent(this.opts.content);
 
@@ -521,7 +521,7 @@ export default class SMSEditorCtrl {
 	}
 	/**
 	 * 设置是否显示提示信息
-	 * 异步加载，初始化短信编辑器时，#sms-content已存在，但内容未渲染到页面上，定位不精准，$$phase存在，$applyAsync无法更新dom。因此选用$timeout（）更新。
+	 * 初始化短信编辑器时，#sms-content已存在，但内容未渲染到页面上，定位不精准，$$phase存在，$apply无法更新dom。因此选用$timeout（）更新。
 	 * @param tag 包含短链内容的元素
 	 * @param showFlag 是否显示
 	 */
@@ -567,8 +567,10 @@ export default class SMSEditorCtrl {
 			window.requestAnimationFrame(() => {
 				if (!this.includedShortLink(this._content.innerHTML)) {
 					this.showTips = false;
-					if (!this._$scope.$$phase) {
+					if (this._$scope.$$phase) {
 						this._$scope.$applyAsync();
+					} else {
+						this._$scope.$apply();
 					}
 					return;
 				}
@@ -577,8 +579,10 @@ export default class SMSEditorCtrl {
 				const startOffset = selection.focusNode.textContent.indexOf(shortLinkHead);
 				if (startOffset === -1) {
 					this.showTips = false;
-					if (!this._$scope.$$phase) {
+					if (this._$scope.$$phase) {
 						this._$scope.$applyAsync();
+					} else {
+						this._$scope.$apply();
 					}
 					return;
 				}
