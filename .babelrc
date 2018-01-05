@@ -2,10 +2,10 @@
   "presets": [
     ["env", {
       "targets": {
-        "chrome": 44,
         "browsers": ["last 2 versions", "safari 7"]
       },
-      "useBuiltIns": true
+      "useBuiltIns": true,
+      "include": ["es6.object.assign", "es6.array.find", "es6.regexp.flags"]
     }]
   ],
   "plugins": ["transform-decorators-legacy", "transform-object-rest-spread", "transform-class-properties", "transform-function-bind"]
