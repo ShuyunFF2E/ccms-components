@@ -532,7 +532,7 @@ export default class SMSEditorCtrl {
 			this.showTips = showFlag;
 			if (showFlag) {
 				this.tipsPosition = {
-					left: currentTag.offsetLeft - 12 + 'px',
+					left: currentTag.offsetLeft - 105 + 'px',
 					top: a.scrollTop > 0 ? currentTag.offsetTop - a.scrollTop - 70 + 'px' : currentTag.offsetTop - 70 + 'px'
 				};
 			}
