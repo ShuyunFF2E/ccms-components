@@ -72,10 +72,10 @@
   top: 0px;
   z-index: 99;
   background: #fff;
-  &::after {
+  .angle {
 	position: absolute;
 	bottom: -6px;
-	left: 110px;
+	left: 20px;
 	border-top: none;
 	border-left: none;
 	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
