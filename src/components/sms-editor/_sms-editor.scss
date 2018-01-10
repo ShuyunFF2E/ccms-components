@@ -89,6 +89,12 @@
 	box-sizing: border-box;
   }
 }
+.show-tips {
+  visibility: visible;
+}
+.hide-tips {
+  visibility: hidden;
+}
 #sms-content a{
   cursor: pointer;
   color: #666;

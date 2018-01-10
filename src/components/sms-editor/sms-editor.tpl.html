@@ -41,7 +41,7 @@
 			</ul>
 		</div>
 		<!--手动收入淘短链tips-->
-		<div ng-style="ctrl.tipsPosition" id="tip" class="short-link-tip" ng-show="ctrl.showTips" >
+		<div ng-style="ctrl.tipsPosition" id="tip" class="short-link-tip" ng-class="ctrl.showTips ? 'show-tips' : 'hide-tips'">
 			{{ctrl.opts.shortLinkTip}}
 			<span style="color: #f48b13">右侧字数提醒将视其为普通文案计数在内</span>
 			<span class="angle" ng-style="ctrl.angleStyle"></span>
