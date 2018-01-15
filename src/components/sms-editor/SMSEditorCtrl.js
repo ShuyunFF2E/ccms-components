@@ -547,7 +547,7 @@ export default class SMSEditorCtrl {
 		}, 0);
 	}
 
-	positionConpute(currentTag, parentEle, tipWidth) {
+	positionCompute(currentTag, parentEle, tipWidth) {
 		const currentWidth = Math.ceil(currentTag.offsetWidth / 2);
 		const parentEleWidth = parentEle.offsetWidth;
 		const currentPositionLeft = currentTag.offsetLeft;
