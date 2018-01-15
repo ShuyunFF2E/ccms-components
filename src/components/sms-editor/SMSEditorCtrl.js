@@ -535,7 +535,7 @@ export default class SMSEditorCtrl {
 			this._$timeout.cancel(showTip);
 			this.showTips = showFlag;
 			if (showFlag) {
-				const tipPosition = this.positionConpute(currentTag, parentEle, TIP_WIDTH);
+				const tipPosition = this.positionCompute(currentTag, parentEle, TIP_WIDTH);
 				this.tipsPosition = {
 					left: tipPosition.newLeft + 'px',
 					top: parentEle.scrollTop > 0 ? currentTag.offsetTop - parentEle.scrollTop - TIP_HEIGHT + 'px' : currentTag.offsetTop - TIP_HEIGHT + 'px'
