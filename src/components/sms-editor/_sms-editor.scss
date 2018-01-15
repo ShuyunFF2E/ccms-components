@@ -72,7 +72,7 @@
   top: 0px;
   z-index: 99;
   background: #fff;
-  &::after {
+  .angle {
 	position: absolute;
 	bottom: -6px;
 	left: 20px;
@@ -88,6 +88,12 @@
 	background-color: #fff;
 	box-sizing: border-box;
   }
+}
+.show-tips {
+  visibility: visible;
+}
+.hide-tips {
+  visibility: hidden;
 }
 #sms-content a{
   cursor: pointer;

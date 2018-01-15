@@ -526,17 +526,45 @@ export default class SMSEditorCtrl {
 	 * @param showFlag 是否显示
 	 */
 	setToolTip(currentTag, showFlag) {
-		const a = document.getElementById('sms-content-holder').querySelector('#sms-content');
+		const UI_SPACE_TOP = 6;
+		const parentEle = document.getElementById('sms-content-holder').querySelector('#sms-content');
+		const tip = document.getElementById('tip');
+		const TIP_WIDTH = window.getComputedStyle(tip).getPropertyValue('width').split('px')[0] * 1 + window.getComputedStyle(tip).getPropertyValue('padding-right').split('px')[0] * 1;
+		const TIP_HEIGHT = window.getComputedStyle(tip).getPropertyValue('height').split('px')[0] * 1 + window.getComputedStyle(tip).getPropertyValue('padding-top').split('px')[0] * 2 + UI_SPACE_TOP;
 		const showTip = this._$timeout(() => {
 			this._$timeout.cancel(showTip);
 			this.showTips = showFlag;
 			if (showFlag) {
+				const tipPosition = this.positionCompute(currentTag, parentEle, TIP_WIDTH);
 				this.tipsPosition = {
-					left: currentTag.offsetLeft - 12 + 'px',
-					top: a.scrollTop > 0 ? currentTag.offsetTop - a.scrollTop - 70 + 'px' : currentTag.offsetTop - 70 + 'px'
+					left: tipPosition.newLeft + 'px',
+					top: parentEle.scrollTop > 0 ? currentTag.offsetTop - parentEle.scrollTop - TIP_HEIGHT + 'px' : currentTag.offsetTop - TIP_HEIGHT + 'px'
+				};
+				this.angleStyle = {
+					left: tipPosition.angleLeft + 'px'
 				};
 			}
 		}, 0);
+	}
+
+	positionCompute(currentTag, parentEle, tipWidth) {
+		const currentWidth = Math.ceil(currentTag.offsetWidth / 2);
+		const parentEleWidth = parentEle.offsetWidth;
+		const currentPositionLeft = currentTag.offsetLeft;
+		const changeFlag = currentPositionLeft + tipWidth;
+		const UI_SPACE_LEFT = 12;
+		if (changeFlag > parentEleWidth) {
+			const newLeft = currentTag.offsetLeft - UI_SPACE_LEFT - (currentPositionLeft + tipWidth - parentEleWidth);
+			const angleLeft = currentPositionLeft - newLeft;
+			return {
+				newLeft,
+				angleLeft
+			};
+		}
+		return {
+			newLeft: currentTag.offsetLeft - UI_SPACE_LEFT,
+			angleLeft: currentWidth
+		};
 	}
 
 	/**
