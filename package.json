@@ -91,7 +91,7 @@
     "angular-ui-router": "0.2.18",
     "ccms-icons": "*",
     "core-js": "^2.5.3",
-    "jquery": "1.11.0",
+    "jquery": "3.0.0",
     "jquery.nicescroll": "^3.6.8",
     "normalize.css": "^4.1.1"
   },
