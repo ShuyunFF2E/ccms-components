@@ -27,7 +27,9 @@ export default {
 		start: '=',
 		end: '=',
 		onCalendarOpen: '&?',
-		onCalendarClose: '&?'
+		onCalendarClose: '&?',
+		isFestival: '<?',
+		customFestivals: '<?'
 	},
 	template,
 

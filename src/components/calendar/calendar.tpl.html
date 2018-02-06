@@ -12,10 +12,11 @@
 	</ul>
 
 	<ul class="calendar-days">
-		<li ng-repeat="date in ctrl.timeRange"
-			ng-class="{'calendar-day-other-month': date.otherMonth, 'active': date.active, 'disabled': date.disabled, 'in-range': date.inRange}"
+		<li ng-repeat="date in ctrl.timeRange" ng-init="isFesDefined = ctrl.isFestivalDefined(date)"
+			ng-class="{'calendar-day-other-month': date.otherMonth, 'active': date.active, 'disabled': date.disabled, 'in-range': date.inRange, 'festival': ctrl.isFestival && isFesDefined}"
 			ng-click="!date.disabled && ctrl.setDate(date)">
-			{{date.getDate()}}
+			<span ng-if="ctrl.isFestival && isFesDefined" cc-tooltip="ctrl.isFestivalDefined(date)">{{date.getDate()}}</span>
+			<span ng-if="!(ctrl.isFestival && isFesDefined)">{{date.getDate()}}</span>
 		</li>
 	</ul>
 
