@@ -90,6 +90,7 @@
     "angular-resource": "1.5.8",
     "angular-ui-router": "0.2.18",
     "ccms-icons": "*",
+    "chinese-lunar": "^0.1.4",
     "core-js": "^2.5.3",
     "jquery": "3.0.0",
     "jquery.nicescroll": "^3.6.8",

@@ -26,6 +26,7 @@
 					on-calendar-open="app.onCalendarOpen()"
 					on-calendar-close="app.onCalendarClose()"
 					is-festival="true"
+					custom-festivals="app.customFestivals"
 					></cc-date-picker>
 
 	<cc-date-range ng-if="!app.hideDates"
@@ -101,6 +102,10 @@
 	angular.module('componentsApp', ['ccms.components'])
 		.controller('ctrl', function ($scope, $timeout) {
 			var self = this;
+			self.customFestivals = {
+				'0905': '豪举的生日',
+				'0915': '豪举生日后10天'
+			};
 			self.onCalendarOpenTimes = 0;
 			self.onCalendarCloseTimes = 0;
 			self.onCalendarOpen = function () {
