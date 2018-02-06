@@ -24,12 +24,15 @@
 					date-only="false"
 					disabled="false"
 					on-calendar-open="app.onCalendarOpen()"
-					on-calendar-close="app.onCalendarClose()"></cc-date-picker>
+					on-calendar-close="app.onCalendarClose()"
+					is-festival="true"
+					></cc-date-picker>
 
 	<cc-date-range ng-if="!app.hideDates"
 				   opts="app.anotherRange"
 				   on-calendar-open="app.onCalendarOpen()"
-				   on-calendar-close="app.onCalendarClose()"></cc-date-range>
+				   on-calendar-close="app.onCalendarClose()"
+				   is-festival="true"></cc-date-range>
 
 	<pre>
 		  ng-model="app.dateValue"
@@ -39,7 +42,8 @@
 		  date-only="false"
 		  disabled="false"
 		  on-calendar-open="app.onCalendarOpen()"
-		  on-calendar-close="app.onCalendarClose()"></pre>
+		  on-calendar-close="app.onCalendarClose()"
+		  is-festival="true"></pre>
 	<h1>DEMO: 2 date-picker 仅日期</h1>
 
 	<cc-date-picker ng-model="app.blankDate" date-only="true"></cc-date-picker>

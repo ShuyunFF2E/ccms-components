@@ -18,7 +18,9 @@ export default {
 	scope: {
 		opts: '=',
 		onCalendarOpen: '&?',
-		onCalendarClose: '&?'
+		onCalendarClose: '&?',
+		isFestival: '<?',
+		customFestivals: '<?'
 	},
 	template
 };
