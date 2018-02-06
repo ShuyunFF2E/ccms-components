@@ -307,7 +307,7 @@ export default class DatePickerCtrl {
 		const parts = destructDate(date, true);
 		const solarStr = `${parts.month}${parts.date}`;
 
-		const lunarStr = chineseLunar.format(chineseLunar.solarToLunar(date), 'MD');
+		const lunarStr = chineseLunar.format(chineseLunar.solarToLunar(date), 'Md');
 
 		const tipStr = `${this.festivals[solarStr] || ''}${(this.festivals[solarStr] && this.festivals[lunarStr]) ? ' 和 ' : ''}${this.festivals[lunarStr] || ''}`;
 
