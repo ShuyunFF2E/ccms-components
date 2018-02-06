@@ -9,7 +9,6 @@ var base = require('./karma.base.conf');
 module.exports = function (config) {
 
 	var opts = Object.assign(base, {
-		browsers: ['Chrome'],
 		reporters: ['progress', 'coverage'],
 		coverageReporter: {
 			reporters: [

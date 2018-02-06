@@ -3,10 +3,48 @@
  */
 
 import angular from 'angular';
+import chineseLunar from 'chinese-lunar';
 
 import { Inject } from 'angular-es-utils';
 
 import { addZero, destructDate, parseNumber } from '../date-picker/dateUtils';
+
+const festivals = {
+	'0101': '元旦',
+	'0214': '情人节',
+	'0308': '妇女节',
+	'0312': '植树节',
+	'0315': '消费者权益日',
+	'0401': '愚人节',
+	'0422': '地球日',
+	'0501': '劳动节',
+	'0504': '青年节',
+	'0512': '护士节',
+	'0520': '母亲节',
+	'0601': '儿童节',
+	'0630': '父亲节',
+	'0701': '建党节',
+	'0801': '建军节',
+	'0903': '抗战胜利日',
+	'0910': '教师节',
+	'1001': '国庆节',
+	'1111': '双11购物节',
+	'1212': '双12购物节',
+	'1224': '平安夜',
+	'1225': '圣诞节'
+};
+
+const lunnarFestivals = {
+	'腊月三十': '除夕',
+	'正月初一': '春节',
+	'正月十五': '元宵节',
+	'五月初五': '端午节',
+	'七月初七': '七夕节',
+	'八月十五': '中秋节',
+	'九月初九': '重阳节',
+	'腊月初八': '腊八节',
+	'腊月廿三': '小年'
+};
 
 
 const yearList = (function() {
@@ -30,6 +68,8 @@ export default class DatePickerCtrl {
 
 		this.years = yearList;
 		this.months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+		this.customFestivals = this.customFestivals || {};
+		this.festivals = Object.assign({}, festivals, lunnarFestivals, this.customFestivals);
 
 		this.close = this.close.bind(this);
 
@@ -259,6 +299,20 @@ export default class DatePickerCtrl {
 		this.parts[input.name] = addZero(value);
 	}
 
+	/**
+	 * 是否定义了该日期
+	 * 如果定义了, 返回节日 tips, 没有返回 undefined
+	 * */
+	isFestivalDefined(date) {
+		const parts = destructDate(date, true);
+		const solarStr = `${parts.month}${parts.date}`;
+
+		const lunarStr = chineseLunar.format(chineseLunar.solarToLunar(date), 'Md');
+
+		const tipStr = `${this.festivals[solarStr] || ''}${(this.festivals[solarStr] && this.festivals[lunarStr]) ? ' 和 ' : ''}${this.festivals[lunarStr] || ''}`;
+
+		return tipStr;
+	}
 
 	preventDefault($event) {
 		$event.stopPropagation();
