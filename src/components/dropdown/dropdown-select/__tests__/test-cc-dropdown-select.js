@@ -15,7 +15,7 @@ describe('cc-dropdown-select', () => {
 				model="value1"
 				datalist="datalist1"
 				mapping="fieldsMap"
-				onSelectChange="selectChange(model, oldModel)">
+				on-select-change="selectChange(model, oldModel, itemIndex, item)">
 		</cc-dropdown-select>
 		`;
 
@@ -35,9 +35,11 @@ describe('cc-dropdown-select', () => {
 			displayField: 'title',
 			valueField: 'value'
 		};
-		scope.selectChange = (model, oldModel) => {
+		scope.selectChange = (model, oldModel, itemIndex, item) => {
 			scope.newModel = model;
 			scope.oldModel = oldModel;
+			scope.curItemIndex = itemIndex;
+			scope.curItem = item;
 		};
 
 		selectEl = _$compile_(html)(scope);
@@ -52,9 +54,12 @@ describe('cc-dropdown-select', () => {
 			assert.strictEqual(ctrl.model, 'sh');
 			ctrl.setModelValue('bj');
 			setTimeout(() => {
+				// TODO: 测试方法不对, 待调研
 				done();
 				assert.strictEqual(scope.newModel, 'bj');
 				assert.strictEqual(scope.oldModel, 'sh');
+				assert.strictEqual(scope.curItemIndex, 1);
+				assert.strictEqual(scope.curItem.value, 'bj');
 			}, 0);
 		});
 
