@@ -71,9 +71,12 @@ export default class DropdownSelectCtrl {
 
 		scope.$watch(() => this.model, (model, oldModel) => {
 			if (!angular.equals(model, oldModel)) {
+				const item = this.getItemByValue(this.model);
+				const itemIndex = this.getItemIndexByItemValue(this.model, this.items);
 				this.setModelValue(this.model);
-				this.focusAt(this.getItemIndexByItemValue(this.model, this.items));
-				this.onSelectChange({ model, oldModel });
+				this.focusAt(itemIndex);
+				// 增加回调参数 itemIndex item
+				this.onSelectChange({ model, oldModel, itemIndex, item });
 			}
 		});
 
