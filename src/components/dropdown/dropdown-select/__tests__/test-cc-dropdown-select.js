@@ -1,14 +1,16 @@
 import { assert } from 'chai';
+import sinon from 'sinon';
 
 import '../../../index';
 
 const {module, inject} = window;
 
 describe('cc-dropdown-select', () => {
-	let selectEl, ctrl, scope;
+	let selectEl, ctrl, scope, callback;
 
 	beforeEach(module('ccms.components'));
 	beforeEach(inject((_$compile_, _$rootScope_) => {
+		callback = sinon.spy();
 		const html = `
 		<cc-dropdown-select
 				placeholder="哈哈哈"
@@ -35,12 +37,7 @@ describe('cc-dropdown-select', () => {
 			displayField: 'title',
 			valueField: 'value'
 		};
-		scope.selectChange = (model, oldModel, itemIndex, item) => {
-			scope.newModel = model;
-			scope.oldModel = oldModel;
-			scope.curItemIndex = itemIndex;
-			scope.curItem = item;
-		};
+		scope.selectChange = callback;
 
 		selectEl = _$compile_(html)(scope);
 		ctrl = selectEl.controller('ccDropdownSelect');
@@ -57,12 +54,11 @@ describe('cc-dropdown-select', () => {
 			ctrl.setModelValue('bj');
 			scope.$digest();  // model 重设, 需要触发脏检查
 			setTimeout(() => {
-				// TODO: 测试方法不对, 待调研
-				done();
-				assert.strictEqual(scope.newModel, 'bj');
-				assert.strictEqual(scope.oldModel, 'sh');
-				assert.strictEqual(scope.curItemIndex, 0);
-				assert.strictEqual(scope.curItem.value, 'bj');
+				assert.strictEqual(callback.getCall(1).args[0], 'bj');
+				assert.strictEqual(callback.getCall(1).args[1], 'sh');
+				assert.strictEqual(callback.getCall(1).args[2], 0);
+				assert.strictEqual(callback.getCall(1).args[3].value, 'bj');
+				done(); // done 方法必须最后执行
 			}, 0);
 		});
 
@@ -113,3 +109,16 @@ describe('cc-dropdown-select', () => {
 	});
 });
 
+// about using setTimeout in UT:
+// https://stackoverflow.com/questions/11235815/is-there-a-way-to-get-chai-working-with-asynchronous-mocha-tests
+
+// setTimeout( function () {
+// 	// Called from the event loop, not it()
+// 	// So only the event loop could capture uncaught exceptions from here
+// 	try {
+// 		expect( true ).to.equal( false );
+// 		done(); // success: call done with no parameter to indicate that it() is done()
+// 	} catch( e ) {
+// 		done( e ); // failure: call done with an error Object to indicate that it() failed
+// 	}
+// }, 100 );
