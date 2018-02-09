@@ -50,15 +50,18 @@ describe('cc-dropdown-select', () => {
 	describe('DropdownSelectCtrl', () => {
 		it('.setModelValue()', done => {
 			ctrl.setModelValue('sh');
+			scope.$digest();  // model 重设, 需要触发脏检查
 			assert.strictEqual(ctrl.title, '上海');
 			assert.strictEqual(ctrl.model, 'sh');
+
 			ctrl.setModelValue('bj');
+			scope.$digest();  // model 重设, 需要触发脏检查
 			setTimeout(() => {
 				// TODO: 测试方法不对, 待调研
 				done();
 				assert.strictEqual(scope.newModel, 'bj');
 				assert.strictEqual(scope.oldModel, 'sh');
-				assert.strictEqual(scope.curItemIndex, 1);
+				assert.strictEqual(scope.curItemIndex, 0);
 				assert.strictEqual(scope.curItem.value, 'bj');
 			}, 0);
 		});
