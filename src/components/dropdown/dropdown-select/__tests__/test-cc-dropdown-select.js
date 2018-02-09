@@ -1,21 +1,23 @@
 import { assert } from 'chai';
+import sinon from 'sinon';
 
 import '../../../index';
 
 const {module, inject} = window;
 
 describe('cc-dropdown-select', () => {
-	let selectEl, ctrl, scope;
+	let selectEl, ctrl, scope, callback;
 
 	beforeEach(module('ccms.components'));
 	beforeEach(inject((_$compile_, _$rootScope_) => {
+		callback = sinon.spy();
 		const html = `
 		<cc-dropdown-select
 				placeholder="哈哈哈"
 				model="value1"
 				datalist="datalist1"
 				mapping="fieldsMap"
-				onSelectChange="selectChange(model, oldModel)">
+				on-select-change="selectChange(model, oldModel, itemIndex, item)">
 		</cc-dropdown-select>
 		`;
 
@@ -35,10 +37,7 @@ describe('cc-dropdown-select', () => {
 			displayField: 'title',
 			valueField: 'value'
 		};
-		scope.selectChange = (model, oldModel) => {
-			scope.newModel = model;
-			scope.oldModel = oldModel;
-		};
+		scope.selectChange = callback;
 
 		selectEl = _$compile_(html)(scope);
 		ctrl = selectEl.controller('ccDropdownSelect');
@@ -48,13 +47,18 @@ describe('cc-dropdown-select', () => {
 	describe('DropdownSelectCtrl', () => {
 		it('.setModelValue()', done => {
 			ctrl.setModelValue('sh');
+			scope.$digest();  // model 重设, 需要触发脏检查
 			assert.strictEqual(ctrl.title, '上海');
 			assert.strictEqual(ctrl.model, 'sh');
+
 			ctrl.setModelValue('bj');
+			scope.$digest();  // model 重设, 需要触发脏检查
 			setTimeout(() => {
-				done();
-				assert.strictEqual(scope.newModel, 'bj');
-				assert.strictEqual(scope.oldModel, 'sh');
+				assert.strictEqual(callback.getCall(1).args[0], 'bj');
+				assert.strictEqual(callback.getCall(1).args[1], 'sh');
+				assert.strictEqual(callback.getCall(1).args[2], 0);
+				assert.strictEqual(callback.getCall(1).args[3].value, 'bj');
+				done(); // done 方法必须最后执行
 			}, 0);
 		});
 
@@ -105,3 +109,16 @@ describe('cc-dropdown-select', () => {
 	});
 });
 
+// about using setTimeout in UT:
+// https://stackoverflow.com/questions/11235815/is-there-a-way-to-get-chai-working-with-asynchronous-mocha-tests
+
+// setTimeout( function () {
+// 	// Called from the event loop, not it()
+// 	// So only the event loop could capture uncaught exceptions from here
+// 	try {
+// 		expect( true ).to.equal( false );
+// 		done(); // success: call done with no parameter to indicate that it() is done()
+// 	} catch( e ) {
+// 		done( e ); // failure: call done with an error Object to indicate that it() failed
+// 	}
+// }, 100 );
