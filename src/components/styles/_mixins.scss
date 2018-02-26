@@ -64,3 +64,12 @@
   color: #666666;
   text-align: left;
 }
+
+@mixin clear-fix {
+  zoom: 1;
+  &:before, &:after {
+	content: "";
+	display: block;
+	clear: both;
+  }
+}

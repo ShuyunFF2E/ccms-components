@@ -1,0 +1,40 @@
+@import "../../styles/mixins";
+
+gs-tabs {
+  .gs-tabs {
+	.gs-tabs-nav {
+	  @include clear-fix;
+	  border-bottom: 1px solid #33b5e5;
+	  height: 30px;
+	  & > li {
+		float: left;
+		margin-right: 5px;
+		border: 1px solid #dedede;
+		border-bottom: 1px solid #33b5e5;
+		font-size: 13px;
+		line-height: 28px;
+		padding: 0 20px;
+		background: #f4f4f4;
+		position: relative;
+		cursor: pointer;
+		&.active {
+		  border: 1px solid #33b5e5;
+		  border-bottom: 2px solid #f8f8f8;
+		  background: #f8f8f8;
+		  & > a {
+			color: #333;
+		  }
+		}
+		& > a {
+		  color: #145681;
+		}
+		> a:hover {
+		  color: #333;
+		}
+	  }
+	}
+	.gs-tab-content {
+		padding-top: 10px;
+	}
+  }
+}

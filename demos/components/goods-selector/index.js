@@ -1,16 +1,10 @@
-/**
- * @author DuYing
- * @homepage https://github.com/Dale-/
- * @since 12/23/16
- */
-
 ;(function (angular) {
 
 	'use strict';
 
 	angular.module('app', ['ccms.components'])
 
-		.controller('ctrl', function ($scope, $ccAreaSelector) {
+		.controller('ctrl', function ($scope, $ccGoodsSelector) {
 
 			var INPUT = [
 				{ id: '310000,310100,310101', name: '上海市 > 市辖区 > 黄浦区' },
@@ -31,32 +25,9 @@
 				{ id: '130000', name: '河北省' }
 			];
 
-			$scope.responseWithIdAndName = function () {
-
-				var areaSelectorInstance = $ccAreaSelector
-
-					.areaSelector({
-						areaSelectorData: INPUT,
-						valueFormat: $ccAreaSelector.ID_ONLY
-					})
-
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
-			};
-
-			$scope.responseWithName = function () {
-
-				var areaSelectorInstance = $ccAreaSelector
-
-					.areaSelector({
-						areaSelectorData: INPUT,
-						valueFormat: $ccAreaSelector.ID_NAME
-					})
-
+			$scope.openGoodsSelector = function () {
+				 $ccGoodsSelector
+					.areaSelector(INPUT)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
