@@ -4,6 +4,28 @@
   font-family: "Microsoft Yahei", Tahoma, sans-serif;
 
   .main-area {
+	.form-area {
+	  .form-wrapper {
+		display: flex;
+		fieldset {
+		  margin: 0px;
+		  padding-left: 0px;
+		  padding-right: 0px;
+		  label {
+			padding-right: 10px;
+			width: 90px;
+		  }
+		  input, select, cc-dropdown-select {
+			width: 150px;
+		  }
+		  &:nth-child(3n+1) {
+			label {
+			  width: 64px;
+			}
+		  }
+		}
 
+	  }
+	}
   }
 }

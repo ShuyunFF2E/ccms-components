@@ -1,11 +1,31 @@
 <div class="goods-selector">
 	<div class="main-area">
+		<section class="form-area">
+			<form class="form-wrapper">
+				<fieldset>
+					<label>店铺选择:</label>
+					<cc-dropdown-select placeholder="哈哈哈"></cc-dropdown-select>
+				</fieldset>
+				<fieldset>
+					<label>商品ID:</label>
+					<input type="text" ng-model="info">
+				</fieldset>
+				<fieldset>
+					<label>关键词:</label>
+					<input type="text" ng-model="info">
+				</fieldset>
+			</form>
+		</section>
 		<gs-tabs>
 			<gs-panel text="全部商品">
-				这是全部商品页面
+				<section class="grid-area">
+					这是全部商品页面
+				</section>
 			</gs-panel>
 			<gs-panel text="已选商品">
-				这是已选商品页面
+				<section class="grid-area">
+					这是已选商品页面
+				</section>
 			</gs-panel>
 		</gs-tabs>
 	</div>
