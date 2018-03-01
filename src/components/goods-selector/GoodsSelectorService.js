@@ -12,16 +12,15 @@ const noop = () => {
  */
 const GoodsSelectorService = {
 
-	areaSelector(selectedGoods) {
-		console.log(selectedGoods);
+	areaSelector(selectedGoods, shopInfo) {
 		return ModalService.modal(
 			{
 				title: '商品选择',
-				style: {'width': '1016px', 'min-height': '420px'},
+				style: {'width': '1027px', 'min-height': '430px'},
 				fullscreen: false,
 				hasFooter: true,
 				__body: bodyTemplate,
-				locals: {selectedData: selectedGoods},
+				locals: {selectedData: selectedGoods, shopInfoData: shopInfo},
 				controller: GoodsSelectorController,
 				controllerAs: '$ctrl',
 				onClose: noop

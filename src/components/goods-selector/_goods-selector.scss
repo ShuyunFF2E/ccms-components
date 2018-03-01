@@ -6,24 +6,22 @@
   .main-area {
 	.gs-tabs {
 	  position: absolute;
-	  top: -0px;
+	  top: -10px;
 	  left: 0;
 	  right: 0;
 	}
 	.form-area {
-	  padding-top: 55px;
+	  padding-top: 28px;
 	  .form-wrapper {
-		margin-left: -20px;
-		&:after {
-		  display: block;
-		  content: '';
-		  clear: both;
-		}
+		margin-left: -18px;
+		margin-right: -20px;
+		padding-top: 5px;
+		display: flex;
+		flex-wrap: wrap;
 		fieldset {
 		  margin: 0px;
 		  padding-left: 0px;
 		  padding-right: 0px;
-		  float: left;
 		  input, select, cc-dropdown-select, cc-dropdown-multiselect {
 			width: 150px;
 		  }
@@ -38,22 +36,20 @@
 			  display: inline-block;
 			  padding-left: 95px;
 			  .date-picker-holder {
-				//width: 160px;
-				.calendar {
-				  //width: 160px;
-				}
+				width: 161px;
 			  }
 			}
 		  }
 		  .goods-label {
-			width: 92px;
+			width: 98px;
 			padding-right: 0;
 		  }
 		  &.goods-price input {
-			width: 100px;
+			width: 106px;
 		  }
 		  &.operate {
 			margin-left: 25px;
+			margin-top: 3px;
 			.search {
 			  width: 64px;
 			  font-size: 12px;
@@ -62,7 +58,7 @@
 			.reset {
 			  display: inline-block;
 			  padding-left: 20px;
-			  padding-right: 30px;
+			  padding-right: 24px;
 			  &:hover {
 				cursor: pointer;
 			  }
@@ -87,5 +83,28 @@
 		}
 	  }
 	}
+	.refresh-data {
+	  position: absolute;
+	  top: -0;
+	  right: -2px;
+	  color: #0083ba;
+	}
+  }
+  gs-tabs .gs-tabs {
+	.gs-tabs-nav {
+	  margin-left: -5px;
+	  margin-right: -5px;
+	}
+	.gs-tab-content {
+	  gs-panel {
+		position: absolute;
+	  }
+	}
+  }
+  gs-tabs.less-rows .gs-tab-content gs-panel {
+	top: 272px;
+  }
+  gs-tabs.more-rows .gs-tab-content gs-panel {
+	top: 120px;
   }
 }

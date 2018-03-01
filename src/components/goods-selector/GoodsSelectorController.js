@@ -1,7 +1,7 @@
 import { Inject } from 'angular-es-utils/decorators';
+// import { isObject } from 'angular-es-utils/type-auth';
 
-
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData')
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
@@ -17,12 +17,13 @@ export default class GoodsSelectorCtrl {
 			disabled: false,
 
 			// 是否显示时间 (true)
-			dateOnly: false
+			dateOnly: true
 		};
 		// this.formModel = {
 		// 	shopName: this.selectedGoods.shopList[0].value,
 		// 	shopId: '',
 		// 	shopNumber: '',
+		// goodsTitle: '',
 		// 	goodsCustom: [this.selectedGoods.goodsCustomList[0].value],
 		// 	goodsLabel: [],
 		// 	standardClassify: '',
@@ -44,6 +45,28 @@ export default class GoodsSelectorCtrl {
 		// };
 		// this.onSelectChange = function({ model, oldModel, itemIndex, item }) {
 		// };
+		this.testData = {shopId: 11111, shopName: '数云食堂', plat: 'jos'};
+		// this.testData = {shopId: 11111, shopName: '数云食堂', plat: 'taobao'};
+		// this.testData = [{shopId: 11111, shopName: '数云食堂', plat: 'taobao'}, {shopId: 10001, shopName: 'JD数云食堂', plat: 'jos'}];
+		// this.testData = [{shopId: 10001, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 11111, shopName: '数云食堂', plat: 'taobao'}];
+		this.isShowShopList = this.shopInfoJudge(this.testData);
+		this.istaobao = this.taobaoJudge(this.testData);
 	}
 
+	// 根据shopInfo是数组还是对象判断是否显示商铺列表,是数组返回true，是对象返回false
+	shopInfoJudge(shopInfoData) {
+		return shopInfoData.length > 1;
+	}
+	// 判断是否是淘宝店铺
+	taobaoJudge(shopInfoItem) {
+		if (this.isShowShopList) {
+			return shopInfoItem[0].plat === 'taobao';
+		} else {
+			return shopInfoItem.plat === 'taobao';
+		}
+	}
+	// 判断是否是简单搜索，注意当没有商铺列表的时候不存在简单搜索
+	simpleSearchJudge() {
+		return this.isSimpleSearch && !this.isShowShopList;
+	}
 }
