@@ -111,7 +111,7 @@
 				</fieldset>
 			</form>
 		</section>
-		<gs-tabs ng-class="{'less-rows': !$ctrl.isSimpleSearch, 'more-rows': $ctrl.isSimpleSearch}">
+		<gs-tabs ng-class="{'row-1': !$ctrl.isShowShopList && $ctrl.isSimpleSearch, 'row-5': $ctrl.isShowShopList || !$ctrl.isShowShopList && !$ctrl.isSimpleSearch}">
 			<gs-panel text="全部商品">
 				<section class="grid-area">
 					这是全部商品页面

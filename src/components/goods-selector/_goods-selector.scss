@@ -22,7 +22,7 @@
 		  margin: 0px;
 		  padding-left: 0px;
 		  padding-right: 0px;
-		  input, select, cc-dropdown-select, cc-dropdown-multiselect {
+		  input:not(.date-picker-input), select, cc-dropdown-select, cc-dropdown-multiselect {
 			width: 150px;
 		  }
 		  &.stack-date {
@@ -36,7 +36,7 @@
 			  display: inline-block;
 			  padding-left: 95px;
 			  .date-picker-holder {
-				width: 161px;
+				width: 198px;
 			  }
 			}
 		  }
@@ -101,10 +101,10 @@
 	  }
 	}
   }
-  gs-tabs.less-rows .gs-tab-content gs-panel {
-	top: 272px;
+  gs-tabs.row-1 .gs-tab-content gs-panel {
+	top: 100px;
   }
-  gs-tabs.more-rows .gs-tab-content gs-panel {
-	top: 120px;
+  gs-tabs.row-5 .gs-tab-content gs-panel {
+	top: 280px;
   }
 }

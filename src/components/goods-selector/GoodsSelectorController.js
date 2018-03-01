@@ -19,8 +19,8 @@ export default class GoodsSelectorCtrl {
 		this.dateRange = {
 			start: null,
 			end: null,
-			minDate: null,
-			maxDate: new Date(),
+			// start: new Date(2016, 2, 10),
+			// end: new Date(2016, 2, 20),
 			disabled: false,
 			dateOnly: true
 		};
