@@ -18,7 +18,7 @@
 					<label class="goods-label">商品标题：</label>
 					<input type="text" ng-model="$ctrl.formModel.goodsTitle" cc-validator placeholder="商品标题">
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.istaobao">
+				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isTaobao">
 					<label class="goods-label">自定义类目：</label>
 					<cc-dropdown-multiselect
 							placeholder=""
@@ -28,7 +28,7 @@
 							mapping="$ctrl.fieldsMap">
 					</cc-dropdown-multiselect>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.istaobao">
+				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isTaobao">
 					<label class="goods-label">商品标签：</label>
 					<cc-dropdown-multiselect
 							placeholder=""
@@ -76,7 +76,7 @@
 							mapping="$ctrl.fieldsMap">
 					</cc-dropdown-select>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && !$ctrl.istaobao">
+				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && !$ctrl.isTaobao">
 					<label class="goods-label">商品编号：</label>
 					<input type="text" ng-model="$ctrl.formModel.goodsCode" cc-validator placeholder="">
 				</fieldset>

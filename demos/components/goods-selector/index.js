@@ -25,15 +25,56 @@
 				{ id: '130000', name: '河北省' }
 			];
 
-			$scope.openGoodsSelector = function () {
+			var withShopList =  [{shopId: 11111, shopName: '数云食堂', plat: 'taobao'}, {shopId: 10001, shopName: 'JD数云食堂', plat: 'jos'}];
+			var jdWithoutShopList = {shopId: 11111, shopName: '数云食堂', plat: 'taobao'};
+			var taobaoWithoutShopList = {shopId: 10001, shopName: 'JD数云食堂', plat: 'jos'};
+
+			// taobao + 店铺选择
+			$scope.openTaobaoGoodsSelectorWithShopList = function () {
 				 $ccGoodsSelector
-					.areaSelector(INPUT)
+					.goodsSelector(withShopList)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
 					}, function() {
 						console.log('----------cancel---------');
 					});
+			};
+
+			// jd + 店铺选择
+			$scope.openJDGoodsSelectorWithShopList = function () {
+				$ccGoodsSelector
+					.goodsSelector(withShopList)
+					.open().result.then(function(response) {
+					console.log('-----------ok-----------');
+					console.log(response);
+				}, function() {
+					console.log('----------cancel---------');
+				});
+			};
+
+			// taobao 无店铺选择
+			$scope.openTaobaoGoodsSelector = function () {
+				$ccGoodsSelector
+					.goodsSelector(taobaoWithoutShopList)
+					.open().result.then(function(response) {
+					console.log('-----------ok-----------');
+					console.log(response);
+				}, function() {
+					console.log('----------cancel---------');
+				});
+			};
+
+			// jd 无店铺选择
+			$scope.openJDGoodsSelector = function () {
+				$ccGoodsSelector
+					.goodsSelector(jdWithoutShopList)
+					.open().result.then(function(response) {
+					console.log('-----------ok-----------');
+					console.log(response);
+				}, function() {
+					console.log('----------cancel---------');
+				});
 			};
 
 		});
