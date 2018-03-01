@@ -2,29 +2,89 @@
   background: #f8f8f8;
   color: #666666;
   font-family: "Microsoft Yahei", Tahoma, sans-serif;
-
+  position: relative;
   .main-area {
+	.gs-tabs {
+	  position: absolute;
+	  top: -0px;
+	  left: 0;
+	  right: 0;
+	}
 	.form-area {
+	  padding-top: 55px;
 	  .form-wrapper {
-		display: flex;
+		margin-left: -20px;
+		&:after {
+		  display: block;
+		  content: '';
+		  clear: both;
+		}
 		fieldset {
 		  margin: 0px;
 		  padding-left: 0px;
 		  padding-right: 0px;
-		  label {
-			padding-right: 10px;
-			width: 90px;
-		  }
-		  input, select, cc-dropdown-select {
+		  float: left;
+		  input, select, cc-dropdown-select, cc-dropdown-multiselect {
 			width: 150px;
 		  }
-		  &:nth-child(3n+1) {
+		  &.stack-date {
+			position: relative;
 			label {
-			  width: 64px;
+			  position: absolute;
+			  left: 0;
+			  top: 14px;
+			}
+			.date-range {
+			  display: inline-block;
+			  padding-left: 95px;
+			  .date-picker-holder {
+				//width: 160px;
+				.calendar {
+				  //width: 160px;
+				}
+			  }
 			}
 		  }
+		  .goods-label {
+			width: 92px;
+			padding-right: 0;
+		  }
+		  &.goods-price input {
+			width: 100px;
+		  }
+		  &.operate {
+			margin-left: 25px;
+			.search {
+			  width: 64px;
+			  font-size: 12px;
+			  min-width: 66px;
+			}
+			.reset {
+			  display: inline-block;
+			  padding-left: 20px;
+			  padding-right: 30px;
+			  &:hover {
+				cursor: pointer;
+			  }
+			}
+			.add-addition {
+			  display: inline-block;
+			  color:#0083ba;
+			  &:hover {
+				cursor: pointer;
+			  }
+			}
+		  }
+		  .dropdown-multiselect .dropdown-panel .dropdown-list li > label {
+			> input[type="checkbox"] {
+			  width: 12px;
+			  height: 12px;
+			  margin-right: 6px;
+			}
+			text-align: left;
+			padding-left: 10px;
+		  }
 		}
-
 	  }
 	}
   }

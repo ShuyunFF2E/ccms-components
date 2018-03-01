@@ -1,18 +1,115 @@
 <div class="goods-selector">
 	<div class="main-area">
 		<section class="form-area">
-			<form class="form-wrapper">
+			<form class="form-wrapper" tooltip-placement="top-left">
 				<fieldset>
-					<label>店铺选择:</label>
-					<cc-dropdown-select placeholder="哈哈哈"></cc-dropdown-select>
+					<label class="goods-label">店铺选择：</label>
+					<cc-dropdown-select
+							model="$ctrl.formModel.shopName"
+							datalist="$ctrl.selectedGoods.shopList"
+							mapping="$ctrl.fieldsMap">
+					</cc-dropdown-select>
 				</fieldset>
 				<fieldset>
-					<label>商品ID:</label>
-					<input type="text" ng-model="info">
+					<label class="goods-label">商品ID：</label>
+					<input type="text" ng-model="$ctrl.formModel.shopId" cc-validator placeholder="商品ID">
 				</fieldset>
 				<fieldset>
-					<label>关键词:</label>
-					<input type="text" ng-model="info">
+					<label class="goods-label">商品编号：</label>
+					<input type="text" ng-model="$ctrl.formModel.shopNumber" cc-validator placeholder="商品编号">
+				</fieldset>
+				<!--<fieldset>-->
+				<!--<label class="goods-label">商品标题：</label>-->
+				<!--<input type="text" ng-model="$ctrl.formModel.goodsTitle" cc-validator placeholder="商品标题">-->
+				<!--</fieldset>-->
+				<fieldset>
+					<label class="goods-label">自定义类目：</label>
+					<cc-dropdown-multiselect
+							placeholder=""
+							model="$ctrl.formModel.goodsCustom"
+							datalist="$ctrl.selectedGoods.goodsCustomList"
+							searchable="true"
+							mapping="$ctrl.fieldsMap">
+					</cc-dropdown-multiselect>
+				</fieldset>
+				<fieldset>
+					<label class="goods-label">商品标签：</label>
+					<cc-dropdown-multiselect
+							placeholder=""
+							model="$ctrl.formModel.goodsLabel"
+							datalist="$ctrl.selectedGoods.goodsLabelList"
+							searchable="true"
+							mapping="$ctrl.fieldsMap">
+					</cc-dropdown-multiselect>
+				</fieldset>
+				<fieldset>
+					<label class="goods-label">标准类目：</label>
+					<cc-dropdown-select
+							placeholder="请选择"
+							model="$ctrl.formModel.standardClassify"
+							datalist="$ctrl.selectedGoods.standardClassifyList"
+							searchable="true"
+							mapping="$ctrl.fieldsMap">
+					</cc-dropdown-select>
+				</fieldset>
+				<fieldset>
+					<label class="goods-label">商品属性：</label>
+					<cc-dropdown-select
+							placeholder="请选择"
+							model="$ctrl.formModel.goodsAttr"
+							datalist="$ctrl.selectedGoods.goodsAttrList"
+							searchable="true"
+							mapping="$ctrl.fieldsMap">
+					</cc-dropdown-select>
+				</fieldset>
+				<fieldset>
+					<label class="goods-label">属性值：</label>
+					<cc-dropdown-multiselect
+							placeholder="请选择"
+							model="$ctrl.formModel.goodsAttrValue"
+							datalist="$ctrl.selectedGoods.goodsAttrValueList"
+							searchable="true"
+							mapping="$ctrl.fieldsMap">
+					</cc-dropdown-multiselect>
+				</fieldset>
+				<fieldset>
+					<label class="goods-label">商品状态：</label>
+					<cc-dropdown-select
+							model="$ctrl.formModel.goodsStatus"
+							datalist="$ctrl.selectedGoods.goodsStatusList"
+							mapping="$ctrl.fieldsMap">
+					</cc-dropdown-select>
+				</fieldset>
+				<fieldset>
+					<label class="goods-label">商品编号：</label>
+					<input type="text" ng-model="$ctrl.formModel.goodsCode" cc-validator placeholder="">
+				</fieldset>
+				<fieldset>
+					<label class="goods-label">商品商家编码：</label>
+					<input type="text" ng-model="$ctrl.formModel.shopCode" cc-validator placeholder="">
+				</fieldset>
+				<fieldset>
+					<label class="goods-label">SKU商家编码：</label>
+					<input type="text" ng-model="$ctrl.formModel.SKUShopCode" cc-validator placeholder="">
+				</fieldset>
+				<fieldset>
+					<label class="goods-label">SKU规格：</label>
+					<input type="text" ng-model="$ctrl.formModel.SKUStandard" cc-validator placeholder="">
+				</fieldset>
+				<fieldset class="stack-date">
+					<label class="goods-label">上架时间：</label>
+					<cc-date-range opts="$ctrl.dateRange"></cc-date-range>
+				</fieldset>
+				<fieldset class="goods-price">
+					<label class="goods-label">价格：</label>
+					<input class="goods-input" type="text" ng-model="$ctrl.formModel.goodsLowPrice" cc-validator>
+					<span>-</span>
+					<input class="goods-input" type="text" ng-model="$ctrl.formModel.goodsHighPrice" cc-validator>
+				</fieldset>
+				<fieldset class="operate">
+					<button type="button" class="btn-ok search">搜索</button>
+					<span class="reset">重置</span>
+					<span class="add-addition">添加为搜索条件</span>
 				</fieldset>
 			</form>
 		</section>
@@ -29,4 +126,5 @@
 			</gs-panel>
 		</gs-tabs>
 	</div>
+	<!--{{$ctrl.selectedGoods}}-->
 </div>

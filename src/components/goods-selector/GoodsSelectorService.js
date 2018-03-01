@@ -13,11 +13,11 @@ const noop = () => {
 const GoodsSelectorService = {
 
 	areaSelector(selectedGoods) {
-
+		console.log(selectedGoods);
 		return ModalService.modal(
 			{
 				title: '商品选择',
-				style: {'max-width': '820px', 'min-height': '420px'},
+				style: {'width': '1016px', 'min-height': '420px'},
 				fullscreen: false,
 				hasFooter: true,
 				__body: bodyTemplate,
