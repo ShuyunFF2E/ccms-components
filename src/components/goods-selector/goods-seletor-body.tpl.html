@@ -111,6 +111,9 @@
 				</fieldset>
 			</form>
 		</section>
+		<!--row-1: 不存在商铺列表选项并且简单搜索，表格区域距离上侧的距离
+			row-5: 有商铺列表选项或者无商铺列表并且是淘宝店铺、高级搜索，表格距离上侧的距离
+			row-4: 不存在商铺列表选项并且是京东店铺、高级搜索，表格距离上侧的距离-->
 		<gs-tabs ng-class="{'row-1': !$ctrl.isShowShopList && $ctrl.isSimpleSearch,
 		 					'row-5': $ctrl.isShowShopList || !$ctrl.isShowShopList && !$ctrl.isSimpleSearch && $ctrl.isTaobao,
 		 					'row-4': !$ctrl.isShowShopList && !$ctrl.isTaobao && !$ctrl.isSimpleSearch}">
