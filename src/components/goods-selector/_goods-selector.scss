@@ -45,7 +45,7 @@
 			padding-right: 0;
 		  }
 		  &.goods-price input {
-			width: 106px;
+			width: 195px;
 		  }
 		  &.operate {
 			margin-left: 25px;
@@ -106,5 +106,11 @@
   }
   gs-tabs.row-5 .gs-tab-content gs-panel {
 	top: 280px;
+  }
+  gs-tabs.row-4 .gs-tab-content gs-panel {
+	top: 233px;
+  }
+  p.error-minor-tooltip {
+	z-index: 1000;
   }
 }

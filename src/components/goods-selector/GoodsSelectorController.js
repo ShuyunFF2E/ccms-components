@@ -4,6 +4,7 @@ import { Inject } from 'angular-es-utils/decorators';
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
+
 		// 已选商品列表
 		// this.selectedGoods = this._selectedData;
 
@@ -12,7 +13,7 @@ export default class GoodsSelectorCtrl {
 		//         -> 其它情况, 需要提示用户, 参数格式不正确
 
 		this.isShowShopList = Array.isArray(this._shopInfoData);
-		this.isTaobao = this.isShowShopList ? this._shopInfoData[0].plat : this._shopInfoData.plat;
+		this.isTaobao = this.isShowShopList ? this._shopInfoData[0].plat === 'taobao' : this._shopInfoData.plat === 'taobao';
 
 		// form 区域日期配置
 		this.dateRange = {
@@ -22,26 +23,207 @@ export default class GoodsSelectorCtrl {
 			dateOnly: true
 		};
 
-		// form 区域model配置
-		this.formModel = {
-			shopName: null,
-			shopId: null,
-			shopNumber: null,
-			goodsCustom: [],
-			goodsLabel: [],
-			standardClassify: '',
-			goodsAttr: '',
-			goodsAttrValue: [],
-			goodsStatus: '不限',
-			goodsCode: '',
-			shopCode: '',
-			SKUShopCode: '',
-			SKUStandard: '',
-			dateFrom: this.dateRange.start,
-			dateTo: this.dateRange.end,
-			goodsLowPrice: null,
-			goodsHighPrice: null
+		// 测试数据
+		this.selectedGoods = {
+			'shopList': [
+				{
+					'title': '商铺1',
+					'value': '商铺1'
+				},
+				{
+					'title': '商铺2',
+					'value': '商铺2'
+				},
+				{
+					'title': '商铺3',
+					'value': '商铺3'
+				},
+				{
+					'title': '商铺4',
+					'value': '商铺4'
+				}
+			],
+			'goodsCustomList': [
+				{
+					'title': '不限',
+					'value': '不限'
+				},
+				{
+					'title': '自定义类目1',
+					'value': '自定义类目1'
+				},
+				{
+					'title': '自定义类目2',
+					'value': '自定义类目2'
+				},
+				{
+					'title': '自定义类目3',
+					'value': '自定义类目3'
+				},
+				{
+					'title': '自定义类目4',
+					'value': '自定义类目4'
+				}
+			],
+			'goodsLabelList': [
+				{
+					'title': '商品标签1',
+					'value': '商品标签1'
+				},
+				{
+					'title': '商品标签2',
+					'value': '商品标签2'
+				},
+				{
+					'title': '商品标签3',
+					'value': '商品标签3'
+				},
+				{
+					'title': '商品标签4',
+					'value': '商品标签4'
+				}
+			],
+			'standardClassifyList': [
+				{
+					'title': '标准类目1',
+					'value': '标准类目1'
+				},
+				{
+					'title': '标准类目2',
+					'value': '标准类目2'
+				},
+				{
+					'title': '标准类目3',
+					'value': '标准类目3'
+				},
+				{
+					'title': '标准类目4',
+					'value': '标准类目4'
+				}
+			],
+			'goodsAttrList': [
+				{
+					'title': '商品属性1',
+					'value': '商品属性1'
+				},
+				{
+					'title': '商品属性2',
+					'value': '商品属性2'
+				},
+				{
+					'title': '商品属性3',
+					'value': '商品属性3'
+				},
+				{
+					'title': '商品属性4',
+					'value': '商品属性4'
+				}
+			],
+			'goodsAttrValueList': [
+				{
+					'title': '属性值1',
+					'value': '属性值1'
+				},
+				{
+					'title': '属性值2',
+					'value': '属性值2'
+				},
+				{
+					'title': '属性值3',
+					'value': '属性值3'
+				},
+				{
+					'title': '属性值4',
+					'value': '属性值4'
+				}
+			],
+			'cascadeSelectMenu': [
+				{
+					'title': '标准类目1',
+					'value': '标准类目1',
+					'childrenList': [
+						{
+							'title': '商品属性1',
+							'value': '商品属性1',
+							'childrenList': [
+								{
+									'title': '属性值1',
+									'value': '属性值1'
+								},
+								{
+									'title': '属性值2',
+									'value': '属性值2'
+								}
+							]
+						},
+						{
+							'title': '商品属性2',
+							'value': '商品属性2',
+							'childrenList': [
+								{
+									'title': '属性值3',
+									'value': '属性值3'
+								},
+								{
+									'title': '属性值4',
+									'value': '属性值4'
+								}
+							]
+						}
+					]
+				},
+				{
+					'title': '标准类目2',
+					'value': '标准类目2',
+					'childrenList': [
+						{
+							'title': '商品属性3',
+							'value': '商品属性3',
+							'childrenList': [
+								{
+									'title': '属性值5',
+									'value': '属性值5'
+								},
+								{
+									'title': '属性值6',
+									'value': '属性值6'
+								}
+							]
+						},
+						{
+							'title': '商品属性4',
+							'value': '商品属性4',
+							'childrenList': [
+								{
+									'title': '属性值7',
+									'value': '属性值7'
+								},
+								{
+									'title': '属性值8',
+									'value': '属性值8'
+								}
+							]
+						}
+					]
+				}
+			],
+			'goodsStatusList': [
+				{
+					'title': '不限',
+					'value': '不限'
+				},
+				{
+					'title': '在架',
+					'value': '在架'
+				},
+				{
+					'title': '下架',
+					'value': '下架'
+				}
+			]
 		};
+
+		this.initForm();
 
 		this.fieldsMap = {
 			valueField: 'value',
@@ -86,6 +268,14 @@ export default class GoodsSelectorCtrl {
 					}
 					return true;
 				}
+			},
+			// 数字校验
+			number: {
+				msg: '请输入整数',
+				fn: (modelValue, viewValue) => {
+					const value = modelValue || viewValue;
+					return value ? (/(^\s*$)|(^\d+$)/).test(value) : !value;
+				}
 			}
 		};
 		// 表单提交前的校验
@@ -99,25 +289,29 @@ export default class GoodsSelectorCtrl {
 		// 重置表单，恢复初始值
 		this.reset = function(formCtrl) {
 			this._$ccValidator.setPristine(formCtrl);
-			this.formModel = {
-				shopName: '店铺1',
-				shopId: '',
-				shopNumber: '',
-				goodsCustom: ['自定义类目1'],
-				goodsLabel: [],
-				standardClassify: '',
-				goodsAttr: '',
-				goodsAttrValue: [],
-				goodsStatus: '不限',
-				goodsCode: '',
-				shopCode: '',
-				SKUShopCode: '',
-				SKUStandard: '',
-				dateFrom: this.dateRange.start,
-				dateTo: this.dateRange.end,
-				goodsLowPrice: '',
-				goodsHighPrice: ''
-			};
+			this.initForm();
+		};
+	}
+    // form 表单初始化
+	initForm() {
+		this.formModel = {
+			shopName: this.selectedGoods.shopList[0].title,
+			shopId: null,
+			shopNumber: null,
+			goodsCustom: [this.selectedGoods.goodsCustomList[0].title],
+			goodsLabel: [],
+			standardClassify: null,
+			goodsAttr: null,
+			goodsAttrValue: [],
+			goodsStatus: this.selectedGoods.goodsStatusList[0].title,
+			goodsCode: null,
+			shopCode: null,
+			SKUShopCode: null,
+			SKUStandard: null,
+			dateFrom: this.dateRange.start,
+			dateTo: this.dateRange.end,
+			goodsLowPrice: null,
+			goodsHighPrice: null
 		};
 	}
 }
