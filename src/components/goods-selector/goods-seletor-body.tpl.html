@@ -1,7 +1,7 @@
 <div class="goods-selector">
 	<div class="main-area">
 		<section class="form-area">
-			<form class="form-wrapper" tooltip-placement="top-left"  ng-init="$ctrl.isSimpleSearch=true">
+			<form class="form-wrapper" cc-validators="$ctrl.validators" name="$ctrl.goodsSelectorForm" ng-init="$ctrl.isSimpleSearch=true">
 				<fieldset ng-if="$ctrl.isShowShopList">
 					<label class="goods-label">店铺选择：</label>
 					<cc-dropdown-select
@@ -12,11 +12,11 @@
 				</fieldset>
 				<fieldset>
 					<label class="goods-label">商品ID：</label>
-					<input type="text" ng-model="$ctrl.formModel.shopId" cc-validator placeholder="商品ID">
+					<input type="text" ng-model="$ctrl.formModel.shopId" placeholder="商品ID">
 				</fieldset>
 				<fieldset>
 					<label class="goods-label">商品标题：</label>
-					<input type="text" ng-model="$ctrl.formModel.goodsTitle" cc-validator placeholder="商品标题">
+					<input type="text" ng-model="$ctrl.formModel.goodsTitle" placeholder="商品标题">
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isTaobao">
 					<label class="goods-label">自定义类目：</label>
@@ -78,19 +78,19 @@
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && !$ctrl.isTaobao">
 					<label class="goods-label">商品编号：</label>
-					<input type="text" ng-model="$ctrl.formModel.goodsCode" cc-validator placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.goodsCode" placeholder="">
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">商品商家编码：</label>
-					<input type="text" ng-model="$ctrl.formModel.shopCode" cc-validator placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.shopCode" placeholder="">
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">SKU商家编码：</label>
-					<input type="text" ng-model="$ctrl.formModel.SKUShopCode" cc-validator placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.SKUShopCode" placeholder="">
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">SKU规格：</label>
-					<input type="text" ng-model="$ctrl.formModel.SKUStandard" cc-validator placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.SKUStandard" placeholder="">
 				</fieldset>
 				<fieldset class="stack-date" ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">上架时间：</label>
@@ -98,13 +98,13 @@
 				</fieldset>
 				<fieldset class="goods-price" ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">价格：</label>
-					<input class="goods-input" type="text" ng-model="$ctrl.formModel.goodsLowPrice" cc-validator>
+					<input class="goods-input" type="text" ng-model="$ctrl.formModel.goodsLowPrice" cc-validator="price, lowPrice">
 					<span>-</span>
-					<input class="goods-input" type="text" ng-model="$ctrl.formModel.goodsHighPrice" cc-validator>
+					<input class="goods-input" type="text" ng-model="$ctrl.formModel.goodsHighPrice" cc-validator="price, highPrice">
 				</fieldset>
 				<fieldset class="operate">
-					<button type="button" class="btn-ok search">搜索</button>
-					<span class="reset">重置</span>
+					<button type="button" class="btn-ok search" ng-click="$ctrl.search()">搜索</button>
+					<span class="reset" ng-click="$ctrl.reset($ctrl.goodsSelectorForm)">重置</span>
 					<span class="add-addition" ng-if="$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = false">高级搜索</span>
 					<span class="add-addition" ng-if="!$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = true">简单搜索</span>
 					<span class="add-addition" ng-if="$ctrl.isShowShopList">添加为搜索条件</span>
