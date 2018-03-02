@@ -24,10 +24,10 @@ export default class GoodsSelectorCtrl {
 
 		// form 区域model配置
 		this.formModel = {
-			shopName: '店铺1',
-			shopId: '',
-			shopNumber: '',
-			goodsCustom: ['自定义类目1'],
+			shopName: null,
+			shopId: null,
+			shopNumber: null,
+			goodsCustom: [],
 			goodsLabel: [],
 			standardClassify: '',
 			goodsAttr: '',
@@ -39,62 +39,58 @@ export default class GoodsSelectorCtrl {
 			SKUStandard: '',
 			dateFrom: this.dateRange.start,
 			dateTo: this.dateRange.end,
-			goodsLowPrice: '',
-			goodsHighPrice: ''
+			goodsLowPrice: null,
+			goodsHighPrice: null
 		};
+
 		this.fieldsMap = {
 			valueField: 'value',
 			displayField: 'title'
 		};
 
-		// form 区域价格校验 -> 只能输入数字
-		//				    -> 前一个数字小于或者等于后一个数字
-		//					-> 如果最低价不填，最低价默认为0，最高价可填可不填
-		// 					-> 如果最低价填写，最高价必须填写
+		// form 区域价格校验
 		this.validators = {
+			/**
+			 * 价格校验
+			 * -> 只能输入数字或两位小数
+			 * -> 前一个数字小于或者等于后一个数字
+			 * -> 价格区间必须都写, 校验才生效
+			 * */
 			price: {
-				msg: '只能是正整数或者最多保留两位小数！',
+				msg: '价格只能填写正数或两位小数.',
 				fn: (modelValue, viewValue) => {
 					const value = modelValue || viewValue;
 					return value ? (/^[0-9]+([.][0-9]{0,2}){0,1}$/).test(value) : !value;
 				}
 			},
 			lowPrice: {
+				msg: '价格前项值必须小于后项值',
 				fn: (modelValue, viewValue) => {
 					const value = modelValue || viewValue;
-					if (this.formModel.goodsLowPrice !== '' && this.formModel.goodsHighPrice !== '' && Number(value) >= Number(this.formModel.goodsHighPrice)) {
-						this.formModel.goodsHighPrice = '';
+					const l = parseFloat(value);
+					const h = parseFloat(this.formModel.goodsHighPrice);
+					if (!isNaN(l) && !isNaN(h)) {
+						return l < h;
 					}
 					return true;
 				}
 			},
 			highPrice: {
-				msg: '不得小于最低价！',
+				msg: '价格后项值必须大于前项值',
 				fn: (modelValue, viewValue) => {
 					const value = modelValue || viewValue;
-					if (this.formModel.goodsLowPrice !== '') {
-						if (value !== '' && Number(value) >= Number(this.formModel.goodsLowPrice)) {
-							return true;
-						} else {
-							return false;
-						}
-					} else {
-						if (value === '') {
-							return true;
-						} else {
-							this.formModel.goodsLowPrice = 0;
-							return false;
-						}
+					const l = parseFloat(this.formModel.goodsLowPrice);
+					const h = parseFloat(value);
+					if (!isNaN(l) && !isNaN(h)) {
+						return l < h;
 					}
+					return true;
 				}
 			}
 		};
 		// 表单提交前的校验
 		this.search = function() {
 			this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
-				if (this.formModel.goodsLowPrice === '' && this.formModel.goodsHighPrice !== '') {
-					this.formModel.goodsLowPrice = 0;
-				}
 				console.log('校验成功!');
 			}, () => {
 				console.log('校验失败!');
