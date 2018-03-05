@@ -33,7 +33,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
 		this.pagerGridOptions = {
 
-			resource: $resource('/pages/1'),
+			resource: $resource('/api/pages/1'),
 			response: null,
 			queryParams: {
 				pageNum: 2
@@ -76,7 +76,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
 		this.pagerGridOptions2 = {
 
-			resource: $resource('/pages/1'),
+			resource: $resource('/api/pages/1'),
 			response: null,
 			queryParams: {
 				pageNum: 2
@@ -162,7 +162,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
 		this.gridOption4 = {
 
-			resource: $resource('/pages/10'),
+			resource: $resource('/api/pages/10'),
 			columnsDef: [
 				{
 					cellTemplate: '<span style="color:#145681" ng-bind="entity.name" ng-click="app.click()"></span>',
