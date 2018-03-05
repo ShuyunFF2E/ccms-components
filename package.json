@@ -17,14 +17,14 @@
     "publish:docs": "./scripts/publish-docs.sh",
     "release": "./scripts/release.sh",
     "update-dev-server": "./scripts/update-dev-server.sh",
-    "start": "concurrently \"node server.js\" \"npx fe-mock-server --mock './mock/' --api-prefix '/api' --port 8989\"",
+    "start": "concurrently \"node server.js\" \"npx fe-mock-server --mock \"./mock/\" --api-prefix \"/api\" --port 8989\"",
     "prepush": "npm test",
     "codecheck": "cross-env NODE_EVN=test eslint src/components",
     "start:test": "karma start test/karma.unit.conf.js",
     "test": "npm run codecheck & npm run test:cover",
     "test:unit": "karma start test/karma.unit.conf.js --single-run",
     "test:cover": "karma start test/karma.cover.conf.js --single-run",
-    "mock": "npx fe-mock-server --mock './mock/' --api-prefix '/api' --port 8989"
+    "mock": "npx fe-mock-server --mock \"./mock/\" --api-prefix \"/api\" --port 8989"
   },
   "devDependencies": {
     "angular-mocks": "1.5.8",
