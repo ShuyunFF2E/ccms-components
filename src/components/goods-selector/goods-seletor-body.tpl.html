@@ -44,19 +44,21 @@
 					<cc-dropdown-select
 							placeholder="请选择"
 							model="$ctrl.formModel.standardClassify"
-							datalist="$ctrl.selectedGoods.standardClassifyList"
+							datalist="$ctrl.selectedGoods.cascadeSelectMenu"
 							searchable="true"
-							mapping="$ctrl.fieldsMap">
+							mapping="$ctrl.fieldsMap"
+							on-select-change="$ctrl.cascadeChangeStandard(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">商品属性：</label>
 					<cc-dropdown-select
 							placeholder="请选择"
-							model="$ctrl.formModel.goodsAttr"
-							datalist="$ctrl.selectedGoods.goodsAttrList"
+							model="$ctrl.goodsAttr"
+							datalist="$ctrl.goodsAttrList"
 							searchable="true"
-							mapping="$ctrl.fieldsMap">
+							mapping="$ctrl.fieldsMap"
+							on-select-change="$ctrl.cascadeChangeAttr(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
@@ -64,7 +66,7 @@
 					<cc-dropdown-multiselect
 							placeholder="请选择"
 							model="$ctrl.formModel.goodsAttrValue"
-							datalist="$ctrl.selectedGoods.goodsAttrValueList"
+							datalist="$ctrl.goodsAttrValueList"
 							searchable="true"
 							mapping="$ctrl.fieldsMap">
 					</cc-dropdown-multiselect>

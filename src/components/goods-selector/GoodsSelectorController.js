@@ -266,6 +266,24 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		};
+		// 级联菜单
+		this.goodsAttrList = [];
+		this.goodsAttrValueList = [];
+		this.cascadeChangeStandard = function(newValue, oldValue, itemIndex, item) {
+			if (itemIndex !== -1) {
+				this.goodsAttrList = item.children.concat();
+			} else {
+				this.goodsAttrList = [].concat();
+				this.goodsAttrValueList = [].concat();
+			}
+		};
+		this.cascadeChangeAttr = function(newValue, oldValue, itemIndex, item) {
+			if (itemIndex !== -1) {
+				this.goodsAttrValueList = item.children.concat();
+			} else {
+				this.goodsAttrValueList = [].concat();
+			}
+		};
 		// 表单提交前的校验
 		this.search = function() {
 			this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
@@ -273,8 +291,9 @@ export default class GoodsSelectorCtrl {
 			}, () => {
 				console.log('校验失败!');
 			});
-			this.formModel.dateFrom = this.dateRange.start;
-			this.formModel.dateTo = this.dateRange.end;
+			this.formModel.dateFrom = this.dateRange.start.toLocaleDateString();
+			this.formModel.dateTo = this.dateRange.end.toLocaleDateString();
+			console.log(this.formModel);
 		};
 		// 重置表单，恢复初始值
 		this.reset = function(formCtrl) {
