@@ -1,6 +1,6 @@
 import { Inject } from 'angular-es-utils/decorators';
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$scope')
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
@@ -23,26 +23,14 @@ export default class GoodsSelectorCtrl {
 			dateOnly: true
 		};
 
+		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
+		this.shopList.forEach(item => {
+			item['title'] = item.shopName;
+			item['value'] = item.shopName;
+		});
 		// 测试数据
 		this.selectedGoods = {
-			'shopList': [
-				{
-					'title': '商铺1',
-					'value': '商铺1'
-				},
-				{
-					'title': '商铺2',
-					'value': '商铺2'
-				},
-				{
-					'title': '商铺3',
-					'value': '商铺3'
-				},
-				{
-					'title': '商铺4',
-					'value': '商铺4'
-				}
-			],
+			'shopList': this.shopList,
 			'goodsCustomList': [
 				{
 					'title': '不限',
@@ -141,11 +129,11 @@ export default class GoodsSelectorCtrl {
 				{
 					'title': '标准类目1',
 					'value': '标准类目1',
-					'childrenList': [
+					'children': [
 						{
 							'title': '商品属性1',
 							'value': '商品属性1',
-							'childrenList': [
+							'children': [
 								{
 									'title': '属性值1',
 									'value': '属性值1'
@@ -159,7 +147,7 @@ export default class GoodsSelectorCtrl {
 						{
 							'title': '商品属性2',
 							'value': '商品属性2',
-							'childrenList': [
+							'children': [
 								{
 									'title': '属性值3',
 									'value': '属性值3'
@@ -175,11 +163,11 @@ export default class GoodsSelectorCtrl {
 				{
 					'title': '标准类目2',
 					'value': '标准类目2',
-					'childrenList': [
+					'children': [
 						{
 							'title': '商品属性3',
 							'value': '商品属性3',
-							'childrenList': [
+							'children': [
 								{
 									'title': '属性值5',
 									'value': '属性值5'
@@ -193,7 +181,7 @@ export default class GoodsSelectorCtrl {
 						{
 							'title': '商品属性4',
 							'value': '商品属性4',
-							'childrenList': [
+							'children': [
 								{
 									'title': '属性值7',
 									'value': '属性值7'
@@ -285,6 +273,8 @@ export default class GoodsSelectorCtrl {
 			}, () => {
 				console.log('校验失败!');
 			});
+			this.formModel.dateFrom = this.dateRange.start;
+			this.formModel.dateTo = this.dateRange.end;
 		};
 		// 重置表单，恢复初始值
 		this.reset = function(formCtrl) {
@@ -308,8 +298,8 @@ export default class GoodsSelectorCtrl {
 			shopCode: null,
 			SKUShopCode: null,
 			SKUStandard: null,
-			dateFrom: this.dateRange.start,
-			dateTo: this.dateRange.end,
+			dateFrom: null,
+			dateTo: null,
 			goodsLowPrice: null,
 			goodsHighPrice: null
 		};
