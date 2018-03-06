@@ -102,6 +102,105 @@
 	.gs-tab-content {
 	  gs-panel {
 		position: absolute;
+		.choose-addition {
+		  padding-left: 11px;
+		  margin-bottom: 6px;
+		  color: #333333;
+		  .cc-checkbox {
+			margin-right: 15px;
+			.cc-checkbox-input {
+			  width: 12px;
+			  height: 12px;
+			  margin-right: 6px;
+			}
+		  }
+		  span.all-slide-down {
+			color: #0083ba;
+			line-height: 2em;
+			&:hover {
+			  cursor: pointer;
+			}
+		  }
+		  .cc-checkbox.checked .cc-checkbox-input:before {
+			width: 2px;
+			height: 6px;
+			left: 3px;
+			top: 0.6px;
+		  }
+		}
+		cc-grid {
+		  height: 300px;
+		  width: 987px;
+		  margin-left: -2px;
+		  overflow-y: scroll;
+		  .cc-grid {
+			border: none;
+			.cc-grid-table {
+			  thead > tr {
+				background-color: #ffffff;
+			  }
+			  tbody {
+				tr:last-child {
+				  border-bottom: none;
+				  &.children {
+					border-bottom: none;
+				  }
+				}
+				.shop-name {
+				  display: flex;
+				  width: 100%;
+				  color: #0083ba;
+				  margin-top: 10px;
+				  margin-bottom: 9px;
+				  img {
+					width: 38px;
+					height: 38px;
+					vertical-align: middle;
+				  }
+				  span {
+					display: inline-block;
+					width: 168px;
+					vertical-align: top;
+					line-height: 19px;
+					margin-left: 5px;
+					&.sku {
+					  color: black;
+					}
+				  }
+				}
+			  }
+			}
+			.goods-toggle-button {
+			  width: 35px;
+			  padding-left: 10px;
+			  div {
+				width: 15px;
+				height: 15px;
+				border: 1px solid #00aaf1;
+				border-radius: 100%;
+				text-align: center;
+				line-height: 10px;
+				color: #00AAF1
+			  }
+			  &:hover {
+				cursor: pointer;
+			  }
+			}
+			.cc-grid-body * {
+			  position: static;
+			  .datalist {
+				height: 300px;
+			  }
+			}
+			> .cc-grid-footer {
+			  padding: 23px 11px;
+			  background-color: #ffffff;
+			  .total-items-count, .reload {
+				display: none;
+			  }
+			}
+		  }
+		}
 	  }
 	}
   }
@@ -109,7 +208,7 @@
 	top: 100px;
   }
   gs-tabs.row-5 .gs-tab-content gs-panel {
-	top: 280px;
+	top: 270px;
   }
   gs-tabs.row-4 .gs-tab-content gs-panel {
 	top: 233px;

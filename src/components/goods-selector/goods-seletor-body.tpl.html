@@ -5,6 +5,7 @@
 				<fieldset ng-if="$ctrl.isShowShopList">
 					<label class="goods-label">店铺选择：</label>
 					<cc-dropdown-select
+							disabled="$ctrl.isShopListDisabled"
 							model="$ctrl.formModel.shopName"
 							datalist="$ctrl.selectedGoods.shopList"
 							mapping="$ctrl.fieldsMap">
@@ -122,7 +123,16 @@
 		 					'row-4': !$ctrl.isShowShopList && !$ctrl.isTaobao && !$ctrl.isSimpleSearch}">
 			<gs-panel text="全部商品">
 				<section class="grid-area">
-					这是全部商品页面
+					<div class="choose-addition">
+						<cc-checkbox class="select-all" ng-checked="selectAll" ng-click="app.toggleSelectAll(selectAll, opts.data)">全选</cc-checkbox>
+						<cc-checkbox class="select-none" ng-checked="selectCurrentPage">全选当页</cc-checkbox>
+						<span class="all-slide-down">全部展开</span>
+					</div>
+					<cc-grid opts="$ctrl.pagerGridOptions"
+							 selected-items="$ctrl.selectedItems"
+							 type="selectable"
+							 on-refresh="$ctrl.onRefresh(opts)">
+					</cc-grid>
 				</section>
 			</gs-panel>
 			<gs-panel text="已选商品">

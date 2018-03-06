@@ -1,6 +1,8 @@
 import { Inject } from 'angular-es-utils/decorators';
+// import angular from 'angular';
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$scope')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource')
+
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
@@ -69,60 +71,6 @@ export default class GoodsSelectorCtrl {
 				{
 					'title': '商品标签4',
 					'value': '商品标签4'
-				}
-			],
-			'standardClassifyList': [
-				{
-					'title': '标准类目1',
-					'value': '标准类目1'
-				},
-				{
-					'title': '标准类目2',
-					'value': '标准类目2'
-				},
-				{
-					'title': '标准类目3',
-					'value': '标准类目3'
-				},
-				{
-					'title': '标准类目4',
-					'value': '标准类目4'
-				}
-			],
-			'goodsAttrList': [
-				{
-					'title': '商品属性1',
-					'value': '商品属性1'
-				},
-				{
-					'title': '商品属性2',
-					'value': '商品属性2'
-				},
-				{
-					'title': '商品属性3',
-					'value': '商品属性3'
-				},
-				{
-					'title': '商品属性4',
-					'value': '商品属性4'
-				}
-			],
-			'goodsAttrValueList': [
-				{
-					'title': '属性值1',
-					'value': '属性值1'
-				},
-				{
-					'title': '属性值2',
-					'value': '属性值2'
-				},
-				{
-					'title': '属性值3',
-					'value': '属性值3'
-				},
-				{
-					'title': '属性值4',
-					'value': '属性值4'
 				}
 			],
 			'cascadeSelectMenu': [
@@ -266,6 +214,7 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		};
+
 		// 级联菜单
 		this.goodsAttrList = [];
 		this.goodsAttrValueList = [];
@@ -284,7 +233,8 @@ export default class GoodsSelectorCtrl {
 				this.goodsAttrValueList = [].concat();
 			}
 		};
-		// 表单提交前的校验
+
+		// 筛选
 		this.search = function() {
 			this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
 				console.log('校验成功!');
@@ -300,6 +250,108 @@ export default class GoodsSelectorCtrl {
 			this._$ccValidator.setPristine(formCtrl);
 			this.initForm();
 		};
+
+		// 点击已选商品tab：表单中商铺列表项显示当前商铺，不可更改，其他恢复默认值
+		this.isShopListDisabled = false;
+		this.oldFormModel = {};
+		this.selectedGoodsClick = function() {
+			this.oldFormModel = this.deepCopy(this.formModel);
+			this.initForm();
+			this.formModel.shopName = this.oldFormModel.shopName;
+			this.isShopListDisabled = true;
+		};
+		// 点击全部商品tab：表单显示上一次的选项，商铺列表项可更改
+		this.allGoodsClick = function() {
+			Object.assign(this.formModel, this.oldFormModel);
+			this.isShopListDisabled = false;
+		};
+
+		// 表格配置
+		this.selectAll = true;
+		this.goodsData = [];
+		this.pagerGridOptions = {
+			resource: this._$resource('/api/gridData/1'),
+			response: null,
+			queryParams: {
+				pageNum: 1
+			},
+			columnsDef: [
+				{
+					cellTemplate: '<a class="shop-name" ng-href="{entity.detailUrl}">' +
+					'<img src="{{entity.picUrl}}" alt="">' +
+					'<span ' +
+					'ng-class="{\'sku\': entity.parentId !== 0}"' +
+					'ng-bind="entity.name" ' +
+					'ng-click="app.click()" ' +
+					'cc-tooltip="entity.name" ' +
+					'tooltip-append-to-body="true">' +
+					'</span>' +
+					'</a>',
+					field: 'name',
+					displayName: '商品',
+					align: 'left'
+				},
+				{
+					field: 'id',
+					displayName: '商品ID',
+					align: 'left'
+				},
+				{
+					field: 'quantity',
+					displayName: '库存',
+					align: 'left',
+					sortProp: 'storeCount'
+				},
+				{
+					field: 'price',
+					displayName: '价格',
+					align: 'left'
+				},
+				{
+					field: 'outerId',
+					displayName: '商家编码',
+					align: 'left'
+				}
+			],
+			headerTpl: '/src/components/goods-selector/customer-header.tpl.html',
+			rowTpl: '/src/components/goods-selector/customer-row.tpl.html',
+			transformer: function(res) {
+				res['pageNum'] = res['currentPage'];
+				delete res['currentPage'];
+				res['totals'] = res['totalCount'];
+				delete res['totalCount'];
+				var newList = [];
+				res.list.forEach(item => {
+					item['parentId'] = 0;
+					newList.push(item);
+					if (item.skus && item.skus.length) {
+						item.skus.forEach(sku => {
+							sku['parentId'] = item.id;
+							newList.push(sku);
+						});
+					}
+				});
+				newList.forEach(item => {
+					item['isSelected'] = false;
+					if (item.parentId === 0) {
+						item['isShow'] = true;
+						if (item['skus'] && item['skus'].length) {
+							item['hasChildren'] = true;
+						} else {
+							item['hasChildren'] = false;
+						}
+						delete item['skus'];
+					} else {
+						item['isShow'] = false;
+						item['hasChildren'] = false;
+					}
+				});
+				res.list = newList.concat();
+				console.log(res.list);
+				return res;
+			}
+		};
+		this.selectedItems = [];
 	}
     // form 表单初始化
 	initForm() {
@@ -322,5 +374,17 @@ export default class GoodsSelectorCtrl {
 			goodsLowPrice: null,
 			goodsHighPrice: null
 		};
+	}
+	// 深拷贝,返回新对象
+	deepCopy(p, c = {}) {
+		for (var i in p) {
+			if (typeof p[i] === 'object') {
+				c[i] = (p[i].constructor === Array) ? [] : {};
+				this.deepCopy(p[i], c[i]);
+			} else {
+				c[i] = p[i];
+			}
+		}
+		return c;
 	}
 }
