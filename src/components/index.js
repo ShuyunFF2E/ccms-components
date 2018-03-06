@@ -33,6 +33,7 @@ import tabset from './tabset';
 import tips from './tips';
 import toggle from './toggle';
 import tooltip from './tooltip';
+import tree from './tree';
 
 export default angular
 	.module('ccms.components.ui', [
@@ -62,7 +63,8 @@ export default angular
 		tabset,
 		tips,
 		toggle,
-		tooltip
+		tooltip,
+		tree
 	])
 	.name;
 
