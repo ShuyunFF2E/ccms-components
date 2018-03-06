@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>树</title>
+<link rel="import" href="../../common/layout.html">
+
+<style>
+	.group {
+		display: flex;
+	}
+	.group + .group {
+		margin-top: 1em;
+	}
+	h1 {
+		margin-top: 0 !important;
+		padding-top: 20px;
+		padding-left: 20px;
+	}
+	.demo {
+		flex: 1;
+		margin: .5em;
+	}
+	[cc-dropdown-panel] {
+		width: 150px;
+		padding: .5em;
+		border: solid 1px #ccc;
+	}
+</style>
+
+<main ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+	<h2> Simple Tree </h2>
+	<cc-tree data="ctrl.tree" on-selected="ctrl.select(item)"></cc-tree>
+	<h2> Checkbox Tree </h2>
+	<cc-tree data="ctrl.tree" on-selected="ctrl.select(item)" has-checkbox="true"></cc-tree>
+</main>
+
+<script src="/components.js"></script>
+<script>
+	angular.module('demoApp', ['ccms.components'])
+			.controller('DemoCtrl', DemoCtrl);
+
+	DemoCtrl.$inject = [];
+	function DemoCtrl() {
+
+		this.select = function(item) {
+			console.log(item);
+		};
+
+		this.tree = [{
+			id: 1,
+			label: '所有工单类型',
+			children: [
+				{
+					id: 2,
+					label: '售前事务',
+					children: [
+						{
+							id: 21,
+							label: '催付工单'
+						},
+						{
+							id: 22,
+							label: '发货提醒工单',
+							children: [
+								{
+									id: 224,
+									label: '催付工单'
+								},
+								{
+									id: 225,
+									label: '发货提醒工单'
+								},
+								{
+									id: 226,
+									label: 'Test'
+								}
+							]
+						},
+						{
+							id: 23,
+							label: 'Test',
+							children: [
+								{
+									id: 234,
+									label: '催付工单'
+								},
+								{
+									id: 235,
+									label: '发货提醒工单'
+								},
+								{
+									id: 236,
+									label: 'Test'
+								}
+							]
+						}
+					]
+				},
+				{
+					id: 3,
+					label: '售中事务',
+					children: [
+						{
+							id: 4,
+							label: '催付工单'
+						},
+						{
+							id: 5,
+							label: '发货提醒工单'
+						},
+						{
+							id: 6,
+							label: 'Test'
+						}
+					]
+				}
+			]
+		}];
+	}
+</script>
+
