@@ -13,7 +13,8 @@ const treeDDO = {
 	scope: {
 		data: '<',
 		onSelected: '&',
-		hasCheckbox: '<'
+		hasCheckbox: '<',
+		selectedIds: '<'
 	},
 	bindToController: true,
 	controller: TreeCtrl,
@@ -36,6 +37,9 @@ const treeItemDDO = {
 	link: function(scope, element, attrs, $ctrl) {
 		$ctrl.scopes.push(scope);
 		scope.$ctrl.hasCheckbox = $ctrl.hasCheckbox;
+		if (!$ctrl.hasCheckbox) {
+			scope.$ctrl.selected = $ctrl.selectedIds ? $ctrl.selectedIds.includes(scope.$ctrl.data.id) : false;
+		}
 	}
 };
 

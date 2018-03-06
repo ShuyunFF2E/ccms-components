@@ -1,9 +1,9 @@
 export default class TreeItemCtrl {
 	constructor() {
 		this.showChildren = true;
-		this.data.partial = false;
-		this.data.checked = false;
-		this.data.parentId = this.parentId;
+		// this.data.checked = false;
+		// this.data.partial = true;
+		// this.data.parentId = this.parentId;
 	}
 
 	isLeaf(treeItem) {

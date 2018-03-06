@@ -28,9 +28,9 @@
 
 <main ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 	<h2> Simple Tree </h2>
-	<cc-tree data="ctrl.tree" on-selected="ctrl.select(item)"></cc-tree>
+	<cc-tree data="ctrl.tree" on-selected="ctrl.select(item)" selected-ids="ctrl.selectedIds"></cc-tree>
 	<h2> Checkbox Tree </h2>
-	<cc-tree data="ctrl.tree" on-selected="ctrl.select(item)" has-checkbox="true"></cc-tree>
+	<cc-tree data="ctrl.tree" on-selected="ctrl.select(item, data)" selected-ids="ctrl.selectedIds" has-checkbox="true"></cc-tree>
 </main>
 
 <script src="/components.js"></script>
@@ -41,8 +41,11 @@
 	DemoCtrl.$inject = [];
 	function DemoCtrl() {
 
-		this.select = function(item) {
+		this.selectedIds = [22, 23];
+
+		this.select = function(item, data) {
 			console.log(item);
+			console.log(data);
 		};
 
 		this.tree = [{
