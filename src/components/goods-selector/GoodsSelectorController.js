@@ -277,7 +277,7 @@ export default class GoodsSelectorCtrl {
 			},
 			columnsDef: [
 				{
-					cellTemplate: '<a class="shop-name" ng-href="{entity.detailUrl}">' +
+					cellTemplate: '<a class="shop-name" href="{{entity.detailUrl}}">' +
 					'<img src="{{entity.picUrl}}" alt="">' +
 					'<span ' +
 					'ng-class="{\'sku\': entity.parentId !== 0}"' +

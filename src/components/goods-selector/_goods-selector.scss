@@ -150,13 +150,13 @@
 				  margin-top: 10px;
 				  margin-bottom: 9px;
 				  img {
-					width: 56px;
+					width: 38px;
 					height: 38px;
 					vertical-align: middle;
 				  }
 				  span {
 					display: inline-block;
-					width: 168px;
+					width: 112px;
 					vertical-align: top;
 					line-height: 19px;
 					margin-left: 5px;
@@ -203,12 +203,18 @@
   }
   gs-tabs.row-1 .gs-tab-content gs-panel {
 	top: 100px;
+	cc-grid {
+	  height: 390px;
+	}
   }
   gs-tabs.row-5 .gs-tab-content gs-panel {
 	top: 270px;
   }
   gs-tabs.row-4 .gs-tab-content gs-panel {
 	top: 233px;
+	cc-grid {
+	  height: 257px;
+	}
   }
   p.error-minor-tooltip {
 	z-index: 1000;
