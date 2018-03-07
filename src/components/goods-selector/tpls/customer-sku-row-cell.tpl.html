@@ -2,11 +2,16 @@
 <td style="width: 42px" class="checkbox">
 	<input type="checkbox">
 </td>
-<td ng-show="entity.parentId === 0 && !entity.hasChildren" class="goods-toggle-button"></td>
+<td style="padding-left: 10px;">
+	<a href="{{entity.detailUrl}}" class="goods-name">
+		<img src="{{sku.picUrl}}" alt="">
+		<span ng-bind="sku.name" class="sku"></span>
+	</a>
+</td>
 <!--默认的表格行元素模板-->
 <td ng-repeat="column in $ctrl.opts.columnsDef track by $index"
 	ng-if="!column.isHidden"
-	ng-style="{width:column.width}">
-	<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="entity"></cc-grid-cell>
+	ng-style="{width:column.width, 'padding-left': '10px'}">
+	<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="sku"></cc-grid-cell>
 </td>
 <td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>

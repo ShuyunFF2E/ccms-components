@@ -1,13 +1,21 @@
-<td style="width: 45px" ng-show="entity.parentId !== 0"></td>
-<td ng-click="entity.isSelected = !entity.isSelected;$ctrl.opts.toggelSelectParSon(entity, index)" style="width: 42px" class="checkbox">
-	<input type="checkbox" ng-checked="entity.isSelected">
+<td style="width: 42px" class="checkbox">
+	<input type="checkbox">
 </td>
 <!--展开收起按钮-->
-<td style="padding-left: 10px" aria-init="showAdd = false;" ng-show="entity.parentId === 0 && entity.hasChildren" class="goods-toggle-button" ng-click="showAdd = !showAdd;$ctrl.opts.toggleShowChildList(entity)">
+<td ng-if="entity.skus && entity.skus.length"
+	aria-init="showAdd = false;"
+	class="goods-toggle-button"
+	ng-click="showAdd = !showAdd; $ctrl.opts.toggleSelect()">
 	<div ng-show="!showAdd">—</div>
 	<div ng-show="showAdd">+</div>
 </td>
-<td ng-show="entity.parentId === 0 && !entity.hasChildren" class="goods-toggle-button"></td>
+<td ng-if="!entity.skus || entity.skus.length === 0" class="goods-toggle-button"></td>
+<td>
+	<a href="{{entity.detailUrl}}" class="goods-name">
+		<img src="{{entity.picUrl}}" alt="">
+		<span ng-bind="entity.name"></span>
+	</a>
+</td>
 <!--默认的表格行元素模板-->
 <td ng-repeat="column in $ctrl.opts.columnsDef track by $index"
 	ng-if="!column.isHidden"

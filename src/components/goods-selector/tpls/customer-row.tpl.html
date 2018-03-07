@@ -1,6 +1,8 @@
-<script src="../../../../data.js"></script>
-<tr ng-repeat="(index, entity) in $ctrl.opts.data track by $index"
-	ng-class="{'row-selected':entity.isSelected, children: entity.parentId !== 0}"
-	ng-show="entity.isShow"
+<tr ng-repeat-start="entity in $ctrl.opts.data track by $index"
 	cc-bind-html="$ctrl.opts.rowCellTemplate">
 </tr>
+<tr ng-repeat-start="sku in entity.skus track by $index"
+	cc-bind-html="$ctrl.opts.skuRowCellTemplate">
+</tr>
+<br style="display: none" ng-repeat-end>
+<br style="display: none" ng-repeat-end>

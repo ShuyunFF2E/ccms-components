@@ -43,48 +43,6 @@ var gridData = {
 				}
 			],
 			'skus': [
-				{
-					'id': '11',
-					'name': '颜色：黄色；尺码：46；属性值1',
-					'order': '排序',
-					'status': '状态',
-					'created': '创建时间',
-					'modified': '更改时间',
-					'lastSync': '同步时间',
-					'outerId': 'A1-2334-543',
-					'price': '23',
-					'quantity': '100',
-					'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
-					'props': [
-						{
-							'pid': '属性ID',
-							'pname': '属性名称',
-							'vid': '属性值ID',
-							'vname': '属性值名称'
-						}
-					]
-				},
-				{
-					'id': '12',
-					'name': '颜色：黄色；尺码：46；属性值1',
-					'order': '排序',
-					'status': '状态',
-					'created': '创建时间',
-					'modified': '更改时间',
-					'lastSync': '同步时间',
-					'outerId': 'A1-2334-543',
-					'price': '23',
-					'quantity': '100',
-					'picUrl': 'https://img.alicdn.com/bao/uploaded/i4/414285109/TB2UGDHllDH8KJjSspnXXbNAVXa_!!414285109.jpg_430x430q90.jpg',
-					'props': [
-						{
-							'pid': '属性ID',
-							'pname': '属性名称',
-							'vid': '属性值ID',
-							'vname': '属性值名称'
-						}
-					]
-				}
 			]
 		},
 		{
@@ -301,27 +259,6 @@ var gridData = {
 					'price': '23',
 					'quantity': '100',
 					'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
-					'props': [
-						{
-							'pid': '属性ID',
-							'pname': '属性名称',
-							'vid': '属性值ID',
-							'vname': '属性值名称'
-						}
-					]
-				},
-				{
-					'id': '42',
-					'name': '颜色：黄色；尺码：46；属性值1',
-					'order': '排序',
-					'status': '状态',
-					'created': '创建时间',
-					'modified': '更改时间',
-					'lastSync': '同步时间',
-					'outerId': 'A1-2334-543',
-					'price': '23',
-					'quantity': '100',
-					'picUrl': 'https://img.alicdn.com/bao/uploaded/i4/414285109/TB2UGDHllDH8KJjSspnXXbNAVXa_!!414285109.jpg_430x430q90.jpg',
 					'props': [
 						{
 							'pid': '属性ID',

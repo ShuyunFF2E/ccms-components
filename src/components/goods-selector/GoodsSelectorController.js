@@ -1,5 +1,6 @@
 import { Inject } from 'angular-es-utils/decorators';
 import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
+import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource')
@@ -273,6 +274,15 @@ export default class GoodsSelectorCtrl {
 
 		// 表格配置
 		this.selectAll = true;
+		// this.parentColumnStr = '<a class="shop-name" href="{{entity.detailUrl}}" ng-if="entity.skus && entity.skus.length">' +
+		// 							'<img src="{{entity.picUrl}}" alt="">' +
+		// 							'<span ' +
+		// 								'ng-bind="entity.name" ' +
+		// 								'ng-click="app.click()" ' +
+		// 								'cc-tooltip="entity.name" ' +
+		// 								'tooltip-append-to-body="true">' +
+		// 							'</span>' +
+		// 						'</a>';
 		this.pagerGridOptions = {
 			resource: this._$resource('/api/gridData/1'),
 			response: null,
@@ -280,21 +290,6 @@ export default class GoodsSelectorCtrl {
 				pageNum: 1
 			},
 			columnsDef: [
-				{
-					cellTemplate: '<a class="shop-name" href="{{entity.detailUrl}}">' +
-					'<img src="{{entity.picUrl}}" alt="">' +
-					'<span ' +
-					'ng-class="{\'sku\': entity.parentId !== 0}"' +
-					'ng-bind="entity.name" ' +
-					'ng-click="app.click()" ' +
-					'cc-tooltip="entity.name" ' +
-					'tooltip-append-to-body="true">' +
-					'</span>' +
-					'</a>',
-					field: 'name',
-					displayName: '商品',
-					align: 'left'
-				},
 				{
 					field: 'id',
 					displayName: '商品ID',
@@ -320,44 +315,13 @@ export default class GoodsSelectorCtrl {
 			headerTpl: '/src/components/goods-selector/tpls/customer-header.tpl.html',
 			rowTpl: '/src/components/goods-selector/tpls/customer-row.tpl.html',
 			emptyTipTpl: emptyTpl,
-			transformer: function(res) {
-				res['pageNum'] = res['currentPage'];
-				delete res['currentPage'];
-				res['totals'] = res['totalCount'];
-				delete res['totalCount'];
-				var newList = [];
-				res.list.forEach(item => {
-					item['parentId'] = 0;
-					newList.push(item);
-					if (item.skus && item.skus.length) {
-						item.skus.forEach(sku => {
-							sku['parentId'] = item.id;
-							newList.push(sku);
-						});
-					}
-				});
-				newList.forEach(item => {
-					item['isSelected'] = false;
-					if (item.parentId === 0) {
-						item['isShow'] = true;
-						if (item['skus'] && item['skus'].length) {
-							item['hasChildren'] = true;
-						} else {
-							item['hasChildren'] = false;
-						}
-						delete item['skus'];
-					} else {
-						item['isShow'] = false;
-						item['hasChildren'] = false;
-					}
-				});
-				res.list = newList.concat();
-				console.log(res.list);
-				return res;
-			}
+			transformer: null
 		};
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
-		this.pagerGridOptions.toggelSelectParSon = function(entity, index) {
+		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
+		this.pagerGridOptions.toggleSelect = function(entity, index) {
+			console.log(entity);
+			console.log(index);
 		};
 		//	收起和展开孩子列表
 		this.pagerGridOptions.toggleShowChildList = function(entity) {
