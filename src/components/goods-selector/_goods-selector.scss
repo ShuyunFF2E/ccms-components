@@ -103,7 +103,7 @@
 	  gs-panel {
 		position: absolute;
 		.choose-addition {
-		  padding-left: 11px;
+		  padding-left: 10px;
 		  margin-bottom: 6px;
 		  color: #333333;
 		  .cc-checkbox {
@@ -129,16 +129,13 @@
 		  }
 		}
 		cc-grid {
-		  height: 300px;
+		  height: 220px;
 		  width: 987px;
 		  margin-left: -2px;
 		  overflow-y: scroll;
 		  .cc-grid {
 			border: none;
 			.cc-grid-table {
-			  thead > tr {
-				background-color: #ffffff;
-			  }
 			  tbody {
 				tr:last-child {
 				  border-bottom: none;
@@ -153,7 +150,7 @@
 				  margin-top: 10px;
 				  margin-bottom: 9px;
 				  img {
-					width: 38px;
+					width: 56px;
 					height: 38px;
 					vertical-align: middle;
 				  }
@@ -194,7 +191,7 @@
 			}
 			> .cc-grid-footer {
 			  padding: 23px 11px;
-			  background-color: #ffffff;
+			  //background-color: #ffffff;
 			  .total-items-count, .reload {
 				display: none;
 			  }
