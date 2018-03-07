@@ -20,16 +20,3 @@
 		  class="iconfont icon-question-mark tooltip"
 	></span>
 </th>
-<th class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns" cc-dropdown>
-	<span cc-dropdown-toggle><span class="main-icon"></span><span class="state-icon"></span></span>
-	<div cc-dropdown-panel>
-		<ul>
-			<li ng-repeat="column in $ctrl.opts.columnsDef track by $index">
-				<cc-checkbox
-						ng-disabled="!column.isHidden && $ctrl.getShownColumnsCount() === 1"
-						ng-checked="!column.isHidden"
-						ng-click="$ctrl.toggleColumnByIndex($index)" title={{column.displayName}}>{{ column.displayName }}</cc-checkbox>
-			</li>
-		</ul>
-	</div>
-</th>

@@ -274,15 +274,6 @@ export default class GoodsSelectorCtrl {
 
 		// 表格配置
 		this.selectAll = true;
-		// this.parentColumnStr = '<a class="shop-name" href="{{entity.detailUrl}}" ng-if="entity.skus && entity.skus.length">' +
-		// 							'<img src="{{entity.picUrl}}" alt="">' +
-		// 							'<span ' +
-		// 								'ng-bind="entity.name" ' +
-		// 								'ng-click="app.click()" ' +
-		// 								'cc-tooltip="entity.name" ' +
-		// 								'tooltip-append-to-body="true">' +
-		// 							'</span>' +
-		// 						'</a>';
 		this.pagerGridOptions = {
 			resource: this._$resource('/api/gridData/1'),
 			response: null,

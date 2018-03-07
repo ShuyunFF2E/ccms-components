@@ -1,8 +1,8 @@
 <tr ng-repeat-start="entity in $ctrl.opts.data track by $index"
 	cc-bind-html="$ctrl.opts.rowCellTemplate">
 </tr>
-<tr ng-repeat-start="sku in entity.skus track by $index"
+<tr ng-repeat-start="sku in entity.skus track by $index" class="ng-repeat-start"
 	cc-bind-html="$ctrl.opts.skuRowCellTemplate">
 </tr>
-<br style="display: none" ng-repeat-end>
-<br style="display: none" ng-repeat-end>
+<tr style="display: none" ng-repeat-end></tr>
+<tr style="display: none" ng-repeat-end></tr>

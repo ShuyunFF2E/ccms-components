@@ -1,15 +1,13 @@
-<td style="width: 42px" class="checkbox">
+<td class="row-cell">
 	<input type="checkbox">
+	<div class="goods-toggle-button"
+		 aria-init="extend = false;"
+		 ng-if="entity.skus && entity.skus.length"
+		 ng-click="extend = !extend; $ctrl.opts.toggleSelect()">
+		<i ng-if="!extend" class="iconfont icon-subtract"></i>
+		<i ng-if="extend" class="iconfont icon-add"></i>
+	</div>
 </td>
-<!--展开收起按钮-->
-<td ng-if="entity.skus && entity.skus.length"
-	aria-init="showAdd = false;"
-	class="goods-toggle-button"
-	ng-click="showAdd = !showAdd; $ctrl.opts.toggleSelect()">
-	<div ng-show="!showAdd">—</div>
-	<div ng-show="showAdd">+</div>
-</td>
-<td ng-if="!entity.skus || entity.skus.length === 0" class="goods-toggle-button"></td>
 <td>
 	<a href="{{entity.detailUrl}}" class="goods-name">
 		<img src="{{entity.picUrl}}" alt="">
