@@ -357,6 +357,11 @@ export default class GoodsSelectorCtrl {
 			}
 		};
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
+		this.pagerGridOptions.toggelSelectParSon = function(entity, index) {
+		};
+		//	收起和展开孩子列表
+		this.pagerGridOptions.toggleShowChildList = function(entity) {
+		};
 		this.selectedItems = [];
 	}
     // form 表单初始化

@@ -141,6 +141,9 @@
 			.loading-mask {
 			  margin-top: -25px;
 			}
+			.no-data-message {
+			  padding-top: 50px;
+			}
 			.cc-grid-table {
 			  tbody {
 				tr:last-child {
@@ -211,11 +214,16 @@
 	top: 100px;
 	cc-grid {
 	  height: 390px;
-	  .cc-grid .cc-grid-body .default {
-		padding-top: 120px;
-	  }
-	  .cc-grid .loading-mask {
-		padding-top: 80px;
+	  .cc-grid .cc-grid-body {
+		.default {
+		  padding-top: 120px;
+		}
+		.loading-mask {
+		  padding-top: 80px;
+		}
+		.no-data-message{
+		  padding-top: 138px;
+		}
 	  }
 	}
   }
@@ -226,8 +234,13 @@
 	top: 233px;
 	cc-grid {
 	  height: 257px;
-	  .cc-grid .cc-grid-body .default{
-		padding-top: 47px;
+	  .cc-grid .cc-grid-body {
+		.default{
+		  padding-top: 47px;
+		}
+		.no-data-message {
+		  padding-top: 68px;
+		}
 	  }
 	}
   }
