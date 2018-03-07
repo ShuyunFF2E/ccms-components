@@ -1,0 +1,12 @@
+<td style="width: 45px"></td>
+<td style="width: 42px" class="checkbox">
+	<input type="checkbox">
+</td>
+<td ng-show="entity.parentId === 0 && !entity.hasChildren" class="goods-toggle-button"></td>
+<!--默认的表格行元素模板-->
+<td ng-repeat="column in $ctrl.opts.columnsDef track by $index"
+	ng-if="!column.isHidden"
+	ng-style="{width:column.width}">
+	<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="entity"></cc-grid-cell>
+</td>
+<td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>
