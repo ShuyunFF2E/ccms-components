@@ -27,10 +27,6 @@ export default class GoodsSelectorCtrl {
 		};
 
 		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
-		this.shopList.forEach(item => {
-			item['title'] = item.shopName;
-			item['value'] = item.shopName;
-		});
 		// 测试数据
 		this.selectedGoods = {
 			'shopList': this.shopList,
@@ -162,11 +158,38 @@ export default class GoodsSelectorCtrl {
 
 		this.initForm();
 
-		this.fieldsMap = {
+		this.shopFieldsMap = {
+			valueField: 'shopName',
+			displayField: 'shopName'
+		};
+		this.shopFieldsMap = {
 			valueField: 'value',
 			displayField: 'title'
 		};
-
+		this.goodsCustomFieldsMap = {
+			valueField: 'value',
+			displayField: 'title'
+		};
+		this.goodsLabelFieldsMap = {
+			valueField: 'value',
+			displayField: 'title'
+		};
+		this.standardClassifyFieldsMap = {
+			valueField: 'value',
+			displayField: 'title'
+		};
+		this.goodsAttrFieldsMap = {
+			valueField: 'value',
+			displayField: 'title'
+		};
+		this.goodsAttrValueFieldsMap = {
+			valueField: 'value',
+			displayField: 'title'
+		};
+		this.goodsStatusFieldsMap = {
+			valueField: 'value',
+			displayField: 'title'
+		};
 		// form 区域价格校验
 		this.validators = {
 			/**

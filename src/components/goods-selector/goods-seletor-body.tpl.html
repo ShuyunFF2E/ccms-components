@@ -8,7 +8,7 @@
 							disabled="$ctrl.isShopListDisabled"
 							model="$ctrl.formModel.shopName"
 							datalist="$ctrl.selectedGoods.shopList"
-							mapping="$ctrl.fieldsMap">
+							mapping="$ctrl.shopFieldsMap">
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset>
@@ -26,7 +26,7 @@
 							model="$ctrl.formModel.goodsCustom"
 							datalist="$ctrl.selectedGoods.goodsCustomList"
 							searchable="true"
-							mapping="$ctrl.fieldsMap">
+							mapping="$ctrl.goodsCustomFieldsMap">
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isTaobao">
@@ -37,7 +37,7 @@
 							datalist="$ctrl.selectedGoods.goodsLabelList"
 							searchable="true"
 							confirm-button="true"
-							mapping="$ctrl.fieldsMap">
+							mapping="$ctrl.goodsLabelFieldsMap">
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<fieldset>
@@ -47,7 +47,7 @@
 							model="$ctrl.formModel.standardClassify"
 							datalist="$ctrl.selectedGoods.cascadeSelectMenu"
 							searchable="true"
-							mapping="$ctrl.fieldsMap"
+							mapping="$ctrl.standardClassifyFieldsMap"
 							on-select-change="$ctrl.cascadeChangeStandard(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
@@ -58,7 +58,7 @@
 							model="$ctrl.goodsAttr"
 							datalist="$ctrl.goodsAttrList"
 							searchable="true"
-							mapping="$ctrl.fieldsMap"
+							mapping="$ctrl.goodsAttrFieldsMap"
 							on-select-change="$ctrl.cascadeChangeAttr(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
@@ -69,7 +69,7 @@
 							model="$ctrl.formModel.goodsAttrValue"
 							datalist="$ctrl.goodsAttrValueList"
 							searchable="true"
-							mapping="$ctrl.fieldsMap">
+							mapping="$ctrl.goodsAttrValueFieldsMap">
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
@@ -77,7 +77,7 @@
 					<cc-dropdown-select
 							model="$ctrl.formModel.goodsStatus"
 							datalist="$ctrl.selectedGoods.goodsStatusList"
-							mapping="$ctrl.fieldsMap">
+							mapping="$ctrl.goodsStatusFieldsMap">
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && !$ctrl.isTaobao">
