@@ -135,6 +135,12 @@
 		  overflow-y: scroll;
 		  .cc-grid {
 			border: none;
+			.cc-grid-body .default {
+			  padding-top: 30px;
+			}
+			.loading-mask {
+			  margin-top: -25px;
+			}
 			.cc-grid-table {
 			  tbody {
 				tr:last-child {
@@ -205,6 +211,12 @@
 	top: 100px;
 	cc-grid {
 	  height: 390px;
+	  .cc-grid .cc-grid-body .default {
+		padding-top: 120px;
+	  }
+	  .cc-grid .loading-mask {
+		padding-top: 80px;
+	  }
 	}
   }
   gs-tabs.row-5 .gs-tab-content gs-panel {
@@ -214,6 +226,9 @@
 	top: 233px;
 	cc-grid {
 	  height: 257px;
+	  .cc-grid .cc-grid-body .default{
+		padding-top: 47px;
+	  }
 	}
   }
   p.error-minor-tooltip {

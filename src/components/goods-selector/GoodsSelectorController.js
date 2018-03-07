@@ -1,5 +1,6 @@
 import { Inject } from 'angular-es-utils/decorators';
-// import angular from 'angular';
+import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
+import emptyTpl from './tpls/customer-empty.tpl.html';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource')
 
@@ -215,25 +216,6 @@ export default class GoodsSelectorCtrl {
 			}
 		};
 
-		// 级联菜单
-		this.goodsAttrList = [];
-		this.goodsAttrValueList = [];
-		this.cascadeChangeStandard = function(newValue, oldValue, itemIndex, item) {
-			if (itemIndex !== -1) {
-				this.goodsAttrList = item.children.concat();
-			} else {
-				this.goodsAttrList = [].concat();
-				this.goodsAttrValueList = [].concat();
-			}
-		};
-		this.cascadeChangeAttr = function(newValue, oldValue, itemIndex, item) {
-			if (itemIndex !== -1) {
-				this.goodsAttrValueList = item.children.concat();
-			} else {
-				this.goodsAttrValueList = [].concat();
-			}
-		};
-
 		// 筛选
 		this.search = function() {
 			this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
@@ -268,7 +250,6 @@ export default class GoodsSelectorCtrl {
 
 		// 表格配置
 		this.selectAll = true;
-		this.goodsData = [];
 		this.pagerGridOptions = {
 			resource: this._$resource('/api/gridData/1'),
 			response: null,
@@ -313,8 +294,9 @@ export default class GoodsSelectorCtrl {
 					align: 'left'
 				}
 			],
-			headerTpl: '/src/components/goods-selector/customer-header.tpl.html',
-			rowTpl: '/src/components/goods-selector/customer-row.tpl.html',
+			headerTpl: '/src/components/goods-selector/tpls/customer-header.tpl.html',
+			rowTpl: '/src/components/goods-selector/tpls/customer-row.tpl.html',
+			emptyTipTpl: emptyTpl,
 			transformer: function(res) {
 				res['pageNum'] = res['currentPage'];
 				delete res['currentPage'];
@@ -351,6 +333,7 @@ export default class GoodsSelectorCtrl {
 				return res;
 			}
 		};
+		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.selectedItems = [];
 	}
     // form 表单初始化

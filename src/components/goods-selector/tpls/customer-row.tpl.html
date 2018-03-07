@@ -1,0 +1,6 @@
+<script src="../../../../data.js"></script>
+<tr ng-repeat="(index, entity) in $ctrl.opts.data track by $index"
+	ng-class="{'row-selected':entity.isSelected, children: entity.parentId !== 0}"
+	ng-show="entity.isShow"
+	cc-bind-html="$ctrl.opts.rowCellTemplate">
+</tr>
