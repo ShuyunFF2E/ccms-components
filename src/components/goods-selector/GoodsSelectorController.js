@@ -3,12 +3,15 @@ import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
 import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
 
+import angular from 'angular';
+
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource')
 
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
 
+		let self = this;
 		// 已选商品列表
 		// this.selectedGoods = this._selectedData;
 
@@ -306,17 +309,51 @@ export default class GoodsSelectorCtrl {
 			headerTpl: '/src/components/goods-selector/tpls/customer-header.tpl.html',
 			rowTpl: '/src/components/goods-selector/tpls/customer-row.tpl.html',
 			emptyTipTpl: emptyTpl,
-			transformer: null
+			transformer: function(res) {
+				res.list.forEach(item => {
+					item['checked'] = false;
+					item['indeterminate'] = false;
+					item.skus && item.skus.length && item.skus.forEach(item1 => {
+						item1['checked'] = false;
+						item1['indeterminate'] = false;
+					});
+				});
+				console.log(res.list);
+				return res;
+			}
 		};
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
-		this.pagerGridOptions.toggleSelect = function(entity, index) {
-			console.log(entity);
-			console.log(index);
+		// 表格子行的展开和收起
+		this.pagerGridOptions.clickExtend = function(event) {
+			let target = event.target;
+			let eleDataId = angular.element(target.parentNode.parentNode)[0].dataset.id;// goods-x
+			let checkboxEleList = document.querySelectorAll('tbody tr.' + eleDataId);
+			for (let i = 0; i < checkboxEleList.length; i++) {
+				checkboxEleList[i].classList.toggle('hide');
+			}
 		};
-		//	收起和展开孩子列表
-		this.pagerGridOptions.toggleShowChildList = function(entity) {
+		// 选择父亲则孩子全选，选择部分孩子父亲半选，选择全部孩子父亲选
+		this.pagerGridOptions.clickParentItem = function(event) {
+			let target = event.target;
+			let scope = angular.element(target).scope();
+
+			scope.$parent.entity.checked = !scope.$parent.entity.checked;
+
+			let eleDataId = angular.element(target.parentNode.parentNode.parentNode.parentNode)[0].dataset.id;// goods-x
+			let checkboxEleList = document.querySelectorAll('tbody tr.' + eleDataId);
+			for (let i = 0; i < checkboxEleList.length; i++) {
+				angular.element(checkboxEleList[i]).scope().sku.checked = scope.$parent.entity.checked;
+			}
+
+			if (scope.$parent.entity.checked) {
+				self.selectedItems.push(scope.$parent.entity);
+			} else {
+				self.selectedItems.splice(self.findEntity(self.selectedItems, scope.$parent.entity), 1);
+			}
+			console.log(self.selectedItems);
 		};
+		this.pagerGridOptions.clickChildrenItem = function(event) {};
 		this.selectedItems = [];
 	}
     // form 表单初始化
@@ -352,5 +389,9 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 		return c;
+	}
+	// 从集合中获取entity的index,找不到返回-1
+	findEntity(collection, entity) {
+		return collection.findIndex(item => angular.equals(item, entity));
 	}
 }

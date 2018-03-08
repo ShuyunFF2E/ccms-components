@@ -1,6 +1,5 @@
-<td style="width: 42px"></td>
-<td style="width: 35px"></td>
 <!--默认表格头部模板-->
+<th>商品</th>
 <th ng-repeat="column in $ctrl.opts.columnsDef track by $index"
 	ng-if="!column.isHidden"
 	ng-class="{'column-sort':column.sortProp}"

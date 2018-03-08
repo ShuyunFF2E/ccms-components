@@ -103,7 +103,7 @@
 	  gs-panel {
 		position: absolute;
 		.choose-addition {
-		  padding-left: 10px;
+		  padding-left: 9px;
 		  margin-bottom: 6px;
 		  color: #333333;
 		  .cc-checkbox {
@@ -127,6 +127,10 @@
 			left: 3px;
 			top: 0.6px;
 		  }
+		  .cc-checkbox.indeterminate .cc-checkbox-input:before {
+			left: 2px;
+			top: 5px;
+		  }
 		}
 		cc-grid {
 		  height: 220px;
@@ -144,12 +148,21 @@
 			.no-data-message {
 			  padding-top: 50px;
 			}
+			.cc-grid-header thead tr th:first-child {
+			  width: 252px;
+			  padding-left: 76px;
+			}
 			.cc-grid-table {
 			  tbody {
-				tr:last-child {
-				  border-bottom: none;
-				  &.children {
+				tr {
+				  &:last-child {
 					border-bottom: none;
+					&.children {
+					  border-bottom: none;
+					}
+				  }
+				  &.hide {
+					display: none;
 				  }
 				}
 				.goods-name {
@@ -180,11 +193,26 @@
 				.sku-row-cell {
 				  padding-left: 49px;
 				}
+				cc-checkbox {
+				  position: relative;
+				  .cc-checkbox {
+					.cc-checkbox-input {
+					  width: 12px;
+					  height: 12px;
+					  margin-top: 3px;
+					  margin-right: 0;
+					}
+					&.checked .cc-checkbox-input:before {
+					  width: 2px;
+					  height: 6px;
+					  left: 4px;
+					  top: 4px;
+					}
+				  }
+				}
 			  }
 			}
 			.goods-toggle-button {
-			  width: 35px;
-			  padding-left: 21px;
 			  float: right;
 			  color: #00AAF1;
 			  &:hover {

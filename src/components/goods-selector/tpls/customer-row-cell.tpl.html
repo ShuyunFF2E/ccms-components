@@ -1,12 +1,13 @@
 <td class="row-cell">
-	<input type="checkbox">
-	<div class="goods-toggle-button"
-		 aria-init="extend = false;"
-		 ng-if="entity.skus && entity.skus.length"
-		 ng-click="extend = !extend; $ctrl.opts.toggleSelect()">
-		<i ng-if="!extend" class="iconfont icon-subtract"></i>
-		<i ng-if="extend" class="iconfont icon-add"></i>
-	</div>
+	<cc-checkbox ng-click="$ctrl.opts.clickParentItem($event)"
+				 ng-checked="entity.checked"
+				 indeterminate="entity.indeterminate">
+	</cc-checkbox>
+	<i aria-init="extend = false;"
+	   ng-if="entity.skus && entity.skus.length"
+	   ng-click="extend = !extend; $ctrl.opts.clickExtend($event)"
+	   ng-class="{'iconfont': true, 'goods-toggle-button': true, 'icon-subtract': !extend, 'icon-add': extend}">
+	</i>
 </td>
 <td>
 	<a href="{{entity.detailUrl}}" class="goods-name">

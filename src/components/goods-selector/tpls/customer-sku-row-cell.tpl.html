@@ -1,5 +1,5 @@
 <td class="sku-row-cell">
-	<input type="checkbox">
+	<cc-checkbox ng-model="sku.checked" ng-click="$ctrl.opts.clickChildrenItem($event)"></cc-checkbox>
 </td>
 <td style="padding-left: 10px;">
 	<a href="{{entity.detailUrl}}" class="goods-name">
