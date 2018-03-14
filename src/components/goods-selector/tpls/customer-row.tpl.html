@@ -1,5 +1,5 @@
 <tr ng-repeat-start="entity in $ctrl.opts.data track by $index"
-	data-id="goods-{{entity.id}}"
+	id="goods-{{entity.id}}"
 	cc-bind-html="$ctrl.opts.rowCellTemplate">
 </tr>
 <tr ng-repeat-start="sku in entity.skus track by $index"

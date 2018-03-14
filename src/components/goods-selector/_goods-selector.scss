@@ -127,10 +127,6 @@
 			left: 3px;
 			top: 0.6px;
 		  }
-		  .cc-checkbox.indeterminate .cc-checkbox-input:before {
-			left: 2px;
-			top: 5px;
-		  }
 		}
 		cc-grid {
 		  height: 220px;
@@ -207,6 +203,10 @@
 					  height: 6px;
 					  left: 4px;
 					  top: 4px;
+					}
+					&.indeterminate .cc-checkbox-input:before {
+					  left: 2px;
+					  top: 5px;
 					}
 				  }
 				}

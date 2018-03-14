@@ -313,6 +313,7 @@ export default class GoodsSelectorCtrl {
 				res.list.forEach(item => {
 					item['checked'] = false;
 					item['indeterminate'] = false;
+					item['checkedChildrenCount'] = 0;
 					item.skus && item.skus.length && item.skus.forEach(item1 => {
 						item1['checked'] = false;
 						item1['indeterminate'] = false;
@@ -327,36 +328,53 @@ export default class GoodsSelectorCtrl {
 		// 表格子行的展开和收起
 		this.pagerGridOptions.clickExtend = function(event) {
 			let target = event.target;
-			let eleDataId = angular.element(target.parentNode.parentNode)[0].dataset.id;// goods-x
-			let checkboxEleList = document.querySelectorAll('tbody tr.' + eleDataId);
-			for (let i = 0; i < checkboxEleList.length; i++) {
-				checkboxEleList[i].classList.toggle('hide');
+			let childrenClass = angular.element(target.parentNode.parentNode)[0].id;// goods-x
+			let childrenList = document.querySelectorAll('tbody tr.' + childrenClass);
+			for (let i = 0; i < childrenList.length; i++) {
+				childrenList[i].classList.toggle('hide');
 			}
 		};
 		// 选择父亲则孩子全选，选择部分孩子父亲半选，选择全部孩子父亲选
 		this.pagerGridOptions.clickParentItem = function(event) {
 			let target = event.target;
-			let scope = angular.element(target).scope();
+			let parentEntity = angular.element(target).scope().$parent.entity;
 
-			scope.$parent.entity.checked = !scope.$parent.entity.checked;
+			parentEntity.checked = !parentEntity.checked;
 
-			let eleDataId = angular.element(target.parentNode.parentNode.parentNode.parentNode)[0].dataset.id;// goods-x
-			let checkboxEleList = document.querySelectorAll('tbody tr.' + eleDataId);
-			for (let i = 0; i < checkboxEleList.length; i++) {
-				angular.element(checkboxEleList[i]).scope().sku.checked = scope.$parent.entity.checked;
+			let childrenClass = angular.element(target.parentNode.parentNode.parentNode.parentNode)[0].id;// goods-x
+			let childrenList = document.querySelectorAll('tbody tr.' + childrenClass);
+			for (let i = 0; i < childrenList.length; i++) {
+				angular.element(childrenList[i]).scope().sku.checked = parentEntity.checked;
 			}
 
-			if (scope.$parent.entity.checked) {
-				self.selectedItems.push(scope.$parent.entity);
+			if (parentEntity.checked) {
+				self.selectedItems.push(parentEntity);
+				parentEntity.checkedChildrenCount = parentEntity.skus.length;
 			} else {
-				self.selectedItems.splice(self.findEntity(self.selectedItems, scope.$parent.entity), 1);
+				self.selectedItems.splice(self.findEntity(self.selectedItems, parentEntity), 1);
+				parentEntity.checkedChildrenCount = 0;
 			}
-			console.log(self.selectedItems);
+			parentEntity.indeterminate = false;
+			// console.log(self.selectedItems);
 		};
-		this.pagerGridOptions.clickChildrenItem = function(event) {};
+		this.pagerGridOptions.clickChildrenItem = function(event) {
+			let target = event.target;
+			let childrenSku = angular.element(target).scope().$parent.sku;
+
+			let parentId = angular.element(target.parentNode.parentNode.parentNode.parentNode)[0].classList[0];
+
+			let parentEntity = angular.element(document.getElementById(parentId)).scope().entity;
+			if (childrenSku.checked) {
+				parentEntity.checkedChildrenCount++;
+			} else {
+				parentEntity.checkedChildrenCount--;
+			}
+			parentEntity.checked = parentEntity.checkedChildrenCount === parentEntity.skus.length;
+			parentEntity.indeterminate = parentEntity.checkedChildrenCount > 0 && parentEntity.checkedChildrenCount < parentEntity.skus.length;
+		};
 		this.selectedItems = [];
 	}
-    // form 表单初始化
+	// form 表单初始化
 	initForm() {
 		this.formModel = {
 			shopName: this.selectedGoods.shopList[0].title,
@@ -390,7 +408,7 @@ export default class GoodsSelectorCtrl {
 		}
 		return c;
 	}
-	// 从集合中获取entity的index,找不到返回-1
+	// 从集合中获取entity的index,找	不到返回-1
 	findEntity(collection, entity) {
 		return collection.findIndex(item => angular.equals(item, entity));
 	}
