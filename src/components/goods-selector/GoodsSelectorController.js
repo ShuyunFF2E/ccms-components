@@ -310,100 +310,83 @@ export default class GoodsSelectorCtrl {
 			rowTpl: '/src/components/goods-selector/tpls/customer-row.tpl.html',
 			emptyTipTpl: emptyTpl,
 			transformer: function(res) {
-				res.list.forEach(item => {
-					item['checked'] = false;
-					item['indeterminate'] = false;
-					item['checkedChildrenCount'] = 0;
-					item.skus && item.skus.length && item.skus.forEach(item1 => {
-						item1['checked'] = false;
-						item1['indeterminate'] = false;
-					});
-				});
-				console.log(res.list);
+				self.resInfo = res;
 				return res;
 			}
 		};
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		// 表格子行的展开和收起
-		this.pagerGridOptions.clickExtend = function(event) {
-			let target = event.target;
-			let childrenClass = angular.element(target.parentNode.parentNode)[0].id;// goods-x
-			let childrenList = document.querySelectorAll('tbody tr.' + childrenClass);
-			for (let i = 0; i < childrenList.length; i++) {
-				childrenList[i].classList.toggle('hide');
-			}
+		this.pagerGridOptions.handleTreeIcon = function(entity) {
+			entity.extend = !entity.extend;
 		};
 		// 选择父亲则孩子全选，选择部分孩子父亲半选，选择全部孩子父亲选
-		this.pagerGridOptions.clickParentItem = function(event) {
-			let target = event.target;
-			let parentEntity = angular.element(target).scope().$parent.entity;
-
-			parentEntity.checked = !parentEntity.checked;
-
-			let childrenClass = angular.element(target.parentNode.parentNode.parentNode.parentNode)[0].id;// goods-x
-			if (childrenClass) {
-				let childrenList = document.querySelectorAll('tbody tr.' + childrenClass);
-				for (let i = 0; i < childrenList.length; i++) {
-					angular.element(childrenList[i]).scope().sku.checked = parentEntity.checked;
-				}
-			}
-
-			if (parentEntity.checked) {
-				self.selectedItems.push(parentEntity);
-				parentEntity.checkedChildrenCount = parentEntity.skus.length;
+		this.pagerGridOptions.checkTreeRootItem = function(entity) {
+			entity.checked = !entity.checked;
+			entity.partial = false;
+			entity.skus.forEach(item => {
+				item.checked = entity.checked;
+			});
+			// 将已选商品放入selectedItems数组
+			if (entity.checked) {
+				self.selectedItems.push(entity);
 			} else {
-				if (self.findEntity(self.selectedItems, parentEntity) !== -1) {
-					self.selectedItems.splice(self.findEntity(self.selectedItems, parentEntity), 1);
+				if (self.findEntity(self.selectedItems, entity) !== -1) {
+					self.selectedItems.splice(self.findEntity(self.selectedItems, entity), 1);
 				}
-				parentEntity.checkedChildrenCount = 0;
 			}
-			parentEntity.indeterminate = false;
 			console.log(self.selectedItems);
 		};
-		this.pagerGridOptions.clickChildrenItem = function(event) {
-			let target = event.target;
-			let childrenSku = angular.element(target).scope().$parent.sku;
-
-			let parentId = angular.element(target.parentNode.parentNode.parentNode.parentNode)[0].classList[0];
-			let parentEntity = angular.element(document.getElementById(parentId)).scope().entity;
-			if (childrenSku.checked) {
-				parentEntity.checkedChildrenCount++;
-			} else {
-				parentEntity.checkedChildrenCount--;
-			}
-
-			parentEntity.checked = parentEntity.checkedChildrenCount === parentEntity.skus.length;
-			parentEntity.indeterminate = parentEntity.checkedChildrenCount > 0 && parentEntity.checkedChildrenCount < parentEntity.skus.length;
-
-			if (parentEntity.checked) {
-				self.selectedItems.push(parentEntity);
-			} else if (parentEntity.indeterminate) {
+		this.pagerGridOptions.checkTreeLeafItem = function(entity, sku) {
+			sku.checked = !sku.checked;
+			entity.checked = self.isAllChildrenChecked(entity.skus);
+			entity.partial = self.isSomeChildrenChecked(entity.skus);
+			// 将已选商品放入selectedItems数组
+			if (entity.checked) {
+				self.selectedItems.push(entity);
+			} else if (entity.partial) {
 				//	TODO
-				console.log('indeterminate is being handled!');
+				console.log('partial is being handled!');
 			} else {
-				if (self.findEntity(self.selectedItems, parentEntity) !== -1) {
-					self.selectedItems.splice(self.findEntity(self.selectedItems, parentEntity), 1);
+				if (self.findEntity(self.selectedItems, entity) !== -1) {
+					self.selectedItems.splice(self.findEntity(self.selectedItems, entity), 1);
 				}
 			}
 			console.log(self.selectedItems);
 		};
 		// 展开/折叠全部
-		this.expendAll = function(isExpendAll) {
-			let childrenList = document.querySelectorAll('.children');
-			if (isExpendAll) {
-				for (let i = 0; i < childrenList.length; i++) {
-					childrenList[i].classList.remove('hide');
-				}
-			} else {
-				for (let i = 0; i < childrenList.length; i++) {
-					childrenList[i].classList.add('hide');
-				}
-			}
+		this.isExpendAll = true;
+		this.expendAll = function() {
+			this.isExpendAll = false;
+			this.resInfo.list.forEach(item => {
+				item.extend = true;
+			});
+		};
+		this.foldAll = function() {
+			this.isExpendAll = true;
+			this.resInfo.list.forEach(item => {
+				item.extend = false;
+			});
 		};
 		// 全选当页
-		this.selectCurrentPage = function(isSelected) {
-			if (isSelected) {} else {}
+		this.currentPageChecked = false;
+		this.checkCurrentPage = function() {
+			this.currentPageChecked = !this.currentPageChecked;
+			this.resInfo.list.forEach(item => {
+				item.checked = this.currentPageChecked;
+				item.partial = false;
+				item.skus && item.skus.forEach(sku => {
+					sku.checked = this.currentPageChecked;
+				});
+			});
+			// 将已选商品放入selectedItems数组
+			if (this.currentPageChecked) {
+				this.selectedItems = this.selectedItems.splice(0, this.selectedItems.length).concat(this.resInfo.list);
+				console.log(this.selectedItems);
+			} else {
+				this.selectedItems.splice(0, this.selectedItems.length);
+				console.log(this.selectedItems);
+			}
 		};
 	}
 	// form 表单初始化
@@ -443,5 +426,17 @@ export default class GoodsSelectorCtrl {
 	// 从集合中获取entity的index,找	不到返回-1
 	findEntity(collection, entity) {
 		return collection.findIndex(item => angular.equals(item, entity));
+	}
+
+	isAllChildrenChecked(children) {
+		return children && children.every(child => {
+			return child.checked;
+		});
+	}
+
+	isSomeChildrenChecked(children) {
+		return children && !this.isAllChildrenChecked(children) && children.some(child => {
+			return child.checked || child.partial;
+		});
 	}
 }
