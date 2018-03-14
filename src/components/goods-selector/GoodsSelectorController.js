@@ -276,7 +276,7 @@ export default class GoodsSelectorCtrl {
 		};
 
 		// 表格配置
-		this.selectAll = true;
+		this.selectedItems = [];
 		this.pagerGridOptions = {
 			resource: this._$resource('/api/gridData/1'),
 			response: null,
@@ -342,37 +342,69 @@ export default class GoodsSelectorCtrl {
 			parentEntity.checked = !parentEntity.checked;
 
 			let childrenClass = angular.element(target.parentNode.parentNode.parentNode.parentNode)[0].id;// goods-x
-			let childrenList = document.querySelectorAll('tbody tr.' + childrenClass);
-			for (let i = 0; i < childrenList.length; i++) {
-				angular.element(childrenList[i]).scope().sku.checked = parentEntity.checked;
+			if (childrenClass) {
+				let childrenList = document.querySelectorAll('tbody tr.' + childrenClass);
+				for (let i = 0; i < childrenList.length; i++) {
+					angular.element(childrenList[i]).scope().sku.checked = parentEntity.checked;
+				}
 			}
 
 			if (parentEntity.checked) {
 				self.selectedItems.push(parentEntity);
 				parentEntity.checkedChildrenCount = parentEntity.skus.length;
 			} else {
-				self.selectedItems.splice(self.findEntity(self.selectedItems, parentEntity), 1);
+				if (self.findEntity(self.selectedItems, parentEntity) !== -1) {
+					self.selectedItems.splice(self.findEntity(self.selectedItems, parentEntity), 1);
+				}
 				parentEntity.checkedChildrenCount = 0;
 			}
 			parentEntity.indeterminate = false;
-			// console.log(self.selectedItems);
+			console.log(self.selectedItems);
 		};
 		this.pagerGridOptions.clickChildrenItem = function(event) {
 			let target = event.target;
 			let childrenSku = angular.element(target).scope().$parent.sku;
 
 			let parentId = angular.element(target.parentNode.parentNode.parentNode.parentNode)[0].classList[0];
-
 			let parentEntity = angular.element(document.getElementById(parentId)).scope().entity;
 			if (childrenSku.checked) {
 				parentEntity.checkedChildrenCount++;
 			} else {
 				parentEntity.checkedChildrenCount--;
 			}
+
 			parentEntity.checked = parentEntity.checkedChildrenCount === parentEntity.skus.length;
 			parentEntity.indeterminate = parentEntity.checkedChildrenCount > 0 && parentEntity.checkedChildrenCount < parentEntity.skus.length;
+
+			if (parentEntity.checked) {
+				self.selectedItems.push(parentEntity);
+			} else if (parentEntity.indeterminate) {
+				//	TODO
+				console.log('indeterminate is being handled!');
+			} else {
+				if (self.findEntity(self.selectedItems, parentEntity) !== -1) {
+					self.selectedItems.splice(self.findEntity(self.selectedItems, parentEntity), 1);
+				}
+			}
+			console.log(self.selectedItems);
 		};
-		this.selectedItems = [];
+		// 展开/折叠全部
+		this.expendAll = function(isExpendAll) {
+			let childrenList = document.querySelectorAll('.children');
+			if (isExpendAll) {
+				for (let i = 0; i < childrenList.length; i++) {
+					childrenList[i].classList.remove('hide');
+				}
+			} else {
+				for (let i = 0; i < childrenList.length; i++) {
+					childrenList[i].classList.add('hide');
+				}
+			}
+		};
+		// 全选当页
+		this.selectCurrentPage = function(isSelected) {
+			if (isSelected) {} else {}
+		};
 	}
 	// form 表单初始化
 	initForm() {
