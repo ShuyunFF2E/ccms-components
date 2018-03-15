@@ -121,24 +121,31 @@
 		<gs-tabs ng-class="{'row-1': !$ctrl.isShowShopList && $ctrl.isSimpleSearch,
 		 					'row-5': $ctrl.isShowShopList || !$ctrl.isShowShopList && !$ctrl.isSimpleSearch && $ctrl.isTaobao,
 		 					'row-4': !$ctrl.isShowShopList && !$ctrl.isTaobao && !$ctrl.isSimpleSearch}">
-			<gs-panel text="全部商品">
-				<section class="grid-area">
-					<div class="choose-addition">
+			<gs-panel text="全部商品" class="all-goods-panel" ng-click="console.log('全部商品')">
+				<section class="grid-area" ng-click="console.log('全部商品')">
+					<div class="all-goods-operation">
 						<!--<cc-checkbox class="select-all" ng-checked="$ctrl.selectAll">全选</cc-checkbox>-->
 						<cc-checkbox class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.checkCurrentPage()">全选当页</cc-checkbox>
-						<span ng-if="!$ctrl.isExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = true; $ctrl.extendAll(true);">全部展开</span>
-						<span ng-if="$ctrl.isExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = false; $ctrl.extendAll(false);">全部折叠</span>
+						<span ng-if="!$ctrl.isExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = true; $ctrl.extendAll(true, $ctrl.resInfo.list);">全部展开</span>
+						<span ng-if="$ctrl.isExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = false; $ctrl.extendAll(false, $ctrl.resInfo.list);">全部折叠</span>
 					</div>
 					<cc-grid opts="$ctrl.pagerGridOptions"
 							 selected-items="$ctrl.selectedItems"
-							 type="selectable"
-							 on-refresh="$ctrl.onRefresh(opts)">
+							 type="default">
 					</cc-grid>
 				</section>
 			</gs-panel>
-			<gs-panel text="已选商品">
-				<section class="grid-area">
-					这是已选商品页面
+			<gs-panel text="已选商品" class="checked-goods-panel" ng-click="console.log($event);">
+				<section class="grid-area" ng-click="console.log($event);">
+					<div class="checked-goods-operation">
+						<span>移除全部</span>
+						<span>移除当页</span>
+						<span ng-if="!$ctrl.isCheckedExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isCheckedExtendAll = true; $ctrl.extendAll(true, $ctrl.selectedItems);">全部展开</span>
+						<span ng-if="$ctrl.isCheckedExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isCheckedExtendAll = false; $ctrl.extendAll(false, $ctrl.selectedItems);">全部折叠</span>
+					</div>
+					<cc-grid opts="$ctrl.checkedPagerGridOptions"
+							 type="default">
+					</cc-grid>
 				</section>
 			</gs-panel>
 		</gs-tabs>

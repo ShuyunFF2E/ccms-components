@@ -1,5 +1,5 @@
 <!--默认表格头部模板-->
-<th>商品</th>
+<th ng-class="{'all-goods-head': !$ctrl.opts.isCheckedGoodsTab, 'checked-goods-head': $ctrl.opts.isCheckedGoodsTab}">商品</th>
 <th ng-repeat="column in $ctrl.opts.columnsDef track by $index"
 	ng-if="!column.isHidden"
 	ng-class="{'column-sort':column.sortProp}"
@@ -19,3 +19,4 @@
 		  class="iconfont icon-question-mark tooltip"
 	></span>
 </th>
+<th class="operation" ng-show="$ctrl.opts.isCheckedGoodsTab">操作</th>

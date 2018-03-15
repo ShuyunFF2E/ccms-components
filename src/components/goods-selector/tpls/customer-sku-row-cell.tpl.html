@@ -1,5 +1,6 @@
 <td class="sku-row-cell">
 	<cc-checkbox ng-checked="sku.checked"
+				 ng-show = "!$ctrl.opts.isCheckedGoodsTab"
 				 ng-click="$ctrl.opts.checkTreeLeafItem(entity, sku)">
 	</cc-checkbox>
 </td>
@@ -11,8 +12,9 @@
 </td>
 <!--默认的表格行元素模板-->
 <td ng-repeat="column in $ctrl.opts.columnsDef track by $index"
-ng-if="!column.isHidden"
-ng-style="{width:column.width, 'padding-left': '10px'}">
-<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="sku"></cc-grid-cell>
+	ng-if="!column.isHidden"
+	ng-style="{width:column.width, 'padding-left': '10px'}">
+	<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="sku"></cc-grid-cell>
 </td>
 <td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>
+<td class="remove-btn" ng-show = "$ctrl.opts.isCheckedGoodsTab" ng-click="$ctrl.opts.removeTreeLeafItem(entity, sku)">移除</td>

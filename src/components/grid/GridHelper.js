@@ -37,6 +37,7 @@ export default {
 			externalData: null, // 来自外部表格数据
 			showPagination: true, // 是否展示分页
 			headerTpl: null, // 表头模板,允许 字符串 or 模板url
+			footerTpl: null, // 表尾模板,允许 字符串 or 模板url
 			rowTpl: null, // 表格行模板,允许 字符串 or 模板url
 			emptyTipTpl: null,  // 表格为空时的提示 允许 字符串 or 模板url
 			transformer: null, // 数据格式转换方法 | 字段映射对象

@@ -1,8 +1,9 @@
 <tr ng-repeat-start="entity in $ctrl.opts.data track by $index"
+	ng-class="{'hide': entity.removed}"
 	cc-bind-html="$ctrl.opts.rowCellTemplate">
 </tr>
 <tr class="children"
-	ng-class="{'hide': !entity.extend}"
+	ng-class="{'hide': !entity.extend || sku.removed}"
 	ng-repeat-start="sku in entity.skus track by $index"
 	cc-bind-html="$ctrl.opts.skuRowCellTemplate">
 </tr>

@@ -189,5 +189,48 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			],
 			enableHiddenColumns: true
 		};
+		this.gridOption6 = {
+
+			resource: $resource('/api/pages/1'),
+			response: null,
+			queryParams: {
+				pageNum: 2
+			},
+			// enableMultipleFieldsSort:true,
+			columnsDef: [
+				{
+					cellTemplate: '<span style="color:#145681" ng-bind="entity.name" ng-click="app.click()" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
+					displayName: '姓名',
+					align: 'center',
+					width: '100px',
+					tooltip: '这是一个tooltip!'
+				},
+				{
+					field: 'age',
+					displayName: '年龄', align: 'center',
+					tooltip: '这是一个tooltip!'
+				},
+				{
+					field: 'gender',
+					displayName: '性别',
+					align: 'right',
+					width: '100px',
+					cellTemplate: '<span>123123123123123123123123123123123123123123123123</span>',
+					tooltip: '这是一个tooltip!'
+				}
+			],
+			transformer: {
+				pageNum: 'currentPage',
+				totals: 'totalCount'
+			},
+			// transformer: function (res) {
+			// 	console.log(res);
+			// 	return [];
+			// }
+
+			footerTpl: '/demos/components/grid/customer-footer.tpl.html'
+
+		};
 
 	});
+

@@ -10,6 +10,7 @@ import angular from 'angular';
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
+		let self = this;
 		// 已选商品列表
 		// this.selectedGoods = this._selectedData;
 
@@ -273,8 +274,213 @@ export default class GoodsSelectorCtrl {
 			this.isShopListDisabled = false;
 		};
 
-		// 表格配置
-		this.selectedItems = [];
+		// 全部商品->表格配置
+		this.selectedItems = [
+			{
+				'id': '1',
+				'name': '商品名称商品名称商品名称商品名称',
+				'order': '排序',
+				'status': '状态',
+				'created': '创建时间',
+				'modified': '更改时间',
+				'lastSync': '同步时间',
+				'shopId': '店铺ID',
+				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
+				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
+				'outerId': 'A1-2334-543',
+				'price': '21',
+				'quantity': '133',
+				'listTime': '上架时间',
+				'delistTime': '下架时间',
+				'tags': ['标签'],
+				'props': [
+					{
+						'pid': '属性ID',
+						'pname': '属性名称',
+						'vid': '属性值ID',
+						'vname': '属性值名称'
+					}
+				],
+				'categories': [
+					{
+						'cid': '类目ID',
+						'cname': '类目名称'
+					}
+				],
+				'shopCategories': [
+					{
+						'cid': '类目ID',
+						'cname': '类目名称'
+					}
+				],
+				'skus': [
+				]
+			},
+			{
+				'id': '2',
+				'name': '商品名称商品名称商品名称商品名称',
+				'order': '排序',
+				'status': '状态',
+				'created': '创建时间',
+				'modified': '更改时间',
+				'lastSync': '同步时间',
+				'shopId': '店铺ID',
+				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
+				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
+				'outerId': 'A1-2334-543',
+				'price': '21',
+				'quantity': '133',
+				'listTime': '上架时间',
+				'delistTime': '下架时间',
+				'tags': ['标签'],
+				'props': [
+					{
+						'pid': '属性ID',
+						'pname': '属性名称',
+						'vid': '属性值ID',
+						'vname': '属性值名称'
+					}
+				],
+				'categories': [
+					{
+						'cid': '类目ID',
+						'cname': '类目名称'
+					}
+				],
+				'shopCategories': [
+					{
+						'cid': '类目ID',
+						'cname': '类目名称'
+					}
+				],
+				'skus': [
+					{
+						'id': '21',
+						'name': '颜色：黄色；尺码：46；属性值1',
+						'order': '排序',
+						'status': '状态',
+						'created': '创建时间',
+						'modified': '更改时间',
+						'lastSync': '同步时间',
+						'outerId': 'A1-2334-543',
+						'price': '23',
+						'quantity': '100',
+						'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
+						'props': [
+							{
+								'pid': '属性ID',
+								'pname': '属性名称',
+								'vid': '属性值ID',
+								'vname': '属性值名称'
+							}
+						]
+					},
+					{
+						'id': '22',
+						'name': '颜色：黄色；尺码：46；属性值1',
+						'order': '排序',
+						'status': '状态',
+						'created': '创建时间',
+						'modified': '更改时间',
+						'lastSync': '同步时间',
+						'outerId': 'A1-2334-543',
+						'price': '23',
+						'quantity': '100',
+						'picUrl': 'https://img.alicdn.com/bao/uploaded/i4/414285109/TB2UGDHllDH8KJjSspnXXbNAVXa_!!414285109.jpg_430x430q90.jpg',
+						'props': [
+							{
+								'pid': '属性ID',
+								'pname': '属性名称',
+								'vid': '属性值ID',
+								'vname': '属性值名称'
+							}
+						]
+					}
+				]
+			},
+			{
+				'id': '3',
+				'name': '商品名称商品名称商品名称商品名称',
+				'order': '排序',
+				'status': '状态',
+				'created': '创建时间',
+				'modified': '更改时间',
+				'lastSync': '同步时间',
+				'shopId': '店铺ID',
+				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
+				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
+				'outerId': 'A1-2334-543',
+				'price': '21',
+				'quantity': '133',
+				'listTime': '上架时间',
+				'delistTime': '下架时间',
+				'tags': ['标签'],
+				'props': [
+					{
+						'pid': '属性ID',
+						'pname': '属性名称',
+						'vid': '属性值ID',
+						'vname': '属性值名称'
+					}
+				],
+				'categories': [
+					{
+						'cid': '类目ID',
+						'cname': '类目名称'
+					}
+				],
+				'shopCategories': [
+					{
+						'cid': '类目ID',
+						'cname': '类目名称'
+					}
+				],
+				'skus': [
+					{
+						'id': '31',
+						'name': '颜色：黄色；尺码：46；属性值1',
+						'order': '排序',
+						'status': '状态',
+						'created': '创建时间',
+						'modified': '更改时间',
+						'lastSync': '同步时间',
+						'outerId': 'A1-2334-543',
+						'price': '23',
+						'quantity': '100',
+						'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
+						'props': [
+							{
+								'pid': '属性ID',
+								'pname': '属性名称',
+								'vid': '属性值ID',
+								'vname': '属性值名称'
+							}
+						]
+					},
+					{
+						'id': '32',
+						'name': '颜色：黄色；尺码：46；属性值1',
+						'order': '排序',
+						'status': '状态',
+						'created': '创建时间',
+						'modified': '更改时间',
+						'lastSync': '同步时间',
+						'outerId': 'A1-2334-543',
+						'price': '23',
+						'quantity': '100',
+						'picUrl': 'https://img.alicdn.com/bao/uploaded/i4/414285109/TB2UGDHllDH8KJjSspnXXbNAVXa_!!414285109.jpg_430x430q90.jpg',
+						'props': [
+							{
+								'pid': '属性ID',
+								'pname': '属性名称',
+								'vid': '属性值ID',
+								'vname': '属性值名称'
+							}
+						]
+					}
+				]
+			}
+		];
 		this.pagerGridOptions = {
 			resource: this._$resource('/api/gridData/1'),
 			response: null,
@@ -306,12 +512,14 @@ export default class GoodsSelectorCtrl {
 			],
 			headerTpl: '/src/components/goods-selector/tpls/customer-header.tpl.html',
 			rowTpl: '/src/components/goods-selector/tpls/customer-row.tpl.html',
+			footerTpl: '/src/components/goods-selector/tpls/customer-footer.tpl.html',
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
 				this.resInfo = res;
 				return res;
 			}
 		};
+		this.pagerGridOptions.isCheckedGoodsTab = true;
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		// 表格子行的展开和收起
@@ -339,8 +547,8 @@ export default class GoodsSelectorCtrl {
 			}
 		};
 		// 展开/折叠全部
-		this.extendAll = isExtend => {
-			this.resInfo.list.forEach(item => {
+		this.extendAll = (isExtend, data) => {
+			data.forEach(item => {
 				item.extend = isExtend;
 			});
 		};
@@ -355,6 +563,36 @@ export default class GoodsSelectorCtrl {
 				});
 			});
 		};
+		// 移除父亲
+		this.pagerGridOptions.removeTreeRootItem = function(entity) {
+			let targetIndex = self.findEntity(self.selectedItems, entity);
+			if (targetIndex !== -1) {
+				self.selectedItems.splice(targetIndex, 1);
+			}
+		};
+		// 移除孩子
+		this.pagerGridOptions.removeTreeLeafItem = (entity, sku) => {
+			let entityIndex = self.findEntity(self.selectedItems, entity);
+			let targetIndex = self.findEntity(self.selectedItems[entityIndex].skus, sku);
+			if (targetIndex !== -1) {
+				self.selectedItems[entityIndex].skus.splice(targetIndex, 1);
+			}
+			if (self.isAllChildrenRemoved(entity.skus)) {
+				self.selectedItems.splice(targetIndex, 1);
+			}
+		};
+		// 已选商品->表格配置
+		this.checkedPagerGridOptions = {};
+		for (let key in this.pagerGridOptions) {
+			if (this.pagerGridOptions.hasOwnProperty(key)) {
+				if (key !== 'resource' && key !== 'externalData' && key !== 'transformer') {
+					this.checkedPagerGridOptions[key] = this.pagerGridOptions[key];
+				}
+			}
+		}
+		this.checkedPagerGridOptions.resource = null;
+		this.checkedPagerGridOptions.externalData = this.selectedItems;
+		this.checkedPagerGridOptions.transformer = null;
 	}
 	// form 表单初始化
 	initForm() {
@@ -405,5 +643,8 @@ export default class GoodsSelectorCtrl {
 		return children && !this.isAllChildrenChecked(children) && children.some(child => {
 			return child.checked || child.partial;
 		});
+	}
+	isAllChildrenRemoved(entity) {
+		return entity.length === 0;
 	}
 }

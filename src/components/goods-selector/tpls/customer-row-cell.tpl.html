@@ -1,5 +1,6 @@
-<td class="row-cell">
-	<cc-checkbox ng-click="$ctrl.opts.checkTreeRootItem(entity)"
+<td ng-class="{'row-cell': !$ctrl.opts.isCheckedGoodsTab, 'checked-row-cell': $ctrl.opts.isCheckedGoodsTab}">
+	<cc-checkbox ng-show = "!$ctrl.opts.isCheckedGoodsTab"
+				 ng-click="$ctrl.opts.checkTreeRootItem(entity)"
 				 ng-checked="entity.checked"
 				 indeterminate="entity.partial">
 	</cc-checkbox>
@@ -22,3 +23,4 @@
 	<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="entity"></cc-grid-cell>
 </td>
 <td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>
+<td class="remove-btn" ng-show="$ctrl.opts.isCheckedGoodsTab" ng-click="$ctrl.opts.removeTreeRootItem(entity)">移除</td>

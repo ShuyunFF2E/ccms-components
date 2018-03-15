@@ -22,8 +22,11 @@
 		  margin: 0px;
 		  padding-left: 0px;
 		  padding-right: 0px;
-		  input:not(.date-picker-input), select:not(.ng-pristine), cc-dropdown-select, cc-dropdown-multiselect {
+		  input:not(.date-picker-input), select, cc-dropdown-select, cc-dropdown-multiselect {
 			width: 150px;
+		  }
+		  .calendar select {
+			width: 80px;
 		  }
 		  &.stack-date {
 			position: relative;
@@ -102,7 +105,7 @@
 	.gs-tab-content {
 	  gs-panel {
 		position: absolute;
-		.choose-addition {
+		.all-goods-operation {
 		  padding-left: 9px;
 		  margin-bottom: 6px;
 		  color: #333333;
@@ -128,6 +131,20 @@
 			top: 0.6px;
 		  }
 		}
+		.checked-goods-operation {
+		  margin-bottom: 6px;
+		  span {
+			color: #0083ba;
+			line-height: 2em;
+			margin-right: 15px;
+			&:hover {
+			  cursor: pointer;
+			}
+			&:first-child {
+			  margin-left: 8px;
+			}
+		  }
+		}
 		cc-grid {
 		  height: 220px;
 		  width: 987px;
@@ -144,9 +161,18 @@
 			.no-data-message {
 			  padding-top: 50px;
 			}
-			.cc-grid-header thead tr th:first-child {
-			  width: 252px;
-			  padding-left: 76px;
+			.cc-grid-header thead tr th {
+			  &.all-goods-head {
+				width: 252px;
+				padding-left: 76px;
+			  }
+			  &.checked-goods-head {
+				width: 208px;
+				padding-left: 60px;
+			  }
+			  &.operation {
+				width: 100px;
+			  }
 			}
 			.cc-grid-table {
 			  tbody {
@@ -159,6 +185,13 @@
 				  }
 				  &.hide {
 					display: none;
+				  }
+				  td.remove-btn {
+					width: 100px;
+					color: #0083ba;
+					&:hover {
+					  cursor: pointer;
+					}
 				  }
 				}
 				.goods-name {
@@ -185,6 +218,9 @@
 				}
 				.row-cell, .sku-row-cell {
 				  width: 74px;
+				}
+				.checked-row-cell {
+				  width: 46px;
 				}
 				.sku-row-cell {
 				  padding-left: 49px;
@@ -227,9 +263,22 @@
 			}
 			> .cc-grid-footer {
 			  padding: 23px 11px;
-			  //background-color: #ffffff;
-			  .total-items-count, .reload {
+			  .total-items-count, .reload, .selected-items-count {
 				display: none;
+			  }
+			  .footer-info {
+				font-family: MicrosoftYaHei;
+				background: #eff7ff;
+				border: 1px solid #cde5ff;
+				border-radius: 2px;
+				height: 23px;
+				line-height: 22px;
+				font-size: 12px;
+				color: #0083ba;
+				padding: 0 10px;
+				.plus-icon {
+				  color: #222;
+				}
 			  }
 			}
 		  }
