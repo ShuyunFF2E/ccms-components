@@ -261,6 +261,11 @@ export default class GoodsSelectorCtrl {
 
 		// 点击已选商品tab：表单中商铺列表项显示当前商铺，不可更改，其他恢复默认值
 		this.isShopListDisabled = false;
+
+		this.tabClick = function(text) {
+			console.log(text);
+		};
+
 		this.oldFormModel = {};
 		this.selectedGoodsClick = () => {
 			this.oldFormModel = this.deepCopy(this.formModel);

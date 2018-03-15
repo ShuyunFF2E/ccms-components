@@ -19,7 +19,8 @@ const paneDDO = {
 		tabsCtrl: '^gsTabs'
 	},
 	bindings: {
-		text: '@'
+		text: '@',
+		tabClick: '&'
 	},
 	controller: PanelCtrl,
 	template: panelTemplate
