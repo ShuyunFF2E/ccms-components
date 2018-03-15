@@ -22,11 +22,8 @@
 		  margin: 0px;
 		  padding-left: 0px;
 		  padding-right: 0px;
-		  input:not(.date-picker-input), select, cc-dropdown-select, cc-dropdown-multiselect {
+		  input:not(.date-picker-input), select:not(.ng-pristine), cc-dropdown-select, cc-dropdown-multiselect {
 			width: 150px;
-		  }
-		  .calendar select {
-			width: 80px;
 		  }
 		  &.stack-date {
 			position: relative;
@@ -105,6 +102,40 @@
 	.gs-tab-content {
 	  gs-panel {
 		position: absolute;
+		&.all-goods-panel {
+		  .cc-grid-header thead tr th {
+			&:first-child {
+			  width: 252px;
+			  padding-left: 76px;
+			}
+			&:last-child {
+			  display: none;
+			}
+		  }
+		  .row-cell, .sku-row-cell {
+			width: 74px;
+		  }
+		  .remove-btn {
+			display: none;
+		  }
+		}
+		&.checked-goods-panel{
+		  .cc-grid-header thead tr th {
+			&:first-child {
+			  width: 208px;
+			  padding-left: 76px;
+			}
+			&:last-child {
+			  width: 100px;
+			}
+		  }
+		  .row-cell, .sku-row-cell {
+			width: 47px;
+		  }
+		  cc-checkbox, .hide-sku {
+			display: none;
+		  }
+		}
 		.all-goods-operation {
 		  padding-left: 9px;
 		  margin-bottom: 6px;
@@ -166,13 +197,6 @@
 				width: 252px;
 				padding-left: 76px;
 			  }
-			  &.checked-goods-head {
-				width: 208px;
-				padding-left: 60px;
-			  }
-			  &.operation {
-				width: 100px;
-			  }
 			}
 			.cc-grid-table {
 			  tbody {
@@ -215,12 +239,6 @@
 					  color: #3d3d3d;
 					}
 				  }
-				}
-				.row-cell, .sku-row-cell {
-				  width: 74px;
-				}
-				.checked-row-cell {
-				  width: 46px;
 				}
 				.sku-row-cell {
 				  padding-left: 49px;
@@ -266,20 +284,18 @@
 			  .total-items-count, .reload, .selected-items-count {
 				display: none;
 			  }
-			  .footer-info {
-				font-family: MicrosoftYaHei;
-				background: #eff7ff;
-				border: 1px solid #cde5ff;
-				border-radius: 2px;
-				height: 23px;
-				line-height: 22px;
-				font-size: 12px;
-				color: #0083ba;
-				padding: 0 10px;
-				.plus-icon {
-				  color: #222;
-				}
-			  }
+			}
+		  }
+		  .footer-info {
+			background:#eff7ff;
+			border:1px solid #cde5ff;
+			border-radius:2px;
+			height:22px;
+			line-height: 21px;
+			color:#0083ba;
+			padding: 0 10px;
+			.plus-icon {
+			  color: #222;
 			}
 		  }
 		}

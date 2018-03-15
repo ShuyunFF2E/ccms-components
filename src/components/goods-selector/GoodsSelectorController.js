@@ -5,7 +5,7 @@ import emptyTpl from './tpls/customer-empty.tpl.html';
 
 import angular from 'angular';
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource', 'selectedData')
 
 export default class GoodsSelectorCtrl {
 
@@ -261,11 +261,6 @@ export default class GoodsSelectorCtrl {
 
 		// 点击已选商品tab：表单中商铺列表项显示当前商铺，不可更改，其他恢复默认值
 		this.isShopListDisabled = false;
-
-		this.tabClick = function(text) {
-			console.log(text);
-		};
-
 		this.oldFormModel = {};
 		this.selectedGoodsClick = () => {
 			this.oldFormModel = this.deepCopy(this.formModel);
@@ -278,214 +273,8 @@ export default class GoodsSelectorCtrl {
 			Object.assign(this.formModel, this.oldFormModel);
 			this.isShopListDisabled = false;
 		};
-
 		// 全部商品->表格配置
-		this.selectedItems = [
-			{
-				'id': '1',
-				'name': '商品名称商品名称商品名称商品名称',
-				'order': '排序',
-				'status': '状态',
-				'created': '创建时间',
-				'modified': '更改时间',
-				'lastSync': '同步时间',
-				'shopId': '店铺ID',
-				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
-				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
-				'outerId': 'A1-2334-543',
-				'price': '21',
-				'quantity': '133',
-				'listTime': '上架时间',
-				'delistTime': '下架时间',
-				'tags': ['标签'],
-				'props': [
-					{
-						'pid': '属性ID',
-						'pname': '属性名称',
-						'vid': '属性值ID',
-						'vname': '属性值名称'
-					}
-				],
-				'categories': [
-					{
-						'cid': '类目ID',
-						'cname': '类目名称'
-					}
-				],
-				'shopCategories': [
-					{
-						'cid': '类目ID',
-						'cname': '类目名称'
-					}
-				],
-				'skus': [
-				]
-			},
-			{
-				'id': '2',
-				'name': '商品名称商品名称商品名称商品名称',
-				'order': '排序',
-				'status': '状态',
-				'created': '创建时间',
-				'modified': '更改时间',
-				'lastSync': '同步时间',
-				'shopId': '店铺ID',
-				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
-				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
-				'outerId': 'A1-2334-543',
-				'price': '21',
-				'quantity': '133',
-				'listTime': '上架时间',
-				'delistTime': '下架时间',
-				'tags': ['标签'],
-				'props': [
-					{
-						'pid': '属性ID',
-						'pname': '属性名称',
-						'vid': '属性值ID',
-						'vname': '属性值名称'
-					}
-				],
-				'categories': [
-					{
-						'cid': '类目ID',
-						'cname': '类目名称'
-					}
-				],
-				'shopCategories': [
-					{
-						'cid': '类目ID',
-						'cname': '类目名称'
-					}
-				],
-				'skus': [
-					{
-						'id': '21',
-						'name': '颜色：黄色；尺码：46；属性值1',
-						'order': '排序',
-						'status': '状态',
-						'created': '创建时间',
-						'modified': '更改时间',
-						'lastSync': '同步时间',
-						'outerId': 'A1-2334-543',
-						'price': '23',
-						'quantity': '100',
-						'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
-						'props': [
-							{
-								'pid': '属性ID',
-								'pname': '属性名称',
-								'vid': '属性值ID',
-								'vname': '属性值名称'
-							}
-						]
-					},
-					{
-						'id': '22',
-						'name': '颜色：黄色；尺码：46；属性值1',
-						'order': '排序',
-						'status': '状态',
-						'created': '创建时间',
-						'modified': '更改时间',
-						'lastSync': '同步时间',
-						'outerId': 'A1-2334-543',
-						'price': '23',
-						'quantity': '100',
-						'picUrl': 'https://img.alicdn.com/bao/uploaded/i4/414285109/TB2UGDHllDH8KJjSspnXXbNAVXa_!!414285109.jpg_430x430q90.jpg',
-						'props': [
-							{
-								'pid': '属性ID',
-								'pname': '属性名称',
-								'vid': '属性值ID',
-								'vname': '属性值名称'
-							}
-						]
-					}
-				]
-			},
-			{
-				'id': '3',
-				'name': '商品名称商品名称商品名称商品名称',
-				'order': '排序',
-				'status': '状态',
-				'created': '创建时间',
-				'modified': '更改时间',
-				'lastSync': '同步时间',
-				'shopId': '店铺ID',
-				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
-				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
-				'outerId': 'A1-2334-543',
-				'price': '21',
-				'quantity': '133',
-				'listTime': '上架时间',
-				'delistTime': '下架时间',
-				'tags': ['标签'],
-				'props': [
-					{
-						'pid': '属性ID',
-						'pname': '属性名称',
-						'vid': '属性值ID',
-						'vname': '属性值名称'
-					}
-				],
-				'categories': [
-					{
-						'cid': '类目ID',
-						'cname': '类目名称'
-					}
-				],
-				'shopCategories': [
-					{
-						'cid': '类目ID',
-						'cname': '类目名称'
-					}
-				],
-				'skus': [
-					{
-						'id': '31',
-						'name': '颜色：黄色；尺码：46；属性值1',
-						'order': '排序',
-						'status': '状态',
-						'created': '创建时间',
-						'modified': '更改时间',
-						'lastSync': '同步时间',
-						'outerId': 'A1-2334-543',
-						'price': '23',
-						'quantity': '100',
-						'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
-						'props': [
-							{
-								'pid': '属性ID',
-								'pname': '属性名称',
-								'vid': '属性值ID',
-								'vname': '属性值名称'
-							}
-						]
-					},
-					{
-						'id': '32',
-						'name': '颜色：黄色；尺码：46；属性值1',
-						'order': '排序',
-						'status': '状态',
-						'created': '创建时间',
-						'modified': '更改时间',
-						'lastSync': '同步时间',
-						'outerId': 'A1-2334-543',
-						'price': '23',
-						'quantity': '100',
-						'picUrl': 'https://img.alicdn.com/bao/uploaded/i4/414285109/TB2UGDHllDH8KJjSspnXXbNAVXa_!!414285109.jpg_430x430q90.jpg',
-						'props': [
-							{
-								'pid': '属性ID',
-								'pname': '属性名称',
-								'vid': '属性值ID',
-								'vname': '属性值名称'
-							}
-						]
-					}
-				]
-			}
-		];
+		this.selectedItems = this._selectedData;
 		this.pagerGridOptions = {
 			resource: this._$resource('/api/gridData/1'),
 			response: null,
@@ -524,7 +313,7 @@ export default class GoodsSelectorCtrl {
 				return res;
 			}
 		};
-		this.pagerGridOptions.isCheckedGoodsTab = true;
+		this.pagerGridOptions.isCheckedGoodsTab = false;
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		// 表格子行的展开和收起
@@ -541,6 +330,14 @@ export default class GoodsSelectorCtrl {
 			if (!entity.checked) {
 				this.currentPageChecked = false;
 			}
+			// 将已选商品push但selectedItem中
+			let entityIndex = this.findEntity(this.selectedItems, entity);
+			if (entity.checked && entityIndex === -1) {
+				this.selectedItems.push(entity);
+			}
+			if (!entity.checked && entityIndex !== -1) {
+				this.selectedItems.splice(entityIndex, 1);
+			}
 		};
 		// 选择部分孩子父亲半选，选择全部孩子父亲选
 		this.pagerGridOptions.checkTreeLeafItem = (entity, sku) => {
@@ -550,54 +347,56 @@ export default class GoodsSelectorCtrl {
 			if (!sku.checked) {
 				this.currentPageChecked = false;
 			}
-		};
-		// 展开/折叠全部
-		this.extendAll = (isExtend, data) => {
-			data.forEach(item => {
-				item.extend = isExtend;
-			});
-		};
-		// 全选当页
-		this.checkCurrentPage = () => {
-			this.currentPageChecked = !this.currentPageChecked;
-			this.resInfo.list.forEach(item => {
-				item.checked = this.currentPageChecked;
-				item.partial = false;
-				item.skus && item.skus.forEach(sku => {
-					sku.checked = this.currentPageChecked;
-				});
-			});
-		};
-		// 移除父亲
-		this.pagerGridOptions.removeTreeRootItem = function(entity) {
-			let targetIndex = self.findEntity(self.selectedItems, entity);
-			if (targetIndex !== -1) {
-				self.selectedItems.splice(targetIndex, 1);
-			}
-		};
-		// 移除孩子
-		this.pagerGridOptions.removeTreeLeafItem = (entity, sku) => {
-			let entityIndex = self.findEntity(self.selectedItems, entity);
-			let targetIndex = self.findEntity(self.selectedItems[entityIndex].skus, sku);
-			if (targetIndex !== -1) {
-				self.selectedItems[entityIndex].skus.splice(targetIndex, 1);
-			}
-			if (self.isAllChildrenRemoved(entity.skus)) {
-				self.selectedItems.splice(targetIndex, 1);
+			// 将已选商品push但selectedItem中
+			if (entity.checked) {
+				if (this.findEntity(this.selectedItems, entity) === -1) {
+					this.selectedItems.push(entity);
+				}
+			} else if (entity.partial) {
+				let entityIndex = this.findEntity(this.selectedItems, entity);
+				if (entityIndex !== -1) {
+					this.selectedItems[entityIndex] = entity;
+				} else {
+					this.selectedItems.push(entity);
+				}
+			} else {
+				let entityIndex = this.findEntity(this.selectedItems, entity);
+				entityIndex !== -1 && this.selectedItems.splice(entityIndex, 1);
 			}
 		};
 		// 已选商品->表格配置
 		this.checkedPagerGridOptions = {};
 		for (let key in this.pagerGridOptions) {
 			if (this.pagerGridOptions.hasOwnProperty(key)) {
-				if (key !== 'resource' && key !== 'externalData' && key !== 'transformer') {
-					this.checkedPagerGridOptions[key] = this.pagerGridOptions[key];
-				}
+				this.checkedPagerGridOptions[key] = this.pagerGridOptions[key];
 			}
 		}
 		this.checkedPagerGridOptions.resource = null;
 		this.checkedPagerGridOptions.externalData = this.selectedItems;
 		this.checkedPagerGridOptions.transformer = null;
+		// 移除父亲
+		this.checkedPagerGridOptions.removeTreeRootItem = entity => {
+			let targetIndex = self.findEntity(self.selectedItems, entity);
+			if (targetIndex !== -1) {
+				// let targetEntity = self.selectedItems[targetIndex];
+				// targetEntity.checked = false;
+				// targetEntity.partial = false;
+				this.selectedItems.splice(targetIndex, 1);
+			}
+			console.log(self.selectedItems);
+		};
+		// 移除孩子
+		this.checkedPagerGridOptions.removeTreeLeafItem = (entity, sku) => {
+			let entityIndex = self.findEntity(self.selectedItems, entity);
+			let skuIndex = self.findEntity(self.selectedItems[entityIndex].skus, sku);
+			if (skuIndex !== -1) {
+				self.selectedItems[entityIndex].skus[skuIndex].checked = false;
+			}
+			if (self.isAllChildrenNotChecked(entity.skus)) {
+				this.selectedItems.slice(entityIndex, 1);
+			}
+			console.log(self.selectedItems);
+		};
 	}
 	// form 表单初始化
 	initForm() {
@@ -643,13 +442,49 @@ export default class GoodsSelectorCtrl {
 			return child.checked;
 		});
 	}
+	isAllChildrenNotChecked(children) {
+		return children && children.every(child => {
+			return !child.checked;
+		});
+	}
 
 	isSomeChildrenChecked(children) {
 		return children && !this.isAllChildrenChecked(children) && children.some(child => {
 			return child.checked || child.partial;
 		});
 	}
-	isAllChildrenRemoved(entity) {
-		return entity.length === 0;
+
+	// 展开/折叠全部
+	extendAll(isExtend, data) {
+		data.forEach(item => {
+			item.extend = isExtend;
+		});
+	};
+	// 全选当页
+	checkCurrentPage() {
+		this.currentPageChecked = !this.currentPageChecked;
+		this.resInfo.list.forEach(item => {
+			item.checked = this.currentPageChecked;
+			item.partial = false;
+			item.skus && item.skus.forEach(sku => {
+				sku.checked = this.currentPageChecked;
+			});
+		});
+	};
+	// 点击tab
+	tabClick(text) {
+		console.log(text);
+	}
+	// merge->点击已选商品之后再点击全部商品，全部商品的当前页能够保持商品被选状态
+	// 		->点击下一页之后再点击上一页，保持商品被选状态
+	dataMerge(targetArr, sourceArr, key) {
+		for (let i = 0; i < targetArr.length; i++) {
+			for (let j = 0; j < sourceArr.length; j++) {
+				if (targetArr[i][key] === sourceArr[j][key]) {
+					targetArr[i] = sourceArr[j];
+					break;
+				}
+			}
+		}
 	}
 }
