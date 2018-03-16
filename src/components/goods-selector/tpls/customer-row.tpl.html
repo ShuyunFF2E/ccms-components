@@ -1,4 +1,5 @@
-<tr ng-repeat-start="entity in $ctrl.opts.data track by $index"
+<tr ng-class="{'hide-entity': !entity.checked && !entity.partial}"
+	ng-repeat-start="entity in $ctrl.opts.data track by $index"
 	cc-bind-html="$ctrl.opts.rowCellTemplate">
 </tr>
 <tr class="children"

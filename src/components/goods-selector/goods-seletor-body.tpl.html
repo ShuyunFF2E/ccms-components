@@ -138,12 +138,12 @@
 			<gs-panel text="已选商品" class="checked-goods-panel" tab-click="$ctrl.tabClick(text)">
 				<section class="grid-area">
 					<div class="checked-goods-operation">
-						<span>移除全部</span>
+						<span ng-click="$ctrl.removeAll()">移除全部</span>
 						<span>移除当页</span>
 						<span ng-if="!$ctrl.isCheckedExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isCheckedExtendAll = true; $ctrl.extendAll(true, $ctrl.selectedItems);">全部展开</span>
 						<span ng-if="$ctrl.isCheckedExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isCheckedExtendAll = false; $ctrl.extendAll(false, $ctrl.selectedItems);">全部折叠</span>
 					</div>
-					<cc-grid opts="$ctrl.checkedPagerGridOptions"
+					<cc-grid opts="$ctrl.selectedPagerGridOptions"
 							 type="default">
 					</cc-grid>
 				</section>

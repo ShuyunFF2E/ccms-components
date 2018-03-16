@@ -10,7 +10,6 @@ import angular from 'angular';
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
-		let self = this;
 		// 已选商品列表
 		// this.selectedGoods = this._selectedData;
 
@@ -273,8 +272,11 @@ export default class GoodsSelectorCtrl {
 			Object.assign(this.formModel, this.oldFormModel);
 			this.isShopListDisabled = false;
 		};
+
+
 		// 全部商品->表格配置
 		this.selectedItems = this._selectedData;
+		this.selectedItemsBuf = this.selectedItems.concat();
 		this.pagerGridOptions = {
 			resource: this._$resource('/api/gridData/1'),
 			response: null,
@@ -310,6 +312,7 @@ export default class GoodsSelectorCtrl {
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
 				this.resInfo = res;
+				this.currentPageChecked = false;
 				return res;
 			}
 		};
@@ -319,6 +322,12 @@ export default class GoodsSelectorCtrl {
 		// 表格子行的展开和收起
 		this.pagerGridOptions.handleTreeIcon = entity => {
 			entity.extend = !entity.extend;
+		};
+		// 展开/折叠全部
+		this.extendAll = (isExtend, data) => {
+			data.forEach(item => {
+				item.extend = isExtend;
+			});
 		};
 		// 选择父亲则孩子全选
 		this.pagerGridOptions.checkTreeRootItem = entity => {
@@ -331,6 +340,8 @@ export default class GoodsSelectorCtrl {
 				this.currentPageChecked = false;
 			}
 			// 将已选商品push但selectedItem中
+			//    -> 如果父亲被选并且不存在于selectedItem数组中，则将父亲这个整体放到数组中；
+			//    -> 如果父亲未选并且存在于selectedItem数组中，则将父亲这个整体删除
 			let entityIndex = this.findEntity(this.selectedItems, entity);
 			if (entity.checked && entityIndex === -1) {
 				this.selectedItems.push(entity);
@@ -338,6 +349,7 @@ export default class GoodsSelectorCtrl {
 			if (!entity.checked && entityIndex !== -1) {
 				this.selectedItems.splice(entityIndex, 1);
 			}
+			this.selectedItemsBuf = this.selectedItems.concat();
 		};
 		// 选择部分孩子父亲半选，选择全部孩子父亲选
 		this.pagerGridOptions.checkTreeLeafItem = (entity, sku) => {
@@ -347,7 +359,10 @@ export default class GoodsSelectorCtrl {
 			if (!sku.checked) {
 				this.currentPageChecked = false;
 			}
-			// 将已选商品push但selectedItem中
+			// 将已选商品push到selectedItem中
+			//    -> 如果父亲被选，则将父亲push到selectedItem数组中；
+			//    -> 如果父亲半选，当父亲存在于selectedItem数组中，则用父亲替换已存在entity；
+			//    -> 如果父亲未选，则将父亲从selectedItem数组中删除
 			if (entity.checked) {
 				if (this.findEntity(this.selectedItems, entity) === -1) {
 					this.selectedItems.push(entity);
@@ -363,39 +378,67 @@ export default class GoodsSelectorCtrl {
 				let entityIndex = this.findEntity(this.selectedItems, entity);
 				entityIndex !== -1 && this.selectedItems.splice(entityIndex, 1);
 			}
+			this.selectedItemsBuf = this.selectedItems.concat();
 		};
+		// 全选当页
+		this.checkCurrentPage = () => {
+			this.currentPageChecked = !this.currentPageChecked;
+			this.resInfo.list.forEach(item => {
+				item.checked = this.currentPageChecked;
+				item.partial = false;
+				item.skus && item.skus.forEach(sku => {
+					sku.checked = this.currentPageChecked;
+				});
+			});
+			if (this.currentPageChecked) {
+				this.selectedItems.splice(0, this.selectedItems.length);
+				this.selectedItems.push(...this.selectedItemsBuf);
+				this.selectedItems.push(...this.resInfo.list);
+			} else {
+				this.removeAll();
+			}
+			this.selectedItemsBuf = this.selectedItems.concat();
+		};
+		// 页数改变
+		this.onPagerChange = (currentPageNum, pageSize) => {
+			console.log(currentPageNum, pageSize);
+			let previousPageNum = this.pagerGridOptions.pager.pageNum;
+			console.log(previousPageNum);
+			console.log(this.selectedItemsBuf);
+			this.dataMerge(this.resInfo, this.selectedItemsBuf);
+		};
+
+
 		// 已选商品->表格配置
-		this.checkedPagerGridOptions = {};
+		this.selectedPagerGridOptions = {};
 		for (let key in this.pagerGridOptions) {
 			if (this.pagerGridOptions.hasOwnProperty(key)) {
-				this.checkedPagerGridOptions[key] = this.pagerGridOptions[key];
+				this.selectedPagerGridOptions[key] = this.pagerGridOptions[key];
 			}
 		}
-		this.checkedPagerGridOptions.resource = null;
-		this.checkedPagerGridOptions.externalData = this.selectedItems;
-		this.checkedPagerGridOptions.transformer = null;
-		// 移除父亲
-		this.checkedPagerGridOptions.removeTreeRootItem = entity => {
-			let targetIndex = self.findEntity(self.selectedItems, entity);
-			if (targetIndex !== -1) {
-				// let targetEntity = self.selectedItems[targetIndex];
-				// targetEntity.checked = false;
-				// targetEntity.partial = false;
-				this.selectedItems.splice(targetIndex, 1);
-			}
-			console.log(self.selectedItems);
+		this.selectedPagerGridOptions.resource = null;
+		this.selectedPagerGridOptions.externalData = this.selectedItems;
+		this.selectedPagerGridOptions.transformer = null;
+		// 移除父亲 -> 用作显示的UI数据处理handleRootByDeletingItem：如果已选商品中有父亲，则删除父亲。
+		//         -> 用作merge的数据处理handleRootByChangingStatus：如果已选商品中有父亲，则将父亲checked置为false。
+		this.selectedPagerGridOptions.removeTreeRootItem = entity => {
+			this.handleRootByDeletingItem(entity);
+			this.handleRootByChangingStatus(entity);
 		};
-		// 移除孩子
-		this.checkedPagerGridOptions.removeTreeLeafItem = (entity, sku) => {
-			let entityIndex = self.findEntity(self.selectedItems, entity);
-			let skuIndex = self.findEntity(self.selectedItems[entityIndex].skus, sku);
-			if (skuIndex !== -1) {
-				self.selectedItems[entityIndex].skus[skuIndex].checked = false;
-			}
-			if (self.isAllChildrenNotChecked(entity.skus)) {
-				this.selectedItems.slice(entityIndex, 1);
-			}
-			console.log(self.selectedItems);
+		// 移除孩子: -> 如果已选商品中有孩子，则将孩子的checked置为false;
+		//          -> 如果该孩子的所有兄弟checked都为false，则删除父亲（用作显示的UI数据处理handleChildrenByDeletingChild）
+		// 			   或者将父亲checked置为false（用作merge的数据处理handleChildrenByChangingStatus）。
+		//          -> 如果该孩子的并不是所有兄弟checked都为false，则将父亲状态置为半选。
+		this.selectedPagerGridOptions.removeTreeLeafItem = (entity, sku) => {
+			this.handleChildrenByDeletingChild(entity, sku);
+			this.handleChildrenByChangingStatus(entity, sku);
+		};
+		// 移除全部
+		this.removeAll = () => {
+			this.selectedItems.splice(0, this.selectedItems.length);
+			this.selectedItemsBuf.forEach(entity => {
+				this.removeParentItem(entity);
+			});
 		};
 	}
 	// form 表单初始化
@@ -442,46 +485,78 @@ export default class GoodsSelectorCtrl {
 			return child.checked;
 		});
 	}
-	isAllChildrenNotChecked(children) {
-		return children && children.every(child => {
-			return !child.checked;
-		});
-	}
-
 	isSomeChildrenChecked(children) {
 		return children && !this.isAllChildrenChecked(children) && children.some(child => {
 			return child.checked || child.partial;
 		});
 	}
+	isAllChildrenNotChecked(children) {
+		return !(this.isAllChildrenChecked(children) || this.isSomeChildrenChecked(children));
+	}
 
-	// 展开/折叠全部
-	extendAll(isExtend, data) {
-		data.forEach(item => {
-			item.extend = isExtend;
-		});
+	handleRootByDeletingItem(entity) {
+		let targetIndex = this.findEntity(this.selectedItems, entity);
+		if (targetIndex !== -1) {
+			this.selectedItems.splice(targetIndex, 1);
+		}
 	};
-	// 全选当页
-	checkCurrentPage() {
-		this.currentPageChecked = !this.currentPageChecked;
-		this.resInfo.list.forEach(item => {
-			item.checked = this.currentPageChecked;
-			item.partial = false;
-			item.skus && item.skus.forEach(sku => {
-				sku.checked = this.currentPageChecked;
-			});
-		});
+	handleRootByChangingStatus(entity) {
+		let bufTargetIndex = this.findEntity(this.selectedItemsBuf, entity);
+		if (bufTargetIndex !== -1) {
+			this.removeParentItem(this.selectedItemsBuf[bufTargetIndex]);
+		}
 	};
+
+	handleChildrenByDeletingChild(entity, sku) {
+		let entityIndex = this.findEntity(this.selectedItems, entity);
+		let skuIndex = this.findEntity(this.selectedItems[entityIndex].skus, sku);
+		if (skuIndex !== -1) {
+			this.selectedItems[entityIndex].skus[skuIndex].checked = false;
+			if (this.isAllChildrenNotChecked(entity.skus)) {
+				this.selectedItems.splice(entityIndex, 1);
+			} else {
+				this.selectedItems[entityIndex].partial = true;
+				this.selectedItems[entityIndex].checked = false;
+			}
+		}
+	};
+	handleChildrenByChangingStatus(entity, sku) {
+		let bufEntityIndex = this.findEntity(this.selectedItemsBuf, entity);
+		let bufSkuIndex = this.findEntity(this.selectedItemsBuf[bufEntityIndex].skus, sku);
+		if (bufSkuIndex !== -1) {
+			this.selectedItemsBuf[bufEntityIndex].skus[bufSkuIndex].checked = false;
+			if (this.isAllChildrenNotChecked(entity.skus)) {
+				this.removeParentItem(this.selectedItemsBuf[bufEntityIndex]);
+			} else {
+				this.selectedItemsBuf[bufEntityIndex].partial = true;
+				this.selectedItemsBuf[bufEntityIndex].checked = false;
+			}
+		}
+	};
+
+	// 移除一个父亲节点
+	removeParentItem(entity) {
+		entity.checked = false;
+		entity.partial = false;
+		entity.skus.forEach(sku => {
+			sku.checked = false;
+		});
+	}
+
 	// 点击tab
 	tabClick(text) {
 		console.log(text);
+		if (text === '全部商品') {
+			this.dataMerge(this.resInfo, this.selectedItemsBuf);
+		}
 	}
 	// merge->点击已选商品之后再点击全部商品，全部商品的当前页能够保持商品被选状态
 	// 		->点击下一页之后再点击上一页，保持商品被选状态
-	dataMerge(targetArr, sourceArr, key) {
-		for (let i = 0; i < targetArr.length; i++) {
-			for (let j = 0; j < sourceArr.length; j++) {
-				if (targetArr[i][key] === sourceArr[j][key]) {
-					targetArr[i] = sourceArr[j];
+	dataMerge(selectedGoodsArr, goodsArr) {
+		for (let i = 0; i < goodsArr.length; i++) {
+			for (let j = i; j < selectedGoodsArr.length; j++) {
+				if (goodsArr[i].id === selectedGoodsArr[j].id) {
+					goodsArr[i] = selectedGoodsArr[j];
 					break;
 				}
 			}
