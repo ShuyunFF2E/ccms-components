@@ -1,9 +1,8 @@
 <div class="footer-info">
-	<span>已选：条件(55条)</span>
-	<span class="plus-icon">+</span>
-	<span>商品(1,345)件</span>
-	<span class="plus-icon">+</span>
-	<span>SKU(45)种</span>
+	<span>已选：</span>
+	<span>条件(5条)</span>
+	<span class="plus-icon" ng-show="$ctrl.opts.selectedData.length > 0">+</span>
+	<span ng-show="$ctrl.opts.selectedData.length > 0">商品({{$ctrl.opts.selectedData.length}})件</span>
 </div>
 <span class="delimiter"></span>
 <cc-pagination

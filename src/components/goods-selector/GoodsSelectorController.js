@@ -319,6 +319,7 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.isCheckedGoodsTab = false;
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
+		this.pagerGridOptions.selectedData = this.selectedItems;
 		// 表格子行的展开和收起
 		this.pagerGridOptions.handleTreeIcon = entity => {
 			entity.extend = !entity.extend;
@@ -380,7 +381,8 @@ export default class GoodsSelectorCtrl {
 			}
 			this.selectedItemsBuf = this.selectedItems.concat();
 		};
-		// 全选当页
+		// 全选当页: -> 将列表数据checked状态置为true
+		// 			-> 将当页数据push到已选商品数组中（注意先选择再全选的情况特殊处理）
 		this.checkCurrentPage = () => {
 			this.currentPageChecked = !this.currentPageChecked;
 			this.resInfo.list.forEach(item => {
@@ -392,10 +394,15 @@ export default class GoodsSelectorCtrl {
 			});
 			if (this.currentPageChecked) {
 				this.selectedItems.splice(0, this.selectedItems.length);
-				this.selectedItems.push(...this.selectedItemsBuf);
 				this.selectedItems.push(...this.resInfo.list);
+				this.selectedItemsBuf.forEach(item => {
+					if (this.findEntity(this.selectedItems, item) === -1) {
+						this.selectedItems.push(item);
+					}
+				});
 			} else {
-				this.removeAll();
+				let startIndex = this.findEntity(this.selectedItems, this.resInfo.list[0]);
+				this.selectedItems.splice(startIndex, this.resInfo.list.length);
 			}
 			this.selectedItemsBuf = this.selectedItems.concat();
 		};
@@ -545,7 +552,6 @@ export default class GoodsSelectorCtrl {
 
 	// 点击tab
 	tabClick(text) {
-		console.log(text);
 		if (text === '全部商品') {
 			this.dataMerge(this.resInfo, this.selectedItemsBuf);
 		}
