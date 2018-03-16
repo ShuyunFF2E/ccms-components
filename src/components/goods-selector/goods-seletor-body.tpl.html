@@ -126,8 +126,7 @@
 					<div class="all-goods-operation">
 						<!--<cc-checkbox class="select-all" ng-checked="$ctrl.selectAll">全选</cc-checkbox>-->
 						<cc-checkbox class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.checkCurrentPage()">全选当页</cc-checkbox>
-						<span ng-if="!$ctrl.isExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = true; $ctrl.extendAll(true, $ctrl.resInfo.list);">全部展开</span>
-						<span ng-if="$ctrl.isExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = false; $ctrl.extendAll(false, $ctrl.resInfo.list);">全部折叠</span>
+						<span class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = !$ctrl.isExtendAll; $ctrl.extendAll($ctrl.isExtendAll, $ctrl.resInfo.list);">{{$ctrl.isExtendAll ? '全部折叠' : '全部展开'}}</span>
 					</div>
 					<cc-grid opts="$ctrl.pagerGridOptions"
 							 selected-items="$ctrl.selectedItems"
@@ -140,8 +139,7 @@
 					<div class="checked-goods-operation">
 						<span ng-click="$ctrl.removeAll()">移除全部</span>
 						<span>移除当页</span>
-						<span ng-if="!$ctrl.isCheckedExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isCheckedExtendAll = true; $ctrl.extendAll(true, $ctrl.selectedItems);">全部展开</span>
-						<span ng-if="$ctrl.isCheckedExtendAll" class="slide-toggle-btn" ng-click="$ctrl.isCheckedExtendAll = false; $ctrl.extendAll(false, $ctrl.selectedItems);">全部折叠</span>
+						<span class="slide-toggle-btn" ng-click="$ctrl.isCheckedExtendAll = !$ctrl.isCheckedExtendAll; $ctrl.extendAll($ctrl.isCheckedExtendAll, $ctrl.selectedItems);">{{$ctrl.isCheckedExtendAll ? '全部折叠' : '全部展开'}}</span>
 					</div>
 					<cc-grid opts="$ctrl.selectedPagerGridOptions"
 							 type="default">
