@@ -127,6 +127,7 @@
 						<!--<cc-checkbox class="select-all" ng-checked="$ctrl.selectAll">全选</cc-checkbox>-->
 						<cc-checkbox class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.selectCurrentPageAll()">全选当页</cc-checkbox>
 						<span class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = !$ctrl.isExtendAll; $ctrl.extendAll($ctrl.isExtendAll, $ctrl.resInfo.list);">{{$ctrl.isExtendAll ? '全部折叠' : '全部展开'}}</span>
+						<span>{{$ctrl.pagerGridOptions.pager.pageNum}}</span>
 					</div>
 					<cc-grid opts="$ctrl.pagerGridOptions"
 							 selected-items="$ctrl.selectedItems"

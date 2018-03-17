@@ -5,7 +5,7 @@ import emptyTpl from './tpls/customer-empty.tpl.html';
 
 import angular from 'angular';
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource', 'selectedData')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource', 'selectedData', '$scope')
 
 export default class GoodsSelectorCtrl {
 
@@ -29,6 +29,7 @@ export default class GoodsSelectorCtrl {
 		};
 
 		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
+		console.log(this.shopList);
 		// 测试数据
 		this.selectedGoods = {
 			'shopList': this.shopList,
@@ -315,6 +316,7 @@ export default class GoodsSelectorCtrl {
 			transformer: res => {
 				this.resInfo = res;
 				this.currentPageChecked = false;
+				this.dataMerge(this.selectedItemsBuffer, this.resInfo.list);
 				return res;
 			}
 		};
@@ -415,15 +417,6 @@ export default class GoodsSelectorCtrl {
 			}
 			this.getSelectedItemsBuffer();
 		};
-		// 页数改变
-		// this.onPagerChange = (currentPageNum, pageSize) => {
-		// 	console.log(currentPageNum, pageSize);
-		// 	let previousPageNum = this.pagerGridOptions.pager.pageNum;
-		// 	console.log(previousPageNum);
-		// 	console.log(this.selectedItemsBuffer);
-		// 	this.dataMerge(this.resInfo, this.selectedItemsBuffer);
-		// };
-
 
 		// 已选商品->表格配置
 		this.selectedPagerGridOptions = {};
@@ -437,11 +430,13 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.transformer = null;
 
 		// 移除父亲: 从已选商品中删除父亲（包括 sku）。
-		// 注意：selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态 resetRootItem
+		// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态 resetRootItem
+		// -> 更新 selectedItemsBuffer 状态：用selectedItems 中已删除商品替换掉 selectedItemsBuffer 中与之 id 相等的项。
 		this.selectedPagerGridOptions.removeTreeRootItem = entity => {
 			let targetIndex = this.findEntity(this.selectedItems, entity);
 			if (targetIndex !== -1) {
 				this.resetRootItem(entity);
+				this.updateSelectedItemsBuffer(entity);
 				this.selectedItems.splice(targetIndex, 1);
 			}
 			// 任意一个父亲被 remove 掉, 表格上方的全选当页, 被 unchecked
@@ -451,7 +446,8 @@ export default class GoodsSelectorCtrl {
 		};
 		// 移除孩子: -> 如果部分孩子被移除，则将孩子状态置为 unchecked;
 		//          -> 如果全部孩子被移除，则将孩子状态置为 unchecked; 并且删除父亲。
-		// 注意：selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态 resetRootItem
+		//          -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态 resetRootItem
+		//          -> 更新 selectedItemsBuffer 状态：用 selectedItems 中状态为 unchecked(partial) 的商品替换掉 selectedItemsBuffer 中与之 id 相等的项。
 		this.selectedPagerGridOptions.removeTreeLeafItem = (entity, sku) => {
 			let entityIndex = this.findEntity(this.selectedItems, entity);
 			let skuIndex = this.findEntity(this.selectedItems[entityIndex].skus, sku);
@@ -459,10 +455,12 @@ export default class GoodsSelectorCtrl {
 				this.selectedItems[entityIndex].skus[skuIndex].checked = false;
 				if (this.isAllChildrenRemoved(entity.skus)) {
 					this.resetRootItem(entity);
+					this.updateSelectedItemsBuffer(entity);
 					this.selectedItems.splice(entityIndex, 1);
 				} else {
 					this.selectedItems[entityIndex].partial = true;
 					this.selectedItems[entityIndex].checked = false;
+					this.updateSelectedItemsBuffer(entity);
 				}
 			}
 			// 任意一个孩子被 remove 掉, 表格上方的全选当页, 被 unchecked
@@ -471,11 +469,13 @@ export default class GoodsSelectorCtrl {
 			}
 		};
 		// 移除全部
-		// 注意：selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态 resetRootItem
+		// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态 resetRootItem
+		// -> 清空 selectedItemsBuffer
 		this.removeAll = () => {
 			this.selectedItems.forEach(entity => {
 				this.resetRootItem(entity);
 			});
+			this.selectedItemsBuffer.splice(0, this.selectedItemsBuffer.length);
 			this.selectedItems.splice(0, this.selectedItems.length);
 			// 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = false;
@@ -484,7 +484,7 @@ export default class GoodsSelectorCtrl {
 	// form 表单初始化
 	initForm() {
 		this.formModel = {
-			shopName: this.selectedGoods.shopList[0].title,
+			shopName: this.selectedGoods.shopList[0].shopName,
 			shopId: null,
 			shopNumber: null,
 			goodsCustom: [this.selectedGoods.goodsCustomList[0].title],
@@ -519,20 +519,23 @@ export default class GoodsSelectorCtrl {
 	findEntity(collection, entity) {
 		return collection.findIndex(item => angular.equals(item.id, entity.id));
 	}
-
+	// 所有孩子状态都为 checked， 返回 true, 反之返回 false
 	isAllChildrenSelected(children) {
 		return children && children.every(child => {
 			return child.checked;
 		});
 	}
+	// 至少有一个孩子被选中（不包括全部孩子被选的情况）， 返回 true, 反之返回 false
 	isSomeChildrenSelected(children) {
 		return children && !this.isAllChildrenSelected(children) && children.some(child => {
 			return child.checked || child.partial;
 		});
 	}
+	// 所有孩子都被移除， 返回 true, 反之返回 false
 	isAllChildrenRemoved(children) {
 		return !(this.isAllChildrenSelected(children) || this.isSomeChildrenSelected(children));
 	}
+	// 将商品状态恢复成初始状态
 	resetRootItem(entity) {
 		entity.checked = false;
 		entity.partial = false;
@@ -540,19 +543,26 @@ export default class GoodsSelectorCtrl {
 			sku.checked = false;
 		});
 	}
-	// 获取 selectedItems 的副本
+	// 获取 selectedItems 的副本 selectedItemsBuffer
 	getSelectedItemsBuffer() {
 		this.selectedItemsBuffer = [];
 		this.selectedItems.forEach(item => {
 			this.selectedItemsBuffer.push(this.deepCopy(item));
 		});
 	}
-	// merge->点击下一页之后再点击上一页，保持商品被选状态
+	// 更新 selectedItems 的副本 selectedItemsBuffer
+	updateSelectedItemsBuffer(entity) {
+		let index = this.findEntity(this.selectedItemsBuffer, entity);
+		if (index !== -1) {
+			this.selectedItemsBuffer.splice(index, 1);
+			this.selectedItemsBuffer.push(this.deepCopy(entity));
+		}
+	}
+	// merge->分页时进行页的切换时需要保持商品被选状态
 	dataMerge(selectedGoodsArr, goodsArr) {
 		for (let i = 0; i < goodsArr.length; i++) {
 			for (let j = 0; j < selectedGoodsArr.length; j++) {
 				if (goodsArr[i].id === selectedGoodsArr[j].id) {
-					console.log(selectedGoodsArr[j]);
 					goodsArr[i] = this.deepCopy(selectedGoodsArr[j]);
 					break;
 				}
