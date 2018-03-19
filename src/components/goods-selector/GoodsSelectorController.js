@@ -316,7 +316,8 @@ export default class GoodsSelectorCtrl {
 			transformer: res => {
 				this.resInfo = res;
 				this.currentPageChecked = false;
-				this.dataMerge(this.selectedItemsBuffer, this.resInfo.list);
+				// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
+				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
 				return res;
 			}
 		};
@@ -559,7 +560,7 @@ export default class GoodsSelectorCtrl {
 		}
 	}
 	// merge->分页时进行页的切换时需要保持商品被选状态
-	dataMerge(selectedGoodsArr, goodsArr) {
+	dataMerge(goodsArr, selectedGoodsArr) {
 		for (let i = 0; i < goodsArr.length; i++) {
 			for (let j = 0; j < selectedGoodsArr.length; j++) {
 				if (goodsArr[i].id === selectedGoodsArr[j].id) {
