@@ -431,8 +431,9 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.transformer = null;
 
 		// 移除父亲: 从已选商品中删除父亲（包括 sku）。
-		// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态 resetRootItem
-		// -> 更新 selectedItemsBuffer 状态：用selectedItems 中已删除商品替换掉 selectedItemsBuffer 中与之 id 相等的项。
+		// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，先改变即将删除的商品状态；
+		// -> 然后将其 push 到 selectedItemsBuffer 中（如果已存在，则先删除再 push）。
+		// -> 最后执行splice操作，删除该商品。
 		this.selectedPagerGridOptions.removeTreeRootItem = entity => {
 			let targetIndex = this.findEntity(this.selectedItems, entity);
 			if (targetIndex !== -1) {
@@ -447,8 +448,8 @@ export default class GoodsSelectorCtrl {
 		};
 		// 移除孩子: -> 如果部分孩子被移除，则将孩子状态置为 unchecked;
 		//          -> 如果全部孩子被移除，则将孩子状态置为 unchecked; 并且删除父亲。
-		//          -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态 resetRootItem
-		//          -> 更新 selectedItemsBuffer 状态：用 selectedItems 中状态为 unchecked(partial) 的商品替换掉 selectedItemsBuffer 中与之 id 相等的项。
+		//          -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态；
+		//          -> 然后将其 push 到 selectedItemsBuffer 中（如果已存在，则先删除再 push）。
 		this.selectedPagerGridOptions.removeTreeLeafItem = (entity, sku) => {
 			let entityIndex = this.findEntity(this.selectedItems, entity);
 			let skuIndex = this.findEntity(this.selectedItems[entityIndex].skus, sku);
@@ -470,8 +471,8 @@ export default class GoodsSelectorCtrl {
 			}
 		};
 		// 移除全部
-		// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态 resetRootItem
-		// -> 清空 selectedItemsBuffer
+		// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态；
+		// -> 然后清空 selectedItemsBuffer
 		this.removeAll = () => {
 			this.selectedItems.forEach(entity => {
 				this.resetRootItem(entity);
