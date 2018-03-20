@@ -114,8 +114,8 @@
 		<gs-tabs ng-class="{'row-1': !$ctrl.isShowShopList && $ctrl.isSimpleSearch,
 		 					'row-5': $ctrl.isShowShopList || !$ctrl.isShowShopList && !$ctrl.isSimpleSearch && $ctrl.isTaobao,
 		 					'row-4': !$ctrl.isShowShopList && !$ctrl.isTaobao && !$ctrl.isSimpleSearch}">
-			<gs-panel text="全部商品" class="all-goods-panel" tab-click="$ctrl.pagerGridOptions.isSelectedTab = false">
-				<section class="grid-area" ng-click="console.log('全部商品')">
+			<gs-panel text="全部商品" class="all-goods-panel" tab-click="$ctrl.tabClick(text)">
+				<section class="grid-area">
 					<div class="all-goods-operation">
 						<!--<cc-checkbox class="select-all" ng-checked="$ctrl.selectAll">全选</cc-checkbox>-->
 						<cc-checkbox class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.selectCurrentPageAll()">全选当页</cc-checkbox>
@@ -127,15 +127,16 @@
 					</cc-grid>
 				</section>
 			</gs-panel>
-			<gs-panel text="已选商品" class="checked-goods-panel" tab-click="$ctrl.pagerGridOptions.isSelectedTab = true">
+			<gs-panel text="已选商品" class="checked-goods-panel" tab-click="$ctrl.tabClick(text)">
 				<section class="grid-area">
 					<div class="checked-goods-operation">
 						<span ng-click="$ctrl.removeAll()">移除全部</span>
-						<span>移除当页</span>
+						<span ng-click="$ctrl.removeCurrentPage()">移除当页</span>
 						<span class="slide-toggle-btn" ng-click="$ctrl.isSelectedExtendAll = !$ctrl.isSelectedExtendAll; $ctrl.extendAll($ctrl.isSelectedExtendAll, $ctrl.selectedItems);">{{$ctrl.isSelectedExtendAll ? '全部折叠' : '全部展开'}}</span>
 					</div>
 					<cc-grid opts="$ctrl.selectedPagerGridOptions"
-							 type="default">
+							 type="default"
+							 on-refresh="$ctrl.selectedPagerGridOptions.onRefresh(opts)">
 					</cc-grid>
 				</section>
 			</gs-panel>
