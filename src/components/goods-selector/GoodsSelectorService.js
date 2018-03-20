@@ -42,15 +42,13 @@ const GoodsSelectorService = {
 		console.log(2);
 		return ModalService.modal(
 			{
-				title: '商品选择',
+				title: '商品标签选择',
 				style: {'width': '400px', 'min-width': '400px', 'max-width': '400px', 'min-height': '300px'},
 				fullscreen: false,
 				hasFooter: true,
 				__body: goodsLabelBodyTemplate,
-				locals: [],
-				controller: GoodsLabelController,
-				controllerAs: '$ctrl',
-				onClose: noop
+				locals: [1, 2, 3],
+				controllerAs: '$ctrl'
 			}
 		);
 	}

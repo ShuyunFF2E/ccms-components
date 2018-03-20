@@ -272,9 +272,7 @@ export default class GoodsSelectorCtrl {
 		};
 		// 打开商品标签弹窗
 		this.openGoodsLabel = () => {
-			console.log(1);
-			this._$ccGoodsSelector
-				.goodsLabelModal()
+			this.$ccGoodsSelector
 				.open().result.then(function(response) {
 					console.log('-----------ok-----------');
 					console.log(response);
