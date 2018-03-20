@@ -5,7 +5,7 @@ import emptyTpl from './tpls/customer-empty.tpl.html';
 
 import angular from 'angular';
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource', 'selectedData', '$scope')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource', 'selectedData', '$scope', '$ccGrid')
 
 export default class GoodsSelectorCtrl {
 
@@ -159,10 +159,8 @@ export default class GoodsSelectorCtrl {
 			]
 		};
 
-		this.initForm();
-
 		this.shopFieldsMap = {
-			valueField: 'shopName',
+			valueField: 'shopId',
 			displayField: 'shopName'
 		};
 		this.shopFieldsMap = {
@@ -193,6 +191,9 @@ export default class GoodsSelectorCtrl {
 			valueField: 'value',
 			displayField: 'title'
 		};
+
+		this.initForm();
+
 		// form 区域价格校验
 		this.validators = {
 			/**
@@ -274,12 +275,18 @@ export default class GoodsSelectorCtrl {
 			this.isShopListDisabled = false;
 		};
 
-
 		// 全部商品->表格配置
-		this.selectedItems = this._selectedData;
+		this._selectedData.forEach(item => {
+			item.checked = true;
+			item.partial = false;
+			item.skus.forEach(sku => {
+				sku.checked = true;
+			});
+		});
+		this.selectedItems = this._selectedData.concat();
 		// selectedItemsBuffer 保存 selectedItems 中数据的副本（深拷贝）。维护 selectedItems 中数据状态。
 		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
-		this.selectedItemsBuffer = [];
+		this.selectedItemsBuffer = this._selectedData.concat();
 		this.pagerGridOptions = {
 			resource: this._$resource('/api/gridData/1'),
 			response: null,
@@ -318,7 +325,11 @@ export default class GoodsSelectorCtrl {
 				this.currentPageChecked = false;
 				// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
+				console.log(this.resInfo);
 				return res;
+			},
+			pager: {
+				pageSize: 10
 			}
 		};
 		this.pagerGridOptions.isCheckedGoodsTab = false;
@@ -429,6 +440,13 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.resource = null;
 		this.selectedPagerGridOptions.externalData = this.selectedItems;
 		this.selectedPagerGridOptions.transformer = null;
+		this.selectedPagerGridOptions.queryParams = {
+			pageNum: 1
+		};
+		this.selectedPagerGridOptions.pager = {
+			pageNum: 1,
+			pageSize: 10
+		};
 
 		// 移除父亲: 从已选商品中删除父亲（包括 sku）。
 		// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，先改变即将删除的商品状态；
@@ -442,9 +460,7 @@ export default class GoodsSelectorCtrl {
 				this.selectedItems.splice(targetIndex, 1);
 			}
 			// 任意一个父亲被 remove 掉, 表格上方的全选当页, 被 unchecked
-			if (!entity.checked) {
-				this.currentPageChecked = false;
-			}
+			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
 		// 移除孩子: -> 如果部分孩子被移除，则将孩子状态置为 unchecked;
 		//          -> 如果全部孩子被移除，则将孩子状态置为 unchecked; 并且删除父亲。
@@ -466,9 +482,7 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 			// 任意一个孩子被 remove 掉, 表格上方的全选当页, 被 unchecked
-			if (!entity.checked) {
-				this.currentPageChecked = false;
-			}
+			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
 		// 移除全部
 		// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态；

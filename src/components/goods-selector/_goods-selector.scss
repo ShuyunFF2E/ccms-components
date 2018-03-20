@@ -187,7 +187,9 @@
 			  padding-top: 30px;
 			}
 			.loading-mask {
-			  margin-top: -25px;
+			  //margin-top: -25px;
+			  position: absolute!important;
+			  z-index: 200000;
 			}
 			.no-data-message {
 			  padding-top: 50px;
@@ -314,7 +316,9 @@
 		  padding-top: 120px;
 		}
 		.loading-mask {
-		  padding-top: 80px;
+		  //padding-top: 80px;
+		  z-index: 200000;
+		  position: absolute!important;
 		}
 		.no-data-message{
 		  padding-top: 138px;
