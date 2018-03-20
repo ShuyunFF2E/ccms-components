@@ -163,10 +163,6 @@ export default class GoodsSelectorCtrl {
 			valueField: 'shopId',
 			displayField: 'shopName'
 		};
-		this.shopFieldsMap = {
-			valueField: 'value',
-			displayField: 'title'
-		};
 		this.goodsCustomFieldsMap = {
 			valueField: 'value',
 			displayField: 'title'
