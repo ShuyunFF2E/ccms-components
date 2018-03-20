@@ -123,7 +123,7 @@ export default {
 			if (isPromiseLike(gridOptions.externalData)) {
 				return gridOptions.externalData.then(finish);
 			} else {
-				return injector.get('$q').resolve(finish(gridOptions.externalData));
+				return injector.get('$q').resolve(finish(gridOptions.externalData || []));
 			}
 
 		}
