@@ -57,20 +57,36 @@ export default class GoodsSelectorCtrl {
 			],
 			'goodsLabelList': [
 				{
-					'title': '商品标签1',
-					'value': '商品标签1'
+					id: 1,
+					label: '标签1',
+					children: [
+						{
+							id: 12,
+							label: '标签11'
+						},
+						{
+							id: 13,
+							label: '标签12'
+						}
+					]
 				},
 				{
-					'title': '商品标签2',
-					'value': '商品标签2'
-				},
-				{
-					'title': '商品标签3',
-					'value': '商品标签3'
-				},
-				{
-					'title': '商品标签4',
-					'value': '商品标签4'
+					id: 2,
+					label: '标签2',
+					children: [
+						{
+							id: 21,
+							label: '标签21'
+						},
+						{
+							id: 22,
+							label: '标签22'
+						},
+						{
+							id: 23,
+							label: '标签23'
+						}
+					]
 				}
 			],
 			'cascadeSelectMenu': [
@@ -271,11 +287,12 @@ export default class GoodsSelectorCtrl {
 			}
 		};
 		// 打开商品标签弹窗
-		this.openGoodsLabel = () => {
-			this.$ccGoodsSelector
-				.open().result.then(function(response) {
+		this.openGoodsLabel = goodsLabelList => {
+			this._$ccGoodsSelector
+				.goodsLabelModal(goodsLabelList)
+				.open().result.then(response => {
 					console.log('-----------ok-----------');
-					console.log(response);
+					console.log(goodsLabelList);
 				}, function() {
 					console.log('----------cancel---------');
 				});
@@ -345,7 +362,6 @@ export default class GoodsSelectorCtrl {
 				this.currentPageChecked = false;
 				// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
-				console.log(this.resInfo);
 				return res;
 			},
 			pager: {
@@ -374,11 +390,13 @@ export default class GoodsSelectorCtrl {
 			entity.skus.forEach(item => {
 				item.checked = entity.checked;
 			});
+			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
+			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 
-			// 任意一个父亲被 unchecked 掉, 表格上方的全选当页, 被 unchecked
-			if (!entity.checked) {
-				this.currentPageChecked = false;
+			if (this.isAllChildrenSelected(this.resInfo.list)) {
+				this.currentPageChecked = true;
 			}
+			console.log(this.currentPageChecked);
 			// 将已选商品 push 到 selectedItems 中
 			//    -> 如果父亲 checked 并且不存在于 selectedItems 数组中，则将父亲(包括sku数据)整体 push 到数组中；
 			//    -> 如果父亲 unchecked 并且存在于 selectedItems 数组中，则将父亲这个整体删除
@@ -398,9 +416,9 @@ export default class GoodsSelectorCtrl {
 			sku.checked = !sku.checked;
 			entity.checked = this.isAllChildrenSelected(entity.skus);
 			entity.partial = this.isSomeChildrenSelected(entity.skus);
-			if (!sku.checked) {
-				this.currentPageChecked = false;
-			}
+			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
+			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
+
 			// 将已选商品 push 到 selectedItems 中
 			//    -> 如果父亲状态是 checked，且不存在于 selectedItems 中, 则将父亲(包括 sku) push 到 selectedItems 数组中；
 			//    -> 如果父亲状态是 partial，且存在于 selectedItems 中，则用父亲(包括 sku)替换已存在 entity；

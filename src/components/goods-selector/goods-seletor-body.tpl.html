@@ -30,17 +30,8 @@
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isTaobao">
-					<!--<label class="goods-label">商品标签：</label>-->
-					<!--<cc-dropdown-multiselect-->
-							<!--placeholder=""-->
-							<!--model="$ctrl.formModel.goodsLabel"-->
-							<!--datalist="$ctrl.goodsLabelList"-->
-							<!--searchable="false"-->
-							<!--mapping="$ctrl.goodsLabelFieldsMap"-->
-							<!--ng-click="console.log(3);">-->
-					<!--</cc-dropdown-multiselect>-->
 					<label class="goods-label">商品标签：</label>
-					<input type="text" ng-model="$ctrl.formModel.goodsLabel" placeholder="商品标签" ng-focus="$ctrl.openGoodsLabel()">
+					<input type="text" ng-model="$ctrl.formModel.goodsLabel" placeholder="商品标签" ng-focus="$ctrl.openGoodsLabel($ctrl.selectedGoods.goodsLabelList)">
 				</fieldset>
 				<fieldset>
 					<label class="goods-label">商品标准类目：</label>
@@ -57,7 +48,7 @@
 					<label class="goods-label">商品属性：</label>
 					<cc-dropdown-select
 							placeholder="请选择"
-							model="$ctrl.goodsAttr"
+							model="$ctrl.formModel.goodsAttr"
 							datalist="$ctrl.goodsAttrList"
 							searchable="true"
 							mapping="$ctrl.goodsAttrFieldsMap"
@@ -127,7 +118,7 @@
 				<section class="grid-area" ng-click="console.log('全部商品')">
 					<div class="all-goods-operation">
 						<!--<cc-checkbox class="select-all" ng-checked="$ctrl.selectAll">全选</cc-checkbox>-->
-						<cc-checkbox class="select-none" ng-checked="$ctrl.currentPageChecked || $ctrl.isAllChildrenSelected($ctrl.resInfo.list)" ng-click="$ctrl.selectCurrentPageAll()">全选当页</cc-checkbox>
+						<cc-checkbox class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.selectCurrentPageAll()">全选当页</cc-checkbox>
 						<span class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = !$ctrl.isExtendAll; $ctrl.extendAll($ctrl.isExtendAll, $ctrl.resInfo.list);">{{$ctrl.isExtendAll ? '全部折叠' : '全部展开'}}</span>
 					</div>
 					<cc-grid opts="$ctrl.pagerGridOptions"

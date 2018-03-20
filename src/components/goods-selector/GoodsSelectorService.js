@@ -5,7 +5,7 @@ import bodyTemplate from './goods-seletor-body.tpl.html';
 import GoodsSelectorController from './GoodsSelectorController';
 
 import goodsLabelBodyTemplate from './tpls/goods-label-body.tpl.html';
-import GoodsLabelController from './GoodsSelectorController';
+import GoodsLabelController from './GoodsLabelController';
 
 const noop = () => {
 };
@@ -38,16 +38,16 @@ const GoodsSelectorService = {
 			}
 		);
 	},
-	goodsLabelModal() {
-		console.log(2);
+	goodsLabelModal(goodsLabelList = []) {
 		return ModalService.modal(
 			{
 				title: '商品标签选择',
-				style: {'width': '400px', 'min-width': '400px', 'max-width': '400px', 'min-height': '300px'},
+				style: {'width': '400px', 'min-width': '400px', 'max-width': '400px', 'height': '300px'},
 				fullscreen: false,
 				hasFooter: true,
 				__body: goodsLabelBodyTemplate,
-				locals: [1, 2, 3],
+				locals: {goodsLabelInfo: goodsLabelList},
+				controller: GoodsLabelController,
 				controllerAs: '$ctrl'
 			}
 		);
