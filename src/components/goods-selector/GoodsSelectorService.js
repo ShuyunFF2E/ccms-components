@@ -4,6 +4,9 @@ import ModalService from '../modal/ModalService';
 import bodyTemplate from './goods-seletor-body.tpl.html';
 import GoodsSelectorController from './GoodsSelectorController';
 
+import goodsLabelBodyTemplate from './tpls/goods-label-body.tpl.html';
+import GoodsLabelController from './GoodsSelectorController';
+
 const noop = () => {
 };
 
@@ -30,6 +33,22 @@ const GoodsSelectorService = {
 				__body: bodyTemplate,
 				locals: {shopInfoData: shopInfo, selectedData: selectedGoods},
 				controller: GoodsSelectorController,
+				controllerAs: '$ctrl',
+				onClose: noop
+			}
+		);
+	},
+	goodsLabelModal() {
+		console.log(2);
+		return ModalService.modal(
+			{
+				title: '商品选择',
+				style: {'width': '400px', 'min-width': '400px', 'max-width': '400px', 'min-height': '300px'},
+				fullscreen: false,
+				hasFooter: true,
+				__body: goodsLabelBodyTemplate,
+				locals: [],
+				controller: GoodsLabelController,
 				controllerAs: '$ctrl',
 				onClose: noop
 			}

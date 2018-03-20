@@ -5,7 +5,7 @@ import emptyTpl from './tpls/customer-empty.tpl.html';
 
 import angular from 'angular';
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource', 'selectedData', '$scope', '$ccGrid')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector')
 
 export default class GoodsSelectorCtrl {
 
@@ -255,7 +255,33 @@ export default class GoodsSelectorCtrl {
 			this._$ccValidator.setPristine(formCtrl);
 			this.initForm();
 		};
-
+		// 级联菜单
+		this.attrSelectChange = function(newValue, oldValue, itemIndex, item) {
+			if (itemIndex !== -1) {
+				this.goodsAttrList = this.selectedGoods.cascadeSelectMenu[itemIndex].children;
+			} else {
+				this.goodsAttrList = [];
+			}
+		};
+		this.attrValueSelectChange = function(newValue, oldValue, itemIndex, item) {
+			if (itemIndex !== -1) {
+				this.goodsAttrValueList = this.goodsAttrList[itemIndex].children;
+			} else {
+				this.goodsAttrValueList = [];
+			}
+		};
+		// 打开商品标签弹窗
+		this.openGoodsLabel = () => {
+			console.log(1);
+			this._$ccGoodsSelector
+				.goodsLabelModal()
+				.open().result.then(function(response) {
+					console.log('-----------ok-----------');
+					console.log(response);
+				}, function() {
+					console.log('----------cancel---------');
+				});
+		};
 		// 点击已选商品tab：表单中商铺列表项显示当前商铺，不可更改，其他恢复默认值
 		this.isShopListDisabled = false;
 		this.oldFormModel = {};
