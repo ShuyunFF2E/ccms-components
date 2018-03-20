@@ -60,17 +60,17 @@ export default {
 		gridOptions.loading = true;
 		gridOptions.errorMessage = '';
 
+		const pageParams = {
+			pageNum: gridOptions.pager.pageNum,
+			pageSize: gridOptions.pager.pageSize
+		};
+
+		const params = filter(Object.assign({}, pageParams, gridOptions.queryParams, queryParams), value => !!value);
+
 		// 如果不存在外部表格数据则请求接口拿数据
 		if (!gridOptions.externalData && gridOptions.resource) {
 
 			gridOptions.lastRequest && gridOptions.lastRequest.$cancelRequest && gridOptions.lastRequest.$cancelRequest();
-
-			const pageParams = {
-				pageNum: gridOptions.pager.pageNum,
-				pageSize: gridOptions.pager.pageSize
-			};
-
-			const params = filter(Object.assign({}, pageParams, gridOptions.queryParams, queryParams), value => !!value);
 
 			gridOptions.lastRequest = gridOptions.resource.get(params);
 
@@ -111,7 +111,11 @@ export default {
 		} else {
 
 			const finish = data => {
-				gridOptions.data = data;
+				if (data.length > params.pageSize) {
+					gridOptions.data = data.slice(params.pageSize * (params.pageNum - 1), params.pageSize * params.pageNum);
+				} else {
+					gridOptions.data = data;
+				}
 				gridOptions.loading = false;
 				return gridOptions;
 			};
