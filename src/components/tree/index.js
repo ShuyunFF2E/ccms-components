@@ -11,7 +11,7 @@ const treeDDO = {
 	restrict: 'E',
 	template: treeTemplate,
 	scope: {
-		data: '<',
+		treeData: '<',
 		onSelected: '&',
 		hasCheckbox: '<',
 		selectedIds: '<'

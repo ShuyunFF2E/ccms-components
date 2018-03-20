@@ -1,10 +1,14 @@
 import angular from 'angular';
+import cloneDeep from 'lodash.clonedeep';
 
 // 表示根的 parentId 的值
 const ROOT = () => {};
 
 export default class TreeCtrl {
 	constructor() {
+		// clone一份原始数据
+		this.data = cloneDeep(this.treeData);
+
 		// 临时存储遍历 nodeItem 的数据
 		this.tempNodeItemData = null;
 		// 存储所有 tree Items 上的 scope
@@ -13,9 +17,12 @@ export default class TreeCtrl {
 	}
 
 	initNodeItemsStatus() {
-		this.findNodeItemDataById(-1, this.data, ROOT);
-		this.selectedIds && this.selectedIds.forEach((id, index) => {
-			this.findNodeItemDataById(id, this.data, ROOT, index !== 0);
+		// 初始化数据, 为节点数据加上 parentId, 方便之后遍历使用
+		this.findNodeItemDataById(null, this.data, ROOT, false);
+
+		// 将用户传进来的已选中的节点ids, 将状态标记在数据中, 标注 checked 或 partial
+		this.selectedIds && this.selectedIds.forEach(selectedId => {
+			this.findNodeItemDataById(selectedId, this.data);
 			if (this.tempNodeItemData) {
 				if (this.hasCheckbox) {
 					this.tempNodeItemData.checked = true;
@@ -27,12 +34,22 @@ export default class TreeCtrl {
 		});
 	}
 
-	findNodeItemDataById(id, data, parentId, isBreak) {
+	/**
+	 * 根据 id 查找 node item data, 查找到的数据存储在 this.tempNodeItemData 中
+	 *
+	 * @param id 被查找数据 id
+	 * @param data 目标数据
+	 * @param parentId 是否添加辅助数据 parentId
+	 * @param isBreak 当找出目标数据是否跳出
+	 * */
+	findNodeItemDataById(id, data, parentId = false, isBreak = true) {
 		if (!data || !data.length) return;
 
 		for (let i = 0, len = data.length; i < len; i++) {
 
-			data[i].parentId = parentId;
+			if (parentId) {
+				data[i].parentId = parentId;
+			}
 
 			if (id === data[i].id) {
 				this.tempNodeItemData = data[i];
@@ -41,12 +58,19 @@ export default class TreeCtrl {
 				}
 			}
 
-			var children = data[i].children;
+			let children = data[i].children;
 
 			if (children && children.length > 0) {
-				this.findNodeItemDataById(id, children, data[i].id, isBreak);
+				this.findNodeItemDataById(id, children, parentId !== false ? data[i].id : false, isBreak);
 			}
 		}
+	}
+
+	/*
+	* 根据 id 查找原始 node item data
+	* */
+	findOriginNodeDataById(id) {
+		this.findNodeItemDataById(id, this.treeData);
 	}
 
 	// 清除已选 tree Items
@@ -63,18 +87,19 @@ export default class TreeCtrl {
 			if (!this.hasCheckbox) {
 				this.clearSelected();
 				treeItemScope.$ctrl.selected = true;
-				this.onSelected && this.onSelected({item: treeItemScope.$ctrl.data});
+				this.findOriginNodeDataById(treeItemScope.$ctrl.data.id);
+				this.onSelected && this.onSelected({item: cloneDeep(this.tempNodeItemData)});
 			} else {
 				this.handleTreeCheckbox(treeItemScope.$parent.$parent.$ctrl.data);
-				// TODO 遍历后, 将选中, 处理后, 扔给回调函数
-				this.onSelected && this.onSelected({item: treeItemScope.$parent.$parent.$ctrl.data, data: this.data});
+				this.findOriginNodeDataById(treeItemScope.$parent.$parent.$ctrl.data.id);
+				this.onSelected && this.onSelected({item: cloneDeep(this.tempNodeItemData), checked: treeItemScope.$parent.$parent.$ctrl.data.checked});
 			}
 		}
 
 		if (target.classList.contains('cc-checkbox-input')) {
 			this.handleTreeCheckbox(treeItemScope.$parent.$ctrl.data);
-			// TODO 遍历后, 将选中, 处理后, 扔给回调函数
-			this.onSelected && this.onSelected({item: treeItemScope.$parent.$ctrl.data, data: this.data});
+			this.findOriginNodeDataById(treeItemScope.$parent.$ctrl.data.id);
+			this.onSelected && this.onSelected({item: cloneDeep(this.tempNodeItemData), checked: treeItemScope.$parent.$ctrl.data.checked});
 		}
 
 		if (target.classList.contains('treeArrow')) {
