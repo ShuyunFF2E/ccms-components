@@ -369,9 +369,9 @@ export default class GoodsSelectorCtrl {
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
 				this.resInfo = res;
-				this.currentPageChecked = false;
 				// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
+				this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 				return res;
 			},
 			pager: {
@@ -403,15 +403,10 @@ export default class GoodsSelectorCtrl {
 			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 
-			if (this.isAllChildrenSelected(this.resInfo.list)) {
-				this.currentPageChecked = true;
-			}
-			console.log(this.currentPageChecked);
 			// 将已选商品 push 到 selectedItems 中
 			//    -> 如果父亲 checked 并且不存在于 selectedItems 数组中，则将父亲(包括sku数据)整体 push 到数组中；
 			//    -> 如果父亲 unchecked 并且存在于 selectedItems 数组中，则将父亲这个整体删除
 			//    -> 其它情况不处理
-
 			let entityIndex = this.findEntity(this.selectedItems, entity);
 			if (entity.checked && entityIndex === -1) {
 				this.selectedItems.push(entity);
@@ -532,6 +527,8 @@ export default class GoodsSelectorCtrl {
 			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个孩子被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
+			console.log(this.selectedItems);
+			console.log(this.resInfo.list);
 		};
 		// 移除全部
 		// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态；
