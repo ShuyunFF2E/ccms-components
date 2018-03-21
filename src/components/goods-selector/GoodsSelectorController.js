@@ -1,4 +1,6 @@
 import { Inject } from 'angular-es-utils/decorators';
+// import {dynamicExport} from 'angular-es-utils';
+import genResource from 'angular-es-utils/rs-generator';
 import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
 import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
@@ -32,32 +34,15 @@ export default class GoodsSelectorCtrl {
 		};
 
 		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
-		console.log(this.shopList);
+		// 商品自定义类目
+		this.shopCategories = null;
+		// 请求商品自自定义类目数据
+		genResource('/api/shop_categories', false, null).get().$promise.then(res => {
+			this.shopCategories = res.data;
+		});
 		// 测试数据
 		this.selectedGoods = {
-			'shopList': this.shopList,
-			'goodsCustomList': [
-				{
-					'title': '不限',
-					'value': '不限'
-				},
-				{
-					'title': '自定义类目1',
-					'value': '自定义类目1'
-				},
-				{
-					'title': '自定义类目2',
-					'value': '自定义类目2'
-				},
-				{
-					'title': '自定义类目3',
-					'value': '自定义类目3'
-				},
-				{
-					'title': '自定义类目4',
-					'value': '自定义类目4'
-				}
-			],
+			'goodsCustomList': null,
 			'goodsLabelList': [
 				{
 					id: 1,
@@ -162,6 +147,7 @@ export default class GoodsSelectorCtrl {
 					]
 				}
 			],
+			'categories': null,
 			'goodsStatusList': [
 				{
 					'title': '不限',
@@ -177,22 +163,25 @@ export default class GoodsSelectorCtrl {
 				}
 			]
 		};
-
+		// 请求商品标准类目数据
+		genResource('/api/categories', false, null).get().$promise.then(res => {
+			this.selectedGoods.categories = res.data;
+		});
 		this.shopFieldsMap = {
 			valueField: 'shopId',
 			displayField: 'shopName'
 		};
 		this.goodsCustomFieldsMap = {
-			valueField: 'value',
-			displayField: 'title'
+			valueField: 'id',
+			displayField: 'name'
 		};
 		this.goodsLabelFieldsMap = {
 			valueField: 'value',
 			displayField: 'title'
 		};
 		this.standardClassifyFieldsMap = {
-			valueField: 'value',
-			displayField: 'title'
+			valueField: 'id',
+			displayField: 'name'
 		};
 		this.goodsAttrFieldsMap = {
 			valueField: 'value',
@@ -275,16 +264,21 @@ export default class GoodsSelectorCtrl {
 			this.initForm();
 		};
 		// 级联菜单
-		this.attrSelectChange = function(newValue, oldValue, itemIndex, item) {
+		this.categorySelectChange = function(newValue, oldValue, itemIndex, item) {
+			console.log(newValue, oldValue, itemIndex, item);
 			if (itemIndex !== -1) {
-				this.goodsAttrList = this.selectedGoods.cascadeSelectMenu[itemIndex].children;
+				genResource(`/api/categories/${item.id}/properties`, false, null).get().$promise.then(res => {
+					console.log(res.data);
+					this.goodsAttrList = res.data;
+				});
 			} else {
 				this.goodsAttrList = [];
 			}
 		};
-		this.attrValueSelectChange = function(newValue, oldValue, itemIndex, item) {
+		this.attrSelectChange = function(newValue, oldValue, itemIndex, item) {
+			console.log(newValue, oldValue, itemIndex, item);
 			if (itemIndex !== -1) {
-				this.goodsAttrValueList = this.goodsAttrList[itemIndex].children;
+				this.goodsAttrValueList = this.goodsAttrList[itemIndex].values;
 			} else {
 				this.goodsAttrValueList = [];
 			}
@@ -575,23 +569,23 @@ export default class GoodsSelectorCtrl {
 	// form 表单初始化
 	initForm() {
 		this.formModel = {
-			shopName: this.selectedGoods.shopList[0].shopName,
-			shopId: null,
-			shopNumber: null,
-			goodsCustom: [this.selectedGoods.goodsCustomList[0].title],
-			goodsLabel: [],
-			standardClassify: null,
-			goodsAttr: null,
-			goodsAttrValue: [],
-			goodsStatus: this.selectedGoods.goodsStatusList[0].title,
-			goodsCode: null,
-			shopCode: null,
-			SKUShopCode: null,
-			SKUStandard: null,
-			dateFrom: null,
-			dateTo: null,
-			goodsLowPrice: null,
-			goodsHighPrice: null
+			platform: null, // 平台
+			shopId: this.selectedGoods.shopList[0].shopName, // 店铺
+			id: null, // 商品ID数组??????????
+			name: null, // 商品名称模糊匹配
+			shopCategoriesId: [], // shopCategories.id 店铺类目数组
+			categoriesId: null, // categories.id 标准类目
+			propsPid: null, // props.pid 属性ID
+			propsVid: null, // props.vid 属性值ID
+			status: this.selectedGoods.goodsStatusList[0].title, // 状态, true 在架, false 不在架
+			skusPropsVname: null, // skus.props.vname SKU属性值模糊匹配
+			outerId: null, // 外部编码
+			skusOuterId: null, // skus.outerId SKU 外部编码
+			skusId: null, // skus.id SKUID数组
+			startListTime: null, // 上架时间起始值, Unix时间戳，毫秒
+			endListTime: null, // 上架时间结束值, Unix时间戳，毫秒
+			minPrice: null, // 商品价格下限
+			maxPrice: null // 商品价格下限
 		};
 	}
 	// 从集合中获取 entity 的 index, 找不到返回 -1

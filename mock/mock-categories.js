@@ -1,74 +1,30 @@
 var categories = {
 	'data': [
 		{
-			'id': '1',
-			'name': '商品属性1',
+			'id': '111111',
+			'name': '标准类目1',
 			'order': '排序',
 			'status': '状态',
 			'created': '创建时间',
 			'modified': '更改时间',
 			'lastSync': '同步时间',
-			'type': '类型',
-			'categoryId': '111111',
-			'ppid': '上级属性',
-			'ppvid': '上级属性值',
-			'values': [
-				{
-					'id': '11',
-					'name': '属性值11',
-					'order': '排序',
-					'status': '状态',
-					'created': '创建时间',
-					'modified': '更改时间',
-					'lastSync': '同步时间',
-					'alias': '别名'
-				},
-				{
-					'id': '12',
-					'name': '属性值12',
-					'order': '排序',
-					'status': '状态',
-					'created': '创建时间',
-					'modified': '更改时间',
-					'lastSync': '同步时间',
-					'alias': '别名'
-				}
-			]
+			'shopId': '店铺',
+			'pid': '上级类目',
+			'level': '级别',
+			'isLeaf': '是否叶子节点'
 		},
 		{
-			'id': '2',
-			'name': '名称',
+			'id': '222222',
+			'name': '标准类目1',
 			'order': '排序',
 			'status': '状态',
 			'created': '创建时间',
 			'modified': '更改时间',
 			'lastSync': '同步时间',
-			'type': '类型',
-			'categoryId': '222222',
-			'ppid': '上级属性',
-			'ppvid': '上级属性值',
-			'values': [
-				{
-					'id': '21',
-					'name': '属性值21',
-					'order': '排序',
-					'status': '状态',
-					'created': '创建时间',
-					'modified': '更改时间',
-					'lastSync': '同步时间',
-					'alias': '别名'
-				},
-				{
-					'id': '22',
-					'name': '属性值22',
-					'order': '排序',
-					'status': '状态',
-					'created': '创建时间',
-					'modified': '更改时间',
-					'lastSync': '同步时间',
-					'alias': '别名'
-				}
-			]
+			'shopId': '店铺',
+			'pid': '上级类目',
+			'level': '级别',
+			'isLeaf': '是否叶子节点'
 		}
 	]
 };
