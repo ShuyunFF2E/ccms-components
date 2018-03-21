@@ -314,18 +314,23 @@ export default class GoodsSelectorCtrl {
 			Object.assign(this.formModel, this.oldFormModel);
 			this.isShopListDisabled = false;
 		};
+
 		// 点击已选商品 tab
 		this.tabClick = text => {
 			if (text === '已选商品') {
-				// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			}
 		};
+
+		// 全部商品->表格配置
 		this._selectedData.forEach(item => {
+			item.checked = true;
+			item.partial = false;
 			item.skus.forEach(sku => {
 				sku.checked = true;
 			});
 		});
-		this.selectedItems = this._selectedData;
+		this.selectedItems = [];
 		// selectedItemsBuffer 保存 selectedItems 中数据的副本（深拷贝）。维护 selectedItems 中数据状态。
 		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
 		this.selectedItemsBuffer = [];
@@ -367,31 +372,6 @@ export default class GoodsSelectorCtrl {
 				this.currentPageChecked = false;
 				// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
-				// 全部商品->表格配置
-				this._selectedData.forEach((item, i) => {
-					let index = this.findEntity(this.resInfo.list, item);
-					let entity = this.resInfo.list[index];
-					if (index !== -1) {
-						if (item.skus.length === entity.skus.length || !item.skus.length) {
-							entity.partial = false;
-							entity.checked = true;
-						} else {
-							entity.partial = true;
-							entity.checked = false;
-						}
-						if (item.skus.length) {
-							item.skus.forEach(sku => {
-								let skuIndex = this.findEntity(entity.skus, sku);
-								if (skuIndex !== -1) {
-									entity.skus[skuIndex].checked = true;
-								}
-							});
-						}
-						this._selectedData[i] = entity;
-					}
-				});
-				console.log(this.resInfo.list);
-				console.log(this.selectedItems);
 				return res;
 			},
 			pager: {
@@ -518,13 +498,14 @@ export default class GoodsSelectorCtrl {
 		// -> 然后将其 push 到 selectedItemsBuffer 中（如果已存在，则先删除再 push）。
 		// -> 最后执行splice操作，删除该商品。
 		this.selectedPagerGridOptions.removeTreeRootItem = entity => {
-			console.log('怎么移除不了了');
 			let targetIndex = this.findEntity(this.selectedItems, entity);
 			if (targetIndex !== -1) {
 				this.resetRootItem(entity);
 				this.updateSelectedItemsBuffer(entity);
 				this.selectedItems.splice(targetIndex, 1);
 			}
+			// 刷新
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个父亲被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
@@ -535,11 +516,8 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.removeTreeLeafItem = (entity, sku) => {
 			let entityIndex = this.findEntity(this.selectedItems, entity);
 			let skuIndex = this.findEntity(this.selectedItems[entityIndex].skus, sku);
-			console.log(this.selectedItems[entityIndex]);
-			console.log(skuIndex);
 			if (skuIndex !== -1) {
 				this.selectedItems[entityIndex].skus[skuIndex].checked = false;
-				console.log(this.isAllChildrenRemoved(entity.skus));
 				if (this.isAllChildrenRemoved(entity.skus)) {
 					this.resetRootItem(entity);
 					this.updateSelectedItemsBuffer(entity);
@@ -550,7 +528,8 @@ export default class GoodsSelectorCtrl {
 					this.updateSelectedItemsBuffer(entity);
 				}
 			}
-			console.log(this.selectedItems[entityIndex]);
+			// 刷新
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个孩子被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
@@ -563,31 +542,33 @@ export default class GoodsSelectorCtrl {
 			});
 			this.selectedItemsBuffer.splice(0, this.selectedItemsBuffer.length);
 			this.selectedItems.splice(0, this.selectedItems.length);
+			// 刷新
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = false;
 		};
 
 		// 表格数据来自于 externalData 时，分页操作
-		// let filteredData = [];
-		// const wrapGridData = (currentPage, pageSize, data) => {
-		// 	this.selectedPagerGridOptions.pager.pageNum = currentPage;
-		// 	this.selectedPagerGridOptions.pager.pageSize = pageSize;
-		// 	this.selectedPagerGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
-		// 	this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
-		// 	return this.selectedPagerGridOptions;
-		// };
-		// this.selectedPagerGridOptions.onSearch = name => {
-		// 	const currentPage = 1;
-		// 	const pageSize = this.pager.pageSize;
-		// 	filteredData = this._$filter('filter')(this.selectedItems, name);
-		// 	this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, filteredData));
-		// };
-		// this.selectedPagerGridOptions.onRefresh = opts => {
-		// 	const currentPage = opts.pager.pageNum;
-		// 	const pageSize = opts.pager.pageSize;
-		// 	const data = filteredData.length ? filteredData : this.selectedItems;
-		// 	this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
-		// };
+		let filteredData = [];
+		const wrapGridData = (currentPage, pageSize, data) => {
+			this.selectedPagerGridOptions.pager.pageNum = currentPage;
+			this.selectedPagerGridOptions.pager.pageSize = pageSize;
+			this.selectedPagerGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
+			this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
+			return this.selectedPagerGridOptions;
+		};
+		this.selectedPagerGridOptions.onSearch = name => {
+			const currentPage = 1;
+			const pageSize = this.pager.pageSize;
+			filteredData = this._$filter('filter')(this.selectedItems, name);
+			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, filteredData));
+		};
+		this.selectedPagerGridOptions.onRefresh = opts => {
+			const currentPage = opts.pager.pageNum;
+			const pageSize = opts.pager.pageSize;
+			const data = filteredData.length ? filteredData : this.selectedItems;
+			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
+		};
 		// 移除当页
 		this.removeCurrentPage = () => {
 			let removeData = this.selectedPagerGridOptions.externalData;
@@ -595,10 +576,13 @@ export default class GoodsSelectorCtrl {
 			removeData.forEach(item => {
 				let targetIndex = this.findEntity(this.selectedItems, item);
 				if (targetIndex !== -1) {
+					this.resetRootItem(this.selectedItems[targetIndex]);
+					this.updateSelectedItemsBuffer(this.selectedItems[targetIndex]);
 					this.selectedItems.splice(targetIndex, 1);
-					this.updateSelectedItemsBuffer(item);
 				}
 			});
+			// 刷新
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 		};
 	}
 	// form 表单初始化
