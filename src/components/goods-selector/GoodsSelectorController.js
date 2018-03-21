@@ -289,17 +289,7 @@ export default class GoodsSelectorCtrl {
 				this.goodsAttrValueList = [];
 			}
 		};
-		// 打开商品标签弹窗
-		this.openGoodsLabel = goodsLabelList => {
-			this._$ccGoodsSelector
-				.goodsLabelModal(goodsLabelList)
-				.open().result.then(response => {
-					console.log('-----------ok-----------');
-					console.log(goodsLabelList);
-				}, function() {
-					console.log('----------cancel---------');
-				});
-		};
+
 		// 点击已选商品tab：表单中商铺列表项显示当前商铺，不可更改，其他恢复默认值
 		this.isShopListDisabled = false;
 		this.oldFormModel = {};
