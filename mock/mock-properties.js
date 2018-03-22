@@ -163,15 +163,11 @@ module.exports = function(configurations) {
 				body: function(req) {
 					let categoryId = req.originalUrl.split('/')[3].toString();
 					let result = null;
-					console.log(categoryId);
 					categories.forEach((item, index) => {
-						console.log(item.categoryId);
 						if (categoryId === item.categoryId) {
-							console.log('wejfwe');
 							result = categories[index];
 						}
 					});
-					console.log(result);
 					return result;
 				},
 				headers: {

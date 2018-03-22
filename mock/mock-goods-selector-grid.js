@@ -1,10 +1,11 @@
 var gridData = [
 	{
 		'id': 1,
-		'pageNum': 1,
-		'totals': 21,
-		'pageSize': 10,
-		'list': [
+		'currentPage': 1,
+		'pageSize': 20,
+		'totalPage': 1,
+		'totalCount': 40,
+		'data': [
 			{
 				'id': '1',
 				'name': '商品名称商品名称商品名称商品名称',
@@ -1522,7 +1523,7 @@ module.exports = function(configurations) {
 		{
 			request: {
 				method: 'GET',
-				urlPattern: '/gridData/1'
+				urlPattern: '/item'
 			},
 			response: {
 				status: 200,

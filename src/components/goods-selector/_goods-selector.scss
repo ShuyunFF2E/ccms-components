@@ -75,11 +75,16 @@
 			  }
 			}
 		  }
-		  .dropdown-multiselect .dropdown-panel .dropdown-list li > label {
-			> input[type="checkbox"] {
-			  width: 12px;
-			  height: 12px;
-			  margin-right: 6px;
+		  .dropdown-multiselect .dropdown-panel .dropdown-list li {
+			> label {
+			  width: 129px;
+			  padding-right: 0;
+			  text-align: left;
+			  > input[type="checkbox"] {
+				width: 12px;
+				height: 12px;
+				margin-right: 6px;
+			  }
 			}
 			text-align: left;
 			padding-left: 10px;

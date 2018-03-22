@@ -8,12 +8,12 @@
 							disabled="$ctrl.isShopListDisabled"
 							model="$ctrl.formModel.shopId"
 							datalist="$ctrl.shopList"
-							mapping="$ctrl.shopFieldsMap">
+							mapping="$ctrl.shopListFieldsMap">
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset>
 					<label class="goods-label">商品ID：</label>
-					<input type="text" ng-model="$ctrl.formModel.id" cc-validator='number' placeholder="商品ID">
+					<input type="text" ng-model="$ctrl.formModel.id[0]" cc-validator='number' placeholder="商品ID">
 				</fieldset>
 				<fieldset>
 					<label class="goods-label">商品标题：</label>
@@ -24,9 +24,9 @@
 					<cc-dropdown-multiselect
 							placeholder=""
 							model="$ctrl.formModel.shopCategoriesId"
-							datalist="$ctrl.shopCategories"
+							datalist="$ctrl.shopCategoriesList"
 							searchable="true"
-							mapping="$ctrl.goodsCustomFieldsMap">
+							mapping="$ctrl.shopCategoriesFieldsMap">
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<!--<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isTaobao">-->
@@ -38,9 +38,9 @@
 					<cc-dropdown-select
 							placeholder="请选择"
 							model="$ctrl.formModel.categoriesId"
-							datalist="$ctrl.selectedGoods.categories"
+							datalist="$ctrl.categoriesList"
 							searchable="true"
-							mapping="$ctrl.standardClassifyFieldsMap"
+							mapping="$ctrl.categoriesFieldsMap"
 							on-select-change="$ctrl.categorySelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
@@ -49,10 +49,10 @@
 					<cc-dropdown-select
 							placeholder="请选择"
 							model="$ctrl.formModel.propsPid"
-							datalist="$ctrl.goodsAttrList"
+							datalist="$ctrl.propsPidList"
 							searchable="true"
-							mapping="$ctrl.goodsAttrFieldsMap"
-							on-select-change="$ctrl.attrSelectChange(newValue, oldValue, itemIndex, item)">
+							mapping="$ctrl.propsPidFieldsMap"
+							on-select-change="$ctrl.propSelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
@@ -60,34 +60,34 @@
 					<cc-dropdown-multiselect
 							placeholder="请选择"
 							model="$ctrl.formModel.propsVid"
-							datalist="$ctrl.goodsAttrValueList"
+							datalist="$ctrl.propsVidList"
 							searchable="true"
-							mapping="$ctrl.goodsAttrValueFieldsMap">
+							mapping="$ctrl.propsVidFieldsMap">
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">商品状态：</label>
 					<cc-dropdown-select
 							model="$ctrl.formModel.status"
-							datalist="$ctrl.selectedGoods.goodsStatusList"
-							mapping="$ctrl.goodsStatusFieldsMap">
+							datalist="$ctrl.statusList"
+							mapping="$ctrl.statusFieldsMap">
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && !$ctrl.isTaobao">
 					<label class="goods-label">商品编号：</label>
-					<input type="text" ng-model="$ctrl.formModel.skusPropsVname" cc-validator='number' placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.outerId" cc-validator='number' placeholder="">
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">商品商家编码：</label>
-					<input type="text" ng-model="$ctrl.formModel.outerId" placeholder="">
-				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
-					<label class="goods-label">SKU商家编码：</label>
 					<input type="text" ng-model="$ctrl.formModel.skusOuterId" placeholder="">
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
+					<label class="goods-label">SKU商家编码：</label>
+					<input type="text" ng-model="$ctrl.formModel.skusPropsVname" placeholder="">
+				</fieldset>
+				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">SKU规格：</label>
-					<input type="text" ng-model="$ctrl.formModel.skusStandard" placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.skusId[0]" placeholder="">
 				</fieldset>
 				<fieldset class="stack-date" ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">上架时间：</label>
@@ -95,12 +95,12 @@
 				</fieldset>
 				<fieldset class="goods-price" ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">价格：</label>
-					<input class="goods-input" type="text" ng-model="$ctrl.formModel.goodsLowPrice" cc-validator="price, lowPrice">
+					<input class="goods-input" type="text" ng-model="$ctrl.formModel.minPrice" cc-validator="price, lowPrice">
 					<span>-</span>
-					<input class="goods-input" type="text" ng-model="$ctrl.formModel.goodsHighPrice" cc-validator="price, highPrice">
+					<input class="goods-input" type="text" ng-model="$ctrl.formModel.maxPrice" cc-validator="price, highPrice">
 				</fieldset>
 				<fieldset class="operate">
-					<button type="button" class="btn-ok search" ng-click="$ctrl.search()">搜索</button>
+					<button type="button" class="btn-ok search" ng-click="$ctrl.search($ctrl.isSelectedGoodsTab)">搜索</button>
 					<span class="reset" ng-click="$ctrl.reset($ctrl.goodsSelectorForm)">重置</span>
 					<span class="add-addition" ng-if="$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = false">高级搜索</span>
 					<span class="add-addition" ng-if="!$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = true">简单搜索</span>
