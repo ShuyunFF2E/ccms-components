@@ -29,8 +29,8 @@ export default class GoodsSelectorCtrl {
 		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
 		// 请求商品自自定义类目数据
 		this.getShopCateGoriesList();
-		// 获取级联菜单列表数据
-		this.getCascadeMenu();
+		// 获取商品标准类目列表
+		this.getCategoriesList();
 		// 商品状态
 		this.statusList = [
 			{
@@ -76,6 +76,7 @@ export default class GoodsSelectorCtrl {
 
 		// 级联菜单 -> 商品标准类目 select 框 change
 		this.categorySelectChange = (newValue, oldValue, itemIndex, item) => {
+			this.formModel.propsPid = null;
 			if (itemIndex !== -1) {
 				this.getPropsPidList(item.id);
 			} else {
@@ -163,34 +164,19 @@ export default class GoodsSelectorCtrl {
 
 		this.allGoodsFormModel = {};
 		this.allGoodsDateRange = {};
-		this.selectedGoodsFormModel = {};
-		this.selectedGoodsDateRange = {};
-		// 点击已选商品 tab
+		this.selectedGoodsFormModel = cloneDeep(this.formModel);
+		this.selectedGoodsDateRange = cloneDeep(this.dateRange);
+		// 点击 tab
+		// -> 点击已选商品tab，先复制一份全部商品 tab 的 formModel 对象，然后使用 selectedGoodsFormModel 对已选商品 tab 的 formModel 对象进行恢复；
+		// -> 点击全部商品tab，先复制一份已选商品 tab 的 formModel 对象，然后使用 allGoodsFormModel 对全部商品 tab 的 formModel 对象进行恢复；
+		// 问题： 点击 tab 的时候，如果级联菜单中的三个 select 框在切换前已经有值，那么在切换回来后，由于使用了克隆操作，所以会触发 selectChange 事件，
+		// 导致第三个 select 框中的值先被赋值，然后由于触发第二个框的 selectChange 事件，随后又被清空
 		this.tabClick = text => {
 			if (text === '已选商品') {
 				this.isSelectedGoodsTab = true;
-				this.allGoodsFormModel = cloneDeep(this.formModel);
-				this.allGoodsDateRange = cloneDeep(this.dateRange);
-				this.initForm();
-				this.getCascadeMenu(this.selectedGoodsFormModel);
-				setTimeout(() => {
-					Object.assign(this.formModel, this.selectedGoodsFormModel);
-					Object.assign(this.dateRange, this.selectedGoodsDateRange);
-				}, 0);
 				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			} else {
 				this.isSelectedGoodsTab = false;
-				this.selectedGoodsFormModel = cloneDeep(this.formModel);
-				this.selectedGoodsDateRange = cloneDeep(this.dateRange);
-				this.initForm();
-				this.getCascadeMenu(this.allGoodsFormModel);
-				setTimeout(() => {
-					Object.assign(this.formModel, this.allGoodsFormModel);
-					Object.assign(this.dateRange, this.allGoodsDateRange);
-				}, 0);
-				console.log(this.formModel.categoriesId);
-				console.log(this.formModel.propsPid);
-				console.log(this.formModel.propsVid);
 			}
 		};
 		// 全部商品->表格配置
@@ -508,29 +494,6 @@ export default class GoodsSelectorCtrl {
 		genResource('/api/categories', false, null).get().$promise.then(res => {
 			this.categoriesList = res.data;
 		});
-	}
-	// 获取级联菜单列表数据
-	// -> 请求商品标准类目列表。
-	// -> 如果商品标准类目不为空，则请求商品属性列表数据；否则不作处理。
-	// -> 如果商品标准类目和商品属性不为空，则获取商品属性值列表。
-	getCascadeMenu(formModel) {
-		this.getCategoriesList();
-		if (formModel) {
-			if (formModel.categoriesId) {
-				genResource(`/api/categories/${formModel.categoriesId}/properties`, false, null).get().$promise.then(res => {
-					this.propsPidList = res.data;
-					console.log(this.propsPidList);
-					if (formModel.propsPid) {
-						this.propsPidList.forEach(item => {
-							if (item.id === formModel.propsPid) {
-								this.propsVidList = item.values;
-								console.log(this.propsVidList);
-							}
-						});
-					}
-				});
-			}
-		}
 	}
 	// 查询条件的参数名以及参数值转换
 	transformParams() {
