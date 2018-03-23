@@ -197,8 +197,7 @@ export default class GoodsSelectorCtrl {
 				{
 					field: 'quantity',
 					displayName: '库存',
-					align: 'left',
-					sortProp: 'storeCount'
+					align: 'left'
 				},
 				{
 					field: 'price',
