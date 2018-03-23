@@ -1528,8 +1528,17 @@ module.exports = function(configurations) {
 			response: {
 				status: 200,
 				body: function(req) {
-					let pageNum = Number(req.originalUrl.split('?')[1].split('&')[0].split('=')[1]);
-					return gridData[pageNum - 1];
+					console.log(req.originalUrl);
+					let pageNum = 0;
+					let paramsArr = req.originalUrl.split('?')[1].split('&');
+					paramsArr.forEach(item => {
+						let param = item.split('=');
+						if (param[0] === 'pageNum') {
+							pageNum = param[1] - 1;
+						}
+					});
+					// let pageNum = Number(req.originalUrl.split('?')[1].split('&')[0].split('=')[1]);
+					return gridData[pageNum];
 				},
 				headers: {
 					'Content-Type': 'application/json'

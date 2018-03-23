@@ -12,7 +12,7 @@
 <td>
 	<a href="{{entity.detailUrl}}" class="goods-name">
 		<img src="{{entity.picUrl}}" alt="">
-		<span ng-bind="entity.name"></span>
+		<span ng-bind="entity.name" cc-tooltip="entity.name" tooltip-opened="true" tooltip-placement="top" tooltip-append-to-body="true"></span>
 	</a>
 </td>
 <!--默认的表格行元素模板-->

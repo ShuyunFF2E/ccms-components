@@ -74,20 +74,29 @@ export default class GoodsSelectorCtrl {
 
 		this.initForm();
 
+		this.selectedGoodsFormModel = cloneDeep(this.formModel);
+		this.allGoodsFormModel = {};
 		// 级联菜单 -> 商品标准类目 select 框 change
 		this.categorySelectChange = (newValue, oldValue, itemIndex, item) => {
-			this.formModel.propsPid = null;
-			if (itemIndex !== -1) {
-				this.getPropsPidList(item.id);
+			this.isSelectedGoodsTab ? this.propsPidBuffer = cloneDeep(this.allGoodsFormModel.propsPid) : cloneDeep(this.selectedGoodsFormModel.propsPid);
+			if (this.formModel.categoriesId) {
+				this.formModel.propsPid = null;
+				genResource(`/api/categories/${item.id}/properties`, false, null).get().$promise.then(res => {
+					if (itemIndex !== -1) {
+						this.propsPidList = res.data;
+						this.formModel.propsPid = this.propsPidBuffer;
+					}
+				});
 			} else {
 				this.propsPidList = [];
 			}
 		};
 		// 级联菜单 -> 商品属性 select 框 change
 		this.propSelectChange = (newValue, oldValue, itemIndex, item) => {
-			this.formModel.propsVid = [];
-			if (itemIndex !== -1) {
-				this.propsVidList = this.propsPidList[itemIndex].values;
+			if (this.formModel.propsPid) {
+				if (itemIndex !== -1) {
+					this.propsVidList = this.propsPidList[itemIndex].values;
+				}
 			} else {
 				this.propsVidList = [];
 			}
@@ -163,11 +172,16 @@ export default class GoodsSelectorCtrl {
 		};
 		// 点击 tab
 		this.tabClick = text => {
+			window.cloneDeep = cloneDeep;
 			if (text === '已选商品') {
 				this.isSelectedGoodsTab = true;
+				this.allGoodsFormModel = cloneDeep(this.formModel);
+				this.formModel = cloneDeep(this.selectedGoodsFormModel);
 				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			} else {
 				this.isSelectedGoodsTab = false;
+				this.selectedGoodsFormModel = cloneDeep(this.formModel);
+				this.formModel = cloneDeep(this.allGoodsFormModel);
 			}
 		};
 		// 全部商品->表格配置
@@ -467,12 +481,6 @@ export default class GoodsSelectorCtrl {
 			maxPrice: null // 商品价格下限
 		};
 	}
-	// 请求商品属性数据
-	getPropsPidList(categoriesId) {
-		genResource(`/api/categories/${categoriesId}/properties`, false, null).get().$promise.then(res => {
-			this.propsPidList = res.data;
-		});
-	}
 	// 请求商品自自定义类目数据
 	getShopCateGoriesList() {
 		genResource('/api/shop_categories', false, null).get().$promise.then(res => {
@@ -527,17 +535,14 @@ export default class GoodsSelectorCtrl {
 		}
 	}
 	// 更新表格数据（数据从后端请求）
-	//    -> update 全部商品中状态 -> 恢复初始状态
-	//    -> update 已选商品状态 -> 清空
-	//    -> update 状态缓存数组 -> 清空
+	//    -> update 全部商品中状态
+	//    -> update 全选按钮
 	updateGrid() {
 		this._$ccGrid.refresh(this.pagerGridOptions).then(opts => {
-			this.selectedItems.splice(0, this.selectedItems.length);
-			this.selectedItemsBuffer.splice(0, this.selectedItemsBuffer.length);
-			opts.data.forEach(item => {
-				this.resetRootItem(item);
-			});
-			this.currentPageChecked = false;
+			if (opts.data && opts.data.length) {
+				this.dataMerge(opts.data, this.selectedItemsBuffer);
+				this.currentPageChecked = this.isAllChildrenSelected(opts.data);
+			}
 		});
 	}
 	// 从集合中获取 entity 的 index, 找不到返回 -1
@@ -593,5 +598,12 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		}
+	}
+	// 超过17个字则隐藏多余字，显示 '...'
+	characterInterCept(str) {
+		if (str.length > 17) {
+			str = str.slice(0, 18) + '...';
+		}
+		return str;
 	}
 }
