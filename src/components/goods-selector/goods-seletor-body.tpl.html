@@ -113,7 +113,7 @@
 			row-4: 不存在商铺列表选项并且是京东店铺、高级搜索，表格距离上侧的距离-->
 		<gs-tabs ng-class="{'row-1': !$ctrl.isShowShopList && $ctrl.isSimpleSearch,
 		 					'row-5': $ctrl.isShowShopList || !$ctrl.isShowShopList && !$ctrl.isSimpleSearch && $ctrl.isTaobao,
-		 					'row-4': !$ctrl.isShowShopList && !$ctrl.isTaobao && !$ctrl.isSimpleSearch}">
+		 					'row-4': !$ctrl.isShowShopList && !$ctrl.isSimpleSearch}">
 			<gs-panel text="全部商品" class="all-goods-panel" tab-click="$ctrl.tabClick(text)">
 				<section class="grid-area">
 					<div class="all-goods-operation">

@@ -185,11 +185,14 @@
 		  height: 220px;
 		  width: 987px;
 		  margin-left: -2px;
-		  overflow-y: scroll;
 		  .cc-grid {
 			border: none;
-			.cc-grid-body .default {
-			  padding-top: 30px;
+			.cc-grid-body {
+			  height: 220px;
+			  overflow-y: scroll;
+			  .default {
+				padding-top: 30px;
+			  }
 			}
 			.loading-mask {
 			  //margin-top: -25px;
@@ -287,7 +290,7 @@
 			  }
 			}
 			> .cc-grid-footer {
-			  padding: 23px 11px;
+			  padding: 15px 11px 4px 11px;
 			  .total-items-count, .reload, .selected-items-count {
 				display: none;
 			  }
@@ -338,6 +341,7 @@
 	top: 233px;
 	cc-grid {
 	  height: 257px;
+	  //width: 1017px;
 	  .cc-grid .cc-grid-body {
 		.default{
 		  padding-top: 47px;

@@ -20,7 +20,6 @@ const GoodsSelectorService = {
 		if (typeof shopInfo === 'undefined') {
 			throw new Error('goodsSelector 缺少 shopInfo 参数');
 		}
-
 		return ModalService.modal(
 			{
 				title: '商品选择',
