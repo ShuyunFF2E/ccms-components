@@ -161,16 +161,7 @@ export default class GoodsSelectorCtrl {
 			this._$ccValidator.setPristine(formCtrl);
 			this.initForm();
 		};
-
-		this.allGoodsFormModel = {};
-		this.allGoodsDateRange = {};
-		this.selectedGoodsFormModel = cloneDeep(this.formModel);
-		this.selectedGoodsDateRange = cloneDeep(this.dateRange);
 		// 点击 tab
-		// -> 点击已选商品tab，先复制一份全部商品 tab 的 formModel 对象，然后使用 selectedGoodsFormModel 对已选商品 tab 的 formModel 对象进行恢复；
-		// -> 点击全部商品tab，先复制一份已选商品 tab 的 formModel 对象，然后使用 allGoodsFormModel 对全部商品 tab 的 formModel 对象进行恢复；
-		// 问题： 点击 tab 的时候，如果级联菜单中的三个 select 框在切换前已经有值，那么在切换回来后，由于使用了克隆操作，所以会触发 selectChange 事件，
-		// 导致第三个 select 框中的值先被赋值，然后由于触发第二个框的 selectChange 事件，随后又被清空
 		this.tabClick = text => {
 			if (text === '已选商品') {
 				this.isSelectedGoodsTab = true;
