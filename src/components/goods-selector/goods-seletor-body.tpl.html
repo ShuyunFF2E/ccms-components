@@ -75,19 +75,19 @@
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && !$ctrl.isTaobao">
 					<label class="goods-label">商品编号：</label>
-					<input type="text" ng-model="$ctrl.formModel.outerId" cc-validator='number' placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.skusId[0]" cc-validator='number' placeholder="">
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">商品商家编码：</label>
-					<input type="text" ng-model="$ctrl.formModel.skusOuterId" placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.outerId" placeholder="">
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">SKU商家编码：</label>
-					<input type="text" ng-model="$ctrl.formModel.skusPropsVname" placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.skusOuterId" placeholder="">
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">SKU规格：</label>
-					<input type="text" ng-model="$ctrl.formModel.skusId[0]" placeholder="">
+					<input type="text" ng-model="$ctrl.formModel.skusPropsVname" placeholder="">
 				</fieldset>
 				<fieldset class="stack-date" ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">上架时间：</label>

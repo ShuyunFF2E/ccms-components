@@ -10,14 +10,14 @@ var gridData = [
 				'id': '1',
 				'name': '商品名称商品名称商品名称商品名称商品名称',
 				'order': '排序',
-				'status': '状态',
+				'status': 'true',
 				'created': '创建时间',
 				'modified': '更改时间',
 				'lastSync': '同步时间',
-				'shopId': '店铺ID',
+				'shopId': '10001',
 				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
 				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
-				'outerId': 'A1-2334-543',
+				'outerId': 'A1-2334-546',
 				'price': '21',
 				'quantity': '133',
 				'listTime': '上架时间',
@@ -25,21 +25,21 @@ var gridData = [
 				'tags': ['标签'],
 				'props': [
 					{
-						'pid': '属性ID',
+						'pid': '1',
 						'pname': '属性名称',
-						'vid': '属性值ID',
+						'vid': '11',
 						'vname': '属性值名称'
 					}
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -50,14 +50,14 @@ var gridData = [
 				'id': '2',
 				'name': '商品名称商品名称商品名称商品名称商品名称',
 				'order': '排序',
-				'status': '状态',
+				'status': 'false',
 				'created': '创建时间',
 				'modified': '更改时间',
 				'lastSync': '同步时间',
-				'shopId': '店铺ID',
+				'shopId': '10001',
 				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
 				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
-				'outerId': 'A1-2334-543',
+				'outerId': 'A1-2334-545',
 				'price': '21',
 				'quantity': '133',
 				'listTime': '上架时间',
@@ -65,21 +65,21 @@ var gridData = [
 				'tags': ['标签'],
 				'props': [
 					{
-						'pid': '属性ID',
+						'pid': '2',
 						'pname': '属性名称',
-						'vid': '属性值ID',
+						'vid': '12',
 						'vname': '属性值名称'
 					}
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -88,7 +88,7 @@ var gridData = [
 						'id': '21',
 						'name': '颜色：黄色；尺码：46；属性值1；颜色：黄色；尺码：46；',
 						'order': '排序',
-						'status': '状态',
+						'status': 'true',
 						'created': '创建时间',
 						'modified': '更改时间',
 						'lastSync': '同步时间',
@@ -98,9 +98,9 @@ var gridData = [
 						'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
 						'props': [
 							{
-								'pid': '属性ID',
+								'pid': '1',
 								'pname': '属性名称',
-								'vid': '属性值ID',
+								'vid': '21',
 								'vname': '属性值名称'
 							}
 						]
@@ -109,7 +109,7 @@ var gridData = [
 						'id': '22',
 						'name': '颜色：黄色；尺码：46；属性值1；颜色：黄色；尺码：46；',
 						'order': '排序',
-						'status': '状态',
+						'status': 'true',
 						'created': '创建时间',
 						'modified': '更改时间',
 						'lastSync': '同步时间',
@@ -119,9 +119,9 @@ var gridData = [
 						'picUrl': 'https://img.alicdn.com/bao/uploaded/i4/414285109/TB2UGDHllDH8KJjSspnXXbNAVXa_!!414285109.jpg_430x430q90.jpg',
 						'props': [
 							{
-								'pid': '属性ID',
+								'pid': '1',
 								'pname': '属性名称',
-								'vid': '属性值ID',
+								'vid': '22',
 								'vname': '属性值名称'
 							}
 						]
@@ -136,32 +136,32 @@ var gridData = [
 				'created': '创建时间',
 				'modified': '更改时间',
 				'lastSync': '同步时间',
-				'shopId': '店铺ID',
+				'shopId': '10001',
 				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
 				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
 				'outerId': 'A1-2334-543',
-				'price': '21',
+				'price': '1',
 				'quantity': '133',
 				'listTime': '上架时间',
 				'delistTime': '下架时间',
 				'tags': ['标签'],
 				'props': [
 					{
-						'pid': '属性ID',
+						'pid': '2',
 						'pname': '属性名称',
-						'vid': '属性值ID',
+						'vid': '31',
 						'vname': '属性值名称'
 					}
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '222222',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -180,9 +180,9 @@ var gridData = [
 						'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
 						'props': [
 							{
-								'pid': '属性ID',
+								'pid': '2',
 								'pname': '属性名称',
-								'vid': '属性值ID',
+								'vid': '32',
 								'vname': '属性值名称'
 							}
 						]
@@ -201,9 +201,9 @@ var gridData = [
 						'picUrl': 'https://img.alicdn.com/bao/uploaded/i4/414285109/TB2UGDHllDH8KJjSspnXXbNAVXa_!!414285109.jpg_430x430q90.jpg',
 						'props': [
 							{
-								'pid': '属性ID',
+								'pid': '2',
 								'pname': '属性名称',
-								'vid': '属性值ID',
+								'vid': '41',
 								'vname': '属性值名称'
 							}
 						]
@@ -222,7 +222,7 @@ var gridData = [
 				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
 				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
 				'outerId': 'A1-2334-543',
-				'price': '21',
+				'price': '33',
 				'quantity': '133',
 				'listTime': '上架时间',
 				'delistTime': '下架时间',
@@ -231,19 +231,19 @@ var gridData = [
 					{
 						'pid': '属性ID',
 						'pname': '属性名称',
-						'vid': '属性值ID',
+						'vid': '42',
 						'vname': '属性值名称'
 					}
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '222222',
 						'cname': '类目名称'
 					}
 				],
@@ -262,7 +262,7 @@ var gridData = [
 				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
 				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
 				'outerId': 'A1-2334-543',
-				'price': '21',
+				'price': '44',
 				'quantity': '133',
 				'listTime': '上架时间',
 				'delistTime': '下架时间',
@@ -277,13 +277,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '222222',
 						'cname': '类目名称'
 					}
 				],
@@ -297,7 +297,7 @@ var gridData = [
 						'modified': '更改时间',
 						'lastSync': '同步时间',
 						'outerId': 'A1-2334-543',
-						'price': '23',
+						'price': '55',
 						'quantity': '100',
 						'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
 						'props': [
@@ -318,7 +318,7 @@ var gridData = [
 						'modified': '更改时间',
 						'lastSync': '同步时间',
 						'outerId': 'A1-2334-543',
-						'price': '23',
+						'price': '77',
 						'quantity': '100',
 						'picUrl': 'https://img.alicdn.com/bao/uploaded/i4/414285109/TB2UGDHllDH8KJjSspnXXbNAVXa_!!414285109.jpg_430x430q90.jpg',
 						'props': [
@@ -344,7 +344,7 @@ var gridData = [
 				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
 				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
 				'outerId': 'A1-2334-543',
-				'price': '21',
+				'price': '88',
 				'quantity': '133',
 				'listTime': '上架时间',
 				'delistTime': '下架时间',
@@ -359,13 +359,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -441,13 +441,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -481,13 +481,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -563,13 +563,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -645,13 +645,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -693,13 +693,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -754,13 +754,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -836,13 +836,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -918,13 +918,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -1000,13 +1000,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -1061,13 +1061,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -1143,13 +1143,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -1225,13 +1225,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -1307,13 +1307,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -1349,7 +1349,7 @@ var gridData = [
 				'created': '创建时间',
 				'modified': '更改时间',
 				'lastSync': '同步时间',
-				'shopId': '店铺ID',
+				'shopId': '11111',
 				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
 				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
 				'outerId': 'A1-2334-543',
@@ -1368,13 +1368,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -1439,7 +1439,7 @@ var gridData = [
 				'created': '创建时间',
 				'modified': '更改时间',
 				'lastSync': '同步时间',
-				'shopId': '店铺ID',
+				'shopId': '11111',
 				'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB1rLzYbA9WBuNjSspeXXaz5VXa_!!0-item_pic.jpg_430x430q90.jpg',
 				'detailUrl': 'https://detail.tmall.com/item.htm?id=44756970618&ali_refid=a3_419108_1006:1102969274:N:%E7%BE%BD%E7%BB%92%E6%9C%8D:6177e31faa2b329216fd0c090edd0881&ali_trackid=1_6177e31faa2b329216fd0c090edd0881&spm=a220m.1000858.0.0',
 				'outerId': 'A1-2334-543',
@@ -1458,13 +1458,13 @@ var gridData = [
 				],
 				'categories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
 				'shopCategories': [
 					{
-						'cid': '类目ID',
+						'cid': '111111',
 						'cname': '类目名称'
 					}
 				],
@@ -1483,7 +1483,7 @@ var gridData = [
 						'picUrl': 'https://img.alicdn.com/bao/uploaded/i3/414285109/TB2CYAflmfD8KJjSszhXXbIJFXa_!!414285109.jpg_430x430q90.jpg',
 						'props': [
 							{
-								'pid': '属性ID',
+								'pid': '1',
 								'pname': '属性名称',
 								'vid': '属性值ID',
 								'vname': '属性值名称'

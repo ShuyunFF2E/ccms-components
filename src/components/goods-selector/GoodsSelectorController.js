@@ -1,5 +1,4 @@
 import { Inject } from 'angular-es-utils/decorators';
-// import {dynamicExport} from 'angular-es-utils';
 import genResource from 'angular-es-utils/rs-generator';
 import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
 import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
@@ -24,9 +23,15 @@ export default class GoodsSelectorCtrl {
 
 		this.isShowShopList = Array.isArray(this._shopInfoData);
 		this.isTaobao = this.isShowShopList ? this._shopInfoData[0].plat === 'taobao' : this._shopInfoData.plat === 'taobao';
-
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
+		// form 区域日期配置
+		this.dateRange = {
+			start: null,
+			end: null,
+			disabled: false,
+			dateOnly: true
+		};
 		// 请求商品自自定义类目数据
 		this.getShopCateGoriesList();
 		// 获取商品标准类目列表
@@ -51,19 +56,7 @@ export default class GoodsSelectorCtrl {
 			valueField: 'shopId',
 			displayField: 'shopName'
 		};
-		this.shopCategoriesFieldsMap = {
-			valueField: 'id',
-			displayField: 'name'
-		};
-		this.categoriesFieldsMap = {
-			valueField: 'id',
-			displayField: 'name'
-		};
-		this.propsPidFieldsMap = {
-			valueField: 'id',
-			displayField: 'name'
-		};
-		this.propsVidFieldsMap = {
+		this.shopCategoriesFieldsMap = this.categoriesFieldsMap = this.propsPidFieldsMap = this.propsVidFieldsMap = {
 			valueField: 'id',
 			displayField: 'name'
 		};
@@ -156,7 +149,14 @@ export default class GoodsSelectorCtrl {
 					this.transformParams();
 					this.updateGrid();
 				} else {
-					console.log('这个操作和后端没关系~*~');
+					console.log(this.formModel);
+					this.selectedItems.forEach(item => {
+						item.isHide = !this.isEntityMatched(item);
+						// item.skus && item.skus.forEach(sku => {
+						// 	sku.isHide = !this.isSkuMatched(sku);
+						// });
+					});
+					this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 				}
 			}, () => {
 				console.log('校验失败!');
@@ -175,12 +175,24 @@ export default class GoodsSelectorCtrl {
 				this.allDateRangeModel = cloneDeep(this.dateRange);
 				this.allGoodsFormModel = cloneDeep(this.formModel);
 				this.handleFormChange(this.selectedDateRangeModel, this.selectedGoodsFormModel);
+				this.selectedItems.forEach(item => {
+					item.interceptName = this.characterInterCept(item.name, 15);
+					item.skus && item.skus.length && item.skus.forEach(sku => {
+						sku.interceptName = this.characterInterCept(sku.name, 15);
+					});
+				});
 				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			} else {
 				this.isSelectedGoodsTab = false;
 				this.selectedDateRangeModel = cloneDeep(this.dateRange);
 				this.selectedGoodsFormModel = cloneDeep(this.formModel);
 				this.handleFormChange(this.allDateRangeModel, this.allGoodsFormModel);
+				this.resInfo.list.forEach(item => {
+					item.interceptName = this.characterInterCept(item.name, 17);
+					item.skus && item.skus.length && item.skus.forEach(sku => {
+						sku.interceptName = this.characterInterCept(sku.name, 17);
+					});
+				});
 			}
 		};
 		// 全部商品->表格配置
@@ -245,9 +257,9 @@ export default class GoodsSelectorCtrl {
 				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
 				this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 				this.resInfo.list.forEach(item => {
-					item.interceptName = this.characterInterCept(item.name);
+					item.interceptName = this.characterInterCept(item.name, 17);
 					item.skus && item.skus.length && item.skus.forEach(sku => {
-						sku.interceptName = this.characterInterCept(sku.name);
+						sku.interceptName = this.characterInterCept(sku.name, 17);
 					});
 				});
 				return res;
@@ -458,13 +470,6 @@ export default class GoodsSelectorCtrl {
 	}
 	// form 表单初始化
 	initForm() {
-		// form 区域日期配置
-		this.dateRange = {
-			start: null,
-			end: null,
-			disabled: false,
-			dateOnly: true
-		};
 		this.formModel = {
 			platform: this.shopList[0].plat, // 平台
 			shopId: this.shopList[0].shopId, // 店铺
@@ -476,8 +481,8 @@ export default class GoodsSelectorCtrl {
 			propsVid: [], // props.vid 属性值ID
 			status: this.statusList[0].value, // 状态, true 在架, false 不在架
 			skusPropsVname: null, // skus.props.vname SKU属性值模糊匹配
-			outerId: null, // 外部编码
-			skusOuterId: null, // skus.outerId SKU 外部编码
+			outerId: null, // 商品商家编码
+			skusOuterId: null, // skus.outerId SKU 商家编码
 			skusId: [], // skus.id SKUID数组-----------
 			startListTime: null, // 上架时间起始值, Unix时间戳，毫秒
 			endListTime: null, // 上架时间结束值, Unix时间戳，毫秒
@@ -604,9 +609,9 @@ export default class GoodsSelectorCtrl {
 		}
 	}
 	// 超过17个字则隐藏多余字，显示 '...'
-	characterInterCept(str) {
-		if (str.length > 17) {
-			str = str.slice(0, 17) + '...';
+	characterInterCept(str, maxLength) {
+		if (str.length > maxLength) {
+			str = str.slice(0, maxLength) + '...';
 		}
 		return str;
 	}
@@ -622,5 +627,155 @@ export default class GoodsSelectorCtrl {
 		}
 		this.propsPid = cloneDeep(formModel.propsPid);
 		this.propsVid = cloneDeep(formModel.propsVid);
+	}
+	// 验证父亲是否匹配
+	isEntityMatched(goods) {
+		console.log(this.isShopMatched(goods.shopId));
+		console.log('id:', this.isIdMatched(goods.id));
+		console.log(this.isNameMatched(goods.name));
+		console.log(this.isShopCategoriesIdMatched(goods.shopCategories));
+		console.log(this.isCategoriesMatched(goods.categories));
+		console.log(this.isPropsMatched(goods.props));
+		console.log(this.isPropValueMatched(goods.props));
+		console.log(this.isStatusMatched(goods.status));
+		console.log(this.isOuterIdMatched(goods.outerId));
+		console.log(this.isPriceMatched(goods.price));
+		return this.isShopMatched(goods.shopId) && this.isStatusMatched(goods.status) && this.isPriceMatched(goods.price) && this.isNameMatched(goods.name) &&
+			this.isOuterIdMatched(goods.outerId) && this.isShopCategoriesIdMatched(goods.shopCategories) &&
+			this.isCategoriesMatched(goods.categories) &&
+			this.isPropsMatched(goods.props) && this.isPropValueMatched(goods.props);
+		// return this.isShopMatched(goods.shopId);
+		// return this.isShopMatched(goods.shopId);
+		// return this.isStatusMatched(goods.status);
+		// return this.isPriceMatched(goods.price);
+		// return this.isNameMatched(goods.name);
+		// return this.isOuterIdMatched(goods.outerId);
+		// return this.isShopCategoriesIdMatched(goods.shopCategories);
+		// return this.isCategoriesMatched(goods.categories);
+		// return this.isPropsMatched(goods.props);
+		// return this.isPropValueMatched(goods.props);
+	}
+	// 商品id -> 精确查询
+	isIdMatched(id) {
+		let isMatched = false;
+		if (this.formModel.id.length) {
+			for (let i = 0; i < this.formModel.id.length; i++) {
+				if (String(id) === this.formModel.id[i]) {
+					isMatched = true;
+					break;
+				}
+			}
+		} else {
+			isMatched = true;
+		}
+		return isMatched;
+	}
+	// 商品所属店铺 -> 精确查询
+	isShopMatched(shopId) {
+		return this.formModel.shopId === null || String(this.formModel.shopId) === String(shopId);
+	}
+	// 商品状态 -> 精确查询
+	isStatusMatched(status) {
+		console.log(status);
+		return this.formModel.status === null || this.formModel.status === status;
+	}
+	// 价格 -> 精确查询
+	isPriceMatched(price) {
+		if (this.formModel.minPrice === null) {
+			if (this.formModel.maxPrice !== null) {
+				return price <= Number(this.formModel.maxPrice);
+			} else {
+				return true;
+			}
+		} else {
+			if (this.formModel.maxPrice === null) {
+				return price >= Number(this.formModel.minPrice);
+			} else {
+				return price >= Number(this.formModel.minPrice) && Number(price <= this.formModel.maxPrice);
+			}
+		}
+	}
+	// 商品标题 -> 模糊查询
+	isNameMatched(name) {
+		return this.formModel.name === null || name.search(this.formModel.name) !== -1;
+	}
+	// 商品商家编码 -> 模糊查询
+	isOuterIdMatched(outerId) {
+		console.log(outerId.search(this.formModel.outerId));
+		return this.formModel.outerId === null || outerId.search(this.formModel.outerId) !== -1;
+	}
+	// 商品自定义类目(多选、数组) -> 模糊查询
+	isShopCategoriesIdMatched(shopCategories) {
+		let isMatched = false;
+		if (this.formModel.shopCategoriesId.length) {
+			for (let i = 0; i < this.formModel.shopCategoriesId.length; i++) {
+				let id = this.formModel.shopCategoriesId[i];
+				for (let j = 0; j < shopCategories.length; j++) {
+					if (shopCategories[j].cid === id) {
+						isMatched = true;
+						break;
+					}
+				}
+			}
+		} else {
+			isMatched = true;
+		}
+		return isMatched;
+	}
+	// 商品标准类目 -> 模糊查询
+	isCategoriesMatched(categories) {
+		let isMatched = false;
+		if (this.formModel.categoriesId !== null) {
+			for (let i = 0; i < categories.length; i++) {
+				if (categories[i].cid.search(String(this.formModel.categoriesId)) !== -1) {
+					isMatched = true;
+					break;
+				}
+			}
+		} else {
+			isMatched = true;
+		}
+		return isMatched;
+	}
+	// 商品属性 -> 模糊查询
+	isPropsMatched(props) {
+		let isMatched = false;
+		if (this.formModel.propsPid !== null) {
+			for (let i = 0; i < props.length; i++) {
+				if (props[i].pid.search(String(this.formModel.propsPid)) !== -1) {
+					isMatched = true;
+					break;
+				}
+			}
+		} else {
+			isMatched = true;
+		}
+		return isMatched;
+	}
+	// 属性值(数组、多选) -> 模糊查询
+	isPropValueMatched(propsValue) {
+		let isMatched = false;
+		if (this.formModel.propsVid.length) {
+			for (let i = 0; i < this.formModel.propsVid.length; i++) {
+				let id = this.formModel.propsVid[i];
+				for (let j = 0; j < propsValue.length; j++) {
+					if (propsValue[j].vid === id) {
+						isMatched = true;
+						break;
+					}
+				}
+			}
+		} else {
+			isMatched = true;
+		}
+		return isMatched;
+	}
+	// 验证商品 sku 是否匹配
+	isSkuMatched(sku) {
+		return this.isSkusOuterIdMatched(sku.outerId);
+	};
+	// SKU 商家编码 -> 模糊查询
+	isSkusOuterIdMatched(skusOuterId) {
+		return this.formModel.skusOuterId === null || skusOuterId.search(this.formModel.skusOuterId !== -1);
 	}
 }
