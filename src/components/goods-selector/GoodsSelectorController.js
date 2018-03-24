@@ -78,27 +78,24 @@ export default class GoodsSelectorCtrl {
 		this.allGoodsFormModel = {};
 		// 级联菜单 -> 商品标准类目 select 框 change
 		this.categorySelectChange = (newValue, oldValue, itemIndex, item) => {
-			this.isSelectedGoodsTab ? this.propsPidBuffer = cloneDeep(this.allGoodsFormModel.propsPid) : cloneDeep(this.selectedGoodsFormModel.propsPid);
 			if (this.formModel.categoriesId) {
-				this.formModel.propsPid = null;
 				genResource(`/api/categories/${item.id}/properties`, false, null).get().$promise.then(res => {
-					if (itemIndex !== -1) {
-						this.propsPidList = res.data;
-						this.formModel.propsPid = this.propsPidBuffer;
-					}
+					this.propsPidList = res.data;
+					this.formModel.propsPid = this.propsPid;
 				});
 			} else {
 				this.propsPidList = [];
+				this.formModel.propsPid = null;
 			}
 		};
 		// 级联菜单 -> 商品属性 select 框 change
 		this.propSelectChange = (newValue, oldValue, itemIndex, item) => {
 			if (this.formModel.propsPid) {
-				if (itemIndex !== -1) {
-					this.propsVidList = this.propsPidList[itemIndex].values;
-				}
+				this.propsVidList = this.propsPidList[itemIndex].values;
+				this.formModel.propsVid = cloneDeep(this.propsVid);
 			} else {
 				this.propsVidList = [];
+				this.formModel.propsVid = [];
 			}
 		};
 
@@ -175,13 +172,15 @@ export default class GoodsSelectorCtrl {
 			window.cloneDeep = cloneDeep;
 			if (text === '已选商品') {
 				this.isSelectedGoodsTab = true;
+				this.allDateRangeModel = cloneDeep(this.dateRange);
 				this.allGoodsFormModel = cloneDeep(this.formModel);
-				this.formModel = cloneDeep(this.selectedGoodsFormModel);
+				this.handleFormChange(this.selectedDateRangeModel, this.selectedGoodsFormModel);
 				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			} else {
 				this.isSelectedGoodsTab = false;
+				this.selectedDateRangeModel = cloneDeep(this.dateRange);
 				this.selectedGoodsFormModel = cloneDeep(this.formModel);
-				this.formModel = cloneDeep(this.allGoodsFormModel);
+				this.handleFormChange(this.allDateRangeModel, this.allGoodsFormModel);
 			}
 		};
 		// 全部商品->表格配置
@@ -251,7 +250,6 @@ export default class GoodsSelectorCtrl {
 				pageSize: 10
 			}
 		};
-		this.pagerGridOptions.isCheckedGoodsTab = false;
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
@@ -605,5 +603,19 @@ export default class GoodsSelectorCtrl {
 			str = str.slice(0, 18) + '...';
 		}
 		return str;
+	}
+	// tab 切换时 form 表单处理
+	handleFormChange(dateRangeModel, formModel) {
+		console.log(dateRangeModel);
+		this.dateRange = dateRangeModel;
+		for (let attr in formModel) {
+			if (formModel.hasOwnProperty(attr)) {
+				if (attr !== 'propsPid' && attr !== 'propsVid') {
+					this.formModel[attr] = cloneDeep(formModel[attr]);
+				}
+			}
+		}
+		this.propsPid = cloneDeep(formModel.propsPid);
+		this.propsVid = cloneDeep(formModel.propsVid);
 	}
 }
