@@ -244,6 +244,12 @@ export default class GoodsSelectorCtrl {
 				// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
 				this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
+				this.resInfo.list.forEach(item => {
+					item.interceptName = this.characterInterCept(item.name);
+					item.skus && item.skus.length && item.skus.forEach(sku => {
+						sku.interceptName = this.characterInterCept(sku.name);
+					});
+				});
 				return res;
 			},
 			pager: {
@@ -600,13 +606,12 @@ export default class GoodsSelectorCtrl {
 	// 超过17个字则隐藏多余字，显示 '...'
 	characterInterCept(str) {
 		if (str.length > 17) {
-			str = str.slice(0, 18) + '...';
+			str = str.slice(0, 17) + '...';
 		}
 		return str;
 	}
 	// tab 切换时 form 表单处理
 	handleFormChange(dateRangeModel, formModel) {
-		console.log(dateRangeModel);
 		this.dateRange = dateRangeModel;
 		for (let attr in formModel) {
 			if (formModel.hasOwnProperty(attr)) {
