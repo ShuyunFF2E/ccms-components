@@ -4,12 +4,13 @@ import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
 import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
 import cloneDeep from 'lodash.clonedeep';
+import match from './FilterCtrl';
 
 import angular from 'angular';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData',
-'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector',
-'$filter')
+	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector',
+	'$filter')
 
 export default class GoodsSelectorCtrl {
 
@@ -91,7 +92,6 @@ export default class GoodsSelectorCtrl {
 				this.formModel.propsVid = [];
 			}
 		};
-
 		// form 区域价格校验
 		this.validators = {
 			/**
@@ -140,22 +140,57 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		};
-
+		this.formConfig = {
+			shopId: 'equal',
+			id: 'equalArray',
+			name: 'fuzzySearch',
+			shopCategoriesId: 'fuzzymutipleArray',
+			categoriesId: 'equal',
+			propsPid: 'equal',
+			propsVid: 'fuzzymutipleArray',
+			status: 'equal',
+			outerId: 'fuzzySearch',
+			startListTime: 'lessEqual',
+			endListTime: 'greaterEqual',
+			minPrice: 'lessEqual',
+			maxPrice: 'greaterEqual'
+		};
+		this.skuFormConfig = {
+			status: 'equal',
+			skusId: 'equalArray',
+			skusOuterId: 'fuzzySearch',
+			skusPropsVname: 'fuzzySearch'
+		};
 		// 筛选
 		this.search = isSelectedGoodsTab => {
 			this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
 				console.log('校验成功!');
 				if (!isSelectedGoodsTab) {
+					console.log('formModel:', this.formModel);
 					this.transformParams();
 					this.updateGrid();
 				} else {
+					this.transformDateParams();
 					console.log(this.formModel);
 					this.selectedItems.forEach(item => {
-						item.isHide = !this.isEntityMatched(item);
-						// item.skus && item.skus.forEach(sku => {
-						// 	sku.isHide = !this.isSkuMatched(sku);
-						// });
+						item.shopCategoriesId = this.getNewArray(item.shopCategories, 'cid');
+						item.categoriesId = this.getNewArray(item.categories, 'cid');
+						item.propsPid = this.getNewArray(item.props, 'pid');
+						item.propsVid = this.getNewArray(item.props, 'vid');
+						item.skus.length && item.skus.forEach(sku => {
+							sku.skusOuterId = sku.outerId;
+							sku.skusId = sku.id;
+							sku.skusPropsVname = this.getNewArray(sku.props, 'vname');
+						});
+						match(this.formModel, item.skus, this.skuFormConfig);
 					});
+					match(this.formModel, this.selectedItems, this.formConfig);
+					this.selectedItems.forEach(item => {
+						if (item.skus.length) {
+							item.isHide = this.isAllChildrenHide(item.skus);
+						}
+					});
+					console.log(this.selectedItems);
 					this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 				}
 			}, () => {
@@ -168,13 +203,15 @@ export default class GoodsSelectorCtrl {
 			this.initForm();
 		};
 		// 点击 tab
+		this.selectedDateRangeModel = cloneDeep(this.dateRange);
+		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		this.tabClick = text => {
 			window.cloneDeep = cloneDeep;
 			if (text === '已选商品') {
 				this.isSelectedGoodsTab = true;
 				this.allDateRangeModel = cloneDeep(this.dateRange);
 				this.allGoodsFormModel = cloneDeep(this.formModel);
-				this.handleFormChange(this.selectedDateRangeModel, this.selectedGoodsFormModel);
+				this.handleTabChange(this.selectedDateRangeModel, this.selectedGoodsFormModel);
 				this.selectedItems.forEach(item => {
 					item.interceptName = this.characterInterCept(item.name, 15);
 					item.skus && item.skus.length && item.skus.forEach(sku => {
@@ -186,7 +223,7 @@ export default class GoodsSelectorCtrl {
 				this.isSelectedGoodsTab = false;
 				this.selectedDateRangeModel = cloneDeep(this.dateRange);
 				this.selectedGoodsFormModel = cloneDeep(this.formModel);
-				this.handleFormChange(this.allDateRangeModel, this.allGoodsFormModel);
+				this.handleTabChange(this.allDateRangeModel, this.allGoodsFormModel);
 				this.resInfo.list.forEach(item => {
 					item.interceptName = this.characterInterCept(item.name, 17);
 					item.skus && item.skus.length && item.skus.forEach(sku => {
@@ -262,6 +299,7 @@ export default class GoodsSelectorCtrl {
 						sku.interceptName = this.characterInterCept(sku.name, 17);
 					});
 				});
+				console.log('list:', this.resInfo);
 				return res;
 			},
 			pager: {
@@ -504,12 +542,7 @@ export default class GoodsSelectorCtrl {
 	}
 	// 查询条件的参数名以及参数值转换
 	transformParams() {
-		if (this.dateRange.start) {
-			this.formModel.startListTime = Date.parse(this.dateRange.start);
-		}
-		if (this.dateRange.end) {
-			this.formModel.endListTime = Date.parse(this.dateRange.end);
-		}
+		this.transformDateParams();
 		// 查询参数
 		const queryCollection = this.pagerGridOptions.queryParams;
 		// 将部分参数属性名的驼峰形式转换成以 '.' 连接的形式
@@ -543,6 +576,14 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 	}
+	transformDateParams() {
+		if (this.dateRange.start) {
+			this.formModel.startListTime = Date.parse(this.dateRange.start);
+		}
+		if (this.dateRange.end) {
+			this.formModel.endListTime = Date.parse(this.dateRange.end);
+		}
+	}
 	// 更新表格数据（数据从后端请求）
 	//    -> update 全部商品中状态
 	//    -> update 全选按钮
@@ -573,6 +614,12 @@ export default class GoodsSelectorCtrl {
 	// 所有孩子都被移除， 返回 true, 反之返回 false
 	isAllChildrenRemoved(children) {
 		return !(this.isAllChildrenSelected(children) || this.isSomeChildrenSelected(children));
+	}
+	// 所有孩子都隐藏
+	isAllChildrenHide(children) {
+		return children && children.every(child => {
+			return child.isHide;
+		});
 	}
 	// 将商品状态恢复成初始状态
 	resetRootItem(entity) {
@@ -608,7 +655,7 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 	}
-	// 超过17个字则隐藏多余字，显示 '...'
+	// 超过 maxLength 个字则隐藏多余字，显示 '...'
 	characterInterCept(str, maxLength) {
 		if (str.length > maxLength) {
 			str = str.slice(0, maxLength) + '...';
@@ -616,8 +663,8 @@ export default class GoodsSelectorCtrl {
 		return str;
 	}
 	// tab 切换时 form 表单处理
-	handleFormChange(dateRangeModel, formModel) {
-		this.dateRange = dateRangeModel;
+	handleTabChange(dateRangeModel, formModel) {
+		this.dateRange = cloneDeep(dateRangeModel);
 		for (let attr in formModel) {
 			if (formModel.hasOwnProperty(attr)) {
 				if (attr !== 'propsPid' && attr !== 'propsVid') {
@@ -628,154 +675,12 @@ export default class GoodsSelectorCtrl {
 		this.propsPid = cloneDeep(formModel.propsPid);
 		this.propsVid = cloneDeep(formModel.propsVid);
 	}
-	// 验证父亲是否匹配
-	isEntityMatched(goods) {
-		console.log(this.isShopMatched(goods.shopId));
-		console.log('id:', this.isIdMatched(goods.id));
-		console.log(this.isNameMatched(goods.name));
-		console.log(this.isShopCategoriesIdMatched(goods.shopCategories));
-		console.log(this.isCategoriesMatched(goods.categories));
-		console.log(this.isPropsMatched(goods.props));
-		console.log(this.isPropValueMatched(goods.props));
-		console.log(this.isStatusMatched(goods.status));
-		console.log(this.isOuterIdMatched(goods.outerId));
-		console.log(this.isPriceMatched(goods.price));
-		return this.isShopMatched(goods.shopId) && this.isStatusMatched(goods.status) && this.isPriceMatched(goods.price) && this.isNameMatched(goods.name) &&
-			this.isOuterIdMatched(goods.outerId) && this.isShopCategoriesIdMatched(goods.shopCategories) &&
-			this.isCategoriesMatched(goods.categories) &&
-			this.isPropsMatched(goods.props) && this.isPropValueMatched(goods.props);
-		// return this.isShopMatched(goods.shopId);
-		// return this.isShopMatched(goods.shopId);
-		// return this.isStatusMatched(goods.status);
-		// return this.isPriceMatched(goods.price);
-		// return this.isNameMatched(goods.name);
-		// return this.isOuterIdMatched(goods.outerId);
-		// return this.isShopCategoriesIdMatched(goods.shopCategories);
-		// return this.isCategoriesMatched(goods.categories);
-		// return this.isPropsMatched(goods.props);
-		// return this.isPropValueMatched(goods.props);
-	}
-	// 商品id -> 精确查询
-	isIdMatched(id) {
-		let isMatched = false;
-		if (this.formModel.id.length) {
-			for (let i = 0; i < this.formModel.id.length; i++) {
-				if (String(id) === this.formModel.id[i]) {
-					isMatched = true;
-					break;
-				}
-			}
-		} else {
-			isMatched = true;
-		}
-		return isMatched;
-	}
-	// 商品所属店铺 -> 精确查询
-	isShopMatched(shopId) {
-		return this.formModel.shopId === null || String(this.formModel.shopId) === String(shopId);
-	}
-	// 商品状态 -> 精确查询
-	isStatusMatched(status) {
-		console.log(status);
-		return this.formModel.status === null || this.formModel.status === status;
-	}
-	// 价格 -> 精确查询
-	isPriceMatched(price) {
-		if (this.formModel.minPrice === null) {
-			if (this.formModel.maxPrice !== null) {
-				return price <= Number(this.formModel.maxPrice);
-			} else {
-				return true;
-			}
-		} else {
-			if (this.formModel.maxPrice === null) {
-				return price >= Number(this.formModel.minPrice);
-			} else {
-				return price >= Number(this.formModel.minPrice) && Number(price <= this.formModel.maxPrice);
-			}
-		}
-	}
-	// 商品标题 -> 模糊查询
-	isNameMatched(name) {
-		return this.formModel.name === null || name.search(this.formModel.name) !== -1;
-	}
-	// 商品商家编码 -> 模糊查询
-	isOuterIdMatched(outerId) {
-		console.log(outerId.search(this.formModel.outerId));
-		return this.formModel.outerId === null || outerId.search(this.formModel.outerId) !== -1;
-	}
-	// 商品自定义类目(多选、数组) -> 模糊查询
-	isShopCategoriesIdMatched(shopCategories) {
-		let isMatched = false;
-		if (this.formModel.shopCategoriesId.length) {
-			for (let i = 0; i < this.formModel.shopCategoriesId.length; i++) {
-				let id = this.formModel.shopCategoriesId[i];
-				for (let j = 0; j < shopCategories.length; j++) {
-					if (shopCategories[j].cid === id) {
-						isMatched = true;
-						break;
-					}
-				}
-			}
-		} else {
-			isMatched = true;
-		}
-		return isMatched;
-	}
-	// 商品标准类目 -> 模糊查询
-	isCategoriesMatched(categories) {
-		let isMatched = false;
-		if (this.formModel.categoriesId !== null) {
-			for (let i = 0; i < categories.length; i++) {
-				if (categories[i].cid.search(String(this.formModel.categoriesId)) !== -1) {
-					isMatched = true;
-					break;
-				}
-			}
-		} else {
-			isMatched = true;
-		}
-		return isMatched;
-	}
-	// 商品属性 -> 模糊查询
-	isPropsMatched(props) {
-		let isMatched = false;
-		if (this.formModel.propsPid !== null) {
-			for (let i = 0; i < props.length; i++) {
-				if (props[i].pid.search(String(this.formModel.propsPid)) !== -1) {
-					isMatched = true;
-					break;
-				}
-			}
-		} else {
-			isMatched = true;
-		}
-		return isMatched;
-	}
-	// 属性值(数组、多选) -> 模糊查询
-	isPropValueMatched(propsValue) {
-		let isMatched = false;
-		if (this.formModel.propsVid.length) {
-			for (let i = 0; i < this.formModel.propsVid.length; i++) {
-				let id = this.formModel.propsVid[i];
-				for (let j = 0; j < propsValue.length; j++) {
-					if (propsValue[j].vid === id) {
-						isMatched = true;
-						break;
-					}
-				}
-			}
-		} else {
-			isMatched = true;
-		}
-		return isMatched;
-	}
-	// 验证商品 sku 是否匹配
-	isSkuMatched(sku) {
-		return this.isSkusOuterIdMatched(sku.outerId);
-	};
-	// SKU 商家编码 -> 模糊查询
-	isSkusOuterIdMatched(skusOuterId) {
-		return this.formModel.skusOuterId === null || skusOuterId.search(this.formModel.skusOuterId !== -1);
+	// 返回一个新数组，新数组元素为原数组中元素对象的某个属性的值
+	getNewArray(sourceArr, fieldName) {
+		let result = [];
+		sourceArr.forEach(item => {
+			result.push(item[fieldName]);
+		});
+		return result;
 	}
 }
