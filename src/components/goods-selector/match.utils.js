@@ -7,7 +7,6 @@ export default function Match(form, list, config) {
 	}
 	// 开始过滤
 	list.forEach(item => {
-		item.isHide = false;
 		let buf = [];
 		for (let field in config) {
 			buf.push(config[field](form[field], item[field]));
@@ -26,8 +25,6 @@ Match.methods = {
 	// 大于等于某值
 	// 价格、时间
 	greaterEqual: (formVal, val) => {
-		console.log('formVal:', formVal);
-		console.log('val:', val);
 		return formVal === null || Number(formVal) >= Number(val);
 	},
 	// 小于等于某值
