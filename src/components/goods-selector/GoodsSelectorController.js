@@ -4,7 +4,7 @@ import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
 import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
 import cloneDeep from 'lodash.clonedeep';
-import match from './FilterCtrl';
+import match from './match.utils';
 
 import angular from 'angular';
 
@@ -191,7 +191,7 @@ export default class GoodsSelectorCtrl {
 						}
 					});
 					console.log(this.selectedItems);
-					this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+					// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 				}
 			}, () => {
 				console.log('校验失败!');
@@ -218,7 +218,7 @@ export default class GoodsSelectorCtrl {
 						sku.interceptName = this.characterInterCept(sku.name, 15);
 					});
 				});
-				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+				// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			} else {
 				this.isSelectedGoodsTab = false;
 				this.selectedDateRangeModel = cloneDeep(this.dateRange);
@@ -427,7 +427,7 @@ export default class GoodsSelectorCtrl {
 				this.selectedItems.splice(targetIndex, 1);
 			}
 			// 刷新
-			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个父亲被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
@@ -451,7 +451,7 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 			// 刷新
-			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个孩子被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
@@ -465,32 +465,32 @@ export default class GoodsSelectorCtrl {
 			this.selectedItemsBuffer.splice(0, this.selectedItemsBuffer.length);
 			this.selectedItems.splice(0, this.selectedItems.length);
 			// 刷新
-			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = false;
 		};
 
 		// 表格数据来自于 externalData 时，分页操作
-		let filteredData = [];
-		const wrapGridData = (currentPage, pageSize, data) => {
-			this.selectedPagerGridOptions.pager.pageNum = currentPage;
-			this.selectedPagerGridOptions.pager.pageSize = pageSize;
-			this.selectedPagerGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
-			this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
-			return this.selectedPagerGridOptions;
-		};
-		this.selectedPagerGridOptions.onSearch = name => {
-			const currentPage = 1;
-			const pageSize = this.pager.pageSize;
-			filteredData = this._$filter('filter')(this.selectedItems, name);
-			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, filteredData));
-		};
-		this.selectedPagerGridOptions.onRefresh = opts => {
-			const currentPage = opts.pager.pageNum;
-			const pageSize = opts.pager.pageSize;
-			const data = filteredData.length ? filteredData : this.selectedItems;
-			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
-		};
+		// let filteredData = [];
+		// const wrapGridData = (currentPage, pageSize, data) => {
+		// 	this.selectedPagerGridOptions.pager.pageNum = currentPage;
+		// 	this.selectedPagerGridOptions.pager.pageSize = pageSize;
+		// 	this.selectedPagerGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
+		// 	this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
+		// 	return this.selectedPagerGridOptions;
+		// };
+		// this.selectedPagerGridOptions.onSearch = name => {
+		// 	const currentPage = 1;
+		// 	const pageSize = this.pager.pageSize;
+		// 	filteredData = this._$filter('filter')(this.selectedItems, name);
+		// 	this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, filteredData));
+		// };
+		// this.selectedPagerGridOptions.onRefresh = opts => {
+		// 	const currentPage = opts.pager.pageNum;
+		// 	const pageSize = opts.pager.pageSize;
+		// 	const data = filteredData.length ? filteredData : this.selectedItems;
+		// 	this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
+		// };
 		// 移除当页
 		this.removeCurrentPage = () => {
 			let removeData = this.selectedPagerGridOptions.externalData;
@@ -503,7 +503,7 @@ export default class GoodsSelectorCtrl {
 				}
 			});
 			// 刷新
-			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 		};
 	}
 	// form 表单初始化
