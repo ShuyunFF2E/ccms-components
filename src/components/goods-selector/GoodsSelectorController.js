@@ -73,10 +73,14 @@ export default class GoodsSelectorCtrl {
 		// 级联菜单 -> 商品标准类目 select 框 change
 		this.categorySelectChange = (newValue, oldValue, itemIndex, item) => {
 			if (this.formModel.categoriesId) {
-				genResource(`/api/categories/${item.id}/properties`, false, null).get().$promise.then(res => {
-					this.propsPidList = res.data;
-					this.formModel.propsPid = this.propsPid;
-				});
+				genResource(`/api/categories/${item.id}/properties`, false, null).get().$promise
+					.then(res => {
+						this.propsPidList = res.data;
+						this.formModel.propsPid = this.propsPid;
+					})
+					.catch(res => {
+						console.log('failed:', res);
+					});
 			} else {
 				this.propsPidList = [];
 				this.formModel.propsPid = null;
@@ -140,6 +144,7 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		};
+		// form 表单搜索配置项
 		this.formConfig = {
 			shopId: 'equal',
 			id: 'equalArray',
@@ -149,6 +154,7 @@ export default class GoodsSelectorCtrl {
 			propsPid: 'equal',
 			propsVid: 'fuzzymutipleArray',
 			status: 'equal',
+			skusId: 'equalArray',
 			outerId: 'fuzzySearch',
 			startListTime: 'lessEqual',
 			endListTime: 'greaterEqual',
@@ -156,8 +162,6 @@ export default class GoodsSelectorCtrl {
 			maxPrice: 'greaterEqual'
 		};
 		this.skuFormConfig = {
-			status: 'equal',
-			skusId: 'equalArray',
 			skusOuterId: 'fuzzySearch',
 			skusPropsVname: 'fuzzySearch'
 		};
@@ -166,32 +170,13 @@ export default class GoodsSelectorCtrl {
 			this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
 				console.log('校验成功!');
 				if (!isSelectedGoodsTab) {
-					console.log('formModel:', this.formModel);
 					this.transformParams();
 					this.updateGrid();
 				} else {
 					this.transformDateParams();
-					console.log(this.formModel);
-					this.selectedItems.forEach(item => {
-						item.shopCategoriesId = this.getNewArray(item.shopCategories, 'cid');
-						item.categoriesId = this.getNewArray(item.categories, 'cid');
-						item.propsPid = this.getNewArray(item.props, 'pid');
-						item.propsVid = this.getNewArray(item.props, 'vid');
-						item.skus.length && item.skus.forEach(sku => {
-							sku.skusOuterId = sku.outerId;
-							sku.skusId = sku.id;
-							sku.skusPropsVname = this.getNewArray(sku.props, 'vname');
-						});
-						match(this.formModel, item.skus, this.skuFormConfig);
-					});
+					this.transformSelectedItems();
 					match(this.formModel, this.selectedItems, this.formConfig);
-					this.selectedItems.forEach(item => {
-						if (item.skus.length) {
-							item.isHide = this.isAllChildrenHide(item.skus);
-						}
-					});
-					console.log(this.selectedItems);
-					// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+					this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 				}
 			}, () => {
 				console.log('校验失败!');
@@ -206,30 +191,19 @@ export default class GoodsSelectorCtrl {
 		this.selectedDateRangeModel = cloneDeep(this.dateRange);
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		this.tabClick = text => {
-			window.cloneDeep = cloneDeep;
 			if (text === '已选商品') {
 				this.isSelectedGoodsTab = true;
 				this.allDateRangeModel = cloneDeep(this.dateRange);
 				this.allGoodsFormModel = cloneDeep(this.formModel);
-				this.handleTabChange(this.selectedDateRangeModel, this.selectedGoodsFormModel);
-				this.selectedItems.forEach(item => {
-					item.interceptName = this.characterInterCept(item.name, 15);
-					item.skus && item.skus.length && item.skus.forEach(sku => {
-						sku.interceptName = this.characterInterCept(sku.name, 15);
-					});
-				});
-				// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+				this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
+				this.listCharacterIntercept(this.selectedItems, 15);
+				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			} else {
 				this.isSelectedGoodsTab = false;
 				this.selectedDateRangeModel = cloneDeep(this.dateRange);
 				this.selectedGoodsFormModel = cloneDeep(this.formModel);
-				this.handleTabChange(this.allDateRangeModel, this.allGoodsFormModel);
-				this.resInfo.list.forEach(item => {
-					item.interceptName = this.characterInterCept(item.name, 17);
-					item.skus && item.skus.length && item.skus.forEach(sku => {
-						sku.interceptName = this.characterInterCept(sku.name, 17);
-					});
-				});
+				this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
+				this.listCharacterIntercept(this.resInfo.list, 17);
 			}
 		};
 		// 全部商品->表格配置
@@ -293,13 +267,7 @@ export default class GoodsSelectorCtrl {
 				// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
 				this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
-				this.resInfo.list.forEach(item => {
-					item.interceptName = this.characterInterCept(item.name, 17);
-					item.skus && item.skus.length && item.skus.forEach(sku => {
-						sku.interceptName = this.characterInterCept(sku.name, 17);
-					});
-				});
-				console.log('list:', this.resInfo);
+				this.listCharacterIntercept(this.resInfo.list, 17);
 				return res;
 			},
 			pager: {
@@ -427,7 +395,7 @@ export default class GoodsSelectorCtrl {
 				this.selectedItems.splice(targetIndex, 1);
 			}
 			// 刷新
-			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个父亲被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
@@ -451,7 +419,7 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 			// 刷新
-			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个孩子被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
@@ -465,32 +433,32 @@ export default class GoodsSelectorCtrl {
 			this.selectedItemsBuffer.splice(0, this.selectedItemsBuffer.length);
 			this.selectedItems.splice(0, this.selectedItems.length);
 			// 刷新
-			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = false;
 		};
 
 		// 表格数据来自于 externalData 时，分页操作
-		// let filteredData = [];
-		// const wrapGridData = (currentPage, pageSize, data) => {
-		// 	this.selectedPagerGridOptions.pager.pageNum = currentPage;
-		// 	this.selectedPagerGridOptions.pager.pageSize = pageSize;
-		// 	this.selectedPagerGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
-		// 	this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
-		// 	return this.selectedPagerGridOptions;
-		// };
-		// this.selectedPagerGridOptions.onSearch = name => {
-		// 	const currentPage = 1;
-		// 	const pageSize = this.pager.pageSize;
-		// 	filteredData = this._$filter('filter')(this.selectedItems, name);
-		// 	this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, filteredData));
-		// };
-		// this.selectedPagerGridOptions.onRefresh = opts => {
-		// 	const currentPage = opts.pager.pageNum;
-		// 	const pageSize = opts.pager.pageSize;
-		// 	const data = filteredData.length ? filteredData : this.selectedItems;
-		// 	this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
-		// };
+		let filteredData = [];
+		const wrapGridData = (currentPage, pageSize, data) => {
+			this.selectedPagerGridOptions.pager.pageNum = currentPage;
+			this.selectedPagerGridOptions.pager.pageSize = pageSize;
+			this.selectedPagerGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
+			this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
+			return this.selectedPagerGridOptions;
+		};
+		this.selectedPagerGridOptions.onSearch = name => {
+			const currentPage = 1;
+			const pageSize = this.pager.pageSize;
+			filteredData = this._$filter('filter')(this.selectedItems, name);
+			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, filteredData));
+		};
+		this.selectedPagerGridOptions.onRefresh = opts => {
+			const currentPage = opts.pager.pageNum;
+			const pageSize = opts.pager.pageSize;
+			const data = filteredData.length ? filteredData : this.selectedItems;
+			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
+		};
 		// 移除当页
 		this.removeCurrentPage = () => {
 			let removeData = this.selectedPagerGridOptions.externalData;
@@ -503,8 +471,25 @@ export default class GoodsSelectorCtrl {
 				}
 			});
 			// 刷新
-			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 		};
+	}
+
+	// 请求商品自自定义类目数据
+	getShopCateGoriesList() {
+		genResource('/api/shop_categories', false, null).get().$promise.then(res => {
+			this.shopCategoriesList = res.data;
+		}).catch(res => {
+			console.log('failed: ', res);
+		});
+	}
+	// 请求商品标准类目数据
+	getCategoriesList() {
+		genResource('/api/categories', false, null).get().$promise.then(res => {
+			this.categoriesList = res.data;
+		}).catch(res => {
+			console.log('failed: ', res);
+		});
 	}
 	// form 表单初始化
 	initForm() {
@@ -528,19 +513,20 @@ export default class GoodsSelectorCtrl {
 			maxPrice: null // 商品价格下限
 		};
 	}
-	// 请求商品自自定义类目数据
-	getShopCateGoriesList() {
-		genResource('/api/shop_categories', false, null).get().$promise.then(res => {
-			this.shopCategoriesList = res.data;
-		});
+	// tab 切换时 form 表单处理
+	handleForm(dateRangeModel, formModel) {
+		this.dateRange = cloneDeep(dateRangeModel);
+		for (let attr in formModel) {
+			if (formModel.hasOwnProperty(attr)) {
+				if (attr !== 'propsPid' && attr !== 'propsVid') {
+					this.formModel[attr] = cloneDeep(formModel[attr]);
+				}
+			}
+		}
+		this.propsPid = cloneDeep(formModel.propsPid);
+		this.propsVid = cloneDeep(formModel.propsVid);
 	}
-	// 请求商品标准类目数据
-	getCategoriesList() {
-		genResource('/api/categories', false, null).get().$promise.then(res => {
-			this.categoriesList = res.data;
-		});
-	}
-	// 查询条件的参数名以及参数值转换
+	// 后端搜索 -> 提交 form 表单前参数处理
 	transformParams() {
 		this.transformDateParams();
 		// 查询参数
@@ -576,6 +562,7 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 	}
+	// 将时间转换成时间戳格式
 	transformDateParams() {
 		if (this.dateRange.start) {
 			this.formModel.startListTime = Date.parse(this.dateRange.start);
@@ -583,6 +570,36 @@ export default class GoodsSelectorCtrl {
 		if (this.dateRange.end) {
 			this.formModel.endListTime = Date.parse(this.dateRange.end);
 		}
+	}
+	// 前端搜索 -> 对已选商品列表进行处理
+	transformSelectedItems() {
+		this.selectedItems.forEach(item => {
+			item.isHide = false;
+			item.shopCategoriesId = this.getNewArray(item.shopCategories, 'cid');
+			item.categoriesId = this.getNewArray(item.categories, 'cid');
+			item.propsPid = this.getNewArray(item.props, 'pid');
+			item.propsVid = this.getNewArray(item.props, 'vid');
+			item.maxPrice = item.minPrice = item.price;
+			item.startListTime = item.listTime;
+			item.endListTime = item.delistTime;
+			item.skus.length && item.skus.forEach(sku => {
+				sku.isHide = false;
+				sku.skusOuterId = sku.outerId;
+				sku.skusPropsVname = this.getNewArray(sku.props, 'vname');
+			});
+			match(this.formModel, item.skus, this.skuFormConfig);
+			if (item.skus.length) {
+				item.isHide = this.isAllChildrenHide(item.skus);
+			}
+		});
+	}
+	// 返回一个新数组，新数组元素为原数组中元素对象的某个属性的值
+	getNewArray(sourceArr, fieldName) {
+		let result = [];
+		sourceArr.forEach(item => {
+			result.push(item[fieldName]);
+		});
+		return result;
 	}
 	// 更新表格数据（数据从后端请求）
 	//    -> update 全部商品中状态
@@ -593,32 +610,6 @@ export default class GoodsSelectorCtrl {
 				this.dataMerge(opts.data, this.selectedItemsBuffer);
 				this.currentPageChecked = this.isAllChildrenSelected(opts.data);
 			}
-		});
-	}
-	// 从集合中获取 entity 的 index, 找不到返回 -1
-	findEntity(collection, entity) {
-		return collection.findIndex(item => angular.equals(item.id, entity.id));
-	}
-	// 所有孩子状态都为 checked， 返回 true, 反之返回 false
-	isAllChildrenSelected(children) {
-		return children && children.every(child => {
-			return child.checked;
-		});
-	}
-	// 至少有一个孩子被选中（不包括全部孩子被选的情况）， 返回 true, 反之返回 false
-	isSomeChildrenSelected(children) {
-		return children && !this.isAllChildrenSelected(children) && children.some(child => {
-			return child.checked || child.partial;
-		});
-	}
-	// 所有孩子都被移除， 返回 true, 反之返回 false
-	isAllChildrenRemoved(children) {
-		return !(this.isAllChildrenSelected(children) || this.isSomeChildrenSelected(children));
-	}
-	// 所有孩子都隐藏
-	isAllChildrenHide(children) {
-		return children && children.every(child => {
-			return child.isHide;
 		});
 	}
 	// 将商品状态恢复成初始状态
@@ -644,6 +635,26 @@ export default class GoodsSelectorCtrl {
 			this.selectedItemsBuffer.push(cloneDeep(entity));
 		}
 	}
+	// 超过 maxLength 个字则隐藏多余字，显示 '...'
+	listCharacterIntercept(list, maxLength) {
+		let characterIntercept = (str, maxLength) => {
+			if (str.length > maxLength) {
+				str = str.slice(0, maxLength) + '...';
+			}
+			return str;
+		};
+		list.forEach(item => {
+			item.interceptName = characterIntercept(item.name, maxLength);
+			item.skus && item.skus.length && item.skus.forEach(sku => {
+				sku.interceptName = characterIntercept(sku.name, maxLength);
+			});
+		});
+	}
+	// 从集合中获取 entity 的 index, 找不到返回 -1
+
+	findEntity(collection, entity) {
+		return collection.findIndex(item => angular.equals(item.id, entity.id));
+	}
 	// merge->分页时进行页的切换时需要保持商品被选状态
 	dataMerge(goodsArr, selectedGoodsArr) {
 		for (let i = 0; i < goodsArr.length; i++) {
@@ -655,32 +666,26 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 	}
-	// 超过 maxLength 个字则隐藏多余字，显示 '...'
-	characterInterCept(str, maxLength) {
-		if (str.length > maxLength) {
-			str = str.slice(0, maxLength) + '...';
-		}
-		return str;
-	}
-	// tab 切换时 form 表单处理
-	handleTabChange(dateRangeModel, formModel) {
-		this.dateRange = cloneDeep(dateRangeModel);
-		for (let attr in formModel) {
-			if (formModel.hasOwnProperty(attr)) {
-				if (attr !== 'propsPid' && attr !== 'propsVid') {
-					this.formModel[attr] = cloneDeep(formModel[attr]);
-				}
-			}
-		}
-		this.propsPid = cloneDeep(formModel.propsPid);
-		this.propsVid = cloneDeep(formModel.propsVid);
-	}
-	// 返回一个新数组，新数组元素为原数组中元素对象的某个属性的值
-	getNewArray(sourceArr, fieldName) {
-		let result = [];
-		sourceArr.forEach(item => {
-			result.push(item[fieldName]);
+	// 所有孩子状态都为 checked， 返回 true, 反之返回 false
+	isAllChildrenSelected(children) {
+		return children && children.every(child => {
+			return child.checked;
 		});
-		return result;
+	}
+	// 至少有一个孩子被选中（不包括全部孩子被选的情况）， 返回 true, 反之返回 false
+	isSomeChildrenSelected(children) {
+		return children && !this.isAllChildrenSelected(children) && children.some(child => {
+			return child.checked || child.partial;
+		});
+	}
+	// 所有孩子都被移除， 返回 true, 反之返回 false
+	isAllChildrenRemoved(children) {
+		return !(this.isAllChildrenSelected(children) || this.isSomeChildrenSelected(children));
+	}
+	// 所有孩子都隐藏
+	isAllChildrenHide(children) {
+		return children && children.every(child => {
+			return child.isHide;
+		});
 	}
 }
