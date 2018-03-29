@@ -1,4 +1,23 @@
 export default {
+	match(form, list, config) {
+		let methods = this.getMethods();
+		// 将配置转换为对应的程序
+		for (let field in config) {
+			if (typeof config[field] === 'string') {
+				config[field] = methods[config[field]];
+			}
+		}
+		// 开始过滤
+		list.forEach(item => {
+			let buf = [];
+			for (let field in config) {
+				buf.push(config[field](form[field], item[field]));
+			}
+			if (buf.indexOf(false) !== -1) {
+				item.isHide = true;
+			}
+		});
+	},
 	getMethods() {
 		return {
 			// 判断两个字符串是否相等
@@ -43,24 +62,5 @@ export default {
 				return isMatched;
 			}
 		};
-	},
-	match(form, list, config) {
-		let methods = this.getMethods();
-		// 将配置转换为对应的程序
-		for (let field in config) {
-			if (typeof config[field] === 'string') {
-				config[field] = methods[config[field]];
-			}
-		}
-		// 开始过滤
-		list.forEach(item => {
-			let buf = [];
-			for (let field in config) {
-				buf.push(config[field](form[field], item[field]));
-			}
-			if (buf.indexOf(false) !== -1) {
-				item.isHide = true;
-			}
-		});
 	}
 };
