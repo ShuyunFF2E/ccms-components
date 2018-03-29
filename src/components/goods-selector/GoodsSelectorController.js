@@ -33,9 +33,17 @@ export default class GoodsSelectorCtrl {
 			dateOnly: true
 		};
 		// 商品自自定义类目数据
-		this.getShopCateGoriesList();
+		genResource('/api/shop_categories', false, null).get().$promise.then(res => {
+			this.shopCategoriesList = res.data;
+		}).catch(res => {
+			console.log('failed: ', res);
+		});
 		// 商品标准类目列表
-		this.getCategoriesList();
+		genResource('/api/categories', false, null).get().$promise.then(res => {
+			this.categoriesList = res.data;
+		}).catch(res => {
+			console.log('failed: ', res);
+		});
 		// 商品状态
 		this.statusList = [
 			{
@@ -349,22 +357,7 @@ export default class GoodsSelectorCtrl {
 		// };
 	}
 
-	// 请求商品自自定义类目数据
-	getShopCateGoriesList() {
-		genResource('/api/shop_categories', false, null).get().$promise.then(res => {
-			this.shopCategoriesList = res.data;
-		}).catch(res => {
-			console.log('failed: ', res);
-		});
-	}
-	// 请求商品标准类目数据
-	getCategoriesList() {
-		genResource('/api/categories', false, null).get().$promise.then(res => {
-			this.categoriesList = res.data;
-		}).catch(res => {
-			console.log('failed: ', res);
-		});
-	}
+
 	// form 表单初始化
 	initForm() {
 		this.formModel = {
