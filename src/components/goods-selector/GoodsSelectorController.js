@@ -5,6 +5,7 @@ import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
 import cloneDeep from 'lodash.clonedeep';
 import matchHelper from './MatchHelper';
+import bodyTemplate from './tpls/customer-modal-body.tpl.html';
 
 import angular from 'angular';
 
@@ -32,17 +33,23 @@ export default class GoodsSelectorCtrl {
 			disabled: false,
 			dateOnly: true
 		};
+		this.tips = null;
 		// 商品自自定义类目数据
 		genResource('/api/shop_categories', false, null).get().$promise.then(res => {
 			this.shopCategoriesList = res.data;
 		}).catch(res => {
-			console.log('failed: ', res);
+			if (!this.tips || !this.tips.element) {
+				this.tips = this._$ccTips.error('<span style="color: red;">出错提示</span>后台服务出错，请联系数云客服人员' + Math.random());
+			}
 		});
 		// 商品标准类目列表
-		genResource('/api/categories', false, null).get().$promise.then(res => {
+		genResource('/api/categorie', false, null).get().$promise.then(res => {
 			this.categoriesList = res.data;
 		}).catch(res => {
-			console.log('failed: ', res);
+			console.log('failed:', res);
+			if (!this.tips || !this.tips.element) {
+				this.tips = this._$ccTips.error('<span style="color: red;">出错提示</span>后台服务出错，请联系数云客服人员' + Math.random());
+			}
 		});
 		// 商品状态
 		this.statusList = [
@@ -389,7 +396,9 @@ export default class GoodsSelectorCtrl {
 					this.formModel.propsPid = this.propsPid;
 				})
 				.catch(res => {
-					console.log('failed:', res);
+					if (!this.tips || !this.tips.element) {
+						this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员' + Math.random());
+					}
 				});
 		} else {
 			this.propsPidList = [];
@@ -511,9 +520,21 @@ export default class GoodsSelectorCtrl {
 				this.transformParams();
 				this.updateGrid();
 			} else {
+				console.log(this.formModel);
 				this.transformDateParams();
 				this.transformSelectedItems();
 				matchHelper.match(this.formModel, this.selectedItems, this.formConfig);
+				this.selectedItems.forEach(item => {
+					if (!item.skus.length) {
+						if (this.formModel.skusOuterId || this.formModel.skusPropsVname) {
+							item.isHide = true;
+						}
+					} else {
+						if (this.isAllChildrenHide(item.skus)) {
+							item.isHide = true;
+						}
+					}
+				});
 				// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			}
 		}, () => {
@@ -679,6 +700,33 @@ export default class GoodsSelectorCtrl {
 	isAllChildrenHide(children) {
 		return children && children.every(child => {
 			return child.isHide;
+		});
+	}
+	// 批量添加 -- 后端查询
+	addSection() {
+		var modalInstance = this._$ccModal
+			.modal({
+				scope: this._$scope,
+				title: '批量导入商品ID',
+				fullscreen: true,
+				locals: {
+					data: [1, 2, 3]
+				},
+				style: {
+					width: '568px',
+					'min-width': '568px',
+					height: '265px'
+				},
+				__body: bodyTemplate
+			})
+			.open();
+		// 收集modal的操作反馈,确认为成功回调,取消为失败回调
+		modalInstance.result.then(v => {
+			self.array = v;
+			console.log('resolved-------', v);
+		}, v => {
+			self.array.length = 0;
+			console.log('rejected-------', v);
 		});
 	}
 }

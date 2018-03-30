@@ -359,3 +359,44 @@
 .tooltip-opened {
   z-index: 10000;
 }
+.float-tips-container {
+  z-index: 10000!important;
+}
+.modal-body {
+  .section-modal {
+	.tips {
+	  background:#ecf8fc;
+	  border:1px solid #d2eeff;
+	  border-radius:2px;
+	  width:532px;
+	  height:28px;
+	  line-height: 28px;
+	  font-family:MicrosoftYaHei;
+	  font-size:12px;
+	  color:#999999;
+	  padding-left: 10px;
+	}
+	.addition {
+	  display: flex;
+	  flex-wrap: wrap;
+	  margin-top: 17px;
+	  margin-bottom: 8px;
+	  span {
+		margin-left: 2px;
+	  }
+	  .cc-radio {
+		margin-right: 25px;
+		.radio-button-icon {
+		  width: 12px;
+		  height: 12px;
+		  margin-right: 8px;
+		}
+	  }
+	}
+	textarea {
+	  width: 530px;
+	  height: 226px;
+	  border:1px solid #d9d9d9;
+	}
+  }
+}

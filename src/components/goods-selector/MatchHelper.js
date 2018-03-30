@@ -23,27 +23,27 @@ export default {
 			// 判断两个字符串是否相等
 			// 商品所属店铺 shopId; 商品状态 status; 商品标准类目 categories; 商品属性 propsPid
 			equal: (formVal, val) => {
-				return formVal === null || String(formVal) === String(val);
+				return !formVal && formVal !== 0 || String(formVal).replace(/\s/g, '') === String(val);
 			},
 			// 大于等于某值
 			// 价格、时间
 			greaterEqual: (formVal, val) => {
-				return formVal === null || Number(formVal) >= Number(val);
+				return !formVal && formVal !== 0 || Number(formVal) >= Number(val);
 			},
 			// 小于等于某值
 			// 价格、时间
 			lessEqual: (formVal, val) => {
-				return formVal === null || Number(formVal) <= Number(val);
+				return !formVal && formVal !== 0 || Number(formVal) <= Number(val);
 			},
 			// 判断数组中是否存在某值
 			// 商品 id
 			equalArray: (formVal, val) => {
-				return !formVal.length || formVal[0] === '' || formVal.indexOf(String(val)) !== -1;
+				return !formVal.length || !formVal[0] && formVal[0] !== 0 || formVal.indexOf(String(val)) !== -1;
 			},
 			// 模糊匹配字符串
 			// 商品标题 name; 商品商家编码 outerId; SKU 商家编码 skusOuterId
 			fuzzySearch: (formVal, val) => {
-				return formVal === null || String(val).search(String(formVal)) !== -1;
+				return !formVal && formVal !== 0 || String(val).replace(/\s/g, '').search(String(formVal)) !== -1;
 			},
 			// 模糊匹配数组
 			// 商品自定义类目 shopCategories; 属性值 propsVid
