@@ -22,7 +22,7 @@
 		  margin: 0px;
 		  padding-left: 0px;
 		  padding-right: 0px;
-		  input:not(.date-picker-input), select:not(.ng-pristine), cc-dropdown-select, cc-dropdown-multiselect {
+		  input:not(.date-picker-input), select:not(.ng-not-empty), cc-dropdown-select, cc-dropdown-multiselect {
 			width: 150px;
 		  }
 		  &.stack-date {

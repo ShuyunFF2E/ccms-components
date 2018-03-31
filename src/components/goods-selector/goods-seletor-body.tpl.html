@@ -89,6 +89,8 @@
 					<label class="goods-label">SKU规格：</label>
 					<input type="text" ng-model="$ctrl.formModel.skusPropsVname" placeholder="">
 				</fieldset>
+				{{$ctrl.dateRange.start}}
+				{{$ctrl.dateRange.end}}
 				<fieldset class="stack-date" ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">上架时间：</label>
 					<cc-date-range opts="$ctrl.dateRange"></cc-date-range>

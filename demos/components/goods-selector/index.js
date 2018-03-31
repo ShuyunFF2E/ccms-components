@@ -292,10 +292,10 @@
 				}
 			];
 
-			var taobaoWithShopList = [{shopId: 11111, shopName: '数云食堂', plat: 'taobao'}, {shopId: 10001, shopName: 'JD数云食堂', plat: 'jos'}];
-			var jsWithShopList = [{shopId: 10001, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 11111, shopName: '数云食堂', plat: 'taobao'}];
-			var taobaoWithoutShopList = {shopId: 11111, shopName: '数云食堂', plat: 'taobao'};
-			var jdWithoutShopList = {shopId: 10001, shopName: 'JD数云食堂', plat: 'jos'};
+			var taobaoWithShopList = [{shopId: 122094, shopName: '数云食堂', plat: 'top'}, {shopId: 10001, shopName: 'JD数云食堂', plat: 'top'}];
+			var jsWithShopList = [{shopId: 122094, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 11111, shopName: '数云食堂', plat: 'jos'}];
+			var taobaoWithoutShopList = {shopId: 122094, shopName: '数云食堂', plat: 'jos'};
+			var jdWithoutShopList = {shopId: 122094, shopName: 'JD数云食堂', plat: 'jos'};
 
 			// taobao + 店铺选择
 			$scope.openTaobaoGoodsSelectorWithShopList = function() {

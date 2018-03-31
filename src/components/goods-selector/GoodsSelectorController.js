@@ -16,6 +16,8 @@ import angular from 'angular';
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
+		this.apiPrefix = '/shuyun-searchapi/1.0';
+		// this.apiPrefix = '/api';
 		// 已选商品列表
 		// this.selectedGoods = this._selectedData;
 
@@ -23,7 +25,7 @@ export default class GoodsSelectorCtrl {
 		//         -> 如果是 object, 说明是单店铺
 		//         -> 其它情况, 需要提示用户, 参数格式不正确
 		this.isShowShopList = Array.isArray(this._shopInfoData);
-		this.isTaobao = this.isShowShopList ? this._shopInfoData[0].plat === 'taobao' : this._shopInfoData.plat === 'taobao';
+		this.isTaobao = this.isShowShopList ? this._shopInfoData[0].plat === 'top' : this._shopInfoData.plat === 'top';
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
 		// form 区域日期配置
@@ -34,23 +36,6 @@ export default class GoodsSelectorCtrl {
 			dateOnly: true
 		};
 		this.tips = null;
-		// 商品自自定义类目数据
-		genResource('/api/shop_categories', false, null).get().$promise.then(res => {
-			this.shopCategoriesList = res.data;
-		}).catch(res => {
-			if (!this.tips || !this.tips.element) {
-				this.tips = this._$ccTips.error('<span style="color: red;">出错提示</span>后台服务出错，请联系数云客服人员' + Math.random());
-			}
-		});
-		// 商品标准类目列表
-		genResource('/api/categorie', false, null).get().$promise.then(res => {
-			this.categoriesList = res.data;
-		}).catch(res => {
-			console.log('failed:', res);
-			if (!this.tips || !this.tips.element) {
-				this.tips = this._$ccTips.error('<span style="color: red;">出错提示</span>后台服务出错，请联系数云客服人员' + Math.random());
-			}
-		});
 		// 商品状态
 		this.statusList = [
 			{
@@ -59,11 +44,11 @@ export default class GoodsSelectorCtrl {
 			},
 			{
 				'title': '在架',
-				'value': 'true'
+				'value': '1'
 			},
 			{
 				'title': '下架',
-				'value': 'false'
+				'value': '0'
 			}
 		];
 
@@ -71,16 +56,19 @@ export default class GoodsSelectorCtrl {
 			valueField: 'shopId',
 			displayField: 'shopName'
 		};
-		this.shopCategoriesFieldsMap = this.categoriesFieldsMap = this.propsPidFieldsMap = this.propsVidFieldsMap = {
+		this.shopCategoriesFieldsMap = this.categoriesFieldsMap = this.propsPidFieldsMap = {
 			valueField: 'id',
 			displayField: 'name'
+		};
+		this.propsVidFieldsMap = {
+			valueField: 'id',
+			displayField: 'value'
 		};
 		this.statusListFieldsMap = {
 			valueField: 'value',
 			displayField: 'title'
 		};
 
-		this.initForm();
 		// form 区域价格校验
 		this.validators = {
 			/**
@@ -151,11 +139,33 @@ export default class GoodsSelectorCtrl {
 			skusPropsVname: 'fuzzySearch'
 		};
 
+		this.initForm();
+
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		this.allGoodsFormModel = {};
 		this.selectedDateRangeModel = cloneDeep(this.dateRange);
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
-
+		// 商品自自定义类目数据
+		// this.shopCategoriesList = [];
+		// this.shopList[0].plat
+		genResource(`${this.apiPrefix}/shop_categories?platform=${this.shopList[0].plat}&shopId=${this.shopList[0].shopId}`, false, null).get().$promise.then(res => {
+			this.shopCategoriesList = res.data.data;
+			console.log('shopCategoriesList', this.shopCategoriesList);
+		}).catch(res => {
+			if (!this.tips || !this.tips.element) {
+				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
+			}
+		});
+		// 商品标准类目列表
+		// this.categoriesList = [];
+		genResource(`${this.apiPrefix}/categories?platform=${this.shopList[0].plat}&shopId=${this.shopList[0].shopId}`, false, null).get().$promise.then(res => {
+			this.categoriesList = res.data.data;
+			console.log('categoriesList', this.categoriesList);
+		}).catch(res => {
+			if (!this.tips || !this.tips.element) {
+				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
+			}
+		});
 		// 全部商品->表格配置
 		this._selectedData.forEach(item => {
 			item.checked = true;
@@ -169,10 +179,13 @@ export default class GoodsSelectorCtrl {
 		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
 		this.selectedItemsBuffer = [];
 		this.pagerGridOptions = {
-			resource: this._$resource('/api/item'),
+			resource: this._$resource(`${this.apiPrefix}/items`),
 			response: null,
 			queryParams: {
-				pageNum: 1
+				name: '2017',
+				currentPage: '',
+				pageSize: '',
+				pageNum: ''
 			},
 			columnsDef: [
 				{
@@ -213,15 +226,27 @@ export default class GoodsSelectorCtrl {
 					res['totals'] = res['totalCount'];
 					delete res['totalCount'];
 				}
+				res.list.forEach(item => {
+					item.skus && item.skus.length && item.skus.forEach(sku => {
+						let propName = '';
+						if (sku.props && sku.props.length) {
+							for (let i = 0; i < sku.props.length; i++) {
+								if (i === sku.props.length - 1) {
+									propName += sku.props[i].pname + '：' + sku.props[i].vname;
+								} else {
+									propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
+								}
+							}
+						}
+						sku['name'] = propName;
+					});
+				});
 				this.resInfo = res;
 				// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
 				this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 				this.listCharacterIntercept(this.resInfo.list, 17);
 				return res;
-			},
-			pager: {
-				pageSize: 10
 			}
 		};
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
@@ -368,7 +393,7 @@ export default class GoodsSelectorCtrl {
 	// form 表单初始化
 	initForm() {
 		this.formModel = {
-			platform: this.shopList[0].plat, // 平台
+			// platform: this.shopList[0].plat, // 平台
 			shopId: this.shopList[0].shopId, // 店铺
 			id: [], // 商品ID数组??????????
 			name: null, // 商品名称模糊匹配
@@ -390,14 +415,14 @@ export default class GoodsSelectorCtrl {
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.categoriesId) {
-			genResource(`/api/categories/${item.id}/properties`, false, null).get().$promise
+			genResource(`${this.apiPrefix}/categories/${item.id}/properties`, false, null).get().$promise
 				.then(res => {
-					this.propsPidList = res.data;
+					this.propsPidList = res.data.data;
 					this.formModel.propsPid = this.propsPid;
 				})
 				.catch(res => {
 					if (!this.tips || !this.tips.element) {
-						this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员' + Math.random());
+						this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
 					}
 				});
 		} else {
@@ -455,17 +480,21 @@ export default class GoodsSelectorCtrl {
 	transformDateParams() {
 		if (this.dateRange.start) {
 			this.formModel.startListTime = Date.parse(this.dateRange.start);
+		} else {
+			this.formModel.startListTime = null;
 		}
 		if (this.dateRange.end) {
 			this.formModel.endListTime = Date.parse(this.dateRange.end);
+		} else {
+			this.formModel.endListTime = null;
 		}
 	}
 	// 前端搜索 -> 对已选商品列表进行处理
 	transformSelectedItems() {
 		this.selectedItems.forEach(item => {
 			item.isHide = false;
-			item.shopCategoriesId = this.getNewArray(item.shopCategories, 'cid');
-			item.categoriesId = this.getNewArray(item.categories, 'cid');
+			item.shopCategoriesId = this.getNewArray(item.shopCategories, 'id');
+			item.categoriesId = this.getNewArray(item.categories, 'id');
 			item.propsPid = this.getNewArray(item.props, 'pid');
 			item.propsVid = this.getNewArray(item.props, 'vid');
 			item.maxPrice = item.minPrice = item.price;
@@ -487,6 +516,8 @@ export default class GoodsSelectorCtrl {
 		if (text === '已选商品') {
 			this.isSelectedGoodsTab = true;
 			this.allDateRangeModel = cloneDeep(this.dateRange);
+			console.log(this.allDateRangeModel);
+			console.log('allDateRangeModel', this.allDateRangeModel);
 			this.allGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
 			this.listCharacterIntercept(this.selectedItems, 15);
@@ -494,6 +525,7 @@ export default class GoodsSelectorCtrl {
 		} else {
 			this.isSelectedGoodsTab = false;
 			this.selectedDateRangeModel = cloneDeep(this.dateRange);
+			console.log('selectedDateRangeModel', this.selectedDateRangeModel);
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
 			this.listCharacterIntercept(this.resInfo.list, 17);
