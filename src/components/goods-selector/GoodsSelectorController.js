@@ -146,21 +146,16 @@ export default class GoodsSelectorCtrl {
 		this.selectedDateRangeModel = cloneDeep(this.dateRange);
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		// 商品自自定义类目数据
-		// this.shopCategoriesList = [];
-		// this.shopList[0].plat
 		genResource(`${this.apiPrefix}/shop_categories?platform=${this.shopList[0].plat}&shopId=${this.shopList[0].shopId}`, false, null).get().$promise.then(res => {
 			this.shopCategoriesList = res.data.data;
-			console.log('shopCategoriesList', this.shopCategoriesList);
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
 			}
 		});
 		// 商品标准类目列表
-		// this.categoriesList = [];
 		genResource(`${this.apiPrefix}/categories?platform=${this.shopList[0].plat}&shopId=${this.shopList[0].shopId}`, false, null).get().$promise.then(res => {
 			this.categoriesList = res.data.data;
-			console.log('categoriesList', this.categoriesList);
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
@@ -182,9 +177,9 @@ export default class GoodsSelectorCtrl {
 			resource: this._$resource(`${this.apiPrefix}/items`),
 			response: null,
 			queryParams: {
-				name: '2017',
-				currentPage: '',
-				pageSize: '',
+				shopId: '70866974',
+				currentPage: 1,
+				pageSize: 10,
 				pageNum: ''
 			},
 			columnsDef: [
@@ -221,31 +216,37 @@ export default class GoodsSelectorCtrl {
 				if (res['data']) {
 					res['list'] = res['data'];
 					delete res['data'];
+				} else {
+					res['list'] = [];
 				}
 				if (res['totalCount']) {
 					res['totals'] = res['totalCount'];
 					delete res['totalCount'];
 				}
-				res.list.forEach(item => {
-					item.skus && item.skus.length && item.skus.forEach(sku => {
-						let propName = '';
-						if (sku.props && sku.props.length) {
-							for (let i = 0; i < sku.props.length; i++) {
-								if (i === sku.props.length - 1) {
-									propName += sku.props[i].pname + '：' + sku.props[i].vname;
-								} else {
-									propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
+				console.log(res.list);
+				if (res.list && res.list.length) {
+					res.list.forEach(item => {
+						item.skus && item.skus.length && item.skus.forEach(sku => {
+							let propName = '';
+							if (sku.props && sku.props.length) {
+								for (let i = 0; i < sku.props.length; i++) {
+									if (i === sku.props.length - 1) {
+										propName += sku.props[i].pname + '：' + sku.props[i].vname;
+									} else {
+										propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
+									}
 								}
 							}
-						}
-						sku['name'] = propName;
+							sku['name'] = propName;
+						});
 					});
-				});
-				this.resInfo = res;
-				// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
-				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
-				this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
-				this.listCharacterIntercept(this.resInfo.list, 17);
+					// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
+					this.dataMerge(res.list, this.selectedItemsBuffer);
+					this.currentPageChecked = this.isAllChildrenSelected(res.list);
+					this.listCharacterIntercept(res.list, 17);
+					this.resInfo = res;
+				}
+				console.log('res:', res);
 				return res;
 			}
 		};
@@ -393,7 +394,7 @@ export default class GoodsSelectorCtrl {
 	// form 表单初始化
 	initForm() {
 		this.formModel = {
-			// platform: this.shopList[0].plat, // 平台
+			platform: this.shopList[0].plat, // 平台
 			shopId: this.shopList[0].shopId, // 店铺
 			id: [], // 商品ID数组??????????
 			name: null, // 商品名称模糊匹配
@@ -516,8 +517,6 @@ export default class GoodsSelectorCtrl {
 		if (text === '已选商品') {
 			this.isSelectedGoodsTab = true;
 			this.allDateRangeModel = cloneDeep(this.dateRange);
-			console.log(this.allDateRangeModel);
-			console.log('allDateRangeModel', this.allDateRangeModel);
 			this.allGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
 			this.listCharacterIntercept(this.selectedItems, 15);
@@ -525,7 +524,6 @@ export default class GoodsSelectorCtrl {
 		} else {
 			this.isSelectedGoodsTab = false;
 			this.selectedDateRangeModel = cloneDeep(this.dateRange);
-			console.log('selectedDateRangeModel', this.selectedDateRangeModel);
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
 			this.listCharacterIntercept(this.resInfo.list, 17);
@@ -552,7 +550,6 @@ export default class GoodsSelectorCtrl {
 				this.transformParams();
 				this.updateGrid();
 			} else {
-				console.log(this.formModel);
 				this.transformDateParams();
 				this.transformSelectedItems();
 				matchHelper.match(this.formModel, this.selectedItems, this.formConfig);
