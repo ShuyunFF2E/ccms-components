@@ -391,6 +391,10 @@
 		  height: 12px;
 		  margin-right: 8px;
 		}
+		&.checked .radio-button-icon:before {
+		  left: 1px;
+		  top: 1px;
+		}
 	  }
 	}
 	textarea {

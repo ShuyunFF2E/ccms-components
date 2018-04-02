@@ -7,6 +7,8 @@ import cloneDeep from 'lodash.clonedeep';
 import matchHelper from './MatchHelper';
 import bodyTemplate from './tpls/customer-modal-body.tpl.html';
 
+import sectionAddCtrl from './SectionAddCtrl';
+
 import angular from 'angular';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData',
@@ -244,8 +246,8 @@ export default class GoodsSelectorCtrl {
 					this.dataMerge(res.list, this.selectedItemsBuffer);
 					this.currentPageChecked = this.isAllChildrenSelected(res.list);
 					this.listCharacterIntercept(res.list, 17);
-					this.resInfo = res;
 				}
+				this.resInfo = res;
 				console.log('res:', res);
 				return res;
 			}
@@ -746,7 +748,9 @@ export default class GoodsSelectorCtrl {
 					'min-width': '568px',
 					height: '265px'
 				},
-				__body: bodyTemplate
+				__body: bodyTemplate,
+				controller: sectionAddCtrl,
+				controllerAs: '$ctrl'
 			})
 			.open();
 		// 收集modal的操作反馈,确认为成功回调,取消为失败回调
