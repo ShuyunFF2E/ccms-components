@@ -129,7 +129,6 @@ export default class GoodsSelectorCtrl {
 			propsPid: 'equal',
 			propsVid: 'fuzzymutipleArray',
 			status: 'equal',
-			skusId: 'equalArray',
 			outerId: 'fuzzySearch',
 			startListTime: 'lessEqual',
 			endListTime: 'greaterEqual',
@@ -138,7 +137,8 @@ export default class GoodsSelectorCtrl {
 		};
 		this.skuFormConfig = {
 			skusOuterId: 'fuzzySearch',
-			skusPropsVname: 'fuzzySearch'
+			skusPropsVname: 'fuzzySearch',
+			skusId: 'equalArray'
 		};
 
 		this.initForm();
@@ -148,7 +148,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedDateRangeModel = cloneDeep(this.dateRange);
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		// 商品自自定义类目数据
-		genResource(`${this.apiPrefix}/shop_categories?platform=${this.shopList[0].plat}&shopId=${this.shopList[0].shopId}`, false, null).get().$promise.then(res => {
+		genResource(`${this.apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
 			this.shopCategoriesList = res.data.data;
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
@@ -156,7 +156,7 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 		// 商品标准类目列表
-		genResource(`${this.apiPrefix}/categories?platform=${this.shopList[0].plat}&shopId=${this.shopList[0].shopId}`, false, null).get().$promise.then(res => {
+		genResource(`${this.apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
 			this.categoriesList = res.data.data;
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
@@ -178,11 +178,13 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions = {
 			resource: this._$resource(`${this.apiPrefix}/items`),
 			response: null,
+			// pageNum: null,
 			queryParams: {
-				shopId: '70866974',
-				currentPage: 1,
+				shopId: this.formModel.shopId,
+				platform: this.formModel.platform,
+				// currentPage: 1,
 				pageSize: 10,
-				pageNum: ''
+				pageNum: 1
 			},
 			columnsDef: [
 				{
@@ -211,10 +213,6 @@ export default class GoodsSelectorCtrl {
 			footerTpl: '/src/components/goods-selector/tpls/customer-footer.tpl.html',
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
-				if (res['currentPage']) {
-					res['pageNum'] = res['currentPage'];
-					delete res['currentPage'];
-				}
 				if (res['data']) {
 					res['list'] = res['data'];
 					delete res['data'];
@@ -225,7 +223,6 @@ export default class GoodsSelectorCtrl {
 					res['totals'] = res['totalCount'];
 					delete res['totalCount'];
 				}
-				console.log(res.list);
 				if (res.list && res.list.length) {
 					res.list.forEach(item => {
 						item.skus && item.skus.length && item.skus.forEach(sku => {
@@ -248,7 +245,6 @@ export default class GoodsSelectorCtrl {
 					this.listCharacterIntercept(res.list, 17);
 				}
 				this.resInfo = res;
-				console.log('res:', res);
 				return res;
 			}
 		};
@@ -453,6 +449,9 @@ export default class GoodsSelectorCtrl {
 			if (this.formModel.hasOwnProperty(prop)) {
 				switch (prop) {
 					case 'skusId':
+						if (this.formModel[prop].length && !this.formModel[prop][0] && this.formModel[prop][0] !== 0) {
+							this.formModel[prop] = [];
+						}
 						queryCollection['skus' + '.' + 'id'] = this.formModel[prop];
 						break;
 					case 'skusOuterId':
@@ -472,6 +471,12 @@ export default class GoodsSelectorCtrl {
 						break;
 					case 'propsVid':
 						queryCollection['props' + '.' + 'vid'] = this.formModel[prop];
+						break;
+					case 'id':
+						if (this.formModel[prop].length && !this.formModel[prop][0] && this.formModel[prop][0] !== 0) {
+							this.formModel[prop] = [];
+						}
+						queryCollection[prop] = this.formModel[prop];
 						break;
 					default:
 						queryCollection[prop] = this.formModel[prop];
@@ -506,10 +511,11 @@ export default class GoodsSelectorCtrl {
 			item.skus.length && item.skus.forEach(sku => {
 				sku.isHide = false;
 				sku.skusOuterId = sku.outerId;
+				sku.skusId = sku.id;
 				sku.skusPropsVname = this.getNewArray(sku.props, 'vname');
 			});
 			matchHelper.match(this.formModel, item.skus, this.skuFormConfig);
-			if (item.skus.length) {
+			if (item.skus && item.skus.length) {
 				item.isHide = this.isAllChildrenHide(item.skus);
 			}
 		});
