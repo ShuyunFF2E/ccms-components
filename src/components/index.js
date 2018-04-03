@@ -9,6 +9,7 @@ import angular from 'angular';
 import altSrc from './alt-src';
 import areaSelector from './area-selector';
 import calendar from './calendar';
+import captureEvent from './capture-event';
 import checkbox from './checkbox';
 import customerProfileBoard from './customer-profile-board';
 import datePicker from './date-picker';
@@ -40,6 +41,7 @@ export default angular
 		altSrc,
 		areaSelector,
 		calendar,
+		captureEvent,
 		checkbox,
 		customerProfileBoard,
 		datePicker,
