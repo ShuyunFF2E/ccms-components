@@ -290,7 +290,7 @@
 			  }
 			}
 			> .cc-grid-footer {
-			  padding: 15px 11px 4px 11px;
+			  padding: 15px 11px 14px 11px;
 			  .total-items-count, .reload, .selected-items-count {
 				display: none;
 			  }
@@ -403,4 +403,7 @@
 	  border:1px solid #d9d9d9;
 	}
   }
+}
+.ccms-modal .container > footer {
+  margin-top: -10px;
 }

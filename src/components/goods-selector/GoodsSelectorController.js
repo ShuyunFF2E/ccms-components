@@ -37,7 +37,7 @@ export default class GoodsSelectorCtrl {
 			disabled: false,
 			dateOnly: true
 		};
-		this.tips = null;
+		this.tips = this.warnTips = null;
 		// 商品状态
 		this.statusList = [
 			{
@@ -149,7 +149,11 @@ export default class GoodsSelectorCtrl {
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		// 商品自自定义类目数据
 		genResource(`${this.apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			this.shopCategoriesList = res.data.data;
+			if (res.flag === 'fail') {
+				this.shopCategoriesList = [];
+			} else {
+				this.shopCategoriesList = res.data;
+			}
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
@@ -157,32 +161,34 @@ export default class GoodsSelectorCtrl {
 		});
 		// 商品标准类目列表
 		genResource(`${this.apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			this.categoriesList = res.data.data;
+			if (res.flag === 'fail') {
+				this.categoriesList = [];
+			} else {
+				this.categoriesList = res.data;
+			}
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
 			}
 		});
 		// 全部商品->表格配置
-		this._selectedData.forEach(item => {
-			item.checked = true;
-			item.partial = false;
-			item.skus.forEach(sku => {
-				sku.checked = true;
-			});
-		});
 		this.selectedItems = [];
 		// selectedItemsBuffer 保存 selectedItems 中数据的副本（深拷贝）。维护 selectedItems 中数据状态。
 		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
 		this.selectedItemsBuffer = [];
+		if (this._selectedData.length) {
+			this._selectedData.forEach(entity => {
+				this.selectedItems.push(cloneDeep(entity));
+				this.selectedItemsBuffer.push(cloneDeep(entity));
+			});
+		}
+		console.log(this.selectedItemsBuffer);
 		this.pagerGridOptions = {
 			resource: this._$resource(`${this.apiPrefix}/items`),
 			response: null,
-			// pageNum: null,
 			queryParams: {
 				shopId: this.formModel.shopId,
 				platform: this.formModel.platform,
-				// currentPage: 1,
 				pageSize: 10,
 				pageNum: 1
 			},
@@ -213,7 +219,7 @@ export default class GoodsSelectorCtrl {
 			footerTpl: '/src/components/goods-selector/tpls/customer-footer.tpl.html',
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
-				if (res['data']) {
+				if (res['data'] && res.flag !== 'fail') {
 					res['list'] = res['data'];
 					delete res['data'];
 				} else {
@@ -239,6 +245,13 @@ export default class GoodsSelectorCtrl {
 							sku['name'] = propName;
 						});
 					});
+					res.list.forEach(item => {
+						let selectedItemsIndex = this.findEntity(this.selectedItems, item);
+						let selectedDataIndex = this.findEntity(this._selectedData, item);
+						if (selectedItemsIndex !== -1 && selectedDataIndex !== -1) {
+							this.selectedItems[selectedItemsIndex] = item;
+						}
+					});
 					// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 					this.dataMerge(res.list, this.selectedItemsBuffer);
 					this.currentPageChecked = this.isAllChildrenSelected(res.list);
@@ -251,10 +264,12 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
+
 		// 表格子行的展开和收起
 		this.pagerGridOptions.handleTreeIcon = entity => {
 			entity.extend = !entity.extend;
 		};
+
 		// checked 父亲, 所有孩子 checked,
 		// 反之 unchecked 父亲, 所有孩子 unchecked
 		this.pagerGridOptions.selectTreeRootItem = entity => {
@@ -279,6 +294,7 @@ export default class GoodsSelectorCtrl {
 			}
 			this.getSelectedItemsBuffer();
 		};
+
 		// 孩子中的一部分 checked, 父亲半选 partial，全部孩子 checked, 父亲 checked
 		this.pagerGridOptions.selectTreeLeafItem = (entity, sku) => {
 			sku.checked = !sku.checked;
@@ -414,9 +430,9 @@ export default class GoodsSelectorCtrl {
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.categoriesId) {
-			genResource(`${this.apiPrefix}/categories/${item.id}/properties`, false, null).get().$promise
+			genResource(`${this.apiPrefix}/categories/${item.id}/properties?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise
 				.then(res => {
-					this.propsPidList = res.data.data;
+					this.propsPidList = res.data;
 					this.formModel.propsPid = this.propsPid;
 				})
 				.catch(res => {
@@ -738,6 +754,12 @@ export default class GoodsSelectorCtrl {
 		return children && children.every(child => {
 			return child.isHide;
 		});
+	}
+	/**
+	 * @name ok 点击确认按钮
+	 */
+	ok() {
+		this._modalInstance.ok(this.selectedItems);
 	}
 	// 批量添加 -- 后端查询
 	addSection() {

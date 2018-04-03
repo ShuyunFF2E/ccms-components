@@ -14,8 +14,9 @@ const GoodsSelectorService = {
 	/**
 	 * @params shopInfo array|object array 表示有店铺选择 object 表示没有店铺选择 (必填)
 	 * @params selectedGoods array 已选商品列表 默认是[](可选)
+	 * @params isOnlyChecked bool 是否仅允许查看
 	 * */
-	goodsSelector(shopInfo, selectedGoods = []) {
+	goodsSelector(shopInfo, isOnlyChecked = false, selectedGoods = []) {
 
 		if (typeof shopInfo === 'undefined') {
 			throw new Error('goodsSelector 缺少 shopInfo 参数');
@@ -25,9 +26,9 @@ const GoodsSelectorService = {
 				title: '商品选择',
 				style: {'width': '1025px', 'min-width': '1025px', 'max-width': '1025px', 'min-height': '530px'},
 				fullscreen: false,
-				hasFooter: true,
+				hasFooter: !isOnlyChecked,
 				__body: bodyTemplate,
-				locals: {shopInfoData: shopInfo, selectedData: selectedGoods},
+				locals: {shopInfoData: shopInfo, isOnlyChecked: isOnlyChecked, selectedData: selectedGoods},
 				controller: GoodsSelectorController,
 				controllerAs: '$ctrl',
 				onClose: noop
