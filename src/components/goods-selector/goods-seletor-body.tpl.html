@@ -34,7 +34,7 @@
 					<!--<input type="text" ng-model="$ctrl.formModel.goodsLabel" placeholder="商品标签" ng-focus="$ctrl.openGoodsLabel($ctrl.selectedGoods.goodsLabelList)">-->
 				<!--</fieldset>-->
 				<fieldset>
-					<label class="goods-label">商品标准类目：</label>
+					<label class="goods-label">标准类目：</label>
 					<cc-dropdown-select
 							placeholder="请选择"
 							model="$ctrl.formModel.categoriesId"
@@ -103,7 +103,7 @@
 					<button type="button" class="btn-ok search" ng-click="$ctrl.search($ctrl.isSelectedGoodsTab)">搜索</button>
 					<span class="reset" ng-click="$ctrl.reset($ctrl.goodsSelectorForm)">重置</span>
 					<span class="add-addition" ng-if="$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = false">高级搜索</span>
-					<span class="add-addition" ng-if="!$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = true">简单搜索</span>
+					<span class="add-addition" ng-if="!$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = true; $ctrl.initComplexForm();">简单搜索</span>
 					<!--<span class="add-addition" ng-if="$ctrl.isShowShopList">添加为搜索条件</span>-->
 				</fieldset>
 			</form>

@@ -18,6 +18,7 @@ import angular from 'angular';
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
+		window.cloneDeep = cloneDeep;
 		this.apiPrefix = '/shuyun-searchapi/1.0';
 		// this.apiPrefix = '/api';
 		// 已选商品列表
@@ -189,8 +190,11 @@ export default class GoodsSelectorCtrl {
 			queryParams: {
 				shopId: this.formModel.shopId,
 				platform: this.formModel.platform,
-				pageSize: 10,
+				pageSize: 3,
 				pageNum: 1
+			},
+			pager: {
+				pageSizeList: [2, 3, 4]
 			},
 			columnsDef: [
 				{
@@ -219,6 +223,7 @@ export default class GoodsSelectorCtrl {
 			footerTpl: '/src/components/goods-selector/tpls/customer-footer.tpl.html',
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
+				console.log('res-----:', res);
 				if (res['data'] && res.flag !== 'fail') {
 					res['list'] = res['data'];
 					delete res['data'];
@@ -231,7 +236,11 @@ export default class GoodsSelectorCtrl {
 				}
 				if (res.list && res.list.length) {
 					res.list.forEach(item => {
+						item['price'] = '￥' + this.keepTwoDecimal(item['price']);
+						item['quantity'] = item['quantity'] + '件';
 						item.skus && item.skus.length && item.skus.forEach(sku => {
+							sku['price'] = '￥' + this.keepTwoDecimal(sku['price']);
+							sku['quantity'] = sku['quantity'] + '件';
 							let propName = '';
 							if (sku.props && sku.props.length) {
 								for (let i = 0; i < sku.props.length; i++) {
@@ -245,16 +254,22 @@ export default class GoodsSelectorCtrl {
 							sku['name'] = propName;
 						});
 					});
-					res.list.forEach(item => {
-						let selectedItemsIndex = this.findEntity(this.selectedItems, item);
-						let selectedDataIndex = this.findEntity(this._selectedData, item);
-						if (selectedItemsIndex !== -1 && selectedDataIndex !== -1) {
-							this.selectedItems[selectedItemsIndex] = item;
-						}
-					});
 					// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 					this.dataMerge(res.list, this.selectedItemsBuffer);
+					this.selectedItems.forEach((item, index) => {
+						let targetIndex = this.findEntity(res.list, item);
+						if (targetIndex !== -1) {
+							this.selectedItems.splice(index, 1);
+							this.selectedItems.push(res.list[targetIndex]);
+						}
+					});
 					this.currentPageChecked = this.isAllChildrenSelected(res.list);
+					if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
+						res.list.forEach(item => {
+							item.extend = true;
+						});
+					}
+					this.isExtendAll = this.isAllChildrenExtend(res.list);
 					this.listCharacterIntercept(res.list, 17);
 				}
 				this.resInfo = res;
@@ -268,6 +283,11 @@ export default class GoodsSelectorCtrl {
 		// 表格子行的展开和收起
 		this.pagerGridOptions.handleTreeIcon = entity => {
 			entity.extend = !entity.extend;
+			if (this.isSelectedGoodsTab) {
+				this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
+			} else {
+				this.isExtendAll = this.isAllChildrenExtend(this.resInfo.list);
+			}
 		};
 
 		// checked 父亲, 所有孩子 checked,
@@ -337,7 +357,8 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.transformer = null;
 		this.selectedPagerGridOptions.pager = {
 			pageNum: 1,
-			pageSize: 10
+			pageSize: 3,
+			pageSizeList: [2, 3, 4]
 		};
 
 		// 移除父亲: 从已选商品中删除父亲（包括 sku）。
@@ -352,7 +373,7 @@ export default class GoodsSelectorCtrl {
 				this.selectedItems.splice(targetIndex, 1);
 			}
 			// 刷新
-			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个父亲被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
@@ -376,32 +397,30 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 			// 刷新
-			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个孩子被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
 
 		// 表格数据来自于 externalData 时，分页操作
-		// let filteredData = [];
-		// const wrapGridData = (currentPage, pageSize, data) => {
-		// 	this.selectedPagerGridOptions.pager.pageNum = currentPage;
-		// 	this.selectedPagerGridOptions.pager.pageSize = pageSize;
-		// 	this.selectedPagerGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
-		// 	this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
-		// 	return this.selectedPagerGridOptions;
-		// };
-		// this.selectedPagerGridOptions.onSearch = name => {
-		// 	const currentPage = 1;
-		// 	const pageSize = this.pager.pageSize;
-		// 	filteredData = this._$filter('filter')(this.selectedItems, name);
-		// 	this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, filteredData));
-		// };
-		// this.selectedPagerGridOptions.onRefresh = opts => {
-		// 	const currentPage = opts.pager.pageNum;
-		// 	const pageSize = opts.pager.pageSize;
-		// 	const data = filteredData.length ? filteredData : this.selectedItems;
-		// 	this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
-		// };
+		const wrapGridData = (currentPage, pageSize, data) => {
+			this.selectedPagerGridOptions.pager.pageNum = currentPage;
+			this.selectedPagerGridOptions.pager.pageSize = pageSize;
+			this.selectedPagerGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
+			this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
+			return this.selectedPagerGridOptions;
+		};
+		this.selectedPagerGridOptions.onRefresh = opts => {
+			const currentPage = opts.pager.pageNum;
+			const pageSize = opts.pager.pageSize;
+			const data = [];
+			this.selectedItems.forEach(item => {
+				if (!item.isHide) {
+					data.push(item);
+				}
+			});
+			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
+		};
 	}
 
 
@@ -426,6 +445,19 @@ export default class GoodsSelectorCtrl {
 			minPrice: null, // 商品价格下限
 			maxPrice: null // 商品价格下限
 		};
+	}
+	initComplexForm() {
+		let platform = this.formModel.platform,
+			shopId = this.formModel.shopId,
+			id = this.formModel.id,
+			name = this.formModel.name,
+			categoriesId = this.formModel.categoriesId;
+		this.initForm();
+		this.formModel.platform = platform;
+		this.formModel.shopId = shopId;
+		this.formModel.id = id;
+		this.formModel.name = name;
+		this.formModel.categoriesId = categoriesId;
 	}
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
@@ -460,6 +492,7 @@ export default class GoodsSelectorCtrl {
 		this.transformDateParams();
 		// 查询参数
 		const queryCollection = this.pagerGridOptions.queryParams;
+		queryCollection['pageNum'] = 1;
 		// 将部分参数属性名的驼峰形式转换成以 '.' 连接的形式
 		for (let prop in this.formModel) {
 			if (this.formModel.hasOwnProperty(prop)) {
@@ -543,14 +576,15 @@ export default class GoodsSelectorCtrl {
 			this.allDateRangeModel = cloneDeep(this.dateRange);
 			this.allGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
-			this.listCharacterIntercept(this.selectedItems, 15);
-			// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			this.selectedItems.length && this.listCharacterIntercept(this.selectedItems, 15);
+			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 		} else {
 			this.isSelectedGoodsTab = false;
 			this.selectedDateRangeModel = cloneDeep(this.dateRange);
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
-			this.listCharacterIntercept(this.resInfo.list, 17);
+			this.resInfo && this.resInfo.list && this.resInfo.list.length && this.listCharacterIntercept(this.resInfo.list, 17);
 		}
 	};
 	// tab 切换时 form 表单处理
@@ -588,7 +622,7 @@ export default class GoodsSelectorCtrl {
 						}
 					}
 				});
-				// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			}
 		}, () => {
 			console.log('校验失败!');
@@ -598,16 +632,19 @@ export default class GoodsSelectorCtrl {
 	reset(formCtrl) {
 		this._$ccValidator.setPristine(formCtrl);
 		this.initForm();
+		this.dateRange = {
+			start: null,
+			end: null,
+			disabled: false,
+			dateOnly: true
+		};
 	};
 	// 更新表格数据（数据从后端请求）
 	//    -> update 全部商品中状态
 	//    -> update 全选按钮
 	updateGrid() {
 		this._$ccGrid.refresh(this.pagerGridOptions).then(opts => {
-			if (opts.data && opts.data.length) {
-				this.dataMerge(opts.data, this.selectedItemsBuffer);
-				this.currentPageChecked = this.isAllChildrenSelected(opts.data);
-			}
+			console.log('opts:', opts);
 		});
 	}
 	// 将商品状态恢复成初始状态
@@ -678,7 +715,7 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 		// 刷新
-		// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+		this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 	};
 	// 移除全部
 	// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态；
@@ -690,7 +727,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedItemsBuffer.splice(0, this.selectedItemsBuffer.length);
 		this.selectedItems.splice(0, this.selectedItems.length);
 		// 刷新
-		// this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+		this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 		// 表格上方的全选当页, 被 unchecked
 		this.currentPageChecked = false;
 	};
@@ -698,6 +735,9 @@ export default class GoodsSelectorCtrl {
 	// 返回一个新数组，新数组元素为原数组中元素对象的某个属性的值
 	getNewArray(sourceArr, fieldName) {
 		let result = [];
+		if (!sourceArr) {
+			sourceArr = [];
+		}
 		sourceArr.forEach(item => {
 			result.push(item[fieldName]);
 		});
@@ -754,6 +794,33 @@ export default class GoodsSelectorCtrl {
 		return children && children.every(child => {
 			return child.isHide;
 		});
+	}
+	// 是否所有孩子都展开
+	isAllChildrenExtend(children) {
+		return children && children.every(child => {
+			return child.extend;
+		});
+	}
+	// 价格保留两位小数
+	keepTwoDecimal(number) {
+		let buffer = [];
+		if (number || number === 0) {
+			buffer = String(number).split('.');
+		}
+		if (buffer.length === 2) {
+			buffer[0] = buffer[0].replace(/(?=(?!\b)(\d{3})+$)/g, ',');
+			if (buffer[1].length === 1) {
+				number = buffer[0] + '.' + buffer[1] + '0';
+			} else if (buffer[1].length === 2) {
+				number = buffer[0] + '.' + buffer[1];
+			} else {
+				number = buffer[0] + '.' + buffer[1].slice(0, 2);
+			}
+		} else {
+			number = String(number).replace(/(?=(?!\b)(\d{3})+$)/g, ',');
+			number += '.00';
+		}
+		return number;
 	}
 	/**
 	 * @name ok 点击确认按钮

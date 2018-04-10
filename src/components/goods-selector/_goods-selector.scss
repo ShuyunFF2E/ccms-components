@@ -110,8 +110,20 @@
 		&.all-goods-panel {
 		  .cc-grid-header thead tr th {
 			&:first-child {
-			  width: 252px;
+			  width: 253px;
 			  padding-left: 76px;
+			}
+			&:nth-child(2) {
+			  padding-left: 13px;
+			}
+			&:nth-child(3) {
+			  padding-left: 7px;
+			}
+			&:nth-child(4) {
+			  padding-left: 6px;
+			}
+			&:nth-child(5) {
+			  padding-left: 0;
 			}
 			&:last-child {
 			  display: none;
@@ -130,8 +142,20 @@
 			  width: 208px;
 			  padding-left: 76px;
 			}
+			&:nth-child(2) {
+			  padding-left: 15px;
+			}
+			&:nth-child(3) {
+			  padding-left: 12px;
+			}
+			&:nth-child(4) {
+			  padding-left: 15px;
+			}
+			&:nth-child(5) {
+			  padding-left: 4px;
+			}
 			&:last-child {
-			  width: 100px;
+			  width: 116px;
 			}
 		  }
 		  .row-cell, .sku-row-cell {
@@ -182,13 +206,13 @@
 		  }
 		}
 		cc-grid {
-		  height: 220px;
+		  height: 200px;
 		  width: 987px;
 		  margin-left: -2px;
 		  .cc-grid {
 			border: none;
 			.cc-grid-body {
-			  height: 220px;
+			  height: 200px;
 			  overflow-y: scroll;
 			  .default {
 				padding-top: 30px;
@@ -200,7 +224,8 @@
 			  z-index: 200000;
 			}
 			.no-data-message {
-			  padding-top: 70px;
+			  //padding-top: 70px;
+			  padding-top: 52px;
 			}
 			.cc-grid-header thead tr th {
 			  &.all-goods-head {
@@ -318,7 +343,7 @@
   gs-tabs.row-1 .gs-tab-content gs-panel {
 	top: 100px;
 	cc-grid {
-	  height: 390px;
+	  height: 370px;
 	  .cc-grid .cc-grid-body {
 		.default {
 		  padding-top: 120px;
@@ -340,7 +365,8 @@
   gs-tabs.row-4 .gs-tab-content gs-panel {
 	top: 233px;
 	cc-grid {
-	  height: 257px;
+	  //height: 257px;
+	  height: 237px;
 	  //width: 1017px;
 	  .cc-grid .cc-grid-body {
 		.default{
@@ -361,6 +387,9 @@
 }
 .float-tips-container {
   z-index: 10000!important;
+}
+.ccms-modal .container.modal .modal-body {
+  overflow: inherit;
 }
 .modal-body {
   .section-modal {
