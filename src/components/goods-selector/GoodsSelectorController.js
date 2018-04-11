@@ -183,18 +183,17 @@ export default class GoodsSelectorCtrl {
 				this.selectedItemsBuffer.push(cloneDeep(entity));
 			});
 		}
-		console.log(this.selectedItemsBuffer);
 		this.pagerGridOptions = {
 			resource: this._$resource(`${this.apiPrefix}/items`),
 			response: null,
 			queryParams: {
 				shopId: this.formModel.shopId,
 				platform: this.formModel.platform,
-				pageSize: 3,
+				pageSize: 15,
 				pageNum: 1
 			},
 			pager: {
-				pageSizeList: [2, 3, 4]
+				pageSizeList: [10, 15, 20, 25]
 			},
 			columnsDef: [
 				{
@@ -223,7 +222,6 @@ export default class GoodsSelectorCtrl {
 			footerTpl: '/src/components/goods-selector/tpls/customer-footer.tpl.html',
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
-				console.log('res-----:', res);
 				if (res['data'] && res.flag !== 'fail') {
 					res['list'] = res['data'];
 					delete res['data'];
@@ -357,8 +355,8 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.transformer = null;
 		this.selectedPagerGridOptions.pager = {
 			pageNum: 1,
-			pageSize: 3,
-			pageSizeList: [2, 3, 4]
+			pageSize: 15,
+			pageSizeList: [10, 15, 20, 25]
 		};
 
 		// 移除父亲: 从已选商品中删除父亲（包括 sku）。
@@ -609,7 +607,6 @@ export default class GoodsSelectorCtrl {
 	// 筛选
 	search(isSelectedGoodsTab) {
 		this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
-			console.log('校验成功!');
 			if (!isSelectedGoodsTab) {
 				this.transformParams();
 				this.updateGrid();
@@ -630,9 +627,7 @@ export default class GoodsSelectorCtrl {
 				});
 				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			}
-		}, () => {
-			console.log('校验失败!');
-		});
+		}, () => {});
 	};
 	// 重置表单，恢复初始值
 	reset(formCtrl) {
@@ -649,9 +644,7 @@ export default class GoodsSelectorCtrl {
 	//    -> update 全部商品中状态
 	//    -> update 全选按钮
 	updateGrid() {
-		this._$ccGrid.refresh(this.pagerGridOptions).then(opts => {
-			console.log('opts:', opts);
-		});
+		this._$ccGrid.refresh(this.pagerGridOptions).then(opts => {});
 	}
 	// 将商品状态恢复成初始状态
 	resetRootItem(entity) {
@@ -860,10 +853,8 @@ export default class GoodsSelectorCtrl {
 		// 收集modal的操作反馈,确认为成功回调,取消为失败回调
 		modalInstance.result.then(v => {
 			self.array = v;
-			console.log('resolved-------', v);
 		}, v => {
 			self.array.length = 0;
-			console.log('rejected-------', v);
 		});
 	}
 }
