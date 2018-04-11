@@ -34,6 +34,8 @@ export default class GoodsSelectorCtrl {
 		this.dateRange = {
 			start: null,
 			end: null,
+			minDate: null,
+			maxDate: new Date(),
 			disabled: false,
 			dateOnly: true
 		};
@@ -445,6 +447,10 @@ export default class GoodsSelectorCtrl {
 			minPrice: null, // 商品价格下限
 			maxPrice: null // 商品价格下限
 		};
+
+		// 日期组件的特殊性
+		this.dateRange.start = null;
+		this.dateRange.end = null;
 	}
 	initComplexForm() {
 		let platform = this.formModel.platform,
