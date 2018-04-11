@@ -589,6 +589,8 @@ export default class GoodsSelectorCtrl {
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
 			this.resInfo && this.resInfo.list && this.resInfo.list.length && this.listCharacterIntercept(this.resInfo.list, 17);
+			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
+			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		}
 	};
 	// tab 切换时 form 表单处理
