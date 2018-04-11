@@ -12,8 +12,7 @@ import sectionAddCtrl from './SectionAddCtrl';
 import angular from 'angular';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData',
-	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector',
-	'$filter')
+	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter')
 
 export default class GoodsSelectorCtrl {
 
