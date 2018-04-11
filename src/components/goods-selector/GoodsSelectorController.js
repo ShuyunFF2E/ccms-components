@@ -373,6 +373,9 @@ export default class GoodsSelectorCtrl {
 				this.selectedItems.splice(targetIndex, 1);
 			}
 			// 刷新
+			if (this.selectedPagerGridOptions.pager.pageNum !== 1 && this.selectedPagerGridOptions.externalData.length === 1) {
+				this.selectedPagerGridOptions.pager.pageNum -= 1;
+			}
 			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			// 任意一个父亲被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
@@ -578,6 +581,7 @@ export default class GoodsSelectorCtrl {
 			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
 			this.selectedItems.length && this.listCharacterIntercept(this.selectedItems, 15);
 			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
+			this.selectedPagerGridOptions.pager.pageNum = 1;
 			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 		} else {
 			this.isSelectedGoodsTab = false;
@@ -715,6 +719,9 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 		// 刷新
+		if (this.selectedPagerGridOptions.pager.pageNum !== 1) {
+			this.selectedPagerGridOptions.pager.pageNum -= 1;
+		}
 		this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 	};
 	// 移除全部
