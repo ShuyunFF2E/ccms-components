@@ -194,7 +194,7 @@ export default class GoodsSelectorCtrl {
 				pageNum: 1
 			},
 			pager: {
-				pageSizeList: [10, 15, 20, 25]
+				pageSizeList: [10, 15, 20, 25, 50]
 			},
 			columnsDef: [
 				{
@@ -357,7 +357,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.pager = {
 			pageNum: 1,
 			pageSize: 15,
-			pageSizeList: [10, 15, 20, 25]
+			pageSizeList: [10, 15, 20, 25, 50]
 		};
 
 		// 移除父亲: 从已选商品中删除父亲（包括 sku）。
@@ -563,7 +563,7 @@ export default class GoodsSelectorCtrl {
 			item.maxPrice = item.minPrice = item.price;
 			item.startListTime = item.listTime;
 			item.endListTime = item.delistTime;
-			item.skus.length && item.skus.forEach(sku => {
+			item.skus && item.skus.length && item.skus.forEach(sku => {
 				sku.isHide = false;
 				sku.skusOuterId = sku.outerId;
 				sku.skusId = sku.id;
@@ -584,8 +584,10 @@ export default class GoodsSelectorCtrl {
 			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
 			this.selectedItems.length && this.listCharacterIntercept(this.selectedItems, 15);
 			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
-			this.selectedPagerGridOptions.pager.pageNum = 1;
-			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			setTimeout(() => {
+				this.selectedPagerGridOptions.pager.pageNum = 1;
+				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+			}, 0);
 		} else {
 			this.isSelectedGoodsTab = false;
 			this.selectedDateRangeModel = cloneDeep(this.dateRange);
@@ -687,7 +689,7 @@ export default class GoodsSelectorCtrl {
 		this.resInfo.list.forEach(item => {
 			item.checked = this.currentPageChecked;
 			item.partial = false;
-			item.skus && item.skus.forEach(sku => {
+			item.skus && item.skus.length && item.skus.forEach(sku => {
 				sku.checked = this.currentPageChecked;
 			});
 		});
