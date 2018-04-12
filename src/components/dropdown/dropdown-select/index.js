@@ -20,6 +20,7 @@ const dropdownSelectDDO = {
 		mapping: '<?',
 		datalist: '<',
 		searchable: '<?',
+		supportInputValue: '<?',
 		disabled: '<?',
 		placeholder: '@?',
 		onSelectChange: '&?',
