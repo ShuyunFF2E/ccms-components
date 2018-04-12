@@ -91,6 +91,7 @@
     "angular": "1.5.8",
     "angular-es-utils": "^2.1.2",
     "angular-resource": "1.5.8",
+    "angular-sanitize": "1.5.8",
     "angular-ui-router": "0.2.18",
     "ccms-icons": "*",
     "chinese-lunar": "^0.1.4",

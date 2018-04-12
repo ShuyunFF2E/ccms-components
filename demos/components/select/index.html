@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		<div class="demo">
-			<h3>单选（可搜索）</h3>
+			<h3>单选（可搜索, 如果没有匹配值, 可使用用户输入的值）</h3>
 			<span>当前值: <span ng-bind="ctrl.value2 | json"></span></span>
 			<cc-dropdown-select
 					placeholder="快，快选我。。啊！"
@@ -62,6 +62,7 @@
 					datalist="ctrl.datalist1"
 					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					searchable="true"
+					support-input-value="true"
 					mapping="ctrl.fieldsMap">
 			</cc-dropdown-select>
 			<div style="margin: 0.5em 0;">

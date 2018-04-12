@@ -18,6 +18,7 @@ export default class DropdownSelectCtrl {
 		this.title = '';
 		this.placeholder = '';
 		this.searchable = false;
+		this.supportInputValue = false;
 		this.model = null;
 		this.focusIndex = 0;
 		this.isOpen = false;
@@ -144,6 +145,7 @@ export default class DropdownSelectCtrl {
 	}
 
 	onSearchTextChange(text) {
+		this._searchText = text;
 		if (text !== this.oldText) {
 			this.oldText = text;
 			text = text.trim();
@@ -196,14 +198,22 @@ export default class DropdownSelectCtrl {
 			this.model = modelValue;
 			this.icon = newItem[iconField];
 		} else {
-			this.title = '';
-			this.model = null;
-			this.icon = false;
-			this.items = this._clampedDatalist;
+			if (this.supportInputValue && this._searchText) {
+				this.title = this._searchText;
+				this.model = this._searchText;
+				this.icon = false;
+				this.items = [];
+			} else {
+				this.title = '';
+				this.model = null;
+				this.icon = false;
+				this.items = this._clampedDatalist;
+			}
 		}
 	}
 
 	clear() {
+		this._searchText = null;
 		this.setModelValue(null);
 		this.getInputElement().focus();
 		this.focusAt(0);
