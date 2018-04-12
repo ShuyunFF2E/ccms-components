@@ -1,5 +1,4 @@
 import './_goods-selector.scss';
-
 import ModalService from '../modal/ModalService';
 import bodyTemplate from './goods-seletor-body.tpl.html';
 import GoodsSelectorController from './GoodsSelectorController';

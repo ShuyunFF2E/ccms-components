@@ -274,6 +274,11 @@
 					&.sku {
 					  color: #3d3d3d;
 					}
+					&.highlight {
+					  background-color: yellow;
+					  display: inline;
+					  margin: 0;
+					}
 				  }
 				}
 				.sku-row-cell {
@@ -436,4 +441,8 @@
 }
 .ccms-modal .container > footer {
   margin-top: -10px;
+}
+.highlight {
+  background-color: yellow;
+  display: inline;
 }

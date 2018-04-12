@@ -12,16 +12,12 @@ import sectionAddCtrl from './SectionAddCtrl';
 import angular from 'angular';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData',
-	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter')
+	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce')
 
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
-		window.cloneDeep = cloneDeep;
 		this.apiPrefix = '/shuyun-searchapi/1.0';
-		// this.apiPrefix = '/api';
-		// 已选商品列表
-		// this.selectedGoods = this._selectedData;
 
 		// 店铺信息 -> 如果是 array, 说明需要显示店铺列表
 		//         -> 如果是 object, 说明是单店铺
@@ -199,7 +195,7 @@ export default class GoodsSelectorCtrl {
 			columnsDef: [
 				{
 					field: 'id',
-					displayName: '商品ID',
+					displayName: '商品ID/SKU ID',
 					align: 'left'
 				},
 				{
@@ -211,11 +207,6 @@ export default class GoodsSelectorCtrl {
 					field: 'price',
 					displayName: '价格',
 					align: 'left'
-				},
-				{
-					field: 'outerId',
-					displayName: '商家编码',
-					align: 'left'
 				}
 			],
 			headerTpl: '/src/components/goods-selector/tpls/customer-header.tpl.html',
@@ -223,6 +214,7 @@ export default class GoodsSelectorCtrl {
 			footerTpl: '/src/components/goods-selector/tpls/customer-footer.tpl.html',
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
+				console.log(res);
 				if (res['data'] && res.flag !== 'fail') {
 					res['list'] = res['data'];
 					delete res['data'];
@@ -244,9 +236,17 @@ export default class GoodsSelectorCtrl {
 							if (sku.props && sku.props.length) {
 								for (let i = 0; i < sku.props.length; i++) {
 									if (i === sku.props.length - 1) {
-										propName += sku.props[i].pname + '：' + sku.props[i].vname;
+										if (sku.props[i].pname) {
+											propName += sku.props[i].pname + '：' + sku.props[i].vname;
+										} else {
+											propName += sku.props[i].vname;
+										}
 									} else {
-										propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
+										if (sku.props[i].pname) {
+											propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
+										} else {
+											propName += sku.props[i].vname + '；';
+										}
 									}
 								}
 							}
@@ -270,11 +270,20 @@ export default class GoodsSelectorCtrl {
 					}
 					this.isExtendAll = this.isAllChildrenExtend(res.list);
 					this.listCharacterIntercept(res.list, 17);
+					res.list.forEach(item => {
+						item['interceptName'] = this.lightText(item['interceptName'], this.formModel.name);
+						item['outerId'] = this.lightText(item['outerId'], this.formModel.outerId);
+						item.skus && item.skus.length && item.skus.forEach(sku => {
+							sku['interceptName'] = this.lightText(sku['interceptName'], this.formModel.skusPropsVname);
+							sku['outerId'] = this.lightText(sku['outerId'], this.formModel.skusOuterId);
+						});
+					});
 				}
 				this.resInfo = res;
 				return res;
 			}
 		};
+		this.pagerGridOptions.columnsDef[0].displayName = this.isTaobao ? '商品ID/SKU ID' : '商品ID/商品编号';
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
@@ -830,6 +839,17 @@ export default class GoodsSelectorCtrl {
 			number += '.00';
 		}
 		return number;
+	}
+	// 高亮显示关键字
+	lightText(originText, keyWords) {
+		let reg = new RegExp(keyWords, 'g');
+		let result = '';
+		if (keyWords && keyWords.length !== 0 && originText.indexOf(keyWords) > -1) {
+			result = originText.replace(reg, `<span class="highlight">${keyWords}</span>`);
+		} else {
+			result = originText;
+		}
+		return this._$sce.trustAsHtml(result);
 	}
 	/**
 	 * @name ok 点击确认按钮

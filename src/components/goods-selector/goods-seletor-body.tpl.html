@@ -1,7 +1,7 @@
 <div class="goods-selector">
 	<div class="main-area">
 		<section class="form-area">
-			<form class="form-wrapper" cc-validators="$ctrl.validators" name="$ctrl.goodsSelectorForm" ng-init="$ctrl.isSimpleSearch=true">
+			<form class="form-wrapper" cc-validators="$ctrl.validators" name="$ctrl.goodsSelectorForm" ng-init="$ctrl.isSimpleSearch=true;">
 				<fieldset ng-if="$ctrl.isShowShopList">
 					<label class="goods-label">店铺选择：</label>
 					<cc-dropdown-select
@@ -58,7 +58,7 @@
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">属性值：</label>
 					<cc-dropdown-multiselect
-							placeholder="请选择"
+							placeholder="请选择或输入"
 							model="$ctrl.formModel.propsVid"
 							datalist="$ctrl.propsVidList"
 							searchable="true"
@@ -100,7 +100,7 @@
 					<input class="goods-input" type="text" ng-model="$ctrl.formModel.maxPrice" cc-validator="price, highPrice">
 				</fieldset>
 				<fieldset class="operate">
-					<button type="button" class="btn-ok search" ng-click="$ctrl.search($ctrl.isSelectedGoodsTab)">搜索</button>
+					<button type="button" class="btn-ok search" ng-click="$ctrl.search($ctrl.isSelectedGoodsTab); $ctrl.hasSearched = true;">搜索</button>
 					<span class="reset" ng-click="$ctrl.reset($ctrl.goodsSelectorForm)">重置</span>
 					<span class="add-addition" ng-if="$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = false">高级搜索</span>
 					<span class="add-addition" ng-if="!$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = true; $ctrl.initComplexForm();">简单搜索</span>

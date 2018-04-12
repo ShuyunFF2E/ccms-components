@@ -8,11 +8,16 @@
 	   ng-if="entity.skus && entity.skus.length"
 	   ng-click="$ctrl.opts.handleTreeIcon(entity)">
 	</i>
+	<!--<i class="tree-icon iconfont"-->
+	   <!--ng-class="{'icon-jian': entity.extend, 'icon-jia': !entity.extend}"-->
+	   <!--ng-if="entity.skus && entity.skus.length"-->
+	   <!--ng-click="$ctrl.opts.handleTreeIcon(entity)">-->
+	<!--</i>-->
 </td>
 <td>
 	<a href="{{entity.detailUrl}}" class="goods-name">
 		<img src="{{entity.picUrl}}" alt="">
-		<span ng-bind="entity.interceptName" cc-tooltip="entity.name" tooltip-placement="top" tooltip-append-to-body="true"></span>
+		<span ng-bind-html="entity.interceptName" cc-tooltip="entity.name" tooltip-placement="top" tooltip-append-to-body="true"></span>
 	</a>
 </td>
 <!--默认的表格行元素模板-->
@@ -22,4 +27,7 @@
 	<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="entity"></cc-grid-cell>
 </td>
 <td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>
+<td>
+	<span ng-bind-html="entity.outerId"></span>
+</td>
 <td class="remove-btn" ng-click="$ctrl.opts.removeTreeRootItem(entity)">移除</td>
