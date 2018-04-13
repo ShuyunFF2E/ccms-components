@@ -18,7 +18,7 @@
 <td>
 	<a href="{{entity.detailUrl}}" class="goods-name">
 		<img src="{{entity.picUrl}}" alt="">
-		<span ng-bind-html="entity.interceptNameCopy" cc-tooltip="entity.name" tooltip-placement="top" tooltip-append-to-body="true"></span>
+		<span ng-bind-html="$ctrl.opts.lightText(entity.name, $ctrl.opts.formModel.name)" cc-tooltip="entity.name" tooltip-placement="top" tooltip-append-to-body="true"></span>
 	</a>
 </td>
 <!--默认的表格行元素模板-->
@@ -29,6 +29,12 @@
 </td>
 <td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>
 <td>
-	<span ng-bind-html="entity.outerIdCopy"></span>
+	<span ng-bind-html="entity.quantity + '件'"></span>
+</td>
+<td>
+	<span ng-bind-html="$ctrl.opts.getPrice(entity.price)"></span>
+</td>
+<td>
+	<span ng-bind-html="$ctrl.opts.lightText(entity.outerId, $ctrl.opts.formModel.outerId)"></span>
 </td>
 <td class="remove-btn" ng-click="$ctrl.opts.removeTreeRootItem(entity)">移除</td>

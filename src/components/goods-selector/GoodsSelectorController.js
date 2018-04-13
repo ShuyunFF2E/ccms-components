@@ -203,16 +203,6 @@ export default class GoodsSelectorCtrl {
 					field: 'id',
 					displayName: '商品ID/SKU ID',
 					align: 'left'
-				},
-				{
-					field: 'quantity',
-					displayName: '库存',
-					align: 'left'
-				},
-				{
-					field: 'price',
-					displayName: '价格',
-					align: 'left'
 				}
 			],
 			headerTpl: '/src/components/goods-selector/tpls/customer-header.tpl.html',
@@ -232,35 +222,12 @@ export default class GoodsSelectorCtrl {
 					delete res['totalCount'];
 				}
 				if (res.list && res.list.length) {
-					// res.list.forEach(item => {
-					// 	item['price'] = '￥' + this.keepTwoDecimal(item['price']);
-					// 	item['quantity'] = item['quantity'] + '件';
-					// 	item['outerIdCopy'] = cloneDeep(item['outerId']);
-					// 	item.skus && item.skus.length && item.skus.forEach(sku => {
-					// 		sku['price'] = '￥' + this.keepTwoDecimal(sku['price']);
-					// 		sku['quantity'] = sku['quantity'] + '件';
-					// 		sku['outerIdCopy'] = cloneDeep(sku['outerId']);
-					// 		let propName = '';
-					// 		if (sku.props && sku.props.length) {
-					// 			for (let i = 0; i < sku.props.length; i++) {
-					// 				if (i === sku.props.length - 1) {
-					// 					if (sku.props[i].pname) {
-					// 						propName += sku.props[i].pname + '：' + sku.props[i].vname;
-					// 					} else {
-					// 						propName += sku.props[i].vname;
-					// 					}
-					// 				} else {
-					// 					if (sku.props[i].pname) {
-					// 						propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
-					// 					} else {
-					// 						propName += sku.props[i].vname + '；';
-					// 					}
-					// 				}
-					// 			}
-					// 		}
-					// 		sku['name'] = propName;
-					// 	});
-					// });
+					res.list.forEach(item => {
+						item['outerIdCopy'] = cloneDeep(item['outerId']);
+						item.skus && item.skus.length && item.skus.forEach(sku => {
+							sku['outerIdCopy'] = cloneDeep(sku['outerId']);
+						});
+					});
 					// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 					this.dataMerge(res.list, this.selectedItemsBuffer);
 					this.selectedItems.forEach((item, index) => {
@@ -277,8 +244,6 @@ export default class GoodsSelectorCtrl {
 						});
 					}
 					this.isExtendAll = this.isAllChildrenExtend(res.list);
-					this.listCharacterIntercept(res.list, 17);
-					this.lightTextFilter(res.list);
 				}
 				this.resInfo = res;
 				return res;
@@ -288,7 +253,62 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
-
+		// 获取 sku 标题
+		this.pagerGridOptions.getSkuName = sku => {
+			let propName = '';
+			if (sku.props && sku.props.length) {
+				for (let i = 0; i < sku.props.length; i++) {
+					if (i === sku.props.length - 1) {
+						if (sku.props[i].pname) {
+							propName += sku.props[i].pname + '：' + sku.props[i].vname;
+						} else {
+							propName += sku.props[i].vname;
+						}
+					} else {
+						if (sku.props[i].pname) {
+							propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
+						} else {
+							propName += sku.props[i].vname + '；';
+						}
+					}
+				}
+			}
+			return propName;
+		};
+		// 高亮显示搜索关键字
+		this.pagerGridOptions.lightText = (originText, keyWords) => {
+			let reg = new RegExp(keyWords, 'g');
+			let result = '';
+			originText = this.listCharacterIntercept(originText, 17);
+			if (keyWords && keyWords.length !== 0 && originText.indexOf(keyWords) > -1) {
+				result = originText.toString().replace(reg, `<span class="highlight">${keyWords}</span>`);
+			} else {
+				result = originText.toString();
+			}
+			return this._$sce.trustAsHtml(result);
+		};
+		// 价格保留两位小数
+		this.pagerGridOptions.getPrice = price => {
+			let buffer = [];
+			if (price || price === 0) {
+				buffer = String(price).split('.');
+			}
+			if (buffer.length === 2) {
+				buffer[0] = buffer[0].replace(/(?=(?!\b)(\d{3})+$)/g, ',');
+				if (buffer[1].length === 1) {
+					price = buffer[0] + '.' + buffer[1] + '0';
+				} else if (buffer[1].length === 2) {
+					price = buffer[0] + '.' + buffer[1];
+				} else {
+					price = buffer[0] + '.' + buffer[1].slice(0, 2);
+				}
+			} else {
+				price = String(price).replace(/(?=(?!\b)(\d{3})+$)/g, ',');
+				price += '.00';
+			}
+			return '￥' + price;
+		};
+		this.pagerGridOptions.formModel = this.formModel;
 		// 表格子行的展开和收起
 		this.pagerGridOptions.handleTreeIcon = entity => {
 			entity.extend = !entity.extend;
@@ -426,7 +446,6 @@ export default class GoodsSelectorCtrl {
 			const currentPage = opts.pager.pageNum;
 			const pageSize = opts.pager.pageSize;
 			const data = [];
-			this.lightTextFilter(this.selectedItems);
 			this.selectedItems.forEach(item => {
 				if (!item.isHide) {
 					data.push(item);
@@ -593,8 +612,6 @@ export default class GoodsSelectorCtrl {
 			this.allDateRangeModel = cloneDeep(this.dateRange);
 			this.allGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
-			this.selectedItems.length && this.listCharacterIntercept(this.selectedItems, 15);
-			this.lightTextFilter(this.selectedItems);
 			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
 			setTimeout(() => {
 				this.selectedPagerGridOptions.pager.pageNum = 1;
@@ -606,8 +623,6 @@ export default class GoodsSelectorCtrl {
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
 			if (this.resInfo && this.resInfo.list && this.resInfo.list.length) {
-				this.listCharacterIntercept(this.resInfo.list, 17);
-				this.lightTextFilter(this.resInfo.list);
 			}
 
 			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
@@ -769,19 +784,11 @@ export default class GoodsSelectorCtrl {
 		return result;
 	}
 	// 超过 maxLength 个字则隐藏多余字，显示 '...'
-	listCharacterIntercept(list, maxLength) {
-		let characterIntercept = (str = '', maxLength) => {
-			if (str.length > maxLength) {
-				str = str.slice(0, maxLength) + '...';
-			}
-			return str;
-		};
-		list.forEach(item => {
-			item.interceptName = characterIntercept(item.name, maxLength);
-			item.skus && item.skus.length && item.skus.forEach(sku => {
-				sku.interceptName = characterIntercept(sku.name, maxLength);
-			});
-		});
+	listCharacterIntercept(str, maxLength) {
+		if (str.length > maxLength) {
+			str = str.slice(0, maxLength) + '...';
+		}
+		return str;
 	}
 	// 从集合中获取 entity 的 index, 找不到返回 -1
 	findEntity(collection, entity) {
@@ -824,48 +831,6 @@ export default class GoodsSelectorCtrl {
 	isAllChildrenExtend(children) {
 		return children && children.every(child => {
 			return child.extend;
-		});
-	}
-	// 价格保留两位小数
-	keepTwoDecimal(number) {
-		let buffer = [];
-		if (number || number === 0) {
-			buffer = String(number).split('.');
-		}
-		if (buffer.length === 2) {
-			buffer[0] = buffer[0].replace(/(?=(?!\b)(\d{3})+$)/g, ',');
-			if (buffer[1].length === 1) {
-				number = buffer[0] + '.' + buffer[1] + '0';
-			} else if (buffer[1].length === 2) {
-				number = buffer[0] + '.' + buffer[1];
-			} else {
-				number = buffer[0] + '.' + buffer[1].slice(0, 2);
-			}
-		} else {
-			number = String(number).replace(/(?=(?!\b)(\d{3})+$)/g, ',');
-			number += '.00';
-		}
-		return number;
-	}
-	// 高亮显示关键字
-	lightText(originText, keyWords) {
-		let reg = new RegExp(keyWords, 'g');
-		let result = '';
-		if (keyWords && keyWords.length !== 0 && originText.indexOf(keyWords) > -1) {
-			result = originText.toString().replace(reg, `<span class="highlight">${keyWords}</span>`);
-		} else {
-			result = originText.toString();
-		}
-		return this._$sce.trustAsHtml(result);
-	}
-	lightTextFilter(list) {
-		list.forEach(item => {
-			item['interceptNameCopy'] = this.lightText(item['interceptName'], this.formModel.name);
-			item['outerIdCopy'] = this.lightText(item['outerId'], this.formModel.outerId);
-			item.skus && item.skus.length && item.skus.forEach(sku => {
-				sku['interceptNameCopy'] = this.lightText(sku['interceptName'], this.formModel.skusPropsVname);
-				sku['outerIdCopy'] = this.lightText(sku['outerId'], this.formModel.skusOuterId);
-			});
 		});
 	}
 	/**
