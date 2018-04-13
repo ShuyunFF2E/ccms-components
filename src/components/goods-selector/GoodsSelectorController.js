@@ -148,29 +148,9 @@ export default class GoodsSelectorCtrl {
 		this.selectedDateRangeModel = cloneDeep(this.dateRange);
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		// 商品自自定义类目数据
-		genResource(`${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			if (res.flag === 'fail') {
-				this.shopCategoriesList = [];
-			} else {
-				this.shopCategoriesList = res.data;
-			}
-		}).catch(res => {
-			if (!this.tips || !this.tips.element) {
-				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
-			}
-		});
+		this.getShopCatories();
 		// 商品标准类目列表
-		genResource(`${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			if (res.flag === 'fail') {
-				this.categoriesList = [];
-			} else {
-				this.categoriesList = res.data;
-			}
-		}).catch(res => {
-			if (!this.tips || !this.tips.element) {
-				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
-			}
-		});
+		this.getCatories();
 		// 全部商品->表格配置
 		this.selectedItems = [];
 		// selectedItemsBuffer 保存 selectedItems 中数据的副本（深拷贝）。维护 selectedItems 中数据状态。
@@ -180,10 +160,10 @@ export default class GoodsSelectorCtrl {
 		transformGoodsData(this._shopInfoData, this._selectedData).then(data => {
 			if (data && data.length) {
 				data.forEach(entity => {
-					this.selectedItems.push(cloneDeep(entity));
+					this.selectedItems.push(entity);
 					this.selectedItemsBuffer.push(cloneDeep(entity));
 				});
-				this.updateGrid();
+				// this.updateGrid();
 			}
 		});
 
@@ -490,6 +470,34 @@ export default class GoodsSelectorCtrl {
 		this.formModel.name = name;
 		this.formModel.categoriesId = categoriesId;
 	}
+	// 获取商品自自定义类目数据
+	getShopCatories() {
+		genResource(`${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
+			if (res.flag === 'fail') {
+				this.shopCategoriesList = [];
+			} else {
+				this.shopCategoriesList = res.data;
+			}
+		}).catch(res => {
+			if (!this.tips || !this.tips.element) {
+				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
+			}
+		});
+	}
+	// 获取商品标准类目列表
+	getCatories() {
+		genResource(`${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
+			if (res.flag === 'fail') {
+				this.categoriesList = [];
+			} else {
+				this.categoriesList = res.data;
+			}
+		}).catch(res => {
+			if (!this.tips || !this.tips.element) {
+				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
+			}
+		});
+	}
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.categoriesId) {
@@ -507,6 +515,12 @@ export default class GoodsSelectorCtrl {
 			this.propsPidList = [];
 			this.formModel.propsPid = null;
 		}
+	};
+	// 店铺 select 框 change
+	shopSelectChange(newValue, oldValue, itemIndex, item) {
+		console.log(newValue, oldValue, itemIndex, item);
+		this.getShopCatories();
+		this.getCatories();
 	};
 	// 级联菜单 -> 商品属性 select 框 change
 	propSelectChange(newValue, oldValue, itemIndex, item) {
@@ -617,9 +631,7 @@ export default class GoodsSelectorCtrl {
 			this.selectedDateRangeModel = cloneDeep(this.dateRange);
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
-			if (this.resInfo && this.resInfo.list && this.resInfo.list.length) {
-			}
-
+			this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
 			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		}
