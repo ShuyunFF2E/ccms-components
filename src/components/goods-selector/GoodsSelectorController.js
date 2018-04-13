@@ -1,15 +1,18 @@
+import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
+import cloneDeep from 'lodash.clonedeep';
 import genResource from 'angular-es-utils/rs-generator';
+
 import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
 import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
-import cloneDeep from 'lodash.clonedeep';
-import matchHelper from './MatchHelper';
 import bodyTemplate from './tpls/customer-modal-body.tpl.html';
 
+import matchHelper from './MatchHelper';
 import sectionAddCtrl from './SectionAddCtrl';
+import { apiPrefix } from './constant';
+import { transformGoodsData } from './utils';
 
-import angular from 'angular';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce')
@@ -17,7 +20,6 @@ import angular from 'angular';
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
-		this.apiPrefix = '/shuyun-searchapi/1.0';
 
 		// 店铺信息 -> 如果是 array, 说明需要显示店铺列表
 		//         -> 如果是 object, 说明是单店铺
@@ -146,7 +148,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedDateRangeModel = cloneDeep(this.dateRange);
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		// 商品自自定义类目数据
-		genResource(`${this.apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
+		genResource(`${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
 			if (res.flag === 'fail') {
 				this.shopCategoriesList = [];
 			} else {
@@ -158,7 +160,7 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 		// 商品标准类目列表
-		genResource(`${this.apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
+		genResource(`${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
 			if (res.flag === 'fail') {
 				this.categoriesList = [];
 			} else {
@@ -174,14 +176,18 @@ export default class GoodsSelectorCtrl {
 		// selectedItemsBuffer 保存 selectedItems 中数据的副本（深拷贝）。维护 selectedItems 中数据状态。
 		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
 		this.selectedItemsBuffer = [];
-		if (this._selectedData.length) {
-			this._selectedData.forEach(entity => {
-				this.selectedItems.push(cloneDeep(entity));
-				this.selectedItemsBuffer.push(cloneDeep(entity));
-			});
-		}
+
+		transformGoodsData(this._shopInfoData, this._selectedData).then(data => {
+			if (data.length) {
+				data.forEach(entity => {
+					this.selectedItems.push(cloneDeep(entity));
+					this.selectedItemsBuffer.push(cloneDeep(entity));
+				});
+			}
+		});
+
 		this.pagerGridOptions = {
-			resource: this._$resource(`${this.apiPrefix}/items`),
+			resource: this._$resource(`${apiPrefix}/items`),
 			response: null,
 			queryParams: {
 				shopId: this.formModel.shopId,
@@ -226,35 +232,35 @@ export default class GoodsSelectorCtrl {
 					delete res['totalCount'];
 				}
 				if (res.list && res.list.length) {
-					res.list.forEach(item => {
-						item['price'] = '￥' + this.keepTwoDecimal(item['price']);
-						item['quantity'] = item['quantity'] + '件';
-						item['outerIdCopy'] = cloneDeep(item['outerId']);
-						item.skus && item.skus.length && item.skus.forEach(sku => {
-							sku['price'] = '￥' + this.keepTwoDecimal(sku['price']);
-							sku['quantity'] = sku['quantity'] + '件';
-							sku['outerIdCopy'] = cloneDeep(sku['outerId']);
-							let propName = '';
-							if (sku.props && sku.props.length) {
-								for (let i = 0; i < sku.props.length; i++) {
-									if (i === sku.props.length - 1) {
-										if (sku.props[i].pname) {
-											propName += sku.props[i].pname + '：' + sku.props[i].vname;
-										} else {
-											propName += sku.props[i].vname;
-										}
-									} else {
-										if (sku.props[i].pname) {
-											propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
-										} else {
-											propName += sku.props[i].vname + '；';
-										}
-									}
-								}
-							}
-							sku['name'] = propName;
-						});
-					});
+					// res.list.forEach(item => {
+					// 	item['price'] = '￥' + this.keepTwoDecimal(item['price']);
+					// 	item['quantity'] = item['quantity'] + '件';
+					// 	item['outerIdCopy'] = cloneDeep(item['outerId']);
+					// 	item.skus && item.skus.length && item.skus.forEach(sku => {
+					// 		sku['price'] = '￥' + this.keepTwoDecimal(sku['price']);
+					// 		sku['quantity'] = sku['quantity'] + '件';
+					// 		sku['outerIdCopy'] = cloneDeep(sku['outerId']);
+					// 		let propName = '';
+					// 		if (sku.props && sku.props.length) {
+					// 			for (let i = 0; i < sku.props.length; i++) {
+					// 				if (i === sku.props.length - 1) {
+					// 					if (sku.props[i].pname) {
+					// 						propName += sku.props[i].pname + '：' + sku.props[i].vname;
+					// 					} else {
+					// 						propName += sku.props[i].vname;
+					// 					}
+					// 				} else {
+					// 					if (sku.props[i].pname) {
+					// 						propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
+					// 					} else {
+					// 						propName += sku.props[i].vname + '；';
+					// 					}
+					// 				}
+					// 			}
+					// 		}
+					// 		sku['name'] = propName;
+					// 	});
+					// });
 					// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 					this.dataMerge(res.list, this.selectedItemsBuffer);
 					this.selectedItems.forEach((item, index) => {
@@ -764,7 +770,7 @@ export default class GoodsSelectorCtrl {
 	}
 	// 超过 maxLength 个字则隐藏多余字，显示 '...'
 	listCharacterIntercept(list, maxLength) {
-		let characterIntercept = (str, maxLength) => {
+		let characterIntercept = (str = '', maxLength) => {
 			if (str.length > maxLength) {
 				str = str.slice(0, maxLength) + '...';
 			}
