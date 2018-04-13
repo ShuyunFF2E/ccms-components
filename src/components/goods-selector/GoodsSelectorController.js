@@ -178,11 +178,12 @@ export default class GoodsSelectorCtrl {
 		this.selectedItemsBuffer = [];
 
 		transformGoodsData(this._shopInfoData, this._selectedData).then(data => {
-			if (data.length) {
+			if (data && data.length) {
 				data.forEach(entity => {
 					this.selectedItems.push(cloneDeep(entity));
 					this.selectedItemsBuffer.push(cloneDeep(entity));
 				});
+				this.updateGrid();
 			}
 		});
 
@@ -222,12 +223,6 @@ export default class GoodsSelectorCtrl {
 					delete res['totalCount'];
 				}
 				if (res.list && res.list.length) {
-					res.list.forEach(item => {
-						item['outerIdCopy'] = cloneDeep(item['outerId']);
-						item.skus && item.skus.length && item.skus.forEach(sku => {
-							sku['outerIdCopy'] = cloneDeep(sku['outerId']);
-						});
-					});
 					// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
 					this.dataMerge(res.list, this.selectedItemsBuffer);
 					this.selectedItems.forEach((item, index) => {
