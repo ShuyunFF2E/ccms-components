@@ -69,7 +69,7 @@
 				}
 			];
 
-			var taobaoWithShopList = [{shopId: 70866974, shopName: '数云食堂', plat: 'top'}, {shopId: 10001, shopName: 'JD数云食堂', plat: 'top'}];
+			var taobaoWithShopList = [{shopId: 106878997, shopName: '数云食堂', plat: 'top'}, {shopId: 157263193, shopName: '0黑色的琴键0', plat: 'top'}, {shopId: 65305757, shopName: '安踏', plat: 'top'}];
 			// var jsWithShopList = [{shopId: 24058, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
 			var jsWithShopList = [{shopId: 23591, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 23591, shopName: '数云食堂', plat: 'jos'}];
 			var taobaoWithoutShopList = {shopId: 70866974, shopName: '数云食堂', plat: 'top'};
