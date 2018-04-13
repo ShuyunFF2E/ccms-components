@@ -229,9 +229,11 @@ export default class GoodsSelectorCtrl {
 					res.list.forEach(item => {
 						item['price'] = '￥' + this.keepTwoDecimal(item['price']);
 						item['quantity'] = item['quantity'] + '件';
+						item['outerIdCopy'] = cloneDeep(item['outerId']);
 						item.skus && item.skus.length && item.skus.forEach(sku => {
 							sku['price'] = '￥' + this.keepTwoDecimal(sku['price']);
 							sku['quantity'] = sku['quantity'] + '件';
+							sku['outerIdCopy'] = cloneDeep(sku['outerId']);
 							let propName = '';
 							if (sku.props && sku.props.length) {
 								for (let i = 0; i < sku.props.length; i++) {
@@ -270,14 +272,7 @@ export default class GoodsSelectorCtrl {
 					}
 					this.isExtendAll = this.isAllChildrenExtend(res.list);
 					this.listCharacterIntercept(res.list, 17);
-					res.list.forEach(item => {
-						item['interceptName'] = this.lightText(item['interceptName'], this.formModel.name);
-						item['outerId'] = this.lightText(item['outerId'], this.formModel.outerId);
-						item.skus && item.skus.length && item.skus.forEach(sku => {
-							sku['interceptName'] = this.lightText(sku['interceptName'], this.formModel.skusPropsVname);
-							sku['outerId'] = this.lightText(sku['outerId'], this.formModel.skusOuterId);
-						});
-					});
+					this.lightTextFilter(res.list);
 				}
 				this.resInfo = res;
 				return res;
@@ -425,6 +420,7 @@ export default class GoodsSelectorCtrl {
 			const currentPage = opts.pager.pageNum;
 			const pageSize = opts.pager.pageSize;
 			const data = [];
+			this.lightTextFilter(this.selectedItems);
 			this.selectedItems.forEach(item => {
 				if (!item.isHide) {
 					data.push(item);
@@ -592,6 +588,7 @@ export default class GoodsSelectorCtrl {
 			this.allGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
 			this.selectedItems.length && this.listCharacterIntercept(this.selectedItems, 15);
+			this.lightTextFilter(this.selectedItems);
 			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
 			setTimeout(() => {
 				this.selectedPagerGridOptions.pager.pageNum = 1;
@@ -602,7 +599,11 @@ export default class GoodsSelectorCtrl {
 			this.selectedDateRangeModel = cloneDeep(this.dateRange);
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
-			this.resInfo && this.resInfo.list && this.resInfo.list.length && this.listCharacterIntercept(this.resInfo.list, 17);
+			if (this.resInfo && this.resInfo.list && this.resInfo.list.length) {
+				this.listCharacterIntercept(this.resInfo.list, 17);
+				this.lightTextFilter(this.resInfo.list);
+			}
+
 			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		}
@@ -845,11 +846,21 @@ export default class GoodsSelectorCtrl {
 		let reg = new RegExp(keyWords, 'g');
 		let result = '';
 		if (keyWords && keyWords.length !== 0 && originText.indexOf(keyWords) > -1) {
-			result = originText.replace(reg, `<span class="highlight">${keyWords}</span>`);
+			result = originText.toString().replace(reg, `<span class="highlight">${keyWords}</span>`);
 		} else {
-			result = originText;
+			result = originText.toString();
 		}
 		return this._$sce.trustAsHtml(result);
+	}
+	lightTextFilter(list) {
+		list.forEach(item => {
+			item['interceptNameCopy'] = this.lightText(item['interceptName'], this.formModel.name);
+			item['outerIdCopy'] = this.lightText(item['outerId'], this.formModel.outerId);
+			item.skus && item.skus.length && item.skus.forEach(sku => {
+				sku['interceptNameCopy'] = this.lightText(sku['interceptName'], this.formModel.skusPropsVname);
+				sku['outerIdCopy'] = this.lightText(sku['outerId'], this.formModel.skusOuterId);
+			});
+		});
 	}
 	/**
 	 * @name ok 点击确认按钮

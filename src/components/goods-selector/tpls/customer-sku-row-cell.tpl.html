@@ -6,17 +6,17 @@
 <td style="padding-left: 10px;">
 	<a href="{{entity.detailUrl}}" class="goods-name">
 		<img src="{{sku.picUrl}}" alt="">
-		<span ng-bind-html="sku.interceptName" class="sku" cc-tooltip="sku.name" tooltip-placement="top" tooltip-append-to-body="true"></span>
+		<span ng-bind-html="sku.interceptNameCopy" class="sku" cc-tooltip="sku.name" tooltip-placement="top" tooltip-append-to-body="true"></span>
 	</a>
 </td>
 <!--默认的表格行元素模板-->
 <td ng-repeat="column in $ctrl.opts.columnsDef track by $index"
-ng-if="!column.isHidden"
-ng-style="{width:column.width, 'padding-left': '10px'}">
-<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="sku"></cc-grid-cell>
+	ng-if="!column.isHidden"
+	ng-style="{width:column.width, 'padding-left': '10px'}">
+	<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="sku"></cc-grid-cell>
 </td>
 <td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>
 <td>
-	<span ng-bind-html="sku.outerId"></span>
+	<span ng-bind-html="sku.outerIdCopy"></span>
 </td>
 <td class="remove-btn" ng-click="$ctrl.opts.removeTreeLeafItem(entity, sku)">移除</td>
