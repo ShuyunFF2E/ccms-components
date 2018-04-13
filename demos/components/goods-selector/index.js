@@ -7,6 +7,7 @@
 		.controller('ctrl', function($scope, $ccGoodsSelector) {
 
 			var selectedGoods = {
+				'10156930444': null,
 				'10229028174': ['11374112151']
 			};
 
