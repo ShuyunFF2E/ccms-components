@@ -12,8 +12,8 @@ const noop = () => {
 const GoodsSelectorService = {
 	/**
 	 * @params shopInfo array|object array 表示有店铺选择 object 表示没有店铺选择 (必填)
-	 * @params selectedGoods array 已选商品列表 默认是[](可选)
 	 * @params isOnlyChecked bool 是否仅允许查看
+	 * @params selectedGoods array 已选商品列表 默认是{}(可选)
 	 * */
 	goodsSelector(shopInfo, isOnlyChecked = false, selectedGoods = []) {
 
