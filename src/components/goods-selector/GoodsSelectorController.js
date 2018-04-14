@@ -20,7 +20,7 @@ import { transformGoodsData } from './utils';
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
-
+		this.showLoading = true;
 		// 店铺信息 -> 如果是 array, 说明需要显示店铺列表
 		//         -> 如果是 object, 说明是单店铺
 		//         -> 其它情况, 需要提示用户, 参数格式不正确
@@ -166,7 +166,6 @@ export default class GoodsSelectorCtrl {
 				// this.updateGrid();
 			}
 		});
-
 		this.pagerGridOptions = {
 			resource: this._$resource(`${apiPrefix}/items`),
 			response: null,
@@ -408,7 +407,6 @@ export default class GoodsSelectorCtrl {
 			// 任意一个孩子被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
-
 		// 表格数据来自于 externalData 时，分页操作
 		const wrapGridData = (currentPage, pageSize, data) => {
 			this.selectedPagerGridOptions.pager.pageNum = currentPage;
@@ -426,7 +424,9 @@ export default class GoodsSelectorCtrl {
 					data.push(item);
 				}
 			});
-			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
+			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data)).then(() => {
+				this.showLoading = false;
+			});
 		};
 	}
 
@@ -622,6 +622,7 @@ export default class GoodsSelectorCtrl {
 			this.allGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
 			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
+			this.showLoading = true;
 			setTimeout(() => {
 				this.selectedPagerGridOptions.pager.pageNum = 1;
 				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);

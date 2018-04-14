@@ -164,6 +164,10 @@
 		  cc-checkbox, .hide-sku, .hide-entity, .hide-no-matched {
 			display: none;
 		  }
+		  cc-loading section .loader .circular {
+			left: 490px;
+			bottom: 250px;
+		  }
 		}
 		.all-goods-operation {
 		  padding-left: 9px;
