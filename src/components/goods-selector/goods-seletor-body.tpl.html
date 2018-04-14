@@ -118,14 +118,14 @@
 				<section class="grid-area">
 					<div class="all-goods-operation">
 						<!--<cc-checkbox class="select-all" ng-checked="$ctrl.selectAll">全选</cc-checkbox>-->
-						<cc-checkbox class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.selectCurrentPageAll()">全选当页</cc-checkbox>
+						<cc-checkbox cc-capture-click="$ctrl.checkCurrentPageBefore($event)" class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.selectCurrentPageAll()">全选当页</cc-checkbox>
 						<span class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = !$ctrl.isExtendAll; $ctrl.extendAll($ctrl.isExtendAll, $ctrl.resInfo.list);">{{$ctrl.isExtendAll ? '全部折叠' : '全部展开'}}</span>
 						<!--<span class="add-section" style="float: right; color: #0083ba; margin-right: 4px; margin-top: 6px;" ng-click="$ctrl.addSection()">批量添加</span>-->
 					</div>
 					<cc-grid opts="$ctrl.pagerGridOptions"
 							 selected-items="$ctrl.selectedItems"
 							 type="default"
-					         cc-capture-click="$ctrl.clickGrid($event)">
+							 cc-capture-click="$ctrl.checkCheckboxBefore($event)">
 					</cc-grid>
 				</section>
 			</gs-panel>

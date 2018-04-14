@@ -18,11 +18,15 @@
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
 
 			var isOnlyChecked = false;
-
+			var maxSelectedNumber = 100;
+			var options = {
+				isOnlyChecked,
+				maxSelectedNumber
+			};
 			// taobao + 店铺选择
 			$scope.openTaobaoGoodsSelectorWithShopList = function() {
 				$ccGoodsSelector
-					.goodsSelector(taobaoWithShopList, isOnlyChecked)
+					.goodsSelector(taobaoWithShopList, options)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
@@ -34,7 +38,7 @@
 			// jd + 店铺选择
 			$scope.openJDGoodsSelectorWithShopList = function() {
 				$ccGoodsSelector
-					.goodsSelector(jsWithShopList, isOnlyChecked, selectedGoods)
+					.goodsSelector(jsWithShopList, options, selectedGoods)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
@@ -46,7 +50,7 @@
 			// taobao 无店铺选择
 			$scope.openTaobaoGoodsSelector = function() {
 				$ccGoodsSelector
-					.goodsSelector(taobaoWithoutShopList, isOnlyChecked)
+					.goodsSelector(taobaoWithoutShopList, options)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
@@ -58,7 +62,7 @@
 			// jd 无店铺选择
 			$scope.openJDGoodsSelector = function() {
 				$ccGoodsSelector
-					.goodsSelector(jdWithoutShopList, isOnlyChecked)
+					.goodsSelector(jdWithoutShopList, options)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);

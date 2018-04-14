@@ -11,11 +11,11 @@ import bodyTemplate from './tpls/customer-modal-body.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './SectionAddCtrl';
-import { apiPrefix } from './constant';
+import { apiPrefix, getExceedSelectedNumberMsg } from './constant';
 import { transformGoodsData } from './utils';
 
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData',
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce')
 
 export default class GoodsSelectorCtrl {
@@ -39,7 +39,7 @@ export default class GoodsSelectorCtrl {
 			disabled: false,
 			dateOnly: true
 		};
-		this.tips = this.warnTips = null;
+		this.tips = this.warnTips = this.maxNumberTips = null;
 		// 商品状态
 		this.statusList = [
 			{
@@ -860,15 +860,30 @@ export default class GoodsSelectorCtrl {
 			return child.extend;
 		});
 	}
-	clickGrid(e) {
-		if (e.target.classList.contains('cc-checkbox-input')) {
-			if (this.selectedItems.length + 1 >= 3) {
-				this.isMoreThanHundred = true;
-			} else {
-				this.isMoreThanHundred = false;
+	checkCheckboxBefore(event) {
+		const target = event.target;
+		const targetScope = angular.element(target).scope();
+		if (target.parentNode.parentNode.classList.contains('sd-root-node')) {
+			if (!targetScope.$parent.entity['checked'] && this.selectedItems.length + 1 > this._maxSelectedNumber) {
+				event.stopPropagation();
+				this.maxNumberTips = this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
 			}
-		} else {
-			this.isMoreThanHundred = true;
+		} else if (target.parentNode.parentNode.classList.contains('sd-child-node')) {
+			if (!targetScope.$parent.$parent.entity['partial'] && this.selectedItems.length + 1 > this._maxSelectedNumber) {
+				event.stopPropagation();
+				this.maxNumberTips = this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
+			}
+		}
+	}
+	checkCurrentPageBefore(event) {
+		const target = event.target;
+		const targetScope = angular.element(target).scope();
+		const uncheckedItems = this.resInfo.list.filter(item => {
+			return !item.checked && !item.partial;
+		});
+		if (!targetScope.$parent.$ctrl.ngChecked && this.selectedItems.length + uncheckedItems.length > this._maxSelectedNumber) {
+			event.stopPropagation();
+			this.maxNumberTips = this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
 		}
 	}
 	/**
