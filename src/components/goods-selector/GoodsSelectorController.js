@@ -6,6 +6,7 @@ import genResource from 'angular-es-utils/rs-generator';
 import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
 import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
+import selectedEmptyTpl from './tpls/customer-selected-empty.tpl.html';
 import bodyTemplate from './tpls/customer-modal-body.tpl.html';
 
 import matchHelper from './MatchHelper';
@@ -361,6 +362,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.resource = null;
 		this.selectedPagerGridOptions.externalData = this.selectedItems;
 		this.selectedPagerGridOptions.transformer = null;
+		this.selectedPagerGridOptions.emptyTipTpl = selectedEmptyTpl;
 		this.selectedPagerGridOptions.pager = {
 			pageNum: 1,
 			pageSize: 15,
