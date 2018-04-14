@@ -26,7 +26,7 @@ angular.forEach(
 				compile: function($element, attr) {
 					var fn = $parse(attr[directiveName]);
 					return function ngEventHandler(scope, element) {
-						element.on(eventName, function(event) {
+						element[0].addEventListener(eventName, function(event) {
 							var callback = function() {
 								fn(scope, {$event: event});
 							};
