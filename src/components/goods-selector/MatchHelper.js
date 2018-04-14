@@ -1,5 +1,8 @@
 export default {
 	match(form, list, config) {
+		if (!list) {
+			list = [];
+		}
 		let methods = this.getMethods();
 		// 将配置转换为对应的程序
 		for (let field in config) {

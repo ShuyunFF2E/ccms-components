@@ -124,7 +124,8 @@
 					</div>
 					<cc-grid opts="$ctrl.pagerGridOptions"
 							 selected-items="$ctrl.selectedItems"
-							 type="default">
+							 type="default"
+					         cc-capture-click="$ctrl.clickGrid($event)">
 					</cc-grid>
 				</section>
 			</gs-panel>

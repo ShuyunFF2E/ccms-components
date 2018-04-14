@@ -22,6 +22,7 @@ export default class GoodsSelectorCtrl {
 
 	$onInit() {
 		this.showLoading = true;
+		this.isMoreThanHundred = false;
 		// 店铺信息 -> 如果是 array, 说明需要显示店铺列表
 		//         -> 如果是 object, 说明是单店铺
 		//         -> 其它情况, 需要提示用户, 参数格式不正确
@@ -297,6 +298,7 @@ export default class GoodsSelectorCtrl {
 		// checked 父亲, 所有孩子 checked,
 		// 反之 unchecked 父亲, 所有孩子 unchecked
 		this.pagerGridOptions.selectTreeRootItem = entity => {
+			// if (!this.isMoreThanHundred) {
 			entity.checked = !entity.checked;
 			entity.partial = false;
 			entity.skus && entity.skus.forEach(item => {
@@ -320,8 +322,10 @@ export default class GoodsSelectorCtrl {
 				this.selectedItems.splice(entityIndex, 1);
 			}
 			this.getSelectedItemsBuffer();
+			// } else {
+			// 	console.log('不允许超过100条');
+			// }
 		};
-
 		// 孩子中的一部分 checked, 父亲半选 partial，全部孩子 checked, 父亲 checked
 		this.pagerGridOptions.selectTreeLeafItem = (entity, sku) => {
 			sku.checked = !sku.checked;
@@ -855,6 +859,17 @@ export default class GoodsSelectorCtrl {
 		return children && children.every(child => {
 			return child.extend;
 		});
+	}
+	clickGrid(e) {
+		if (e.target.classList.contains('cc-checkbox-input')) {
+			if (this.selectedItems.length + 1 >= 3) {
+				this.isMoreThanHundred = true;
+			} else {
+				this.isMoreThanHundred = false;
+			}
+		} else {
+			this.isMoreThanHundred = true;
+		}
 	}
 	/**
 	 * @name ok 点击确认按钮
