@@ -692,6 +692,10 @@ export default class GoodsSelectorCtrl {
 	// 重置表单，恢复初始值
 	reset(formCtrl) {
 		this._$ccValidator.setPristine(formCtrl);
+		this.formModel.outerId = null;
+		this.formModel.name = null;
+		this.formModel.skusOuterId = null;
+		this.formModel.skusPropsVname = null;
 		this.initForm();
 		this.dateRange = {
 			start: null,
