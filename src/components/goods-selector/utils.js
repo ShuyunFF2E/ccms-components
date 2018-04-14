@@ -12,6 +12,9 @@ export function transformGoodsData(shopInfo, selectedGoodIds) {
 	return new Promise((resolve, reject) => {
 		genResource(`${apiPrefix}/items?platform=${shopInfo.plat}&shopId=${shopInfo.shopId}&id=${paramIdStr}`, false, null).get().$promise.then(res => {
 			// 数据转换
+			if (!res['data']) {
+				res['data'] = [];
+			}
 			let transformedData = res.data.map(d => {
 				d.skus.forEach(sku => {
 					if (selectedGoodIds[d.id] === null) {

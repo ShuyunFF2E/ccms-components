@@ -298,7 +298,7 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.selectTreeRootItem = entity => {
 			entity.checked = !entity.checked;
 			entity.partial = false;
-			entity.skus.forEach(item => {
+			entity.skus && entity.skus.forEach(item => {
 				item.checked = entity.checked;
 			});
 			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
@@ -310,6 +310,9 @@ export default class GoodsSelectorCtrl {
 			//    -> 其它情况不处理
 			let entityIndex = this.findEntity(this.selectedItems, entity);
 			if (entity.checked && entityIndex === -1) {
+				this.selectedItems.push(entity);
+			} else {
+				this.selectedItems.splice(entityIndex, 1);
 				this.selectedItems.push(entity);
 			}
 			if (!entity.checked && entityIndex !== -1) {
@@ -424,6 +427,11 @@ export default class GoodsSelectorCtrl {
 					data.push(item);
 				}
 			});
+			if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
+				this.selectedItems.forEach(item => {
+					item.extend = true;
+				});
+			}
 			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data)).then(() => {
 				this.showLoading = false;
 			});
@@ -661,7 +669,7 @@ export default class GoodsSelectorCtrl {
 				this.transformSelectedItems();
 				matchHelper.match(this.formModel, this.selectedItems, this.formConfig);
 				this.selectedItems.forEach(item => {
-					if (!item.skus.length) {
+					if (!item.skus || !item.skus.length) {
 						if (this.formModel.skusOuterId || this.formModel.skusPropsVname) {
 							item.isHide = true;
 						}
@@ -726,18 +734,23 @@ export default class GoodsSelectorCtrl {
 		// currentPageChecked -> 全选当页 (true or false)
 		this.currentPageChecked = !this.currentPageChecked;
 		this.resInfo.list.forEach(item => {
-			item.checked = this.currentPageChecked;
-			item.partial = false;
+			item['checked'] = this.currentPageChecked;
+			item['partial'] = false;
 			item.skus && item.skus.length && item.skus.forEach(sku => {
-				sku.checked = this.currentPageChecked;
+				sku['checked'] = this.currentPageChecked;
 			});
 		});
 		if (this.currentPageChecked) {
 			this.resInfo.list.forEach(item => {
-				if (this.findEntity(this.selectedItems, item) === -1) {
+				let index = this.findEntity(this.selectedItems, item);
+				if (index === -1) {
+					this.selectedItems.push(item);
+				} else {
+					this.selectedItems.splice(index, 1);
 					this.selectedItems.push(item);
 				}
 			});
+			console.log(this.selectedItems);
 		} else {
 			this.resInfo.list.forEach(item => {
 				let targetIndex = this.findEntity(this.selectedItems, item);
