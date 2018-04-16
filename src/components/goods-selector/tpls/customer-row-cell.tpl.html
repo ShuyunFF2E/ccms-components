@@ -13,7 +13,7 @@
 <td>
 	<a href="{{entity.detailUrl}}" class="goods-name">
 		<img src="{{entity.picUrl}}" alt="">
-		<span ng-bind-html="$ctrl.opts.lightText(entity.name, $ctrl.opts.formModel.name)" cc-tooltip="entity.name" tooltip-placement="top" tooltip-append-to-body="true"></span>
+		<span ng-bind-html="$ctrl.opts.lightText($ctrl.opts.listCharacterIntercept(entity.name, 16), $ctrl.opts.formModel.name)" cc-tooltip="entity.name" tooltip-placement="top" tooltip-append-to-body="true"></span>
 	</a>
 </td>
 <!--默认的表格行元素模板-->
