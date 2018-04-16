@@ -15,7 +15,7 @@ const GoodsSelectorService = {
 	 * @params isOnlyChecked bool 是否仅允许查看
 	 * @params selectedGoods array 已选商品列表 默认是{}(可选)
 	 * */
-	goodsSelector(shopInfo, { isOnlyChecked = false, maxSelectedNumber = 100 }, selectedGoods = []) {
+	goodsSelector(shopInfo, { isOnlyChecked = false, maxSelectedNumber = 100, serverName = '' }, selectedGoods = []) {
 
 		if (typeof shopInfo === 'undefined') {
 			throw new Error('goodsSelector 缺少 shopInfo 参数');
@@ -27,7 +27,13 @@ const GoodsSelectorService = {
 				fullscreen: false,
 				hasFooter: !isOnlyChecked,
 				__body: bodyTemplate,
-				locals: {shopInfoData: shopInfo, isOnlyChecked: isOnlyChecked, maxSelectedNumber: maxSelectedNumber, selectedData: selectedGoods},
+				locals: {
+					shopInfoData: shopInfo,
+					isOnlyChecked: isOnlyChecked,
+					maxSelectedNumber: maxSelectedNumber,
+					serverName: serverName,
+					selectedData: selectedGoods
+				},
 				controller: GoodsSelectorController,
 				controllerAs: '$ctrl',
 				onClose: noop

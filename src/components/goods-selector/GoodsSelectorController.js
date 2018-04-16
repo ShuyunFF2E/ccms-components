@@ -15,7 +15,7 @@ import { apiPrefix, getExceedSelectedNumberMsg } from './constant';
 import { transformGoodsData } from './utils';
 
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber',
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce')
 
 export default class GoodsSelectorCtrl {
@@ -169,7 +169,7 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 		this.pagerGridOptions = {
-			resource: this._$resource(`${apiPrefix}/items`),
+			resource: this._$resource(`${this._serverName}${apiPrefix}/items`),
 			response: null,
 			queryParams: {
 				shopId: this.formModel.shopId,
@@ -486,7 +486,7 @@ export default class GoodsSelectorCtrl {
 	}
 	// 获取商品自自定义类目数据
 	getShopCatories() {
-		genResource(`${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
+		genResource(`${this._serverName}${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
 			if (res.flag === 'fail') {
 				this.shopCategoriesList = [];
 			} else {
@@ -515,7 +515,7 @@ export default class GoodsSelectorCtrl {
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.categoriesId) {
-			genResource(`${apiPrefix}/categories/${item.id}/properties?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise
+			genResource(`${this._serverName}${apiPrefix}/categories/${item.id}/properties?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise
 				.then(res => {
 					this.propsPidList = res.data;
 					this.formModel.propsPid = this.propsPid;

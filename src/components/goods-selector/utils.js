@@ -1,7 +1,7 @@
 import genResource from 'angular-es-utils/rs-generator';
 import { apiPrefix } from './constant';
 
-export function transformGoodsData(shopInfo, selectedGoodIds) {
+export function transformGoodsData(shopInfo, selectedGoodIds, serverName) {
 
 	if (Array.isArray(shopInfo)) {
 		shopInfo = shopInfo[0];
@@ -10,7 +10,7 @@ export function transformGoodsData(shopInfo, selectedGoodIds) {
 	const ids = Object.keys(selectedGoodIds);
 	const paramIdStr = ids.join('&id=');
 	return new Promise((resolve, reject) => {
-		genResource(`${apiPrefix}/items?platform=${shopInfo.plat}&shopId=${shopInfo.shopId}&id=${paramIdStr}`, false, null).get().$promise.then(res => {
+		genResource(`${serverName}${apiPrefix}/items?platform=${shopInfo.plat}&shopId=${shopInfo.shopId}&id=${paramIdStr}`, false, null).get().$promise.then(res => {
 			// 数据转换
 			if (!res['data']) {
 				res['data'] = [];
