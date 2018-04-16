@@ -493,6 +493,9 @@ export default class GoodsSelectorCtrl {
 				this.shopCategoriesList = [];
 			} else {
 				this.shopCategoriesList = res.data;
+				this.shopCategoriesList.forEach(item => {
+					item.name = this.htmlDecodeByRegExp(item.name);
+				});
 			}
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
@@ -865,6 +868,20 @@ export default class GoodsSelectorCtrl {
 		return children && children.every(child => {
 			return child.extend;
 		});
+	}
+	// 用正则表达式实现html解码
+	htmlDecodeByRegExp(str) {
+		let s = '';
+		if (str.length === 0) {
+			return '';
+		}
+		s = str.replace(/&amp;/g, '&');
+		s = s.replace(/&lt;/g, '<');
+		s = s.replace(/&gt;/g, '>');
+		s = s.replace(/&nbsp;/g, ' ');
+		s = s.replace(/&#39;/g, '\'');
+		s = s.replace(/&quot;/g, '\"');
+		return s;
 	}
 	checkCheckboxBefore(event) {
 		const target = event.target;
