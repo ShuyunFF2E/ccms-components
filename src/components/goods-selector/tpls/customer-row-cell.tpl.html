@@ -4,8 +4,8 @@
 				 ng-checked="entity.checked"
 				 indeterminate="entity.partial">
 	</cc-checkbox>
-	<i class="tree-icon iconfont"
-	   ng-class="{'icon-subtract': entity.extend, 'icon-add': !entity.extend}"
+	<i class="tree-icon iconfont icon"
+	   ng-class="{'icon-jian': entity.extend, 'icon-jia': !entity.extend}"
 	   ng-if="entity.skus && entity.skus.length"
 	   ng-click="$ctrl.opts.handleTreeIcon(entity)">
 	</i>
