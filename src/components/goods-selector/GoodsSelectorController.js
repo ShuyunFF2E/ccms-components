@@ -255,9 +255,6 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.lightText = (originText, keyWords) => {
 			let reg = new RegExp(keyWords, 'g');
 			let result = '';
-			if (keyWords === 'name' || keyWords === 'skusPropsVname') {
-				originText = this.listCharacterIntercept(originText, 17);
-			}
 			if (keyWords && keyWords.length !== 0 && originText.indexOf(keyWords) > -1) {
 				result = originText.toString().replace(reg, `<span class="highlight">${keyWords}</span>`);
 			} else {
@@ -285,6 +282,13 @@ export default class GoodsSelectorCtrl {
 				price += '.00';
 			}
 			return '￥' + price;
+		};
+		// 超过 maxLength 个字则隐藏多余字，显示 '...'
+		this.pagerGridOptions.listCharacterIntercept = (str, maxLength) => {
+			if (str.length > maxLength) {
+				str = str.slice(0, maxLength) + '...';
+			}
+			return str;
 		};
 		this.pagerGridOptions.formModel = this.formModel;
 		// 表格子行的展开和收起
@@ -489,14 +493,10 @@ export default class GoodsSelectorCtrl {
 	// 获取商品自自定义类目数据
 	getShopCatories() {
 		genResource(`${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			if (res.flag === 'fail') {
-				this.shopCategoriesList = [];
-			} else {
-				this.shopCategoriesList = res.data;
-				this.shopCategoriesList.forEach(item => {
-					item.name = this.htmlDecodeByRegExp(item.name);
-				});
-			}
+			this.shopCategoriesList = res.data || [];
+			this.shopCategoriesList.forEach(item => {
+				item.name = this.htmlDecodeByRegExp(item.name);
+			});
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
@@ -506,11 +506,7 @@ export default class GoodsSelectorCtrl {
 	// 获取商品标准类目列表
 	getCatories() {
 		genResource(`${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			if (res.flag === 'fail') {
-				this.categoriesList = [];
-			} else {
-				this.categoriesList = res.data;
-			}
+			this.categoriesList = res.data || [];
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
@@ -522,7 +518,7 @@ export default class GoodsSelectorCtrl {
 		if (this.formModel.categoriesId) {
 			genResource(`${apiPrefix}/categories/${item.id}/properties?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise
 				.then(res => {
-					this.propsPidList = res.data;
+					this.propsPidList = res.data || [];
 					this.formModel.propsPid = this.propsPid;
 				})
 				.catch(res => {
@@ -818,13 +814,6 @@ export default class GoodsSelectorCtrl {
 			result.push(item[fieldName]);
 		});
 		return result;
-	}
-	// 超过 maxLength 个字则隐藏多余字，显示 '...'
-	listCharacterIntercept(str, maxLength) {
-		if (str.length > maxLength) {
-			str = str.slice(0, maxLength) + '...';
-		}
-		return str;
 	}
 	// 从集合中获取 entity 的 index, 找不到返回 -1
 	findEntity(collection, entity) {

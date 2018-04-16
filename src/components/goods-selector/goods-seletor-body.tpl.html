@@ -8,7 +8,8 @@
 							disabled="$ctrl.isShopListDisabled"
 							model="$ctrl.formModel.shopId"
 							datalist="$ctrl.shopList"
-							mapping="$ctrl.shopListFieldsMap">
+							mapping="$ctrl.shopListFieldsMap"
+							on-select-change="$ctrl.shopSelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset>

@@ -7,7 +7,7 @@
 <td style="padding-left: 10px;">
 	<a href="{{entity.detailUrl}}" class="goods-name">
 		<img src="{{sku.picUrl}}" alt="">
-		<span ng-bind-html="$ctrl.opts.lightText($ctrl.opts.getSkuName(sku), $ctrl.opts.formModel.skusPropsVname)" class="sku" cc-tooltip="$ctrl.opts.getSkuName(sku)" tooltip-placement="top" tooltip-append-to-body="true"></span>
+		<span ng-bind-html="$ctrl.opts.lightText($ctrl.opts.listCharacterIntercept($ctrl.opts.getSkuName(sku), 16), $ctrl.opts.formModel.skusPropsVname)" class="sku" cc-tooltip="$ctrl.opts.getSkuName(sku)" tooltip-placement="top" tooltip-append-to-body="true"></span>
 	</a>
 </td>
 <!--默认的表格行元素模板-->
