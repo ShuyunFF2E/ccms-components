@@ -255,7 +255,9 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.lightText = (originText, keyWords) => {
 			let reg = new RegExp(keyWords, 'g');
 			let result = '';
-			originText = this.listCharacterIntercept(originText, 17);
+			if (keyWords === 'name' || keyWords === 'skusPropsVname') {
+				originText = this.listCharacterIntercept(originText, 17);
+			}
 			if (keyWords && keyWords.length !== 0 && originText.indexOf(keyWords) > -1) {
 				result = originText.toString().replace(reg, `<span class="highlight">${keyWords}</span>`);
 			} else {
