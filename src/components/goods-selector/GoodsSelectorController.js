@@ -159,7 +159,7 @@ export default class GoodsSelectorCtrl {
 		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
 		this.selectedItemsBuffer = [];
 
-		transformGoodsData(this._shopInfoData, this._selectedData).then(data => {
+		transformGoodsData(this._shopInfoData, this._selectedData, this._serverName).then(data => {
 			if (data && data.length) {
 				data.forEach(entity => {
 					this.selectedItems.push(entity);
