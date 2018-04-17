@@ -8,6 +8,9 @@ import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
 import selectedEmptyTpl from './tpls/customer-selected-empty.tpl.html';
 import bodyTemplate from './tpls/customer-modal-body.tpl.html';
+import headerTemplate from './tpls/customer-header.tpl.html';
+import footerTemplate from './tpls/customer-footer.tpl.html';
+import rowTemplate from './tpls/customer-row.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './SectionAddCtrl';
@@ -187,12 +190,11 @@ export default class GoodsSelectorCtrl {
 					align: 'left'
 				}
 			],
-			headerTpl: '/src/components/goods-selector/tpls/customer-header.tpl.html',
-			rowTpl: '/src/components/goods-selector/tpls/customer-row.tpl.html',
-			footerTpl: '/src/components/goods-selector/tpls/customer-footer.tpl.html',
+			headerTpl: headerTemplate,
+			rowTpl: rowTemplate,
+			footerTpl: footerTemplate,
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
-				console.log(res);
 				if (res['data'] && res.flag !== 'fail') {
 					res['list'] = res['data'];
 					delete res['data'];
