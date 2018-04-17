@@ -493,7 +493,9 @@ export default class GoodsSelectorCtrl {
 	// 获取商品自自定义类目数据
 	getShopCatories() {
 		genResource(`${this._serverName}${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			this.shopCategoriesList = res.data || [];
+			let data = res.data || [];
+			// 只显示叶子类目
+			this.shopCategoriesList = data.filter(item => item.isLeaf === true);
 			this.shopCategoriesList.forEach(item => {
 				item.name = this.htmlDecodeByRegExp(item.name);
 			});
