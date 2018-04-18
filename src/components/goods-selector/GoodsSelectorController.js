@@ -344,7 +344,7 @@ export default class GoodsSelectorCtrl {
 
 			// 将已选商品 push 到 selectedItems 中
 			//    -> 如果父亲状态是 checked，且不存在于 selectedItems 中, 则将父亲(包括 sku) push 到 selectedItems 数组中；
-			//    -> 如果父亲状态是 partial，且不存在于 selectedItems 中, 则将父亲(包括sku数据)从已选商品数组中先 splice 掉，然后将整体 push 到数组中；
+			//    -> 如果父亲状态是 checked，且存在于 selectedItems 中, 则将父亲(包括sku数据)从已选商品数组中先 splice 掉，然后将整体 push 到数组中；
 			//    -> 如果父亲状态是 partial，且存在于 selectedItems 中，则用父亲(包括 sku)替换已存在 entity；
 			//    -> 如果父亲状态是 unchecked，则将其从 selectedItems 中删除
 			if (entity.checked) {
