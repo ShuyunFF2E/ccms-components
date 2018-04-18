@@ -8,6 +8,9 @@ import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
 import selectedEmptyTpl from './tpls/customer-selected-empty.tpl.html';
 import bodyTemplate from './tpls/customer-modal-body.tpl.html';
+import headerTemplate from './tpls/customer-header.tpl.html';
+import footerTemplate from './tpls/customer-footer.tpl.html';
+import rowTemplate from './tpls/customer-row.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './SectionAddCtrl';
@@ -187,12 +190,11 @@ export default class GoodsSelectorCtrl {
 					align: 'left'
 				}
 			],
-			headerTpl: '/src/components/goods-selector/tpls/customer-header.tpl.html',
-			rowTpl: '/src/components/goods-selector/tpls/customer-row.tpl.html',
-			footerTpl: '/src/components/goods-selector/tpls/customer-footer.tpl.html',
+			headerTpl: headerTemplate,
+			rowTpl: rowTemplate,
+			footerTpl: footerTemplate,
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
-				console.log(res);
 				if (res['data'] && res.flag !== 'fail') {
 					res['list'] = res['data'];
 					delete res['data'];
@@ -493,7 +495,9 @@ export default class GoodsSelectorCtrl {
 	// 获取商品自自定义类目数据
 	getShopCatories() {
 		genResource(`${this._serverName}${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			this.shopCategoriesList = res.data || [];
+			let data = res.data || [];
+			// 只显示叶子类目
+			this.shopCategoriesList = data.filter(item => item.isLeaf === true);
 			this.shopCategoriesList.forEach(item => {
 				item.name = this.htmlDecodeByRegExp(item.name);
 			});
