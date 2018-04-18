@@ -494,17 +494,17 @@ export default class GoodsSelectorCtrl {
 		this.dateRange.end = null;
 	}
 	initComplexForm() {
-		let platform = this.formModel.platform,
-			shopId = this.formModel.shopId,
-			id = this.formModel.id,
-			name = this.formModel.name,
-			categoriesId = this.formModel.categoriesId;
-		this.initForm();
-		this.formModel.platform = platform;
-		this.formModel.shopId = shopId;
-		this.formModel.id = id;
-		this.formModel.name = name;
-		this.formModel.categoriesId = categoriesId;
+		for (let attr in this.formModel) {
+			if (attr !== 'platform' && attr !== 'shopId' && attr !== 'id' && attr !== 'name' && attr !== 'categoriesId') {
+				if (Array.isArray(this.formModel[attr])) {
+					this.formModel[attr].splice(0, this.formModel[attr].length);
+				} else {
+					this.formModel[attr] = null;
+				}
+			}
+		}
+		this.dateRange.start = null;
+		this.dateRange.end = null;
 	}
 	// 获取商品自自定义类目数据
 	getShopCatories() {
