@@ -41,6 +41,9 @@
 			  }
 			  .date-picker-holder:last-child {
 				width: 195px;
+				.calendar {
+				  left: -37px;
+				}
 			  }
 			}
 		  }
@@ -391,6 +394,10 @@
   p.error-minor-tooltip {
 	z-index: 1000;
   }
+  .highlight {
+	background-color: yellow;
+	display: inline;
+  }
 }
 .tooltip-opened {
   z-index: 10000;
@@ -439,8 +446,4 @@
 	  border:1px solid #d9d9d9;
 	}
   }
-}
-.highlight {
-  background-color: yellow;
-  display: inline;
 }
