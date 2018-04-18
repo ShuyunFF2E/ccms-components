@@ -168,7 +168,7 @@ export default class GoodsSelectorCtrl {
 					this.selectedItems.push(entity);
 					this.selectedItemsBuffer.push(cloneDeep(entity));
 				});
-				// this.updateGrid();
+				this.updateGrid();
 			}
 		});
 		this.pagerGridOptions = {
@@ -203,6 +203,7 @@ export default class GoodsSelectorCtrl {
 				}
 				if (res['totalCount']) {
 					res['totals'] = res['totalCount'];
+					delete res['totalCount'];
 					delete res['totalCount'];
 				}
 				if (res.list && res.list.length) {
@@ -322,17 +323,16 @@ export default class GoodsSelectorCtrl {
 			let entityIndex = this.findEntity(this.selectedItems, entity);
 			if (entity.checked && entityIndex === -1) {
 				this.selectedItems.push(entity);
-			} else {
+			}
+			if (entity.checked && entityIndex !== -1) {
 				this.selectedItems.splice(entityIndex, 1);
 				this.selectedItems.push(entity);
 			}
 			if (!entity.checked && entityIndex !== -1) {
 				this.selectedItems.splice(entityIndex, 1);
 			}
+			console.log(this.selectedItems);
 			this.getSelectedItemsBuffer();
-			// } else {
-			// 	console.log('不允许超过100条');
-			// }
 		};
 		// 孩子中的一部分 checked, 父亲半选 partial，全部孩子 checked, 父亲 checked
 		this.pagerGridOptions.selectTreeLeafItem = (entity, sku) => {
@@ -347,7 +347,11 @@ export default class GoodsSelectorCtrl {
 			//    -> 如果父亲状态是 partial，且存在于 selectedItems 中，则用父亲(包括 sku)替换已存在 entity；
 			//    -> 如果父亲状态是 unchecked，则将其从 selectedItems 中删除
 			if (entity.checked) {
-				if (this.findEntity(this.selectedItems, entity) === -1) {
+				let entityIndex = this.findEntity(this.selectedItems, entity);
+				if (entityIndex === -1) {
+					this.selectedItems.push(entity);
+				} else {
+					this.selectedItems.splice(entityIndex, 1);
 					this.selectedItems.push(entity);
 				}
 			} else if (entity.partial) {
@@ -906,6 +910,12 @@ export default class GoodsSelectorCtrl {
 	 * @name ok 点击确认按钮
 	 */
 	ok() {
+		console.log(this.selectedItems);
+		this.selectedItems.forEach(item => {
+			if (item.skus && item.skus.length) {
+				item.skus = item.skus.filter(sku => { return sku.checked; });
+			}
+		});
 		this._modalInstance.ok(this.selectedItems);
 	}
 	// 批量添加 -- 后端查询
