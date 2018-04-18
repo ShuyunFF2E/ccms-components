@@ -7,14 +7,15 @@
 		.controller('ctrl', function($scope, $ccGoodsSelector) {
 
 			var selectedGoods = {
-				'10156930444': null,
-				'10229028174': ['11374112151']
+				556311744305: null,
+				556337565814:["3442328164921"],
+				559059470281:["3479833168658"]
 			};
 
 			var taobaoWithShopList = [{shopId: 106878997, shopName: '数云食堂', plat: 'top'}, {shopId: 157263193, shopName: '0黑色的琴键0', plat: 'top'}, {shopId: 65305757, shopName: '安踏', plat: 'top'}];
 			// var jsWithShopList = [{shopId: 24058, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
 			var jsWithShopList = [{shopId: 23591, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
-			var taobaoWithoutShopList = {shopId: 106878997, shopName: '数云食堂', plat: 'top'};
+			var taobaoWithoutShopList = {shopId: 157263193, shopName: '黑色', plat: 'top'};
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
 
 			var isOnlyChecked = false;
@@ -52,7 +53,7 @@
 			// taobao 无店铺选择
 			$scope.openTaobaoGoodsSelector = function() {
 				$ccGoodsSelector
-					.goodsSelector(taobaoWithoutShopList, options)
+					.goodsSelector(taobaoWithoutShopList, options, selectedGoods)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);

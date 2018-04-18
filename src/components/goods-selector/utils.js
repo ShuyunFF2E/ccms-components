@@ -16,7 +16,7 @@ export function transformGoodsData(shopInfo, selectedGoodIds, serverName) {
 				res['data'] = [];
 			}
 			let transformedData = res.data.map(d => {
-				d.skus.forEach(sku => {
+				d.skus && d.skus.forEach(sku => {
 					if (selectedGoodIds[d.id] === null) {
 						sku.checked = true;
 					} else if (selectedGoodIds[d.id].includes(sku.id)) {

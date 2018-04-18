@@ -5,7 +5,7 @@
 	</cc-checkbox>
 </td>
 <td style="padding-left: 10px;">
-	<a href="{{entity.detailUrl}}" class="goods-name">
+	<a ng-href="{{entity.detailUrl ? entity.detailUrl : ''}}" class="goods-name" target="_blank">
 		<img src="{{sku.picUrl}}" alt="">
 		<span ng-bind-html="$ctrl.opts.lightText($ctrl.opts.listCharacterIntercept($ctrl.opts.getSkuName(sku), 16), $ctrl.opts.formModel.skusPropsVname)" class="sku" cc-tooltip="$ctrl.opts.getSkuName(sku)" tooltip-placement="top" tooltip-append-to-body="true"></span>
 	</a>
