@@ -34,7 +34,7 @@
 					<!--<label class="goods-label">商品标签：</label>-->
 					<!--<input type="text" ng-model="$ctrl.formModel.goodsLabel" placeholder="商品标签" ng-focus="$ctrl.openGoodsLabel($ctrl.selectedGoods.goodsLabelList)">-->
 				<!--</fieldset>-->
-				<fieldset>
+				<fieldset ng-class="{'shop-categories': !$ctrl.isSimpleSearch}">
 					<label class="goods-label">标准类目：</label>
 					<cc-dropdown-select
 							placeholder="请选择"
