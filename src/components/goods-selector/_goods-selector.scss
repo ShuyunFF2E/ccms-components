@@ -92,6 +92,11 @@
 			text-align: left;
 			padding-left: 10px;
 		  }
+		  &.shop-categories {
+			cc-dropdown-select .dropdown-select .dropdown-list {
+			  left: -34px;
+			}
+		  }
 		}
 	  }
 	}
