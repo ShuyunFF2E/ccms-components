@@ -19,7 +19,7 @@ import { transformGoodsData } from './utils';
 
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
-	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce')
+	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile')
 
 export default class GoodsSelectorCtrl {
 
@@ -42,7 +42,7 @@ export default class GoodsSelectorCtrl {
 			disabled: false,
 			dateOnly: true
 		};
-		this.tips = this.warnTips = this.maxNumberTips = null;
+		this.tips = this.pageWarnTips = this.maxNumberTips = null;
 		// 商品状态
 		this.statusList = [
 			{
@@ -195,6 +195,14 @@ export default class GoodsSelectorCtrl {
 			footerTpl: footerTemplate,
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
+				if (res.flag === 'fail' && res.msg === 'Result window is too large, window size must be less than or equal to: [10000]') {
+					this.pageWarnTips = this._$ccTips.error('<span class="sd-max-number-error-msg"></span>');
+					let warnMsg = this._$compile('<span>出错提示：最多允许查询10000条商品数据, 请刷新表格。&nbsp;</span><span style="color: #0083ba; cursor: pointer" ng-click="$ctrl.refreshGrid()">刷新</span>')(this._$scope);
+					let tipsArr = document.querySelectorAll('.float-tips-container .float-tips .message .sd-max-number-error-msg');
+					tipsArr.forEach(item => {
+						angular.element(item).parent().empty().append(warnMsg);
+					});
+				}
 				if (res['data'] && res.flag !== 'fail') {
 					res['list'] = res['data'];
 					delete res['data'];
@@ -256,6 +264,7 @@ export default class GoodsSelectorCtrl {
 		};
 		// 高亮显示搜索关键字
 		this.pagerGridOptions.lightText = (originText, keyWords) => {
+			originText = originText || '';
 			let reg = new RegExp(keyWords, 'g');
 			let result = '';
 			if (keyWords && keyWords.length !== 0 && originText.indexOf(keyWords) > -1) {
@@ -655,7 +664,13 @@ export default class GoodsSelectorCtrl {
 			this.selectedDateRangeModel = cloneDeep(this.dateRange);
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
-			this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
+			if (this.selectedItemsBuffer.length) {
+				this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
+			} else {
+				this.resInfo.list.forEach(item => {
+					this.resetRootItem(item);
+				});
+			}
 			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		}
@@ -719,6 +734,10 @@ export default class GoodsSelectorCtrl {
 	updateGrid() {
 		this._$ccGrid.refresh(this.pagerGridOptions).then(opts => {});
 	}
+	refreshGrid() {
+		this.pagerGridOptions.queryParams.pageNum = 1;
+		this.updateGrid();
+	};
 	// 将商品状态恢复成初始状态
 	resetRootItem(entity) {
 		entity.checked = false;
