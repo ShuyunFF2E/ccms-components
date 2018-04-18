@@ -318,6 +318,7 @@ export default class GoodsSelectorCtrl {
 
 			// 将已选商品 push 到 selectedItems 中
 			//    -> 如果父亲 checked 并且不存在于 selectedItems 数组中，则将父亲(包括sku数据)整体 push 到数组中；
+			//	  -> 如果父亲初始状态为partial, 父亲 checked 并且存在于 selectedItems 数组中，则将父亲(包括sku数据)从已选商品数组中先 splice 掉，然后将整体 push 到数组中；
 			//    -> 如果父亲 unchecked 并且存在于 selectedItems 数组中，则将父亲这个整体删除
 			//    -> 其它情况不处理
 			let entityIndex = this.findEntity(this.selectedItems, entity);
@@ -331,7 +332,6 @@ export default class GoodsSelectorCtrl {
 			if (!entity.checked && entityIndex !== -1) {
 				this.selectedItems.splice(entityIndex, 1);
 			}
-			console.log(this.selectedItems);
 			this.getSelectedItemsBuffer();
 		};
 		// 孩子中的一部分 checked, 父亲半选 partial，全部孩子 checked, 父亲 checked
@@ -344,6 +344,7 @@ export default class GoodsSelectorCtrl {
 
 			// 将已选商品 push 到 selectedItems 中
 			//    -> 如果父亲状态是 checked，且不存在于 selectedItems 中, 则将父亲(包括 sku) push 到 selectedItems 数组中；
+			//    -> 如果父亲状态是 partial，且不存在于 selectedItems 中, 则将父亲(包括sku数据)从已选商品数组中先 splice 掉，然后将整体 push 到数组中；
 			//    -> 如果父亲状态是 partial，且存在于 selectedItems 中，则用父亲(包括 sku)替换已存在 entity；
 			//    -> 如果父亲状态是 unchecked，则将其从 selectedItems 中删除
 			if (entity.checked) {
@@ -541,7 +542,6 @@ export default class GoodsSelectorCtrl {
 	};
 	// 店铺 select 框 change
 	shopSelectChange(newValue, oldValue, itemIndex, item) {
-		console.log(newValue, oldValue, itemIndex, item);
 		this.getShopCatories();
 		this.getCatories();
 	};
@@ -769,7 +769,6 @@ export default class GoodsSelectorCtrl {
 					this.selectedItems.push(item);
 				}
 			});
-			console.log(this.selectedItems);
 		} else {
 			this.resInfo.list.forEach(item => {
 				let targetIndex = this.findEntity(this.selectedItems, item);
@@ -910,7 +909,6 @@ export default class GoodsSelectorCtrl {
 	 * @name ok 点击确认按钮
 	 */
 	ok() {
-		console.log(this.selectedItems);
 		this.selectedItems.forEach(item => {
 			if (item.skus && item.skus.length) {
 				item.skus = item.skus.filter(sku => { return sku.checked; });
