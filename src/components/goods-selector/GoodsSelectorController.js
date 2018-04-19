@@ -529,7 +529,8 @@ export default class GoodsSelectorCtrl {
 	// 获取商品标准类目列表
 	getCatories() {
 		genResource(`${this._serverName}${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			this.categoriesList = res.data || [];
+			let data = res.data || [];
+			this.categoriesList = data.filter(item => item.isLeaf === true);
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
