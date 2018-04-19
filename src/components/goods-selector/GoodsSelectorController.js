@@ -716,17 +716,17 @@ export default class GoodsSelectorCtrl {
 	// 重置表单，恢复初始值
 	reset(formCtrl) {
 		this._$ccValidator.setPristine(formCtrl);
-		this.formModel.outerId = null;
-		this.formModel.name = null;
-		this.formModel.skusOuterId = null;
-		this.formModel.skusPropsVname = null;
-		this.initForm();
-		this.dateRange = {
-			start: null,
-			end: null,
-			disabled: false,
-			dateOnly: true
-		};
+		for (let attr in this.formModel) {
+			if (attr !== 'platform' && attr !== 'shopId') {
+				if (Array.isArray(this.formModel[attr])) {
+					this.formModel[attr].splice(0, this.formModel[attr].length);
+				} else {
+					this.formModel[attr] = null;
+				}
+			}
+		}
+		this.dateRange.start = null;
+		this.dateRange.end = null;
 	};
 	// 更新表格数据（数据从后端请求）
 	//    -> update 全部商品中状态
