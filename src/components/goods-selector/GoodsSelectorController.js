@@ -497,7 +497,7 @@ export default class GoodsSelectorCtrl {
 		for (let attr in this.formModel) {
 			if (attr !== 'platform' && attr !== 'shopId' && attr !== 'id' && attr !== 'name' && attr !== 'categoriesId') {
 				if (Array.isArray(this.formModel[attr])) {
-					this.formModel[attr].splice(0, this.formModel[attr].length);
+					this.formModel[attr] = [];
 				} else {
 					this.formModel[attr] = null;
 				}
@@ -719,7 +719,7 @@ export default class GoodsSelectorCtrl {
 		for (let attr in this.formModel) {
 			if (attr !== 'platform' && attr !== 'shopId') {
 				if (Array.isArray(this.formModel[attr])) {
-					this.formModel[attr].splice(0, this.formModel[attr].length);
+					this.formModel[attr] = [];
 				} else {
 					this.formModel[attr] = null;
 				}
