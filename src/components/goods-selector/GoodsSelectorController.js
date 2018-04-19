@@ -225,11 +225,13 @@ export default class GoodsSelectorCtrl {
 						}
 					});
 					this.currentPageChecked = this.isAllChildrenSelected(res.list);
-					if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
-						res.list.forEach(item => {
+					res.list.forEach(item => {
+						if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
 							item.extend = true;
-						});
-					}
+						} else {
+							item.extend = false;
+						}
+					});
 					this.isExtendAll = this.isAllChildrenExtend(res.list);
 				}
 				this.resInfo = res;
@@ -455,11 +457,14 @@ export default class GoodsSelectorCtrl {
 					data.push(item);
 				}
 			});
-			if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
-				this.selectedItems.forEach(item => {
+			this.selectedItems.forEach(item => {
+				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
 					item.extend = true;
-				});
-			}
+				} else {
+					item.extend = false;
+				}
+			});
+			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
 			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data)).then(() => {
 				this.showLoading = false;
 			});
