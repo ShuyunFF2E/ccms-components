@@ -42,7 +42,8 @@
 			  .date-picker-holder:last-child {
 				width: 195px;
 				.calendar {
-				  left: -37px;
+				  left: auto;
+				  right: 0;
 				}
 			  }
 			}
@@ -94,7 +95,8 @@
 		  }
 		  &.shop-categories {
 			cc-dropdown-select .dropdown-select .dropdown-list {
-			  left: -34px;
+			  left: auto;
+			  right: 0;
 			}
 		  }
 		}
