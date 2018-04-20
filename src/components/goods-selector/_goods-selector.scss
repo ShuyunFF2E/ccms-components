@@ -22,6 +22,7 @@
 		  margin: 0px;
 		  padding-left: 0px;
 		  padding-right: 0px;
+		  padding-bottom: 5px;
 		  input:not(.date-picker-input), select:not(.ng-not-empty), cc-dropdown-select, cc-dropdown-multiselect {
 			width: 150px;
 		  }
@@ -41,9 +42,6 @@
 			  }
 			  .date-picker-holder:last-child {
 				width: 195px;
-				.calendar {
-				  left: -37px;
-				}
 			  }
 			}
 		  }
@@ -52,7 +50,7 @@
 			padding-right: 0;
 		  }
 		  &.goods-price input {
-			width: 194.5px;
+			width: 69px;
 		  }
 		  &.operate {
 			margin-left: 25px;
@@ -94,7 +92,8 @@
 		  }
 		  &.shop-categories {
 			cc-dropdown-select .dropdown-select .dropdown-list {
-			  left: -34px;
+			  left: auto;
+			  right: 0;
 			}
 		  }
 		}
@@ -333,7 +332,7 @@
 			  }
 			}
 			> .cc-grid-footer {
-			  padding: 15px 11px 14px 11px;
+			  padding: 10px 11px 10px 11px;
 			  .total-items-count, .reload, .selected-items-count {
 				display: none;
 			  }
@@ -381,10 +380,10 @@
 	top: 270px;
   }
   gs-tabs.row-4 .gs-tab-content gs-panel {
-	top: 233px;
+	top: 212px;
 	cc-grid {
 	  //height: 257px;
-	  height: 237px;
+	  height: 258px;
 	  //width: 1017px;
 	  .cc-grid .cc-grid-body {
 		.default{

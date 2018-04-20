@@ -225,11 +225,13 @@ export default class GoodsSelectorCtrl {
 						}
 					});
 					this.currentPageChecked = this.isAllChildrenSelected(res.list);
-					if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
-						res.list.forEach(item => {
+					res.list.forEach(item => {
+						if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
 							item.extend = true;
-						});
-					}
+						} else {
+							item.extend = false;
+						}
+					});
 					this.isExtendAll = this.isAllChildrenExtend(res.list);
 				}
 				this.resInfo = res;
@@ -455,11 +457,14 @@ export default class GoodsSelectorCtrl {
 					data.push(item);
 				}
 			});
-			if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
-				this.selectedItems.forEach(item => {
+			this.selectedItems.forEach(item => {
+				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
 					item.extend = true;
-				});
-			}
+				} else {
+					item.extend = false;
+				}
+			});
+			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
 			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data)).then(() => {
 				this.showLoading = false;
 			});
@@ -497,7 +502,7 @@ export default class GoodsSelectorCtrl {
 		for (let attr in this.formModel) {
 			if (attr !== 'platform' && attr !== 'shopId' && attr !== 'id' && attr !== 'name' && attr !== 'categoriesId') {
 				if (Array.isArray(this.formModel[attr])) {
-					this.formModel[attr].splice(0, this.formModel[attr].length);
+					this.formModel[attr] = [];
 				} else {
 					this.formModel[attr] = null;
 				}
@@ -524,7 +529,8 @@ export default class GoodsSelectorCtrl {
 	// 获取商品标准类目列表
 	getCatories() {
 		genResource(`${this._serverName}${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
-			this.categoriesList = res.data || [];
+			let data = res.data || [];
+			this.categoriesList = data.filter(item => item.isLeaf === true);
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
@@ -716,17 +722,17 @@ export default class GoodsSelectorCtrl {
 	// 重置表单，恢复初始值
 	reset(formCtrl) {
 		this._$ccValidator.setPristine(formCtrl);
-		this.formModel.outerId = null;
-		this.formModel.name = null;
-		this.formModel.skusOuterId = null;
-		this.formModel.skusPropsVname = null;
-		this.initForm();
-		this.dateRange = {
-			start: null,
-			end: null,
-			disabled: false,
-			dateOnly: true
-		};
+		for (let attr in this.formModel) {
+			if (attr !== 'platform' && attr !== 'shopId') {
+				if (Array.isArray(this.formModel[attr])) {
+					this.formModel[attr] = [];
+				} else {
+					this.formModel[attr] = null;
+				}
+			}
+		}
+		this.dateRange.start = null;
+		this.dateRange.end = null;
 	};
 	// 更新表格数据（数据从后端请求）
 	//    -> update 全部商品中状态
