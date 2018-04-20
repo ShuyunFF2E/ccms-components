@@ -31,8 +31,8 @@
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<!--<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isTaobao">-->
-					<!--<label class="goods-label">商品标签：</label>-->
-					<!--<input type="text" ng-model="$ctrl.formModel.goodsLabel" placeholder="商品标签" ng-focus="$ctrl.openGoodsLabel($ctrl.selectedGoods.goodsLabelList)">-->
+				<!--<label class="goods-label">商品标签：</label>-->
+				<!--<input type="text" ng-model="$ctrl.formModel.goodsLabel" placeholder="商品标签" ng-focus="$ctrl.openGoodsLabel($ctrl.selectedGoods.goodsLabelList)">-->
 				<!--</fieldset>-->
 				<fieldset ng-class="{'shop-categories': !$ctrl.isSimpleSearch}">
 					<label class="goods-label">标准类目：</label>
@@ -57,7 +57,7 @@
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
-					<label class="goods-label">属性值：</label>{{$ctrl.formModel.propsVid}}
+					<label class="goods-label">属性值：</label>
 					<cc-dropdown-select
 							placeholder="请选择或输入"
 							model="$ctrl.formModel.propsVid"

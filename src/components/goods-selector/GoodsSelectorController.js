@@ -149,7 +149,6 @@ export default class GoodsSelectorCtrl {
 
 		this.initForm();
 
-		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		this.allGoodsFormModel = {};
 		this.selectedDateRangeModel = cloneDeep(this.dateRange);
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
@@ -495,7 +494,6 @@ export default class GoodsSelectorCtrl {
 			minPrice: null, // 商品价格下限
 			maxPrice: null // 商品价格下限
 		};
-
 		// 日期组件的特殊性
 		this.dateRange.start = null;
 		this.dateRange.end = null;
@@ -555,16 +553,18 @@ export default class GoodsSelectorCtrl {
 		} else {
 			this.propsPidList = [];
 			this.formModel.propsPid = null;
+			this.propsPid = null;
 		}
 	};
 	// 级联菜单 -> 商品属性 select 框 change
 	propSelectChange(newValue, oldValue, itemIndex, item) {
-		if (this.formModel.propsPid) {
+		if (this.formModel.propsPid && itemIndex !== -1) {
 			this.propsVidList = this.propsPidList[itemIndex].values;
 			this.formModel.propsVid = cloneDeep(this.propsVid);
 		} else {
 			this.propsVidList = [];
-			this.formModel.propsVid = null;
+			this.formModel.propsVid = undefined;
+			this.propsVid = undefined;
 			this.formModel.propsVname = null;
 		}
 	};
@@ -575,13 +575,10 @@ export default class GoodsSelectorCtrl {
 	};
 	// 商品属性值 select 框 change
 	propsVidSelectChange(newValue, oldValue, itemIndex, item) {
-		console.log('newValue, oldValue, itemIndex, item: ', newValue, oldValue, itemIndex, item);
 		if (newValue && itemIndex === -1) {
 			this.formModel.propsVname = newValue;
-			this.isPropsVname = true;
 		} else {
 			this.formModel.propsVname = null;
-			this.isPropsVname = false;
 		}
 	};
 	// 后端搜索 -> 提交 form 表单前参数处理
@@ -616,7 +613,7 @@ export default class GoodsSelectorCtrl {
 						queryCollection['props' + '.' + 'pid'] = this.formModel[prop];
 						break;
 					case 'propsVid':
-						queryCollection['props' + '.' + 'vid'] = this.isPropsVname ? null : this.formModel[prop];
+						queryCollection['props' + '.' + 'vid'] = this.formModel.propsVname ? null : this.formModel[prop];
 						break;
 					case 'propsVname':
 						queryCollection['props' + '.' + 'vname'] = this.formModel[prop];
@@ -709,8 +706,15 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		}
+		this.categoriesId = cloneDeep(formModel.categoriesId);
 		this.propsPid = cloneDeep(formModel.propsPid);
 		this.propsVid = cloneDeep(formModel.propsVid);
+		if (this.categoriesId === formModel.categoriesId) {
+			this.formModel.propsPid = this.propsPid;
+		}
+		if (this.categoriesId === formModel.categoriesId && this.propsPid === formModel.propsPid) {
+			this.formModel.propsVid = this.propsVid;
+		}
 	}
 	// 筛选
 	search(isSelectedGoodsTab) {
