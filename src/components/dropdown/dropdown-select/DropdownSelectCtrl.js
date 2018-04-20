@@ -74,6 +74,9 @@ export default class DropdownSelectCtrl {
 			if (!angular.equals(model, oldModel)) {
 				const item = this.getItemByValue(this.model);
 				const itemIndex = this.getItemIndexByItemValue(this.model, this.items);
+				if (this.supportInputValue) {
+					this._searchText = this.model;
+				}
 				this.setModelValue(this.model);
 				this.focusAt(itemIndex);
 				// 增加回调参数 itemIndex item
@@ -202,7 +205,7 @@ export default class DropdownSelectCtrl {
 				this.title = this._searchText;
 				this.model = this._searchText;
 				this.icon = false;
-				this.items = [];
+				this.items = this._clampedDatalist;
 			} else {
 				this.title = '';
 				this.model = null;
