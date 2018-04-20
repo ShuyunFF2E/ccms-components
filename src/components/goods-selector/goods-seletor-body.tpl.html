@@ -57,14 +57,16 @@
 					</cc-dropdown-select>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
-					<label class="goods-label">属性值：</label>
-					<cc-dropdown-multiselect
+					<label class="goods-label">属性值：</label>{{$ctrl.formModel.propsVid}}
+					<cc-dropdown-select
 							placeholder="请选择或输入"
 							model="$ctrl.formModel.propsVid"
 							datalist="$ctrl.propsVidList"
 							searchable="true"
+							on-select-change="$ctrl.propsVidSelectChange(model, oldModel, itemIndex, item)"
+							support-input-value="true"
 							mapping="$ctrl.propsVidFieldsMap">
-					</cc-dropdown-multiselect>
+					</cc-dropdown-select>
 				</fieldset>
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
 					<label class="goods-label">商品状态：</label>

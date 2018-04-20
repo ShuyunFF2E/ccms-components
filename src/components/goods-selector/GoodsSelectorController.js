@@ -132,7 +132,8 @@ export default class GoodsSelectorCtrl {
 			shopCategoriesId: 'fuzzymutipleArray',
 			categoriesId: 'equal',
 			propsPid: 'equal',
-			propsVid: 'fuzzymutipleArray',
+			propsVid: 'fuzzySearch',
+			propsVname: 'fuzzySearch',
 			status: 'equal',
 			outerId: 'fuzzySearch',
 			startListTime: 'lessEqual',
@@ -482,7 +483,8 @@ export default class GoodsSelectorCtrl {
 			shopCategoriesId: [], // shopCategories.id 店铺类目数组
 			categoriesId: null, // categories.id 标准类目
 			propsPid: null, // props.pid 属性ID
-			propsVid: [], // props.vid 属性值ID
+			propsVid: null, // props.vid 属性值ID
+			propsVname: null, // props.vid 属性值ID
 			status: this.statusList[0].value, // 状态, true 在架, false 不在架
 			skusPropsVname: null, // skus.props.vname SKU属性值模糊匹配
 			outerId: null, // 商品商家编码
@@ -555,11 +557,6 @@ export default class GoodsSelectorCtrl {
 			this.formModel.propsPid = null;
 		}
 	};
-	// 店铺 select 框 change
-	shopSelectChange(newValue, oldValue, itemIndex, item) {
-		this.getShopCatories();
-		this.getCatories();
-	};
 	// 级联菜单 -> 商品属性 select 框 change
 	propSelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.propsPid) {
@@ -567,7 +564,24 @@ export default class GoodsSelectorCtrl {
 			this.formModel.propsVid = cloneDeep(this.propsVid);
 		} else {
 			this.propsVidList = [];
-			this.formModel.propsVid = [];
+			this.formModel.propsVid = null;
+			this.formModel.propsVname = null;
+		}
+	};
+	// 店铺 select 框 change
+	shopSelectChange(newValue, oldValue, itemIndex, item) {
+		this.getShopCatories();
+		this.getCatories();
+	};
+	// 商品属性值 select 框 change
+	propsVidSelectChange(newValue, oldValue, itemIndex, item) {
+		console.log('newValue, oldValue, itemIndex, item: ', newValue, oldValue, itemIndex, item);
+		if (newValue && itemIndex === -1) {
+			this.formModel.propsVname = newValue;
+			this.isPropsVname = true;
+		} else {
+			this.formModel.propsVname = null;
+			this.isPropsVname = false;
 		}
 	};
 	// 后端搜索 -> 提交 form 表单前参数处理
@@ -602,7 +616,10 @@ export default class GoodsSelectorCtrl {
 						queryCollection['props' + '.' + 'pid'] = this.formModel[prop];
 						break;
 					case 'propsVid':
-						queryCollection['props' + '.' + 'vid'] = this.formModel[prop];
+						queryCollection['props' + '.' + 'vid'] = this.isPropsVname ? null : this.formModel[prop];
+						break;
+					case 'propsVname':
+						queryCollection['props' + '.' + 'vname'] = this.formModel[prop];
 						break;
 					case 'id':
 						if (this.formModel[prop].length && !this.formModel[prop][0] && this.formModel[prop][0] !== 0) {
@@ -637,6 +654,7 @@ export default class GoodsSelectorCtrl {
 			item.categoriesId = this.getNewArray(item.categories, 'id');
 			item.propsPid = this.getNewArray(item.props, 'pid');
 			item.propsVid = this.getNewArray(item.props, 'vid');
+			item.propsVname = this.getNewArray(item.props, 'vname');
 			item.maxPrice = item.minPrice = item.price;
 			item.startListTime = item.listTime;
 			item.endListTime = item.delistTime;
@@ -697,6 +715,7 @@ export default class GoodsSelectorCtrl {
 	// 筛选
 	search(isSelectedGoodsTab) {
 		this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
+			console.log(this.formModel);
 			if (!isSelectedGoodsTab) {
 				this.transformParams();
 				this.updateGrid();
