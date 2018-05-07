@@ -123,6 +123,10 @@ cc-dropdown-select {
 						background-color: #fff;
 					}
 				}
+			    &[disabled=disabled] {
+				  	color: #888;
+					cursor: not-allowed;
+				}
 				.highlight {
 					color: #0083ba;
 				}
