@@ -30,7 +30,7 @@
 					is-open="ctrl.isOpen"
 					datalist="ctrl.datalist2"
 					mapping="ctrl.fieldsMap"
-					on-select-change="ctrl.selectChange(model, oldModel)"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					on-dropdown-open="ctrl.dropdownOpen()"
 					on-dropdown-close="ctrl.dropdownClose()">
 			</cc-dropdown-select>
@@ -46,6 +46,7 @@
 					placeholder="哈哈哈"
 					model="ctrl.value1"
 					datalist="ctrl.datalist2"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					mapping="ctrl.fieldsMap">
 			</cc-dropdown-select>
 			<div style="margin: 0.5em 0;">
@@ -53,13 +54,15 @@
 			</div>
 		</div>
 		<div class="demo">
-			<h3>单选（可搜索）</h3>
+			<h3>单选（可搜索, 如果没有匹配值, 可使用用户输入的值）</h3>
 			<span>当前值: <span ng-bind="ctrl.value2 | json"></span></span>
 			<cc-dropdown-select
 					placeholder="快，快选我。。啊！"
 					model="ctrl.value2"
 					datalist="ctrl.datalist1"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					searchable="true"
+					support-input-value="true"
 					mapping="ctrl.fieldsMap">
 			</cc-dropdown-select>
 			<div style="margin: 0.5em 0;">
@@ -77,6 +80,7 @@
 					model="ctrl.value3"
 					datalist="ctrl.datalist1"
 					mapping="ctrl.fieldsMap"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					on-dropdown-open="ctrl.dropdownOpen()"
 					on-dropdown-close="ctrl.dropdownClose()">
 			</cc-dropdown-multiselect>
@@ -90,6 +94,7 @@
 					datalist="ctrl.datalist1"
 					searchable="true"
 					confirm-button="true"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					mapping="ctrl.fieldsMap">
 			</cc-dropdown-multiselect>
 			<div style="margin: 0.5em 0;">
@@ -105,8 +110,28 @@
 					placeholder="我默认"
 					model="ctrl.value5"
 					datalist="ctrl.datalist5"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					searchable="true"
 					mapping="ctrl.fieldsMap"
+			>
+			</cc-dropdown-select>
+		</div>
+	</div>
+	<div class="group">
+		<div class="demo">
+			<h3>级联选择</h3>
+			<h4>当前值: {{ctrl.value6}} {{ctrl.value7}}</h4>
+			<cc-dropdown-select
+					placeholder="选择城市"
+					model="ctrl.value6"
+					datalist="ctrl.cascadeDataList"
+					on-select-change="ctrl.cascadeSelectChange(model)"
+			>
+			</cc-dropdown-select>
+			<cc-dropdown-select
+					placeholder="选择区"
+					model="ctrl.value7"
+					datalist="ctrl.cascadeAreaDataList"
 			>
 			</cc-dropdown-select>
 		</div>
@@ -124,10 +149,10 @@
 			this.value5 = '上海';
 			this.datalist1 = [
 				{title: '北京', value: 'bj'},
-				{title: '上海', value: 'sh'},
+				{title: '上海', value: 'sh', disabled: true},
 				{title: '123789', value: 123789},
 				{title: '123456', value: 123456},
-				{title: '深圳', value: 'sz'},
+				{title: '深圳', value: 'sz', disabled: true},
 				{title: '西安', value: 'xa'},
 				{title: '南京', value: 'nj'},
 				{title: '武汉', value: 'wh'},
@@ -136,7 +161,7 @@
 			];
 			this.datalist5 = [
 				{title: '北京', value: 'bj', icon: 'icon-phone'},
-				{title: '上海', value: 'sh', icon: 'icon-phone'},
+				{title: '上海', value: 'sh', icon: 'icon-phone', disabled: true},
 				{title: '123789', value: 123789, icon: 'icon-phone'},
 				{title: '123456', value: 123456, icon: 'icon-phone'},
 				{title: '深圳', value: 'sz', icon: 'icon-phone'},
@@ -158,8 +183,8 @@
 				this.isOpen = !this.isOpen;
 			};
 
-			this.selectChange = function(newValue, oldValue) {
-				console.log('on-select-change:', newValue, oldValue);
+			this.selectChange = function(newValue, oldValue, itemIndex, item) {
+				console.log('on-select-change:', newValue, oldValue, itemIndex, item);
 			};
 
 			this.dropdownOpen = function() {
@@ -176,6 +201,17 @@
 				displayField: 'title',
 				iconField: 'icon'
 			};
+
+			// 数据结构比较简单, 当然你可以配合 fieldsMap 设计自己的数据结构, on-select-change 支持 model, oldModel, itemIndex, item
+			this.cascadeDataList = ['北京', '上海'];
+			this.areaDataList = [['海淀', '朝阳'], ['浦东', '徐汇']];
+
+			this.cascadeSelectChange = (newValue) => {
+				this.cascadeAreaDataList = this.areaDataList[this.cascadeDataList.indexOf(newValue)] || [];
+				this.value7 = this.cascadeAreaDataList[0] || '';
+			};
+
+
 		});
 </script>
 

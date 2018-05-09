@@ -18,6 +18,7 @@ export default class DropdownSelectCtrl {
 		this.title = '';
 		this.placeholder = '';
 		this.searchable = false;
+		this.supportInputValue = false;
 		this.model = null;
 		this.focusIndex = 0;
 		this.isOpen = false;
@@ -63,6 +64,10 @@ export default class DropdownSelectCtrl {
 
 		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
 			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
+			// TODO: SB requirement
+			if (this.supportInputValue) {
+				this._searchText = this.model;
+			}
 			// 选中预设值
 			this.setModelValue(this.model);
 			// 设置预设值的 focusIndex
@@ -71,9 +76,15 @@ export default class DropdownSelectCtrl {
 
 		scope.$watch(() => this.model, (model, oldModel) => {
 			if (!angular.equals(model, oldModel)) {
+				const item = this.getItemByValue(this.model);
+				const itemIndex = this.getItemIndexByItemValue(this.model, this.items);
+				if (this.supportInputValue) {
+					this._searchText = this.model;
+				}
 				this.setModelValue(this.model);
-				this.focusAt(this.getItemIndexByItemValue(this.model, this.items));
-				this.onSelectChange({ model, oldModel });
+				this.focusAt(itemIndex);
+				// 增加回调参数 itemIndex item
+				this.onSelectChange({ model, oldModel, itemIndex, item });
 			}
 		});
 
@@ -141,6 +152,7 @@ export default class DropdownSelectCtrl {
 	}
 
 	onSearchTextChange(text) {
+		this._searchText = text;
 		if (text !== this.oldText) {
 			this.oldText = text;
 			text = text.trim();
@@ -160,7 +172,7 @@ export default class DropdownSelectCtrl {
 	onOpen() {
 		let scope = this.getScope();
 		this.getInputElement().focus();
-		if (this.searchable && this.title.length) {
+		if (this.searchable && this.title && this.title.length) {
 			this._search(this.title);
 			this.focusAt(0);
 			scope.$root.$$phase || scope.$apply();
@@ -193,14 +205,22 @@ export default class DropdownSelectCtrl {
 			this.model = modelValue;
 			this.icon = newItem[iconField];
 		} else {
-			this.title = '';
-			this.model = null;
-			this.icon = false;
-			this.items = this._clampedDatalist;
+			if (this.supportInputValue) {
+				this.title = this._searchText;
+				this.model = this._searchText;
+				this.icon = false;
+				this.items = this._clampedDatalist;
+			} else {
+				this.title = '';
+				this.model = null;
+				this.icon = false;
+				this.items = this._clampedDatalist;
+			}
 		}
 	}
 
 	clear() {
+		this._searchText = null;
 		this.setModelValue(null);
 		this.getInputElement().focus();
 		this.focusAt(0);

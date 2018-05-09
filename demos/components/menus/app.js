@@ -142,8 +142,8 @@ angular
 			unfoldClick: function (unfold) {
 				console.log('结果:', unfold);
 			},
-			menusResource: $resource('/menus'),
-			shopsResource: $resource('/shops'),
+			menusResource: $resource('/api/menus'),
+			shopsResource: $resource('/api/shops'),
 			shopItemTpl: './tpls/shop-item.html',
 			shopLogoStyle: {border: 'solid 1px #08bb08'},
 			shopLogoSubConfig: {
