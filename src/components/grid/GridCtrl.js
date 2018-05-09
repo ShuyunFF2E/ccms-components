@@ -43,10 +43,11 @@ export default class GridCtrl {
 
 		GridHelper.fillOpts(this.opts);
 
-		const {headerTpl, emptyTipTpl, rowTpl} = this.opts;
+		const {headerTpl, emptyTipTpl, rowTpl, footerTpl} = this.opts;
 
 		this.headerTemplate = TplReqHelper.get(headerTpl || GRID_TEMPLATES[type][0]);
 		this.emptyTipsTemplate = TplReqHelper.get(emptyTipTpl || GRID_TEMPLATES[type][2]);
+		this.footerTemplate = TplReqHelper.get(footerTpl || GRID_TEMPLATES[type][3]);
 		this.errorMessageTpl = errorMessageTpl;
 
 		if (rowTpl) {

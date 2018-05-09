@@ -119,6 +119,10 @@ cc-dropdown-multiselect {
 					> input[type="checkbox"] {
 						margin-right: 5px;
 					}
+				  	&[disabled=disabled] {
+						color: #888;
+						cursor: not-allowed;
+				  	}
 				}
 				.highlight {
 					color: #0083ba;

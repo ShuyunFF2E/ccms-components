@@ -1,0 +1,453 @@
+.goods-selector {
+  background: #f8f8f8;
+  color: #666666;
+  font-family: "Microsoft Yahei", Tahoma, sans-serif;
+  position: relative;
+  .main-area {
+	.gs-tabs {
+	  position: absolute;
+	  top: -10px;
+	  left: 0;
+	  right: 0;
+	}
+	.form-area {
+	  padding-top: 28px;
+	  .form-wrapper {
+		margin-left: -18px;
+		margin-right: -20px;
+		padding-top: 5px;
+		display: flex;
+		flex-wrap: wrap;
+		fieldset {
+		  margin: 0px;
+		  padding-left: 0px;
+		  padding-right: 0px;
+		  padding-bottom: 5px;
+		  input:not(.date-picker-input), select:not(.ng-not-empty), cc-dropdown-select, cc-dropdown-multiselect {
+			width: 150px;
+		  }
+		  &.stack-date {
+			position: relative;
+			label {
+			  position: absolute;
+			  left: 0;
+			  top: 14px;
+			}
+			.date-range {
+			  display: inline-block;
+			  padding-left: 95px;
+			  margin-left: 6px;
+			  .date-picker-holder:first-child {
+				width: 194px;
+			  }
+			  .date-picker-holder:last-child {
+				width: 196px;
+			  }
+			}
+		  }
+		  .goods-label {
+			width: 98px;
+			padding-right: 0;
+		  }
+		  &.goods-price input {
+			width: 69px;
+		  }
+		  &.operate {
+			margin-left: 25px;
+			margin-top: 3px;
+			.search {
+			  width: 64px;
+			  font-size: 12px;
+			  min-width: 66px;
+			}
+			.reset {
+			  display: inline-block;
+			  padding-left: 20px;
+			  padding-right: 24px;
+			  &:hover {
+				cursor: pointer;
+			  }
+			}
+			.add-addition {
+			  display: inline-block;
+			  color:#0083ba;
+			  &:hover {
+				cursor: pointer;
+			  }
+			}
+		  }
+		  .dropdown-multiselect .dropdown-panel .dropdown-list li {
+			> label {
+			  width: 129px;
+			  padding-right: 0;
+			  text-align: left;
+			  > input[type="checkbox"] {
+				width: 12px;
+				height: 12px;
+				margin-right: 6px;
+			  }
+			}
+			text-align: left;
+			padding-left: 10px;
+		  }
+		  &.shop-categories {
+			cc-dropdown-select .dropdown-select .dropdown-list {
+			  left: auto;
+			  right: 0;
+			}
+		  }
+		}
+	  }
+	}
+	.refresh-data {
+	  position: absolute;
+	  top: -0;
+	  right: -2px;
+	  color: #0083ba;
+	}
+  }
+  gs-tabs .gs-tabs {
+	.gs-tabs-nav {
+	  margin-left: -5px;
+	  margin-right: -5px;
+	}
+	.gs-tab-content {
+	  gs-panel {
+		position: absolute;
+		&.all-goods-panel {
+		  .cc-grid-header thead tr th {
+			&:first-child {
+			  width: 253px;
+			  padding-left: 86px;
+			}
+			&:nth-child(2) {
+			  padding-left: 13px;
+			}
+			&:nth-child(3) {
+			  padding-left: 7px;
+			}
+			&:nth-child(4) {
+			  padding-left: 6px;
+			}
+			&:nth-child(5) {
+			  padding-left: 0;
+			}
+			&:last-child {
+			  display: none;
+			}
+		  }
+		  .row-cell, .sku-row-cell {
+			width: 74px;
+		  }
+		  .remove-btn {
+			display: none;
+		  }
+		}
+		&.checked-goods-panel{
+		  .cc-grid-header thead tr th {
+			&:first-child {
+			  width: 208px;
+			  padding-left: 59px;
+			}
+			&:nth-child(2) {
+			  padding-left: 15px;
+			}
+			&:nth-child(3) {
+			  padding-left: 12px;
+			}
+			&:nth-child(4) {
+			  padding-left: 15px;
+			}
+			&:nth-child(5) {
+			  padding-left: 11px;
+			}
+			&:last-child {
+			  width: 116px;
+			}
+		  }
+		  .row-cell, .sku-row-cell {
+			width: 47px;
+		  }
+		  cc-checkbox, .hide-sku, .hide-entity, .hide-no-matched {
+			display: none;
+		  }
+		  cc-loading section .loader .circular {
+			left: 490px;
+			bottom: 250px;
+		  }
+		}
+		.all-goods-operation {
+		  padding-left: 9px;
+		  margin-bottom: 6px;
+		  color: #333333;
+		  .cc-checkbox {
+			margin-right: 15px;
+			.cc-checkbox-input {
+			  width: 12px;
+			  height: 12px;
+			  margin-right: 6px;
+			}
+		  }
+		  span.slide-toggle-btn {
+			color: #0083ba;
+			line-height: 2em;
+			&:hover {
+			  cursor: pointer;
+			}
+		  }
+		  .cc-checkbox.checked .cc-checkbox-input:before {
+			width: 2px;
+			height: 6px;
+			left: 3px;
+			top: 0.6px;
+		  }
+		}
+		.checked-goods-operation {
+		  margin-bottom: 6px;
+		  span {
+			color: #0083ba;
+			line-height: 2em;
+			margin-right: 15px;
+			&:hover {
+			  cursor: pointer;
+			}
+			&:first-child {
+			  margin-left: 8px;
+			}
+		  }
+		}
+		cc-grid {
+		  height: 200px;
+		  width: 987px;
+		  margin-left: -2px;
+		  .cc-grid {
+			border: none;
+			.cc-grid-body {
+			  height: 200px;
+			  overflow-y: scroll;
+			  .default {
+				padding-top: 30px;
+			  }
+			}
+			.loading-mask {
+			  //margin-top: -25px;
+			  position: absolute!important;
+			  z-index: 200000;
+			  bottom: 36px;
+			}
+			.no-data-message {
+			  //padding-top: 70px;
+			  padding-top: 52px;
+			}
+			.cc-grid-header thead tr th {
+			  &.all-goods-head {
+				width: 252px;
+				padding-left: 76px;
+			  }
+			}
+			.cc-grid-table {
+			  tbody {
+				tr {
+				  &:last-child {
+					border-bottom: none;
+					&.children {
+					  border-bottom: none;
+					}
+				  }
+				  &.hide {
+					display: none;
+				  }
+				  td.remove-btn {
+					width: 100px;
+					color: #0083ba;
+					&:hover {
+					  cursor: pointer;
+					}
+				  }
+				}
+				.goods-name {
+				  display: flex;
+				  width: 100%;
+				  color: #0083ba;
+				  margin-top: 10px;
+				  margin-bottom: 9px;
+				  img {
+					width: 38px;
+					height: 38px;
+					vertical-align: middle;
+				  }
+				  span {
+					display: inline-block;
+					width: 112px;
+					vertical-align: top;
+					line-height: 19px;
+					margin-left: 5px;
+					&.sku {
+					  color: #3d3d3d;
+					}
+					&.highlight {
+					  background-color: yellow;
+					  display: inline;
+					  margin: 0;
+					}
+				  }
+				}
+				.sku-row-cell {
+				  padding-left: 49px;
+				}
+				cc-checkbox {
+				  position: relative;
+				  .cc-checkbox {
+					.cc-checkbox-input {
+					  width: 12px;
+					  height: 12px;
+					  margin-top: 3px;
+					  margin-right: 0;
+					}
+					&.checked .cc-checkbox-input:before {
+					  width: 2px;
+					  height: 6px;
+					  left: 4px;
+					  top: 4px;
+					}
+					&.indeterminate .cc-checkbox-input:before {
+					  left: 2px;
+					  top: 5px;
+					}
+				  }
+				}
+			  }
+			}
+			.tree-icon {
+			  float: right;
+			  color: #00AAF1;
+			  &:hover {
+				cursor: pointer;
+			  }
+			}
+			.cc-grid-body * {
+			  position: static;
+			  .datalist {
+				height: 300px;
+			  }
+			}
+			> .cc-grid-footer {
+			  padding: 10px 11px 10px 11px;
+			  .total-items-count, .reload, .selected-items-count {
+				display: none;
+			  }
+			}
+			.no-data-message .init-msg {
+			  margin-left: 216px;
+			}
+		  }
+		  .footer-info {
+			background:#eff7ff;
+			border:1px solid #cde5ff;
+			border-radius:2px;
+			height:22px;
+			line-height: 21px;
+			color:#0083ba;
+			padding: 0 10px;
+			.plus-icon {
+			  color: #222;
+			}
+		  }
+		}
+	  }
+	}
+  }
+  gs-tabs.row-1 .gs-tab-content gs-panel {
+	top: 100px;
+	cc-grid {
+	  height: 370px;
+	  .cc-grid .cc-grid-body {
+		.default {
+		  padding-top: 120px;
+		}
+		.loading-mask {
+		  //padding-top: 80px;
+		  z-index: 200000;
+		  position: absolute!important;
+		}
+		.no-data-message{
+		  padding-top: 138px;
+		}
+	  }
+	}
+  }
+  gs-tabs.row-5 .gs-tab-content gs-panel {
+	top: 270px;
+  }
+  gs-tabs.row-4 .gs-tab-content gs-panel {
+	top: 212px;
+	cc-grid {
+	  //height: 257px;
+	  height: 258px;
+	  //width: 1017px;
+	  .cc-grid .cc-grid-body {
+		.default{
+		  padding-top: 47px;
+		}
+		.no-data-message {
+		  padding-top: 68px;
+		}
+	  }
+	}
+  }
+  p.error-minor-tooltip {
+	z-index: 1000;
+  }
+  .highlight {
+	background-color: yellow;
+	display: inline;
+  }
+}
+.tooltip-opened {
+  z-index: 10000;
+}
+.float-tips-container {
+  z-index: 10000!important;
+}
+.modal-body {
+  .section-modal {
+	.tips {
+	  background:#ecf8fc;
+	  border:1px solid #d2eeff;
+	  border-radius:2px;
+	  width:532px;
+	  height:28px;
+	  line-height: 28px;
+	  font-family:MicrosoftYaHei;
+	  font-size:12px;
+	  color:#999999;
+	  padding-left: 10px;
+	}
+	.addition {
+	  display: flex;
+	  flex-wrap: wrap;
+	  margin-top: 17px;
+	  margin-bottom: 8px;
+	  span {
+		margin-left: 2px;
+	  }
+	  .cc-radio {
+		margin-right: 25px;
+		.radio-button-icon {
+		  width: 12px;
+		  height: 12px;
+		  margin-right: 8px;
+		}
+		&.checked .radio-button-icon:before {
+		  left: 1px;
+		  top: 1px;
+		}
+	  }
+	}
+	textarea {
+	  width: 530px;
+	  height: 226px;
+	  border:1px solid #d9d9d9;
+	}
+  }
+}

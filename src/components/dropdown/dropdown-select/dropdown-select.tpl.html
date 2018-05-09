@@ -23,8 +23,9 @@
 	<div cc-dropdown-panel>
 		<ul class="dropdown-list">
 			<li ng-repeat="item in $ctrl.items track by $index"
-					ng-click="$ctrl.selectItemAt($index);"
-					ng-class="{focus: $index === $ctrl.focusIndex}">
+					ng-click="item.disabled === true || $ctrl.selectItemAt($index);"
+					ng-class="{focus: $index === $ctrl.focusIndex}"
+					ng-disabled="item.disabled">
 				<cc-icon ng-if="item.icon" symbol="{{item.icon}}"></cc-icon>
 				<span cc-bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
 			</li>

@@ -12,9 +12,6 @@ var config = require('./webpack-dev.config');
 var app = jsonServer.create();
 var compiler = webpack(config);
 
-var apiPrefix = '';
-var filename = path.resolve(__dirname, './mock/db.json');
-
 app.use(require('webpack-dev-middleware')(compiler, {
 	noInfo: false,
 	stats: {
@@ -31,7 +28,7 @@ app.use(/\/$/, function(req, res) {
 
 app.use(require('webpack-hot-middleware')(compiler));
 app.use(jsonServer.defaults({static: path.resolve(__dirname)}));
-app.use(jsonServer.router(apiPrefix, filename));
+app.use('/api', jsonServer.proxy('http://localhost', 8989));
 
 const port = 3000;
 const host = '0.0.0.0';

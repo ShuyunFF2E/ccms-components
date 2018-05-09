@@ -9,6 +9,7 @@ import angular from 'angular';
 import altSrc from './alt-src';
 import areaSelector from './area-selector';
 import calendar from './calendar';
+import captureEvent from './capture-event';
 import checkbox from './checkbox';
 import customerProfileBoard from './customer-profile-board';
 import datePicker from './date-picker';
@@ -18,6 +19,7 @@ import dropdownMultiselect from './dropdown/dropdown-multiselect';
 import dropdownSelect from './dropdown/dropdown-select';
 import form from './form';
 import grid from './grid';
+import goodsSelector from './goods-selector';
 import instantSearch from './instant-search';
 import loading from './loading';
 import menuBar from './menus';
@@ -32,12 +34,14 @@ import tabset from './tabset';
 import tips from './tips';
 import toggle from './toggle';
 import tooltip from './tooltip';
+import tree from './tree';
 
 export default angular
 	.module('ccms.components.ui', [
 		altSrc,
 		areaSelector,
 		calendar,
+		captureEvent,
 		checkbox,
 		customerProfileBoard,
 		datePicker,
@@ -47,6 +51,7 @@ export default angular
 		dropdownSelect,
 		form,
 		grid,
+		goodsSelector,
 		instantSearch,
 		loading,
 		menuBar,
@@ -60,7 +65,8 @@ export default angular
 		tabset,
 		tips,
 		toggle,
-		tooltip
+		tooltip,
+		tree
 	])
 	.name;
 
