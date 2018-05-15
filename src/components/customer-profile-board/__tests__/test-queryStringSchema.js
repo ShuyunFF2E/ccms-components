@@ -199,7 +199,7 @@ describe('queryStringSchema', () => {
       platDpId:"62847409"
       cardNo:"s_peggy"
     ){
-      cardGrade
+      cardGradeName
       effectTime
       expireTime
       currentPoint

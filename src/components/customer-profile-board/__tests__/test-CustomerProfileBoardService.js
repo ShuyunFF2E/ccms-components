@@ -317,7 +317,7 @@ describe('CustomerProfileBoard', () => {
 				'trade_last_time', 'trade_last_amount', 'trade_last_interval', 'trade_tidcount', 'trade_count', 'trade_amount',
 				'trade_item_num', 'trade_avg_amount', 'trade_avg_item_num', 'trade_avg_buy_interval', 'trade_refund_count',
 				'trade_refund_amount', 'trade_avg_confirm_interval', 'trade_max_amount', 'trade_order_discount_fee',
-				'cardGrade', 'effectTime', 'expireTime', 'currentPoint', 'totalGet', 'signCount', 'exchangeCount',
+				'cardGradeName', 'effectTime', 'expireTime', 'currentPoint', 'totalGet', 'signCount', 'exchangeCount',
 				'wechatNick', 'sinawbUserName'];
 
 			assert.deepEqual(customerProfileBoardService.getAttributeList(), result);
