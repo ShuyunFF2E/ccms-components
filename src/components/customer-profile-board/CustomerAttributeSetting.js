@@ -428,17 +428,10 @@ const other = {
 		title: '会员互动',
 		name: 'member',
 		attributeList: [{
-			attribute: 'cardGrade',
+			attribute: 'cardGradeName',
 			name: '会员等级',
 			defaultValue: DEFAULT_VALUE,
 			unit: '',
-			valueMap: {
-				1: '普通会员',
-				2: '高级会员',
-				3: 'VIP会员',
-				4: '至尊VIP',
-				'': '未开通'
-			},
 			editable: false,
 			isInListMode: true
 		}, {
