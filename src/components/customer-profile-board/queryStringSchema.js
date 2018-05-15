@@ -198,7 +198,7 @@ const generatorQueryString = (nick = '', shopId = '', platName = 'taobao', tenan
       platDpId:"${shopId}"
       cardNo:"${nick}"
     ){
-      cardGrade
+      cardGradeName
       effectTime
       expireTime
       currentPoint
