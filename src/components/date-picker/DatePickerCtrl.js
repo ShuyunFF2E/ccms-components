@@ -169,7 +169,6 @@ export default class DatePickerCtrl {
 	 * @param date
 	 */
 	setValue(date) {
-		this._displayValue = date;
 		this.ngModelCtrl.$setViewValue(date);
 		this.ngModelCtrl.$render();
 		this.clearErrorMessage();

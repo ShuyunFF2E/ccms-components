@@ -44,7 +44,8 @@ export default {
 		 */
 		ngModelCtrl.$render = () => {
 			$scope.ctrl.parts = destructDate(ngModelCtrl.$viewValue ? new Date(ngModelCtrl.$viewValue) : null, $scope.ctrl.dateOnly);
-			$scope.ctrl.checkValidity($scope.ctrl.toDateValue($scope.ctrl.parts));
+			$scope.ctrl._displayValue = $scope.ctrl.toDateValue($scope.ctrl.parts);
+			$scope.ctrl.checkValidity($scope.ctrl._displayValue);
 			this.setAllInputsWidth($scope);
 		};
 	},
