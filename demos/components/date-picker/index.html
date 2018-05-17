@@ -95,6 +95,12 @@
 		dateOnly: false
 	};
 	</pre>
+
+	<h1>DEMO: 5 date-range 仅日期且未设置 maxDate 和 minDate</h1>
+	<p>
+		<cc-date-range opts="app.dateIssue"></cc-date-range>
+		<button ng-click="app.resetDateIssue()">重置</button>
+	</p>
 </main>
 
 <script src="/components.js"></script>
@@ -167,6 +173,21 @@
 				dateOnly: true,
 
 				required: false
+			};
+
+			self.dateIssue = {
+				start: new Date(2012, 4, 19),
+				end: new Date(2012, 5, 10),
+				// 是否禁用 (false)
+				disabled: false,
+				// 是否显示时间 (true)
+				dateOnly: true,
+				required: false
+			};
+
+			self.resetDateIssue = function () {
+				self.dateIssue.start = new Date(2012, 4, 19);
+				self.dateIssue.end = new Date(2012, 5, 10);
 			};
 		});
 </script>
