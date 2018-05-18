@@ -76,13 +76,20 @@ export default class DatePickerCtrl {
 	checkValidity(dateValue) {
 		this.clearErrorMessage();
 
-		if (dateValue && this.minDate && (dateValue < this.minDate)) {
+		if (dateValue && this.minDate && (this.compareDateWithoutMilliseconds(this.minDate, dateValue))) {
 			this.ngModelCtrl.$setValidity('minDate', false);
 			this.createErrorTip(`时间不能早于 ${service.$filter('date')(this.minDate, 'yyyy-MM-dd HH:mm:ss')}`);
-		} else if (dateValue && this.maxDate && (dateValue > this.maxDate)) {
+		} else if (dateValue && this.maxDate && (this.compareDateWithoutMilliseconds(dateValue, this.maxDate))) {
 			this.ngModelCtrl.$setValidity('maxDate', false);
 			this.createErrorTip(`时间不能晚于 ${service.$filter('date')(this.maxDate, 'yyyy-MM-dd HH:mm:ss')}`);
 		}
+	}
+
+	/**
+	 * 比较日期大小 (不考虑毫秒)
+	 */
+	compareDateWithoutMilliseconds(a, b) {
+		return Math.floor(a.getTime() / 1000) > Math.floor(b.getTime() / 1000);
 	}
 
 

@@ -101,6 +101,12 @@
 		<cc-date-range opts="app.dateIssue"></cc-date-range>
 		<button ng-click="app.resetDateIssue()">重置</button>
 	</p>
+
+	<h1>DEMO: 6 date-range minDate === start || maxDate === end</h1>
+	<p>
+		<cc-date-range opts="app.dateIssue1"></cc-date-range>
+		<button ng-click="app.changeDate()">切换mindate</button>
+	</p>
 </main>
 
 <script src="/components.js"></script>
@@ -189,6 +195,27 @@
 				self.dateIssue.start = new Date(2012, 4, 19);
 				self.dateIssue.end = new Date(2012, 5, 10);
 			};
+
+
+
+			self.dateIssue1 = {
+				start: null,
+				end: null,
+				minDate: null,
+				maxDate: null,
+				// 是否禁用 (false)
+				disabled: false,
+				required: false
+			};
+
+			self.changeDate = function () {
+				var now = new Date();
+				self.dateIssue1.start = now;
+				console.log(now.getTime());
+				self.dateIssue1.minDate = now;
+				console.log(now.getTime());
+			};
+
 		});
 </script>
 
