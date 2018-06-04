@@ -24,6 +24,7 @@ const
 			opts: '=',
 			selectedItems: '=?',
 			type: '@?',
+			onBeforeRefresh: '&?',
 			onRefresh: '&?'
 		}
 	},

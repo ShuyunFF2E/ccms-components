@@ -31,6 +31,10 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			console.log(opts);
 		};
 
+		this.beforeRefresh = function (opts, queryParams) {
+			console.log('before refresh:', opts, queryParams);
+		};
+
 		this.pagerGridOptions = {
 
 			resource: null,
