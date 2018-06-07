@@ -20,11 +20,13 @@
 
 			var isOnlyChecked = false;
 			var maxSelectedNumber = 100;
+			var isSupportedSku = true;
 			var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
 			var options = {
 				isOnlyChecked,
 				maxSelectedNumber,
-				serverName
+				serverName,
+				isSupportedSku
 			};
 			// taobao + 店铺选择
 			$scope.openTaobaoGoodsSelectorWithShopList = function() {

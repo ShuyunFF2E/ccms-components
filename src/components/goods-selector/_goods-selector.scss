@@ -379,12 +379,21 @@
   gs-tabs.row-5 .gs-tab-content gs-panel {
 	top: 270px;
   }
+  gs-tabs.row-3 .gs-tab-content gs-panel {
+	top: 174px;
+	cc-grid {
+	  height: 296px;
+	  .cc-grid .cc-grid-body {
+		.no-data-message {
+		  padding-top: 106px;
+		}
+	  }
+	}
+  }
   gs-tabs.row-4 .gs-tab-content gs-panel {
 	top: 212px;
 	cc-grid {
-	  //height: 257px;
 	  height: 258px;
-	  //width: 1017px;
 	  .cc-grid .cc-grid-body {
 		.default{
 		  padding-top: 47px;

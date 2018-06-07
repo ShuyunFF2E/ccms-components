@@ -19,13 +19,16 @@ import { transformGoodsData } from './utils';
 
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
-	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile')
+	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
+	'isSupportedSku')
 
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
 		this.showLoading = true;
 		this.isMoreThanHundred = false;
+		// 商品维度选择（是否支持显示sku）
+		this.isSupportedSku = this._isSupportedSku;
 		// 店铺信息 -> 如果是 array, 说明需要显示店铺列表
 		//         -> 如果是 object, 说明是单店铺
 		//         -> 其它情况, 需要提示用户, 参数格式不正确
@@ -230,6 +233,9 @@ export default class GoodsSelectorCtrl {
 							item.extend = true;
 						} else {
 							item.extend = false;
+						}
+						if (!this.isSupportedSku && item.skus && item.skus.length) {
+							delete item.skus;
 						}
 					});
 					this.isExtendAll = this.isAllChildrenExtend(res.list);
