@@ -7,9 +7,9 @@
 		.controller('ctrl', function($scope, $ccGoodsSelector) {
 
 			var selectedGoods = {
-				556311744305: null,
-				556337565814:["3442328164921"],
-				559059470281:["3479833168658"]
+				541920723552: ['3419076274289'],
+				532988558193: null,
+				554208360201: ['3577205138168']
 			};
 
 			var taobaoWithShopList = [{shopId: 106878997, shopName: '数云食堂', plat: 'top'}, {shopId: 157263193, shopName: '0黑色的琴键0', plat: 'top'}, {shopId: 65305757, shopName: '安踏', plat: 'top'}];
