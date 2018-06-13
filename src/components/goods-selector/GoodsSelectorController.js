@@ -189,7 +189,7 @@ export default class GoodsSelectorCtrl {
 			columnsDef: [
 				{
 					field: 'id',
-					displayName: '商品ID/SKU ID',
+					displayName: !this.isSupportedSku ? '商品ID' : (this.isTaobao ? '商品ID/SKU ID' : '商品ID/商品编号'),
 					align: 'left'
 				}
 			],
@@ -244,7 +244,6 @@ export default class GoodsSelectorCtrl {
 				return res;
 			}
 		};
-		this.pagerGridOptions.columnsDef[0].displayName = this.isTaobao ? '商品ID/SKU ID' : '商品ID/商品编号';
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
