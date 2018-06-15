@@ -7,9 +7,10 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import { COMMON_AREAS } from './Constant';
+import unionBy from 'lodash.unionby';
 
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'valueFormat')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'valueFormat', 'platform', 'customAreas')
 export default class AreaSelectorCtrl {
 	static ID_ONLY = 1;
 	static ID_NAME = 2;
@@ -19,6 +20,8 @@ export default class AreaSelectorCtrl {
 		// 外部调用参数初始化
 		this.selectedValue = this._selectedData;
 		this.valueFormat = this._valueFormat;
+		this.platform = this._platform;
+		this.customAreas = this._customAreas;
 
 		// 辅助变量初始化以及初始化参数
 		this.selectedAreas = [];
@@ -57,18 +60,27 @@ export default class AreaSelectorCtrl {
 	 * @name getAreasFromLocalStorage 从localStorage获取全部省、市、区县信息
 	 */
 	getAreasFromLocalStorage() {
-		if (!localStorage.getItem('CCMS_COMPONENTS_AREA_SELECTOR_DATA')) {
-			const areas = require('./areas.json');
-			localStorage.setItem('CCMS_COMPONENTS_AREA_SELECTOR_DATA', angular.toJson(areas));
+		if (this.platform === 'tb') {
+			if (!localStorage.getItem('TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA')) {
+				const areas = require('./tbAreas.json');
+				localStorage.setItem('TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA', angular.toJson(areas));
+			}
+			return angular.fromJson(localStorage.getItem('TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA'));
+		} else if (this.platform === 'jd') {
+			if (!localStorage.getItem('JD_CCMS_COMPONENTS_AREA_SELECTOR_DATA')) {
+				const areas = require('./jdAreas.json');
+				localStorage.setItem('JD_CCMS_COMPONENTS_AREA_SELECTOR_DATA', angular.toJson(areas));
+			}
+			return angular.fromJson(localStorage.getItem('JD_CCMS_COMPONENTS_AREA_SELECTOR_DATA'));
 		}
-		return angular.fromJson(localStorage.getItem('CCMS_COMPONENTS_AREA_SELECTOR_DATA'));
 	}
 
 	/**
 	 * @name initCommonAreas 初始化常用区域
 	 */
 	initCommonAreas() {
-		this.commonAreas = COMMON_AREAS;
+		this.commonAreas = unionBy(this.customAreas, COMMON_AREAS[this.platform], 'id').sort((a, b) => a.id > b.id);
+
 		this.getCommonAreaSelectedStatus();
 	}
 
