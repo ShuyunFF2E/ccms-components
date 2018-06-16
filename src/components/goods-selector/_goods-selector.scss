@@ -115,6 +115,17 @@
 	  gs-panel {
 		position: absolute;
 		&.all-goods-panel {
+		  cc-grid.not-sku {
+			.cc-grid-header thead tr th {
+			  &:first-child {
+				width: 228px;
+				padding-left: 56px;
+			  }
+			}
+			.row-cell, .sku-row-cell {
+			  width: 45px;
+			}
+		  }
 		  .cc-grid-header thead tr th {
 			&:first-child {
 			  width: 253px;
@@ -144,25 +155,41 @@
 		  }
 		}
 		&.checked-goods-panel{
-		  .cc-grid-header thead tr th {
-			&:first-child {
-			  width: 208px;
-			  padding-left: 59px;
+		  cc-grid.not-sku {
+			.cc-grid-header thead tr th {
+			  &:first-child {
+				width: 170px;
+				padding-left: 12px;
+			  }
 			}
-			&:nth-child(2) {
-			  padding-left: 15px;
+			.row-cell, .sku-row-cell {
+			  width: 0;
 			}
-			&:nth-child(3) {
-			  padding-left: 12px;
+		  }
+		  .cc-grid-header thead tr {
+			th {
+			  &:first-child {
+				width: 208px;
+				padding-left: 59px;
+			  }
+			  &:nth-child(2) {
+				padding-left: 15px;
+			  }
+			  &:nth-child(3) {
+				padding-left: 12px;
+			  }
+			  &:nth-child(4) {
+				padding-left: 15px;
+			  }
+			  &:nth-child(5) {
+				padding-left: 11px;
+			  }
+			  &:last-child {
+				width: 116px;
+			  }
 			}
-			&:nth-child(4) {
-			  padding-left: 15px;
-			}
-			&:nth-child(5) {
-			  padding-left: 11px;
-			}
-			&:last-child {
-			  width: 116px;
+			td {
+			  padding-left: 20px;
 			}
 		  }
 		  .row-cell, .sku-row-cell {

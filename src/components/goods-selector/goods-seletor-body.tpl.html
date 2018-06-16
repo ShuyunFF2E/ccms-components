@@ -125,7 +125,8 @@
 						<span class="slide-toggle-btn" ng-click="$ctrl.isExtendAll = !$ctrl.isExtendAll; $ctrl.extendAll($ctrl.isExtendAll, $ctrl.resInfo.list);">{{$ctrl.isExtendAll ? '全部折叠' : '全部展开'}}</span>
 						<!--<span class="add-section" style="float: right; color: #0083ba; margin-right: 4px; margin-top: 6px;" ng-click="$ctrl.addSection()">批量添加</span>-->
 					</div>
-					<cc-grid opts="$ctrl.pagerGridOptions"
+					<cc-grid ng-class="{'not-sku': !$ctrl.isSupportedSku}"
+							 opts="$ctrl.pagerGridOptions"
 							 selected-items="$ctrl.selectedItems"
 							 type="default"
 							 cc-capture-click="$ctrl.checkCheckboxBefore($event)">
@@ -140,7 +141,8 @@
 						<span class="slide-toggle-btn" ng-click="$ctrl.isSelectedExtendAll = !$ctrl.isSelectedExtendAll; $ctrl.extendAll($ctrl.isSelectedExtendAll, $ctrl.selectedItems);">{{$ctrl.isSelectedExtendAll ? '全部折叠' : '全部展开'}}</span>
 						<!--<span class="add-section" style="float: right;margin-right: 4px; margin-top: 0">批量添加</span>-->
 					</div>
-					<cc-grid opts="$ctrl.selectedPagerGridOptions"
+					<cc-grid ng-class="{'not-sku': !$ctrl.isSupportedSku}"
+							 opts="$ctrl.selectedPagerGridOptions"
 							 type="default"
 							 on-refresh="$ctrl.selectedPagerGridOptions.onRefresh(opts)">
 					</cc-grid>
