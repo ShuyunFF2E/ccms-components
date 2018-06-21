@@ -1,7 +1,7 @@
 import genResource from 'angular-es-utils/rs-generator';
 import { apiPrefix } from './constant';
 
-export function transformGoodsData(shopInfo, selectedGoodIds, serverName) {
+export function transformGoodsData(shopInfo, selectedGoodIds, serverName, isSupportedSku) {
 
 	if (Array.isArray(shopInfo)) {
 		shopInfo = shopInfo[0];
@@ -16,13 +16,19 @@ export function transformGoodsData(shopInfo, selectedGoodIds, serverName) {
 				res['data'] = [];
 			}
 			let transformedData = res.data.map(d => {
-				d.skus && d.skus.forEach(sku => {
-					if (selectedGoodIds[d.id] === null) {
-						sku.checked = true;
-					} else if (selectedGoodIds[d.id].includes(sku.id)) {
-						sku.checked = true;
+				if (isSupportedSku) {
+					d.skus && d.skus.forEach(sku => {
+						if (selectedGoodIds[d.id] === null) {
+							sku.checked = true;
+						} else if (selectedGoodIds[d.id].includes(sku.id)) {
+							sku.checked = true;
+						}
+					});
+				} else {
+					if (d.skus) {
+						delete d.skus;
 					}
-				});
+				}
 
 				d.partial = d.skus ? !d.skus.every(s => s.checked === true) && d.skus.some(s => s.checked === true) : false;
 				d.checked = d.skus ? d.skus.every(s => s.checked === true) : true;

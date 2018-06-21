@@ -169,6 +169,7 @@ export default class GridCtrl {
 	}
 
 	_refresh(opts, queryParams) {
+		this.onBeforeRefresh && this.onBeforeRefresh({opts, queryParams});
 		GridHelper
 			.refresh(opts, queryParams)
 			.then(gridOptions => this.onRefresh && this.onRefresh({opts: gridOptions}));

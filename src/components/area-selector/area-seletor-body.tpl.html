@@ -22,7 +22,7 @@
 	<section class="common-areas">
 		常用区域：
 		<div class="common-area-content">
-			<div class="common-area" ng-repeat="commonArea in $ctrl.commonAreas | limitTo : 6 track by $index">
+			<div class="common-area" ng-repeat="commonArea in $ctrl.commonAreas | limitTo : 12 track by $index">
 				<cc-checkbox ng-checked="commonArea.selectedAll"
 							 ng-click="$ctrl.selectedCommonArea(commonArea);"
 							 indeterminate="commonArea.selected && !commonArea.selectedAll">

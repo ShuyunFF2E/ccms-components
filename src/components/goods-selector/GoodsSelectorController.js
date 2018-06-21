@@ -19,13 +19,16 @@ import { transformGoodsData } from './utils';
 
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
-	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile')
+	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
+	'isSupportedSku')
 
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
 		this.showLoading = true;
 		this.isMoreThanHundred = false;
+		// 商品维度选择（是否支持显示sku）
+		this.isSupportedSku = this._isSupportedSku;
 		// 店铺信息 -> 如果是 array, 说明需要显示店铺列表
 		//         -> 如果是 object, 说明是单店铺
 		//         -> 其它情况, 需要提示用户, 参数格式不正确
@@ -162,7 +165,7 @@ export default class GoodsSelectorCtrl {
 		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
 		this.selectedItemsBuffer = [];
 
-		transformGoodsData(this._shopInfoData, this._selectedData, this._serverName).then(data => {
+		transformGoodsData(this._shopInfoData, this._selectedData, this._serverName, this.isSupportedSku).then(data => {
 			if (data && data.length) {
 				data.forEach(entity => {
 					this.selectedItems.push(entity);
@@ -186,7 +189,7 @@ export default class GoodsSelectorCtrl {
 			columnsDef: [
 				{
 					field: 'id',
-					displayName: '商品ID/SKU ID',
+					displayName: !this.isSupportedSku ? '商品ID' : (this.isTaobao ? '商品ID/SKU ID' : '商品ID/商品编号'),
 					align: 'left'
 				}
 			],
@@ -231,6 +234,9 @@ export default class GoodsSelectorCtrl {
 						} else {
 							item.extend = false;
 						}
+						if (!this.isSupportedSku && item.skus && item.skus.length) {
+							delete item.skus;
+						}
 					});
 					this.isExtendAll = this.isAllChildrenExtend(res.list);
 				}
@@ -238,7 +244,6 @@ export default class GoodsSelectorCtrl {
 				return res;
 			}
 		};
-		this.pagerGridOptions.columnsDef[0].displayName = this.isTaobao ? '商品ID/SKU ID' : '商品ID/商品编号';
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;

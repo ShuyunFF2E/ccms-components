@@ -65,6 +65,60 @@
 					});
 			};
 
+			var JDINPUT = [{ id: '-27,-2376', name: '陕西省 > 西安市' }];
+			var customAreas = [
+				{
+					'id': 7,
+					'name': '大西安',
+					'subArea': ['-27,-2376', '-27,-2402']
+				},
+				{
+					'id': 1, // id 相同会覆盖前面的数据
+					'name': '关中城市圈',
+					'subArea': ['-27,-2376', '-27,-2402', '-27,-2386', '-27,-2416', '-27,-2390']
+				}
+			];
+
+
+			$scope.responseWithIdAndNameJD = function () {
+
+				var areaSelectorInstance = $ccAreaSelector
+
+					.areaSelector({
+						areaSelectorData: JDINPUT,
+						valueFormat: $ccAreaSelector.ID_ONLY,
+						platform: 'jd',
+						customAreas: customAreas
+					})
+
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+			$scope.responseWithNameJD = function () {
+
+				var areaSelectorInstance = $ccAreaSelector
+
+					.areaSelector({
+						areaSelectorData: JDINPUT,
+						valueFormat: $ccAreaSelector.ID_NAME,
+						platform: 'jd',
+						customAreas: customAreas
+					})
+
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+
 		});
 
 })(window.angular);

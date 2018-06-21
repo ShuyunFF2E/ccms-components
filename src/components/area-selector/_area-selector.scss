@@ -63,8 +63,12 @@
   .common-areas {
 	.common-area-content {
 	  display: flex;
-	  margin-top: 10px;
+	  flex-wrap: wrap;
+	  width: 600px;
+	  overflow-y: auto;
+	  overflow-x: hidden;
 	  .common-area {
+		margin-top: 10px;
 		font-size: 12px;
 		margin-right: 30px;
 	  }

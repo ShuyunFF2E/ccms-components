@@ -189,6 +189,11 @@
 			"id": "120115",
 			"name": "宝坻区",
 			"children": null
+		  },
+		  {
+			"id": "120116",
+			"name": "滨海新区",
+			"child": null
 		  }
 		]
 	  },
@@ -2193,6 +2198,11 @@
 		"name": "鄂尔多斯市",
 		"children": [
 		  {
+			"id": "150601",
+			"name": "市辖区",
+			"child": null
+		  },
+		  {
 			"id": "150602",
 			"name": "东胜区",
 			"children": null
@@ -3461,6 +3471,11 @@
 			"children": null
 		  },
 		  {
+			"id": "220605",
+			"name": "江源区",
+			"child": null
+		  },
+		  {
 			"id": "220621",
 			"name": "抚松县",
 			"children": null
@@ -3473,11 +3488,6 @@
 		  {
 			"id": "220623",
 			"name": "长白朝鲜族自治县",
-			"children": null
-		  },
-		  {
-			"id": "220625",
-			"name": "江源县",
 			"children": null
 		  },
 		  {
@@ -3636,13 +3646,8 @@
 			"children": null
 		  },
 		  {
-			"id": "230106",
+			"id": "230110",
 			"name": "香坊区",
-			"children": null
-		  },
-		  {
-			"id": "230107",
-			"name": "动力区",
 			"children": null
 		  },
 		  {
@@ -3659,6 +3664,11 @@
 			"id": "230111",
 			"name": "呼兰区",
 			"children": null
+		  },
+		  {
+			"id": "230112",
+			"name": "阿城区",
+			"child": null
 		  },
 		  {
 			"id": "230123",
@@ -3693,11 +3703,6 @@
 		  {
 			"id": "230129",
 			"name": "延寿县",
-			"children": null
-		  },
-		  {
-			"id": "230181",
-			"name": "阿城市",
 			"children": null
 		  },
 		  {
@@ -4415,11 +4420,6 @@
 			"children": null
 		  },
 		  {
-			"id": "310103",
-			"name": "卢湾区",
-			"children": null
-		  },
-		  {
 			"id": "310104",
 			"name": "徐汇区",
 			"children": null
@@ -4487,11 +4487,6 @@
 		  {
 			"id": "310118",
 			"name": "青浦区",
-			"children": null
-		  },
-		  {
-			"id": "310119",
-			"name": "南汇区",
 			"children": null
 		  },
 		  {
@@ -4665,11 +4660,6 @@
 			"children": null
 		  },
 		  {
-			"id": "320304",
-			"name": "九里区",
-			"children": null
-		  },
-		  {
 			"id": "320305",
 			"name": "贾汪区",
 			"children": null
@@ -4680,6 +4670,11 @@
 			"children": null
 		  },
 		  {
+			"id": "320312",
+			"name": "铜山区",
+			"child": null
+		  },
+		  {
 			"id": "320321",
 			"name": "丰县",
 			"children": null
@@ -4687,11 +4682,6 @@
 		  {
 			"id": "320322",
 			"name": "沛县",
-			"children": null
-		  },
-		  {
-			"id": "320323",
-			"name": "铜山县",
 			"children": null
 		  },
 		  {
@@ -4843,6 +4833,11 @@
 			"children": null
 		  },
 		  {
+			"id": "320612",
+			"name": "通州区",
+			"child": null
+		  },
+		  {
 			"id": "320621",
 			"name": "海安县",
 			"children": null
@@ -4860,11 +4855,6 @@
 		  {
 			"id": "320682",
 			"name": "如皋市",
-			"children": null
-		  },
-		  {
-			"id": "320683",
-			"name": "通州市",
 			"children": null
 		  },
 		  {
@@ -5047,9 +5037,9 @@
 			"children": null
 		  },
 		  {
-			"id": "321011",
-			"name": "郊区",
-			"children": null
+			"id": "321012",
+			"name": "江都区",
+			"child": null
 		  },
 		  {
 			"id": "321023",
@@ -5064,11 +5054,6 @@
 		  {
 			"id": "321084",
 			"name": "高邮市",
-			"children": null
-		  },
-		  {
-			"id": "321088",
-			"name": "江都市",
 			"children": null
 		  }
 		]
@@ -5416,7 +5401,7 @@
 		  },
 		  {
 			"id": "330402",
-			"name": "秀城区",
+			"name": "南湖区",
 			"children": null
 		  },
 		  {
@@ -5817,6 +5802,16 @@
 			"id": "340123",
 			"name": "肥西县",
 			"children": null
+		  },
+		  {
+			"id": "340124",
+			"name": "庐江县",
+			"children": null
+		  },
+		  {
+			"id": "340181",
+			"name": "巢湖市",
+			"children": null
 		  }
 		]
 	  },
@@ -5836,17 +5831,17 @@
 		  },
 		  {
 			"id": "340203",
-			"name": "马塘区",
-			"children": null
-		  },
-		  {
-			"id": "340204",
-			"name": "新芜区",
+			"name": "弋江区",
 			"children": null
 		  },
 		  {
 			"id": "340207",
 			"name": "鸠江区",
+			"children": null
+		  },
+		  {
+			"id": "340208",
+			"name": "三山区",
 			"children": null
 		  },
 		  {
@@ -5862,6 +5857,11 @@
 		  {
 			"id": "340223",
 			"name": "南陵县",
+			"children": null
+		  },
+		  {
+			"id": "340225",
+			"name": "无为县",
 			"children": null
 		  }
 		]
@@ -5981,6 +5981,16 @@
 			"id": "340521",
 			"name": "当涂县",
 			"children": null
+		  },
+		  {
+			"id": "340522",
+			"name": "含山县",
+			"children": null
+		  },
+		  {
+			"id": "340523",
+			"name": "和县",
+			"children": null
 		  }
 		]
 	  },
@@ -6067,7 +6077,7 @@
 		  },
 		  {
 			"id": "340811",
-			"name": "郊区",
+			"name": "宜秀区",
 			"children": null
 		  },
 		  {
@@ -6271,7 +6281,7 @@
 		  },
 		  {
 			"id": "341302",
-			"name": "墉桥区",
+			"name": "埇桥区",
 			"children": null
 		  },
 		  {
@@ -6292,42 +6302,6 @@
 		  {
 			"id": "341324",
 			"name": "泗县",
-			"children": null
-		  }
-		]
-	  },
-	  {
-		"id": "341400",
-		"name": "巢湖市",
-		"children": [
-		  {
-			"id": "341401",
-			"name": "市辖区",
-			"children": null
-		  },
-		  {
-			"id": "341402",
-			"name": "居巢区",
-			"children": null
-		  },
-		  {
-			"id": "341421",
-			"name": "庐江县",
-			"children": null
-		  },
-		  {
-			"id": "341422",
-			"name": "无为县",
-			"children": null
-		  },
-		  {
-			"id": "341423",
-			"name": "含山县",
-			"children": null
-		  },
-		  {
-			"id": "341424",
-			"name": "和县",
 			"children": null
 		  }
 		]
@@ -7212,6 +7186,11 @@
 		  {
 			"id": "360481",
 			"name": "瑞昌市",
+			"children": null
+		  },
+		  {
+			"id": "360482",
+			"name": "共青城市",
 			"children": null
 		  }
 		]
@@ -8132,7 +8111,7 @@
 			"children": null
 		  },
 		  {
-			"id": "370903",
+			"id": "370911",
 			"name": "岱岳区",
 			"children": null
 		  },
@@ -8477,7 +8456,7 @@
 	  },
 	  {
 		"id": "371700",
-		"name": "荷泽市",
+		"name": "菏泽市",
 		"children": [
 		  {
 			"id": "371701",
@@ -8573,7 +8552,7 @@
 		  },
 		  {
 			"id": "410108",
-			"name": "邙山区",
+			"name": "惠济区",
 			"children": null
 		  },
 		  {
@@ -8634,12 +8613,12 @@
 		  },
 		  {
 			"id": "410205",
-			"name": "南关区",
+			"name": "禹王台区",
 			"children": null
 		  },
 		  {
 			"id": "410211",
-			"name": "郊区",
+			"name": "金明区",
 			"children": null
 		  },
 		  {
@@ -8690,7 +8669,7 @@
 		  },
 		  {
 			"id": "410304",
-			"name": "廛河回族区",
+			"name": "瀍河回族区",
 			"children": null
 		  },
 		  {
@@ -8704,7 +8683,7 @@
 			"children": null
 		  },
 		  {
-			"id": "410307",
+			"id": "410311",
 			"name": "洛龙区",
 			"children": null
 		  },
@@ -9029,11 +9008,6 @@
 			"children": null
 		  },
 		  {
-			"id": "410881",
-			"name": "济源市",
-			"children": null
-		  },
-		  {
 			"id": "410882",
 			"name": "沁阳市",
 			"children": null
@@ -9347,7 +9321,7 @@
 		  },
 		  {
 			"id": "411502",
-			"name": "师河区",
+			"name": "浉河区",
 			"children": null
 		  },
 		  {
@@ -9518,6 +9492,17 @@
 			"children": null
 		  }
 		]
+	  },
+	  {
+		"id": "419000",
+		"name": "省直辖县",
+		"children": [
+		  {
+			"id": "419001",
+			"name": "济源市",
+			"children": null
+		  }
+		]
 	  }
 	]
   },
@@ -9546,7 +9531,7 @@
 		  },
 		  {
 			"id": "420104",
-			"name": "乔口区",
+			"name": "硚口区",
 			"children": null
 		  },
 		  {
@@ -9771,7 +9756,7 @@
 	  },
 	  {
 		"id": "420600",
-		"name": "襄樊市",
+		"name": "襄阳市",
 		"children": [
 		  {
 			"id": "420601",
@@ -9790,7 +9775,7 @@
 		  },
 		  {
 			"id": "420607",
-			"name": "襄阳区",
+			"name": "襄州区",
 			"children": null
 		  },
 		  {
@@ -10096,8 +10081,13 @@
 			"children": null
 		  },
 		  {
-			"id": "421302",
+			"id": "421303",
 			"name": "曾都区",
+			"children": null
+		  },
+		  {
+			"id": "421321",
+			"name": "随县",
 			"children": null
 		  },
 		  {
@@ -10155,7 +10145,7 @@
 	  },
 	  {
 		"id": "429000",
-		"name": "省直辖行政单位",
+		"name": "省直辖县",
 		"children": [
 		  {
 			"id": "429004",
@@ -10220,13 +10210,13 @@
 			"children": null
 		  },
 		  {
-			"id": "430121",
-			"name": "长沙县",
+			"id": "430112",
+			"name": "望城区",
 			"children": null
 		  },
 		  {
-			"id": "430122",
-			"name": "望城县",
+			"id": "430121",
+			"name": "长沙县",
 			"children": null
 		  },
 		  {
@@ -10736,7 +10726,7 @@
 		  },
 		  {
 			"id": "431102",
-			"name": "芝山区",
+			"name": "零陵区",
 			"children": null
 		  },
 		  {
@@ -10960,11 +10950,6 @@
 			"children": null
 		  },
 		  {
-			"id": "440102",
-			"name": "东山区",
-			"children": null
-		  },
-		  {
 			"id": "440103",
 			"name": "荔湾区",
 			"children": null
@@ -10985,11 +10970,6 @@
 			"children": null
 		  },
 		  {
-			"id": "440107",
-			"name": "芳村区",
-			"children": null
-		  },
-		  {
 			"id": "440111",
 			"name": "白云区",
 			"children": null
@@ -11007,6 +10987,11 @@
 		  {
 			"id": "440114",
 			"name": "花都区",
+			"children": null
+		  },
+		  {
+			"id": "440115",
+			"name": "南沙区",
 			"children": null
 		  },
 		  {
@@ -12528,6 +12513,27 @@
 		]
 	  },
 	  {
+		"id": "460300",
+		"name": "三沙市",
+		"children": [
+		  {
+			"id": "460321",
+			"name": "西沙群岛",
+			"children": null
+		  },
+		  {
+			"id": "460322",
+			"name": "南沙群岛",
+			"children": null
+		  },
+		  {
+			"id": "460323",
+			"name": "中沙群岛的岛礁及其海域",
+			"children": null
+		  }
+		]
+	  },
+	  {
 		"id": "469000",
 		"name": "省直辖县级行政单位",
 		"children": [
@@ -12562,68 +12568,53 @@
 			"children": null
 		  },
 		  {
-			"id": "469025",
+			"id": "469021",
 			"name": "定安县",
 			"children": null
 		  },
 		  {
-			"id": "469026",
+			"id": "469022",
 			"name": "屯昌县",
 			"children": null
 		  },
 		  {
-			"id": "469027",
+			"id": "469023",
 			"name": "澄迈县",
 			"children": null
 		  },
 		  {
-			"id": "469028",
+			"id": "469024",
 			"name": "临高县",
 			"children": null
 		  },
 		  {
-			"id": "469030",
+			"id": "469025",
 			"name": "白沙黎族自治县",
 			"children": null
 		  },
 		  {
-			"id": "469031",
+			"id": "469026",
 			"name": "昌江黎族自治县",
 			"children": null
 		  },
 		  {
-			"id": "469033",
+			"id": "469027",
 			"name": "乐东黎族自治县",
 			"children": null
 		  },
 		  {
-			"id": "469034",
+			"id": "469028",
 			"name": "陵水黎族自治县",
 			"children": null
 		  },
 		  {
-			"id": "469035",
+			"id": "469029",
 			"name": "保亭黎族苗族自治县",
 			"children": null
 		  },
 		  {
-			"id": "469036",
+			"id": "469030",
 			"name": "琼中黎族苗族自治县",
-			"children": null
-		  },
-		  {
-			"id": "469037",
-			"name": "西沙群岛",
-			"children": null
-		  },
-		  {
-			"id": "469038",
-			"name": "南沙群岛",
-			"children": null
-		  },
-		  {
-			"id": "469039",
-			"name": "中沙群岛的岛礁及其海域",
 			"children": null
 		  }
 		]
@@ -12685,12 +12676,12 @@
 		  },
 		  {
 			"id": "500110",
-			"name": "万盛区",
+			"name": "綦江区",
 			"children": null
 		  },
 		  {
 			"id": "500111",
-			"name": "双桥区",
+			"name": "大足区",
 			"children": null
 		  },
 		  {
@@ -12712,6 +12703,26 @@
 			"id": "500115",
 			"name": "长寿区",
 			"children": null
+		  },
+		  {
+			"id": "500116",
+			"name": "江津区",
+			"children": null
+		  },
+		  {
+			"id": "500117",
+			"name": "合川区",
+			"children": null
+		  },
+		  {
+			"id": "500118",
+			"name": "永川区",
+			"children": null
+		  },
+		  {
+			"id": "500119",
+			"name": "南川区",
+			"children": null
 		  }
 		]
 	  },
@@ -12720,11 +12731,6 @@
 		"name": "县",
 		"children": [
 		  {
-			"id": "500222",
-			"name": "綦江县",
-			"children": null
-		  },
-		  {
 			"id": "500223",
 			"name": "潼南县",
 			"children": null
@@ -12732,11 +12738,6 @@
 		  {
 			"id": "500224",
 			"name": "铜梁县",
-			"children": null
-		  },
-		  {
-			"id": "500225",
-			"name": "大足县",
 			"children": null
 		  },
 		  {
@@ -12822,32 +12823,6 @@
 		  {
 			"id": "500243",
 			"name": "彭水苗族土家族自治县",
-			"children": null
-		  }
-		]
-	  },
-	  {
-		"id": "500300",
-		"name": "市",
-		"children": [
-		  {
-			"id": "500381",
-			"name": "江津市",
-			"children": null
-		  },
-		  {
-			"id": "500382",
-			"name": "合川市",
-			"children": null
-		  },
-		  {
-			"id": "500383",
-			"name": "永川市",
-			"children": null
-		  },
-		  {
-			"id": "500384",
-			"name": "南川市",
 			"children": null
 		  }
 		]
@@ -13195,7 +13170,7 @@
 		  },
 		  {
 			"id": "510802",
-			"name": "市中区",
+			"name": "利州区",
 			"children": null
 		  },
 		  {
@@ -13480,13 +13455,13 @@
 			"children": null
 		  },
 		  {
-			"id": "511521",
-			"name": "宜宾县",
+			"id": "511503",
+			"name": "南溪区",
 			"children": null
 		  },
 		  {
-			"id": "511522",
-			"name": "南溪县",
+			"id": "511521",
+			"name": "宜宾县",
 			"children": null
 		  },
 		  {
@@ -13557,7 +13532,7 @@
 		  },
 		  {
 			"id": "511681",
-			"name": "华莹市",
+			"name": "华蓥市",
 			"children": null
 		  }
 		]
@@ -14195,57 +14170,113 @@
 		]
 	  },
 	  {
-		"id": "522200",
-		"name": "铜仁地区",
+		"id": "520500",
+		"name": "毕节市",
 		"children": [
 		  {
-			"id": "522201",
-			"name": "铜仁市",
+			"id": "520501",
+			"name": "市辖区",
 			"children": null
 		  },
 		  {
-			"id": "522222",
+			"id": "520502",
+			"name": "七星关区",
+			"children": null
+		  },
+		  {
+			"id": "520521",
+			"name": "大方县",
+			"children": null
+		  },
+		  {
+			"id": "520522",
+			"name": "黔西县",
+			"children": null
+		  },
+		  {
+			"id": "520523",
+			"name": "金沙县",
+			"children": null
+		  },
+		  {
+			"id": "520524",
+			"name": "织金县",
+			"children": null
+		  },
+		  {
+			"id": "520525",
+			"name": "纳雍县",
+			"children": null
+		  },
+		  {
+			"id": "520526",
+			"name": "威宁彝族回族苗族自治县",
+			"children": null
+		  },
+		  {
+			"id": "520527",
+			"name": "赫章县",
+			"children": null
+		  }
+		]
+	  },
+	  {
+		"id": "520600",
+		"name": "铜仁市",
+		"children": [
+		  {
+			"id": "520601",
+			"name": "市辖区",
+			"children": null
+		  },
+		  {
+			"id": "520602",
+			"name": "碧江区",
+			"children": null
+		  },
+		  {
+			"id": "520603",
+			"name": "万山区",
+			"children": null
+		  },
+		  {
+			"id": "520621",
 			"name": "江口县",
 			"children": null
 		  },
 		  {
-			"id": "522223",
+			"id": "520622",
 			"name": "玉屏侗族自治县",
 			"children": null
 		  },
 		  {
-			"id": "522224",
+			"id": "520623",
 			"name": "石阡县",
 			"children": null
 		  },
 		  {
-			"id": "522225",
+			"id": "520624",
 			"name": "思南县",
 			"children": null
 		  },
 		  {
-			"id": "522226",
+			"id": "520625",
 			"name": "印江土家族苗族自治县",
 			"children": null
 		  },
 		  {
-			"id": "522227",
+			"id": "520626",
 			"name": "德江县",
 			"children": null
 		  },
 		  {
-			"id": "522228",
+			"id": "520627",
 			"name": "沿河土家族自治县",
 			"children": null
 		  },
 		  {
-			"id": "522229",
+			"id": "520628",
 			"name": "松桃苗族自治县",
-			"children": null
-		  },
-		  {
-			"id": "522230",
-			"name": "万山特区",
 			"children": null
 		  }
 		]
@@ -14292,52 +14323,6 @@
 		  {
 			"id": "522328",
 			"name": "安龙县",
-			"children": null
-		  }
-		]
-	  },
-	  {
-		"id": "522400",
-		"name": "毕节地区",
-		"children": [
-		  {
-			"id": "522401",
-			"name": "毕节市",
-			"children": null
-		  },
-		  {
-			"id": "522422",
-			"name": "大方县",
-			"children": null
-		  },
-		  {
-			"id": "522423",
-			"name": "黔西县",
-			"children": null
-		  },
-		  {
-			"id": "522424",
-			"name": "金沙县",
-			"children": null
-		  },
-		  {
-			"id": "522425",
-			"name": "织金县",
-			"children": null
-		  },
-		  {
-			"id": "522426",
-			"name": "纳雍县",
-			"children": null
-		  },
-		  {
-			"id": "522427",
-			"name": "威宁彝族回族苗族自治县",
-			"children": null
-		  },
-		  {
-			"id": "522428",
-			"name": "赫章县",
 			"children": null
 		  }
 		]
@@ -14535,8 +14520,8 @@
 			"children": null
 		  },
 		  {
-			"id": "530121",
-			"name": "呈贡县",
+			"id": "530114",
+			"name": "呈贡区",
 			"children": null
 		  },
 		  {
@@ -14833,7 +14818,7 @@
 	  },
 	  {
 		"id": "530800",
-		"name": "思茅市",
+		"name": "普洱市",
 		"children": [
 		  {
 			"id": "530801",
@@ -14842,12 +14827,12 @@
 		  },
 		  {
 			"id": "530802",
-			"name": "翠云区",
+			"name": "思茅区",
 			"children": null
 		  },
 		  {
 			"id": "530821",
-			"name": "普洱哈尼族彝族自治县",
+			"name": "宁洱哈尼族彝族自治县",
 			"children": null
 		  },
 		  {
@@ -15014,8 +14999,8 @@
 			"children": null
 		  },
 		  {
-			"id": "532522",
-			"name": "蒙自县",
+			"id": "532503",
+			"name": "蒙自市",
 			"children": null
 		  },
 		  {
@@ -15075,8 +15060,8 @@
 		"name": "文山壮族苗族自治州",
 		"children": [
 		  {
-			"id": "532621",
-			"name": "文山县",
+			"id": "532601",
+			"name": "文山市",
 			"children": null
 		  },
 		  {
@@ -15214,7 +15199,7 @@
 		  },
 		  {
 			"id": "533103",
-			"name": "潞西市",
+			"name": "芒市",
 			"children": null
 		  },
 		  {
@@ -15899,7 +15884,7 @@
 		  },
 		  {
 			"id": "610403",
-			"name": "杨凌区",
+			"name": "杨陵区",
 			"children": null
 		  },
 		  {
@@ -16071,7 +16056,7 @@
 		  },
 		  {
 			"id": "610626",
-			"name": "吴旗县",
+			"name": "吴起县",
 			"children": null
 		  },
 		  {
@@ -16486,12 +16471,12 @@
 		  },
 		  {
 			"id": "620502",
-			"name": "秦城区",
+			"name": "秦州区",
 			"children": null
 		  },
 		  {
 			"id": "620503",
-			"name": "北道区",
+			"name": "麦积区",
 			"children": null
 		  },
 		  {
@@ -16660,7 +16645,7 @@
 		  },
 		  {
 			"id": "620922",
-			"name": "安西县",
+			"name": "瓜州县",
 			"children": null
 		  },
 		  {
@@ -17292,6 +17277,11 @@
 			"children": null
 		  },
 		  {
+			"id": "640303",
+			"name": "红寺堡区",
+			"children": null
+		  },
+		  {
 			"id": "640323",
 			"name": "盐池县",
 			"children": null
@@ -17416,8 +17406,8 @@
 			"children": null
 		  },
 		  {
-			"id": "650108",
-			"name": "东山区",
+			"id": "650109",
+			"name": "米东区",
 			"children": null
 		  },
 		  {
@@ -17512,11 +17502,6 @@
 		  {
 			"id": "652302",
 			"name": "阜康市",
-			"children": null
-		  },
-		  {
-			"id": "652303",
-			"name": "米泉市",
 			"children": null
 		  },
 		  {
@@ -17975,7 +17960,7 @@
   },
   {
 	"id": "710000",
-	"name": "台湾省",
+	"name": "台湾",
 	"children": null
   },
   {
@@ -17988,4 +17973,5 @@
 	"name": "澳门特别行政区",
 	"children": null
   }
+
 ]
