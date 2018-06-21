@@ -31,6 +31,15 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 			console.log(opts);
 		};
 
+		this.beforeRefresh = function (opts, queryParams) {
+			console.log('before refresh:', opts, queryParams);
+			// queryParams.pageNum = 10000;
+			// queryParams.test = 'test';
+			// 如果你想修改参数
+			Object.assign(queryParams, {pageNum: 2, pageSize: 20, sortProps: "", sortOrders: "", page: 2});
+			// queryParams = {pageNum: 2, pageSize: 20, sortProps: "", sortOrders: "", page: 2};
+		};
+
 		this.pagerGridOptions = {
 
 			resource: null,
