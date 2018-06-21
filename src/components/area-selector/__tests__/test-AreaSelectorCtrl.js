@@ -33,6 +33,8 @@ describe('AreaSelectorCtrl', () => {
 			},
 			'selectedData': [],
 			'valueFormat': [],
+			'platform': 'tb',
+			'customAreas': [],
 			'$ccTips': {
 				error: () => Promise.resolve()
 			},
@@ -144,6 +146,8 @@ describe('AreaSelectorCtrl', () => {
 	it('#initCommonAreas', () => {
 
 		areaSelectorCtrl.areas = areas;
+		areaSelectorCtrl.platform = 'tb';
+		areaSelectorCtrl.customAreas = [];
 		areaSelectorCtrl.initCommonAreas();
 		assert.lengthOf(areaSelectorCtrl.commonAreas, 6);
 		spy(areaSelectorCtrl, 'getCommonAreaSelectedStatus');
@@ -509,9 +513,14 @@ describe('AreaSelectorCtrl', () => {
 
 	it('#getAreasFromLocalStorage', () => {
 
+		// before each 中 areaSelectorCtrl 并未初始化 $onInit 方法, 导致依赖 platform 并未初始化, 手动添加
+		// TODO 原因待调研
+
+		areaSelectorCtrl.platform = 'tb';
+
 		localStorage.getItem = sinon.stub();
 		localStorage.setItem = sinon.spy();
-		localStorage.getItem.withArgs('CCMS_COMPONENTS_AREA_SELECTOR_DATA').onFirstCall().returns(null).onSecondCall().returns(2);
+		localStorage.getItem.withArgs('TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA').onFirstCall().returns(null).onSecondCall().returns(2);
 
 		assert.equal(areaSelectorCtrl.getAreasFromLocalStorage(), 2);
 		sinon.assert.calledTwice(localStorage.getItem);
