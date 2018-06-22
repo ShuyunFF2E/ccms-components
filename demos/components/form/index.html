@@ -58,12 +58,47 @@
 		</fieldset>
 
 		<fieldset>
-			<label for="info14">请选择</label>
+			<label for="info14">原生select</label>
 			<select ng-model="info14" id="info14" required cc-validator="handsome">
 				<option value="1">1</option>
 				<option value="kuitos">kuitos</option>
 				<option value="2">2</option>
 			</select>
+		</fieldset>
+
+		<fieldset>
+			<label for="info15">select</label>
+			<cc-dropdown-select
+				datalist="app.datalist"
+				ng-model="app.test"
+				cc-validator="handsome"
+				required
+			/>
+		</fieldset>
+
+		<fieldset>
+			<label for="info15">select with input</label>
+			<cc-dropdown-select
+				datalist="app.datalist"
+				ng-model="app.test2"
+				support-input-value="true"
+				searchable="true"
+				cc-validator="handsome"
+				required
+			/>
+		</fieldset>
+
+		<fieldset>
+			<label for="info15">multi select</label>
+			<cc-dropdown-multiselect
+				placeholder="快，快选我。。啊！"
+				ng-model="app.test3"
+				datalist="app.datalist"
+				searchable="true"
+				mapping="app.fieldsMap"
+				cc-validator="laoable"
+				>
+			</cc-dropdown-multiselect>
 		</fieldset>
 
 		<fieldset>

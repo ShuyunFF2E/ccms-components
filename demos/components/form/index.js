@@ -25,6 +25,14 @@
 					}
 				},
 
+				laoable: {
+					msg: '不够捞',
+					fn: (modelValue, viewValue) => {
+						const men = modelValue || viewValue;
+						return men.includes('kuitos');
+					}
+				},
+
 				letter: {
 					msg: '必须为字母',
 					regex: /(^\s*$)|(^\w+$)/
@@ -53,6 +61,16 @@
 				});
 
 			};
+
+			// cc-dropdown-select options
+			this.datalist = [
+				{ title: 'kuitos', value: 'kuitos' },
+				{ title: 'cat', value: '2' },
+				{ title: 'fox', value: '3' }
+			];
+
+			this.test3 = [];
+
 		});
 
 })(window.angular);

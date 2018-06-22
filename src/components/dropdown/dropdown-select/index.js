@@ -9,12 +9,15 @@ import icon from '../../icon';
 
 const dropdownSelectDDO = {
 	restrict: 'E',
-	require: 'ccDropdown',
 	template,
+	require: {
+		ngModelCtrl: '?ngModel'
+	},
 	controller: DropdownSelectCtrl,
 	controllerAs: '$ctrl',
 	scope: {
-		model: '=?',
+		model: '=?', // model保留，兼容之前的版本
+		ngModel: '=?',
 		isOpen: '<?',
 		autoClose: '<?',
 		mapping: '<?',

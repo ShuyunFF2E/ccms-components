@@ -5,6 +5,7 @@
 cc-dropdown-select {
 	display: inline-block;
 	vertical-align: middle;
+	border: solid 1px $input-border-color;
 }
 .dropdown-select {
 	position: relative;
@@ -15,7 +16,6 @@ cc-dropdown-select {
 	.dropdown-select-input-wrap {
 		display: flex;
 		background-color: #fff;
-		border: solid 1px $input-border-color;
 		align-items: center;
 
 		@at-root .active#{&} {

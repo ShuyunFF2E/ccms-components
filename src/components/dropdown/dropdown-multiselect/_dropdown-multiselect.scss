@@ -5,6 +5,7 @@
 cc-dropdown-multiselect {
 	display: inline-block;
 	vertical-align: middle;
+	border: solid 1px $input-border-color;
 }
 .dropdown-multiselect {
 	position: relative;
@@ -15,7 +16,6 @@ cc-dropdown-multiselect {
 	.dropdown-select-input-wrap {
 		display: flex;
 		background-color: #fff;
-		border: solid 1px $input-border-color;
 
 		@at-root .active#{&} {
 			border-color: $input-active-border;
@@ -115,6 +115,7 @@ cc-dropdown-multiselect {
 					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
+					text-align: left;
 					cursor: pointer;
 					> input[type="checkbox"] {
 						margin-right: 5px;

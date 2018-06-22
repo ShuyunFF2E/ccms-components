@@ -8,12 +8,15 @@ import DropdownMultiselectCtrl from './DropdownMultiselectCtrl';
 
 const dropdownMultiselectDDO = {
 	restrict: 'E',
-	require: 'ccDropdown',
+	require: {
+		ngModelCtrl: '?ngModel'
+	},
 	template,
 	controller: DropdownMultiselectCtrl,
 	controllerAs: '$ctrl',
 	scope: {
-		model: '=?',
+		model: '=?', // model保留，兼容旧版本
+		ngModel: '=?',
 		isOpen: '<?',
 		hasSelectAll: '<?',
 		autoClose: '<?',

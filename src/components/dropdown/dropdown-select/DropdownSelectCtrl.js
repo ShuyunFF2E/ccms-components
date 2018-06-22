@@ -20,6 +20,7 @@ export default class DropdownSelectCtrl {
 		this.searchable = false;
 		this.supportInputValue = false;
 		this.model = null;
+		this.ngModel = null;
 		this.focusIndex = 0;
 		this.isOpen = false;
 		this.autoClose = true;
@@ -36,6 +37,7 @@ export default class DropdownSelectCtrl {
 	$onInit() {
 		this._prepareOptions();
 		this._prepareWatches();
+		this.model = this.ngModel || this.model;
 	}
 
 	$postLink() {
@@ -85,6 +87,8 @@ export default class DropdownSelectCtrl {
 				this.focusAt(itemIndex);
 				// 增加回调参数 itemIndex item
 				this.onSelectChange({ model, oldModel, itemIndex, item });
+
+				this.ngModelCtrl && this.ngModelCtrl.$setViewValue(model);
 			}
 		});
 

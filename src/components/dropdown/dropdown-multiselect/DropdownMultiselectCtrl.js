@@ -17,6 +17,7 @@ export default class DropdownMultiselectCtrl {
 		this.mapping = {};
 		this.title = '';
 		this.model = [];
+		this.ngModel = [];
 		this.selection = [];
 		this.placeholder = '';
 		this.searchable = false;
@@ -38,6 +39,7 @@ export default class DropdownMultiselectCtrl {
 		this._prepareOptions();
 		this._prepareWatches();
 		this._prepareSelection();
+		this.model = this.ngModel || this.model;
 	}
 
 	$postLink() {
@@ -86,6 +88,8 @@ export default class DropdownMultiselectCtrl {
 				this.selectAll = this._clampedEnabledDatalist.length > 0 && this.selection.length >= this._clampedEnabledDatalist.length;
 
 				this.onSelectChange({ model, oldModel, selection: this.selection, oldSelection });
+
+				this.ngModelCtrl && this.ngModelCtrl.$setViewValue(model);
 			}
 		});
 
