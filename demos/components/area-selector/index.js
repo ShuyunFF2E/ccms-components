@@ -11,7 +11,7 @@
 	angular.module('app', ['ccms.components'])
 		.config(function(ccAreaSelectorProvider){
 			// 启用后端数据 http://qa-ual.fenxibao.com/shuyun-searchapi/1.0/area  或  http://ual.fenxibao.com/shuyun-searchapi/1.0/area
-			ccAreaSelectorProvider.getAreaData('/api/area', 'jd');
+			ccAreaSelectorProvider.configSetting('/api/area', 'jd');
 		})
 		.controller('ctrl', function ($scope, $ccAreaSelector) {
 

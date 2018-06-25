@@ -13,4 +13,7 @@ export default angular
 	.module('ccms.components.areaSelector', [bindHtml])
 	.provider('ccAreaSelector', AreaSelectorProvider)
 	.value('$ccAreaSelector', AreaSelectorService)
+	.run(['ccAreaSelector', function(ccAreaSelector) {
+		ccAreaSelector.initData();
+	}])
 	.name;
