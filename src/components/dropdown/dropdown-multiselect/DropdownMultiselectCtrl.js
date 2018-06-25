@@ -10,6 +10,7 @@ export default class DropdownMultiselectCtrl {
 	};
 
 	constructor() {
+		this.selectAll = false;
 		this.datalist = [];
 		this._clampedDatalist = [];
 		this.items = [];
@@ -172,8 +173,20 @@ export default class DropdownMultiselectCtrl {
 		let index = this.selection.indexOf(item);
 		if (index > -1) {
 			this.selection.splice(index, 1);
+			this.selectAll = false;
 		} else {
 			this.selection.push(item);
+			this.selectAll = this.selection.length === (this._getClampedDatalist(this.datalist || [])).length;
+		}
+	}
+
+	toggleAll(selectAll) {
+		this.selectAll = selectAll;
+		if (this.selectAll) {
+			this.selection = this._getClampedDatalist(this.datalist || []);
+		} else {
+			this.items = this._getClampedDatalist(this.datalist || []);
+			this.selection = [];
 		}
 	}
 
@@ -231,6 +244,7 @@ export default class DropdownMultiselectCtrl {
 	clear() {
 		this.items = this._clampedDatalist;
 		this.selection = [];
+		this.selectAll = false;
 		this.setTitle('');
 		this.getInputElement().focus();
 		if (!this.isOpen) {

@@ -21,6 +21,14 @@
 	</div>
 	<div cc-dropdown-panel>
 		<ul class="dropdown-list">
+			<li ng-if="$ctrl.hasSelectAll">
+				<label>
+					<input type="checkbox"
+						   ng-checked="$ctrl.selectAll"
+						   ng-click="$ctrl.toggleAll(!$ctrl.selectAll)">
+					<span>全选</span>
+				</label>
+			</li>
 			<li ng-repeat="item in $ctrl.items track by $index"
 				ng-class="{focus: $index === $ctrl.focusIndex}">
 				<label ng-disabled="item.disabled">
