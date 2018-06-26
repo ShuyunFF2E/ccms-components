@@ -80,6 +80,7 @@
 					model="ctrl.value3"
 					datalist="ctrl.datalist1"
 					mapping="ctrl.fieldsMap"
+					select-all-title="ctrl.selectAllTitle"
 					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					on-dropdown-open="ctrl.dropdownOpen()"
 					on-dropdown-close="ctrl.dropdownClose()">
@@ -210,6 +211,8 @@
 				this.cascadeAreaDataList = this.areaDataList[this.cascadeDataList.indexOf(newValue)] || [];
 				this.value7 = this.cascadeAreaDataList[0] || '';
 			};
+
+			this.selectAllTitle = '点一下顶10下的全选功能你怎么说';
 
 
 		});
