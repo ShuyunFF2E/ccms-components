@@ -5,7 +5,7 @@ export default function AreaSelectorProvider() {
 	let _ual = null;
 	let _platform = null;
 
-	this.configSetting = (ual, platform = 'tb') => {
+	this.configSetting = (ual, platform = 'all') => {
 		_ual = ual;
 		_platform = platform;
 	};
@@ -16,17 +16,26 @@ export default function AreaSelectorProvider() {
 		return {
 			initData: function() {
 				if (_ual && _platform) {
-					$http.get(`${_ual}?platform=${platforms[_platform]}`)
-						.then(res => {
-							localStorage.setItem(localStorageKeys[_platform], JSON.stringify(res.data));
-						}).catch(err => {
-							console.error(err);
-						});
+					if (_platform === 'all') {
+						getData($http, 'jd');
+						getData($http, 'tb');
+					} else {
+						getData($http, _platform);
+					}
 				} else {
-					console.info('如果要使用后端数据, 请配置 ual 参数, 见方法 AreaSelectorProvider.configSetting');
+					console.info('如果地区选择器要使用后端数据, 请配置 ual 参数, 见方法 AreaSelectorProvider.configSetting');
 				}
 			}
 		};
+	}
+
+	function getData(http, plat) {
+		http.get(`${_ual}?platform=${platforms[plat]}`)
+			.then(res => {
+				localStorage.setItem(localStorageKeys[plat], JSON.stringify(res.data));
+			}).catch(err => {
+				console.error(err);
+			});
 	}
 
 	init.$inject = ['$http'];
