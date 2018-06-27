@@ -86,6 +86,8 @@ export default class DropdownMultiselectCtrl {
 		this._clampedDatalist = this._getClampedDatalist(this.datalist || []);
 		this._clampedEnabledDatalist = this._getClampedDatalist(this._getEnabledItemFromDataList());
 		this.selection.push(...this._getItemsByValues(this.model));
+		// 初始化是否全选
+		this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
 	}
 
 	_prepareMouseEvents() {
@@ -177,7 +179,7 @@ export default class DropdownMultiselectCtrl {
 			this.selectAll = false;
 		} else {
 			this.selection.push(item);
-			this.selectAll = this.selection.length === this._clampedEnabledDatalist.length;
+			this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
 		}
 	}
 
@@ -255,7 +257,7 @@ export default class DropdownMultiselectCtrl {
 		this.selection = this.selection.filter(item => item.disabled === true);
 		this.selectAll = false;
 		this.setTitle('');
-		this.getInputElement().focus();
+		// this.getInputElement().focus();
 		if (!this.isOpen) {
 			this.open();
 		}
