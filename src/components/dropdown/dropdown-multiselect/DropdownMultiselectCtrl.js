@@ -68,12 +68,18 @@ export default class DropdownMultiselectCtrl {
 			// 选中预设值
 			this.selection = this._getItemsByValues(this.model);
 			this.updateTitle();
+
+			// 当 datalist 发生变化时. 这些常用的数据. 需要进行重算
+			this._clampedDatalist = this._getClampedDatalist(this.datalist || []);
+			this._clampedEnabledDatalist = this._getClampedDatalist(this._getEnabledItemFromDataList());
+			this.selectAll = this._clampedEnabledDatalist.length > 0 && this.selection.length >= this._clampedEnabledDatalist.length;
 		});
 
 		scope.$watch(() => this.model, (model, oldModel) => {
 			if (!angular.equals(model, oldModel)) {
 				this.selection = this._getItemsByValues(model);
 				this.updateTitle();
+				this.selectAll = this._clampedEnabledDatalist.length > 0 && this.selection.length >= this._clampedEnabledDatalist.length;
 			}
 		});
 
