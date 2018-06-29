@@ -10,6 +10,7 @@ export default class DropdownMultiselectCtrl {
 	};
 
 	constructor() {
+		this.selectAll = false;
 		this.datalist = [];
 		this._clampedDatalist = [];
 		this.items = [];
@@ -83,7 +84,10 @@ export default class DropdownMultiselectCtrl {
 
 	_prepareSelection() {
 		this._clampedDatalist = this._getClampedDatalist(this.datalist || []);
+		this._clampedEnabledDatalist = this._getClampedDatalist(this._getEnabledItemFromDataList());
 		this.selection.push(...this._getItemsByValues(this.model));
+		// 初始化是否全选
+		this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
 	}
 
 	_prepareMouseEvents() {
@@ -172,8 +176,28 @@ export default class DropdownMultiselectCtrl {
 		let index = this.selection.indexOf(item);
 		if (index > -1) {
 			this.selection.splice(index, 1);
+			this.selectAll = false;
 		} else {
 			this.selection.push(item);
+			this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
+		}
+	}
+
+	_getEnabledItemFromDataList() {
+		return (this.datalist || []).filter(item => item.disabled !== true);
+	}
+
+	toggleAll(selectAll) {
+		this.selectAll = selectAll;
+
+		// 已选择且 disabled item
+		let selectedAndDisabledItems = this.selection.filter(item => item.disabled === true);
+
+		if (this.selectAll) {
+			this.selection = this._clampedEnabledDatalist.concat(selectedAndDisabledItems);
+		} else {
+			this.items = this._clampedDatalist;
+			this.selection = selectedAndDisabledItems;
 		}
 	}
 
@@ -230,9 +254,10 @@ export default class DropdownMultiselectCtrl {
 
 	clear() {
 		this.items = this._clampedDatalist;
-		this.selection = [];
+		this.selection = this.selection.filter(item => item.disabled === true);
+		this.selectAll = false;
 		this.setTitle('');
-		this.getInputElement().focus();
+		// this.getInputElement().focus();
 		if (!this.isOpen) {
 			this.open();
 		}

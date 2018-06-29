@@ -80,6 +80,7 @@
 					model="ctrl.value3"
 					datalist="ctrl.datalist1"
 					mapping="ctrl.fieldsMap"
+					has-select-all="true"
 					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					on-dropdown-open="ctrl.dropdownOpen()"
 					on-dropdown-close="ctrl.dropdownClose()">
@@ -95,7 +96,8 @@
 					searchable="true"
 					confirm-button="true"
 					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
-					mapping="ctrl.fieldsMap">
+					mapping="ctrl.fieldsMap"
+					has-select-all="true">
 			</cc-dropdown-multiselect>
 			<div style="margin: 0.5em 0;">
 				<button class="btn-ok" ng-click="ctrl.setList()">设置新值</button>
@@ -135,18 +137,61 @@
 			>
 			</cc-dropdown-select>
 		</div>
+		<div class="demo">
+			<h3>封装 dropdown-select</h3>
+			<h4>当前值: {{ctrl.value10}}</h4>
+			<my-cc-dropdown-select
+					v="ctrl.value10",
+					list="ctrl.list10"
+			>
+			</my-cc-dropdown-select>
+		</div>
 	</div>
 </main>
 
 <script src="/components.js"></script>
 <script>
 	angular.module('demoApp', ['ccms.components'])
+			.directive('myCcDropdownSelect', function () {
+				return {
+					restrict: 'E',
+					scope: {
+						v: '<',
+						list: '<'
+					},
+					controllerAs: '$ctrl',
+					bindToController: true,
+					controller: function(){
+						console.log(this.v);
+						console.log(this.list);
+						this.cascadeDataList = this.list;
+						this.cascadeSelectChange = function(model){
+							console.log(model);
+						}
+					},
+					template: `
+						<cc-dropdown-select
+					      placeholder="测试"
+					      model="$ctrl.v"
+					      datalist="$ctrl.cascadeDataList"
+					      on-select-change="$ctrl.cascadeSelectChange(model)"
+			           >
+					`
+				}
+			})
 		.controller('DemoCtrl', function() {
 			this.value1 = '上海';
 			this.value2 = 'xa';
 			this.value3 = [];
 			this.value4 = ['xa', 'sh'];
 			this.value5 = '上海';
+			this.value10 = 123789;
+			this.list10 = [
+				{title: '北京', value: 'bj'},
+				{title: '上海', value: 'sh', disabled: true},
+				{title: '123789', value: 123789},
+				{title: '123456', value: 123456}
+			];
 			this.datalist1 = [
 				{title: '北京', value: 'bj'},
 				{title: '上海', value: 'sh', disabled: true},
@@ -207,6 +252,7 @@
 			this.areaDataList = [['海淀', '朝阳'], ['浦东', '徐汇']];
 
 			this.cascadeSelectChange = (newValue) => {
+				console.log(newValue);
 				this.cascadeAreaDataList = this.areaDataList[this.cascadeDataList.indexOf(newValue)] || [];
 				this.value7 = this.cascadeAreaDataList[0] || '';
 			};

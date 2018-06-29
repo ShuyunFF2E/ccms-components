@@ -74,3 +74,13 @@ export const COMMON_AREAS = {
 	'tb': TB_COMMON_AREAS,
 	'jd': JD_COMMON_AREAS
 };
+
+export const platforms = {
+	'tb': 'top',
+	'jd': 'jos'
+};
+
+export const localStorageKeys = {
+	'tb': 'TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA',
+	'jd': 'JD_CCMS_COMPONENTS_AREA_SELECTOR_DATA'
+};

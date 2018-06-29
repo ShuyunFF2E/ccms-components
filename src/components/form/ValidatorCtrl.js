@@ -140,6 +140,12 @@ export default class ValidatorCtrl {
 
 	}
 
+	$onDestroy() {
+		const {formCtrl, ngModelCtrl} = this;
+		const index = formCtrl.$$ngModelCtrls.indexOf(ngModelCtrl);
+		formCtrl.$$ngModelCtrls.splice(index, 1);
+	}
+
 	/**
 	 * 初始化未使用validators声明的表单校验控制器
 	 * @return {{element}, validators, errorMsg}
