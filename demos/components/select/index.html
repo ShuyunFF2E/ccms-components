@@ -80,7 +80,7 @@
 					model="ctrl.value3"
 					datalist="ctrl.datalist1"
 					mapping="ctrl.fieldsMap"
-					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
 					on-dropdown-open="ctrl.dropdownOpen()"
 					on-dropdown-close="ctrl.dropdownClose()">
 			</cc-dropdown-multiselect>
@@ -94,7 +94,7 @@
 					datalist="ctrl.datalist1"
 					searchable="true"
 					confirm-button="true"
-					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
 					mapping="ctrl.fieldsMap">
 			</cc-dropdown-multiselect>
 			<div style="margin: 0.5em 0;">
@@ -282,6 +282,10 @@
 
 			this.selectChange = function(newValue, oldValue, itemIndex, item) {
 				console.log('on-select-change:', newValue, oldValue, itemIndex, item);
+			};
+
+			this.multiSelectChange = function(newValue, oldValue, selection, oldSelection) {
+				console.log('on-select-change:', newValue, oldValue, selection, oldSelection)
 			};
 
 			this.dropdownOpen = function() {

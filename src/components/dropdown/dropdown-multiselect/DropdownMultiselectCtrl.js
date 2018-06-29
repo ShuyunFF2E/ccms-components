@@ -29,6 +29,7 @@ export default class DropdownMultiselectCtrl {
 
 		this.onDropdownOpen = () => {};
 		this.onDropdownClose = () => {};
+		this.onSelectChange = () => {};
 
 		this._openFn = null;
 	}
@@ -57,6 +58,8 @@ export default class DropdownMultiselectCtrl {
 		} else if (this.confirmButton !== false) {
 			this.autoClose = false;
 		}
+
+		this.onSelectChange = this.onSelectChange || (() => {});
 	}
 
 	_prepareWatches() {
@@ -77,9 +80,12 @@ export default class DropdownMultiselectCtrl {
 
 		scope.$watch(() => this.model, (model, oldModel) => {
 			if (!angular.equals(model, oldModel)) {
+				let oldSelection = this._getItemsByValues(oldModel);
 				this.selection = this._getItemsByValues(model);
 				this.updateTitle();
 				this.selectAll = this._clampedEnabledDatalist.length > 0 && this.selection.length >= this._clampedEnabledDatalist.length;
+
+				this.onSelectChange({ model, oldModel, selection: this.selection, oldSelection });
 			}
 		});
 
