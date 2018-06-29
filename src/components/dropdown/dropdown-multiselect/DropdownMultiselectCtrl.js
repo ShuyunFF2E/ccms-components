@@ -25,6 +25,8 @@ export default class DropdownMultiselectCtrl {
 		this.isOpen = false;
 		this.isActive = false;
 		this.oldText = '';
+		this.selectAll = false;
+		this.selectAllTitle = '全选';
 
 		this.onDropdownOpen = () => {};
 		this.onDropdownClose = () => {};
@@ -174,6 +176,21 @@ export default class DropdownMultiselectCtrl {
 			this.selection.splice(index, 1);
 		} else {
 			this.selection.push(item);
+		}
+
+		// 重置全选状态
+		const disabledFilter = ({ disabled }) => !disabled;
+		this.selectAll = this.selection.filter(disabledFilter).length === this.items.filter(disabledFilter).length;
+	}
+
+	toggleSelectAll() {
+		this.selectAll = !this.selectAll;
+
+		// 清除所有非disabled item
+		this.selection = this.selection.filter(({ disabled }) => disabled);
+
+		if (this.selectAll) {
+			this.selection = this.items.filter(({ disabled }) => !disabled);
 		}
 	}
 
