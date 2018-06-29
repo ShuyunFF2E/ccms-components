@@ -6,7 +6,7 @@
 
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
-import { COMMON_AREAS } from './Constant';
+import { COMMON_AREAS, localStorageKeys } from './Constant';
 import unionBy from 'lodash.unionby';
 
 
@@ -61,17 +61,17 @@ export default class AreaSelectorCtrl {
 	 */
 	getAreasFromLocalStorage() {
 		if (this.platform === 'tb') {
-			if (!localStorage.getItem('TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA')) {
+			if (!localStorage.getItem(localStorageKeys[this.platform])) {
 				const areas = require('./tbAreas.json');
-				localStorage.setItem('TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA', angular.toJson(areas));
+				localStorage.setItem(localStorageKeys[this.platform], angular.toJson(areas));
 			}
-			return angular.fromJson(localStorage.getItem('TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA'));
+			return angular.fromJson(localStorage.getItem(localStorageKeys[this.platform]));
 		} else if (this.platform === 'jd') {
-			if (!localStorage.getItem('JD_CCMS_COMPONENTS_AREA_SELECTOR_DATA')) {
+			if (!localStorage.getItem(localStorageKeys[this.platform])) {
 				const areas = require('./jdAreas.json');
-				localStorage.setItem('JD_CCMS_COMPONENTS_AREA_SELECTOR_DATA', angular.toJson(areas));
+				localStorage.setItem(localStorageKeys[this.platform], angular.toJson(areas));
 			}
-			return angular.fromJson(localStorage.getItem('JD_CCMS_COMPONENTS_AREA_SELECTOR_DATA'));
+			return angular.fromJson(localStorage.getItem(localStorageKeys[this.platform]));
 		}
 	}
 

@@ -42,7 +42,7 @@
 								 ng-checked="province.selectedAll" ng-click="$ctrl.changeCheckboxStatus(province, 'province')">
 					</cc-checkbox>
 					<span class="province">{{province.name}}<span>{{selectedProvince.id}}</span>
-						<span class="iconfont icon-rightarrow"></span>
+						<span ng-if="province.children && province.children.length > 0" class="iconfont icon-rightarrow"></span>
 					</span>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 					 ng-class="{'selected': city.id === $ctrl.selectedCity.id}" ng-click="$ctrl.changeCity(city)">
 					<cc-checkbox indeterminate="city.selected && !city.selectedAll " ng-checked="city.selectedAll"
 								 ng-click="$ctrl.changeCheckboxStatus(city, 'city')"></cc-checkbox>
-					<span class="city">{{city.name}}<span class="iconfont icon-rightarrow"></span></span>
+					<span class="city">{{city.name}}<span ng-if="city.children && city.children.length > 0" class="iconfont icon-rightarrow"></span></span>
 				</div>
 			</div>
 		</div>
