@@ -22,6 +22,7 @@ const dropdownMultiselectDDO = {
 		searchable: '<?',
 		confirmButton: '<?',
 		placeholder: '@?',
+		onSelectChange: '&?',
 		onDropdownOpen: '&?',
 		onDropdownClose: '&?'
 	},
