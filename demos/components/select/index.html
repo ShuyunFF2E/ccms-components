@@ -80,8 +80,7 @@
 					model="ctrl.value3"
 					datalist="ctrl.datalist1"
 					mapping="ctrl.fieldsMap"
-					has-select-all="true"
-					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
 					on-dropdown-open="ctrl.dropdownOpen()"
 					on-dropdown-close="ctrl.dropdownClose()">
 			</cc-dropdown-multiselect>
@@ -95,9 +94,8 @@
 					datalist="ctrl.datalist1"
 					searchable="true"
 					confirm-button="true"
-					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
-					mapping="ctrl.fieldsMap"
-					has-select-all="true">
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
+					mapping="ctrl.fieldsMap">
 			</cc-dropdown-multiselect>
 			<div style="margin: 0.5em 0;">
 				<button class="btn-ok" ng-click="ctrl.setList()">设置新值</button>
@@ -147,6 +145,31 @@
 			</my-cc-dropdown-select>
 		</div>
 	</div>
+	<div class="group">
+		<div class="demo">
+			<h3>加全选 如果选项中有 disabled, 不在计算中</h3>
+			<h4>当前值: {{ctrl.value11}}</h4>
+			<cc-dropdown-multiselect
+					placeholder="xxxx"
+					model="ctrl.value11"
+					datalist="ctrl.datalist11"
+					mapping="ctrl.fieldsMap"
+					has-select-all="true">
+			</cc-dropdown-multiselect>
+		</div>
+		<div class="demo">
+			<h3>异步获取数据</h3>
+			<h4>当前值: {{ctrl.selectedShop}}</h4>
+			<cc-dropdown-multiselect
+					style="max-width: 220px;"
+					placeholder="请选择店铺"
+					model="ctrl.selectedShop"
+					datalist="ctrl.shopList"
+					has-select-all="true"
+			>
+			</cc-dropdown-multiselect>
+		</div>
+	</div>
 </main>
 
 <script src="/components.js"></script>
@@ -179,7 +202,7 @@
 					`
 				}
 			})
-		.controller('DemoCtrl', function() {
+		.controller('DemoCtrl', function($scope) {
 			this.value1 = '上海';
 			this.value2 = 'xa';
 			this.value3 = [];
@@ -204,6 +227,35 @@
 				{title: '重庆', value: 'cq'},
 				{title: '广州', value: 'gz'}
 			];
+			this.value11 = [];
+			this.datalist11 = [
+				{title: '北京', value: 'bj'},
+				{title: '上海', value: 'sh'},
+				{title: '深圳', value: 'sz', disabled: true},
+				{title: '西安', value: 'xa'},
+				{title: '南京', value: 'nj'},
+				{title: '武汉', value: 'wh'},
+				{title: '重庆', value: 'cq'},
+				{title: '广州', value: 'gz'}
+			];
+
+			this.shopList = [];
+			this.selectedShop = [];
+
+			// 异步获取数据
+			setTimeout(() => {
+				this.shopList = [{title: "京东小店", value: "160112511"}, {
+				title: "京东测试店",
+				value: "712411761"
+				}, {title: "自己卖的一个店*要买的赶紧来试试买买买买", value: "317761122"}];
+
+			   this.selectedShop = ["160112511","712411761","317761122"];
+
+				$scope.$apply();
+
+			}, 1000);
+
+
 			this.datalist5 = [
 				{title: '北京', value: 'bj', icon: 'icon-phone'},
 				{title: '上海', value: 'sh', icon: 'icon-phone', disabled: true},
@@ -230,6 +282,10 @@
 
 			this.selectChange = function(newValue, oldValue, itemIndex, item) {
 				console.log('on-select-change:', newValue, oldValue, itemIndex, item);
+			};
+
+			this.multiSelectChange = function(newValue, oldValue, selection, oldSelection) {
+				console.log('on-select-change:', newValue, oldValue, selection, oldSelection)
 			};
 
 			this.dropdownOpen = function() {
