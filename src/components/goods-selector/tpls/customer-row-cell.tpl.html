@@ -24,7 +24,7 @@
 </td>
 <td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>
 <td>
-	<span ng-bind-html="entity.quantity ? entity.quantity + '件' : '—件'"></span>
+	<span ng-bind-html="entity.quantity ? entity.quantity + '件' : '--件'"></span>
 </td>
 <td>
 	<span ng-bind-html="$ctrl.opts.getPrice(entity.price)"></span>
