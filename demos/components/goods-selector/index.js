@@ -22,7 +22,7 @@
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
 
 			var isOnlyChecked = false;
-			var maxSelectedNumber = 100;
+			var maxSelectedNumber = 700;
 			var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
 			var options = {
 				isOnlyChecked,

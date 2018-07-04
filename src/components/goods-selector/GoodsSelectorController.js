@@ -14,7 +14,7 @@ import rowTemplate from './tpls/customer-row.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './SectionAddCtrl';
-import { apiPrefix, getExceedSelectedNumberMsg } from './constant';
+import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber } from './constant';
 import { transformGoodsData } from './utils';
 
 
@@ -723,6 +723,7 @@ export default class GoodsSelectorCtrl {
 	}
 	// 筛选
 	search(isSelectedGoodsTab) {
+		this.checkedAll = false;
 		this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
 			console.log(this.formModel);
 			if (!isSelectedGoodsTab) {
@@ -751,7 +752,7 @@ export default class GoodsSelectorCtrl {
 	reset(formCtrl) {
 		this._$ccValidator.setPristine(formCtrl);
 		for (let attr in this.formModel) {
-			if (attr !== 'platform' && attr !== 'shopId') {
+			if (this.formModel.hasOwnProperty(attr) && attr !== 'platform' && attr !== 'shopId') {
 				if (Array.isArray(this.formModel[attr])) {
 					this.formModel[attr] = [];
 				} else {
@@ -778,6 +779,14 @@ export default class GoodsSelectorCtrl {
 		entity.partial = false;
 		entity.skus && entity.skus.forEach(sku => {
 			sku.checked = false;
+		});
+	}
+	// 选中商品
+	checkRootItem(entity) {
+		entity.checked = true;
+		entity.partial = false;
+		entity.skus && entity.skus.forEach(sku => {
+			sku.checked = true;
 		});
 	}
 	// 获取 selectedItems 的副本 selectedItemsBuffer
@@ -813,25 +822,83 @@ export default class GoodsSelectorCtrl {
 			});
 		});
 		if (this.currentPageChecked) {
-			this.resInfo.list.forEach(item => {
-				let index = this.findEntity(this.selectedItems, item);
-				if (index === -1) {
-					this.selectedItems.push(item);
-				} else {
-					this.selectedItems.splice(index, 1);
-					this.selectedItems.push(item);
-				}
-			});
+			this.getSelectedItems(this.resInfo.list);
 		} else {
-			this.resInfo.list.forEach(item => {
-				let targetIndex = this.findEntity(this.selectedItems, item);
-				if (targetIndex !== -1) {
-					this.selectedItems.splice(targetIndex, 1);
-				}
-			});
+			this.delSelectedItems(this.resInfo.list);
 		}
 		this.getSelectedItemsBuffer();
 	};
+	getSelectedItems(list) {
+		list.forEach(item => {
+			let index = this.findEntity(this.selectedItems, item);
+			if (index === -1) {
+				this.selectedItems.push(item);
+			} else {
+				this.selectedItems.splice(index, 1);
+				this.selectedItems.push(item);
+			}
+		});
+	}
+	delSelectedItems(list) {
+		list.forEach(item => {
+			let targetIndex = this.findEntity(this.selectedItems, item);
+			if (targetIndex !== -1) {
+				this.selectedItems.splice(targetIndex, 1);
+			}
+		});
+	}
+	// 将参数对象转换成 & 符号连接的形式
+	formParamsTransform() {
+		this.transformParams();
+		let queryParams = cloneDeep(this.pagerGridOptions.queryParams);
+		let paramsArr = [];
+		for (let attr in queryParams) {
+			if (queryParams.hasOwnProperty(attr) && (queryParams[attr] || queryParams[attr] === 0)) {
+				let param = queryParams[attr];
+				if (!Array.isArray(param) && attr !== 'pageNum' && attr !== 'pageSize') {
+					paramsArr.push(`${attr}=${param}`);
+				}
+				if (Array.isArray(param)) {
+					param.forEach(item => {
+						paramsArr.push(`${attr}=${item}`);
+					});
+				}
+			}
+		}
+		console.log(paramsArr.join('&'));
+		return paramsArr.join('&');
+	}
+	// 全部全选/全部不选
+	selectAll() {
+		if (this.checkedAll) {
+			this.isShowMask = true;
+			this.resInfo.list.forEach(item => { this.checkRootItem(item); });
+			let goodsNum = this.pagerGridOptions.pager.totals < onceMaxSelectedNumber ? this.pagerGridOptions.pager.totals : onceMaxSelectedNumber;
+			genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ goodsNum }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
+				this.data = res.data || [];
+				this.data.forEach(item => { this.checkRootItem(item); });
+				this.getSelectedItems(this.data);
+				this.getSelectedItemsBuffer();
+				this.isShowMask = false;
+			});
+		} else {
+			this.currentPageChecked = false;
+			this.data.forEach(item => {
+				let selectedItemsIndex = this.findEntity(this.selectedItems, item);
+				if (selectedItemsIndex !== -1) {
+					this.selectedItems.splice(selectedItemsIndex, 1);
+				}
+				let selectedItemsBufferIndex = this.findEntity(this.selectedItemsBuffer, item);
+				if (selectedItemsBufferIndex !== -1) {
+					this.selectedItemsBuffer.splice(selectedItemsBufferIndex, 1);
+				}
+				let resInfoIndex = this.findEntity(this.resInfo.list, item);
+				if (resInfoIndex !== -1) {
+					this.resetRootItem(this.resInfo.list[resInfoIndex]);
+				}
+			});
+		}
+	}
 	// 移除当页
 	removeCurrentPage() {
 		let removeData = this.selectedPagerGridOptions.externalData;
@@ -878,6 +945,12 @@ export default class GoodsSelectorCtrl {
 	// 从集合中获取 entity 的 index, 找不到返回 -1
 	findEntity(collection, entity) {
 		return collection.findIndex(item => angular.equals(item.id, entity.id));
+	}
+	findEntityBySkuOuterId(collection, entity) {
+		return collection.findIndex(item => angular.equals(item, entity.skuOuterId));
+	}
+	findEntityByOuterId(collection, entity) {
+		return collection.findIndex(item => angular.equals(item, entity.outerId));
 	}
 	// merge->分页时进行页的切换时需要保持商品被选状态
 	dataMerge(goodsArr, selectedGoodsArr) {
@@ -937,26 +1010,57 @@ export default class GoodsSelectorCtrl {
 		const targetScope = angular.element(target).scope();
 		if (target.parentNode.parentNode.classList.contains('sd-root-node')) {
 			if (!targetScope.$parent.entity['checked'] && this.selectedItems.length + 1 > this._maxSelectedNumber) {
-				event.stopPropagation();
-				this.maxNumberTips = this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
+				this.moreThanSelectedMaxNumber(event);
 			}
 		} else if (target.parentNode.parentNode.classList.contains('sd-child-node')) {
 			if (!targetScope.$parent.$parent.entity['partial'] && this.selectedItems.length + 1 > this._maxSelectedNumber) {
-				event.stopPropagation();
-				this.maxNumberTips = this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
+				this.moreThanSelectedMaxNumber(event);
 			}
 		}
 	}
 	checkCurrentPageBefore(event) {
 		const target = event.target;
 		const targetScope = angular.element(target).scope();
-		const uncheckedItems = this.resInfo.list.filter(item => {
+		const uncheckedItems = this.getUncheckedItems();
+		if (!targetScope.$parent.$ctrl.ngChecked && this.selectedItems.length + uncheckedItems.length > this._maxSelectedNumber) {
+			this.moreThanSelectedMaxNumber(event);
+		}
+	}
+	checkAllBefore(event) {
+		const target = event.target;
+		const targetScope = angular.element(target).scope();
+		if (!targetScope.$parent.$ctrl.ngChecked) {
+			if (onceMaxSelectedNumber <= this._maxSelectedNumber) {
+				// 单次全选的最大值小于等于全选商品允许的最大值
+				if (this.pagerGridOptions.pager.totals > onceMaxSelectedNumber) { // 测试 20
+					if (this.pagerGridOptions.pager.totals > this._maxSelectedNumber) { // 测试 30
+						this.moreThanSelectedMaxNumber(event);
+					} else {
+						this.moreThanOnceSelectedMaxNumber(event);
+					}
+				}
+			} else {
+				// 单次全选的最大值大于全选商品允许的最大值
+				if (this.pagerGridOptions.pager.totals > this._maxSelectedNumber) {
+					this.moreThanSelectedMaxNumber(event);
+				}
+			}
+		}
+	}
+	getUncheckedItems() {
+		return this.resInfo.list.filter(item => {
 			return !item.checked && !item.partial;
 		});
-		if (!targetScope.$parent.$ctrl.ngChecked && this.selectedItems.length + uncheckedItems.length > this._maxSelectedNumber) {
-			event.stopPropagation();
-			this.maxNumberTips = this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
-		}
+	}
+	// 已选商品数超过已选商品最大允许选择数
+	moreThanSelectedMaxNumber(event) {
+		event.stopPropagation();
+		this.maxNumberTips = this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
+	}
+	// 已选商品数超过单次最大允许全选商品数
+	moreThanOnceSelectedMaxNumber(event) {
+		event.stopPropagation();
+		this.maxNumberTips = this._$ccTips.error(`当前商品超过${ onceMaxSelectedNumber }个，不支持全部选中，请修改条件后重新搜索。`);
 	}
 	/**
 	 * @name ok 点击确认按钮
@@ -971,11 +1075,11 @@ export default class GoodsSelectorCtrl {
 	}
 	// 批量添加 -- 后端查询
 	addSection() {
-		var modalInstance = this._$ccModal
+		const modalInstance = this._$ccModal
 			.modal({
 				scope: this._$scope,
 				title: '批量导入商品ID',
-				fullscreen: true,
+				fullscreen: false,
 				locals: {
 					data: [1, 2, 3]
 				},
@@ -990,10 +1094,17 @@ export default class GoodsSelectorCtrl {
 			})
 			.open();
 		// 收集modal的操作反馈,确认为成功回调,取消为失败回调
-		modalInstance.result.then(v => {
-			self.array = v;
+		modalInstance.result.then(obj => {
+			this.transformParams();
+			if (obj.inputKey === 'id') {
+				this.pagerGridOptions.queryParams['id'] = obj.inputValue;
+			}
+			// 需要后端提供接口：使 sku 商家编码和商品商家编码支持数组查询，需要返回导入成功以及导入失败的数据。
+			// 根据新接口进行查询，对已选商品数组和已选商品数组的副本进行数据 merge，然后跳转到已选商品 tab 页面
+			// TODO TODO TODO
+			this.updateGrid();
 		}, v => {
-			self.array.length = 0;
+			console.log(v);
 		});
 	}
 }
