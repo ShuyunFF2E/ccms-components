@@ -66,6 +66,23 @@
 		  &.goods-price input {
 			width: 69px;
 		  }
+		  &.goods-selector-label {
+			.goods-label {
+			  margin-top: 8px;
+			}
+			.goods-label-btn {
+			  float: right;
+			  width: 150px;
+			  height: 30px;
+			  margin-left: 3px;
+			  border: 1px solid #d9d9d9;
+			  line-height: 30px;
+			  padding-left: 8px;
+			  overflow: hidden;
+			  text-overflow: ellipsis;
+			  white-space: nowrap;
+			}
+		  }
 		  &.operate {
 			margin-left: 25px;
 			margin-top: 3px;
@@ -85,6 +102,14 @@
 			.add-addition {
 			  display: inline-block;
 			  color:#0083ba;
+			  &:hover {
+				cursor: pointer;
+			  }
+			  margin-right: 16px;
+			}
+			.add-condition {
+			  line-height: 30px;
+			  color: #0083ba;
 			  &:hover {
 				cursor: pointer;
 			  }
@@ -229,11 +254,14 @@
 			  margin-right: 6px;
 			}
 		  }
-		  span.slide-toggle-btn {
-			color: #0083ba;
-			line-height: 2em;
-			&:hover {
-			  cursor: pointer;
+		  span {
+			&.slide-toggle-btn {
+			  color: #0083ba;
+			  line-height: 2em;
+			  margin-right: 12px;
+			  &:hover {
+				cursor: pointer;
+			  }
 			}
 		  }
 		  .cc-checkbox.checked .cc-checkbox-input:before {

@@ -20,15 +20,26 @@ import { transformGoodsData } from './utils';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
-	'isSupportedSku')
+	'isSupportedSku', '$labelChoose', 'isSupportedGoodsLabel', 'isSupportedAddCondition')
 
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
 		this.showLoading = true;
 		this.isMoreThanHundred = false;
+
+		// 已选的商品标签
+		this.selectedLabels = [];
+		// 商品标签
+		this.selectedLabelsText = null;
+
 		// 商品维度选择（是否支持显示sku）
 		this.isSupportedSku = this._isSupportedSku;
+		// 是否支持商品标签
+		this.isSupportedGoodsLabel = this._isSupportedGoodsLabel;
+		// 是否支持添加为搜索条件
+		this.isSupportedAddCondition = this._isSupportedAddCondition;
+
 		// 店铺信息 -> 如果是 array, 说明需要显示店铺列表
 		//         -> 如果是 object, 说明是单店铺
 		//         -> 其它情况, 需要提示用户, 参数格式不正确
@@ -723,7 +734,7 @@ export default class GoodsSelectorCtrl {
 	}
 	// 筛选
 	search(isSelectedGoodsTab) {
-		this.checkedAll = false;
+		this.isCheckedAll = false;
 		this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
 			console.log(this.formModel);
 			if (!isSelectedGoodsTab) {
@@ -868,36 +879,32 @@ export default class GoodsSelectorCtrl {
 		console.log(paramsArr.join('&'));
 		return paramsArr.join('&');
 	}
-	// 全部全选/全部不选
-	selectAll() {
-		if (this.checkedAll) {
-			this.isShowMask = true;
-			this.resInfo.list.forEach(item => { this.checkRootItem(item); });
-			let goodsNum = this.pagerGridOptions.pager.totals < onceMaxSelectedNumber ? this.pagerGridOptions.pager.totals : onceMaxSelectedNumber;
-			genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ goodsNum }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
-				this.data = res.data || [];
-				this.data.forEach(item => { this.checkRootItem(item); });
-				this.getSelectedItems(this.data);
-				this.getSelectedItemsBuffer();
-				this.isShowMask = false;
-			});
-		} else {
-			this.currentPageChecked = false;
-			this.data.forEach(item => {
-				let selectedItemsIndex = this.findEntity(this.selectedItems, item);
-				if (selectedItemsIndex !== -1) {
-					this.selectedItems.splice(selectedItemsIndex, 1);
-				}
-				let selectedItemsBufferIndex = this.findEntity(this.selectedItemsBuffer, item);
-				if (selectedItemsBufferIndex !== -1) {
-					this.selectedItemsBuffer.splice(selectedItemsBufferIndex, 1);
-				}
-				let resInfoIndex = this.findEntity(this.resInfo.list, item);
-				if (resInfoIndex !== -1) {
-					this.resetRootItem(this.resInfo.list[resInfoIndex]);
-				}
-			});
-		}
+	// 全部全选
+	checkedAll() {
+		this.resInfo.list.forEach(item => { this.checkRootItem(item); });
+		this.data.forEach(item => { this.checkRootItem(item); });
+		this.getSelectedItems(this.data);
+		this.getSelectedItemsBuffer();
+		this.isShowMask = false;
+	}
+
+	// 全部不选
+	uncheckedAll() {
+		this.currentPageChecked = false;
+		this.data.forEach(item => {
+			let selectedItemsIndex = this.findEntity(this.selectedItems, item);
+			if (selectedItemsIndex !== -1) {
+				this.selectedItems.splice(selectedItemsIndex, 1);
+			}
+			let selectedItemsBufferIndex = this.findEntity(this.selectedItemsBuffer, item);
+			if (selectedItemsBufferIndex !== -1) {
+				this.selectedItemsBuffer.splice(selectedItemsBufferIndex, 1);
+			}
+			let resInfoIndex = this.findEntity(this.resInfo.list, item);
+			if (resInfoIndex !== -1) {
+				this.resetRootItem(this.resInfo.list[resInfoIndex]);
+			}
+		});
 	}
 	// 移除当页
 	removeCurrentPage() {
@@ -1021,7 +1028,7 @@ export default class GoodsSelectorCtrl {
 	checkCurrentPageBefore(event) {
 		const target = event.target;
 		const targetScope = angular.element(target).scope();
-		const uncheckedItems = this.getUncheckedItems();
+		const uncheckedItems = this.getUncheckedItems(this.resInfo.list);
 		if (!targetScope.$parent.$ctrl.ngChecked && this.selectedItems.length + uncheckedItems.length > this._maxSelectedNumber) {
 			this.moreThanSelectedMaxNumber(event);
 		}
@@ -1029,38 +1036,83 @@ export default class GoodsSelectorCtrl {
 	checkAllBefore(event) {
 		const target = event.target;
 		const targetScope = angular.element(target).scope();
+		const totals = this.pagerGridOptions.pager.totals;
 		if (!targetScope.$parent.$ctrl.ngChecked) {
 			if (onceMaxSelectedNumber <= this._maxSelectedNumber) {
 				// 单次全选的最大值小于等于全选商品允许的最大值
-				if (this.pagerGridOptions.pager.totals > onceMaxSelectedNumber) { // 测试 20
-					if (this.pagerGridOptions.pager.totals > this._maxSelectedNumber) { // 测试 30
-						this.moreThanSelectedMaxNumber(event);
-					} else {
-						this.moreThanOnceSelectedMaxNumber(event);
-					}
+				if (totals > this._maxSelectedNumber * 2) {
+					this.moreThanSelectedMaxNumber(event);
+				} else {
+					this.isShowMask = true;
+					genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
+						this.data = res.data || [];
+						let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
+						if (uncheckedGoods.length + 1 > onceMaxSelectedNumber) { // 测试 300
+							if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) { // 测试 400
+								this.moreThanSelectedMaxNumber(event);
+							} else {
+								this.moreThanOnceSelectedMaxNumber(event);
+							}
+						} else {
+							if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) { // 测试 400
+								this.moreThanSelectedMaxNumber(event);
+							} else {
+								this.checkedAll();
+							}
+						}
+					});
 				}
 			} else {
 				// 单次全选的最大值大于全选商品允许的最大值
-				if (this.pagerGridOptions.pager.totals > this._maxSelectedNumber) {
+				if (totals > onceMaxSelectedNumber * 2) {
 					this.moreThanSelectedMaxNumber(event);
+				} else {
+					this.isShowMask = true;
+					if (totals + 1 > onceMaxSelectedNumber) {
+						this.moreThanSelectedMaxNumber(event);
+					} else {
+						genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
+							this.data = res.data || [];
+							let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
+							if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) {
+								this.moreThanSelectedMaxNumber(event);
+							} else {
+								this.checkedAll();
+							}
+						});
+					}
 				}
 			}
+		} else {
+			this.uncheckedAll();
 		}
 	}
-	getUncheckedItems() {
-		return this.resInfo.list.filter(item => {
+	getUncheckedItems(data) {
+		return data.filter(item => {
 			return !item.checked && !item.partial;
+		});
+	}
+	getUncheckedItemsFromAll(data) {
+		return data.filter(item => {
+			let targetIndex = this.findEntity(this.selectedItems, item);
+			if (targetIndex === -1) {
+				return item;
+			}
 		});
 	}
 	// 已选商品数超过已选商品最大允许选择数
 	moreThanSelectedMaxNumber(event) {
 		event.stopPropagation();
 		this.maxNumberTips = this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
+		this.isShowMask = false;
+		this.isCheckedAll = false;
 	}
 	// 已选商品数超过单次最大允许全选商品数
 	moreThanOnceSelectedMaxNumber(event) {
 		event.stopPropagation();
 		this.maxNumberTips = this._$ccTips.error(`当前商品超过${ onceMaxSelectedNumber }个，不支持全部选中，请修改条件后重新搜索。`);
+		this.isShowMask = false;
+		this.isCheckedAll = false;
 	}
 	/**
 	 * @name ok 点击确认按钮
@@ -1106,5 +1158,103 @@ export default class GoodsSelectorCtrl {
 		}, v => {
 			console.log(v);
 		});
+	}
+	// 点击商品标签
+	openGoodsLabelModel() {
+		const title = '标签筛选条件设置';
+		let placeholderText = '标签名称';
+		let mapping = {
+			displayField: 'title',
+			valueField: 'id'
+		};
+		const labelList = [
+			{
+				title: '标签123标签4234标签234标签2342标签34234',
+				id: '1'
+			},
+			{
+				title: '标签2',
+				id: '12'
+			},
+			{
+				title: '标签3',
+				id: '3'
+			},
+			{
+				title: '标签4',
+				id: '4'
+			},
+			{
+				title: '标签53242342342342',
+				id: '5'
+			},
+			{
+				title: '标签6',
+				id: '6'
+			},
+			{
+				title: '标签7',
+				id: '7'
+			},
+			{
+				title: '标签8',
+				id: '8'
+			},
+			{
+				title: '标签9',
+				id: '9'
+			},
+			{
+				title: '标签10',
+				id: '10'
+			},
+			{
+				title: '标签11',
+				id: '11'
+			},
+			{
+				title: '标签12',
+				id: '12'
+			},
+			{
+				title: '标签13',
+				id: '13'
+			},
+			{
+				title: '标签14',
+				id: '14'
+			},
+			{
+				title: '标签15',
+				id: '15'
+			},
+			{
+				title: '标签16',
+				id: '16'
+			},
+			{
+				title: '标签17',
+				id: '17'
+			}
+		];
+		let opts = {
+			placeholderText,
+			selectedLabels: this.selectedLabels,
+			mapping
+		};
+		this._$labelChoose.labelChoose(title, labelList, opts).open()
+			.result.then(res => {
+				console.log(res);
+				if (res.length) {
+					this.selectedLabels	= res;
+				} else {
+					this.selectedLabels = [];
+				}
+				let labelsTitle = this.selectedLabels.map(item => { return item[mapping.displayField]; });
+				this.selectedLabelsText = labelsTitle.join(',');
+				// TODO 需要处理商品标签数组
+			}, res => {
+				console.log(res);
+			});
 	}
 }

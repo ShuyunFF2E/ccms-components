@@ -21,13 +21,17 @@
 			var taobaoWithoutShopList = {shopId: 106878997, shopName: '黑色', plat: 'top'};
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
 
-			var isOnlyChecked = false;
-			var maxSelectedNumber = 700;
+			var isOnlyChecked = false; // 是否包含 footer
+			var maxSelectedNumber = 400; // 最大允许选择的商品数量
 			var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
+			var isSupportedGoodsLabel = true; // 是否支持商品标签
+			var isSupportedAddCondition = true; // 是否支持添加为搜索条件
 			var options = {
 				isOnlyChecked,
 				maxSelectedNumber,
-				serverName
+				serverName,
+				isSupportedGoodsLabel,
+				isSupportedAddCondition
 			};
 			// 如果是商品维度选择，isSupportedSku 值为 false，否则为 true，默认值为 true
 			var isSupportedSku = false;
@@ -41,7 +45,9 @@
 				isOnlyChecked,
 				maxSelectedNumber,
 				serverName,
-				isSupportedSku
+				isSupportedSku,
+				isSupportedGoodsLabel,
+				isSupportedAddCondition
 			};
 			// taobao + 店铺选择
 			$scope.openTaobaoGoodsSelectorWithShopList = function() {
@@ -93,7 +99,7 @@
 			// taobao + 店铺选择 + 商品维度选择
 			$scope.openTaobaoGoodsSelectorWithShopListWithoutSku = function() {
 				$ccGoodsSelector
-					.goodsSelector(taobaoWithShopList, optionsWithoutSku)
+					.goodsSelector(taobaoWithShopList, optionsWithoutSku, selectedGoodsWithoutSku)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
@@ -129,7 +135,7 @@
 			// jd 无店铺选择 + 商品维度选择
 			$scope.openJDGoodsSelectorWithoutSku = function() {
 				$ccGoodsSelector
-					.goodsSelector(jdWithoutShopList, optionsWithoutSku)
+					.goodsSelector(jdWithoutShopList, optionsWithoutSku, selectedGoodsWithoutSku)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
