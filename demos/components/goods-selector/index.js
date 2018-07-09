@@ -22,7 +22,7 @@
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
 
 			var isOnlyChecked = false; // 是否包含 footer
-			var maxSelectedNumber = 400; // 最大允许选择的商品数量
+			var maxSelectedNumber = 700; // 最大允许选择的商品数量
 			var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
 			var isSupportedGoodsLabel = true; // 是否支持商品标签
 			var isSupportedAddCondition = true; // 是否支持添加为搜索条件
