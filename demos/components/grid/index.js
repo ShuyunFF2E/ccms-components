@@ -235,9 +235,16 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
 		};
 
+		// actionName: 'save',
+		// postData: { x: 2 },
 		this.pagerGridOptions2 = {
 
-			resource: $resource('/api/pages/1'),
+			resource: $resource('/api/pages/1', null, {
+				'get': {
+					method: 'POST'
+				}
+			}),
+			postData: { x: 3 },
 			response: null,
 			queryParams: {
 				pageNum: 2
