@@ -1280,9 +1280,6 @@ export default class GoodsSelectorCtrl {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
 			}
 		});
-		// genResource(`${this._serverName}${apiPrefix}/items/batchImport/result?${this.getStandardParams(queryParams)}`, false, null).get().$promise.then(res => {
-		// }).catch(() => {
-		// });
 	}
 
 	// 获取批量导入数据后返回的表格数据
@@ -1290,41 +1287,18 @@ export default class GoodsSelectorCtrl {
 		genResource(`${this._serverName}${apiPrefix}/items/batchImportIds`).save(queryParams, res => {
 			if (res.data && res.data.length) {
 				// 如果查询参数为商品ID或者商品商家编码，则将查询到的商品状态置为 checked
-				// 如果查询到参数为 sku 商家编码，则根据查询到的商品sku是否为全部sku确定商品状态置为 checked 或者 partial，并且展开 sku
-				// 然后将处理过的商品去重后放到已选商品数组和已选商品 buffer 数组中，最后跳转到已选商品 tab 页面
+				// 如果查询到参数为 sku 商家编码，则将查询到的商品状态置为 checked，并且展开 sku
+				// 然后将处理过的商品去重后放到已选商品数组和已选商品 buffer 数组中，最后跳转到已选商品 tab 页面，并刷新表格
 				this.isAddSectionExtend = (obj.inputKey === 'skuNumber');
-				const inputValue = obj.inputValue;
-
-				if (obj.inputKey === 'id' || obj.inputKey === 'number') {
-					res.data.forEach(entity => {
-						entity.extend = false;
-						this.checkRootItem(entity);
-					});
-				} else if (obj.inputKey === 'skuNumber') {
-					res.data.forEach(entity => {
-						entity.extend = true;
-						if (entity.skus && entity.skus.length) {
-							entity.skus.forEach(sku => {
-								if (inputValue.indexOf(sku.outerId) !== -1) {
-									sku.checked = true;
-								}
-							});
-							if (this.isAllChildrenSelected(entity.skus)) {
-								entity.checked = true;
-								entity.partial = false;
-							} else if (this.isSomeChildrenSelected(entity.skus) && !this.isAllChildrenSelected(entity.skus)) {
-								entity.checked = false;
-								entity.partial = true;
-							} else {
-								entity.checked = false;
-								entity.partial = false;
-							}
-						}
-					});
-				}
 				this.getSelectedItems(res.data);
+				this.selectedItems.forEach(entity => {
+					entity.extend = (obj.inputKey === 'skuNumber');
+					this.checkRootItem(entity);
+				});
 				this.getSelectedItemsBuffer();
 				this.jumpToSelectedGoodsTabs(this._$scope);
+				this.selectedPagerGridOptions.pager.pageNum = 1;
+				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 
 				// 当使用批量添加的时候一切表格数据相关请求访问该路径，当使用表单搜索的时候，一切表格数据相关请求访问原来的路径
 				this.gridPrefixApi = `${this._serverName}${apiPrefix}/items/batchImportIds`;
@@ -1347,10 +1321,6 @@ export default class GoodsSelectorCtrl {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
 			}
 		});
-
-		// genResource(`${this._serverName}${apiPrefix}/items/batchImportIds?${this.getStandardParams(queryParams)}`, false, null).get().$promise.then(res => {
-		// }).catch(() => {
-		// });
 	}
 
 	// 跳转到已选商品 tab
