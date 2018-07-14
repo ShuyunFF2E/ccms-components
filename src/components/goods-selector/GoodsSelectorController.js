@@ -7,14 +7,14 @@ import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
 import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
 import emptyTpl from './tpls/customer-empty.tpl.html';
 import selectedEmptyTpl from './tpls/customer-selected-empty.tpl.html';
-import bodyTemplate from './tpls/customer-modal-body.tpl.html';
+import bodyTemplate from './addSection/customer-modal-body.tpl.html';
 import headerTemplate from './tpls/customer-header.tpl.html';
 import footerTemplate from './tpls/customer-footer.tpl.html';
 import rowTemplate from './tpls/customer-row.tpl.html';
 
 import matchHelper from './MatchHelper';
-import sectionAddCtrl from './SectionAddCtrl';
-import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber } from './constant';
+import sectionAddCtrl from './addSection/SectionAddCtrl';
+import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg } from './constant';
 import { transformGoodsData } from './utils';
 
 
@@ -39,6 +39,9 @@ export default class GoodsSelectorCtrl {
 		this.isSupportedGoodsLabel = this._isSupportedGoodsLabel;
 		// 是否支持添加为搜索条件
 		this.isSupportedAddCondition = this._isSupportedAddCondition;
+
+		// 批量导入和搜索是本质上都是根据条件对表格数据进行筛选，但是却是两个不相关的操作，把它们看成两个开关，不同的开关对应不同的API，其下的分页操作分别使用对应的API
+		this.gridPrefixApi = `${this._serverName}${apiPrefix}/items`;
 
 		// 店铺信息 -> 如果是 array, 说明需要显示店铺列表
 		//         -> 如果是 object, 说明是单店铺
@@ -138,7 +141,7 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		};
-		// form 表单搜索配置项
+		// 已选商品 form 表单搜索配置项（前端搜索）
 		this.formConfig = {
 			shopId: 'equal',
 			id: 'equalArray',
@@ -155,6 +158,7 @@ export default class GoodsSelectorCtrl {
 			minPrice: 'lessEqual',
 			maxPrice: 'greaterEqual'
 		};
+		// 已选商品 form 表单sku相关搜索配置项（前端搜索）
 		this.skuFormConfig = {
 			skusOuterId: 'fuzzySearch',
 			skusPropsVname: 'fuzzySearch',
@@ -162,6 +166,12 @@ export default class GoodsSelectorCtrl {
 		};
 
 		this.initForm();
+
+		// 全部全选操作的查询参数
+		this.checkedAllQueryParams = {
+			shopId: this.formModel.shopId,
+			platform: this.formModel.platform
+		};
 
 		this.allGoodsFormModel = {};
 		this.selectedDateRangeModel = cloneDeep(this.dateRange);
@@ -176,6 +186,7 @@ export default class GoodsSelectorCtrl {
 		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
 		this.selectedItemsBuffer = [];
 
+		// 用户传进来的已选商品处理
 		transformGoodsData(this._shopInfoData, this._selectedData, this._serverName, this.isSupportedSku).then(data => {
 			if (data && data.length) {
 				data.forEach(entity => {
@@ -185,6 +196,8 @@ export default class GoodsSelectorCtrl {
 				this.updateGrid();
 			}
 		});
+
+		// 全部商品表格配置
 		this.pagerGridOptions = {
 			resource: this._$resource(`${this._serverName}${apiPrefix}/items`),
 			response: null,
@@ -229,8 +242,9 @@ export default class GoodsSelectorCtrl {
 					delete res['totalCount'];
 				}
 				if (res.list && res.list.length) {
-					// 全部商品列表 -> 当页数改变的时候，更新列表中的商品状态，保持和已选商品状态一致。
+					// 全部商品列表 -> 当表格数据刷新时，更新列表中的商品状态，保持和已选商品状态一致。
 					this.dataMerge(res.list, this.selectedItemsBuffer);
+					// 已选商品列表 -> 当表格数据刷新时，更新已选商品状态
 					this.selectedItems.forEach((item, index) => {
 						let targetIndex = this.findEntity(res.list, item);
 						if (targetIndex !== -1) {
@@ -238,9 +252,12 @@ export default class GoodsSelectorCtrl {
 							this.selectedItems.push(res.list[targetIndex]);
 						}
 					});
+					// 表格刷新，判断当页全选按钮的状态
 					this.currentPageChecked = this.isAllChildrenSelected(res.list);
+					// 如果搜索条件含有 sku 相关项或者批量导入的是 sku 商家编码，那么展开 sku，否则不展开 sku
+					// 如果是商品维度（不支持 sku）,则删除 sku
 					res.list.forEach(item => {
-						if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
+						if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
 							item.extend = true;
 						} else {
 							item.extend = false;
@@ -249,6 +266,7 @@ export default class GoodsSelectorCtrl {
 							delete item.skus;
 						}
 					});
+					// 表格刷新，判断全部展开/折叠按钮的状态
 					this.isExtendAll = this.isAllChildrenExtend(res.list);
 				}
 				this.resInfo = res;
@@ -258,7 +276,8 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
-		// 获取 sku 标题
+
+		// 获取 sku 标题，后端返回的是数组，需要前端自行拼接
 		this.pagerGridOptions.getSkuName = sku => {
 			let propName = '';
 			if (sku.props && sku.props.length) {
@@ -280,6 +299,7 @@ export default class GoodsSelectorCtrl {
 			}
 			return propName;
 		};
+
 		// 高亮显示搜索关键字
 		this.pagerGridOptions.lightText = (originText, keyWords) => {
 			originText = originText || '';
@@ -292,6 +312,7 @@ export default class GoodsSelectorCtrl {
 			}
 			return this._$sce.trustAsHtml(result);
 		};
+
 		// 价格保留两位小数
 		this.pagerGridOptions.getPrice = price => {
 			let buffer = [];
@@ -313,6 +334,7 @@ export default class GoodsSelectorCtrl {
 			}
 			return '￥' + price;
 		};
+
 		// 超过 maxLength 个字则隐藏多余字，显示 '...'
 		this.pagerGridOptions.listCharacterIntercept = (str, maxLength) => {
 			if (str.length > maxLength) {
@@ -320,6 +342,7 @@ export default class GoodsSelectorCtrl {
 			}
 			return str;
 		};
+
 		this.pagerGridOptions.formModel = this.formModel;
 		// 表格子行的展开和收起
 		this.pagerGridOptions.handleTreeIcon = entity => {
@@ -361,6 +384,7 @@ export default class GoodsSelectorCtrl {
 			}
 			this.getSelectedItemsBuffer();
 		};
+
 		// 孩子中的一部分 checked, 父亲半选 partial，全部孩子 checked, 父亲 checked
 		this.pagerGridOptions.selectTreeLeafItem = (entity, sku) => {
 			sku.checked = !sku.checked;
@@ -432,6 +456,7 @@ export default class GoodsSelectorCtrl {
 			// 任意一个父亲被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
+
 		// 移除孩子: -> 如果部分孩子被移除，则将孩子状态置为 unchecked;
 		//          -> 如果全部孩子被移除，则将孩子状态置为 unchecked; 并且删除父亲。
 		//          -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态；
@@ -456,6 +481,7 @@ export default class GoodsSelectorCtrl {
 			// 任意一个孩子被 remove 掉, 表格上方的全选当页, 被 unchecked
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		};
+
 		// 表格数据来自于 externalData 时，分页操作
 		const wrapGridData = (currentPage, pageSize, data) => {
 			this.selectedPagerGridOptions.pager.pageNum = currentPage;
@@ -464,47 +490,50 @@ export default class GoodsSelectorCtrl {
 			this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
 			return this.selectedPagerGridOptions;
 		};
+
 		this.selectedPagerGridOptions.onRefresh = opts => {
-			const currentPage = opts.pager.pageNum;
-			const pageSize = opts.pager.pageSize;
-			const data = [];
+			const currentPage = opts.pager.pageNum; // 当前页
+			const pageSize = opts.pager.pageSize; // 分页大小
+			const data = []; // 已选商品表格数据
 			this.selectedItems.forEach(item => {
 				if (!item.isHide) {
 					data.push(item);
 				}
 			});
+			// 如果搜索条件含有 sku 相关项或者批量导入的是 sku 商家编码，那么展开 sku，否则不展开 sku
 			this.selectedItems.forEach(item => {
-				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
+				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
 					item.extend = true;
 				} else {
 					item.extend = false;
 				}
 			});
+			// 判断全部展开/全部折叠按钮状态
 			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
+			// 刷新表格
 			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data)).then(() => {
 				this.showLoading = false;
 			});
 		};
 	}
 
-
 	// form 表单初始化
 	initForm() {
 		this.formModel = {
 			platform: this.shopList[0].plat, // 平台
 			shopId: this.shopList[0].shopId, // 店铺
-			id: [], // 商品ID数组??????????
-			name: null, // 商品名称模糊匹配
-			shopCategoriesId: [], // shopCategories.id 店铺类目数组
+			id: [], // 商品ID 数组
+			name: null, // 商品名称 模糊匹配
+			shopCategoriesId: [], // shopCategories.id 自定义类目 数组
 			categoriesId: null, // categories.id 标准类目
-			propsPid: null, // props.pid 属性ID
-			propsVid: null, // props.vid 属性值ID
-			propsVname: null, // props.vid 属性值ID
+			propsPid: null, // props.pid 商品属性 ID
+			propsVid: null, // props.vid 商品属性值 ID
+			propsVname: null, // props.vname 商品属性值对应的属性名称
 			status: this.statusList[0].value, // 状态, true 在架, false 不在架
-			skusPropsVname: null, // skus.props.vname SKU属性值模糊匹配
+			skusPropsVname: null, // skus.props.vname SKU属性值 模糊匹配
 			outerId: null, // 商品商家编码
 			skusOuterId: null, // skus.outerId SKU 商家编码
-			skusId: [], // skus.id SKUID数组-----------
+			skusId: [], // skus.id SKUID 数组
 			startListTime: null, // 上架时间起始值, Unix时间戳，毫秒
 			endListTime: null, // 上架时间结束值, Unix时间戳，毫秒
 			minPrice: null, // 商品价格下限
@@ -514,6 +543,8 @@ export default class GoodsSelectorCtrl {
 		this.dateRange.start = null;
 		this.dateRange.end = null;
 	}
+
+	// 表单重置（不改变引用，只恢复初始值）
 	initComplexForm() {
 		for (let attr in this.formModel) {
 			if (attr !== 'platform' && attr !== 'shopId' && attr !== 'id' && attr !== 'name' && attr !== 'categoriesId') {
@@ -527,6 +558,7 @@ export default class GoodsSelectorCtrl {
 		this.dateRange.start = null;
 		this.dateRange.end = null;
 	}
+
 	// 获取商品自自定义类目数据
 	getShopCatories() {
 		genResource(`${this._serverName}${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
@@ -542,6 +574,7 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 	}
+
 	// 获取商品标准类目列表
 	getCatories() {
 		genResource(`${this._serverName}${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
@@ -553,6 +586,7 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 	}
+
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.categoriesId) {
@@ -572,6 +606,7 @@ export default class GoodsSelectorCtrl {
 			this.propsPid = null;
 		}
 	};
+
 	// 级联菜单 -> 商品属性 select 框 change
 	propSelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.propsPid && itemIndex !== -1) {
@@ -584,11 +619,13 @@ export default class GoodsSelectorCtrl {
 			this.formModel.propsVname = null;
 		}
 	};
+
 	// 店铺 select 框 change
 	shopSelectChange(newValue, oldValue, itemIndex, item) {
 		this.getShopCatories();
 		this.getCatories();
 	};
+
 	// 商品属性值 select 框 change
 	propsVidSelectChange(newValue, oldValue, itemIndex, item) {
 		if (newValue && itemIndex === -1) {
@@ -597,6 +634,7 @@ export default class GoodsSelectorCtrl {
 			this.formModel.propsVname = null;
 		}
 	};
+
 	// 后端搜索 -> 提交 form 表单前参数处理
 	transformParams() {
 		this.transformDateParams();
@@ -646,6 +684,7 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 	}
+
 	// 将时间转换成时间戳格式
 	transformDateParams() {
 		if (this.dateRange.start) {
@@ -659,6 +698,7 @@ export default class GoodsSelectorCtrl {
 			this.formModel.endListTime = null;
 		}
 	}
+
 	// 前端搜索 -> 对已选商品列表进行处理
 	transformSelectedItems() {
 		this.selectedItems.forEach(item => {
@@ -683,6 +723,7 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 	}
+
 	// 点击 tab
 	tabClick(text) {
 		if (text === '已选商品') {
@@ -712,6 +753,7 @@ export default class GoodsSelectorCtrl {
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		}
 	};
+
 	// tab 切换时 form 表单处理
 	handleForm(dateRangeModel, formModel) {
 		this.dateRange = cloneDeep(dateRangeModel);
@@ -732,14 +774,21 @@ export default class GoodsSelectorCtrl {
 			this.formModel.propsVid = this.propsVid;
 		}
 	}
+
 	// 筛选
 	search(isSelectedGoodsTab) {
+		this.gridPrefixApi = `${this._serverName}${apiPrefix}/items`;
+		this.pagerGridOptions.resource = this._$resource(this.gridPrefixApi);
+		delete this.pagerGridOptions.postData;
+
+		this.isAddSectionExtend = false;
 		this.isCheckedAll = false;
 		this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
-			console.log(this.formModel);
 			if (!isSelectedGoodsTab) {
 				this.transformParams();
 				this.updateGrid();
+				// 当点击搜索后，更新全部全选的查询参数
+				this.checkedAllQueryParams = Object.assign({}, this.pagerGridOptions.queryParams);
 			} else {
 				this.transformDateParams();
 				this.transformSelectedItems();
@@ -759,6 +808,7 @@ export default class GoodsSelectorCtrl {
 			}
 		}, () => {});
 	};
+
 	// 重置表单，恢复初始值
 	reset(formCtrl) {
 		this._$ccValidator.setPristine(formCtrl);
@@ -774,16 +824,19 @@ export default class GoodsSelectorCtrl {
 		this.dateRange.start = null;
 		this.dateRange.end = null;
 	};
+
 	// 更新表格数据（数据从后端请求）
 	//    -> update 全部商品中状态
 	//    -> update 全选按钮
 	updateGrid() {
 		this._$ccGrid.refresh(this.pagerGridOptions).then(opts => {});
 	}
+
 	refreshGrid() {
 		this.pagerGridOptions.queryParams.pageNum = 1;
 		this.updateGrid();
 	};
+
 	// 将商品状态恢复成初始状态
 	resetRootItem(entity) {
 		entity.checked = false;
@@ -792,6 +845,7 @@ export default class GoodsSelectorCtrl {
 			sku.checked = false;
 		});
 	}
+
 	// 选中商品
 	checkRootItem(entity) {
 		entity.checked = true;
@@ -800,6 +854,7 @@ export default class GoodsSelectorCtrl {
 			sku.checked = true;
 		});
 	}
+
 	// 获取 selectedItems 的副本 selectedItemsBuffer
 	getSelectedItemsBuffer() {
 		this.selectedItemsBuffer = [];
@@ -807,6 +862,7 @@ export default class GoodsSelectorCtrl {
 			this.selectedItemsBuffer.push(cloneDeep(item));
 		});
 	}
+
 	// 更新 selectedItems 的副本 selectedItemsBuffer
 	updateSelectedItemsBuffer(entity) {
 		let index = this.findEntity(this.selectedItemsBuffer, entity);
@@ -815,12 +871,14 @@ export default class GoodsSelectorCtrl {
 			this.selectedItemsBuffer.push(cloneDeep(entity));
 		}
 	}
+
 	// 展开/折叠全部
 	extendAll(isExtend, data) {
 		data.forEach(item => {
 			item.extend = isExtend;
 		});
 	};
+
 	// 全选当页
 	selectCurrentPageAll() {
 		// currentPageChecked -> 全选当页 (true or false)
@@ -839,6 +897,8 @@ export default class GoodsSelectorCtrl {
 		}
 		this.getSelectedItemsBuffer();
 	};
+
+	// 将 list 去重后的项 push 到已选商品数组中
 	getSelectedItems(list) {
 		list.forEach(item => {
 			let index = this.findEntity(this.selectedItems, item);
@@ -850,6 +910,8 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 	}
+
+	// 从已选商品数组中删除 list 中包含的项
 	delSelectedItems(list) {
 		list.forEach(item => {
 			let targetIndex = this.findEntity(this.selectedItems, item);
@@ -858,15 +920,20 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 	}
-	// 将参数对象转换成 & 符号连接的形式
+
 	formParamsTransform() {
-		this.transformParams();
-		let queryParams = cloneDeep(this.pagerGridOptions.queryParams);
+		let exceptList = ['pageNum', 'pageSize'];
+		return this.getStandardParams(this.checkedAllQueryParams, exceptList);
+	}
+
+	// 将参数对象转换成 & 符号连接的形式
+	getStandardParams(params, exceptList = []) {
+		let queryParams = cloneDeep(params);
 		let paramsArr = [];
 		for (let attr in queryParams) {
 			if (queryParams.hasOwnProperty(attr) && (queryParams[attr] || queryParams[attr] === 0)) {
 				let param = queryParams[attr];
-				if (!Array.isArray(param) && attr !== 'pageNum' && attr !== 'pageSize') {
+				if (!Array.isArray(param) && exceptList.indexOf(attr) === -1) {
 					paramsArr.push(`${attr}=${param}`);
 				}
 				if (Array.isArray(param)) {
@@ -876,9 +943,9 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		}
-		console.log(paramsArr.join('&'));
 		return paramsArr.join('&');
 	}
+
 	// 全部全选
 	checkedAll() {
 		this.resInfo.list.forEach(item => { this.checkRootItem(item); });
@@ -889,6 +956,7 @@ export default class GoodsSelectorCtrl {
 	}
 
 	// 全部不选
+	// 将当前全部选择的数据从 selectedItems 和 selectedItemsBuffer 中移除
 	uncheckedAll() {
 		this.currentPageChecked = false;
 		this.data.forEach(item => {
@@ -906,6 +974,7 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 	}
+
 	// 移除当页
 	removeCurrentPage() {
 		let removeData = this.selectedPagerGridOptions.externalData;
@@ -922,7 +991,9 @@ export default class GoodsSelectorCtrl {
 			this.selectedPagerGridOptions.pager.pageNum -= 1;
 		}
 		this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+		this.isCheckedAll = false;
 	};
+
 	// 移除全部
 	// -> selectedItems 和 resInfo.list 是引用关系，因此为了保持状态一致，在删除父亲之前先改变其状态；
 	// -> 然后清空 selectedItemsBuffer
@@ -936,6 +1007,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 		// 表格上方的全选当页, 被 unchecked
 		this.currentPageChecked = false;
+		this.isCheckedAll = false;
 	};
 
 	// 返回一个新数组，新数组元素为原数组中元素对象的某个属性的值
@@ -949,16 +1021,12 @@ export default class GoodsSelectorCtrl {
 		});
 		return result;
 	}
+
 	// 从集合中获取 entity 的 index, 找不到返回 -1
 	findEntity(collection, entity) {
 		return collection.findIndex(item => angular.equals(item.id, entity.id));
 	}
-	findEntityBySkuOuterId(collection, entity) {
-		return collection.findIndex(item => angular.equals(item, entity.skuOuterId));
-	}
-	findEntityByOuterId(collection, entity) {
-		return collection.findIndex(item => angular.equals(item, entity.outerId));
-	}
+
 	// merge->分页时进行页的切换时需要保持商品被选状态
 	dataMerge(goodsArr, selectedGoodsArr) {
 		for (let i = 0; i < goodsArr.length; i++) {
@@ -970,34 +1038,40 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 	}
+
 	// 所有孩子状态都为 checked， 返回 true, 反之返回 false
 	isAllChildrenSelected(children) {
 		return children && children.every(child => {
 			return child.checked;
 		});
 	}
+
 	// 至少有一个孩子被选中（不包括全部孩子被选的情况）， 返回 true, 反之返回 false
 	isSomeChildrenSelected(children) {
 		return children && !this.isAllChildrenSelected(children) && children.some(child => {
 			return child.checked || child.partial;
 		});
 	}
+
 	// 所有孩子都被移除， 返回 true, 反之返回 false
 	isAllChildrenRemoved(children) {
 		return !(this.isAllChildrenSelected(children) || this.isSomeChildrenSelected(children));
 	}
+
 	// 所有孩子都隐藏
 	isAllChildrenHide(children) {
 		return children && children.every(child => {
 			return child.isHide;
 		});
 	}
+
 	// 是否所有孩子都展开
 	isAllChildrenExtend(children) {
 		return children && children.every(child => {
 			return child.extend;
 		});
 	}
+
 	// 用正则表达式实现html解码
 	htmlDecodeByRegExp(str) {
 		let s = '';
@@ -1012,6 +1086,8 @@ export default class GoodsSelectorCtrl {
 		s = s.replace(/&quot;/g, '\"');
 		return s;
 	}
+
+	// 点击商品/sku前面的 checkbox，如果已选商品数超过允许的最大已选商品数，则用户不能 check
 	checkCheckboxBefore(event) {
 		const target = event.target;
 		const targetScope = angular.element(target).scope();
@@ -1025,6 +1101,8 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 	}
+
+	// 点击商品全选当页 checkbox，如果已选商品数超过允许的最大已选商品数，则用户不能 check
 	checkCurrentPageBefore(event) {
 		const target = event.target;
 		const targetScope = angular.element(target).scope();
@@ -1033,65 +1111,80 @@ export default class GoodsSelectorCtrl {
 			this.moreThanSelectedMaxNumber(event);
 		}
 	}
+
+	// 点击商全部全选的 checkbox
 	checkAllBefore(event) {
 		const target = event.target;
 		const targetScope = angular.element(target).scope();
-		const totals = this.pagerGridOptions.pager.totals;
-		if (!targetScope.$parent.$ctrl.ngChecked) {
+		const totals = this.pagerGridOptions.pager.totals || 0;
+		if ((!targetScope.$parent.$ctrl.ngChecked && target.parentNode.classList.contains('cc-checkbox-label')) || (!targetScope.$ctrl.ngChecked && (target.classList.contains('cc-checkbox-input') || target.classList.contains('cc-checkbox')))) {
 			if (onceMaxSelectedNumber <= this._maxSelectedNumber) {
-				// 单次全选的最大值小于等于全选商品允许的最大值
-				if (totals > this._maxSelectedNumber * 2) {
-					this.moreThanSelectedMaxNumber(event);
-				} else {
-					this.isShowMask = true;
-					genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
-						this.data = res.data || [];
-						let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
-						if (uncheckedGoods.length + 1 > onceMaxSelectedNumber) { // 测试 300
-							if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) { // 测试 400
-								this.moreThanSelectedMaxNumber(event);
-							} else {
-								this.moreThanOnceSelectedMaxNumber(event);
-							}
-						} else {
-							if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) { // 测试 400
-								this.moreThanSelectedMaxNumber(event);
-							} else {
-								this.checkedAll();
-							}
-						}
-					});
-				}
+				this.maxMoreThanOnce(totals);
 			} else {
-				// 单次全选的最大值大于全选商品允许的最大值
-				if (totals > onceMaxSelectedNumber * 2) {
-					this.moreThanSelectedMaxNumber(event);
-				} else {
-					this.isShowMask = true;
-					if (totals + 1 > onceMaxSelectedNumber) {
-						this.moreThanSelectedMaxNumber(event);
-					} else {
-						genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
-							this.data = res.data || [];
-							let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
-							if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) {
-								this.moreThanSelectedMaxNumber(event);
-							} else {
-								this.checkedAll();
-							}
-						});
-					}
-				}
+				this.onceMoreThanMax(totals);
 			}
-		} else {
+		} else if (totals) {
 			this.uncheckedAll();
 		}
 	}
+
+	// 单次全选的最大值大于全选商品允许的最大值
+	onceMoreThanMax(totals) {
+		if (totals > onceMaxSelectedNumber * 2) {
+			this.moreThanSelectedMaxNumber(event);
+		} else if (totals) {
+			this.isShowMask = true;
+			if (totals === 0) {
+			} else if (totals + 1 > onceMaxSelectedNumber) {
+				this.moreThanSelectedMaxNumber(event);
+			} else {
+				genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
+					this.data = res.data || [];
+					let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
+					if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) {
+						this.moreThanSelectedMaxNumber(event);
+					} else {
+						this.checkedAll();
+					}
+				});
+			}
+		}
+	}
+
+	// 单次全选的最大值小于等于全选商品允许的最大值
+	maxMoreThanOnce(totals) {
+		if (totals > this._maxSelectedNumber * 2) {
+			this.moreThanSelectedMaxNumber(event);
+		} else if (totals) {
+			this.isShowMask = true;
+			genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
+				this.data = res.data || [];
+				let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
+				if (uncheckedGoods.length + 1 > onceMaxSelectedNumber) { // 测试 500
+					if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) { // 测试 700
+						this.moreThanSelectedMaxNumber(event);
+					} else {
+						this.moreThanOnceSelectedMaxNumber(event);
+					}
+				} else {
+					if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) { // 测试 700
+						this.moreThanSelectedMaxNumber(event);
+					} else {
+						this.checkedAll();
+					}
+				}
+			});
+		}
+	}
+
+	// 获取一个数组中状态为 unchecked 的商品
 	getUncheckedItems(data) {
 		return data.filter(item => {
 			return !item.checked && !item.partial;
 		});
 	}
+
+	// 从所有商品的数组中获取不包含在已选商品数组中的所有商品
 	getUncheckedItemsFromAll(data) {
 		return data.filter(item => {
 			let targetIndex = this.findEntity(this.selectedItems, item);
@@ -1100,6 +1193,7 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 	}
+
 	// 已选商品数超过已选商品最大允许选择数
 	moreThanSelectedMaxNumber(event) {
 		event.stopPropagation();
@@ -1107,6 +1201,7 @@ export default class GoodsSelectorCtrl {
 		this.isShowMask = false;
 		this.isCheckedAll = false;
 	}
+
 	// 已选商品数超过单次最大允许全选商品数
 	moreThanOnceSelectedMaxNumber(event) {
 		event.stopPropagation();
@@ -1125,6 +1220,7 @@ export default class GoodsSelectorCtrl {
 		});
 		this._modalInstance.ok(this.selectedItems);
 	}
+
 	// 批量添加 -- 后端查询
 	addSection() {
 		const modalInstance = this._$ccModal
@@ -1132,9 +1228,7 @@ export default class GoodsSelectorCtrl {
 				scope: this._$scope,
 				title: '批量导入商品ID',
 				fullscreen: false,
-				locals: {
-					data: [1, 2, 3]
-				},
+				locals: {},
 				style: {
 					width: '568px',
 					'min-width': '568px',
@@ -1147,18 +1241,151 @@ export default class GoodsSelectorCtrl {
 			.open();
 		// 收集modal的操作反馈,确认为成功回调,取消为失败回调
 		modalInstance.result.then(obj => {
-			this.transformParams();
-			if (obj.inputKey === 'id') {
-				this.pagerGridOptions.queryParams['id'] = obj.inputValue;
-			}
-			// 需要后端提供接口：使 sku 商家编码和商品商家编码支持数组查询，需要返回导入成功以及导入失败的数据。
-			// 根据新接口进行查询，对已选商品数组和已选商品数组的副本进行数据 merge，然后跳转到已选商品 tab 页面
-			// TODO TODO TODO
-			this.updateGrid();
+			let queryParams = {
+				platform: this.formModel.platform,
+				shopId: this.formModel.shopId,
+				id: obj.inputKey === 'id' ? obj.inputValue : [],
+				outerId: obj.inputKey === 'number' ? obj.inputValue : [],
+				'skus.outerId': obj.inputKey === 'skuNumber' ? obj.inputValue : []
+			};
+			let inputObjHash = {
+				'id': '商品ID',
+				'number': '商品商家编码',
+				'skuNumber': 'sku商家编码'
+			};
+			this.getBatchImportResult(obj, queryParams, inputObjHash);
+			this.getBatchImportIds(obj, queryParams);
 		}, v => {
 			console.log(v);
 		});
 	}
+
+	// 获取批量导入数据的结果（导入总数、导入失败数据列表）
+	getBatchImportResult(obj, queryParams, inputObjHash) {
+		genResource(`${this._serverName}${apiPrefix}/items/batchImport/result`).save(queryParams, res => {
+			let currentTime = Date.parse(new Date());
+			this[`addSectionFailedData${currentTime}`] = res.notFound; // 导入失败的数据
+			this.addSectionTotalsNumber = res.total; // 导入数据总量
+			// 批量导入结果提示信息
+			if (res.notFound.length) {
+				let msg = `<span class="check-details" id="batch-${ currentTime }">成功导入${ inputObjHash[obj.inputKey] }${ res.total - res.notFound.length }个，失败${ res.notFound.length }个</span>`;
+				this._$ccTips.error(msg, document.querySelector('.goods-selector'));
+				let notFoundMsg = this._$compile(getNotFoundMsg(currentTime, inputObjHash[obj.inputKey]))(this._$scope);
+				angular.element(document.querySelector(`#batch-${currentTime}`)).append(notFoundMsg);
+			} else {
+				this._$ccTips.success(`成功添加${ inputObjHash[obj.inputKey] }${ res.total }个`, document.querySelector('.goods-selector'));
+			}
+		}, res => {
+			if (!this.tips || !this.tips.element) {
+				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
+			}
+		});
+		// genResource(`${this._serverName}${apiPrefix}/items/batchImport/result?${this.getStandardParams(queryParams)}`, false, null).get().$promise.then(res => {
+		// }).catch(() => {
+		// });
+	}
+
+	// 获取批量导入数据后返回的表格数据
+	getBatchImportIds(obj, queryParams) {
+		genResource(`${this._serverName}${apiPrefix}/items/batchImportIds`).save(queryParams, res => {
+			if (res.data && res.data.length) {
+				// 如果查询参数为商品ID或者商品商家编码，则将查询到的商品状态置为 checked
+				// 如果查询到参数为 sku 商家编码，则根据查询到的商品sku是否为全部sku确定商品状态置为 checked 或者 partial，并且展开 sku
+				// 然后将处理过的商品去重后放到已选商品数组和已选商品 buffer 数组中，最后跳转到已选商品 tab 页面
+				this.isAddSectionExtend = (obj.inputKey === 'skuNumber');
+				const inputValue = obj.inputValue;
+
+				if (obj.inputKey === 'id' || obj.inputKey === 'number') {
+					res.data.forEach(entity => {
+						entity.extend = false;
+						this.checkRootItem(entity);
+					});
+				} else if (obj.inputKey === 'skuNumber') {
+					res.data.forEach(entity => {
+						entity.extend = true;
+						if (entity.skus && entity.skus.length) {
+							entity.skus.forEach(sku => {
+								if (inputValue.indexOf(sku.outerId) !== -1) {
+									sku.checked = true;
+								}
+							});
+							if (this.isAllChildrenSelected(entity.skus)) {
+								entity.checked = true;
+								entity.partial = false;
+							} else if (this.isSomeChildrenSelected(entity.skus) && !this.isAllChildrenSelected(entity.skus)) {
+								entity.checked = false;
+								entity.partial = true;
+							} else {
+								entity.checked = false;
+								entity.partial = false;
+							}
+						}
+					});
+				}
+				this.getSelectedItems(res.data);
+				this.getSelectedItemsBuffer();
+				this.jumpToSelectedGoodsTabs(this._$scope);
+
+				// 当使用批量添加的时候一切表格数据相关请求访问该路径，当使用表单搜索的时候，一切表格数据相关请求访问原来的路径
+				this.gridPrefixApi = `${this._serverName}${apiPrefix}/items/batchImportIds`;
+				// 更新表格，表格查询参数为 pageNum, pageSize, id/sku.outerId,outerId, shopId, platform
+				this.pagerGridOptions.resource = this._$resource(this.gridPrefixApi, null, {
+					get: {
+						method: 'POST'
+					}
+				});
+				this.pagerGridOptions.postData = queryParams;
+				let pager = {
+					pageNum: 1,
+					pageSize: this.pagerGridOptions.queryParams.pageSize
+				};
+				this.pagerGridOptions.queryParams = Object.assign({}, pager);
+				this.updateGrid();
+			}
+		}, res => {
+			if (!this.tips || !this.tips.element) {
+				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
+			}
+		});
+
+		// genResource(`${this._serverName}${apiPrefix}/items/batchImportIds?${this.getStandardParams(queryParams)}`, false, null).get().$promise.then(res => {
+		// }).catch(() => {
+		// });
+	}
+
+	// 跳转到已选商品 tab
+	jumpToSelectedGoodsTabs(scope) {
+		if (!scope.$$phase && !scope.$root.$$phase) {
+			scope.$apply();
+			document.querySelector('.gs-tabs-nav li:last-child').click();
+		} else {
+			setTimeout(() => {
+				this.jumpToSelectedGoodsTabs(scope);
+			}, 200);
+		}
+	}
+
+	// 查看未导入成功明细
+	checkNotFoundDetails(currentTime) {
+		if (!this[`isShowNotFoundDetails${currentTime}`]) {
+			this[`isCopied${currentTime}`] = false;
+		}
+		this[`isShowNotFoundDetails${currentTime}`] = true;
+	}
+
+	// 复制未导入成功的商品ID/商品商家编码/sku 商家编码
+	copyToBoard(currentTime) {
+		let notFoundCopy = this[`addSectionFailedData${currentTime}`].join('\n');
+		let textArea = document.createElement('textarea');
+		textArea.value = notFoundCopy;
+		document.body.appendChild(textArea);
+		textArea.select();
+		if (document.execCommand('copy')) {
+			document.execCommand('copy');
+		}
+		document.body.removeChild(textArea);
+	}
+
 	// 点击商品标签
 	openGoodsLabelModel() {
 		const title = '标签筛选条件设置';

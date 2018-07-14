@@ -14,6 +14,11 @@
 				554208360201: ['3577205138168'],
 				562099525613: null
 			};
+			var jdSelectedGoods = {
+				10000197594: ['10001406294'],
+				10000200026: null,
+				10000229165: ['10001562137']
+			};
 
 			var taobaoWithShopList = [{shopId: 106878997, shopName: '数云食堂', plat: 'top'}, {shopId: 157263193, shopName: '0黑色的琴键0', plat: 'top'}, {shopId: 65305757, shopName: '安踏', plat: 'top'}];
 			// var jsWithShopList = [{shopId: 24058, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
@@ -22,7 +27,7 @@
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
 
 			var isOnlyChecked = false; // 是否包含 footer
-			var maxSelectedNumber = 700; // 最大允许选择的商品数量
+			var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 			var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
 			var isSupportedGoodsLabel = true; // 是否支持商品标签
 			var isSupportedAddCondition = true; // 是否支持添加为搜索条件
@@ -40,6 +45,12 @@
 				532988558193: null,
 				554208360201: null,
 				562099525613: null
+			};
+			var jdSelectedGoodsWithoutSku = {
+				10000197594: null,
+				10000200007: null,
+				10001027790: null,
+				10000229165: null
 			};
 			var optionsWithoutSku = {
 				isOnlyChecked,
@@ -64,7 +75,7 @@
 			// jd + 店铺选择
 			$scope.openJDGoodsSelectorWithShopList = function() {
 				$ccGoodsSelector
-					.goodsSelector(jsWithShopList, options, selectedGoods)
+					.goodsSelector(jsWithShopList, options, jdSelectedGoods)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
@@ -111,7 +122,7 @@
 			// jd + 店铺选择 + 商品维度选择
 			$scope.openJDGoodsSelectorWithShopListWithoutSku = function() {
 				$ccGoodsSelector
-					.goodsSelector(jsWithShopList, optionsWithoutSku, selectedGoodsWithoutSku)
+					.goodsSelector(jsWithShopList, optionsWithoutSku, jdSelectedGoodsWithoutSku)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
