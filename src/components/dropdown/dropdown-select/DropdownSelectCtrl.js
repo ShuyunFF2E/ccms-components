@@ -212,7 +212,7 @@ export default class DropdownSelectCtrl {
 				this.items = this._clampedDatalist;
 			} else {
 				this.title = '';
-				this.model = null;
+				// this.model = null;
 				this.icon = false;
 				this.items = this._clampedDatalist;
 			}

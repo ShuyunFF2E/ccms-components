@@ -158,7 +158,7 @@
 			</cc-dropdown-multiselect>
 		</div>
 		<div class="demo">
-			<h3>异步获取数据</h3>
+			<h3>异步获取数据(多选)</h3>
 			<h4>当前值: {{ctrl.selectedShop}}</h4>
 			<cc-dropdown-multiselect
 					style="max-width: 220px;"
@@ -168,6 +168,18 @@
 					has-select-all="true"
 			>
 			</cc-dropdown-multiselect>
+		</div>
+		<div class="demo">
+			<h3>异步获取数据(单选)</h3>
+			<h4>当前值: {{ctrl.selectedOneShop}}</h4>
+			<cc-dropdown-select
+					style="max-width: 220px;"
+					placeholder="请选择店铺"
+					model="ctrl.selectedOneShop"
+					datalist="ctrl.shopList"
+					has-select-all="true"
+			>
+			</cc-dropdown-select>
 		</div>
 	</div>
 </main>
@@ -241,19 +253,29 @@
 
 			this.shopList = [];
 			this.selectedShop = [];
-
+			this.selectedOneShop = null;
 			// 异步获取数据
 			setTimeout(() => {
+
 				this.shopList = [{title: "京东小店", value: "160112511"}, {
 				title: "京东测试店",
 				value: "712411761"
 				}, {title: "自己卖的一个店*要买的赶紧来试试买买买买", value: "317761122"}];
 
-			   this.selectedShop = ["160112511","712411761","317761122"];
+
+
 
 				$scope.$apply();
 
 			}, 1000);
+
+			setTimeout(() => {
+				this.selectedOneShop = '160112511';
+			    this.selectedShop = ["160112511","712411761","317761122"];
+
+				$scope.$apply();
+
+		}, 500);
 
 
 			this.datalist5 = [
