@@ -17,10 +17,10 @@
 	<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="sku"></cc-grid-cell>
 </td>
 <td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>
-<td>
+<td ng-if="!$ctrl.opts.isQiake">
 	<span ng-bind-html="sku.quantity ? sku.quantity + '件' : '--件'"></span>
 </td>
-<td>
+<td ng-if="!$ctrl.opts.isQiake">
 	<span ng-bind-html="$ctrl.opts.getPrice(sku.price)"></span>
 </td>
 <td>

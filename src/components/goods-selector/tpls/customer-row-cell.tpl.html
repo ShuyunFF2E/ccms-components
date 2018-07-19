@@ -23,13 +23,13 @@
 	<cc-grid-cell ng-class="column.align" base-scope="$ctrl.$scope.$parent" column="column" entity="entity"></cc-grid-cell>
 </td>
 <td class="hidden-columns" ng-if="$ctrl.opts.enableHiddenColumns"></td>
-<td>
+<td ng-if="!$ctrl.opts.isQiake">
 	<span ng-bind-html="entity.quantity ? entity.quantity + '件' : '--件'"></span>
 </td>
 <td>
 	<span ng-bind-html="$ctrl.opts.getPrice(entity.price)"></span>
 </td>
-<td>
+<td ng-if="!$ctrl.opts.isQiake">
 	<span ng-bind-html="$ctrl.opts.lightText(entity.outerId, $ctrl.opts.formModel.outerId)"></span>
 </td>
 <td class="remove-btn" ng-click="$ctrl.opts.removeTreeRootItem(entity)">移除</td>

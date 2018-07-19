@@ -281,6 +281,7 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
+		this.pagerGridOptions.isQiake = this.isQiake;
 
 		// 获取 sku 标题，后端返回的是数组，需要前端自行拼接
 		this.pagerGridOptions.getSkuName = sku => {
@@ -436,6 +437,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.externalData = this.selectedItems;
 		this.selectedPagerGridOptions.transformer = null;
 		this.selectedPagerGridOptions.emptyTipTpl = selectedEmptyTpl;
+		this.selectedPagerGridOptions.isQiake = this.isQiake;
 		this.selectedPagerGridOptions.pager = {
 			pageNum: 1,
 			pageSize: 15,

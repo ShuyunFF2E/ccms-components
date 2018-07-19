@@ -171,6 +171,9 @@
 			  width: 253px;
 			  padding-left: 86px;
 			}
+			&.qiake-th {
+			  width: 368px;
+			}
 			&:nth-child(2) {
 			  padding-left: 13px;
 			}
@@ -211,6 +214,9 @@
 			  &:first-child {
 				width: 208px;
 				padding-left: 59px;
+			  }
+			  &.qiake-th {
+				width: 316px;
 			  }
 			  &:nth-child(2) {
 				padding-left: 15px;
@@ -525,7 +531,7 @@
   gs-tabs.row-2 .gs-tab-content gs-panel {
 	top: 176px;
 	cc-grid {
-	  height: 292px;
+	  height: 274px;
 	  .cc-grid .cc-grid-body {
 		.default{
 		  padding-top: 47px;
