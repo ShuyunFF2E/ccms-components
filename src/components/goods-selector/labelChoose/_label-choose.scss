@@ -47,5 +47,21 @@
 		}
 	  }
 	}
+	.empty-label {
+	  display: flex;
+	  justify-content: center;
+	  margin-top: 86px;
+	  p {
+		font-size: 14px;
+		color: #999999;
+		line-height: 36px;
+		margin-left: 10px;
+	  }
+	  i {
+		display: block;
+		font-size: 32px;
+		color: #DDD;
+	  }
+	}
   }
 }

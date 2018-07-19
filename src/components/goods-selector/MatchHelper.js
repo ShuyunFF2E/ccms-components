@@ -65,5 +65,141 @@ export default {
 				return isMatched;
 			}
 		};
+	},
+	// 商品标签前端筛选
+	goodsLabelSearch(selectedItems, selectedLabels) {
+		if (selectedLabels.length && selectedItems.length) {
+			let ids = [];
+			selectedLabels.forEach(item => {
+				let items = item.itemIds;
+				if (items.length) {
+					ids.push(...items);
+				}
+			});
+			let labelIds = this.removeArrayDuplicate(ids);
+			selectedItems.forEach(item => {
+				if (labelIds.indexOf(item.id) === -1) {
+					item.isHide = true;
+				}
+			});
+		}
+	},
+
+	// 数组去重
+	removeArrayDuplicate(array) {
+		let obj = {};
+		let result = [];
+		if (array.length) {
+			array.forEach(item => {
+				obj[item] = null;
+			});
+		}
+		for (let attr in obj) {
+			if (obj.hasOwnProperty(attr)) {
+				result.push(attr);
+			}
+		}
+		return result;
+	},
+
+	// 获取所有搜索条件组成的字符串
+	getFormCondition(config) {
+		let methods = this.getConditionFilterMethods();
+		let result = [];
+		for (let attr in config) {
+			if (config.hasOwnProperty(attr)) {
+				let item = config[attr];
+				if (methods[item.method](item.params)) {
+					result.push(methods[item.method](item.params));
+				}
+			}
+		}
+		return result.join(';');
+	},
+
+	getConditionFilterMethods() {
+		return {
+			/**
+			 * 根据 value(单值) 查询 title 值
+			 * @param dataList 查询数组
+			 * @param valueName 待查询的 value 在 dataList 中对应的键名
+			 * @param value 待查询的 value
+			 * @param titleName 待查询的 value 对应的 title 在 dataList 中对应的键名
+			 * @param title 待查询的 value 对应的 title 的名称
+			 */
+			queryTitleByValue({dataList, valueName, value, titleName, title}) {
+				dataList = dataList || [];
+				let result = null;
+				dataList.forEach(item => {
+					if (item[valueName] === value) {
+						result = item[titleName];
+					}
+				});
+				return result ? title + '=' + result : '';
+			},
+
+			queryTitleByValueArray({dataList, valueName, value, titleName, title}) {
+				dataList = dataList || [];
+				let result = [];
+				dataList.forEach(item => {
+					value.forEach(val => {
+						if (item[valueName] === val) {
+							result.push(item[titleName]);
+						}
+					});
+				});
+				return result.length ? title + '=' + result.join(',') : '';
+			},
+
+			/**
+			 * 根据 title 的键名获取 title 的值
+			 * @param dataList
+			 * @param titleName
+			 * @param title
+			 * @returns {string}
+			 */
+			queryTitleByArray({dataList, titleName, title}) {
+				dataList = dataList || [];
+				let result = dataList.map(item => {
+					return item[titleName];
+				});
+				return result.length ? title + '=' + result.join(',') : '';
+			},
+
+			// 根据时间戳获取标准格式时间
+			timestampToTime(timestamp) {
+				if (timestamp) {
+					let date = new Date(timestamp); // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
+					let Y = date.getFullYear() + '-';
+					let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+					let D = date.getDate() + ' ';
+					return Y + M + D;
+				} else {
+					return '';
+				}
+			},
+
+			getStartListTime({start, end, title}) {
+				let startListTime = this.timestampToTime(start);
+				let endListTime = this.timestampToTime(end);
+				if (!startListTime && endListTime) {
+					return title + '<' + endListTime;
+				} else if (startListTime && !endListTime) {
+					return title + '>' + startListTime;
+				} else if (startListTime && endListTime) {
+					return title + '=' + startListTime + '~' + endListTime;
+				} else {
+					return '';
+				}
+			},
+
+			getValue({value, title}) {
+				if (Array.isArray(value)) {
+					return value.length ? title + '=' + value.join(',') : '';
+				} else {
+					return (value || value === 0) ? title + '=' + value : '';
+				}
+			}
+		};
 	}
 };

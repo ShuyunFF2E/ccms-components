@@ -81,6 +81,7 @@
 			  overflow: hidden;
 			  text-overflow: ellipsis;
 			  white-space: nowrap;
+			  color: #3d3d3d;
 			}
 		  }
 		  &.operate {
@@ -292,6 +293,54 @@
 			}
 		  }
 		}
+		.support-condition {
+		  position: relative;
+		  height: 20px;
+		  line-height: 18px;
+		  display: flex;
+		  justify-content: left;
+		  span {
+			&.condition-title {
+			  display: block;
+			  background-color: #7bbee7;
+			  color: #fff;
+			  padding-left: 4px;
+			  padding-right: 3px;
+			  border-radius: 2px;
+			  margin-left: 7px;
+			}
+			&.condition-content {
+			  width: 890px;
+			  overflow: hidden;
+			  text-overflow: ellipsis;
+			  white-space: nowrap;
+			  color: #666666;
+			  padding-right: 24px;
+			  span.content {
+				color:#999999;
+				padding-left: 10px;
+			  }
+			}
+		  }
+		  p.tooltip-opened {
+			max-width: 1200px;
+		  }
+		  &:hover {
+			.content-title, .condition-content {
+			  border-top: 1px solid #d7d5d5;
+			  border-bottom: 1px solid #d7d5d5;
+			}
+			.condition-content {
+			  border-right: 1px solid #d7d5d5;
+			}
+		  }
+		  i.icon-close {
+			font-size: 12px;
+			position: absolute;
+			right: 2px;
+			top: 0;
+		  }
+		}
 		cc-grid {
 		  height: 200px;
 		  width: 987px;
@@ -469,7 +518,7 @@
   gs-tabs.row-4 .gs-tab-content gs-panel {
 	top: 212px;
 	cc-grid {
-	  height: 258px;
+	  height: 238px;
 	  .cc-grid .cc-grid-body {
 		.default{
 		  padding-top: 47px;

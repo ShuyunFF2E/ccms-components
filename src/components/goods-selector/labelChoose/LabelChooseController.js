@@ -11,6 +11,7 @@ export default class LabelChooseController {
 	constructor() {
 		this.getScope();
 		this.prepareOptions();
+		this.prepareWatches();
 	}
 
 	prepareOptions() {
@@ -29,6 +30,28 @@ export default class LabelChooseController {
 				}
 			});
 		}
+	}
+
+	prepareWatches() {
+		this.scope.$watch('$ctrl.labelName', newValue => {
+			if (newValue || newValue === 0) {
+				this.labelList.forEach(item => {
+					item.isShowLabel = (String(item[this.mapping.displayField]).indexOf(newValue) > -1);
+				});
+			} else {
+				this.labelList.forEach(item => {
+					item.isShowLabel = true;
+				});
+			}
+		});
+
+		this.scope.$watch('$ctrl.labelList', newValue => {
+			if (newValue.length === 0) {
+				this.isShowEmpty = true;
+			} else {
+				this.isShowEmpty = false;
+			}
+		}, true);
 	}
 
 	getScope() {
@@ -59,5 +82,9 @@ export default class LabelChooseController {
 			result = originText.toString();
 		}
 		return this._$sce.trustAsHtml(result);
+	}
+
+	isAllChildrenHide(data) {
+		return data.some(item => { return !item.isShowLabel; });
 	}
 }

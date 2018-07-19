@@ -34,9 +34,8 @@
 					<label class="goods-label">商品标签：</label>
 					<div class="goods-label-btn"
 						 ng-click="$ctrl.openGoodsLabelModel()">
-						{{ $ctrl.selectedLabelsText }}
+						您选择了{{ $ctrl.selectedLabels.length }}个标签
 					</div>
-					<!--cc-tooltip="'<span>{{ $ctrl.selectedLabelsText }}</span>'" tooltip-append-to-body="true" tooltip-compilable="true"-->
 				</fieldset>
 				<fieldset ng-class="{'shop-categories': !$ctrl.isSimpleSearch || $ctrl.isSupportedAddCondition}">
 					<label class="goods-label">标准类目：</label>
@@ -108,10 +107,10 @@
 				</fieldset>
 				<fieldset class="operate">
 					<button type="button" class="btn-ok search" ng-click="$ctrl.search($ctrl.isSelectedGoodsTab); $ctrl.hasSearched = true;">搜索</button>
-					<span class="reset" ng-click="$ctrl.reset($ctrl.goodsSelectorForm)">重置</span>
+					<span class="reset" ng-click="$ctrl.reset($ctrl.formModel, $ctrl.dateRange, $ctrl.goodsSelectorForm)">重置</span>
 					<span class="add-addition" ng-if="!$ctrl.isSupportedAddCondition && $ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = false">高级搜索</span>
 					<span class="add-addition" ng-if="!$ctrl.isSupportedAddCondition && !$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = true; $ctrl.initComplexForm();">简单搜索</span>
-					<span class="add-condition" ng-if="$ctrl.isSupportedAddCondition">添加为搜索条件</span>
+					<span class="add-condition" ng-if="$ctrl.isSupportedAddCondition" ng-click="$ctrl.addCondition(); $ctrl.isShowConditions = true;">添加为搜索条件</span>
 				</fieldset>
 			</form>
 		</section>
@@ -149,6 +148,13 @@
 							  ng-if="$ctrl.isSupportedSku"
 							  ng-click="$ctrl.isSelectedExtendAll = !$ctrl.isSelectedExtendAll; $ctrl.extendAll($ctrl.isSelectedExtendAll, $ctrl.selectedItems);">{{$ctrl.isSelectedExtendAll ? '全部折叠' : '全部展开'}}</span>
 					</div>
+					<!--<div class="support-condition" ng-if="$ctrl.isShowConditions && $ctrl.conditionContent">-->
+						<!--<span class="condition-title">条件</span>-->
+						<!--<span class="condition-content" cc-tooltip="$ctrl.conditionContent" tooltip-placement="top-left">-->
+							<!--<span class="content">条件：</span>{{$ctrl.conditionContent}}-->
+						<!--</span>-->
+						<!--<i class="icon iconfont icon-close"></i>-->
+					<!--</div>-->
 					<cc-grid ng-class="{'not-sku': !$ctrl.isSupportedSku}"
 							 opts="$ctrl.selectedPagerGridOptions"
 							 type="default"
