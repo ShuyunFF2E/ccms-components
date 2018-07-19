@@ -521,6 +521,21 @@
 	  }
 	}
   }
+
+  gs-tabs.row-2 .gs-tab-content gs-panel {
+	top: 176px;
+	cc-grid {
+	  height: 292px;
+	  .cc-grid .cc-grid-body {
+		.default{
+		  padding-top: 47px;
+		}
+		.no-data-message {
+		  padding-top: 102px;
+		}
+	  }
+	}
+  }
   p.error-minor-tooltip {
 	z-index: 1000;
   }

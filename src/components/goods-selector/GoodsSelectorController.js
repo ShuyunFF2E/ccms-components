@@ -49,6 +49,7 @@ export default class GoodsSelectorCtrl {
 		//         -> 其它情况, 需要提示用户, 参数格式不正确
 		this.isShowShopList = Array.isArray(this._shopInfoData);
 		this.isTaobao = this.isShowShopList ? this._shopInfoData[0].plat === 'top' : this._shopInfoData.plat === 'top';
+		this.isQiake = this.isShowShopList ? this._shopInfoData[0].plat === 'qk' : this._shopInfoData.plat === 'qk';
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
 		// form 区域日期配置

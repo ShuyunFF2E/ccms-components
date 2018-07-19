@@ -22,7 +22,6 @@
 
 			var taobaoWithShopList = [{shopId: 106878997, shopName: '数云食堂', plat: 'top'}, {shopId: 157263193, shopName: '0黑色的琴键0', plat: 'top'}, {shopId: 65305757, shopName: '安踏', plat: 'top'}];
 			var jsWithShopList = [{shopId: 23591, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
-			var qkWithShopList = [{shopId: 23591, shopName: '恰客1', plat: 'qk'}, {shopId: 23423, shopName: '恰客2', plat: 'qk'}];
 			var taobaoWithoutShopList = {shopId: 106878997, shopName: '黑色', plat: 'top'};
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
 			var qkWithoutShopList = {shopId: 23591, shopName: '恰客', plat: 'qk'};
@@ -119,18 +118,6 @@
 					});
 			};
 
-			// QK + 店铺选择
-			$scope.openQKGoodsSelectorWithShopList = function() {
-				$ccGoodsSelector
-					.goodsSelector(qkWithShopList, options, selectedGoods)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
-			};
-
 			// taobao 无店铺选择
 			$scope.openTaobaoGoodsSelector = function() {
 				$ccGoodsSelector
@@ -191,18 +178,6 @@
 					});
 			};
 
-			// qk + 店铺选择 + 商品维度选择
-			$scope.openQKGoodsSelectorWithShopListWithoutSku = function() {
-				$ccGoodsSelector
-					.goodsSelector(qkWithShopList, optionsWithoutSku, selectedGoodsWithoutSku)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
-			};
-
 			// taobao 无店铺选择 + 商品维度选择
 			$scope.openTaobaoGoodsSelectorWithoutSku = function() {
 				$ccGoodsSelector
@@ -219,18 +194,6 @@
 			$scope.openJDGoodsSelectorWithoutSku = function() {
 				$ccGoodsSelector
 					.goodsSelector(jdWithoutShopList, optionsWithoutSku, selectedGoodsWithoutSku)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
-			};
-
-			// qk 无店铺选择 + 商品维度选择
-			$scope.openQKGoodsSelectorWithoutSku = function() {
-				$ccGoodsSelector
-					.goodsSelector(qkWithoutShopList, optionsWithoutSku, selectedGoodsWithoutSku)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);

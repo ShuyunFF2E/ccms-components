@@ -30,7 +30,7 @@
 							mapping="$ctrl.shopCategoriesFieldsMap">
 					</cc-dropdown-multiselect>
 				</fieldset>
-				<fieldset class="goods-selector-label" ng-if="$ctrl.isTaobao && (!$ctrl.isSimpleSearch || $ctrl.isSupportedAddCondition)">
+				<fieldset class="goods-selector-label" ng-if="$ctrl.isTaobao && ($ctrl.isShowShopList || !$ctrl.isSimpleSearch || $ctrl.isSupportedAddCondition)">
 					<label class="goods-label">商品标签：</label>
 					<div class="goods-label-btn"
 						 ng-click="$ctrl.openGoodsLabelModel()">
@@ -48,7 +48,8 @@
 							on-select-change="$ctrl.categorySelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition)">
+				<!--洽客不支持-->
+				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition) && !$ctrl.isQiake">
 					<label class="goods-label">商品属性：</label>
 					<cc-dropdown-select
 							placeholder="请选择"
@@ -59,7 +60,8 @@
 							on-select-change="$ctrl.propSelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition)">
+				<!--洽客不支持-->
+				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition) && !$ctrl.isQiake">
 					<label class="goods-label">属性值：</label>
 					<cc-dropdown-select
 							placeholder="请选择或输入"
@@ -71,7 +73,8 @@
 							mapping="$ctrl.propsVidFieldsMap">
 					</cc-dropdown-select>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition)">
+				<!--洽客不支持-->
+				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition) && !$ctrl.isQiake">
 					<label class="goods-label">商品状态：</label>
 					<cc-dropdown-select
 							model="$ctrl.formModel.status"
@@ -93,11 +96,13 @@
 					<label class="goods-label">上架时间：</label>
 					<cc-date-range opts="$ctrl.dateRange"></cc-date-range>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition)">
+				<!--洽客不支持-->
+				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition) && !$ctrl.isQiake">
 					<label class="goods-label">商品商家编码：</label>
 					<input type="text" ng-model="$ctrl.formModel.outerId" placeholder="">
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition) && $ctrl.isSupportedSku">
+				<!--洽客不支持-->
+				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition) && $ctrl.isSupportedSku && !$ctrl.isQiake">
 					<label class="goods-label">SKU商家编码：</label>
 					<input type="text" ng-model="$ctrl.formModel.skusOuterId" placeholder="">
 				</fieldset>
@@ -118,6 +123,7 @@
 			row-3: 没有商铺列表选项并且不是简单搜索并且不支持显示sku，表格距离上侧的距离
 			row-4: 存在商铺列表选项或者是高级搜索支持显示sku，表格距离上侧的距离-->
 		<gs-tabs ng-class="{'row-1': !$ctrl.isShowShopList && $ctrl.isSimpleSearch && !$ctrl.isSupportedAddCondition,
+							'row-2': $ctrl.isQiake && (!$ctrl.isSimpleSearch || $ctrl.isSupportedAddCondition),
 							'row-3': !$ctrl.isSupportedSku && !$ctrl.isSimpleSearch && !$ctrl.isShowShopList,
 		 					'row-4': $ctrl.isShowShopList || !$ctrl.isSimpleSearch && $ctrl.isSupportedSku || $ctrl.isSupportedAddCondition}">
 			<gs-panel text="全部商品" class="all-goods-panel" tab-click="$ctrl.tabClick(text)">
