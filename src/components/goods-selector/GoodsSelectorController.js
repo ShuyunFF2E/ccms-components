@@ -20,7 +20,7 @@ import { transformGoodsData } from './utils';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
-	'isSupportedSku', '$labelChoose', 'isSupportedGoodsLabel', 'isSupportedAddCondition', 'tenantId', 'conditions')
+	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions')
 
 export default class GoodsSelectorCtrl {
 
@@ -34,9 +34,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedLabelsOfSelected = [];
 		// 商品维度选择（是否支持显示sku）
 		this.isSupportedSku = this._isSupportedSku;
-		// 是否支持商品标签
-		this.isSupportedGoodsLabel = this._isSupportedGoodsLabel;
-		// 租户ID
+		// 租户ID -> 查询商品标签参数
 		this.tenantId = this._tenantId;
 		// 是否支持添加为搜索条件
 		this.isSupportedAddCondition = this._isSupportedAddCondition;

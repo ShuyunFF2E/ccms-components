@@ -15,20 +15,20 @@ const GoodsSelectorService = {
 	 * @params isOnlyChecked bool 是否仅允许查看
 	 * @params selectedGoods array 已选商品列表 默认是{}(可选)
 	 * @params isSupportedSku bool 是否支持 sku，默认支持
-	 * @params isSupportedGoodsLabel bool 是否支持商品标签，默认不支持
 	 * @params tenantId string 租户ID，如果支持商品标签，那么 tenantId 不可为 null
 	 * @params selectedGoods array 外部传进来的已选商品
 	 * @params isSupportedAddCondition bool 是否支持添加为搜索条件，默认不支持
 	 * @params conditions object 搜索条件
 	 * */
 	goodsSelector(shopInfo, { isOnlyChecked = false, maxSelectedNumber = 100, serverName = '',
-		isSupportedSku = true, isSupportedGoodsLabel = false, tenantId = null, isSupportedAddCondition = false, conditions = {} }, selectedGoods = []) {
+		isSupportedSku = true, tenantId = null, isSupportedAddCondition = false, conditions = {} }, selectedGoods = []) {
 
 		if (typeof shopInfo === 'undefined') {
 			throw new Error('goodsSelector 缺少 shopInfo 参数');
 		}
 
-		if (isSupportedGoodsLabel && tenantId === null) {
+		let isTaobao = Array.isArray(shopInfo) ? shopInfo[0].plat === 'top' : shopInfo === 'top';
+		if (isTaobao && tenantId === null) {
 			throw new Error('goodsSelector 缺少 tenantId 参数');
 		}
 
@@ -49,7 +49,6 @@ const GoodsSelectorService = {
 					serverName: serverName,
 					selectedData: selectedGoods,
 					isSupportedSku: isSupportedSku,
-					isSupportedGoodsLabel: isSupportedGoodsLabel,
 					tenantId: tenantId,
 					isSupportedAddCondition: isSupportedAddCondition,
 					conditions: conditions

@@ -30,8 +30,7 @@
 			var isOnlyChecked = false; // 是否包含 footer
 			var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 			var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
-			var isSupportedGoodsLabel = true; // 是否支持商品标签,如果支持，那么租户ID tenantId 必填
-			var tenantId = '2324234234';
+			var tenantId = '2324234234'; // 如果支持商品标签，那么租户ID tenantId 必填
 			var isSupportedAddCondition = true; // 是否支持添加为搜索条件
 			var conditions = { // 搜索条件
 				categoriesId: '222222', // 商品自定义类目
@@ -69,7 +68,6 @@
 				isOnlyChecked,
 				maxSelectedNumber,
 				serverName,
-				isSupportedGoodsLabel,
 				tenantId,
 				isSupportedAddCondition,
 				conditions
@@ -93,7 +91,6 @@
 				maxSelectedNumber,
 				serverName,
 				isSupportedSku,
-				isSupportedGoodsLabel,
 				tenantId,
 				isSupportedAddCondition,
 				conditions
