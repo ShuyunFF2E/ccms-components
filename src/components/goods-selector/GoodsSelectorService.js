@@ -33,7 +33,7 @@ const GoodsSelectorService = {
 		}
 
 		if (!isSupportedAddCondition && JSON.stringify(conditions) !== '{}') {
-			throw new Error('请配置 isSupportedAddCondition 参数');
+			conditions = {};
 		}
 		return ModalService.modal(
 			{

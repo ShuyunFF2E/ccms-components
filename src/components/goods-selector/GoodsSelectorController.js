@@ -1290,10 +1290,14 @@ export default class GoodsSelectorCtrl {
 		});
 		// 如果支持添加为搜索条件功能，那么将搜索条件传给用户
 		if (this.isSupportedAddCondition) {
-			let form = cloneDeep(this.formModel);
-			delete form.tagItemIds;
-			form.tags = cloneDeep(this.selectedLabels);
-			this._modalInstance.ok([this.selectedItems, form]);
+			if (!this.conditionContent) {
+				this._modalInstance.ok([this.selectedItems, {}]);
+			} else {
+				let form = cloneDeep(this.formModel);
+				delete form.tagItemIds;
+				form.tags = cloneDeep(this.selectedLabels);
+				this._modalInstance.ok([this.selectedItems, form]);
+			}
 		} else {
 			this._modalInstance.ok(this.selectedItems);
 		}
@@ -1610,7 +1614,9 @@ export default class GoodsSelectorCtrl {
 
 	// 添加为搜索条件
 	addCondition() {
-		this.getFormConditionConfig();
-		this.conditionContent = matchHelper.getFormCondition(this.formConditionConfig);
+		if (this.conditions && JSON.stringify(this.conditions) !== '{}' || this.clickCondition) {
+			this.getFormConditionConfig();
+			this.conditionContent = matchHelper.getFormCondition(this.formConditionConfig);
+		}
 	}
 }
