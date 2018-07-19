@@ -318,27 +318,19 @@
 			  padding-right: 24px;
 			  span.content {
 				color:#999999;
-				padding-left: 10px;
+				padding-left: 5px;
 			  }
+			}
+		  }
+		  i.icon-dele {
+			margin-left: 10px;
+			color: #f15757;
+			&:hover {
+			  cursor: pointer;
 			}
 		  }
 		  p.tooltip-opened {
 			max-width: 1200px;
-		  }
-		  &:hover {
-			.content-title, .condition-content {
-			  border-top: 1px solid #d7d5d5;
-			  border-bottom: 1px solid #d7d5d5;
-			}
-			.condition-content {
-			  border-right: 1px solid #d7d5d5;
-			}
-		  }
-		  i.icon-close {
-			font-size: 12px;
-			position: absolute;
-			right: 2px;
-			top: 0;
 		  }
 		}
 		cc-grid {

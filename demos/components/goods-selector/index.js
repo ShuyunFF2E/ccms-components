@@ -43,8 +43,8 @@
 				outerId: '33333', // 商品商家编码
 				platform: 'top', // 平台
 				propsPid: '4', // 商品属性
-				propsVid: null, // 属性值
-				propsVname: 'dgsgsdfgs', // 属性值名称
+				propsVid: '41', // 属性值
+				propsVname: null, // 属性值名称
 				shopCategoriesId: ['111111', '222222'], // 商品标准类目
 				shopId: 106878997, // 店铺ID
 				skusId: [], // sku ID

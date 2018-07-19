@@ -551,6 +551,7 @@ export default class GoodsSelectorCtrl {
 		this.dateRange.start = c.startListTime ? c.startListTime : null;
 		this.dateRange.end = c.endListTime ? c.endListTime : null;
 		this.getTagItemIds(this.selectedLabels);
+		this.addCondition();
 	}
 
 	// 表单重置（不改变引用，只恢复初始值）
@@ -612,6 +613,7 @@ export default class GoodsSelectorCtrl {
 					this.propsPidList = res.data || [];
 					if (this.conditions.propsPid) {
 						this.formModel.propsPid = this.conditions.propsPid;
+						this.addCondition();
 						this.conditions.propsPid = null;
 					} else {
 						this.formModel.propsPid = this.propsPid;
@@ -633,12 +635,14 @@ export default class GoodsSelectorCtrl {
 	propSelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.propsPid && itemIndex !== -1) {
 			this.propsVidList = this.propsPidList[itemIndex].values;
-			if (this._conditions.propsVid) {
+			if (this.conditions.propsVid) {
 				this.formModel.propsVid = cloneDeep(this.conditions.propsVid);
+				this.addCondition();
 				this.conditions.propsVid = null;
 			} else {
 				if (this.conditions.propsVname) {
 					this.formModel.propsVid = this.conditions.propsVname;
+					this.addCondition();
 					this.conditions.propsVname = null;
 				} else {
 					this.formModel.propsVid = cloneDeep(this.propsVid);
@@ -647,7 +651,6 @@ export default class GoodsSelectorCtrl {
 		} else {
 			this.propsVidList = [];
 			this.formModel.propsVid = undefined;
-			this.propsVid = undefined;
 			this.formModel.propsVname = null;
 		}
 	};
@@ -1285,7 +1288,15 @@ export default class GoodsSelectorCtrl {
 				item.skus = item.skus.filter(sku => { return sku.checked; });
 			}
 		});
-		this._modalInstance.ok(this.selectedItems);
+		// 如果支持添加为搜索条件功能，那么将搜索条件传给用户
+		if (this.isSupportedAddCondition) {
+			let form = cloneDeep(this.formModel);
+			delete form.tagItemIds;
+			form.tags = cloneDeep(this.selectedLabels);
+			this._modalInstance.ok([this.selectedItems, form]);
+		} else {
+			this._modalInstance.ok(this.selectedItems);
+		}
 	}
 
 	// 批量添加 -- 后端查询
