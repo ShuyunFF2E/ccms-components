@@ -34,10 +34,14 @@ export default {
 			const unsubscribeText = opts.useUnsubscribe ? (opts.unsubscribeText || '') : '';
 
 			// 字数统计
-			scope.totalChars = text.replace(varReg, '').length +
+			scope.totalChars = text
+					.replace(varReg, '')
+					.replace(/#_enter_#/g, '').length +
 				(gatewayType === 1 || gatewayType === 3 ? signature.length : 0) +
 				customSignature.length +
 				unsubscribeText.length;
+			// 换行统计
+			scope.newLineNum = text.split('#_enter_#').length - 1;
 
 			// 变量统计
 			const varMatch = text.match(varReg);
@@ -54,18 +58,40 @@ export default {
 	 3: 备案签名 +【自定义签名】+ 短信
 	 */
 	generateText(preview, unsubscribeText, signature, customSignature, gatewayType) {
+		const content = preview.split('#_enter_#');
+		const len = content.length;
 
 		switch (gatewayType) {
 			case 0:
-				return preview + unsubscribeText + customSignature;
+				content[len - 1] = content[len - 1] + unsubscribeText + customSignature;
+				return this.formatEmpty(content);
 			case 1:
-				return preview + unsubscribeText + customSignature + signature;
+			case 5:
+				content[len - 1] = content[len - 1] + unsubscribeText + customSignature + signature;
+				return this.formatEmpty(content);
 			case 2:
-				return customSignature + preview + unsubscribeText;
+				content[0] = customSignature + content[0];
+				content[len - 1] = content[len - 1] + unsubscribeText;
+				return this.formatEmpty(content);
 			case 3:
-				return signature + customSignature + preview + unsubscribeText;
+			case 4:
+				content[0] = signature + customSignature + content[0];
+				content[len - 1] = content[len - 1] + unsubscribeText;
+				return this.formatEmpty(content);
 		}
 
 		return '';
+	},
+
+	/**
+	 * 将空行标记格式化
+	 * */
+	formatEmpty(data) {
+		const sms = [];
+		for (let item of data) {
+			const content = item.length ? `<div>${item}</div>` : '<div><br/></div>';
+			sms.push(content);
+		}
+		return sms.join('');
 	}
 };
