@@ -29,7 +29,7 @@ export default class GoodsSelectorCtrl {
 		this.isMoreThanHundred = false;
 
 		// 已选的商品标签
-		this.selectedLabels = (this._conditions.tags && this._conditions.tags.length) ? this._conditions.tags : [];
+		this.selectedLabels = [];
 		this.selectedLabelsOfAll = [];
 		this.selectedLabelsOfSelected = [];
 		// 商品维度选择（是否支持显示sku）
@@ -40,6 +40,7 @@ export default class GoodsSelectorCtrl {
 		this.isSupportedAddCondition = this._isSupportedAddCondition;
 		// 搜索条件
 		this.conditions = cloneDeep(this._conditions);
+		this.conditionsModel = cloneDeep(this._conditions);
 
 		// 批量导入和搜索是本质上都是根据条件对表格数据进行筛选，但是却是两个不相关的操作，把它们看成两个开关，不同的开关对应不同的API，其下的分页操作分别使用对应的API
 		this.gridPrefixApi = `${this._serverName}${apiPrefix}/items`;
@@ -192,6 +193,8 @@ export default class GoodsSelectorCtrl {
 		this.getShopCatories();
 		// 商品标准类目列表
 		this.getCatories();
+		// 获取商品标签数据
+		this.getTags();
 		// 全部商品->表格配置
 		this.selectedItems = [];
 		// selectedItemsBuffer 保存 selectedItems 中数据的副本（深拷贝）。维护 selectedItems 中数据状态。
@@ -552,7 +555,7 @@ export default class GoodsSelectorCtrl {
 		this.dateRange.start = c.startListTime ? c.startListTime : null;
 		this.dateRange.end = c.endListTime ? c.endListTime : null;
 		this.getTagItemIds(this.selectedLabels);
-		this.addCondition();
+		this.getConditionMsg();
 	}
 
 	// 表单重置（不改变引用，只恢复初始值）
@@ -621,6 +624,26 @@ export default class GoodsSelectorCtrl {
 		});
 	}
 
+	// 获取商品标签
+	getTags() {
+		genResource(`${this._serverName}${apiPrefix}/tagSearch?platform=${this.formModel.platform}&tenantId=${this.tenantId}&status=1`, false, null).get().$promise.then(res => {
+			res.data = res.data || [];
+			if (res.data.length) {
+				if (this._conditions.tags && this._conditions.tags.length) {
+					this._conditions.tags.forEach(tag => {
+						let targetIndex = this.findEntity(res.data, tag);
+						if (targetIndex !== -1) {
+							this.selectedLabels.push(tag);
+						}
+					});
+					this.tags = cloneDeep(this.selectedLabels);
+					this.getConditionMsg();
+				}
+			}
+		}).catch(res => {
+		});
+	}
+
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.categoriesId) {
@@ -629,11 +652,11 @@ export default class GoodsSelectorCtrl {
 					this.propsPidList = res.data || [];
 					if (this.conditions.propsPid) {
 						this.formModel.propsPid = this.conditions.propsPid;
-						this.addCondition();
+						this.getConditionMsg();
 						this.conditions.propsPid = null;
 					} else {
 						this.formModel.propsPid = this.propsPid;
-						this.addCondition();
+						this.getConditionMsg();
 					}
 				})
 				.catch(res => {
@@ -654,12 +677,12 @@ export default class GoodsSelectorCtrl {
 			this.propsVidList = this.propsPidList[itemIndex].values;
 			if (this.conditions.propsVid) {
 				this.formModel.propsVid = cloneDeep(this.conditions.propsVid);
-				this.addCondition();
+				this.getConditionMsg();
 				this.conditions.propsVid = null;
 			} else {
 				if (this.conditions.propsVname) {
 					this.formModel.propsVid = this.conditions.propsVname;
-					this.addCondition();
+					this.getConditionMsg();
 					this.conditions.propsVname = null;
 				} else {
 					this.formModel.propsVid = cloneDeep(this.propsVid);
@@ -1320,31 +1343,12 @@ export default class GoodsSelectorCtrl {
 			if (!this.conditionContent) {
 				this._modalInstance.ok([this.selectedItems, {}]);
 			} else {
-				let form = cloneDeep(this.formModel);
-				if (JSON.stringify(this.allGoodsFormModel) !== '{}') {
-					form = cloneDeep(this.allGoodsFormModel);
+				if (this.tags.length) {
+					this.conditionsModel.tags = this.tags;
+				} else {
+					delete this.conditionsModel.tags;
 				}
-				delete form.platform;
-				for (let attr in form) {
-					if (form.hasOwnProperty(attr)) {
-						let item = form[attr];
-						if (Array.isArray(item)) {
-							if (item.length === 0) {
-								delete form[attr];
-							}
-						} else {
-							if (!item && item !== 0) {
-								delete form[attr];
-							}
-						}
-					}
-				}
-				delete form.tagItemIds;
-				form.tags = cloneDeep(this.selectedLabels);
-				if (this.selectedLabelsOfAll.length) {
-					form.tags = cloneDeep(this.selectedLabelsOfAll);
-				}
-				this._modalInstance.ok([this.selectedItems, form]);
+				this._modalInstance.ok([this.selectedItems, this.conditionsModel]);
 			}
 		} else {
 			this._modalInstance.ok(this.selectedItems);
@@ -1494,13 +1498,13 @@ export default class GoodsSelectorCtrl {
 		};
 		genResource(`${this._serverName}${apiPrefix}/tagSearch?platform=${this.formModel.platform}&tenantId=${this.tenantId}&status=1`, false, null).get().$promise.then(res => {
 			res.data = res.data || [];
+			this.tags = cloneDeep(this.selectedLabels);
 			this._$labelChoose.labelChoose(title, res.data, opts).open()
 				.result.then(res => {
 					console.log(res);
 					this.selectedLabels = res.length ? res : [];
 					// 处理商品标签数组，取出所有商品标签对应的商品ID并去重
 					this.getTagItemIds(res);
-					this.tags = res;
 				}, res => {
 					console.log(res);
 				});
@@ -1515,166 +1519,187 @@ export default class GoodsSelectorCtrl {
 		this.formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
 	}
 
-	// 添加为搜索条件 -> 表单搜索项配置
-	getFormConditionConfig() {
-		this.formConditionConfig = {
-			shopId: {
-				method: 'queryTitleByValue',
-				params: {
-					dataList: this.shopList,
-					valueName: 'shopId',
-					value: this.formModel.shopId,
-					titleName: 'shopName',
-					title: '店铺名称'
-				}
-			},
-			shopCategoriesId: {
-				method: 'queryTitleByValueArray',
-				params: {
-					dataList: this.shopCategoriesList,
-					valueName: 'id',
-					value: this.formModel.shopCategoriesId,
-					titleName: 'name',
-					title: '自定义类目'
-				}
-			},
-			categoriesId: {
-				method: 'queryTitleByValue',
-				params: {
-					dataList: this.categoriesList,
-					valueName: 'id',
-					value: this.formModel.categoriesId,
-					titleName: 'name',
-					title: '标准类目'
-				}
-			},
-			propsPid: {
-				method: 'queryTitleByValue',
-				params: {
-					dataList: this.propsPidList,
-					valueName: 'id',
-					value: this.formModel.propsPid,
-					titleName: 'name',
-					title: '商品属性'
-				}
-			},
-			propsVid: {
-				method: 'queryTitleByValue',
-				params: {
-					dataList: this.propsVidList,
-					valueName: 'id',
-					value: this.formModel.propsVid,
-					titleName: 'value',
-					title: '属性值'
-				}
-			},
-			propsVname: {
-				method: 'getValue',
-				params: {
-					value: this.formModel.propsVname,
-					title: '属性值'
-				}
-			},
-			status: {
-				method: 'queryTitleByValue',
-				params: {
-					dataList: this.statusList,
-					valueName: 'value',
-					value: this.formModel.status,
-					titleName: 'title',
-					title: '在架状态'
-				}
-			},
-			startListTime: {
-				method: 'getStartListTime',
-				params: {
-					start: Date.parse(this.dateRange.start),
-					end: Date.parse(this.dateRange.end),
-					title: '上架时间'
-				}
-			},
-			id: {
-				method: 'getValue',
-				params: {
-					value: this.formModel.id,
-					title: '商品ID'
-				}
-			},
-			maxPrice: {
-				method: 'getValue',
-				params: {
-					value: this.formModel.maxPrice,
-					title: '最高价'
-				}
-			},
-			minPrice: {
-				method: 'getValue',
-				params: {
-					value: this.formModel.minPrice,
-					title: '最低价'
-				}
-			},
-			name: {
-				method: 'getValue',
-				params: {
-					value: this.formModel.name,
-					title: '商品名称'
-				}
-			},
-			outerId: {
-				method: 'getValue',
-				params: {
-					value: this.formModel.outerId,
-					title: '商品商家编码'
-				}
-			},
-			skusId: {
-				method: 'getValue',
-				params: {
-					value: this.formModel.skusId,
-					title: '商品编号'
-				}
-			},
-			skusOuterId: {
-				method: 'getValue',
-				params: {
-					value: this.formModel.skusOuterId,
-					title: 'sku商家编码'
-				}
-			},
-			skusPropsVname: {
-				method: 'getValue',
-				params: {
-					value: this.formModel.skusPropsVname,
-					title: 'sku规格'
-				}
-			},
-			tagItemIds: {
-				method: 'queryTitleByArray',
-				params: {
-					dataList: this.selectedLabels,
-					titleName: 'name',
-					title: '商品标签'
-				}
-			},
-			brandId: {
-				method: 'queryTitleByValue',
-				params: {
-					dataList: this.brandsList,
-					valueName: 'brand_id',
-					value: this.formModel.brandId,
-					titleName: 'brand_name',
-					title: '品牌'
-				}
-			}
-		};
-	}
-
 	// 添加为搜索条件
-	addCondition() {
-		if (this.conditions && JSON.stringify(this.conditions) !== '{}' || this.clickCondition) {
-			this.getFormConditionConfig();
+	getConditionMsg() {
+		if (this.conditions && JSON.stringify(this.conditions) !== '{}') {
+			this.formConditionConfig = {
+				shopId: {
+					method: 'queryTitleByValue',
+					params: {
+						dataList: this.shopList,
+						valueName: 'shopId',
+						value: this.formModel.shopId,
+						titleName: 'shopName',
+						title: '店铺名称'
+					}
+				},
+				shopCategoriesId: {
+					method: 'queryTitleByValueArray',
+					params: {
+						dataList: this.shopCategoriesList,
+						valueName: 'id',
+						value: this.formModel.shopCategoriesId,
+						titleName: 'name',
+						title: '自定义类目'
+					}
+				},
+				categoriesId: {
+					method: 'queryTitleByValue',
+					params: {
+						dataList: this.categoriesList,
+						valueName: 'id',
+						value: this.formModel.categoriesId,
+						titleName: 'name',
+						title: '标准类目'
+					}
+				},
+				propsPid: {
+					method: 'queryTitleByValue',
+					params: {
+						dataList: this.propsPidList,
+						valueName: 'id',
+						value: this.formModel.propsPid,
+						titleName: 'name',
+						title: '商品属性'
+					}
+				},
+				propsVid: {
+					method: 'queryTitleByValue',
+					params: {
+						dataList: this.propsVidList,
+						valueName: 'id',
+						value: this.formModel.propsVid,
+						titleName: 'value',
+						title: '属性值'
+					}
+				},
+				propsVname: {
+					method: 'getValue',
+					params: {
+						value: this.formModel.propsVname,
+						title: '属性值'
+					}
+				},
+				status: {
+					method: 'queryTitleByValue',
+					params: {
+						dataList: this.statusList,
+						valueName: 'value',
+						value: this.formModel.status,
+						titleName: 'title',
+						title: '在架状态'
+					}
+				},
+				startListTime: {
+					method: 'getStartListTime',
+					params: {
+						start: Date.parse(this.dateRange.start),
+						end: Date.parse(this.dateRange.end),
+						title: '上架时间'
+					}
+				},
+				id: {
+					method: 'getValue',
+					params: {
+						value: this.formModel.id,
+						title: '商品ID'
+					}
+				},
+				maxPrice: {
+					method: 'getValue',
+					params: {
+						value: this.formModel.maxPrice,
+						title: '最高价'
+					}
+				},
+				minPrice: {
+					method: 'getValue',
+					params: {
+						value: this.formModel.minPrice,
+						title: '最低价'
+					}
+				},
+				name: {
+					method: 'getValue',
+					params: {
+						value: this.formModel.name,
+						title: '商品名称'
+					}
+				},
+				outerId: {
+					method: 'getValue',
+					params: {
+						value: this.formModel.outerId,
+						title: '商品商家编码'
+					}
+				},
+				skusId: {
+					method: 'getValue',
+					params: {
+						value: this.formModel.skusId,
+						title: '商品编号'
+					}
+				},
+				skusOuterId: {
+					method: 'getValue',
+					params: {
+						value: this.formModel.skusOuterId,
+						title: 'sku商家编码'
+					}
+				},
+				skusPropsVname: {
+					method: 'getValue',
+					params: {
+						value: this.formModel.skusPropsVname,
+						title: 'sku规格'
+					}
+				},
+				tagItemIds: {
+					method: 'queryTitleByArray',
+					params: {
+						dataList: this.selectedLabels,
+						titleName: 'name',
+						title: '商品标签'
+					}
+				},
+				brandId: {
+					method: 'queryTitleByValue',
+					params: {
+						dataList: this.brandsList,
+						valueName: 'brand_id',
+						value: this.formModel.brandId,
+						titleName: 'brand_name',
+						title: '品牌'
+					}
+				}
+			};
 			this.conditionContent = matchHelper.getFormCondition(this.formConditionConfig);
 		}
+	}
+
+	// 点击添加为搜索条件按钮
+	clickCondition() {
+		for (let attr in this.formModel) {
+			if (this.formModel.hasOwnProperty(attr) && attr !== 'platform') {
+				let item = this.formModel[attr];
+				if (Array.isArray(item) && item.length || !Array.isArray(item) && (item || item === 0)) {
+					this.conditionsModel[attr] = cloneDeep(item);
+				} else {
+					delete this.conditionsModel[attr];
+				}
+			}
+		}
+		if (this.dateRange.start) {
+			this.conditionsModel['startListTime'] = this.dateRange.start;
+		} else {
+			delete this.conditionsModel['startListTime'];
+		}
+		if (this.dateRange.end) {
+			this.conditionsModel['endListTime'] = this.dateRange.end;
+		} else {
+			delete this.conditionsModel['endListTime'];
+		}
+		this.tags = cloneDeep(this.selectedLabels);
+		this.getConditionMsg();
 	}
 }

@@ -29,11 +29,11 @@
 			var isOnlyChecked = false; // 是否包含 footer
 			var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 			var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
-			var tenantId = '2324234234'; // 如果支持商品标签，那么租户ID tenantId 必填
+			var tenantId = 'sjyj'; // 如果支持商品标签，那么租户ID tenantId 必填
 			var isSupportedAddCondition = true; // 是否支持添加为搜索条件
 			var conditions = { // 搜索条件
-				categoriesId: '222222', // 商品标准类目
-				endListTime: new Date(1531843200000), // 下架时间
+				categoriesId: '50023724', // 商品标准类目
+				// endListTime: new Date(1531843200000), // 下架时间
 				id: ['11111'], // 商品ID
 				maxPrice: '200', // 最高价
 				minPrice: '100', // 最低价
@@ -42,7 +42,7 @@
 				propsPid: '4', // 商品属性
 				propsVid: '41', // 属性值
 				propsVname: null, // 属性值名称
-				shopCategoriesId: ['111111', '222222'], // 商品自定义类目
+				shopCategoriesId: ['810124529', '809546836'], // 商品自定义类目
 				shopId: 106878997, // 店铺ID
 				skusId: ['22342343'], // 商品编号
 				skusOuterId: '44444', // sku 商家编码
@@ -51,7 +51,7 @@
 				status: '1', // 商品状态
 				tags: [ // 商品标签
 					{
-						'id': '标签ID3',
+						'id': '标签ID343',
 						'name': '标签3',
 						'itemIds': ['36177640302', '40948502941', '41897960122']
 					},
@@ -60,8 +60,7 @@
 						'name': '标签4',
 						'itemIds': ['41897960122', '41898176511', '41982082920']
 					}
-				],
-				brandId: '1111'
+				]
 			};
 			var qiakeConditions = { // 搜索条件
 				endListTime: new Date(1531843200000), // 下架时间

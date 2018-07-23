@@ -125,7 +125,7 @@
 					<span class="reset" ng-click="$ctrl.reset($ctrl.formModel, $ctrl.dateRange, $ctrl.goodsSelectorForm)">重置</span>
 					<span class="add-addition" ng-if="!$ctrl.isSupportedAddCondition && $ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = false">高级搜索</span>
 					<span class="add-addition" ng-if="!$ctrl.isSupportedAddCondition && !$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = true; $ctrl.initComplexForm();">简单搜索</span>
-					<span class="add-condition" ng-if="$ctrl.isSupportedAddCondition && !$ctrl.isSelectedGoodsTab" ng-click="$ctrl.clickCondition = true; $ctrl.addCondition();">添加为搜索条件</span>
+					<span class="add-condition" ng-if="$ctrl.isSupportedAddCondition && !$ctrl.isSelectedGoodsTab" ng-click="$ctrl.clickCondition()">添加为搜索条件</span>
 				</fieldset>
 			</form>
 		</section>
