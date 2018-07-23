@@ -269,11 +269,7 @@ export default class GoodsSelectorCtrl {
 					// 如果搜索条件含有 sku 相关项或者批量导入的是 sku 商家编码，那么展开 sku，否则不展开 sku
 					// 如果是商品维度（不支持 sku）,则删除 sku
 					res.list.forEach(item => {
-						if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
-							item.extend = true;
-						} else {
-							item.extend = false;
-						}
+						item.extend = this.allGoodsSkuSearch;
 						if (!this.isSupportedSku && item.skus && item.skus.length) {
 							delete item.skus;
 						}
@@ -516,11 +512,7 @@ export default class GoodsSelectorCtrl {
 			});
 			// 如果搜索条件含有 sku 相关项或者批量导入的是 sku 商家编码，那么展开 sku，否则不展开 sku
 			this.selectedItems.forEach(item => {
-				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
-					item.extend = true;
-				} else {
-					item.extend = false;
-				}
+				item.extend = this.selectedGoodsSkuSearch;
 			});
 			// 判断全部展开/全部折叠按钮状态
 			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
@@ -641,6 +633,7 @@ export default class GoodsSelectorCtrl {
 						this.conditions.propsPid = null;
 					} else {
 						this.formModel.propsPid = this.propsPid;
+						this.addCondition();
 					}
 				})
 				.catch(res => {
@@ -868,12 +861,22 @@ export default class GoodsSelectorCtrl {
 		this.isCheckedAll = false;
 		this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
 			if (!isSelectedGoodsTab) {
+				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
+					this.allGoodsSkuSearch = true;
+				} else {
+					this.allGoodsSkuSearch = false;
+				}
 				this.transformParams();
 				this.updateGrid();
 				// 当点击搜索后，更新全部全选的查询参数
 				this.checkedAllQueryParams = Object.assign({}, this.pagerGridOptions.queryParams);
 			} else {
 				console.log(this.formModel);
+				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
+					this.selectedGoodsSkuSearch = true;
+				} else {
+					this.selectedGoodsSkuSearch = false;
+				}
 				this.transformDateParams();
 				this.transformSelectedItems();
 				matchHelper.match(this.formModel, this.selectedItems, this.formConfig);
@@ -1318,8 +1321,29 @@ export default class GoodsSelectorCtrl {
 				this._modalInstance.ok([this.selectedItems, {}]);
 			} else {
 				let form = cloneDeep(this.formModel);
+				if (JSON.stringify(this.allGoodsFormModel) !== '{}') {
+					form = cloneDeep(this.allGoodsFormModel);
+				}
+				delete form.platform;
+				for (let attr in form) {
+					if (form.hasOwnProperty(attr)) {
+						let item = form[attr];
+						if (Array.isArray(item)) {
+							if (item.length === 0) {
+								delete form[attr];
+							}
+						} else {
+							if (!item && item !== 0) {
+								delete form[attr];
+							}
+						}
+					}
+				}
 				delete form.tagItemIds;
 				form.tags = cloneDeep(this.selectedLabels);
+				if (this.selectedLabelsOfAll.length) {
+					form.tags = cloneDeep(this.selectedLabelsOfAll);
+				}
 				this._modalInstance.ok([this.selectedItems, form]);
 			}
 		} else {

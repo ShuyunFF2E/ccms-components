@@ -131,7 +131,7 @@ export default {
 				dataList = dataList || [];
 				let result = null;
 				dataList.forEach(item => {
-					if (item[valueName] === value) {
+					if (item[valueName] === value && (value || value === 0)) {
 						result = item[titleName];
 					}
 				});

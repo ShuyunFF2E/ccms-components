@@ -32,18 +32,17 @@
 			var tenantId = '2324234234'; // 如果支持商品标签，那么租户ID tenantId 必填
 			var isSupportedAddCondition = true; // 是否支持添加为搜索条件
 			var conditions = { // 搜索条件
-				categoriesId: '222222', // 商品自定义类目
+				categoriesId: '222222', // 商品标准类目
 				endListTime: new Date(1531843200000), // 下架时间
 				id: ['11111'], // 商品ID
 				maxPrice: '200', // 最高价
 				minPrice: '100', // 最低价
 				name: '22222', // 商品名称
 				outerId: '33333', // 商品商家编码
-				platform: 'top', // 平台
 				propsPid: '4', // 商品属性
 				propsVid: '41', // 属性值
 				propsVname: null, // 属性值名称
-				shopCategoriesId: ['111111', '222222'], // 商品标准类目
+				shopCategoriesId: ['111111', '222222'], // 商品自定义类目
 				shopId: 106878997, // 店铺ID
 				skusId: ['22342343'], // 商品编号
 				skusOuterId: '44444', // sku 商家编码
@@ -64,6 +63,20 @@
 				],
 				brandId: '1111'
 			};
+			var qiakeConditions = { // 搜索条件
+				endListTime: new Date(1531843200000), // 下架时间
+				id: ['11111'], // 商品ID
+				maxPrice: '200', // 最高价
+				minPrice: '100', // 最低价
+				name: '22222', // 商品名称
+				platform: 'top', // 平台
+				categoriesId: '222222', // 商品标准类目
+				shopId: 106878997, // 店铺ID
+				skusId: ['22342343'], // 商品编号
+				skusPropsVname: '55555', // sku 规格
+				startListTime: new Date(1530374400000), // 上架时间
+				brandId: '1111'
+			};
 			var options = {
 				isOnlyChecked,
 				maxSelectedNumber,
@@ -71,6 +84,14 @@
 				tenantId,
 				isSupportedAddCondition,
 				conditions
+			};
+			var qiakeOptions = {
+				isOnlyChecked,
+				maxSelectedNumber,
+				serverName,
+				tenantId,
+				isSupportedAddCondition,
+				conditions: qiakeConditions
 			};
 			// 如果是商品维度选择，isSupportedSku 值为 false，否则为 true，默认值为 true
 			var isSupportedSku = false;
@@ -146,7 +167,7 @@
 			// qk 无店铺选择
 			$scope.openQKGoodsSelector = function() {
 				$ccGoodsSelector
-					.goodsSelector(qkWithoutShopList, options)
+					.goodsSelector(qkWithoutShopList, qiakeOptions)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
