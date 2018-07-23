@@ -174,4 +174,8 @@ angular.module('componentsApp', ['ccms.components'])
 		// 		}
 		// 	];
 		// }, 2000);
+
+		self.insertContent = function () {
+			self.channel.api.insertContent(self.smscontent);
+		}
 	});
