@@ -6,6 +6,7 @@ var data = [
 		delistTime: 1531816583000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
@@ -516,6 +517,7 @@ var data = [
 		delistTime: 1531816592000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '2222',
 		props: [
 			{
 				vid: [
@@ -840,6 +842,7 @@ var data = [
 		delistTime: 1531966519000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '3333',
 		props: [
 			{
 				vid: [
@@ -1073,6 +1076,7 @@ var data = [
 		delistTime: 1531810461000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '4444',
 		props: null,
 		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2ZM.jqXXXXXaAXXXXXXXXXXXX_!!1849722037.jpg",
 		lastSync: 1531765281787,
@@ -1115,6 +1119,7 @@ var data = [
 		delistTime: 1531810150000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: null,
 		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB20AkpqXXXXXaaXXXXXXXXXXXX_!!1849722037.jpg",
 		lastSync: 1531765281755,
@@ -1312,6 +1317,7 @@ var data = [
 		delistTime: 1531816571000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
@@ -1396,6 +1402,7 @@ var data = [
 		delistTime: 1531977423000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: null,
 		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB251vXXmOI.eBjSspmXXatOVXa_!!1849722037.jpg",
 		lastSync: 1531765281765,
@@ -1438,6 +1445,7 @@ var data = [
 		delistTime: 1531977357000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
@@ -1714,6 +1722,7 @@ var data = [
 		delistTime: 1531816138000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
@@ -1929,6 +1938,7 @@ var data = [
 		delistTime: 1531881820000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
@@ -2625,6 +2635,7 @@ var data = [
 		delistTime: 1531820928000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
@@ -3389,6 +3400,7 @@ var data = [
 		delistTime: 1531809024000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
@@ -3690,6 +3702,7 @@ var data = [
 		delistTime: 1531879204000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
@@ -3743,6 +3756,7 @@ var data = [
 		delistTime: 1531813559000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
@@ -3806,6 +3820,7 @@ var data = [
 		delistTime: 1531797931000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [

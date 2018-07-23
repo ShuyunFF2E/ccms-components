@@ -94,6 +94,10 @@ export default class GoodsSelectorCtrl {
 			valueField: 'value',
 			displayField: 'title'
 		};
+		this.brandsListFieldsMap = {
+			valueField: 'brand_id',
+			displayField: 'brand_name'
+		};
 
 		// form 区域价格校验
 		this.validators = {
@@ -158,7 +162,8 @@ export default class GoodsSelectorCtrl {
 			startListTime: 'lessEqual',
 			endListTime: 'greaterEqual',
 			minPrice: 'lessEqual',
-			maxPrice: 'greaterEqual'
+			maxPrice: 'greaterEqual',
+			brandId: 'equal'
 		};
 		// 已选商品 form 表单sku相关搜索配置项（前端搜索）
 		this.skuFormConfig = {
@@ -181,6 +186,8 @@ export default class GoodsSelectorCtrl {
 		// 将已选商品 form 表单恢复初始状态 —> 在初始化表单的时候由于已经存在的搜索条件，导致 form 表单项被赋值
 		this.reset(this.selectedGoodsFormModel, this.selectedDateRangeModel);
 
+		// 获取商品标签
+		this.getBrands();
 		// 商品自自定义类目数据
 		this.getShopCatories();
 		// 商品标准类目列表
@@ -546,7 +553,8 @@ export default class GoodsSelectorCtrl {
 			endListTime: c.endListTime ? c.endListTime : null, // 上架时间结束值, Unix时间戳，毫秒
 			minPrice: c.minPrice ? c.minPrice : null, // 商品价格下限
 			maxPrice: c.maxPrice ? c.maxPrice : null, // 商品价格下限,
-			tagItemIds: [] // 商品标签 数组
+			tagItemIds: [], // 商品标签 数组
+			brandId: c.brandId ? c.brandId : null // 品牌
 		};
 		// 日期组件的特殊性
 		this.dateRange.start = c.startListTime ? c.startListTime : null;
@@ -598,6 +606,21 @@ export default class GoodsSelectorCtrl {
 			if (this.conditions.categoriesId) {
 				this.formModel.categoriesId = this.conditions.categoriesId;
 				this.conditions.categoriesId = null;
+			}
+		}).catch(res => {
+			if (!this.tips || !this.tips.element) {
+				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
+			}
+		});
+	}
+
+	// 获取商品品牌
+	getBrands() {
+		genResource(`${this._serverName}${apiPrefix}/brands?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
+			this.brandsList = res.data || [];
+			if (this.conditions.brandId) {
+				this.formModel.brandId = this.conditions.brandId;
+				this.conditions.brandId = null;
 			}
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
@@ -1488,7 +1511,7 @@ export default class GoodsSelectorCtrl {
 					valueName: 'id',
 					value: this.formModel.shopCategoriesId,
 					titleName: 'name',
-					title: '标准类目'
+					title: '自定义类目'
 				}
 			},
 			categoriesId: {
@@ -1498,7 +1521,7 @@ export default class GoodsSelectorCtrl {
 					valueName: 'id',
 					value: this.formModel.categoriesId,
 					titleName: 'name',
-					title: '自定义类目'
+					title: '标准类目'
 				}
 			},
 			propsPid: {
@@ -1585,7 +1608,7 @@ export default class GoodsSelectorCtrl {
 				method: 'getValue',
 				params: {
 					value: this.formModel.skusId,
-					title: 'sku ID'
+					title: '商品编号'
 				}
 			},
 			skusOuterId: {
@@ -1608,6 +1631,16 @@ export default class GoodsSelectorCtrl {
 					dataList: this.selectedLabels,
 					titleName: 'name',
 					title: '商品标签'
+				}
+			},
+			brandId: {
+				method: 'queryTitleByValue',
+				params: {
+					dataList: this.brandsList,
+					valueName: 'brand_id',
+					value: this.formModel.brandId,
+					titleName: 'brand_name',
+					title: '品牌'
 				}
 			}
 		};

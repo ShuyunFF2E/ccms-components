@@ -21,10 +21,10 @@
 			};
 
 			var taobaoWithShopList = [{shopId: 106878997, shopName: '数云食堂', plat: 'top'}, {shopId: 157263193, shopName: '0黑色的琴键0', plat: 'top'}, {shopId: 65305757, shopName: '安踏', plat: 'top'}];
-			var jsWithShopList = [{shopId: 23591, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
+			var jsWithShopList = [{shopId: 106878997, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
 			var taobaoWithoutShopList = {shopId: 106878997, shopName: '黑色', plat: 'top'};
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
-			var qkWithoutShopList = {shopId: 23591, shopName: '恰客', plat: 'qk'};
+			var qkWithoutShopList = {shopId: 106878997, shopName: '恰客', plat: 'qk'};
 
 			var isOnlyChecked = false; // 是否包含 footer
 			var maxSelectedNumber = 1000; // 最大允许选择的商品数量
@@ -45,7 +45,7 @@
 				propsVname: null, // 属性值名称
 				shopCategoriesId: ['111111', '222222'], // 商品标准类目
 				shopId: 106878997, // 店铺ID
-				skusId: [], // sku ID
+				skusId: ['22342343'], // 商品编号
 				skusOuterId: '44444', // sku 商家编码
 				skusPropsVname: '55555', // sku 规格
 				startListTime: new Date(1530374400000), // 上架时间
@@ -61,7 +61,8 @@
 						'name': '标签4',
 						'itemIds': ['41897960122', '41898176511', '41982082920']
 					}
-				]
+				],
+				brandId: '1111'
 			};
 			var options = {
 				isOnlyChecked,

@@ -28,7 +28,7 @@ const GoodsSelectorService = {
 		}
 
 		let isTaobao = Array.isArray(shopInfo) ? shopInfo[0].plat === 'top' : shopInfo === 'top';
-		if (isTaobao && tenantId === null) {
+		if (isTaobao && (!tenantId || tenantId === 0)) {
 			throw new Error('goodsSelector 缺少 tenantId 参数');
 		}
 

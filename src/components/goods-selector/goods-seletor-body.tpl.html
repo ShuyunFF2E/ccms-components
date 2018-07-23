@@ -48,6 +48,16 @@
 							on-select-change="$ctrl.categorySelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
+				<fieldset ng-if="$ctrl.isQiake && !$ctrl.isSimpleSearch || $ctrl.isQiake && $ctrl.isSupportedAddCondition">
+					<label class="goods-label">品牌：</label>
+					<cc-dropdown-select
+							placeholder="请选择"
+							model="$ctrl.formModel.brandId"
+							datalist="$ctrl.brandsList"
+							searchable="true"
+							mapping="$ctrl.brandsListFieldsMap">
+					</cc-dropdown-select>
+				</fieldset>
 				<!--洽客不支持-->
 				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition) && !$ctrl.isQiake">
 					<label class="goods-label">商品属性：</label>
