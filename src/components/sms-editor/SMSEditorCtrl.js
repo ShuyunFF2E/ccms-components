@@ -53,6 +53,11 @@ export default class SMSEditorCtrl {
 			this.initContent(newVal || '');
 			this.reFocus();
 		});
+
+		// 对外暴露短信编辑器 API
+		this.opts.api = {
+			insertContent: this.insertContent.bind(this)
+		};
 	}
 
 
@@ -154,7 +159,7 @@ export default class SMSEditorCtrl {
 	 * @param {string} content - 初始文字
 	 */
 	initContent(content) {
-		this._content.innerHTML = this.parseImage(this.parseTag(content));
+		this._content.innerHTML = this.formatContent(this.parseTag(content));
 		this.checkEmpty();
 		this.parseHTML();
 		if (this.opts.shortLinkTip) {
@@ -271,12 +276,28 @@ export default class SMSEditorCtrl {
 		});
 	}
 
+	/**
+	 * 格式化短信数据
+	 * */
+	formatContent(text) {
+		const data = text.split('#_enter_#');
+		const sms = [];
+		for (let item of data) {
+			const content = item.length ? `<div>${item}</div>` : '<div><br/></div>';
+			sms.push(content);
+		}
+		const parsed = sms.join('').replace(/\{([^}]+)}/g, (result, $1) => {
+			return this.createImage($1);
+		});
+		return parsed;
+	}
+
 
 	/**
 	 * 解析富文本编辑器中的 HTML, 生成预览文本和最终存到服务器的文本
 	 */
 	parseHTML() {
-		const parsed = this._content.innerHTML.trim()
+		let parsed = this._content.innerHTML.trim()
 			.replace(/disabled(="[^"]*")?/i, '')
 			.replace(/style="[^"]+"/i, '')
 			.trim();
@@ -284,7 +305,15 @@ export default class SMSEditorCtrl {
 		const inputReg = /<input\s+class="sms-keyword-inserted\s*([^"]*)"\s+value="([^"]+)"[^>]*>/ig;
 
 		const imgReg = /<img\s+data-emo-name="([^"]+)"\s+src="([^"]+)"\s?\/?>/ig;
+		if (!parsed.startsWith('<div>')) {
+			const parsedArr = parsed.split('<div>');
+			const a = parsed.replace(parsedArr[0], '');
+			parsed = `<div>${parsedArr[0]}</div>${a}`;
+		}
 
+		parsed = parsed.replace(/<\/div>/g, '')
+			.replace(/<div>/g, '#_enter_#')
+			.replace(/#_enter_#/, '');
 		this._tempHolder.innerHTML = parsed
 			.replace(inputReg, (result, $1, $2) => {
 				return SMSEditorCtrl.createTagPreview(this.opts.keywords, $2, $1);
@@ -292,6 +321,30 @@ export default class SMSEditorCtrl {
 			.replace(imgReg, (result, $1, $2) => {
 				return `{{${$2}}}`;
 			});
+
+		// 稍后重构
+		this.opts.text = parsed
+			.replace(inputReg, (result, $1, $2) => {
+				if ($1 === DEFAULT_TYPE_NAME) {
+					return `$$_${this.keywordTextNameConvert($2)}_$$`;
+				}
+				return `$$_[${$1}]${this.keywordTextNameConvert($2)}_$$`;
+			})
+			.replace(imgReg, (result, $1) => {
+				return `{${$1}}`;
+			})
+			.replace(/<[^>]+>/g, '')
+			.replace(/(&nbsp;)|(&lt;)|(&gt;)|(&amp;)/g, result => {
+				return {
+					'&nbsp;': ' ',
+					'&lt;': '<',
+					'&gt;': '>',
+					'&amp;': '&'
+				}[result];
+			});
+		if (this.trimContent) {
+			this.opts.text = this.opts.text.trim();
+		}
 
 		// 图片, 关键字高亮, URL, 手机及固话号码下划线
 		this.opts.preview = SMSEditorCtrl.flatCode(this._tempHolder.textContent, this.trimContent)
@@ -310,49 +363,6 @@ export default class SMSEditorCtrl {
 			.replace(/(\D)((?:[08][1-9]\d{1,2}-?)?[2-9]\d{6,7})(\D)/g, (match, p1, p2, p3) => {
 				return `${p1}<a href="javascript: void(0);">${p2}</a>${p3}`;
 			});
-
-		// 稍后重构
-		if (this.trimContent) {
-			this.opts.text = parsed
-				.replace(inputReg, (result, $1, $2) => {
-					if ($1 === DEFAULT_TYPE_NAME) {
-						return `$$_${this.keywordTextNameConvert($2)}_$$`;
-					}
-					return `$$_[${$1}]${this.keywordTextNameConvert($2)}_$$`;
-				})
-				.replace(imgReg, (result, $1) => {
-					return `{${$1}}`;
-				})
-				.replace(/<[^>]+>/g, '')
-				.replace(/(&nbsp;)|(&lt;)|(&gt;)|(&amp;)/g, result => {
-					return {
-						'&nbsp;': ' ',
-						'&lt;': '<',
-						'&gt;': '>',
-						'&amp;': '&'
-					}[result];
-				}).trim();
-		} else {
-			this.opts.text = parsed
-				.replace(inputReg, (result, $1, $2) => {
-					if ($1 === DEFAULT_TYPE_NAME) {
-						return `$$_${this.keywordTextNameConvert($2)}_$$`;
-					}
-					return `$$_[${$1}]${this.keywordTextNameConvert($2)}_$$`;
-				})
-				.replace(imgReg, (result, $1) => {
-					return `{${$1}}`;
-				})
-				.replace(/<[^>]+>/g, '')
-				.replace(/(&nbsp;)|(&lt;)|(&gt;)|(&amp;)/g, result => {
-					return {
-						'&nbsp;': ' ',
-						'&lt;': '<',
-						'&gt;': '>',
-						'&amp;': '&'
-					}[result];
-				});
-		}
 	}
 
 
@@ -379,6 +389,15 @@ export default class SMSEditorCtrl {
 	insertEmo(emo) {
 		this.reFocus();
 		document.execCommand('insertHTML', false, this.createImage(emo));
+	}
+
+	/**
+	 * 往富文本编辑器中插入文本内容
+	 * @param {string} content - 文本内容
+	 */
+	insertContent(content) {
+		this.reFocus();
+		document.execCommand('insertHTML', false, content);
 	}
 
 
