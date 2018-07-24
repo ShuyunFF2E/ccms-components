@@ -3884,7 +3884,7 @@ module.exports = function(configurations) {
 	configurations.add([
 		{
 			request: {
-				method: 'GET',
+				method: 'POST',
 				urlPattern: '/items'
 			},
 			response: {
@@ -3893,16 +3893,19 @@ module.exports = function(configurations) {
 					console.log(req.originalUrl);
 					let pageNum = 1;
 					let pageSize = 10000;
-					let paramsArr = req.originalUrl.split('?')[1].split('&');
-					paramsArr.forEach(item => {
-						let param = item.split('=');
-						if (param[0] === 'pageNum') {
-							pageNum = Number(param[1]);
-						}
-						if (param[0] === 'pageSize') {
-							pageSize = Number(param[1]);
-						}
-					});
+					let paramsArr1 = req.originalUrl.split('?');
+					if (paramsArr1.length > 1) {
+						let paramsArr = paramsArr1[1].split('&');
+						paramsArr.forEach(item => {
+							let param = item.split('=');
+							if (param[0] === 'pageNum') {
+								pageNum = Number(param[1]);
+							}
+							if (param[0] === 'pageSize') {
+								pageSize = Number(param[1]);
+							}
+						});
+					}
 					return {
 						pageNum: pageNum,
 						pageSize: pageSize,

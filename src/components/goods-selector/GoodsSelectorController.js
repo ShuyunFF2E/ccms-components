@@ -214,7 +214,14 @@ export default class GoodsSelectorCtrl {
 
 		// 全部商品表格配置
 		this.pagerGridOptions = {
-			resource: this._$resource(`${this._serverName}${apiPrefix}/items`),
+			resource: this._$resource(`${this._serverName}${apiPrefix}/items`, null, {
+				get: {
+					method: 'POST'
+				}
+			}),
+			postData: {
+				tagItemIds: this.formModel.tagItemIds
+			},
 			response: null,
 			queryParams: {
 				shopId: this.formModel.shopId,
@@ -753,6 +760,9 @@ export default class GoodsSelectorCtrl {
 						}
 						queryCollection[prop] = this.formModel[prop];
 						break;
+					case 'tagItemIds':
+						delete queryCollection[prop];
+						break;
 					default:
 						queryCollection[prop] = this.formModel[prop];
 				}
@@ -877,8 +887,14 @@ export default class GoodsSelectorCtrl {
 	// 筛选
 	search(isSelectedGoodsTab) {
 		this.gridPrefixApi = `${this._serverName}${apiPrefix}/items`;
-		this.pagerGridOptions.resource = this._$resource(this.gridPrefixApi);
-		delete this.pagerGridOptions.postData;
+		this.pagerGridOptions.resource = this._$resource(this.gridPrefixApi, null, {
+			get: {
+				method: 'POST'
+			}
+		});
+		this.pagerGridOptions.postData = {
+			tagItemIds: this.formModel.tagItemIds
+		};
 
 		this.isAddSectionExtend = false;
 		this.isCheckedAll = false;
@@ -893,6 +909,8 @@ export default class GoodsSelectorCtrl {
 				this.updateGrid();
 				// 当点击搜索后，更新全部全选的查询参数
 				this.checkedAllQueryParams = Object.assign({}, this.pagerGridOptions.queryParams);
+				delete this.checkedAllQueryParams.pageNum;
+				delete this.checkedAllQueryParams.pageSize;
 			} else {
 				console.log(this.formModel);
 				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
@@ -1042,7 +1060,7 @@ export default class GoodsSelectorCtrl {
 	}
 
 	formParamsTransform() {
-		let exceptList = ['pageNum', 'pageSize'];
+		let exceptList = ['pageNum', 'pageSize', 'tagItemIds'];
 		return this.getStandardParams(this.checkedAllQueryParams, exceptList);
 	}
 
@@ -1258,7 +1276,7 @@ export default class GoodsSelectorCtrl {
 			} else if (totals + 1 > onceMaxSelectedNumber) {
 				this.moreThanSelectedMaxNumber(event);
 			} else {
-				genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
+				genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`).save({tagItemIds: this.formModel.tagItemIds}, res => {
 					this.data = res.data || [];
 					let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
 					if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) {
@@ -1266,7 +1284,7 @@ export default class GoodsSelectorCtrl {
 					} else {
 						this.checkedAll();
 					}
-				});
+				}, res => {});
 			}
 		}
 	}
@@ -1277,7 +1295,7 @@ export default class GoodsSelectorCtrl {
 			this.moreThanSelectedMaxNumber(event);
 		} else if (totals) {
 			this.isShowMask = true;
-			genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`, false, null).get().$promise.then(res => {
+			genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`).save({tagItemIds: this.formModel.tagItemIds}, res => {
 				this.data = res.data || [];
 				let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
 				if (uncheckedGoods.length + 1 > onceMaxSelectedNumber) { // 测试 500
@@ -1293,7 +1311,7 @@ export default class GoodsSelectorCtrl {
 						this.checkedAll();
 					}
 				}
-			});
+			}, res => {});
 		}
 	}
 
@@ -1348,6 +1366,7 @@ export default class GoodsSelectorCtrl {
 				} else {
 					delete this.conditionsModel.tags;
 				}
+				delete this.conditionsModel.tagItemIds;
 				this._modalInstance.ok([this.selectedItems, this.conditionsModel]);
 			}
 		} else {
@@ -1498,7 +1517,6 @@ export default class GoodsSelectorCtrl {
 		};
 		genResource(`${this._serverName}${apiPrefix}/tagSearch?platform=${this.formModel.platform}&tenantId=${this.tenantId}&status=1`, false, null).get().$promise.then(res => {
 			res.data = res.data || [];
-			this.tags = cloneDeep(this.selectedLabels);
 			this._$labelChoose.labelChoose(title, res.data, opts).open()
 				.result.then(res => {
 					console.log(res);
@@ -1523,7 +1541,7 @@ export default class GoodsSelectorCtrl {
 		this.formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
 	}
 
-	// 添加为搜索条件
+	// 获取搜索条件信息
 	getConditionMsg() {
 		if (this.conditions && JSON.stringify(this.conditions) !== '{}') {
 			this.formConditionConfig = {

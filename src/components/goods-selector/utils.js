@@ -10,7 +10,7 @@ export function transformGoodsData(shopInfo, selectedGoodIds, serverName, isSupp
 	const ids = Object.keys(selectedGoodIds);
 	const paramIdStr = ids.join('&id=');
 	return new Promise((resolve, reject) => {
-		genResource(`${serverName}${apiPrefix}/items?platform=${shopInfo.plat}&shopId=${shopInfo.shopId}&id=${paramIdStr}`, false, null).get().$promise.then(res => {
+		genResource(`${serverName}${apiPrefix}/items?platform=${shopInfo.plat}&shopId=${shopInfo.shopId}&id=${paramIdStr}`).save().$promise.then(res => {
 			// 数据转换
 			if (!res['data']) {
 				res['data'] = [];
