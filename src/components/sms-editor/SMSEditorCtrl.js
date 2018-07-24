@@ -53,6 +53,11 @@ export default class SMSEditorCtrl {
 			this.initContent(newVal || '');
 			this.reFocus();
 		});
+
+		// 对外暴露短信编辑器 API
+		this.opts.api = {
+			insertContent: this.insertContent.bind(this)
+		};
 	}
 
 
@@ -384,6 +389,15 @@ export default class SMSEditorCtrl {
 	insertEmo(emo) {
 		this.reFocus();
 		document.execCommand('insertHTML', false, this.createImage(emo));
+	}
+
+	/**
+	 * 往富文本编辑器中插入文本内容
+	 * @param {string} content - 文本内容
+	 */
+	insertContent(content) {
+		this.reFocus();
+		document.execCommand('insertHTML', false, content);
 	}
 
 
