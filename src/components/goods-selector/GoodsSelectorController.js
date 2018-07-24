@@ -295,6 +295,7 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
 		this.pagerGridOptions.isQiake = this.isQiake;
+		this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 
 		// 获取 sku 标题，后端返回的是数组，需要前端自行拼接
 		this.pagerGridOptions.getSkuName = sku => {
@@ -645,6 +646,7 @@ export default class GoodsSelectorCtrl {
 					});
 					this.tags = cloneDeep(this.selectedLabels);
 					this.getConditionMsg();
+					this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 				}
 			}
 		}).catch(res => {
@@ -660,10 +662,10 @@ export default class GoodsSelectorCtrl {
 					if (this.conditions.propsPid) {
 						this.formModel.propsPid = this.conditions.propsPid;
 						this.getConditionMsg();
+						this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 						this.conditions.propsPid = null;
 					} else {
 						this.formModel.propsPid = this.propsPid;
-						this.getConditionMsg();
 					}
 				})
 				.catch(res => {
@@ -685,11 +687,13 @@ export default class GoodsSelectorCtrl {
 			if (this.conditions.propsVid) {
 				this.formModel.propsVid = cloneDeep(this.conditions.propsVid);
 				this.getConditionMsg();
+				this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 				this.conditions.propsVid = null;
 			} else {
 				if (this.conditions.propsVname) {
 					this.formModel.propsVid = this.conditions.propsVname;
 					this.getConditionMsg();
+					this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 					this.conditions.propsVname = null;
 				} else {
 					this.formModel.propsVid = cloneDeep(this.propsVid);
@@ -912,7 +916,6 @@ export default class GoodsSelectorCtrl {
 				delete this.checkedAllQueryParams.pageNum;
 				delete this.checkedAllQueryParams.pageSize;
 			} else {
-				console.log(this.formModel);
 				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
 					this.selectedGoodsSkuSearch = true;
 				} else {
@@ -1409,7 +1412,6 @@ export default class GoodsSelectorCtrl {
 			this.getBatchImportResult(obj, this.addSectionQueryParams, inputObjHash);
 			this.getBatchImportIds(obj, this.addSectionQueryParams);
 		}, v => {
-			console.log(v);
 		});
 	}
 
@@ -1519,12 +1521,10 @@ export default class GoodsSelectorCtrl {
 			res.data = res.data || [];
 			this._$labelChoose.labelChoose(title, res.data, opts).open()
 				.result.then(res => {
-					console.log(res);
 					this.selectedLabels = res.length ? res : [];
 					// 处理商品标签数组，取出所有商品标签对应的商品ID并去重
 					this.getTagItemIds(res);
 				}, res => {
-					console.log(res);
 				});
 		}).catch(res => {
 		});
@@ -1729,5 +1729,7 @@ export default class GoodsSelectorCtrl {
 		}
 		this.tags = cloneDeep(this.selectedLabels);
 		this.getConditionMsg();
+		this._$ccTips.success('成功添加一组搜索条件', document.querySelector('.goods-selector'));
+		this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 	}
 }
