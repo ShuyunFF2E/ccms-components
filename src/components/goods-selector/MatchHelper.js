@@ -72,7 +72,7 @@ export default {
 			let ids = [];
 			selectedLabels.forEach(item => {
 				let items = item.itemIds;
-				if (items.length) {
+				if (items && items.length) {
 					ids.push(...items);
 				}
 			});
@@ -179,18 +179,9 @@ export default {
 				}
 			},
 
-			getStartListTime({start, end, title}) {
-				let startListTime = this.timestampToTime(start);
-				let endListTime = this.timestampToTime(end);
-				if (!startListTime && endListTime) {
-					return title + '<' + endListTime;
-				} else if (startListTime && !endListTime) {
-					return title + '>' + startListTime;
-				} else if (startListTime && endListTime) {
-					return title + '=' + startListTime + '~' + endListTime;
-				} else {
-					return '';
-				}
+			getListTime({time, title}) {
+				let startListTime = this.timestampToTime(time);
+				return startListTime ? title + ':' + startListTime : '';
 			},
 
 			getValue({value, title}) {

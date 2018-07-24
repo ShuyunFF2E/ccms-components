@@ -1515,7 +1515,11 @@ export default class GoodsSelectorCtrl {
 	// 获取商品标签对应的商品 ID
 	getTagItemIds(selectedLabels) {
 		let ids = [];
-		selectedLabels.forEach(item => { ids.push(...item.itemIds); });
+		selectedLabels.forEach(item => {
+			if (item.itemIds && item.itemIds.length) {
+				ids.push(...item.itemIds);
+			}
+		});
 		this.formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
 	}
 
@@ -1591,11 +1595,17 @@ export default class GoodsSelectorCtrl {
 					}
 				},
 				startListTime: {
-					method: 'getStartListTime',
+					method: 'getListTime',
 					params: {
-						start: Date.parse(this.dateRange.start),
-						end: Date.parse(this.dateRange.end),
+						time: Date.parse(this.dateRange.start),
 						title: '上架时间'
+					}
+				},
+				endListTime: {
+					method: 'getListTime',
+					params: {
+						time: Date.parse(this.dateRange.end),
+						title: '下架时间'
 					}
 				},
 				id: {
