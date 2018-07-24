@@ -9,8 +9,12 @@
 		</div>
 	</div>
 
-	<div class="sms-preview-stat"><span class="sms-preview-num">{{totalChars}}</span> 个字(<span ng-bind="smsPreviewStatText"></span>)，<span class="sms-preview-num">{{totalVars}}</span> 个变量</div>
-
+	<div class="sms-preview-stat">
+		<span class="sms-preview-num">{{totalChars + newLineNum}}</span> 个字(不含变量
+		<span ng-if="newLineNum > 0">，含
+			<span class="sms-preview-num">{{newLineNum}}</span>个换行符</span>)，
+		<span class="sms-preview-num">{{totalVars}}</span> 个变量
+	</div>
 	<div class="sms-preview-tips"><span ng-bind="smsPreviewTipsText"></span>
 		<a href="javascript:void(0);"
 			 tooltip-placement="top-right"
