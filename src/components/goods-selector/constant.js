@@ -1,3 +1,4 @@
+// export const apiPrefix = '/api';
 export const apiPrefix = '/shuyun-searchapi/1.0';
 export const onceMaxSelectedNumber = 500;
 export const getExceedSelectedNumberMsg = function(number) {
@@ -20,4 +21,71 @@ export const getNotFoundMsg = function(currentTime, value) {
 				<div class="angle"></div>
 			</div>`;
 };
+export const statusList = [
+	{
+		'title': '不限',
+		'value': '-1'
+	},
+	{
+		'title': '在架',
+		'value': '1'
+	},
+	{
+		'title': '下架',
+		'value': '0'
+	}
+];
+export const getFieldsMap = function() {
+	return {
+		shopListFieldsMap: {
+			valueField: 'shopId',
+			displayField: 'shopName'
+		},
+		categoriesFieldsMap: {
+			valueField: 'id',
+			displayField: 'name'
+		},
+		propsVidFieldsMap: {
+			valueField: 'id',
+			displayField: 'value'
+		},
+		statusListFieldsMap: {
+			valueField: 'value',
+			displayField: 'title'
+		},
+		brandsListFieldsMap: {
+			valueField: 'brand_id',
+			displayField: 'brand_name'
+		}
+	};
+};
+export const getFormConfig = function() {
+	return {
+		// 已选商品 form 表单搜索配置项（前端搜索）
+		formConfig: {
+			shopId: 'equal',
+			id: 'equalArray',
+			name: 'fuzzySearch',
+			shopCategoriesId: 'fuzzymutipleArray',
+			categoriesId: 'equal',
+			propsPid: 'equal',
+			propsVid: 'fuzzySearch',
+			propsVname: 'fuzzySearch',
+			status: 'equal',
+			outerId: 'fuzzySearch',
+			startListTime: 'lessEqual',
+			endListTime: 'greaterEqual',
+			minPrice: 'lessEqual',
+			maxPrice: 'greaterEqual',
+			brandId: 'equal'
+		},
+		// 已选商品 form 表单sku相关搜索配置项（前端搜索）
+		skuFormConfig: {
+			skusOuterId: 'fuzzySearch',
+			skusPropsVname: 'fuzzySearch',
+			skusId: 'equalArray'
+		}
+	};
+};
+
 
