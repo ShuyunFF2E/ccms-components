@@ -532,6 +532,7 @@ export default class GoodsSelectorCtrl {
 				this.showLoading = false;
 			});
 		};
+		this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 	}
 
 	// form 表单初始化
@@ -646,7 +647,7 @@ export default class GoodsSelectorCtrl {
 					});
 					this.tags = cloneDeep(this.selectedLabels);
 					this.getConditionMsg();
-					this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 				}
 			}
 		}).catch(res => {
@@ -662,7 +663,7 @@ export default class GoodsSelectorCtrl {
 					if (this.conditions.propsPid) {
 						this.formModel.propsPid = this.conditions.propsPid;
 						this.getConditionMsg();
-						this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+						this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 						this.conditions.propsPid = null;
 					} else {
 						this.formModel.propsPid = this.propsPid;
@@ -687,13 +688,13 @@ export default class GoodsSelectorCtrl {
 			if (this.conditions.propsVid) {
 				this.formModel.propsVid = cloneDeep(this.conditions.propsVid);
 				this.getConditionMsg();
-				this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+				this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 				this.conditions.propsVid = null;
 			} else {
 				if (this.conditions.propsVname) {
 					this.formModel.propsVid = this.conditions.propsVname;
 					this.getConditionMsg();
-					this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 					this.conditions.propsVname = null;
 				} else {
 					this.formModel.propsVid = cloneDeep(this.propsVid);
@@ -1730,6 +1731,6 @@ export default class GoodsSelectorCtrl {
 		this.tags = cloneDeep(this.selectedLabels);
 		this.getConditionMsg();
 		this._$ccTips.success('成功添加一组搜索条件', document.querySelector('.goods-selector'));
-		this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+		this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 	}
 }
