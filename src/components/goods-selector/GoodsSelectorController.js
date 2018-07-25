@@ -14,7 +14,7 @@ import rowTemplate from './tpls/customer-row.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './addSection/SectionAddCtrl';
-import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg } from './constant';
+import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList, getFieldsMap, getFormConfig } from './constant';
 import { transformGoodsData } from './utils';
 
 
@@ -53,52 +53,16 @@ export default class GoodsSelectorCtrl {
 		this.isQiake = this.isShowShopList ? this._shopInfoData[0].plat === 'qk' : this._shopInfoData.plat === 'qk';
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
-		// form 区域日期配置
-		this.dateRange = {
-			start: null,
-			end: null,
-			minDate: null,
-			maxDate: new Date(),
-			disabled: false,
-			dateOnly: true
-		};
 		this.tips = this.pageWarnTips = this.maxNumberTips = null;
 		// 商品状态
-		this.statusList = [
-			{
-				'title': '不限',
-				'value': null
-			},
-			{
-				'title': '在架',
-				'value': '1'
-			},
-			{
-				'title': '下架',
-				'value': '0'
-			}
-		];
+		this.statusList = statusList;
 
-		this.shopListFieldsMap = {
-			valueField: 'shopId',
-			displayField: 'shopName'
-		};
-		this.shopCategoriesFieldsMap = this.categoriesFieldsMap = this.propsPidFieldsMap = {
-			valueField: 'id',
-			displayField: 'name'
-		};
-		this.propsVidFieldsMap = {
-			valueField: 'id',
-			displayField: 'value'
-		};
-		this.statusListFieldsMap = {
-			valueField: 'value',
-			displayField: 'title'
-		};
-		this.brandsListFieldsMap = {
-			valueField: 'brand_id',
-			displayField: 'brand_name'
-		};
+		let fieldsMapGroup = getFieldsMap();
+		this.shopListFieldsMap = fieldsMapGroup.shopListFieldsMap;
+		this.shopCategoriesFieldsMap = this.categoriesFieldsMap = this.propsPidFieldsMap = fieldsMapGroup.categoriesFieldsMap;
+		this.propsVidFieldsMap = fieldsMapGroup.propsVidFieldsMap;
+		this.statusListFieldsMap = fieldsMapGroup.statusListFieldsMap;
+		this.brandsListFieldsMap = fieldsMapGroup.brandsListFieldsMap;
 
 		// form 区域价格校验
 		this.validators = {
@@ -148,53 +112,29 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		};
-		// 已选商品 form 表单搜索配置项（前端搜索）
-		this.formConfig = {
-			shopId: 'equal',
-			id: 'equalArray',
-			name: 'fuzzySearch',
-			shopCategoriesId: 'fuzzymutipleArray',
-			categoriesId: 'equal',
-			propsPid: 'equal',
-			propsVid: 'fuzzySearch',
-			propsVname: 'fuzzySearch',
-			status: 'equal',
-			outerId: 'fuzzySearch',
-			startListTime: 'lessEqual',
-			endListTime: 'greaterEqual',
-			minPrice: 'lessEqual',
-			maxPrice: 'greaterEqual',
-			brandId: 'equal'
-		};
-		// 已选商品 form 表单sku相关搜索配置项（前端搜索）
-		this.skuFormConfig = {
-			skusOuterId: 'fuzzySearch',
-			skusPropsVname: 'fuzzySearch',
-			skusId: 'equalArray'
-		};
+
+		let formConfigGroup = getFormConfig();
+		this.formConfig = formConfigGroup.formConfig; // 已选商品 form 表单搜索配置项（前端搜索）
+		this.skuFormConfig = formConfigGroup.skuFormConfig; // 已选商品 form 表单sku相关搜索配置项（前端搜索）
 
 		this.initForm();
-
-		// 全部全选操作的查询参数
-		this.checkedAllQueryParams = {
-			shopId: this.formModel.shopId,
-			platform: this.formModel.platform
-		};
-
-		this.allGoodsFormModel = {};
-		this.selectedDateRangeModel = cloneDeep(this.dateRange);
-		this.selectedGoodsFormModel = cloneDeep(this.formModel);
-		// 将已选商品 form 表单恢复初始状态 —> 在初始化表单的时候由于已经存在的搜索条件，导致 form 表单项被赋值
-		this.reset(this.selectedGoodsFormModel, this.selectedDateRangeModel);
-
+		// 获取搜索条件信息，条件之间用';'分隔
+		this.getConditionMsg();
 		// 获取商品标签
 		this.getBrands();
 		// 商品自自定义类目数据
 		this.getShopCatories();
 		// 商品标准类目列表
-		this.getCatories();
+		this.getCategories();
 		// 获取商品标签数据并对selectedLabels进行初始化
 		this.getTags();
+
+		// 全部全选操作的查询参数，考虑到当用户选择条件后，并没有点击搜索触发搜索操作，因此这时全部全选操作不能使用当前form表单作为查询参数。
+		this.checkedAllQueryParams = {
+			shopId: this.formModel.shopId,
+			platform: this.formModel.platform
+		};
+
 		// 全部商品->表格配置
 		this.selectedItems = [];
 		// selectedItemsBuffer 保存 selectedItems 中数据的副本（深拷贝）。维护 selectedItems 中数据状态。
@@ -212,6 +152,54 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 
+		this.preparePagerGridOptions();
+		this.prepareSelectedPagerGridOptions();
+	}
+
+	// form 表单初始化
+	initForm() {
+		let c = this.conditions; // 用户传进来的搜索条件
+		this.formModel = {
+			platform: c.plat ? c.plat : this.shopList[0].plat, // 平台
+			shopId: c.shopId ? c.shopId : this.shopList[0].shopId, // 店铺
+			id: c.id ? c.id : [], // 商品ID 数组
+			name: c.name ? c.name : null, // 商品名称 模糊匹配
+			shopCategoriesId: c.shopCategoriesId ? c.shopCategoriesId : [], // shopCategories.id 自定义类目 数组
+			categoriesId: c.categoriesId ? c.categoriesId : null, // categories.id 标准类目
+			propsPid: c.propsPid ? c.propsPid : null, // props.pid 商品属性 ID
+			propsVid: c.propsVid ? c.propsVid : null, // props.vid 商品属性值 ID
+			propsVname: c.propsVid ? null : c.propsVname, // props.vname 商品属性值对应的属性名称
+			status: c.status ? c.status : this.statusList[0].value, // 状态, true 在架, false 不在架
+			skusPropsVname: c.skusPropsVname ? c.skusPropsVname : null, // skus.props.vname SKU属性值 模糊匹配
+			outerId: c.outerId ? c.outerId : null, // 商品商家编码
+			skusOuterId: c.skusOuterId ? c.skusOuterId : null, // skus.outerId SKU 商家编码
+			skusId: c.skusId ? c.skusId : [], // skus.id SKUID 数组
+			startListTime: c.startListTime ? c.startListTime : null, // 上架时间起始值, Unix时间戳，毫秒
+			endListTime: c.endListTime ? c.endListTime : null, // 上架时间结束值, Unix时间戳，毫秒
+			minPrice: c.minPrice ? c.minPrice : null, // 商品价格下限
+			maxPrice: c.maxPrice ? c.maxPrice : null, // 商品价格下限,
+			tagItemIds: [], // 商品标签 数组
+			brandId: c.brandId ? c.brandId : null // 品牌
+		};
+		// 日期组件的特殊性
+		this.dateRange = {
+			start: c.startListTime ? c.startListTime : null,
+			end: c.endListTime ? c.endListTime : null,
+			minDate: null,
+			maxDate: new Date(),
+			disabled: false,
+			dateOnly: true
+		};
+
+		this.allGoodsFormModel = {};
+		this.selectedDateRangeModel = cloneDeep(this.dateRange);
+		this.selectedGoodsFormModel = cloneDeep(this.formModel);
+		// 将已选商品 form 表单恢复初始状态 —> 在初始化表单的时候由于已经存在的搜索条件，导致 form 表单项被赋值
+		this.reset(this.selectedGoodsFormModel, this.selectedDateRangeModel);
+	}
+
+	// 全部商品表格配置
+	preparePagerGridOptions() {
 		// 全部商品表格配置
 		this.pagerGridOptions = {
 			resource: this._$resource(`${this._serverName}${apiPrefix}/items`, null, {
@@ -439,7 +427,10 @@ export default class GoodsSelectorCtrl {
 			}
 			this.getSelectedItemsBuffer();
 		};
+	}
 
+	// 已选商品表格配置
+	prepareSelectedPagerGridOptions() {
 		// 已选商品->表格配置
 		this.selectedPagerGridOptions = {};
 		for (let key in this.pagerGridOptions) {
@@ -535,38 +526,6 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 	}
 
-	// form 表单初始化
-	initForm() {
-		let c = this.conditions; // 用户传进来的搜索条件
-		this.formModel = {
-			platform: c.plat ? c.plat : this.shopList[0].plat, // 平台
-			shopId: c.shopId ? c.shopId : this.shopList[0].shopId, // 店铺
-			id: c.id ? c.id : [], // 商品ID 数组
-			name: c.name ? c.name : null, // 商品名称 模糊匹配
-			shopCategoriesId: c.shopCategoriesId ? c.shopCategoriesId : [], // shopCategories.id 自定义类目 数组
-			categoriesId: c.categoriesId ? c.categoriesId : null, // categories.id 标准类目
-			propsPid: c.propsPid ? c.propsPid : null, // props.pid 商品属性 ID
-			propsVid: c.propsVid ? c.propsVid : null, // props.vid 商品属性值 ID
-			propsVname: c.propsVid ? null : c.propsVname, // props.vname 商品属性值对应的属性名称
-			status: c.status ? c.status : this.statusList[0].value, // 状态, true 在架, false 不在架
-			skusPropsVname: c.skusPropsVname ? c.skusPropsVname : null, // skus.props.vname SKU属性值 模糊匹配
-			outerId: c.outerId ? c.outerId : null, // 商品商家编码
-			skusOuterId: c.skusOuterId ? c.skusOuterId : null, // skus.outerId SKU 商家编码
-			skusId: c.skusId ? c.skusId : [], // skus.id SKUID 数组
-			startListTime: c.startListTime ? c.startListTime : null, // 上架时间起始值, Unix时间戳，毫秒
-			endListTime: c.endListTime ? c.endListTime : null, // 上架时间结束值, Unix时间戳，毫秒
-			minPrice: c.minPrice ? c.minPrice : null, // 商品价格下限
-			maxPrice: c.maxPrice ? c.maxPrice : null, // 商品价格下限,
-			tagItemIds: [], // 商品标签 数组
-			brandId: c.brandId ? c.brandId : null // 品牌
-		};
-		// 日期组件的特殊性
-		this.dateRange.start = c.startListTime ? c.startListTime : null;
-		this.dateRange.end = c.endListTime ? c.endListTime : null;
-		// 获取搜索条件信息，条件之间用';'分隔
-		this.getConditionMsg();
-	}
-
 	// 点击简单搜索按钮时，表单重置（不改变引用，只恢复初始值）
 	initComplexForm() {
 		for (let attr in this.formModel) {
@@ -604,7 +563,7 @@ export default class GoodsSelectorCtrl {
 	}
 
 	// 获取商品标准类目列表
-	getCatories() {
+	getCategories() {
 		genResource(`${this._serverName}${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
 			let data = res.data || [];
 			this.categoriesList = data.filter(item => item.isLeaf === true);
@@ -612,6 +571,9 @@ export default class GoodsSelectorCtrl {
 			if (this.conditions.categoriesId) {
 				this.formModel.categoriesId = this.conditions.categoriesId;
 				this.conditions.categoriesId = null;
+			}
+			if (!this.formModel.categoriesId) {
+				this.formModel.categoriesId = null;
 			}
 		}).catch(res => {
 			if (!this.tips || !this.tips.element) {
@@ -718,7 +680,7 @@ export default class GoodsSelectorCtrl {
 	// 店铺 select 框 change
 	shopSelectChange(newValue, oldValue, itemIndex, item) {
 		this.getShopCatories();
-		this.getCatories();
+		this.getCategories();
 	};
 
 	// 商品属性值 select 框 change
@@ -870,6 +832,7 @@ export default class GoodsSelectorCtrl {
 				this.pagerGridOptions.queryParams = Object.assign({}, pager);
 				this.updateGrid();
 				this.isAddSection = false;
+				this.isCheckedAll = false;
 			}
 			// 所有父亲状态为 checked， 表格上方的全选当页, 被 checked，反之，被 unchecked。
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
@@ -905,6 +868,7 @@ export default class GoodsSelectorCtrl {
 				method: 'POST'
 			}
 		});
+		this.getTagItemIds(this.selectedLabels);
 		this.pagerGridOptions.postData = {
 			tagItemIds: this.formModel.tagItemIds
 		};
@@ -1285,11 +1249,13 @@ export default class GoodsSelectorCtrl {
 			this.moreThanSelectedMaxNumber(event);
 		} else if (totals) {
 			this.isShowMask = true;
+			let url = this.getPostOpts(totals).url;
+			let postData = this.getPostOpts(totals).postData;
 			if (totals === 0) {
 			} else if (totals + 1 > onceMaxSelectedNumber) {
 				this.moreThanSelectedMaxNumber(event);
 			} else {
-				genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`).save({tagItemIds: this.formModel.tagItemIds}, res => {
+				genResource(url).save(postData, res => {
 					this.data = res.data || [];
 					let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
 					if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) {
@@ -1304,11 +1270,13 @@ export default class GoodsSelectorCtrl {
 
 	// 单次全选的最大值小于等于全选商品允许的最大值
 	maxMoreThanOnce(totals) {
+		let url = this.getPostOpts(totals).url;
+		let postData = this.getPostOpts(totals).postData;
 		if (totals > this._maxSelectedNumber * 2) {
 			this.moreThanSelectedMaxNumber(event);
 		} else if (totals) {
 			this.isShowMask = true;
-			genResource(`${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`).save({tagItemIds: this.formModel.tagItemIds}, res => {
+			genResource(url).save(postData, res => {
 				this.data = res.data || [];
 				let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
 				if (uncheckedGoods.length + 1 > onceMaxSelectedNumber) { // 测试 500
@@ -1326,6 +1294,17 @@ export default class GoodsSelectorCtrl {
 				}
 			}, res => {});
 		}
+	}
+
+	getPostOpts(totals) {
+		let url = `${this._serverName}${apiPrefix}/items/batchImportIds?pageNum=1&pageSize=${ totals }`;
+		let postData = this.addSectionQueryParams;
+		if (this.gridPrefixApi === `${this._serverName}${apiPrefix}/items`) {
+			// 不是批量导入
+			url = `${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`;
+			postData = { tagItemIds: this.checkedAllQueryParams.tagItemIds };
+		}
+		return {url, postData};
 	}
 
 	// 获取一个数组中状态为 unchecked 的商品
