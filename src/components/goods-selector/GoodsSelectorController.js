@@ -193,7 +193,7 @@ export default class GoodsSelectorCtrl {
 		this.getShopCatories();
 		// 商品标准类目列表
 		this.getCatories();
-		// 获取商品标签数据
+		// 获取商品标签数据并对selectedLabels进行初始化
 		this.getTags();
 		// 全部商品->表格配置
 		this.selectedItems = [];
@@ -295,7 +295,7 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
 		this.pagerGridOptions.isQiake = this.isQiake;
-		this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+		this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length; // 已选条件数量
 
 		// 获取 sku 标题，后端返回的是数组，需要前端自行拼接
 		this.pagerGridOptions.getSkuName = sku => {
@@ -537,7 +537,7 @@ export default class GoodsSelectorCtrl {
 
 	// form 表单初始化
 	initForm() {
-		let c = this.conditions;
+		let c = this.conditions; // 用户传进来的搜索条件
 		this.formModel = {
 			platform: c.plat ? c.plat : this.shopList[0].plat, // 平台
 			shopId: c.shopId ? c.shopId : this.shopList[0].shopId, // 店铺
@@ -563,11 +563,11 @@ export default class GoodsSelectorCtrl {
 		// 日期组件的特殊性
 		this.dateRange.start = c.startListTime ? c.startListTime : null;
 		this.dateRange.end = c.endListTime ? c.endListTime : null;
-		this.getTagItemIds(this.selectedLabels);
+		// 获取搜索条件信息，条件之间用';'分隔
 		this.getConditionMsg();
 	}
 
-	// 表单重置（不改变引用，只恢复初始值）
+	// 点击简单搜索按钮时，表单重置（不改变引用，只恢复初始值）
 	initComplexForm() {
 		for (let attr in this.formModel) {
 			if (attr !== 'platform' && attr !== 'shopId' && attr !== 'id' && attr !== 'name' && attr !== 'categoriesId') {
@@ -591,7 +591,8 @@ export default class GoodsSelectorCtrl {
 			this.shopCategoriesList.forEach(item => {
 				item.name = this.htmlDecodeByRegExp(item.name);
 			});
-			if (this.conditions.shopCategoriesId) {
+			// 由于商品自定义类目数据是异步请求，所以需要在数据回来以后更新表单中 shopCategoriesId 的值，更新后清空，保证数据只加载一次
+			if (this.conditions.shopCategoriesId.length) {
 				this.formModel.shopCategoriesId = this.conditions.shopCategoriesId;
 				this.conditions.shopCategoriesId = [];
 			}
@@ -607,6 +608,7 @@ export default class GoodsSelectorCtrl {
 		genResource(`${this._serverName}${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
 			let data = res.data || [];
 			this.categoriesList = data.filter(item => item.isLeaf === true);
+			// 由于商品标准类目数据是异步请求，所以需要在数据回来以后更新表单中 categoriesId 的值，更新后清空，保证数据只加载一次
 			if (this.conditions.categoriesId) {
 				this.formModel.categoriesId = this.conditions.categoriesId;
 				this.conditions.categoriesId = null;
@@ -622,6 +624,7 @@ export default class GoodsSelectorCtrl {
 	getBrands() {
 		genResource(`${this._serverName}${apiPrefix}/brands?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
 			this.brandsList = res.data || [];
+			// 由于商品品牌数据是异步请求，所以需要在数据回来以后更新表单中 brandId 的值，更新后清空，保证数据只加载一次
 			if (this.conditions.brandId) {
 				this.formModel.brandId = this.conditions.brandId;
 				this.conditions.brandId = null;
@@ -633,20 +636,23 @@ export default class GoodsSelectorCtrl {
 		});
 	}
 
-	// 获取商品标签
+	// 获取商品标签，初始化的时候调用
 	getTags() {
 		genResource(`${this._serverName}${apiPrefix}/tagSearch?platform=${this.formModel.platform}&tenantId=${this.tenantId}&status=1`, false, null).get().$promise.then(res => {
 			res.data = res.data || [];
 			if (res.data.length) {
-				if (this._conditions.tags && this._conditions.tags.length) {
-					this._conditions.tags.forEach(tag => {
+				if (this.conditions.tags && this.conditions.tags.length) {
+					// 如果用户传进来的商品标签存在于商品标签列表中，那么将商品标签 push 到 selectedLabels 中
+					this.conditions.tags.forEach(tag => {
 						let targetIndex = this.findEntity(res.data, tag);
 						if (targetIndex !== -1) {
 							this.selectedLabels.push(tag);
 						}
 					});
+					// 由于 this.selectedLabels 随着 tab 的切换而被赋值，所以需要获取 selectedLabels 的副本，在关闭面板时传给用户。
 					this.tags = cloneDeep(this.selectedLabels);
-					this.getConditionMsg();
+					this.getTagItemIds(this.selectedLabels); // 更新 form 表单中 tagItemIds的值
+					this.getConditionMsg(); // 获取搜索条件信息，条件之间使用';'分隔
 					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
 				}
 			}
@@ -660,6 +666,7 @@ export default class GoodsSelectorCtrl {
 			genResource(`${this._serverName}${apiPrefix}/categories/${item.id}/properties?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise
 				.then(res => {
 					this.propsPidList = res.data || [];
+					// 仅在初始化时执行：如果用户传进来的商品属性不为空，那么更新 form 表单的 propsPid 值，并清空 this.conditions.propsPid，保证懒加载
 					if (this.conditions.propsPid) {
 						this.formModel.propsPid = this.conditions.propsPid;
 						this.getConditionMsg();
@@ -685,6 +692,7 @@ export default class GoodsSelectorCtrl {
 	propSelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.propsPid && itemIndex !== -1) {
 			this.propsVidList = this.propsPidList[itemIndex].values;
+			// 仅在初始化时执行：如果用户传进来的商品属性值不为空，那么更新 form 表单的 propsVid 值，并清空 this.conditions.propsVid，保证懒加载
 			if (this.conditions.propsVid) {
 				this.formModel.propsVid = cloneDeep(this.conditions.propsVid);
 				this.getConditionMsg();
@@ -766,7 +774,7 @@ export default class GoodsSelectorCtrl {
 						queryCollection[prop] = this.formModel[prop];
 						break;
 					case 'tagItemIds':
-						delete queryCollection[prop];
+						delete queryCollection[prop]; // 后端搜索使用 POST 请求，将 tagItemIds 放到 request body 中
 						break;
 					default:
 						queryCollection[prop] = this.formModel[prop];
@@ -936,6 +944,7 @@ export default class GoodsSelectorCtrl {
 						}
 					}
 				});
+				// 商品标签筛选单独处理，因为 form 表单中保存的是商品标签对应的商品ID数组，而不是商品标签本身，查询的时候需要直接筛选出包含在商品ID数组中的所有商品
 				matchHelper.goodsLabelSearch(this.selectedItems, this.selectedLabels);
 				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			}
@@ -1708,6 +1717,7 @@ export default class GoodsSelectorCtrl {
 
 	// 点击添加为搜索条件按钮
 	clickCondition() {
+		// this.conditionsModel：传给用户的搜索条件对象，和 this.tags 一样，都是为了保证在 tab 切换的时候不受赋值影响。
 		for (let attr in this.formModel) {
 			if (this.formModel.hasOwnProperty(attr) && attr !== 'platform') {
 				let item = this.formModel[attr];
