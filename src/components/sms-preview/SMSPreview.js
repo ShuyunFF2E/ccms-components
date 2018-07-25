@@ -34,18 +34,18 @@ export default {
 			const unsubscribeText = opts.useUnsubscribe ? (opts.unsubscribeText || '') : '';
 
 			// 字数统计
-			scope.totalChars = text
+			scope.totalChars = opts.totalCharts = text
 					.replace(varReg, '')
 					.replace(/#_enter_#/g, '').length +
 				(gatewayType === 1 || gatewayType === 3 ? signature.length : 0) +
 				customSignature.length +
 				unsubscribeText.length;
 			// 换行统计
-			scope.newLineNum = text.split('#_enter_#').length - 1;
+			scope.newLineNum = opts.newLineNum = text.split('#_enter_#').length - 1;
 
 			// 变量统计
 			const varMatch = text.match(varReg);
-			scope.totalVars = varMatch ? varMatch.length : 0;
+			scope.totalVars = opts.totalVars = varMatch ? varMatch.length : 0;
 
 			element[0].querySelector('.sms-preview-content').innerHTML = this.generateText(preview, unsubscribeText, signature, customSignature, gatewayType);
 		}, true);
