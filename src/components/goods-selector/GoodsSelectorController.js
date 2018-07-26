@@ -1310,7 +1310,7 @@ export default class GoodsSelectorCtrl {
 		if (this.gridPrefixApi === `${this._serverName}${apiPrefix}/items`) {
 			// 不是批量导入
 			url = `${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`;
-			postData = { tagItemIds: this.checkedAllQueryParams.tagItemIds };
+			postData = { tagItemIds: this.formModel.tagItemIds };
 		}
 		return {url, postData};
 	}
