@@ -56,7 +56,8 @@ export default class SMSEditorCtrl {
 
 		// 对外暴露短信编辑器 API
 		this.opts.api = {
-			insertContent: this.insertContent.bind(this)
+			insertContent: this.insertContent.bind(this),
+			insertKeyword: this.insertKeyword.bind(this)
 		};
 	}
 

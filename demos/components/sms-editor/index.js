@@ -179,4 +179,8 @@ angular.module('componentsApp', ['ccms.components'])
 		self.insertContent = function () {
 			self.channel.api.insertContent(self.smscontent);
 		}
+
+		self.insertKeyword = function () {
+			self.channel.api.insertKeyword('淘短链', 'taobao');
+		}
 	});
