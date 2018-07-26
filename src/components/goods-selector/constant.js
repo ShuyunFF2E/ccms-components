@@ -71,7 +71,7 @@ export const getFormConfig = function() {
 			propsPid: 'equal',
 			propsVid: 'fuzzySearch',
 			propsVname: 'fuzzySearch',
-			status: 'equal',
+			status: 'equalStatus',
 			outerId: 'fuzzySearch',
 			startListTime: 'lessEqual',
 			endListTime: 'greaterEqual',

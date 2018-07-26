@@ -24,9 +24,13 @@ export default {
 	getMethods() {
 		return {
 			// 判断两个字符串是否相等
-			// 商品所属店铺 shopId; 商品状态 status; 商品标准类目 categories; 商品属性 propsPid
+			// 商品所属店铺 shopId; 商品标准类目 categories; 商品属性 propsPid
 			equal: (formVal, val) => {
 				return !formVal && formVal !== 0 || String(formVal).replace(/\s/g, '') === String(val);
+			},
+			// 商品状态 status;
+			equalStatus: (formVal, val) => {
+				return formVal === '-1' || String(formVal).replace(/\s/g, '') === String(val);
 			},
 			// 大于等于某值
 			// 价格、时间

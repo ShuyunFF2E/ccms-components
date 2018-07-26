@@ -120,14 +120,18 @@ export default class GoodsSelectorCtrl {
 		this.initForm();
 		// 获取搜索条件信息，条件之间用';'分隔
 		this.getConditionMsg();
-		// 获取商品标签
-		this.getBrands();
-		// 商品自自定义类目数据
-		this.getShopCatories();
+
+		if (this.isTaobao) {
+			// 获取商品标签数据并对selectedLabels进行初始化
+			this.getTags();
+			// 商品自自定义类目数据
+			this.getShopCatories();
+		} else if (this.isQiake) {
+			// 获取商品品牌
+			this.getBrands();
+		}
 		// 商品标准类目列表
 		this.getCategories();
-		// 获取商品标签数据并对selectedLabels进行初始化
-		this.getTags();
 
 		// 全部全选操作的查询参数，考虑到当用户选择条件后，并没有点击搜索触发搜索操作，因此这时全部全选操作不能使用当前form表单作为查询参数。
 		this.checkedAllQueryParams = {
@@ -164,22 +168,22 @@ export default class GoodsSelectorCtrl {
 			shopId: c.shopId ? c.shopId : this.shopList[0].shopId, // 店铺
 			id: c.id ? c.id : [], // 商品ID 数组
 			name: c.name ? c.name : null, // 商品名称 模糊匹配
-			shopCategoriesId: c.shopCategoriesId ? c.shopCategoriesId : [], // shopCategories.id 自定义类目 数组
+			shopCategoriesId: !this.isTaobao ? [] : (c.shopCategoriesId ? c.shopCategoriesId : []), // shopCategories.id 自定义类目 数组
 			categoriesId: c.categoriesId ? c.categoriesId : null, // categories.id 标准类目
-			propsPid: c.propsPid ? c.propsPid : null, // props.pid 商品属性 ID
-			propsVid: c.propsVid ? c.propsVid : null, // props.vid 商品属性值 ID
-			propsVname: c.propsVid ? null : c.propsVname, // props.vname 商品属性值对应的属性名称
-			status: c.status ? c.status : this.statusList[0].value, // 状态, true 在架, false 不在架
-			skusPropsVname: c.skusPropsVname ? c.skusPropsVname : null, // skus.props.vname SKU属性值 模糊匹配
-			outerId: c.outerId ? c.outerId : null, // 商品商家编码
-			skusOuterId: c.skusOuterId ? c.skusOuterId : null, // skus.outerId SKU 商家编码
-			skusId: c.skusId ? c.skusId : [], // skus.id SKUID 数组
+			propsPid: this.isQiake ? null : (c.propsPid ? c.propsPid : null), // props.pid 商品属性 ID
+			propsVid: this.isQiake ? null : (c.propsVid ? c.propsVid : null), // props.vid 商品属性值 ID
+			propsVname: this.isQiake ? null : (c.propsVid ? null : c.propsVname), // props.vname 商品属性值对应的属性名称
+			status: this.isQiake ? this.statusList[0].value : (c.status ? c.status : this.statusList[0].value), // 状态, true 在架, false 不在架
+			skusPropsVname: this.isQiake ? null : (c.skusPropsVname ? c.skusPropsVname : null), // skus.props.vname SKU属性值 模糊匹配
+			outerId: this.isQiake ? null : (c.outerId ? c.outerId : null), // 商品商家编码
+			skusOuterId: this.isQiake ? null : (c.skusOuterId ? c.skusOuterId : null), // skus.outerId SKU 商家编码
+			skusId: this.isTaobao ? [] : (c.skusId ? c.skusId : []), // skus.id SKUID 数组
 			startListTime: c.startListTime ? c.startListTime : null, // 上架时间起始值, Unix时间戳，毫秒
 			endListTime: c.endListTime ? c.endListTime : null, // 上架时间结束值, Unix时间戳，毫秒
 			minPrice: c.minPrice ? c.minPrice : null, // 商品价格下限
 			maxPrice: c.maxPrice ? c.maxPrice : null, // 商品价格下限,
 			tagItemIds: [], // 商品标签 数组
-			brandId: c.brandId ? c.brandId : null // 品牌
+			brandId: !this.isQiake ? null : (c.brandId ? c.brandId : null) // 品牌
 		};
 		// 日期组件的特殊性
 		this.dateRange = {
@@ -738,6 +742,9 @@ export default class GoodsSelectorCtrl {
 					case 'tagItemIds':
 						delete queryCollection[prop]; // 后端搜索使用 POST 请求，将 tagItemIds 放到 request body 中
 						break;
+					case 'status':
+						queryCollection[prop] = this.formModel[prop] === '-1' ? null : this.formModel[prop];
+						break;
 					default:
 						queryCollection[prop] = this.formModel[prop];
 				}
@@ -927,7 +934,7 @@ export default class GoodsSelectorCtrl {
 			this.selectedLabelsOfAll = [];
 		}
 		for (let attr in formModel) {
-			if (formModel.hasOwnProperty(attr) && attr !== 'platform' && attr !== 'shopId') {
+			if (formModel.hasOwnProperty(attr) && attr !== 'platform' && attr !== 'shopId' && attr !== 'status') {
 				if (Array.isArray(formModel[attr])) {
 					formModel[attr] = [];
 				} else {
@@ -936,6 +943,7 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 		formModel.shopId = this.shopList[0].shopId;
+		formModel.status = '-1';
 		dateRange.start = null;
 		dateRange.end = null;
 	};
