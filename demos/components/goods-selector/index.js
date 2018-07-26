@@ -21,7 +21,7 @@
 			};
 
 			var taobaoWithShopList = [{shopId: 106878997, shopName: '数云食堂', plat: 'top'}, {shopId: 157263193, shopName: '0黑色的琴键0', plat: 'top'}, {shopId: 65305757, shopName: '安踏', plat: 'top'}];
-			var jsWithShopList = [{shopId: 106878997, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
+			var jdWithShopList = [{shopId: 23591, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
 			var taobaoWithoutShopList = {shopId: 106878997, shopName: '黑色', plat: 'top'};
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
 			var qkWithoutShopList = {shopId: 106878997, shopName: '恰客', plat: 'qk'};
@@ -43,7 +43,7 @@
 				propsVid: '21540056', // 属性值
 				propsVname: null, // 属性值名称
 				shopCategoriesId: ['810124529', '809546836'], // 商品自定义类目
-				shopId: 106878997, // 店铺ID
+				// shopId: 24058, // 店铺ID
 				// skusId: ['22342343'], // 商品编号
 				skusOuterId: '44444', // sku 商家编码
 				skusPropsVname: '55555', // sku 规格
@@ -169,8 +169,7 @@
 			var jdSelectedGoodsWithoutSku = {
 				10000197594: null,
 				10000200007: null,
-				10001027790: null,
-				10000229165: null
+				10001027790: null
 			};
 			var optionsWithoutSku = {
 				isOnlyChecked,
@@ -184,7 +183,7 @@
 			// taobao + 店铺选择
 			$scope.openTaobaoGoodsSelectorWithShopList = function() {
 				$ccGoodsSelector
-					.goodsSelector(taobaoWithShopList, options)
+					.goodsSelector(taobaoWithShopList, options, selectedGoods)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
@@ -196,7 +195,7 @@
 			// jd + 店铺选择
 			$scope.openJDGoodsSelectorWithShopList = function() {
 				$ccGoodsSelector
-					.goodsSelector(jsWithShopList, options, jdSelectedGoods)
+					.goodsSelector(jdWithShopList, options, jdSelectedGoods)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
@@ -256,7 +255,7 @@
 			// jd + 店铺选择 + 商品维度选择
 			$scope.openJDGoodsSelectorWithShopListWithoutSku = function() {
 				$ccGoodsSelector
-					.goodsSelector(jsWithShopList, optionsWithoutSku, jdSelectedGoodsWithoutSku)
+					.goodsSelector(jdWithShopList, optionsWithoutSku, jdSelectedGoodsWithoutSku)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);
