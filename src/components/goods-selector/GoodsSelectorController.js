@@ -624,7 +624,7 @@ export default class GoodsSelectorCtrl {
 
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
-		if (this.formModel.categoriesId) {
+		if (this.formModel.categoriesId && item) {
 			genResource(`${this._serverName}${apiPrefix}/categories/${item.id}/properties?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise
 				.then(res => {
 					this.propsPidList = res.data || [];
