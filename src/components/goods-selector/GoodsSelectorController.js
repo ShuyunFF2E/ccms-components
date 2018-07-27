@@ -287,7 +287,7 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
 		this.pagerGridOptions.selectedData = this.selectedItems;
 		this.pagerGridOptions.isQiake = this.isQiake;
-		this.pagerGridOptions.conditionLength = this.conditionContent.split(';').length; // 已选条件数量
+		this.pagerGridOptions.conditionLength = this.getConditionLength(); // 已选条件数量
 
 		// 获取 sku 标题，后端返回的是数组，需要前端自行拼接
 		this.pagerGridOptions.getSkuName = sku => {
@@ -527,7 +527,7 @@ export default class GoodsSelectorCtrl {
 				this.showLoading = false;
 			});
 		};
-		this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+		this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
 	}
 
 	// 点击简单搜索按钮时，表单重置（不改变引用，只恢复初始值）
@@ -555,7 +555,7 @@ export default class GoodsSelectorCtrl {
 				item.name = this.htmlDecodeByRegExp(item.name);
 			});
 			// 由于商品自定义类目数据是异步请求，所以需要在数据回来以后更新表单中 shopCategoriesId 的值，更新后清空，保证数据只加载一次
-			if (this.conditions.shopCategoriesId.length) {
+			if (this.conditions.shopCategoriesId && this.conditions.shopCategoriesId.length) {
 				this.formModel.shopCategoriesId = this.conditions.shopCategoriesId;
 				this.conditions.shopCategoriesId = [];
 			}
@@ -619,7 +619,7 @@ export default class GoodsSelectorCtrl {
 					this.tags = cloneDeep(this.selectedLabels);
 					this.getTagItemIds(this.selectedLabels); // 更新 form 表单中 tagItemIds的值
 					this.getConditionMsg(); // 获取搜索条件信息，条件之间使用';'分隔
-					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
 				}
 			}
 		}).catch(res => {
@@ -636,7 +636,7 @@ export default class GoodsSelectorCtrl {
 					if (this.conditions.propsPid) {
 						this.formModel.propsPid = this.conditions.propsPid;
 						this.getConditionMsg();
-						this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+						this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
 						this.conditions.propsPid = null;
 					} else {
 						this.formModel.propsPid = this.propsPid;
@@ -662,13 +662,13 @@ export default class GoodsSelectorCtrl {
 			if (this.conditions.propsVid) {
 				this.formModel.propsVid = cloneDeep(this.conditions.propsVid);
 				this.getConditionMsg();
-				this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+				this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
 				this.conditions.propsVid = null;
 			} else {
 				if (this.conditions.propsVname) {
 					this.formModel.propsVid = this.conditions.propsVname;
 					this.getConditionMsg();
-					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
 					this.conditions.propsVname = null;
 				} else {
 					this.formModel.propsVid = cloneDeep(this.propsVid);
@@ -875,7 +875,8 @@ export default class GoodsSelectorCtrl {
 				method: 'POST'
 			}
 		});
-		this.getTagItemIds(this.selectedLabels);
+		let ids = this.getTagItemIds(this.selectedLabels);
+		this.formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
 		this.pagerGridOptions.postData = {
 			tagItemIds: this.formModel.tagItemIds
 		};
@@ -1535,7 +1536,7 @@ export default class GoodsSelectorCtrl {
 				ids.push(...item.itemIds);
 			}
 		});
-		this.formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
+		return ids;
 	}
 
 	// 获取搜索条件信息
@@ -1725,9 +1726,14 @@ export default class GoodsSelectorCtrl {
 		} else {
 			delete this.conditionsModel['endListTime'];
 		}
+		// 只有在点击添加为搜索条件的时候才更新 this.tags
 		this.tags = cloneDeep(this.selectedLabels);
 		this.getConditionMsg();
 		this._$ccTips.success('成功添加一组搜索条件', document.querySelector('.goods-selector'));
-		this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.conditionContent.split(';').length;
+		this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
+	}
+
+	getConditionLength() {
+		return this.conditionContent ? this.conditionContent.split(';').length : 0;
 	}
 }
