@@ -268,7 +268,7 @@ export default class GoodsSelectorCtrl {
 					// 如果搜索条件含有 sku 相关项或者批量导入的是 sku 商家编码，那么展开 sku，否则不展开 sku
 					// 如果是商品维度（不支持 sku）,则删除 sku
 					res.list.forEach(item => {
-						item.extend = this.allGoodsSkuSearch;
+						item.extend = this.allGoodsSkuSearch || this.isAddSectionExtend;
 						if (!this.isSupportedSku && item.skus && item.skus.length) {
 							delete item.skus;
 						}
@@ -516,7 +516,7 @@ export default class GoodsSelectorCtrl {
 			});
 			// 如果搜索条件含有 sku 相关项或者批量导入的是 sku 商家编码，那么展开 sku，否则不展开 sku
 			this.selectedItems.forEach(item => {
-				item.extend = this.selectedGoodsSkuSearch;
+				item.extend = this.selectedGoodsSkuSearch || this.isAddSectionExtend;
 			});
 			// 判断全部展开/全部折叠按钮状态
 			this.isSelectedExtendAll = this.isAllChildrenExtend(this.selectedItems);
@@ -524,6 +524,8 @@ export default class GoodsSelectorCtrl {
 			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data)).then(() => {
 				this.showLoading = false;
 			});
+			// 已选商品数组改变 更新 selectedItemsBuffer
+			this.getSelectedItemsBuffer();
 		};
 		this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
 	}
@@ -881,7 +883,7 @@ export default class GoodsSelectorCtrl {
 		this.isCheckedAll = false;
 		this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
 			if (!isSelectedGoodsTab) {
-				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
+				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
 					this.allGoodsSkuSearch = true;
 				} else {
 					this.allGoodsSkuSearch = false;
@@ -893,7 +895,7 @@ export default class GoodsSelectorCtrl {
 				delete this.checkedAllQueryParams.pageNum;
 				delete this.checkedAllQueryParams.pageSize;
 			} else {
-				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId || this.isAddSectionExtend) {
+				if (this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId) {
 					this.selectedGoodsSkuSearch = true;
 				} else {
 					this.selectedGoodsSkuSearch = false;
