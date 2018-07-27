@@ -53,7 +53,7 @@ export default class GoodsSelectorCtrl {
 		this.isQiake = this.isShowShopList ? this._shopInfoData[0].plat === 'qk' : this._shopInfoData.plat === 'qk';
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this._shopInfoData : [this._shopInfoData];
-		this.tips = this.pageWarnTips = this.maxNumberTips = null;
+		this.tips = null;
 		// 商品状态
 		this.statusList = statusList;
 
@@ -234,7 +234,7 @@ export default class GoodsSelectorCtrl {
 			emptyTipTpl: emptyTpl,
 			transformer: res => {
 				if (res.flag === 'fail' && res.msg === 'Result window is too large, window size must be less than or equal to: [10000]') {
-					this.pageWarnTips = this._$ccTips.error('<span class="sd-max-number-error-msg"></span>');
+					this._$ccTips.error('<span class="sd-max-number-error-msg"></span>');
 					let warnMsg = this._$compile('<span>出错提示：最多允许查询10000条商品数据, 请刷新表格。&nbsp;</span><span style="color: #0083ba; cursor: pointer" ng-click="$ctrl.refreshGrid()">刷新</span>')(this._$scope);
 					let tipsArr = document.querySelectorAll('.float-tips-container .float-tips .message .sd-max-number-error-msg');
 					tipsArr.forEach(item => {
@@ -285,7 +285,7 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.selectedData = this.selectedItems;
 		this.pagerGridOptions.isQiake = this.isQiake;
 		this.pagerGridOptions.conditionLength = this.getConditionLength(); // 已选条件数量
-		this.pagerGridOptions.postData = !this.isSelectedGoodsTab && this.selectedLabels.length ? { tagItemIds: this.formModel.tagItemIds } : {};
+		this.pagerGridOptions.postData = {};
 
 		// 获取 sku 标题，后端返回的是数组，需要前端自行拼接
 		this.pagerGridOptions.getSkuName = sku => {
@@ -1309,7 +1309,7 @@ export default class GoodsSelectorCtrl {
 		if (this.gridPrefixApi === `${this._serverName}${apiPrefix}/items`) {
 			// 不是批量导入
 			url = `${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`;
-			postData = !this.isSelectedGoodsTab && this.selectedLabels.length ? { tagItemIds: this.formModel.tagItemIds } : {};
+			postData = this.pagerGridOptions.postData;
 		}
 		return {url, postData};
 	}
@@ -1334,7 +1334,7 @@ export default class GoodsSelectorCtrl {
 	// 已选商品数超过已选商品最大允许选择数
 	moreThanSelectedMaxNumber(event) {
 		event.stopPropagation();
-		this.maxNumberTips = this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
+		this._$ccTips.error(getExceedSelectedNumberMsg(this._maxSelectedNumber));
 		this.isShowMask = false;
 		this.isCheckedAll = false;
 	}
@@ -1342,7 +1342,7 @@ export default class GoodsSelectorCtrl {
 	// 已选商品数超过单次最大允许全选商品数
 	moreThanOnceSelectedMaxNumber(event) {
 		event.stopPropagation();
-		this.maxNumberTips = this._$ccTips.error(`当前商品超过${ onceMaxSelectedNumber }个，不支持全部选中，请修改条件后重新搜索。`);
+		this._$ccTips.error(`当前商品超过${ onceMaxSelectedNumber }个，不支持全部选中，请修改条件后重新搜索。`);
 		this.isShowMask = false;
 		this.isCheckedAll = false;
 	}
