@@ -211,9 +211,6 @@ export default class GoodsSelectorCtrl {
 					method: 'POST'
 				}
 			}),
-			postData: {
-				tagItemIds: this.formModel.tagItemIds
-			},
 			response: null,
 			queryParams: {
 				shopId: this.formModel.shopId,
@@ -288,6 +285,7 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.selectedData = this.selectedItems;
 		this.pagerGridOptions.isQiake = this.isQiake;
 		this.pagerGridOptions.conditionLength = this.getConditionLength(); // 已选条件数量
+		this.pagerGridOptions.postData = !this.isSelectedGoodsTab && this.selectedLabels.length ? { tagItemIds: this.formModel.tagItemIds } : {};
 
 		// 获取 sku 标题，后端返回的是数组，需要前端自行拼接
 		this.pagerGridOptions.getSkuName = sku => {
@@ -877,9 +875,7 @@ export default class GoodsSelectorCtrl {
 		});
 		let ids = this.getTagItemIds(this.selectedLabels);
 		this.formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
-		this.pagerGridOptions.postData = {
-			tagItemIds: this.formModel.tagItemIds
-		};
+		this.pagerGridOptions.postData = !this.isSelectedGoodsTab && this.selectedLabels.length ? { tagItemIds: this.formModel.tagItemIds } : {};
 
 		this.isAddSectionExtend = false;
 		this.isCheckedAll = false;
@@ -1311,7 +1307,7 @@ export default class GoodsSelectorCtrl {
 		if (this.gridPrefixApi === `${this._serverName}${apiPrefix}/items`) {
 			// 不是批量导入
 			url = `${this._serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ this.formParamsTransform() }`;
-			postData = { tagItemIds: this.formModel.tagItemIds };
+			postData = !this.isSelectedGoodsTab && this.selectedLabels.length ? { tagItemIds: this.formModel.tagItemIds } : {};
 		}
 		return {url, postData};
 	}
