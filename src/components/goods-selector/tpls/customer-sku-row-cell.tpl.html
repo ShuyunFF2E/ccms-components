@@ -20,10 +20,10 @@
 <td ng-if="!$ctrl.opts.isQiake">
 	<span ng-bind-html="sku.quantity ? sku.quantity + '件' : '--件'"></span>
 </td>
-<td ng-if="!$ctrl.opts.isQiake">
+<td>
 	<span ng-bind-html="$ctrl.opts.getPrice(sku.price)"></span>
 </td>
-<td>
+<td ng-if="!$ctrl.opts.isQiake">
 	<span ng-bind-html="$ctrl.opts.lightText(sku.outerId, $ctrl.opts.formModel.skusOuterId)"></span>
 </td>
 <td class="remove-btn" ng-click="$ctrl.opts.removeTreeLeafItem(entity, sku)">移除</td>
