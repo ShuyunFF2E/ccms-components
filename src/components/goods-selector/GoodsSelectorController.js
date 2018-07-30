@@ -173,7 +173,7 @@ export default class GoodsSelectorCtrl {
 			propsPid: this.isQiake ? null : (c.propsPid ? c.propsPid : null), // props.pid 商品属性 ID
 			propsVid: this.isQiake ? null : (c.propsVid ? c.propsVid : null), // props.vid 商品属性值 ID
 			propsVname: this.isQiake ? null : (c.propsVid ? null : c.propsVname), // props.vname 商品属性值对应的属性名称
-			status: this.isQiake ? this.statusList[0].value : (c.status ? c.status : this.statusList[0].value), // 状态, true 在架, false 不在架
+			status: c.status ? String(c.status) : this.statusList[0].value, // 状态, true 在架, false 不在架
 			skusPropsVname: this.isQiake ? null : (c.skusPropsVname ? c.skusPropsVname : null), // skus.props.vname SKU属性值 模糊匹配
 			outerId: this.isQiake ? null : (c.outerId ? c.outerId : null), // 商品商家编码
 			skusOuterId: this.isQiake ? null : (c.skusOuterId ? c.skusOuterId : null), // skus.outerId SKU 商家编码

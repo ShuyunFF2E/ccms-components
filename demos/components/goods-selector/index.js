@@ -140,6 +140,7 @@
 				skusId: ['22342343'], // 商品编号
 				skusPropsVname: '55555', // sku 规格
 				startListTime: new Date(1530374400000), // 上架时间
+				status: '1',
 				brandId: '1611'
 			};
 			var options = {

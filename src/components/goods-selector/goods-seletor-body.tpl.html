@@ -84,7 +84,7 @@
 					</cc-dropdown-select>
 				</fieldset>
 				<!--洽客不支持-->
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition) && !$ctrl.isQiake">
+				<fieldset ng-if="!$ctrl.isSimpleSearch || $ctrl.isShowShopList || $ctrl.isSupportedAddCondition">
 					<label class="goods-label">商品状态：</label>
 					<cc-dropdown-select
 							model="$ctrl.formModel.status"
