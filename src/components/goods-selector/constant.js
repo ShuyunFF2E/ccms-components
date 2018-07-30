@@ -54,8 +54,8 @@ export const getFieldsMap = function() {
 			displayField: 'title'
 		},
 		brandsListFieldsMap: {
-			valueField: 'brand_id',
-			displayField: 'brand_name'
+			valueField: 'brandId',
+			displayField: 'brandName'
 		}
 	};
 };

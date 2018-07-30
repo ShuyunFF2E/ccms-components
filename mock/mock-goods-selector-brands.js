@@ -5,16 +5,16 @@ var data = {
 	'totalCount': 1,
 	'data': [
 		{
-			'brand_id': '1111',
-			'brand_name': '品牌1'
+			'brandId': '1111',
+			'brandName': '品牌1'
 		},
 		{
-			'brand_id': '2222',
-			'brand_name': '品牌2'
+			'brandId': '2222',
+			'brandName': '品牌2'
 		},
 		{
-			'brand_id': '3333',
-			'brand_name': '品牌3'
+			'brandId': '3333',
+			'brandName': '品牌3'
 		}
 	]
 };
