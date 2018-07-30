@@ -1,8 +1,9 @@
 import { Inject } from 'angular-es-utils/decorators';
 
-@Inject('modalInstance', '$ccValidator')
+@Inject('modalInstance', '$ccValidator', 'isQiake')
 export default class SectionAddCtrl {
 	$onInit() {
+		this.isQiake = this._isQiake;
 		this.addSectionForm = {
 			textAreaModel: null
 		};

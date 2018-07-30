@@ -1380,7 +1380,9 @@ export default class GoodsSelectorCtrl {
 				scope: this._$scope,
 				title: '批量导入商品ID',
 				fullscreen: false,
-				locals: {},
+				locals: {
+					isQiake: this.isQiake
+				},
 				style: {
 					width: '568px',
 					'min-width': '568px',

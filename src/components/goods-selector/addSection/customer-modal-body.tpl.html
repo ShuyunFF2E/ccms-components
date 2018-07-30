@@ -6,8 +6,8 @@
 		<div class="addition">
 			<span>数据类型：</span>
 			<cc-radio ng-model="$ctrl.radio.value" value="id">商品ID</cc-radio>
-			<cc-radio ng-model="$ctrl.radio.value" value="number">商品商家编码</cc-radio>
-			<cc-radio ng-model="$ctrl.radio.value" value="skuNumber">SKU商家编码</cc-radio>
+			<cc-radio ng-if="!$ctrl.isQiake" ng-model="$ctrl.radio.value" value="number">商品商家编码</cc-radio>
+			<cc-radio ng-if="!$ctrl.isQiake" ng-model="$ctrl.radio.value" value="skuNumber">SKU商家编码</cc-radio>
 		</div>
 		<textarea cols="30" rows="10" placeholder='&#13;&#10;请输入商品ID，格式如下：&#13;&#10;商品ID1&#13;&#10;商品ID2'
 				  ng-if="$ctrl.radio.value === 'id'"
