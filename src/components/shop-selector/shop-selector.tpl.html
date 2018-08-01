@@ -1,0 +1,27 @@
+<div class="shop-selector">
+	<gs-tabs>
+		<gs-panel text="全部店铺" tab-click="$ctrl.tabClick(text)">
+			<section class="form-area" cc-bind-html="$ctrl.allShopFormTemplate"></section>
+			<section class="grid-area">
+				<div class="operation">
+					<cc-checkbox ng-if="!$ctrl.isSingleSelected"
+								 class="check-all"
+								 ng-checked="$ctrl.isSelectedPage"
+								 ng-click="$ctrl.isSelectedPage = !$ctrl.isSelectedPage; $ctrl.switchSelectPage($ctrl.isSelectedPage)">全选当页
+					</cc-checkbox>
+				</div>
+				<cc-grid type="selectable" opts="$ctrl.allShopGridOptions"></cc-grid>
+			</section>
+		</gs-panel>
+		<gs-panel text="已选店铺" tab-click="$ctrl.tabClick(text)">
+			<section class="form-area" cc-bind-html="$ctrl.selectedShopFormTemplate"></section>
+			<section class="grid-area">
+				<div class="operation" ng-if="!$ctrl.isSingleSelected">
+					<span ng-click="$ctrl.removeAll()">移除全部</span>
+					<span ng-click="$ctrl.removePage()">移除当页</span>
+				</div>
+				<cc-grid opts="$ctrl.selectedShopGridOptions" on-refresh="$ctrl.onRefresh(opts)"></cc-grid>
+			</section>
+		</gs-panel>
+	</gs-tabs>
+</div>

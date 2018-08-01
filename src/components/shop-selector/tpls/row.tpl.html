@@ -1,0 +1,14 @@
+<!--行模板34234-->
+<tr ng-if="!$ctrl.opts.isSingleSelected"
+	ng-repeat="entity in $ctrl.opts.data track by $index"
+	ng-init="entity.$selected = $ctrl.opts.isEntitySelected(entity)"
+	ng-class="{'row-selected': entity.$selected}"
+	ng-click="entity.$selected = !entity.$selected; $ctrl.opts.switchSelectItem(entity.$selected, entity)"
+	cc-bind-html="$ctrl.opts.rowCellTemplate">
+</tr>
+<tr ng-if="$ctrl.opts.isSingleSelected"
+	ng-repeat="entity in $ctrl.opts.data track by $index"
+	ng-class="{'row-selected': $ctrl.opts.radio.value === entity.id}"
+	ng-click="$ctrl.opts.switchSingleSelectItem(entity)"
+	cc-bind-html="$ctrl.opts.rowCellTemplate">
+</tr>
