@@ -15,7 +15,7 @@ import rowTemplate from './tpls/customer-row.tpl.html';
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './addSection/SectionAddCtrl';
 import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList, getFieldsMap, getFormConfig } from './constant';
-import { transformGoodsData } from './utils';
+import { transformGoodsData, getSkuName, lightText, getPrice, listCharacterIntercept } from './utils';
 
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
@@ -232,6 +232,13 @@ export default class GoodsSelectorCtrl {
 			rowTpl: rowTemplate,
 			footerTpl: footerTemplate,
 			emptyTipTpl: emptyTpl,
+			rowCellTemplate: rowCellTemplate,
+			skuRowCellTemplate: skuRowCellTemplate,
+			selectedData: this.selectedItems,
+			formModel: this.formModel,
+			isQiake: this.isQiake,
+			conditionLength: this.getConditionLength(), // 已选条件数量
+			postData: {},
 			transformer: res => {
 				if (res.flag === 'fail' && res.msg === 'Result window is too large, window size must be less than or equal to: [10000]') {
 					this._$ccTips.error('<span class="sd-max-number-error-msg"></span>');
@@ -241,17 +248,11 @@ export default class GoodsSelectorCtrl {
 						angular.element(item).parent().empty().append(warnMsg);
 					});
 				}
-				if (res['data'] && res.flag !== 'fail') {
-					res['list'] = res['data'];
-					delete res['data'];
-				} else {
-					res['list'] = [];
-				}
-				if (res['totalCount']) {
-					res['totals'] = res['totalCount'];
-					delete res['totalCount'];
-					delete res['totalCount'];
-				}
+				res['list'] = res['data'] && res.flag !== 'fail' ? res['data'] : [];
+				delete res['data'];
+				res['totals'] = res['totalCount'] ? res['totalCount'] : [];
+				delete res['totalCount'];
+
 				if (res.list && res.list.length) {
 					// 全部商品列表 -> 当表格数据刷新时，更新列表中的商品状态，保持和已选商品状态一致。
 					this.dataMerge(res.list, this.selectedItemsBuffer);
@@ -278,82 +279,13 @@ export default class GoodsSelectorCtrl {
 				}
 				this.resInfo = res;
 				return res;
-			}
-		};
-		this.pagerGridOptions.rowCellTemplate = rowCellTemplate;
-		this.pagerGridOptions.skuRowCellTemplate = skuRowCellTemplate;
-		this.pagerGridOptions.selectedData = this.selectedItems;
-		this.pagerGridOptions.isQiake = this.isQiake;
-		this.pagerGridOptions.conditionLength = this.getConditionLength(); // 已选条件数量
-		this.pagerGridOptions.postData = {};
-
-		// 获取 sku 标题，后端返回的是数组，需要前端自行拼接
-		this.pagerGridOptions.getSkuName = sku => {
-			let propName = '';
-			if (sku.props && sku.props.length) {
-				for (let i = 0; i < sku.props.length; i++) {
-					if (i === sku.props.length - 1) {
-						if (sku.props[i].pname) {
-							propName += sku.props[i].pname + '：' + sku.props[i].vname;
-						} else {
-							propName += sku.props[i].vname;
-						}
-					} else {
-						if (sku.props[i].pname) {
-							propName += sku.props[i].pname + '：' + sku.props[i].vname + '；';
-						} else {
-							propName += sku.props[i].vname + '；';
-						}
-					}
-				}
-			}
-			return propName;
+			},
+			getSkuName, // 获取 sku 标题，后端返回的是数组，需要前端自行拼接
+			lightText, // 高亮显示搜索关键字
+			getPrice, // 价格保留两位小数
+			listCharacterIntercept // 超过 maxLength 个字则隐藏多余字，显示 '...'
 		};
 
-		// 高亮显示搜索关键字
-		this.pagerGridOptions.lightText = (originText, keyWords) => {
-			originText = originText || '';
-			let reg = new RegExp(keyWords, 'g');
-			let result = '';
-			if (keyWords && keyWords.length !== 0 && originText.indexOf(keyWords) > -1) {
-				result = originText.toString().replace(reg, `<span class="highlight">${keyWords}</span>`);
-			} else {
-				result = originText.toString();
-			}
-			return this._$sce.trustAsHtml(result);
-		};
-
-		// 价格保留两位小数
-		this.pagerGridOptions.getPrice = price => {
-			let buffer = [];
-			if (price || price === 0) {
-				buffer = String(price).split('.');
-			}
-			if (buffer.length === 2) {
-				buffer[0] = buffer[0].replace(/(?=(?!\b)(\d{3})+$)/g, ',');
-				if (buffer[1].length === 1) {
-					price = buffer[0] + '.' + buffer[1] + '0';
-				} else if (buffer[1].length === 2) {
-					price = buffer[0] + '.' + buffer[1];
-				} else {
-					price = buffer[0] + '.' + buffer[1].slice(0, 2);
-				}
-			} else {
-				price = String(price).replace(/(?=(?!\b)(\d{3})+$)/g, ',');
-				price += '.00';
-			}
-			return '￥' + price;
-		};
-
-		// 超过 maxLength 个字则隐藏多余字，显示 '...'
-		this.pagerGridOptions.listCharacterIntercept = (str, maxLength) => {
-			if (str.length > maxLength) {
-				str = str.slice(0, maxLength) + '...';
-			}
-			return str;
-		};
-
-		this.pagerGridOptions.formModel = this.formModel;
 		// 表格子行的展开和收起
 		this.pagerGridOptions.handleTreeIcon = entity => {
 			entity.extend = !entity.extend;
