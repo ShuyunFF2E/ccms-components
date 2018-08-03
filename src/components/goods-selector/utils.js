@@ -2,26 +2,28 @@ import injector from 'angular-es-utils/injector';
 import genResource from 'angular-es-utils/rs-generator';
 import { apiPrefix } from './constant';
 
-export function transformGoodsData(shopInfo, selectedGoodIds, serverName, isSupportedSku) {
+/**
+ * @param shopInfo Object 当前店铺
+ * @param selectedGoods Array 用户传进来的已选商品
+ * @param serverName
+ * @param isSupportedSku bool 是否支持 sku
+ * @returns {Promise<any>}
+ */
+export function transformGoodsData({shopInfo, selectedGoods, serverName, isSupportedSku}) {
 
-	if (Array.isArray(shopInfo)) {
-		shopInfo = shopInfo[0];
-	}
-
-	const ids = Object.keys(selectedGoodIds);
+	const platform = shopInfo.plat;
+	const shopId = shopInfo.shopId;
+	const ids = Object.keys(selectedGoods);
 	const paramIdStr = ids.join('&id=');
 	return new Promise((resolve, reject) => {
-		genResource(`${serverName}${apiPrefix}/items?platform=${shopInfo.plat}&shopId=${shopInfo.shopId}&id=${paramIdStr}`).save().$promise.then(res => {
-			// 数据转换
-			if (!res['data']) {
-				res['data'] = [];
-			}
+		genResource(`${serverName}${apiPrefix}/items?platform=${platform}&shopId=${shopId}&id=${paramIdStr}`).save().$promise.then(res => {
+			res['data'] = res['data'] = [];
 			let transformedData = res.data.map(d => {
 				if (isSupportedSku) {
 					d.skus && d.skus.forEach(sku => {
-						if (selectedGoodIds[d.id] === null) {
+						if (selectedGoods[d.id] === null) {
 							sku.checked = true;
-						} else if (selectedGoodIds[d.id].includes(sku.id)) {
+						} else if (selectedGoods[d.id].includes(sku.id)) {
 							sku.checked = true;
 						}
 					});
@@ -103,4 +105,19 @@ export const listCharacterIntercept = (str, maxLength) => {
 		str = str.slice(0, maxLength) + '...';
 	}
 	return str;
+};
+
+// 用正则表达式实现html解码
+export const htmlDecodeByRegExp = str => {
+	let s = '';
+	if (str.length === 0) {
+		return '';
+	}
+	s = str.replace(/&amp;/g, '&');
+	s = s.replace(/&lt;/g, '<');
+	s = s.replace(/&gt;/g, '>');
+	s = s.replace(/&nbsp;/g, ' ');
+	s = s.replace(/&#39;/g, '\'');
+	s = s.replace(/&quot;/g, '\"');
+	return s;
 };
