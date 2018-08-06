@@ -121,3 +121,31 @@ export const htmlDecodeByRegExp = str => {
 	s = s.replace(/&quot;/g, '\"');
 	return s;
 };
+
+export const isAllChildrenSelected = children => {
+	return children && children.every(child => {
+		return child.checked;
+	});
+};
+
+export const isSomeChildrenSelected = children => {
+	return children && !isAllChildrenSelected(children) && children.some(child => {
+		return child.checked || child.partial;
+	});
+};
+
+export const isAllChildrenRemoved = children => {
+	return !(isAllChildrenSelected(children) || isSomeChildrenSelected(children));
+};
+
+export const isAllChildrenHide = children => {
+	return children && children.every(child => {
+		return child.isHide;
+	});
+};
+
+export const isAllChildrenExtend = children => {
+	return children && children.every(child => {
+		return child.extend;
+	});
+};
