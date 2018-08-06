@@ -1,7 +1,6 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import cloneDeep from 'lodash.clonedeep';
-import genResource from 'angular-es-utils/rs-generator';
 
 import rowCellTemplate from './tpls/customer-row-cell.tpl.html';
 import skuRowCellTemplate from './tpls/customer-sku-row-cell.tpl.html';
@@ -16,6 +15,7 @@ import matchHelper from './MatchHelper';
 import sectionAddCtrl from './addSection/SectionAddCtrl';
 import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList, getFieldsMap, getFormConfig } from './constant';
 import { transformGoodsData, getSkuName, lightText, getPrice, listCharacterIntercept, htmlDecodeByRegExp, isAllChildrenExtend, isAllChildrenHide, isAllChildrenRemoved, isAllChildrenSelected, isSomeChildrenSelected } from './utils';
+import service from './service';
 
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
@@ -435,7 +435,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品自自定义类目数据
 	getShopCatories() {
-		genResource(`${this.serverName}${apiPrefix}/shop_categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
+		service.getShopCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get(res => {
 			let data = res.data || [];
 			// 只显示叶子类目
 			this.shopCategoriesList = data.filter(item => item.isLeaf === true);
@@ -447,7 +447,7 @@ export default class GoodsSelectorCtrl {
 				this.formModel.shopCategoriesId = this.conditions.shopCategoriesId;
 				this.conditions.shopCategoriesId = [];
 			}
-		}).catch(res => {
+		}, res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
 			}
@@ -456,7 +456,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品标准类目列表
 	getCategories() {
-		genResource(`${this.serverName}${apiPrefix}/categories?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
+		service.getCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get(res => {
 			let data = res.data || [];
 			this.categoriesList = data.filter(item => item.isLeaf === true);
 			// 由于商品标准类目数据是异步请求，所以需要在数据回来以后更新表单中 categoriesId 的值，更新后清空，保证数据只加载一次
@@ -467,7 +467,7 @@ export default class GoodsSelectorCtrl {
 			if (!this.formModel.categoriesId) {
 				this.formModel.categoriesId = null;
 			}
-		}).catch(res => {
+		}, res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
 			}
@@ -476,14 +476,14 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品品牌
 	getBrands() {
-		genResource(`${this.serverName}${apiPrefix}/brands?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise.then(res => {
+		service.getBrands(this.serverName, this.formModel.platform, this.formModel.shopId).get(res => {
 			this.brandsList = res.data || [];
 			// 由于商品品牌数据是异步请求，所以需要在数据回来以后更新表单中 brandId 的值，更新后清空，保证数据只加载一次
 			if (this.conditions.brandId) {
 				this.formModel.brandId = this.conditions.brandId;
 				this.conditions.brandId = null;
 			}
-		}).catch(res => {
+		}, res => {
 			if (!this.tips || !this.tips.element) {
 				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
 			}
@@ -492,7 +492,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品标签，初始化的时候调用
 	getTags() {
-		genResource(`${this.serverName}${apiPrefix}/tagSearch?platform=${this.formModel.platform}&tenantId=${this.tenantId}&status=1`, false, null).get().$promise.then(res => {
+		service.getTags(this.serverName, this.formModel.platform, this.tenantId).get().$promise.then(res => {
 			res.data = res.data || [];
 			if (res.data.length) {
 				if (this.conditions.tags && this.conditions.tags.length) {
@@ -516,24 +516,22 @@ export default class GoodsSelectorCtrl {
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.categoriesId && item) {
-			genResource(`${this.serverName}${apiPrefix}/categories/${item.id}/properties?platform=${this.formModel.platform}&shopId=${this.formModel.shopId}`, false, null).get().$promise
-				.then(res => {
-					this.propsPidList = res.data || [];
-					// 仅在初始化时执行：如果用户传进来的商品属性不为空，那么更新 form 表单的 propsPid 值，并清空 this.conditions.propsPid，保证懒加载
-					if (this.conditions.propsPid) {
-						this.formModel.propsPid = this.conditions.propsPid;
-						this.getConditionMsg();
-						this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
-						this.conditions.propsPid = null;
-					} else {
-						this.formModel.propsPid = this.propsPid;
-					}
-				})
-				.catch(res => {
-					if (!this.tips || !this.tips.element) {
-						this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
-					}
-				});
+			service.getProperties(this.serverName, this.formModel.platform, this.formModel.shopId, item.id).get(res => {
+				this.propsPidList = res.data || [];
+				// 仅在初始化时执行：如果用户传进来的商品属性不为空，那么更新 form 表单的 propsPid 值，并清空 this.conditions.propsPid，保证懒加载
+				if (this.conditions.propsPid) {
+					this.formModel.propsPid = this.conditions.propsPid;
+					this.getConditionMsg();
+					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
+					this.conditions.propsPid = null;
+				} else {
+					this.formModel.propsPid = this.propsPid;
+				}
+			}, res => {
+				if (!this.tips || !this.tips.element) {
+					this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
+				}
+			});
 		} else {
 			this.propsPidList = [];
 			this.formModel.propsPid = null;
@@ -1052,13 +1050,11 @@ export default class GoodsSelectorCtrl {
 			this.moreThanSelectedMaxNumber(event);
 		} else if (totals) {
 			this.isShowMask = true;
-			let url = this.getPostOpts(totals).url;
-			let postData = this.getPostOpts(totals).postData;
 			if (totals === 0) {
 			} else if (totals + 1 > onceMaxSelectedNumber) {
 				this.moreThanSelectedMaxNumber(event);
 			} else {
-				genResource(url).save(postData, res => {
+				this.getGridData(totals).then(res => {
 					this.data = res.data || [];
 					let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
 					if (this.selectedItems.length + uncheckedGoods.length > this._maxSelectedNumber) {
@@ -1073,13 +1069,11 @@ export default class GoodsSelectorCtrl {
 
 	// 单次全选的最大值小于等于全选商品允许的最大值
 	maxMoreThanOnce(totals) {
-		let url = this.getPostOpts(totals).url;
-		let postData = this.getPostOpts(totals).postData;
 		if (totals > this._maxSelectedNumber * 2) {
 			this.moreThanSelectedMaxNumber(event);
 		} else if (totals) {
 			this.isShowMask = true;
-			genResource(url).save(postData, res => {
+			this.getGridData(totals).then(res => {
 				this.data = res.data || [];
 				let uncheckedGoods = this.getUncheckedItemsFromAll(this.data);
 				if (uncheckedGoods.length + 1 > onceMaxSelectedNumber) { // 测试 500
@@ -1099,17 +1093,18 @@ export default class GoodsSelectorCtrl {
 		}
 	}
 
-	getPostOpts(totals) {
-		let url = `${this.serverName}${apiPrefix}/items/batchImportIds?pageNum=1&pageSize=${ totals }`;
+	// 获取表格数据
+	getGridData(totals) {
 		let postData = this.addSectionQueryParams;
 		if (this.gridPrefixApi === `${this.serverName}${apiPrefix}/items`) {
+			postData = this.pagerGridOptions.postData;
 			// 不是批量导入
 			let exceptList = ['pageNum', 'pageSize', 'tagItemIds'];
 			let paramStr = this.getStandardParams(this.checkedAllQueryParams, exceptList);
-			url = `${this.serverName}${apiPrefix}/items?pageNum=1&pageSize=${ totals }&${ paramStr }`;
-			postData = this.pagerGridOptions.postData;
+			return service.getGridItems(this.serverName, 1, totals, paramStr).save(postData).$promise;
+		} else {
+			return service.getGridBatchItems(this.serverName, 1, totals).save(postData).$promise;
 		}
-		return {url, postData};
 	}
 
 	// 获取一个数组中状态为 unchecked 的商品
@@ -1216,7 +1211,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取批量导入数据的结果（导入总数、导入失败数据列表）
 	getBatchImportResult(obj, queryParams, inputObjHash) {
-		genResource(`${this.serverName}${apiPrefix}/items/batchImport/result`).save(queryParams, res => {
+		service.getBatchImportResult(this.serverName).save(queryParams, res => {
 			let currentTime = Date.parse(new Date());
 			this[`addSectionFailedData${currentTime}`] = res.notFound; // 导入失败的数据
 			let addSectionTotalsNumber = queryParams['id'].length ? queryParams['id'].length : (queryParams['outerId'].length ? queryParams['outerId'].length : queryParams['skus.outerId'].length); // 导入数据总量
@@ -1248,7 +1243,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取批量导入数据后返回的表格数据
 	getBatchImportIds(obj, queryParams) {
-		genResource(`${this.serverName}${apiPrefix}/items/batchImportIds`).save(queryParams, res => {
+		service.getBatchImportIds(this.serverName).save(queryParams, res => {
 			if (res.data && res.data.length) {
 				// 如果查询参数为商品ID或者商品商家编码，则将查询到的商品状态置为 checked
 				// 如果查询到参数为 sku 商家编码，则将查询到的商品状态置为 checked，并且展开 sku
@@ -1319,7 +1314,7 @@ export default class GoodsSelectorCtrl {
 			selectedLabels: this.selectedLabels,
 			mapping
 		};
-		genResource(`${this.serverName}${apiPrefix}/tagSearch?platform=${this.formModel.platform}&tenantId=${this.tenantId}&status=1`, false, null).get().$promise.then(res => {
+		service.getTags(this.serverName, this.formModel.platform, this.tenantId).get(res => {
 			res.data = res.data || [];
 			this._$labelChoose.labelChoose(title, res.data, opts).open()
 				.result.then(res => {
@@ -1329,8 +1324,7 @@ export default class GoodsSelectorCtrl {
 					this.formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
 				}, res => {
 				});
-		}).catch(res => {
-		});
+		}, res => {});
 	}
 
 	// 获取商品标签对应的商品 ID
