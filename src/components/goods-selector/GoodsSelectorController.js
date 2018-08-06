@@ -70,12 +70,7 @@ export default class GoodsSelectorCtrl {
 
 		// form 区域价格校验
 		this.validators = {
-			/**
-			 * 价格校验
-			 * -> 只能输入数字或两位小数
-			 * -> 前一个数字小于或者等于后一个数字
-			 * -> 价格区间必须都写, 校验才生效
-			 * */
+			// 价格校验 -> 只能输入数字或两位小数 && 前一个数字小于或者等于后一个数字
 			price: {
 				msg: '价格只能填写正数或两位小数.',
 				fn: (modelValue, viewValue) => {
@@ -159,8 +154,8 @@ export default class GoodsSelectorCtrl {
 		transformGoodsData(goodsDataParams).then(data => {
 			if (data && data.length) {
 				data.forEach(entity => {
-					this.updateSelectedItems(this.selectedItems, entity);
-					this.updateSelectedItemsBuffer(this.selectedItemsBuffer, entity);
+					this.updateSelectedItems(entity);
+					this.updateSelectedItemsBuffer();
 				});
 				this.updateAllGoodsGrid();
 			}
@@ -696,20 +691,7 @@ export default class GoodsSelectorCtrl {
 			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
 			this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
 			if (this.isAddSection) {
-				// 当使用批量添加的时候一切表格数据相关请求访问该路径，当使用表单搜索的时候，一切表格数据相关请求访问原来的路径
-				this.gridPrefixApi = `${this.serverName}${apiPrefix}/items/batchImportIds`;
-				// 更新表格，表格查询参数为 pageNum, pageSize, id/sku.outerId,outerId, shopId, platform
-				this.pagerGridOptions.resource = this._$resource(this.gridPrefixApi, null, {
-					get: {
-						method: 'POST'
-					}
-				});
-				this.pagerGridOptions.postData = this.addSectionQueryParams;
-				let pager = {
-					pageNum: 1,
-					pageSize: this.pagerGridOptions.queryParams.pageSize
-				};
-				this.pagerGridOptions.queryParams = Object.assign({}, pager);
+				this.getBatchImportApi();
 				this.updateAllGoodsGrid();
 				this.isAddSection = false;
 				this.isCheckedAll = false;
@@ -717,6 +699,24 @@ export default class GoodsSelectorCtrl {
 			this.currentPageChecked = this.isAllChildrenSelected(this.resInfo.list);
 		}
 	};
+
+	// 批量添加操作下的 api 和 表格查询参数
+	getBatchImportApi() {
+		// 当使用批量添加的时候一切表格数据相关请求访问该路径，当使用表单搜索的时候，一切表格数据相关请求访问原来的路径
+		this.gridPrefixApi = `${this.serverName}${apiPrefix}/items/batchImportIds`;
+		// 更新表格，表格查询参数为 pageNum, pageSize, id/sku.outerId,outerId, shopId, platform
+		this.pagerGridOptions.resource = this._$resource(this.gridPrefixApi, null, {
+			get: {
+				method: 'POST'
+			}
+		});
+		this.pagerGridOptions.postData = this.addSectionQueryParams;
+		let pager = {
+			pageNum: 1,
+			pageSize: this.pagerGridOptions.queryParams.pageSize
+		};
+		this.pagerGridOptions.queryParams = Object.assign({}, pager);
+	}
 
 	// tab 切换时 form 表单处理
 	handleForm(dateRangeModel, formModel) {
@@ -741,7 +741,7 @@ export default class GoodsSelectorCtrl {
 
 	// 筛选
 	search(isSelectedGoodsTab) {
-		this.updateSearchApi();
+		this.getSearchApi();
 		this.isAddSectionExtend = false;
 		this.isCheckedAll = false;
 		this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
@@ -783,8 +783,9 @@ export default class GoodsSelectorCtrl {
 			}
 		}, () => {});
 	};
-	// 更新搜索操作下的api
-	updateSearchApi() {
+
+	// 搜索操作下的 api 和 表格查询参数
+	getSearchApi() {
 		this.gridPrefixApi = `${this.serverName}${apiPrefix}/items`;
 		this.pagerGridOptions.resource = this._$resource(this.gridPrefixApi, null, {
 			get: {

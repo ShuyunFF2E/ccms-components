@@ -17,7 +17,7 @@ export function transformGoodsData({shopInfo, selectedGoods, serverName, isSuppo
 	const paramIdStr = ids.join('&id=');
 	return new Promise((resolve, reject) => {
 		genResource(`${serverName}${apiPrefix}/items?platform=${platform}&shopId=${shopId}&id=${paramIdStr}`).save().$promise.then(res => {
-			res['data'] = res['data'] = [];
+			res['data'] = res['data'] || [];
 			let transformedData = res.data.map(d => {
 				if (isSupportedSku) {
 					d.skus && d.skus.forEach(sku => {
