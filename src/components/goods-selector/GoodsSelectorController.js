@@ -20,11 +20,17 @@ import service from './service';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
-	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions')
+	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions', 'isSingleSelect')
 
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
+		this.isSingleSelect = this._isSingleSelect;
+		this.radio = {
+			value: null,
+			setting: [],
+			disabled: false
+		};
 		this.showLoading = true;
 		// 已选的商品标签
 		this.selectedLabels = [];
@@ -154,6 +160,9 @@ export default class GoodsSelectorCtrl {
 				data.forEach(entity => {
 					this.updateSelectedItems(entity);
 					this.updateSelectedItemsBuffer();
+					if (this.isSingleSelect) {
+						this.radio.value = entity.id;
+					}
 				});
 				this.updateAllGoodsGrid();
 			}
@@ -264,6 +273,8 @@ export default class GoodsSelectorCtrl {
 			isQiake: this.isQiake,
 			conditionLength: this.getConditionLength(), // 已选条件数量
 			postData: {},
+			radio: this.radio,
+			isSingleSelect: this.isSingleSelect,
 			getSkuName, // 获取 sku 标题，后端返回的是数组，需要前端自行拼接
 			lightText, // 高亮显示搜索关键字
 			getPrice, // 价格保留两位小数
@@ -286,23 +297,29 @@ export default class GoodsSelectorCtrl {
 			delete res['totalCount'];
 
 			if (res.list && res.list.length) {
-				// 批量添加，返回值全部被 checked
-				if (this.isAddSection) {
-					res.list.forEach(entity => {
-						this.checkRootItem(entity);
-						this.updateSelectedItems(entity);
-					});
-					this.updateSelectedItemsBuffer();
-				}
-				this.dataMerge(res.list, this.selectedItemsBuffer);
-				this.currentPageChecked = isAllChildrenSelected(res.list);
-				res.list.forEach(entity => {
-					entity.extend = this.allGoodsSkuSearch || this.isAddSectionExtend;
-					if (!this.isSupportedSku && entity.skus && entity.skus.length) {
-						delete entity.skus;
+				if (!this.isSingleSelect) {
+					// 批量添加，返回值全部被 checked
+					if (this.isAddSection) {
+						res.list.forEach(entity => {
+							this.checkRootItem(entity);
+							this.updateSelectedItems(entity);
+						});
+						this.updateSelectedItemsBuffer();
 					}
-				});
-				this.isExtendAll = isAllChildrenExtend(res.list);
+					this.dataMerge(res.list, this.selectedItemsBuffer);
+					this.currentPageChecked = isAllChildrenSelected(res.list);
+					res.list.forEach(entity => {
+						entity.extend = this.allGoodsSkuSearch || this.isAddSectionExtend;
+						if (!this.isSupportedSku && entity.skus && entity.skus.length) {
+							delete entity.skus;
+						}
+					});
+					this.isExtendAll = isAllChildrenExtend(res.list);
+				} else {
+					res.list.forEach(entity => {
+						this.pagerGridOptions.radio.setting.push(entity.id);
+					});
+				}
 			}
 			this.resInfo = res;
 			return res;
@@ -335,6 +352,11 @@ export default class GoodsSelectorCtrl {
 			this.currentPageChecked = isAllChildrenSelected(this.resInfo.list);
 
 			this.updateSelectedItems(entity);
+			this.updateSelectedItemsBuffer();
+		};
+
+		this.pagerGridOptions.selectSingleTreeRootItem = entity => {
+			this.selectedItems.splice(0, 1, entity);
 			this.updateSelectedItemsBuffer();
 		};
 	}
@@ -388,6 +410,13 @@ export default class GoodsSelectorCtrl {
 			if (isAllChildrenRemoved(entity.skus)) {
 				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 			}
+		};
+
+		this.selectedPagerGridOptions.removeSingleTreeRootItem = () => {
+			this.radio.value = null;
+			this.selectedItems.splice(0, 1);
+			this.updateSelectedItemsBuffer();
+			this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
 		};
 
 		// 表格数据来自于 externalData 时，分页操作

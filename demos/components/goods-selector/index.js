@@ -128,55 +128,10 @@
 				]
 				// brandId: '1111'
 			};
-			var qiakeConditions = { // 搜索条件
-				endListTime: new Date(1531843200000), // 下架时间
-				id: ['11111'], // 商品ID
-				maxPrice: '200', // 最高价
-				minPrice: '100', // 最低价
-				name: '22222', // 商品名称
-				platform: 'top', // 平台
-				categoriesId: '222222', // 商品标准类目
-				shopId: 2260, // 店铺ID
-				skusId: ['22342343'], // 商品编号
-				skusPropsVname: '55555', // sku 规格
-				startListTime: new Date(1530374400000), // 上架时间
-				status: '1',
-				brandId: '1611'
-			};
 			var options = {
 				isOnlyChecked,
 				maxSelectedNumber,
 				serverName,
-				tenantId,
-				isSupportedAddCondition,
-				conditions
-			};
-			var qiakeOptions = {
-				isOnlyChecked,
-				maxSelectedNumber,
-				serverName,
-				tenantId,
-				isSupportedAddCondition,
-				conditions: qiakeConditions
-			};
-			// 如果是商品维度选择，isSupportedSku 值为 false，否则为 true，默认值为 true
-			var isSupportedSku = false;
-			var selectedGoodsWithoutSku = {
-				541920723552: null,
-				532988558193: null,
-				554208360201: null,
-				562099525613: null
-			};
-			var jdSelectedGoodsWithoutSku = {
-				10000227589: null,
-				10000200007: null,
-				10001027790: null
-			};
-			var optionsWithoutSku = {
-				isOnlyChecked,
-				maxSelectedNumber,
-				serverName,
-				isSupportedSku,
 				tenantId,
 				isSupportedAddCondition,
 				conditions
@@ -229,6 +184,30 @@
 					});
 			};
 
+			var qiakeConditions = { // 搜索条件
+				endListTime: new Date(1531843200000), // 下架时间
+				id: ['11111'], // 商品ID
+				maxPrice: '200', // 最高价
+				minPrice: '100', // 最低价
+				name: '22222', // 商品名称
+				platform: 'top', // 平台
+				categoriesId: '222222', // 商品标准类目
+				shopId: 2260, // 店铺ID
+				skusId: ['22342343'], // 商品编号
+				skusPropsVname: '55555', // sku 规格
+				startListTime: new Date(1530374400000), // 上架时间
+				status: '1',
+				brandId: '1611'
+			};
+			var qiakeOptions = {
+				isOnlyChecked,
+				maxSelectedNumber,
+				serverName,
+				tenantId,
+				isSupportedAddCondition,
+				conditions: qiakeConditions
+			};
+
 			// qk 无店铺选择
 			$scope.openQKGoodsSelector = function() {
 				$ccGoodsSelector
@@ -239,6 +218,29 @@
 					}, function() {
 						console.log('----------cancel---------');
 					});
+			};
+
+			// 如果是商品维度选择，isSupportedSku 值为 false，否则为 true，默认值为 true
+			var isSupportedSku = false;
+			var selectedGoodsWithoutSku = {
+				541920723552: null,
+				532988558193: null,
+				554208360201: null,
+				562099525613: null
+			};
+			var jdSelectedGoodsWithoutSku = {
+				10000227589: null,
+				10000200007: null,
+				10001027790: null
+			};
+			var optionsWithoutSku = {
+				isOnlyChecked,
+				maxSelectedNumber,
+				serverName,
+				isSupportedSku,
+				tenantId,
+				isSupportedAddCondition,
+				conditions
 			};
 
 			// taobao + 店铺选择 + 商品维度选择
@@ -281,6 +283,72 @@
 			$scope.openJDGoodsSelectorWithoutSku = function() {
 				$ccGoodsSelector
 					.goodsSelector(jdWithoutShopList, optionsWithoutSku, selectedGoodsWithoutSku)
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+			// 单选，商品维度选择器
+			var singleOptionsWithoutSku = {
+				isOnlyChecked,
+				maxSelectedNumber,
+				serverName,
+				isSupportedSku,
+				tenantId,
+				isSupportedAddCondition,
+				conditions,
+				isSingleSelect: true
+			};
+			var singleTaobaoSelectedGoodsWithoutSku = {
+				35647605646: null
+			};
+			var singleJDSelectedGoodsWithoutSku = {
+				10000227589: null
+			};
+
+			// 单选 + taobao + 店铺选择 + 商品维度选择
+			$scope.openSingleTaobaoSelectorWithShopListWithoutSku = function() {
+				$ccGoodsSelector
+					.goodsSelector(taobaoWithShopList, singleOptionsWithoutSku, singleTaobaoSelectedGoodsWithoutSku)
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+			// 单选 + jd + 店铺选择 + 商品维度选择
+			$scope.openSingleJDGoodsSelectorWithShopListWithoutSku = function() {
+				$ccGoodsSelector
+					.goodsSelector(jdWithShopList, singleOptionsWithoutSku, singleJDSelectedGoodsWithoutSku)
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+			// 单选 + taobao 无店铺选择 + 商品维度选择
+			$scope.openSingleTaobaoGoodsSelectorWithoutSku = function() {
+				$ccGoodsSelector
+					.goodsSelector(taobaoWithoutShopList, singleOptionsWithoutSku, singleTaobaoSelectedGoodsWithoutSku)
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+			// 单选 + jd 无店铺选择 + 商品维度选择
+			$scope.openSingleJDGoodsSelectorWithoutSku = function() {
+				$ccGoodsSelector
+					.goodsSelector(jdWithoutShopList, singleOptionsWithoutSku, singleJDSelectedGoodsWithoutSku)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);

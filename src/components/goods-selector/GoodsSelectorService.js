@@ -18,10 +18,10 @@ const GoodsSelectorService = {
 	 * @params tenantId string 租户ID，如果支持商品标签，那么 tenantId 不可为 null
 	 * @params selectedGoods array 外部传进来的已选商品
 	 * @params isSupportedAddCondition bool 是否支持添加为搜索条件，默认不支持
-	 * @params conditions object 搜索条件
+	 * @params isSingleSelect bool 单选 or 多选 默认是多选
 	 * */
 	goodsSelector(shopInfo, { isOnlyChecked = false, maxSelectedNumber = 100, serverName = '',
-		isSupportedSku = true, tenantId = null, isSupportedAddCondition = false, conditions = {} }, selectedGoods = []) {
+		isSupportedSku = true, tenantId = null, isSupportedAddCondition = false, conditions = {}, isSingleSelect = false }, selectedGoods = []) {
 
 		if (typeof shopInfo === 'undefined') {
 			throw new Error('goodsSelector 缺少 shopInfo 参数');
@@ -51,7 +51,8 @@ const GoodsSelectorService = {
 					isSupportedSku: isSupportedSku,
 					tenantId: tenantId,
 					isSupportedAddCondition: isSupportedAddCondition,
-					conditions: conditions
+					conditions: conditions,
+					isSingleSelect: isSingleSelect
 				},
 				controller: GoodsSelectorController,
 				controllerAs: '$ctrl',
