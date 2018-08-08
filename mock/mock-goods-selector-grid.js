@@ -3894,6 +3894,7 @@ module.exports = function(configurations) {
 					let pageNum = 1;
 					let pageSize = 10000;
 					let paramsArr1 = req.originalUrl.split('?');
+					let result = [];
 					if (paramsArr1.length > 1) {
 						let paramsArr = paramsArr1[1].split('&');
 						paramsArr.forEach(item => {
@@ -3904,6 +3905,13 @@ module.exports = function(configurations) {
 							if (param[0] === 'pageSize') {
 								pageSize = Number(param[1]);
 							}
+							if (param[0] === 'id') {
+								data.forEach(item => {
+									if (item.id === param[1]) {
+										result.push(item);
+									}
+								});
+							}
 						});
 					}
 					return {
@@ -3913,7 +3921,7 @@ module.exports = function(configurations) {
 						totalCount: data.length,
 						flag: 'success',
 						msg: 'ok',
-						data: data.slice((pageNum - 1) * pageSize, pageNum * pageSize)
+						data: result.length ? result : data.slice((pageNum - 1) * pageSize, pageNum * pageSize)
 					};
 				},
 				headers: {

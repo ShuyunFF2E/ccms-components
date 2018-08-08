@@ -1,9714 +1,3881 @@
 var data = [
 	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19657/310/784331964/50684/a25741f2/5aa618f1N09625a6b.jpg",
-				quantity: 0,
-				price: 599,
-				created: 1517998801000,
-				platStatus: null,
-				modified: 1517998801000,
-				outerId: "R4YB1801DK1AX8F",
-				id: "25552527748",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500804509"
-						],
-						vname: [
-							"粉色"
-						],
-						pname: null,
-						pid: "1000000203"
-					},
-					{
-						vid: [
-							"1502035724"
-						],
-						vname: [
-							"F"
-						],
-						pname: null,
-						pid: "1000002724"
-					}
-				]
-			}
-		],
-		created: 1517998801000,
-		delistTime: 1517998801000,
+		skus: null,
+		quantity: 10000,
+		created: 0,
+		delistTime: 1531816583000,
 		inputStr: null,
 		inputPids: null,
+		brandId: '1111',
 		props: [
 			{
 				vid: [
-					"76934"
+					"22464426"
 				],
 				vname: [
-					"黑色"
+					"午餐"
 				],
-				pname: null,
-				pid: "8824"
+				pname: "用餐时间",
+				pid: "13129227"
 			},
 			{
 				vid: [
-					"203247"
+					"20371660"
 				],
 				vname: [
-					"甜美淑女"
+					"商务套餐"
 				],
-				pname: null,
-				pid: "14103"
+				pname: "套餐种类",
+				pid: "13153689"
 			},
 			{
 				vid: [
-					"10033921"
+					"3228543"
 				],
 				vname: [
-					"无"
+					"中式快餐"
 				],
-				pname: null,
-				pid: "10013694"
-			},
-			{
-				vid: [
-					"10686707"
-				],
-				vname: [
-					"侧袋"
-				],
-				pname: null,
-				pid: "10126415"
-			},
-			{
-				vid: [
-					"10699854"
-				],
-				vname: [
-					"无"
-				],
-				pname: null,
-				pid: "10013691"
-			},
-			{
-				vid: [
-					"705522"
-				],
-				vname: [
-					"迷你"
-				],
-				pname: null,
-				pid: "133955"
-			},
-			{
-				vid: [
-					"705677"
-				],
-				vname: [
-					"敞口袋"
-				],
-				pname: null,
-				pid: "133958"
-			},
-			{
-				vid: [
-					"0"
-				],
-				vname: [
-					"0"
-				],
-				pname: null,
-				pid: "10126388"
-			},
-			{
-				vid: [
-					"613704"
-				],
-				vname: [
-					"青年"
-				],
-				pname: null,
-				pid: "105393"
-			},
-			{
-				vid: [
-					"705527"
-				],
-				vname: [
-					"伸缩式提把"
-				],
-				pname: null,
-				pid: "133956"
-			},
-			{
-				vid: [
-					"10675280"
-				],
-				vname: [
-					"否"
-				],
-				pname: null,
-				pid: "10123361"
-			},
-			{
-				vid: [
-					"635559"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "111212"
-			},
-			{
-				vid: [
-					"10033906"
-				],
-				vname: [
-					"1个"
-				],
-				pname: null,
-				pid: "10013690"
-			},
-			{
-				vid: [
-					"203234"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "14101"
-			},
-			{
-				vid: [
-					"10686715"
-				],
-				vname: [
-					"1个"
-				],
-				pname: null,
-				pid: "10126422"
-			},
-			{
-				vid: [
-					"705681"
-				],
-				vname: [
-					"软"
-				],
-				pname: null,
-				pid: "133960"
-			},
-			{
-				vid: [
-					"10033874"
-				],
-				vname: [
-					"搭扣"
-				],
-				pname: null,
-				pid: "10013684"
-			},
-			{
-				vid: [
-					"10687584"
-				],
-				vname: [
-					"无"
-				],
-				pname: null,
-				pid: "10126664"
-			},
-			{
-				vid: [
-					"0"
-				],
-				vname: [
-					"0"
-				],
-				pname: null,
-				pid: "10126387"
-			},
-			{
-				vid: [
-					"705484"
-				],
-				vname: [
-					"纯色"
-				],
-				pname: null,
-				pid: "133954"
-			},
-			{
-				vid: [
-					"705696"
-				],
-				vname: [
-					"腈纶"
-				],
-				pname: null,
-				pid: "133962"
-			},
-			{
-				vid: [
-					"705683"
-				],
-				vname: [
-					"是"
-				],
-				pname: null,
-				pid: "133961"
-			},
-			{
-				vid: [
-					"10686609"
-				],
-				vname: [
-					"PU"
-				],
-				pname: null,
-				pid: "10126389"
-			},
-			{
-				vid: [
-					"76953"
-				],
-				vname: [
-					"PU"
-				],
-				pname: null,
-				pid: "8822"
-			},
-			{
-				vid: [
-					"0"
-				],
-				vname: [
-					"0"
-				],
-				pname: null,
-				pid: "10126410"
-			},
-			{
-				vid: [
-					"705726"
-				],
-				vname: [
-					"单根"
-				],
-				pname: null,
-				pid: "133963"
-			},
-			{
-				vid: [
-					"76951"
-				],
-				vname: [
-					"600以上"
-				],
-				pname: null,
-				pid: "8823"
-			},
-			{
-				vid: [
-					"752783"
-				],
-				vname: [
-					"2018春季"
-				],
-				pname: null,
-				pid: "124022"
-			},
-			{
-				vid: [
-					"10699855"
-				],
-				vname: [
-					"无"
-				],
-				pname: null,
-				pid: "10013692"
-			},
-			{
-				vid: [
-					"10686714"
-				],
-				vname: [
-					"否"
-				],
-				pname: null,
-				pid: "10126419"
-			},
-			{
-				vid: [
-					"705679"
-				],
-				vname: [
-					"有"
-				],
-				pname: null,
-				pid: "133959"
-			},
-			{
-				vid: [
-					"203242"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "14102"
-			},
-			{
-				vid: [
-					"10686597"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "10013679"
-			},
-			{
-				vid: [
-					"613699"
-				],
-				vname: [
-					"休闲"
-				],
-				pname: null,
-				pid: "105392"
-			},
-			{
-				vid: [
-					"705529"
-				],
-				vname: [
-					"卡位"
-				],
-				pname: null,
-				pid: "133957"
+				pname: "外卖主营",
+				pid: "13129130"
 			}
 		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t19657/310/784331964/50684/a25741f2/5aa618f1N09625a6b.jpg",
-		lastSync: 1527771718283,
-		price: 599,
-		platStatus: "1",
-		name: "BASTO/百思图2018春季专柜同款粉色人造革流苏女单肩斜挎包B1801AX8",
-		shopCategories: null,
-		modified: 1527759118000,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/12037029948662859/T1_R25FlheXXXXXXXX_!!0-item_pic.jpg",
+		lastSync: 1531765281776,
+		price: 0.01,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "0.01",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "香脆猪排饭",
+		shopCategories: [
+			{
+				name: "各式饭",
+				id: "815315956"
+			}
+		],
+		modified: 1529441189000,
 		outerId: "",
-		detailUrl: "https://item.jd.com/25552527748.html",
-		shopId: "23591",
-		id: "11398459427",
+		detailUrl: "https://item.taobao.com/item.htm?id=35647605646&spm=2015.12283535.0.0",
+		shopId: "106878997",
 		categories: [
 			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "5260"
+				name: "套餐/简餐",
+				id: "50024504"
 			}
 		],
-		listTime: 0,
-		order: 0,
+		id: "35647605646",
+		listTime: 1531211783000,
+		status: 1,
+		order: 0
+	},
+	{
+		delistTime: 1485082585000,
+		props: [
+			{
+				vid: [
+					"3228543"
+				],
+				vname: [
+					"中式快餐"
+				],
+				pname: "外卖主营",
+				pid: "13129130"
+			},
+			{
+				vid: [
+					"20371660"
+				],
+				vname: [
+					"商务套餐"
+				],
+				pname: "套餐种类",
+				pid: "13153689"
+			},
+			{
+				vid: [
+					"22464426"
+				],
+				vname: [
+					"午餐"
+				],
+				pname: "用餐时间",
+				pid: "13129227"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/12037042137628172/T1_R25FlheXXXXXXXX_!!0-item_pic.jpg",
+		lastSync: 1524568130630,
+		price: 2,
+		platStatus: "instock",
+		name: "川味回锅肉木桶饭",
+		shopCategories: [
+			{
+				name: "",
+				id: "815315956"
+			}
+		],
+		modified: 1488706677000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=35649271195&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "套餐/简餐",
+				id: "50024504"
+			}
+		],
+		id: "35649271195",
+		listTime: 1484543400000,
 		status: 0
 	},
 	{
-		quantity: 0,
 		skus: [
 			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15439/46/2241373386/46324/1e39c399/5a7d01c7N81d13d8d.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DL1AM8270",
-				id: "25564944757",
-				status: 0,
+				price: 1,
+				id: "40897415750",
 				props: [
 					{
 						vid: [
-							"1501092946"
+							"3266779"
 						],
 						vname: [
-							"44"
+							"套餐一"
 						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690087"
-						],
-						vname: [
-							"红色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t18175/354/460929203/42963/8f2384b4/5a7d01cbN2b08c4eb.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DF1AM8260",
-				id: "25564944766",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690089"
-						],
-						vname: [
-							"卡其色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15934/348/2059995912/38735/bf9a6f06/5a7d01d0Nd2bbf13f.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DU1AM8255",
-				id: "25564944774",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15934/348/2059995912/38735/bf9a6f06/5a7d01d0Nd2bbf13f.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DU1AM8270",
-				id: "25564944771",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15934/348/2059995912/38735/bf9a6f06/5a7d01d0Nd2bbf13f.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DU1AM8265",
-				id: "25564944772",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t18175/354/460929203/42963/8f2384b4/5a7d01cbN2b08c4eb.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DF1AM8245",
-				id: "25564944769",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690089"
-						],
-						vname: [
-							"卡其色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690139"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15934/348/2059995912/38735/bf9a6f06/5a7d01d0Nd2bbf13f.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DU1AM8240",
-				id: "25564944777",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690170"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15934/348/2059995912/38735/bf9a6f06/5a7d01d0Nd2bbf13f.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DU1AM8260",
-				id: "25564944773",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t18175/354/460929203/42963/8f2384b4/5a7d01cbN2b08c4eb.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DF1AM8270",
-				id: "25564944764",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690089"
-						],
-						vname: [
-							"卡其色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t18175/354/460929203/42963/8f2384b4/5a7d01cbN2b08c4eb.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DF1AM8240",
-				id: "25564944770",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690170"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690089"
-						],
-						vname: [
-							"卡其色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t18175/354/460929203/42963/8f2384b4/5a7d01cbN2b08c4eb.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DF1AM8265",
-				id: "25564944765",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690089"
-						],
-						vname: [
-							"卡其色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15934/348/2059995912/38735/bf9a6f06/5a7d01d0Nd2bbf13f.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DU1AM8250",
-				id: "25564944775",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t18175/354/460929203/42963/8f2384b4/5a7d01cbN2b08c4eb.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DF1AM8255",
-				id: "25564944767",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690089"
-						],
-						vname: [
-							"卡其色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15934/348/2059995912/38735/bf9a6f06/5a7d01d0Nd2bbf13f.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DU1AM8245",
-				id: "25564944776",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690139"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t18175/354/460929203/42963/8f2384b4/5a7d01cbN2b08c4eb.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DF1AM8250",
-				id: "25564944768",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690089"
-						],
-						vname: [
-							"卡其色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15439/46/2241373386/46324/1e39c399/5a7d01c7N81d13d8d.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DL1AM8255",
-				id: "25564944760",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690087"
-						],
-						vname: [
-							"红色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15439/46/2241373386/46324/1e39c399/5a7d01c7N81d13d8d.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DL1AM8245",
-				id: "25564944762",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690087"
-						],
-						vname: [
-							"红色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690139"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15439/46/2241373386/46324/1e39c399/5a7d01c7N81d13d8d.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DL1AM8265",
-				id: "25564944758",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690087"
-						],
-						vname: [
-							"红色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15439/46/2241373386/46324/1e39c399/5a7d01c7N81d13d8d.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DL1AM8260",
-				id: "25564944759",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690087"
-						],
-						vname: [
-							"红色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15439/46/2241373386/46324/1e39c399/5a7d01c7N81d13d8d.jpg",
-				quantity: 0,
-				price: 1099,
-				created: 1518141907000,
-				platStatus: null,
-				modified: 1518141909000,
-				outerId: "RB7BUC03DL1AM8240",
-				id: "25564944763",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690170"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690087"
-						],
-						vname: [
-							"红色"
-						],
-						pname: null,
-						pid: "1000000013"
+						pname: "套餐",
+						pid: "13129880"
 					}
 				]
 			}
 		],
-		created: 1518141907000,
-		delistTime: 1518141907000,
-		inputStr: null,
-		inputPids: null,
+		delistTime: 1385539143000,
 		props: [
 			{
 				vid: [
-					"609629"
+					"3228543"
 				],
 				vname: [
-					"专柜同款"
+					"中式快餐"
 				],
-				pname: null,
-				pid: "104857"
+				pname: "外卖主营",
+				pid: "13129130"
 			},
 			{
 				vid: [
-					"737170"
+					"20371660"
 				],
 				vname: [
-					"其它"
+					"商务套餐"
 				],
-				pname: null,
-				pid: "14850"
+				pname: "套餐种类",
+				pid: "13153689"
 			},
 			{
 				vid: [
-					"609631"
+					"3228364"
 				],
 				vname: [
-					"牛皮"
+					"晚餐"
 				],
-				pname: null,
-				pid: "11864"
+				pname: "用餐时间",
+				pid: "13129227"
 			},
 			{
 				vid: [
-					"746334"
+					"3266779"
 				],
 				vname: [
-					"2018春季"
+					"套餐一"
 				],
-				pname: null,
-				pid: "104886"
+				pname: "套餐",
+				pid: "13129880"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i2/12037030598937959/T1x_PaXnBsXXXXXXXX_!!0-item_pic.jpg",
+		lastSync: 1524571161507,
+		price: 1,
+		platStatus: "instock",
+		promotionIn: [
+			{
+				promoPrice: "0.50"
+			}
+		],
+		name: "板栗烧鸡套餐",
+		shopCategories: [
+			{
+				name: "",
+				id: "812144061"
+			}
+		],
+		modified: 1498230604000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=36177640302&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "套餐/简餐",
+				id: "50024504"
+			}
+		],
+		id: "36177640302",
+		listTime: 1385539143000,
+		status: 0
+	},
+	{
+		skus: [
+			{
+				price: 0.01,
+				outerId: "",
+				id: "3502750500076",
+				props: [
+					{
+						vid: [
+							"3226348"
+						],
+						vname: [
+							"大"
+						],
+						pname: "大小",
+						pid: "134942334"
+					},
+					{
+						vid: [
+							"367875463"
+						],
+						vname: [
+							"浅绿色啊啊啊啊啊啊啊啊啊啊"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			}
+		],
+		delistTime: 1509431191000,
+		props: [
+			{
+				vid: [
+					"3226348"
+				],
+				vname: [
+					"大"
+				],
+				pname: "大小",
+				pid: "134942334"
 			},
 			{
 				vid: [
-					"220845"
+					"367875463"
 				],
 				vname: [
-					"圆头"
+					"浅绿色啊啊啊啊啊啊啊啊啊啊"
 				],
-				pname: null,
-				pid: "14888"
+				pname: "颜色分类",
+				pid: "1627207"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/1849722037/TB2itm_lwMPMeJjy1XbXXcwxVXa_!!1849722037.png",
+		lastSync: 1524581964186,
+		price: 0.01,
+		platStatus: "instock",
+		name: "测试商品请勿购买--发发发",
+		modified: 1522317255000,
+		outerId: "0",
+		detailUrl: "https://item.taobao.com/item.htm?id=40948502941&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "布老虎",
+				id: "124202006"
+			}
+		],
+		id: "40948502941",
+		listTime: 1509431191000,
+		status: 0
+	},
+	{
+		delistTime: 1414637395000,
+		props: [
+			{
+				vid: [
+					"222142136"
+				],
+				vname: [
+					"阿牛嫂"
+				],
+				pname: "品牌",
+				pid: "20000"
 			},
 			{
 				vid: [
-					"570659"
+					"3228543"
 				],
 				vname: [
-					"简约"
+					"中式快餐"
 				],
-				pname: null,
-				pid: "14941"
+				pname: "外卖主营",
+				pid: "13129130"
 			},
 			{
 				vid: [
-					"222446"
+					"20371660"
 				],
 				vname: [
-					"黑色"
+					"商务套餐"
 				],
-				pname: null,
-				pid: "14951"
+				pname: "套餐种类",
+				pid: "13153689"
 			},
 			{
 				vid: [
-					"570692"
+					"137476"
 				],
 				vname: [
-					"车缝线"
+					"同城24小时卖家送货上门"
 				],
-				pname: null,
-				pid: "91800"
+				pname: "同城配送服务",
+				pid: "13130049"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/TB1qgaIGFXXXXXFXpXXXXXXXXXX_!!0-item_pic.jpg",
+		lastSync: 1524573609281,
+		price: 14,
+		platStatus: "instock",
+		promotionIn: [
+			{
+				promoPrice: "7.00"
+			}
+		],
+		name: "韭黄肉丝盖浇饭",
+		shopCategories: [
+			{
+				name: "",
+				id: "815315956"
+			}
+		],
+		modified: 1508389544000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=41897960122&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "套餐/简餐",
+				id: "50024504"
+			}
+		],
+		id: "41897960122",
+		listTime: 1414637395000,
+		status: 0
+	},
+	{
+		skus: [
+			{
+				price: 40,
+				outerId: "1323",
+				id: "3180237725671",
+				props: [
+					{
+						vid: [
+							"3266779"
+						],
+						vname: [
+							"套餐一"
+						],
+						pname: "套餐",
+						pid: "13129880"
+					}
+				]
+			},
+			{
+				price: 20,
+				outerId: "222",
+				id: "3180237725672",
+				props: [
+					{
+						vid: [
+							"3266781"
+						],
+						vname: [
+							"套餐二"
+						],
+						pname: "套餐",
+						pid: "13129880"
+					}
+				]
+			}
+		],
+		delistTime: 1414637533000,
+		props: [
+			{
+				vid: [
+					"222142136"
+				],
+				vname: [
+					"阿牛嫂"
+				],
+				pname: "品牌",
+				pid: "20000"
 			},
 			{
 				vid: [
-					"737174"
+					"3228543"
 				],
 				vname: [
-					"其它"
+					"中式快餐"
 				],
-				pname: null,
-				pid: "91801"
+				pname: "外卖主营",
+				pid: "13129130"
 			},
 			{
 				vid: [
-					"589927"
+					"91392058"
 				],
 				vname: [
-					"休闲皮鞋"
+					"简餐"
 				],
-				pname: null,
-				pid: "11853"
+				pname: "套餐种类",
+				pid: "13153689"
 			},
 			{
 				vid: [
-					"589950"
+					"3228362"
 				],
 				vname: [
-					"平底"
+					"早餐"
 				],
-				pname: null,
-				pid: "91806"
+				pname: "用餐时间",
+				pid: "13129227"
 			},
 			{
 				vid: [
-					"570526"
+					"137476"
 				],
 				vname: [
-					"皮"
+					"同城24小时卖家送货上门"
 				],
-				pname: null,
-				pid: "91791"
+				pname: "同城配送服务",
+				pid: "13130049"
 			},
 			{
 				vid: [
-					"112876"
+					"3266779"
 				],
 				vname: [
-					"1000-1999"
+					"套餐一"
 				],
-				pname: null,
-				pid: "11839"
+				pname: "套餐",
+				pid: "13129880"
 			},
 			{
 				vid: [
-					"112859"
+					"3266781"
 				],
 				vname: [
-					"38"
+					"套餐二"
 				],
-				pname: null,
-				pid: "11838"
+				pname: "套餐",
+				pid: "13129880"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB2jJslpVXXXXaDXXXXXXXXXXXX_!!1849722037.png",
+		lastSync: 1524573609281,
+		price: 22,
+		platStatus: "instock",
+		promotionIn: [
+			{
+				promoPrice: "11.00"
+			}
+		],
+		name: "测试商品，请不要购买，谢谢",
+		shopCategories: [
+			{
+				name: "",
+				id: "815315956"
+			}
+		],
+		modified: 1508389544000,
+		outerId: "厉害了",
+		detailUrl: "https://item.taobao.com/item.htm?id=41898176511&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "套餐/简餐",
+				id: "50024504"
+			}
+		],
+		id: "41898176511",
+		listTime: 1414637533000,
+		status: 0
+	},
+	{
+		skus: null,
+		quantity: 10000,
+		created: 0,
+		delistTime: 1531816592000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '2222',
+		props: [
+			{
+				vid: [
+					"137476"
+				],
+				vname: [
+					"同城24小时卖家送货上门"
+				],
+				pname: "同城配送服务",
+				pid: "13130049"
 			},
 			{
 				vid: [
-					"570340"
+					"91392058"
 				],
 				vname: [
-					"日常休闲"
+					"简餐"
 				],
-				pname: null,
-				pid: "91768"
+				pname: "套餐种类",
+				pid: "13153689"
 			},
 			{
 				vid: [
-					"736817"
+					"3228543"
 				],
 				vname: [
-					"其它"
+					"中式快餐"
 				],
-				pname: null,
-				pid: "91805"
+				pname: "外卖主营",
+				pid: "13129130"
 			},
 			{
 				vid: [
-					"736827"
+					"222142136"
 				],
 				vname: [
-					"胶粘鞋"
+					"阿牛嫂"
 				],
-				pname: null,
-				pid: "142710"
+				pname: "品牌",
+				pid: "20000"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/TB1qgaIGFXXXXXFXpXXXXXXXXXX_!!0-item_pic.jpg",
+		lastSync: 1531765281803,
+		price: 0.01,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "0.01",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "秘制鸡腿木桶饭",
+		shopCategories: [
+			{
+				name: "各式饭",
+				id: "815315956"
+			}
+		],
+		modified: 1529439557000,
+		outerId: "111112222",
+		detailUrl: "https://item.taobao.com/item.htm?id=41982082920&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "套餐/简餐",
+				id: "50024504"
+			}
+		],
+		id: "41982082920",
+		listTime: 1531211792000,
+		status: 1,
+		order: 0
+	},
+	{
+		delistTime: 1489807829000,
+		props: [
+			{
+				vid: [
+					"222142136"
+				],
+				vname: [
+					"阿牛嫂"
+				],
+				pname: "品牌",
+				pid: "20000"
 			},
 			{
 				vid: [
-					"221157"
+					"3228543"
+				],
+				vname: [
+					"中式快餐"
+				],
+				pname: "外卖主营",
+				pid: "13129130"
+			},
+			{
+				vid: [
+					"91392058"
+				],
+				vname: [
+					"简餐"
+				],
+				pname: "套餐种类",
+				pid: "13153689"
+			},
+			{
+				vid: [
+					"137476"
+				],
+				vname: [
+					"同城24小时卖家送货上门"
+				],
+				pname: "同城配送服务",
+				pid: "13130049"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/TB1qgaIGFXXXXXFXpXXXXXXXXXX_!!0-item_pic.jpg",
+		lastSync: 1524568657461,
+		price: 13,
+		platStatus: "instock",
+		name: "虾仁跑蛋饭 123",
+		shopCategories: [
+			{
+				name: "",
+				id: "815315956"
+			}
+		],
+		modified: 1489807829000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=42001816005&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "套餐/简餐",
+				id: "50024504"
+			}
+		],
+		id: "42001816005",
+		listTime: 1489458378000,
+		status: 0
+	},
+	{
+		delistTime: 1415587052000,
+		props: [
+			{
+				vid: [
+					"222142136"
+				],
+				vname: [
+					"阿牛嫂"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"3228543"
+				],
+				vname: [
+					"中式快餐"
+				],
+				pname: "外卖主营",
+				pid: "13129130"
+			},
+			{
+				vid: [
+					"91392058"
+				],
+				vname: [
+					"简餐"
+				],
+				pname: "套餐种类",
+				pid: "13153689"
+			},
+			{
+				vid: [
+					"137476"
+				],
+				vname: [
+					"同城24小时卖家送货上门"
+				],
+				pname: "同城配送服务",
+				pid: "13130049"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/TB1qgaIGFXXXXXFXpXXXXXXXXXX_!!0-item_pic.jpg",
+		lastSync: 1524571069238,
+		price: 13,
+		platStatus: "instock",
+		promotionIn: [
+			{
+				promoPrice: "6.50"
+			}
+		],
+		name: "酱爆猪肝盖浇饭",
+		shopCategories: [
+			{
+				name: "",
+				id: "815315956"
+			}
+		],
+		modified: 1498052396000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=42126757393&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "套餐/简餐",
+				id: "50024504"
+			}
+		],
+		id: "42126757393",
+		listTime: 1415587052000,
+		status: 0
+	},
+	{
+		delistTime: 1415931934000,
+		props: [
+			{
+				vid: [
+					"222142136"
+				],
+				vname: [
+					"阿牛嫂"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"3228543"
+				],
+				vname: [
+					"中式快餐"
+				],
+				pname: "外卖主营",
+				pid: "13129130"
+			},
+			{
+				vid: [
+					"91392058"
+				],
+				vname: [
+					"简餐"
+				],
+				pname: "套餐种类",
+				pid: "13153689"
+			},
+			{
+				vid: [
+					"137476"
+				],
+				vname: [
+					"同城24小时卖家送货上门"
+				],
+				pname: "同城配送服务",
+				pid: "13130049"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/TB1qgaIGFXXXXXFXpXXXXXXXXXX_!!0-item_pic.jpg",
+		lastSync: 1524572603645,
+		price: 0.01,
+		platStatus: "instock",
+		promotionIn: [
+			{
+				promoPrice: "0.01"
+			},
+			{
+				promoPrice: "0.01"
+			}
+		],
+		name: "豆皮红烧肉木桶饭",
+		shopCategories: [
+			{
+				name: "",
+				id: "815315956"
+			}
+		],
+		modified: 1504188726000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=42188530018&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "套餐/简餐",
+				id: "50024504"
+			}
+		],
+		id: "42188530018",
+		listTime: 1415931934000,
+		status: 0
+	},
+	{
+		delistTime: 1482320270000,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB2hzYkpVXXXXXqXFXXXXXXXXXX_!!1849722037.png",
+		lastSync: 1524566518558,
+		price: 0.01,
+		platStatus: "instock",
+		name: "Canbo/康宝 消毒柜立式家用迷你 高温消毒碗柜正品",
+		modified: 1483827817000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=532988558193&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "其它厨房家电",
+				id: "50002900"
+			}
+		],
+		id: "532988558193",
+		listTime: 1481767499000,
+		status: 0
+	},
+	{
+		skus: null,
+		quantity: 11100,
+		created: 0,
+		delistTime: 1531966519000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '3333',
+		props: [
+			{
+				vid: [
+					"28383"
+				],
+				vname: [
+					"均码"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"20527"
+				],
+				vname: [
+					"短袜"
+				],
+				pname: "袜子种类",
+				pid: "10982759"
+			},
+			{
+				vid: [
+					"4222667"
+				],
+				vname: [
+					"Annil/安奈儿"
+				],
+				pname: "品牌",
+				pid: "20000"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i2/1849722037/TB2kQ_PpVXXXXcAXXXXXXXXXXXX_!!1849722037.png",
+		lastSync: 1531765281793,
+		price: 99,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "89.10",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "2018春季新款双面羊绒羊驼绒大衣女中长款反季阿尔--测试数据勿买",
+		shopCategories: [
+			{
+				name: "饭类",
+				id: "810124529"
+			}
+		],
+		modified: 1529397663000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=532989630264&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "儿童袜子(0-16岁)",
+				id: "50006584"
+			}
+		],
+		id: "532989630264",
+		listTime: 1531361719000,
+		status: 1,
+		order: 0
+	},
+	{
+		delistTime: 1490240086000,
+		props: [
+			{
+				vid: [
+					"32998"
+				],
+				vname: [
+					"全国联保"
+				],
+				pname: "保修",
+				pid: "20930"
+			},
+			{
+				vid: [
+					"241584693"
+				],
+				vname: [
+					"普通玻璃镜面"
+				],
+				pname: "手表镜面材质",
+				pid: "151444510"
+			},
+			{
+				vid: [
+					"59957"
+				],
+				vname: [
+					"周大福"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"130593"
+				],
+				vname: [
+					"石英机芯"
+				],
+				pname: "机芯类型",
+				pid: "34339"
+			},
+			{
+				vid: [
+					"27845"
+				],
+				vname: [
+					"儿童"
+				],
+				pname: "手表种类",
+				pid: "122216608"
+			},
+			{
+				vid: [
+					"29229"
+				],
+				vname: [
+					"树脂"
+				],
+				pname: "表带材质",
+				pid: "34340"
+			},
+			{
+				vid: [
+					"60080"
+				],
+				vname: [
+					"30米生活防水"
+				],
+				pname: "防水深度",
+				pid: "122216685"
+			},
+			{
+				vid: [
+					"3862044"
+				],
+				vname: [
+					"7mm"
+				],
+				pname: "表盘厚度",
+				pid: "34375"
+			},
+			{
+				vid: [
+					"3269301"
+				],
+				vname: [
+					"40mm"
+				],
+				pname: "表盘直径",
+				pid: "5741395"
+			},
+			{
+				vid: [
+					"3278780"
+				],
+				vname: [
+					"国内"
+				],
+				pname: "品牌产地",
+				pid: "21299"
+			},
+			{
+				vid: [
+					"30161"
 				],
 				vname: [
 					"橡胶"
 				],
-				pname: null,
-				pid: "14919"
+				pname: "表壳材质",
+				pid: "6184104"
 			}
 		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t15439/46/2241373386/46324/1e39c399/5a7d01c7N81d13d8d.jpg",
-		lastSync: 1527771719008,
-		price: 1099,
-		platStatus: "1",
-		name: "BASTO/百思图2018春季专柜同款红色牛皮/PU学院风松紧带男休闲鞋BUC03AM8休",
-		shopCategories: [
-			{
-				name: null,
-				id: "211256"
-			},
-			{
-				name: null,
-				id: "7945466"
-			},
-			{
-				name: "",
-				id: "4825754"
-			}
-		],
-		modified: 1527759118000,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2RxY9pVXXXXbWXXXXXXXXXXXX_!!1849722037.png",
+		lastSync: 1524567783833,
+		price: 200,
+		platStatus: "instock",
+		name: "周大福X功夫熊猫3儿童手表卡通石英学生男/女手表",
+		modified: 1490240086000,
 		outerId: "",
-		detailUrl: "https://item.jd.com/25564944757.html",
-		shopId: "23591",
-		id: "11399464511",
+		detailUrl: "https://item.taobao.com/item.htm?id=533016837722&spm=2014.12440355.0.0",
+		shopId: "106878997",
 		categories: [
 			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
+				name: "国产腕表",
+				id: "121454006"
 			}
 		],
-		listTime: 0,
-		order: 0,
+		id: "533016837722",
+		listTime: 1490235858000,
 		status: 0
 	},
 	{
-		quantity: 0,
+		delistTime: 1474945779000,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/1849722037/TB2yOzFqXXXXXXlXFXXXXXXXXXX_!!1849722037.jpg",
+		lastSync: 1524564159105,
+		price: 100,
+		platStatus: "instock",
+		name: "【积分联盟】自然乐园 乳木果洗面奶",
+		shopCategories: [
+			{
+				name: "",
+				id: "-1"
+			}
+		],
+		modified: 1465269606000,
+		outerId: "",
+		detailUrl: "http://item.taobao.com/item.htm?id=533260810437",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "赠品",
+				id: "50023728"
+			}
+		],
+		id: "533260810437",
+		listTime: 1474340979000,
+		status: 0
+	},
+	{
+		skus: null,
+		quantity: 12200,
+		created: 0,
+		delistTime: 1531810461000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '4444',
+		props: null,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2ZM.jqXXXXXaAXXXXXXXXXXXX_!!1849722037.jpg",
+		lastSync: 1531765281787,
+		price: 102.9,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "92.61",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "【积分联盟】五谷磨房提子燕麦五谷伴侣早餐燕麦片",
+		shopCategories: [
+			{
+				name: "牛井",
+				id: "809546836"
+			}
+		],
+		modified: 1529397633000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=533274038219&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "赠品",
+				id: "50023728"
+			}
+		],
+		id: "533274038219",
+		listTime: 1531205661000,
+		status: 1,
+		order: 0
+	},
+	{
+		skus: null,
+		quantity: 1927,
+		created: 0,
+		delistTime: 1531810150000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: null,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB20AkpqXXXXXaaXXXXXXXXXXXX_!!1849722037.jpg",
+		lastSync: 1531765281755,
+		price: 0.01,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "0.01",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "【积分联盟】安奈儿女童翻领短袖T恤纯棉",
+		shopCategories: [
+			{
+				name: "咖喱饭&amp;蛋蛋饭",
+				id: "809546837"
+			}
+		],
+		modified: 1531736589000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=533331876819&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "赠品",
+				id: "50023728"
+			}
+		],
+		id: "533331876819",
+		listTime: 1531205350000,
+		status: 1,
+		order: 0
+	},
+	{
+		delistTime: 1472790493000,
+		props: [
+			{
+				vid: [
+					"49929539"
+				],
+				vname: [
+					"11国"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"740138901"
+				],
+				vname: [
+					"2016年冬季"
+				],
+				pname: "年份季节",
+				pid: "122216347"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/1849722037/TB2V7lbXF15V1Bjy1XaXXaPqVXa_!!1849722037.jpg",
+		lastSync: 1524563508079,
+		price: 2,
+		platStatus: "instock",
+		name: "测试预售商品不要拍下",
+		modified: 1473301504000,
+		outerId: "",
+		detailUrl: "http://item.taobao.com/item.htm?id=537926602898&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "大码女装",
+				id: "1629"
+			}
+		],
+		id: "537926602898",
+		listTime: 1472789742000,
+		status: 0
+	},
+	{
 		skus: [
 			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t7705/107/3650180531/43129/e85cbb8c/59fbd874Ndf1e14fd.jpg",
-				quantity: 0,
-				price: 1098,
-				created: 1509677174000,
-				platStatus: null,
-				modified: 1518122385000,
-				outerId: "P712279F3VMI41110",
-				id: "19196986729",
-				status: 0,
+				price: 30,
+				outerId: "123456",
+				id: "3214698274000",
 				props: [
 					{
 						vid: [
-							"1501092946"
+							"46432"
 						],
 						vname: [
-							"44"
+							"3片"
 						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t7705/107/3650180531/43129/e85cbb8c/59fbd874Ndf1e14fd.jpg",
-				quantity: 0,
-				price: 1098,
-				created: 1509677174000,
-				platStatus: null,
-				modified: 1518122560000,
-				outerId: "P712279F3VMI41100",
-				id: "19196986728",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t7705/107/3650180531/43129/e85cbb8c/59fbd874Ndf1e14fd.jpg",
-				quantity: 0,
-				price: 1098,
-				created: 1509677174000,
-				platStatus: null,
-				modified: 1518122538000,
-				outerId: "P712279F3VMI41080",
-				id: "19196986726",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t7705/107/3650180531/43129/e85cbb8c/59fbd874Ndf1e14fd.jpg",
-				quantity: 0,
-				price: 1098,
-				created: 1509677174000,
-				platStatus: null,
-				modified: 1518122524000,
-				outerId: "P712279F3VMI41070",
-				id: "19196986725",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
+						pname: "片数",
+						pid: "8631813"
 					}
 				]
 			}
 		],
-		created: 1509677174000,
-		delistTime: 1517969937000,
-		inputStr: null,
-		inputPids: null,
+		delistTime: 1493348393000,
 		props: [
 			{
 				vid: [
-					"736827"
+					"27433"
 				],
 				vname: [
-					"胶粘鞋"
+					"3"
 				],
-				pname: null,
-				pid: "142710"
+				pname: "包装数量(片)",
+				pid: "122216316"
 			},
 			{
 				vid: [
-					"570707"
+					"3279834"
 				],
 				vname: [
-					"漆皮"
+					"维康"
 				],
-				pname: null,
-				pid: "91801"
+				pname: "品牌",
+				pid: "20000"
 			},
 			{
 				vid: [
-					"220185"
+					"360768929"
 				],
 				vname: [
-					"系带"
+					"WKJJ-221"
 				],
-				pname: null,
-				pid: "14850"
+				pname: "型号",
+				pid: "14668261"
 			},
 			{
 				vid: [
-					"222467"
+					"10593760"
+				],
+				vname: [
+					"18kg"
+				],
+				pname: "毛重",
+				pid: "2020542"
+			},
+			{
+				vid: [
+					"3910209"
+				],
+				vname: [
+					"暖足贴"
+				],
+				pname: "产品",
+				pid: "7070411"
+			},
+			{
+				vid: [
+					"11891343"
+				],
+				vname: [
+					"14小时"
+				],
+				pname: "发热时间",
+				pid: "19398730"
+			},
+			{
+				vid: [
+					"46432"
+				],
+				vname: [
+					"3片"
+				],
+				pname: "片数",
+				pid: "8631813"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i2/1849722037/TB2RilcXqe5V1Bjy1zjXXa08VXa_!!1849722037.jpg",
+		lastSync: 1524569790977,
+		price: 30,
+		platStatus: "instock",
+		name: "本店测试商品，请勿购买",
+		modified: 1493348393000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=538243628525&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "保暖贴",
+				id: "50013959"
+			}
+		],
+		id: "538243628525",
+		listTime: 1493177820000,
+		status: 0
+	},
+	{
+		skus: null,
+		quantity: 7999,
+		created: 0,
+		delistTime: 1531816571000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: [
+			{
+				vid: [
+					"740138901"
+				],
+				vname: [
+					"2016年冬季"
+				],
+				pname: "年份季节",
+				pid: "122216347"
+			},
+			{
+				vid: [
+					"135311220"
+				],
+				vname: [
+					"10 Crosby Derek Lam"
+				],
+				pname: "品牌",
+				pid: "20000"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB251vXXmOI.eBjSspmXXatOVXa_!!1849722037.jpg",
+		lastSync: 1531765281800,
+		price: 2,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "1.80",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "全新宝贝",
+		shopCategories: [
+			{
+				name: "",
+				id: "-1"
+			}
+		],
+		modified: 1531532252000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=541497704393&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "半身裙",
+				id: "1623"
+			}
+		],
+		id: "541497704393",
+		listTime: 1531211771000,
+		status: 1,
+		order: 0
+	},
+	{
+		delistTime: 1492140399000,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i2/1849722037/TB2RilcXqe5V1Bjy1zjXXa08VXa_!!1849722037.jpg",
+		lastSync: 1524569522704,
+		price: 1,
+		platStatus: "instock",
+		name: "预售商品测试-全款预售",
+		modified: 1492140399000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=541892896687&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "手帕",
+				id: "50009035"
+			}
+		],
+		id: "541892896687",
+		listTime: 1492060704000,
+		status: 0
+	},
+	{
+		skus: null,
+		quantity: 12997,
+		created: 0,
+		delistTime: 1531977423000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: null,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB251vXXmOI.eBjSspmXXatOVXa_!!1849722037.jpg",
+		lastSync: 1531765281765,
+		price: 1,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "0.90",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "预售测试-定时预售",
+		shopCategories: [
+			{
+				name: "饭类",
+				id: "810124529"
+			}
+		],
+		modified: 1531366544000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=541892992299&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "手帕",
+				id: "50009035"
+			}
+		],
+		id: "541892992299",
+		listTime: 1531372623000,
+		status: 1,
+		order: 0
+	},
+	{
+		skus: null,
+		quantity: 29800,
+		created: 0,
+		delistTime: 1531977357000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: [
+			{
+				vid: [
+					"740138901"
+				],
+				vname: [
+					"2016年冬季"
+				],
+				pname: "年份季节",
+				pid: "122216347"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i2/1849722037/TB2LGBZak5M.eBjSZFrXXXPgVXa_!!1849722037.jpg",
+		lastSync: 1531765281806,
+		price: 4,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "3.60",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "预售商品测试-普通预售-订单确认固定时间",
+		shopCategories: [
+			{
+				name: "饭类",
+				id: "810124529"
+			}
+		],
+		modified: 1529397658000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=541906293255&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "半身裙",
+				id: "1623"
+			}
+		],
+		id: "541906293255",
+		listTime: 1531372557000,
+		status: 1,
+		order: 0
+	},
+	{
+		skus: [
+			{
+				price: 12,
+				outerId: "",
+				id: "3419076274289",
+				props: [
+					{
+						vid: [
+							"28332"
+						],
+						vname: [
+							"浅灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					},
+					{
+						vid: [
+							"444706729"
+						],
+						vname: [
+							"30"
+						],
+						pname: "尺码",
+						pid: "20549"
+					}
+				]
+			}
+		],
+		delistTime: 1480511826000,
+		props: [
+			{
+				vid: [
+					"7601965"
+				],
+				vname: [
+					"24Hrs"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"854168429"
+				],
+				vname: [
+					"2016年春季"
+				],
+				pname: "上市年份季节",
+				pid: "122216347"
+			},
+			{
+				vid: [
+					"6474787"
+				],
+				vname: [
+					"二层猪皮"
+				],
+				pname: "帮面材质",
+				pid: "124128491"
+			},
+			{
+				vid: [
+					"6474787"
+				],
+				vname: [
+					"二层猪皮"
+				],
+				pname: "内里材质",
+				pid: "122216587"
+			},
+			{
+				vid: [
+					"115801"
+				],
+				vname: [
+					"浅口"
+				],
+				pname: "开口深度",
+				pid: "122216628"
+			},
+			{
+				vid: [
+					"20213"
 				],
 				vname: [
 					"其他"
 				],
-				pname: null,
-				pid: "14951"
+				pname: "鞋头款式",
+				pid: "122216351"
 			},
 			{
 				vid: [
-					"609631"
+					"29069296"
 				],
 				vname: [
-					"牛皮"
+					"低跟(1-3cm)"
 				],
-				pname: null,
-				pid: "11864"
+				pname: "后跟高",
+				pid: "1626698"
 			},
 			{
 				vid: [
-					"589929"
+					"3994116"
 				],
 				vname: [
-					"户外鞋"
+					"内增高"
 				],
-				pname: null,
-				pid: "11853"
+				pname: "跟底款式",
+				pid: "122216561"
 			},
 			{
 				vid: [
-					"589951"
+					"28332"
 				],
 				vname: [
-					"有跟"
+					"浅灰色"
 				],
-				pname: null,
-				pid: "91806"
+				pname: "颜色分类",
+				pid: "1627207"
 			},
 			{
 				vid: [
-					"220845"
+					"444706729"
 				],
 				vname: [
-					"圆头"
+					"30"
 				],
-				pname: null,
-				pid: "14888"
-			},
-			{
-				vid: [
-					"570340"
-				],
-				vname: [
-					"日常休闲"
-				],
-				pname: null,
-				pid: "91768"
-			},
-			{
-				vid: [
-					"609630"
-				],
-				vname: [
-					"线上销售"
-				],
-				pname: null,
-				pid: "104857"
-			},
-			{
-				vid: [
-					"112876"
-				],
-				vname: [
-					"1000-1999"
-				],
-				pname: null,
-				pid: "11839"
-			},
-			{
-				vid: [
-					"221157"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14919"
-			},
-			{
-				vid: [
-					"737172"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "91791"
-			},
-			{
-				vid: [
-					"112863"
-				],
-				vname: [
-					"40"
-				],
-				pname: null,
-				pid: "11838"
-			},
-			{
-				vid: [
-					"609918"
-				],
-				vname: [
-					"往季"
-				],
-				pname: null,
-				pid: "104886"
-			},
-			{
-				vid: [
-					"570659"
-				],
-				vname: [
-					"简约"
-				],
-				pname: null,
-				pid: "14941"
-			},
-			{
-				vid: [
-					"736817"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "91805"
-			},
-			{
-				vid: [
-					"570692"
-				],
-				vname: [
-					"车缝线"
-				],
-				pname: null,
-				pid: "91800"
+				pname: "尺码",
+				pid: "20549"
 			}
 		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t7705/107/3650180531/43129/e85cbb8c/59fbd874Ndf1e14fd.jpg",
-		lastSync: 1527771725443,
-		price: 1098,
-		platStatus: "2",
-		name: "CAT卡特 专柜同款 男子黄色牛皮革/合成革/织物休闲鞋P712270",
-		shopCategories: [
-			{
-				name: null,
-				id: "211256"
-			},
-			{
-				name: "",
-				id: "5149081"
-			}
-		],
-		modified: 1527759114000,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2tLv2XYmI.eBjy1zjXXaq5VXa_!!1849722037.jpg",
+		lastSync: 1524564926792,
+		price: 12,
+		platStatus: "instock",
+		name: "普通预售商品-订单确认：定金支付X天后",
+		modified: 1480511826000,
 		outerId: "",
-		detailUrl: "https://item.jd.com/19196986727.html",
-		shopId: "23591",
-		id: "10941868527",
+		detailUrl: "http://item.taobao.com/item.htm?id=541920723552&spm=2014.12440355.0.0",
+		shopId: "106878997",
 		categories: [
 			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
+				name: "低帮鞋",
+				id: "50012027"
 			}
 		],
-		listTime: 1509939780000,
-		order: 0,
+		id: "541920723552",
+		listTime: 1479964099000,
 		status: 0
 	},
 	{
-		quantity: 0,
+		delistTime: 1488425720000,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB251vXXmOI.eBjSspmXXatOVXa_!!1849722037.jpg",
+		lastSync: 1524568100236,
+		price: 1,
+		platStatus: "instock",
+		name: "d",
+		modified: 1488425720000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=541921971966&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "手帕",
+				id: "50009035"
+			}
+		],
+		id: "541921971966",
+		listTime: 1487827707000,
+		status: 0
+	},
+	{
+		delistTime: 1516616944000,
+		props: [
+			{
+				vid: [
+					"1030290041"
+				],
+				vname: [
+					"-欧雅仕家-"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"740138901"
+				],
+				vname: [
+					"2016年冬季"
+				],
+				pname: "年份季节",
+				pid: "122216347"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2__Q7XBbM8KJjSZFFXXaynpXa_!!1849722037.jpg",
+		lastSync: 1524580858249,
+		price: 2,
+		platStatus: "instock",
+		promotionIn: [
+			{
+				promoPrice: "1.00",
+				startTime: 1516001785000,
+				endTime: 1517124985000
+			}
+		],
+		name: "1元换购商品测试商品请表拍下",
+		modified: 1516616944000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=542809771261&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "半身裙",
+				id: "1623"
+			}
+		],
+		id: "542809771261",
+		listTime: 1516593082000,
+		status: 0
+	},
+	{
+		skus: null,
+		quantity: 99964,
+		created: 0,
+		delistTime: 1531816138000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: [
+			{
+				vid: [
+					"728146012"
+				],
+				vname: [
+					"2016年秋季"
+				],
+				pname: "上市年份季节",
+				pid: "122216347"
+			},
+			{
+				vid: [
+					"33273"
+				],
+				vname: [
+					"100"
+				],
+				pname: "品牌",
+				pid: "20000"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2ur2hd.hnpuFjSZFPXXb_4XXa_!!1849722037.jpg",
+		lastSync: 1531765281760,
+		price: 2,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "1.80",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "测试商品-定金尾款分阶段支付",
+		shopCategories: [
+			{
+				name: "井饭定食",
+				id: "809546839"
+			}
+		],
+		modified: 1529396938000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=544695363363&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "打底裤",
+				id: "50007068"
+			}
+		],
+		id: "544695363363",
+		listTime: 1531211338000,
+		status: 1,
+		order: 0
+	},
+	{
+		delistTime: 1496375420000,
+		props: [
+			{
+				vid: [
+					"135311220"
+				],
+				vname: [
+					"10 Crosby Derek Lam"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"740138901"
+				],
+				vname: [
+					"2016年冬季"
+				],
+				pname: "年份季节",
+				pid: "122216347"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i2/1849722037/TB2qeTrd00opuFjSZFxXXaDNVXa_!!1849722037.jpg",
+		lastSync: 1524570397511,
+		price: 2,
+		platStatus: "instock",
+		name: "测试预售宝贝",
+		modified: 1496375420000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=544699419136&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "背心吊带",
+				id: "121412004"
+			}
+		],
+		id: "544699419136",
+		listTime: 1495861510000,
+		status: 0
+	},
+	{
 		skus: [
 			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15940/314/1519741900/37784/20dca9c7/5a543595N768e7386.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU8AK7245",
-				id: "24202790580",
-				status: 0,
+				price: 0.1,
+				outerId: "",
+				id: "3577205138168",
 				props: [
 					{
 						vid: [
-							"1500690007"
+							"28320"
 						],
 						vname: [
-							"39"
+							"白色"
 						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"深黑色"
-						],
-						pname: null,
-						pid: "1000003624"
+						pname: "颜色分类",
+						pid: "1627207"
 					}
 				]
 			},
 			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t14374/209/1677826387/35060/442ca16c/5a543590Nf62b2f44.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU1AK7250",
-				id: "24202790587",
-				status: 0,
+				price: 0.1,
+				outerId: "666",
+				id: "3577205138169",
 				props: [
 					{
 						vid: [
-							"1500685585"
+							"28321"
 						],
 						vname: [
-							"黑色"
+							"乳白色"
 						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500689978"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t14374/209/1677826387/35060/442ca16c/5a543590Nf62b2f44.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU1AK7220",
-				id: "24202790593",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500689996"
-						],
-						vname: [
-							"34"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t14374/209/1677826387/35060/442ca16c/5a543590Nf62b2f44.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU1AK7225",
-				id: "24202790592",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690005"
-						],
-						vname: [
-							"35"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t14374/209/1677826387/35060/442ca16c/5a543590Nf62b2f44.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU1AK7215",
-				id: "24202790594",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690004"
-						],
-						vname: [
-							"33"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t14374/209/1677826387/35060/442ca16c/5a543590Nf62b2f44.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU1AK7230",
-				id: "24202790591",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690021"
-						],
-						vname: [
-							"36"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t14374/209/1677826387/35060/442ca16c/5a543590Nf62b2f44.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU1AK7240",
-				id: "24202790589",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689977"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t14374/209/1677826387/35060/442ca16c/5a543590Nf62b2f44.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU1AK7245",
-				id: "24202790588",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690007"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t14374/209/1677826387/35060/442ca16c/5a543590Nf62b2f44.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU1AK7235",
-				id: "24202790590",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690022"
-						],
-						vname: [
-							"37"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15940/314/1519741900/37784/20dca9c7/5a543595N768e7386.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU8AK7215",
-				id: "24202790586",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690004"
-						],
-						vname: [
-							"33"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"深黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15940/314/1519741900/37784/20dca9c7/5a543595N768e7386.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU8AK7220",
-				id: "24202790585",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689996"
-						],
-						vname: [
-							"34"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"深黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15940/314/1519741900/37784/20dca9c7/5a543595N768e7386.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU8AK7250",
-				id: "24202790579",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689978"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"深黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15940/314/1519741900/37784/20dca9c7/5a543595N768e7386.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU8AK7230",
-				id: "24202790583",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"深黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690021"
-						],
-						vname: [
-							"36"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15940/314/1519741900/37784/20dca9c7/5a543595N768e7386.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU8AK7240",
-				id: "24202790581",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689977"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"深黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15940/314/1519741900/37784/20dca9c7/5a543595N768e7386.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU8AK7225",
-				id: "24202790584",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"深黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690005"
-						],
-						vname: [
-							"35"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t15940/314/1519741900/37784/20dca9c7/5a543595N768e7386.jpg",
-				quantity: 0,
-				price: 799,
-				created: 1515468187000,
-				platStatus: null,
-				modified: 1515485687000,
-				outerId: "V91VBT03DU8AK7235",
-				id: "24202790582",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690022"
-						],
-						vname: [
-							"37"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"深黑色"
-						],
-						pname: null,
-						pid: "1000003624"
+						pname: "颜色分类",
+						pid: "1627207"
 					}
 				]
 			}
 		],
-		created: 1515468187000,
-		delistTime: 1515468186000,
-		inputStr: null,
-		inputPids: null,
+		delistTime: 1501556257000,
 		props: [
 			{
 				vid: [
-					"112303"
-				],
-				vname: [
-					"中跟3-5"
-				],
-				pname: null,
-				pid: "11792"
-			},
-			{
-				vid: [
-					"572188"
-				],
-				vname: [
-					"漆皮"
-				],
-				pname: null,
-				pid: "93111"
-			},
-			{
-				vid: [
-					"572235"
-				],
-				vname: [
-					"胶粘鞋"
-				],
-				pname: null,
-				pid: "93114"
-			},
-			{
-				vid: [
-					"220110"
-				],
-				vname: [
-					"黑色"
-				],
-				pname: null,
-				pid: "14825"
-			},
-			{
-				vid: [
-					"572213"
-				],
-				vname: [
-					"格子"
-				],
-				pname: null,
-				pid: "11790"
-			},
-			{
-				vid: [
-					"112054"
-				],
-				vname: [
-					"34"
-				],
-				pname: null,
-				pid: "11796"
-			},
-			{
-				vid: [
-					"220168"
-				],
-				vname: [
-					"橡胶底"
-				],
-				pname: null,
-				pid: "14822"
-			},
-			{
-				vid: [
-					"736373"
+					"3323086"
 				],
 				vname: [
 					"PU"
 				],
-				pname: null,
-				pid: "142512"
+				pname: "质地",
+				pid: "20021"
 			},
 			{
 				vid: [
-					"573943"
+					"90765"
 				],
 				vname: [
-					"日常"
+					"磨砂"
 				],
-				pname: null,
-				pid: "93254"
+				pname: "材质工艺",
+				pid: "122216629"
 			},
 			{
 				vid: [
-					"112052"
+					"33273"
 				],
 				vname: [
-					"大于700元"
+					"100"
 				],
-				pname: null,
-				pid: "11798"
+				pname: "品牌",
+				pid: "20000"
 			},
 			{
 				vid: [
-					"220200"
-				],
-				vname: [
-					"pu皮"
-				],
-				pname: null,
-				pid: "14823"
-			},
-			{
-				vid: [
-					"112324"
-				],
-				vname: [
-					"粗跟"
-				],
-				pname: null,
-				pid: "11793"
-			},
-			{
-				vid: [
-					"736358"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "11794"
-			},
-			{
-				vid: [
-					"572238"
-				],
-				vname: [
-					"纯色"
-				],
-				pname: null,
-				pid: "93115"
-			},
-			{
-				vid: [
-					"572227"
-				],
-				vname: [
-					"空"
-				],
-				pname: null,
-				pid: "93113"
-			},
-			{
-				vid: [
-					"220082"
-				],
-				vname: [
-					"一字式扣带"
-				],
-				pname: null,
-				pid: "14826"
-			},
-			{
-				vid: [
-					"736347"
-				],
-				vname: [
-					"青年"
-				],
-				pname: null,
-				pid: "93255"
-			},
-			{
-				vid: [
-					"736345"
-				],
-				vname: [
-					"2017春季"
-				],
-				pname: null,
-				pid: "134336"
-			},
-			{
-				vid: [
-					"573928"
-				],
-				vname: [
-					"性感"
-				],
-				pname: null,
-				pid: "93252"
-			},
-			{
-				vid: [
-					"736383"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "93112"
-			},
-			{
-				vid: [
-					"220162"
-				],
-				vname: [
-					"包头"
-				],
-				pname: null,
-				pid: "14821"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t15940/314/1519741900/37784/20dca9c7/5a543595N768e7386.jpg",
-		lastSync: 1527771726658,
-		price: 799,
-		platStatus: "1",
-		name: "Senda/森达春季专柜同款优雅舒适休闲真皮女凉鞋VBT03AK7",
-		shopCategories: [
-			{
-				name: null,
-				id: "211327"
-			},
-			{
-				name: "",
-				id: "255754"
-			}
-		],
-		modified: 1527759117000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/24202790580.html",
-		shopId: "23591",
-		id: "11300535208",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6917"
-			}
-		],
-		listTime: 0,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2716/273/1016607112/55407/19266eb0/57318972N943e104a.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122537000,
-				outerId: "CWRH4Y22MA1AM6270",
-				id: "10341217169",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689825"
-						],
-						vname: [
-							"白/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					},
-					{
-						vid: [
-							"1501887760"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000003626"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2770/282/1072047354/46826/d99e6f39/57318976N03f339ea.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122730000,
-				outerId: "CWRH4Y22MM8AM6265",
-				id: "10341217175",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689855"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000003626"
-					},
-					{
-						vid: [
-							"1500689791"
-						],
-						vname: [
-							"深兰/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2770/282/1072047354/46826/d99e6f39/57318976N03f339ea.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122537000,
-				outerId: "CWRH4Y22MM8AM6255",
-				id: "10341217173",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689879"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000003626"
-					},
-					{
-						vid: [
-							"1500689791"
-						],
-						vname: [
-							"深兰/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2770/282/1072047354/46826/d99e6f39/57318976N03f339ea.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122597000,
-				outerId: "CWRH4Y22MM8AM6270",
-				id: "10341217176",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689791"
-						],
-						vname: [
-							"深兰/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					},
-					{
-						vid: [
-							"1501887760"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000003626"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2770/282/1072047354/46826/d99e6f39/57318976N03f339ea.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122809000,
-				outerId: "CWRH4Y22MM8AM6260",
-				id: "10341217174",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689791"
-						],
-						vname: [
-							"深兰/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					},
-					{
-						vid: [
-							"1500689880"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000003626"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2770/282/1072047354/46826/d99e6f39/57318976N03f339ea.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518123024000,
-				outerId: "CWRH4Y22MM8AM6245",
-				id: "10341217171",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689877"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000003626"
-					},
-					{
-						vid: [
-							"1500689791"
-						],
-						vname: [
-							"深兰/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2770/282/1072047354/46826/d99e6f39/57318976N03f339ea.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122504000,
-				outerId: "CWRH4Y22MM8AM6250",
-				id: "10341217172",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689853"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000003626"
-					},
-					{
-						vid: [
-							"1500689791"
-						],
-						vname: [
-							"深兰/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2770/282/1072047354/46826/d99e6f39/57318976N03f339ea.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122597000,
-				outerId: "CWRH4Y22MM8AM6240",
-				id: "10341217170",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689791"
-						],
-						vname: [
-							"深兰/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					},
-					{
-						vid: [
-							"1500689902"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000003626"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2716/273/1016607112/55407/19266eb0/57318972N943e104a.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122867000,
-				outerId: "CWRH4Y22MA1AM6260",
-				id: "10341217167",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689825"
-						],
-						vname: [
-							"白/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					},
-					{
-						vid: [
-							"1500689880"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000003626"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2716/273/1016607112/55407/19266eb0/57318972N943e104a.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122537000,
-				outerId: "CWRH4Y22MA1AM6265",
-				id: "10341217168",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689825"
-						],
-						vname: [
-							"白/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					},
-					{
-						vid: [
-							"1500689855"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000003626"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2716/273/1016607112/55407/19266eb0/57318972N943e104a.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122917000,
-				outerId: "CWRH4Y22MA1AM6255",
-				id: "10341217166",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689879"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000003626"
-					},
-					{
-						vid: [
-							"1500689825"
-						],
-						vname: [
-							"白/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2716/273/1016607112/55407/19266eb0/57318972N943e104a.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122537000,
-				outerId: "CWRH4Y22MA1AM6250",
-				id: "10341217165",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689825"
-						],
-						vname: [
-							"白/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					},
-					{
-						vid: [
-							"1500689853"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000003626"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2716/273/1016607112/55407/19266eb0/57318972N943e104a.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122742000,
-				outerId: "CWRH4Y22MA1AM6245",
-				id: "10341217164",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689877"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000003626"
-					},
-					{
-						vid: [
-							"1500689825"
-						],
-						vname: [
-							"白/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2716/273/1016607112/55407/19266eb0/57318972N943e104a.jpg",
-				quantity: 0,
-				price: 969,
-				created: 1462864242000,
-				platStatus: null,
-				modified: 1518122478000,
-				outerId: "CWRH4Y22MA1AM6240",
-				id: "10341217163",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689902"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000003626"
-					},
-					{
-						vid: [
-							"1500689825"
-						],
-						vname: [
-							"白/粉灰"
-						],
-						pname: null,
-						pid: "1000003611"
-					}
-				]
-			}
-		],
-		created: 1462864242000,
-		delistTime: 1517969937000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"569951"
-				],
-				vname: [
-					"磨砂皮"
-				],
-				pname: null,
-				pid: "91737"
-			},
-			{
-				vid: [
-					"609824"
-				],
-				vname: [
-					"2016春季"
-				],
-				pname: null,
-				pid: "104878"
-			},
-			{
-				vid: [
-					"609473"
-				],
-				vname: [
-					"专柜同款"
-				],
-				pname: null,
-				pid: "104841"
-			},
-			{
-				vid: [
-					"217726"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14759"
-			},
-			{
-				vid: [
-					"569925"
-				],
-				vname: [
-					"欧美"
-				],
-				pname: null,
-				pid: "91735"
-			},
-			{
-				vid: [
-					"112777"
-				],
-				vname: [
-					"套脚"
-				],
-				pname: null,
-				pid: "11835"
-			},
-			{
-				vid: [
-					"217760"
-				],
-				vname: [
-					"黑色"
-				],
-				pname: null,
-				pid: "14761"
-			},
-			{
-				vid: [
-					"1000024262"
-				],
-				vname: [
-					"500-999"
-				],
-				pname: null,
-				pid: "11821"
-			},
-			{
-				vid: [
-					"217734"
-				],
-				vname: [
-					"圆头"
-				],
-				pname: null,
-				pid: "14760"
-			},
-			{
-				vid: [
-					"112816"
-				],
-				vname: [
-					"38"
-				],
-				pname: null,
-				pid: "11820"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t2686/210/1044982142/119715/74ceadf2/5731896fNaf7e67ef.jpg",
-		lastSync: 1527771703744,
-		price: 969,
-		platStatus: "2",
-		name: "Hush Puppies/暇步士2016春季专柜同款磨砂牛皮革男休闲鞋H4Y22AM6",
-		shopCategories: null,
-		modified: 1527759104000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10341217169.html",
-		shopId: "23591",
-		id: "10073786865",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6906"
-			}
-		],
-		listTime: 1511865148000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2941/33/1777048065/88848/4b05d5c5/57933b34N5c445ed9.jpg",
-				quantity: 0,
-				price: 368,
-				created: 1469266733000,
-				platStatus: null,
-				modified: 1517969938000,
-				outerId: "TICX1153LU1CX6F",
-				id: "10506009950",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1502035706"
-						],
-						vname: [
-							"F"
-						],
-						pname: null,
-						pid: "1000003590"
-					},
-					{
-						vid: [
-							"1500689915"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000171"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2611/305/3557084430/72461/f5e9395a/57933b2fNd074d21a.jpg",
-				quantity: 0,
-				price: 368,
-				created: 1469266733000,
-				platStatus: null,
-				modified: 1517969938000,
-				outerId: "TICX1153LL1CX6F",
-				id: "10506009949",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1502035706"
-						],
-						vname: [
-							"F"
-						],
-						pname: null,
-						pid: "1000003590"
-					},
-					{
-						vid: [
-							"1500689913"
-						],
-						vname: [
-							"红色"
-						],
-						pname: null,
-						pid: "1000000171"
-					}
-				]
-			}
-		],
-		created: 1469266733000,
-		delistTime: 1517969938000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"635692"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "111221"
-			},
-			{
-				vid: [
-					"203165"
-				],
-				vname: [
-					"拉链"
-				],
-				pname: null,
-				pid: "14098"
-			},
-			{
-				vid: [
-					"76975"
-				],
-				vname: [
-					"PU"
-				],
-				pname: null,
-				pid: "8818"
-			},
-			{
-				vid: [
-					"76958"
-				],
-				vname: [
-					"红色"
-				],
-				pname: null,
-				pid: "8820"
-			},
-			{
-				vid: [
-					"10033829"
-				],
-				vname: [
-					"1个"
-				],
-				pname: null,
-				pid: "10013673"
-			},
-			{
-				vid: [
-					"10033754"
-				],
-				vname: [
-					"横款"
-				],
-				pname: null,
-				pid: "10013660"
-			},
-			{
-				vid: [
-					"610813"
-				],
-				vname: [
-					"商务"
-				],
-				pname: null,
-				pid: "105015"
-			},
-			{
-				vid: [
-					"610819"
-				],
-				vname: [
-					"青年"
-				],
-				pname: null,
-				pid: "105016"
-			},
-			{
-				vid: [
-					"10033825"
-				],
-				vname: [
-					"1个"
-				],
-				pname: null,
-				pid: "10013672"
-			},
-			{
-				vid: [
-					"76972"
-				],
-				vname: [
-					"300-599"
-				],
-				pname: null,
-				pid: "8819"
-			},
-			{
-				vid: [
-					"635705"
-				],
-				vname: [
-					"商务"
-				],
-				pname: null,
-				pid: "14100"
-			},
-			{
-				vid: [
-					"10033817"
-				],
-				vname: [
-					"有"
-				],
-				pname: null,
-				pid: "10013669"
-			},
-			{
-				vid: [
-					"10033788"
-				],
-				vname: [
-					"拉链"
-				],
-				pname: null,
-				pid: "10013665"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t2959/47/1903567951/259373/b5d6c431/57933b2dN98b77def.jpg",
-		lastSync: 1527771704408,
-		price: 368,
-		platStatus: "2",
-		name: "Teenmix/天美意2016秋季人造革女包1153LCX6",
-		shopCategories: [
-			{
-				name: null,
-				id: "250365"
-			},
-			{
-				name: "",
-				id: "214728"
-			}
-		],
-		modified: 1527759105000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10506009950.html",
-		shopId: "23591",
-		id: "10107938166",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "5259"
-			}
-		],
-		listTime: 1511866870000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t16294/131/2386500392/45496/3a14698b/5aa63a05N248a6992.jpg",
-				quantity: 0,
-				price: 368,
-				created: 1482128220000,
-				platStatus: null,
-				modified: 1522325711000,
-				outerId: "RICX1001LP2AX7F",
-				id: "11150109666",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689894"
-						],
-						vname: [
-							"RICX1001LP2AX7+灰绿/黑"
-						],
-						pname: null,
-						pid: "1000002163"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19309/156/771911833/45386/e9cba613/5aa63a01N06c80243.jpg",
-				quantity: 0,
-				price: 368,
-				created: 1482128220000,
-				platStatus: null,
-				modified: 1517969929000,
-				outerId: "RICX1001LU2AX7F",
-				id: "11150109667",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1508872631"
-						],
-						vname: [
-							"RICX1001LU2AX7+黑色"
-						],
-						pname: null,
-						pid: "1000002163"
-					}
-				]
-			}
-		],
-		created: 1482128220000,
-		delistTime: 1517969929000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"10686730"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "10013641"
-			},
-			{
-				vid: [
-					"10033733"
-				],
-				vname: [
-					" 无"
-				],
-				pname: null,
-				pid: "10013650"
-			},
-			{
-				vid: [
-					"202633"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "14077"
-			},
-			{
-				vid: [
-					"610871"
-				],
-				vname: [
-					"青年"
-				],
-				pname: null,
-				pid: "105019"
-			},
-			{
-				vid: [
-					"76983"
-				],
-				vname: [
-					"300-599"
-				],
-				pname: null,
-				pid: "8815"
-			},
-			{
-				vid: [
-					"76985"
+					"28320"
 				],
 				vname: [
 					"白色"
 				],
-				pname: null,
-				pid: "8816"
+				pname: "颜色分类",
+				pid: "1627207"
 			},
 			{
 				vid: [
-					"10686815"
+					"28321"
 				],
 				vname: [
-					"是"
+					"乳白色"
 				],
-				pname: null,
-				pid: "10126471"
-			},
-			{
-				vid: [
-					"610824"
-				],
-				vname: [
-					"其它　"
-				],
-				pname: null,
-				pid: "8814"
-			},
-			{
-				vid: [
-					"202634"
-				],
-				vname: [
-					"拉链"
-				],
-				pname: null,
-				pid: "14078"
-			},
-			{
-				vid: [
-					"10675253"
-				],
-				vname: [
-					"否"
-				],
-				pname: null,
-				pid: "10123357"
-			},
-			{
-				vid: [
-					"10686817"
-				],
-				vname: [
-					"1个"
-				],
-				pname: null,
-				pid: "10126473"
-			},
-			{
-				vid: [
-					"10686814"
-				],
-				vname: [
-					"证件位"
-				],
-				pname: null,
-				pid: "10126468"
-			},
-			{
-				vid: [
-					"106626"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "11208"
-			},
-			{
-				vid: [
-					"10686751"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "10126445"
-			},
-			{
-				vid: [
-					"10033703"
-				],
-				vname: [
-					"拉链"
-				],
-				pname: null,
-				pid: "10013646"
-			},
-			{
-				vid: [
-					"610866"
-				],
-				vname: [
-					"休闲"
-				],
-				pname: null,
-				pid: "105018"
-			},
-			{
-				vid: [
-					"10686756"
-				],
-				vname: [
-					"棉"
-				],
-				pname: null,
-				pid: "10126446"
-			},
-			{
-				vid: [
-					"610853"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "14097"
+				pname: "颜色分类",
+				pid: "1627207"
 			}
 		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t16294/131/2386500392/45496/3a14698b/5aa63a05N248a6992.jpg",
-		lastSync: 1527771704503,
-		price: 368,
-		platStatus: "2",
-		name: "BASTO/百思图灰绿/黑化纤布女包X1001AX7",
-		shopCategories: [
-			{
-				name: null,
-				id: "214726"
-			},
-			{
-				name: "",
-				id: "4825754"
-			}
-		],
-		modified: 1527759105000,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2Z8Jqx.hnpuFjSZFpXXcpuXXa_!!1849722037.jpg",
+		lastSync: 1524572184816,
+		price: 0.1,
+		platStatus: "instock",
+		name: "测试",
+		modified: 1501556257000,
 		outerId: "",
-		detailUrl: "https://item.jd.com/11150109666.html",
-		shopId: "23591",
-		id: "10195366150",
+		detailUrl: "https://item.taobao.com/item.htm?id=554208360201&spm=2014.12440355.0.0",
+		shopId: "106878997",
 		categories: [
 			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "5258"
+				name: "卡包",
+				id: "121400005"
 			}
 		],
-		listTime: 1490168843000,
-		order: 0,
+		id: "554208360201",
+		listTime: 1501550720000,
 		status: 0
 	},
 	{
-		quantity: 0,
+		skus: null,
+		quantity: 93000,
+		created: 0,
+		delistTime: 1531881820000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: [
+			{
+				vid: [
+					"38486"
+				],
+				vname: [
+					"101-200元"
+				],
+				pname: "价格区间",
+				pid: "21541"
+			},
+			{
+				vid: [
+					"29534"
+				],
+				vname: [
+					"other/其他"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"20213"
+				],
+				vname: [
+					"其他"
+				],
+				pname: "材质",
+				pid: "20021"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2Z8Jqx.hnpuFjSZFpXXcpuXXa_!!1849722037.jpg",
+		lastSync: 1531765281812,
+		price: 105.2,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "94.68",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "测试狗狗",
+		shopCategories: [
+			{
+				name: "饭类",
+				id: "810124529"
+			}
+		],
+		modified: 1529397666000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=554390761977&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "其它首饰",
+				id: "50013882"
+			}
+		],
+		id: "554390761977",
+		listTime: 1531277020000,
+		status: 1,
+		order: 0
+	},
+	{
 		skus: [
 			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3814/221/508149554/29121/9c35688f/5812cfedNdc5d608f.jpg",
-				quantity: 0,
-				price: 1098,
-				created: 1477627883000,
+				picUrl: null,
+				quantity: 479,
+				price: 0.03,
+				created: 1511493303000,
 				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P719090F3WDR01110",
-				id: "10883551283",
+				modified: 1515553307000,
+				outerId: "",
+				id: "3690119039609",
 				status: 0,
 				props: [
 					{
 						vid: [
-							"1501092946"
+							"3232483"
 						],
 						vname: [
-							"44"
+							"军绿色"
 						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
+						pname: "颜色分类",
+						pid: "1627207"
 					}
 				]
 			},
 			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3814/221/508149554/29121/9c35688f/5812cfedNdc5d608f.jpg",
-				quantity: 0,
-				price: 1098,
-				created: 1477627883000,
+				picUrl: null,
+				quantity: 849,
+				price: 0.01,
+				created: 1511493303000,
 				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P719090F3WDR01100",
-				id: "10883551282",
+				modified: 1515553307000,
+				outerId: "",
+				id: "3690119039610",
 				status: 0,
 				props: [
 					{
 						vid: [
-							"1500690014"
+							"4950473"
 						],
 						vname: [
-							"黑色"
+							"桔红色"
 						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3814/221/508149554/29121/9c35688f/5812cfedNdc5d608f.jpg",
-				quantity: 0,
-				price: 1098,
-				created: 1477627883000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P719090F3WDR01090",
-				id: "10883551281",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3814/221/508149554/29121/9c35688f/5812cfedNdc5d608f.jpg",
-				quantity: 0,
-				price: 1098,
-				created: 1477627883000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P719090F3WDR01080",
-				id: "10883551280",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3814/221/508149554/29121/9c35688f/5812cfedNdc5d608f.jpg",
-				quantity: 0,
-				price: 1098,
-				created: 1477627883000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P719090F3WDR01070",
-				id: "10883551279",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
+						pname: "颜色分类",
+						pid: "1627207"
 					}
 				]
 			}
 		],
-		created: 1477627883000,
-		delistTime: 1503542816000,
-		inputStr: null,
-		inputPids: null,
+		quantity: 1327,
+		created: 1498729072000,
+		delistTime: 1499333872000,
+		inputStr: "89757",
+		inputPids: "13021751",
 		props: [
 			{
 				vid: [
-					"609629"
+					"21456"
 				],
 				vname: [
-					"专柜同款"
+					"全新"
 				],
-				pname: null,
-				pid: "104857"
+				pname: "成色",
+				pid: "20879"
 			},
 			{
 				vid: [
-					"220845"
+					"4950473"
 				],
 				vname: [
-					"圆头"
+					"桔红色"
 				],
-				pname: null,
-				pid: "14888"
+				pname: "颜色分类",
+				pid: "1627207"
 			},
 			{
 				vid: [
-					"609631"
+					"3232483"
+				],
+				vname: [
+					"军绿色"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"14031880"
+				],
+				vname: [
+					"卡通动漫"
+				],
+				pname: "图案",
+				pid: "20603"
+			},
+			{
+				vid: [
+					"20785"
+				],
+				vname: [
+					"日韩"
+				],
+				pname: "风格",
+				pid: "20608"
+			},
+			{
+				vid: [
+					"33273"
+				],
+				vname: [
+					"100"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"94811103"
+				],
+				vname: [
+					"牛剖层移膜革"
+				],
+				pname: "皮质特征",
+				pid: "122276073"
+			},
+			{
+				vid: [
+					"28397"
 				],
 				vname: [
 					"牛皮"
 				],
-				pname: null,
-				pid: "11864"
+				pname: "质地",
+				pid: "20021"
 			},
 			{
 				vid: [
-					"222446"
+					"20213"
 				],
 				vname: [
-					"黑色"
+					"其他"
 				],
-				pname: null,
-				pid: "14951"
+				pname: "折数",
+				pid: "122216619"
 			},
 			{
 				vid: [
-					"220185"
+					"20533"
 				],
 				vname: [
-					"系带"
+					"女"
 				],
-				pname: null,
-				pid: "14850"
+				pname: "性别",
+				pid: "24477"
 			},
 			{
 				vid: [
-					"221157"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14919"
-			},
-			{
-				vid: [
-					"611476"
-				],
-				vname: [
-					"2016秋季"
-				],
-				pname: null,
-				pid: "104886"
-			},
-			{
-				vid: [
-					"112876"
-				],
-				vname: [
-					"1000-1999"
-				],
-				pname: null,
-				pid: "11839"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t3703/4/745269013/397138/93bdfadf/5812cfebNd84b5a47.jpg",
-		lastSync: 1525920403186,
-		price: 1098,
-		platStatus: "2",
-		name: "CAT卡特2016秋冬新款牛皮革/牛剖层革男士户外休闲鞋粗犷装备(Rugged)P71",
-		shopCategories: [
-			{
-				name: "",
-				id: "5149081"
-			}
-		],
-		modified: 1525917932000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10883551283.html",
-		shopId: "23591",
-		id: "10159932909",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
-			}
-		],
-		listTime: 1477652638000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3217/128/637126275/41252/cd7723fc/57bbdd91N13e0c644.jpg",
-				quantity: 0,
-				price: 878,
-				created: 1471929743000,
-				platStatus: null,
-				modified: 1518317761000,
-				outerId: "P718920E3YDR01110",
-				id: "10596556097",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3217/128/637126275/41252/cd7723fc/57bbdd91N13e0c644.jpg",
-				quantity: 0,
-				price: 878,
-				created: 1471929743000,
-				platStatus: null,
-				modified: 1518317761000,
-				outerId: "P718920E3YDR01100",
-				id: "10596556096",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3217/128/637126275/41252/cd7723fc/57bbdd91N13e0c644.jpg",
-				quantity: 0,
-				price: 878,
-				created: 1471929743000,
-				platStatus: null,
-				modified: 1518317761000,
-				outerId: "P718920E3YDR01090",
-				id: "10596556095",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3217/128/637126275/41252/cd7723fc/57bbdd91N13e0c644.jpg",
-				quantity: 0,
-				price: 878,
-				created: 1471929743000,
-				platStatus: null,
-				modified: 1518317761000,
-				outerId: "P718920E3YDR01080",
-				id: "10596556094",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3217/128/637126275/41252/cd7723fc/57bbdd91N13e0c644.jpg",
-				quantity: 0,
-				price: 878,
-				created: 1471929743000,
-				platStatus: null,
-				modified: 1518317761000,
-				outerId: "P718920E3YDR01070",
-				id: "10596556093",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			}
-		],
-		created: 1471929743000,
-		delistTime: 1503542814000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"570342"
-				],
-				vname: [
-					"运动休闲"
-				],
-				pname: null,
-				pid: "91768"
-			},
-			{
-				vid: [
-					"220185"
-				],
-				vname: [
-					"系带"
-				],
-				pname: null,
-				pid: "14850"
-			},
-			{
-				vid: [
-					"220845"
-				],
-				vname: [
-					"圆头"
-				],
-				pname: null,
-				pid: "14888"
-			},
-			{
-				vid: [
-					"112874"
-				],
-				vname: [
-					"500-999"
-				],
-				pname: null,
-				pid: "11839"
-			},
-			{
-				vid: [
-					"221157"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14919"
-			},
-			{
-				vid: [
-					"112855"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "11853"
-			},
-			{
-				vid: [
-					"609630"
-				],
-				vname: [
-					"线上销售"
-				],
-				pname: null,
-				pid: "104857"
-			},
-			{
-				vid: [
-					"222446"
-				],
-				vname: [
-					"黑色"
-				],
-				pname: null,
-				pid: "14951"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t3010/364/1055785322/313477/9ad9f281/57bbdd8fN3d7b7dbd.jpg",
-		lastSync: 1525920403201,
-		price: 878,
-		platStatus: "2",
-		name: "CAT/卡特男士户外休闲低靴粗犷装备(Rugged)P718920E3YDR01",
-		shopCategories: [
-			{
-				name: "",
-				id: "5149081"
-			}
-		],
-		modified: 1525917933000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10596556097.html",
-		shopId: "23591",
-		id: "10121307188",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
-			}
-		],
-		listTime: 1482202562000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3178/33/642711102/50802/cd29ac95/57bbdd6cN926af615.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718947E3MDR33100",
-				id: "10596562217",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"浅咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3178/33/642711102/50802/cd29ac95/57bbdd6cN926af615.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718947E3MDR33110",
-				id: "10596562218",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"浅咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3178/33/642711102/50802/cd29ac95/57bbdd6cN926af615.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718947E3MDR33090",
-				id: "10596562216",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"浅咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3178/33/642711102/50802/cd29ac95/57bbdd6cN926af615.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718947E3MDR33080",
-				id: "10596562215",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"浅咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3178/33/642711102/50802/cd29ac95/57bbdd6cN926af615.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718947E3MDR33070",
-				id: "10596562214",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"浅咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/284/615831134/52204/39f94818/57bbdd66Nf85b5c69.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718948E3MDR01110",
-				id: "10596562213",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/284/615831134/52204/39f94818/57bbdd66Nf85b5c69.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718948E3MDR01100",
-				id: "10596562212",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/284/615831134/52204/39f94818/57bbdd66Nf85b5c69.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718948E3MDR01090",
-				id: "10596562211",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/284/615831134/52204/39f94818/57bbdd66Nf85b5c69.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718948E3MDR01080",
-				id: "10596562210",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/284/615831134/52204/39f94818/57bbdd66Nf85b5c69.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718948E3MDR01070",
-				id: "10596562209",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3211/1/623096400/45075/5a662383/57bbdd60N42d31d32.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718946E3MDR40110",
-				id: "10596562208",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3211/1/623096400/45075/5a662383/57bbdd60N42d31d32.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718946E3MDR40100",
-				id: "10596562207",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3211/1/623096400/45075/5a662383/57bbdd60N42d31d32.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718946E3MDR40090",
-				id: "10596562206",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3211/1/623096400/45075/5a662383/57bbdd60N42d31d32.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718946E3MDR40080",
-				id: "10596562205",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3211/1/623096400/45075/5a662383/57bbdd60N42d31d32.jpg",
-				quantity: 0,
-				price: 898,
-				created: 1471929694000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P718946E3MDR40070",
-				id: "10596562204",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			}
-		],
-		created: 1471929694000,
-		delistTime: 1484548208000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"220845"
-				],
-				vname: [
-					"圆头"
-				],
-				pname: null,
-				pid: "14888"
-			},
-			{
-				vid: [
-					"609630"
-				],
-				vname: [
-					"线上销售"
-				],
-				pname: null,
-				pid: "104857"
-			},
-			{
-				vid: [
-					"570342"
-				],
-				vname: [
-					"运动休闲"
-				],
-				pname: null,
-				pid: "91768"
-			},
-			{
-				vid: [
-					"112855"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "11853"
-			},
-			{
-				vid: [
-					"222452"
-				],
-				vname: [
-					"黄色"
-				],
-				pname: null,
-				pid: "14951"
-			},
-			{
-				vid: [
-					"220185"
-				],
-				vname: [
-					"系带"
-				],
-				pname: null,
-				pid: "14850"
-			},
-			{
-				vid: [
-					"112874"
-				],
-				vname: [
-					"500-999"
-				],
-				pname: null,
-				pid: "11839"
-			},
-			{
-				vid: [
-					"221157"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14919"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t3013/268/1034216935/396809/744100a4/57bbdd5eNfb3ecfa9.jpg",
-		lastSync: 1525920403226,
-		price: 898,
-		platStatus: "2",
-		name: "CAT/卡特男休闲鞋粗犷装备(Rugged)P718946E3MDR40",
-		shopCategories: [
-			{
-				name: "",
-				id: "5149081"
-			}
-		],
-		modified: 1525917933000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10596562217.html",
-		shopId: "23591",
-		id: "10121305475",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
-			}
-		],
-		listTime: 1472172730000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/84/636162111/62873/fc497afd/57bbe711N721e802a.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718021D3MDC09110",
-				id: "10596722996",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑白色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/84/636162111/62873/fc497afd/57bbe711N721e802a.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718021D3MDC09100",
-				id: "10596722995",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑白色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/84/636162111/62873/fc497afd/57bbe711N721e802a.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718021D3MDC09090",
-				id: "10596722994",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑白色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/84/636162111/62873/fc497afd/57bbe711N721e802a.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718021D3MDC09070",
-				id: "10596722992",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑白色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/84/636162111/62873/fc497afd/57bbe711N721e802a.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718021D3MDC09080",
-				id: "10596722993",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑白色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3106/84/636162111/62873/fc497afd/57bbe711N721e802a.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718021D3MDC09060",
-				id: "10596722991",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690139"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"黑白色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3199/130/617221564/53223/35ce0df9/57bbe70bNa612bec0.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718024D3MDC70110",
-				id: "10596722990",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3199/130/617221564/53223/35ce0df9/57bbe70bNa612bec0.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718024D3MDC70100",
-				id: "10596722989",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3199/130/617221564/53223/35ce0df9/57bbe70bNa612bec0.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718024D3MDC70090",
-				id: "10596722988",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3199/130/617221564/53223/35ce0df9/57bbe70bNa612bec0.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718024D3MDC70080",
-				id: "10596722987",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3199/130/617221564/53223/35ce0df9/57bbe70bNa612bec0.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718024D3MDC70070",
-				id: "10596722986",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3199/130/617221564/53223/35ce0df9/57bbe70bNa612bec0.jpg",
-				quantity: 0,
-				price: 428,
-				created: 1471932169000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P718024D3MDC70060",
-				id: "10596722985",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690139"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			}
-		],
-		created: 1471932169000,
-		delistTime: 1503542813000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"570574"
-				],
-				vname: [
-					"400-499"
-				],
-				pname: null,
-				pid: "11839"
-			},
-			{
-				vid: [
-					"570342"
-				],
-				vname: [
-					"运动休闲"
-				],
-				pname: null,
-				pid: "91768"
-			},
-			{
-				vid: [
-					"221157"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14919"
-			},
-			{
-				vid: [
-					"609630"
-				],
-				vname: [
-					"线上销售"
-				],
-				pname: null,
-				pid: "104857"
-			},
-			{
-				vid: [
-					"220845"
-				],
-				vname: [
-					"圆头"
-				],
-				pname: null,
-				pid: "14888"
-			},
-			{
-				vid: [
-					"589927"
-				],
-				vname: [
-					"休闲皮鞋"
-				],
-				pname: null,
-				pid: "11853"
-			},
-			{
-				vid: [
-					"589951"
-				],
-				vname: [
-					"有跟"
-				],
-				pname: null,
-				pid: "91806"
-			},
-			{
-				vid: [
-					"570692"
-				],
-				vname: [
-					"车缝线"
-				],
-				pname: null,
-				pid: "91800"
-			},
-			{
-				vid: [
-					"220185"
-				],
-				vname: [
-					"系带"
-				],
-				pname: null,
-				pid: "14850"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t3130/88/635015807/241291/ec3d7d7f/57bbe709N30148acc.jpg",
-		lastSync: 1525920403453,
-		price: 488,
-		platStatus: "2",
-		name: "CAT卡特蓝色合成革男士户外休闲低靴P718024D3MDC70潮流密码(CODE)",
-		shopCategories: [
-			{
-				name: "",
-				id: "5149081"
-			}
-		],
-		modified: 1525917934000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10596722996.html",
-		shopId: "23591",
-		id: "10121354828",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
-			}
-		],
-		listTime: 1472172754000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3109/93/625442745/53619/5a587591/57bbe781N6ee82386.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716509D3BDC03100",
-				id: "10596740318",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690096"
-						],
-						vname: [
-							"深灰色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3154/106/631721673/48878/eabe7f8f/57bbe788Naed246f4.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716510D3BDC34080",
-				id: "10596740322",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"深咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3109/93/625442745/53619/5a587591/57bbe781N6ee82386.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716509D3BDC03080",
-				id: "10596740316",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690096"
-						],
-						vname: [
-							"深灰色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3154/106/631721673/48878/eabe7f8f/57bbe788Naed246f4.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716510D3BDC34110",
-				id: "10596740325",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"深咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3154/106/631721673/48878/eabe7f8f/57bbe788Naed246f4.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716510D3BDC34090",
-				id: "10596740323",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"深咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3154/106/631721673/48878/eabe7f8f/57bbe788Naed246f4.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716510D3BDC34100",
-				id: "10596740324",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"深咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3154/106/631721673/48878/eabe7f8f/57bbe788Naed246f4.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716510D3BDC34060",
-				id: "10596740320",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690139"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"深咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3109/93/625442745/53619/5a587591/57bbe781N6ee82386.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716509D3BDC03110",
-				id: "10596740319",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690096"
-						],
-						vname: [
-							"深灰色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3154/106/631721673/48878/eabe7f8f/57bbe788Naed246f4.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716510D3BDC34070",
-				id: "10596740321",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"深咖色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3109/93/625442745/53619/5a587591/57bbe781N6ee82386.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716509D3BDC03090",
-				id: "10596740317",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690096"
-						],
-						vname: [
-							"深灰色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3109/93/625442745/53619/5a587591/57bbe781N6ee82386.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716509D3BDC03070",
-				id: "10596740315",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690096"
-						],
-						vname: [
-							"深灰色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3109/93/625442745/53619/5a587591/57bbe781N6ee82386.jpg",
-				quantity: 0,
-				price: 598,
-				created: 1471932285000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P716509D3BDC03060",
-				id: "10596740314",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690139"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690096"
-						],
-						vname: [
-							"深灰色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			}
-		],
-		created: 1471932286000,
-		delistTime: 1483411202000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"570692"
-				],
-				vname: [
-					"车缝线"
-				],
-				pname: null,
-				pid: "91800"
-			},
-			{
-				vid: [
-					"220185"
-				],
-				vname: [
-					"系带"
-				],
-				pname: null,
-				pid: "14850"
-			},
-			{
-				vid: [
-					"221157"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14919"
-			},
-			{
-				vid: [
-					"609631"
-				],
-				vname: [
-					"牛皮"
-				],
-				pname: null,
-				pid: "11864"
-			},
-			{
-				vid: [
-					"609629"
-				],
-				vname: [
-					"专柜同款"
-				],
-				pname: null,
-				pid: "104857"
-			},
-			{
-				vid: [
-					"222446"
-				],
-				vname: [
-					"黑色"
-				],
-				pname: null,
-				pid: "14951"
-			},
-			{
-				vid: [
-					"570342"
-				],
-				vname: [
-					"运动休闲"
-				],
-				pname: null,
-				pid: "91768"
-			},
-			{
-				vid: [
-					"220845"
-				],
-				vname: [
-					"圆头"
-				],
-				pname: null,
-				pid: "14888"
-			},
-			{
-				vid: [
-					"112874"
-				],
-				vname: [
-					"500-999"
-				],
-				pname: null,
-				pid: "11839"
-			},
-			{
-				vid: [
-					"589951"
-				],
-				vname: [
-					"有跟"
-				],
-				pname: null,
-				pid: "91806"
-			},
-			{
-				vid: [
-					"589927"
-				],
-				vname: [
-					"休闲皮鞋"
-				],
-				pname: null,
-				pid: "11853"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t3235/291/593556115/410110/4cd6b968/57bbe77dN48d831f8.jpg",
-		lastSync: 1525920403466,
-		price: 598,
-		platStatus: "2",
-		name: "CAT/卡特深咖色牛皮男装休闲鞋P716510D3BDC34",
-		shopCategories: [
-			{
-				name: "",
-				id: "5149081"
-			}
-		],
-		modified: 1525917928000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10596740318.html",
-		shopId: "23591",
-		id: "10121354086",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
-			}
-		],
-		listTime: 1482401856000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3052/264/614566622/44509/5385b320/57bbd444Ndce61b4b.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719789F1KMC74100",
-				id: "10596431933",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"灰蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3100/180/612447338/41709/6d487cf5/57bbd44aNe764fe1f.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719785F1KMC45100",
-				id: "10596431938",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3100/180/612447338/41709/6d487cf5/57bbd44aNe764fe1f.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719785F1KMC45070",
-				id: "10596431935",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3100/180/612447338/41709/6d487cf5/57bbd44aNe764fe1f.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719785F1KMC45110",
-				id: "10596431939",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3052/264/614566622/44509/5385b320/57bbd444Ndce61b4b.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719789F1KMC74110",
-				id: "10596431934",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"灰蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3100/180/612447338/41709/6d487cf5/57bbd44aNe764fe1f.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719785F1KMC45090",
-				id: "10596431937",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3100/180/612447338/41709/6d487cf5/57bbd44aNe764fe1f.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719785F1KMC45080",
-				id: "10596431936",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3052/264/614566622/44509/5385b320/57bbd444Ndce61b4b.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719789F1KMC74090",
-				id: "10596431932",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"灰蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3052/264/614566622/44509/5385b320/57bbd444Ndce61b4b.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719789F1KMC74080",
-				id: "10596431931",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"灰蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3052/264/614566622/44509/5385b320/57bbd444Ndce61b4b.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719789F1KMC74070",
-				id: "10596431930",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690061"
-						],
-						vname: [
-							"灰蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3046/187/617414333/48038/8ee18075/57bbd439Nc6e09ec7.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719791F1KMC63110",
-				id: "10596431929",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"青褐色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3046/187/617414333/48038/8ee18075/57bbd439Nc6e09ec7.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719791F1KMC63080",
-				id: "10596431926",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"青褐色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3046/187/617414333/48038/8ee18075/57bbd439Nc6e09ec7.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719791F1KMC63100",
-				id: "10596431928",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"青褐色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3046/187/617414333/48038/8ee18075/57bbd439Nc6e09ec7.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719791F1KMC63090",
-				id: "10596431927",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"青褐色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3046/187/617414333/48038/8ee18075/57bbd439Nc6e09ec7.jpg",
-				quantity: 0,
-				price: 718,
-				created: 1471927346000,
-				platStatus: null,
-				modified: 1518317757000,
-				outerId: "P719791F1KMC63070",
-				id: "10596431925",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690014"
-						],
-						vname: [
-							"青褐色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			}
-		],
-		created: 1471927346000,
-		delistTime: 1503542814000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"220191"
-				],
-				vname: [
-					"套脚"
-				],
-				pname: null,
-				pid: "14850"
-			},
-			{
-				vid: [
-					"112874"
-				],
-				vname: [
-					"500-999"
-				],
-				pname: null,
-				pid: "11839"
-			},
-			{
-				vid: [
-					"570692"
-				],
-				vname: [
-					"车缝线"
-				],
-				pname: null,
-				pid: "91800"
-			},
-			{
-				vid: [
-					"609909"
-				],
-				vname: [
-					"2016春季"
-				],
-				pname: null,
-				pid: "104886"
-			},
-			{
-				vid: [
-					"221157"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14919"
-			},
-			{
-				vid: [
-					"589927"
-				],
-				vname: [
-					"休闲皮鞋"
-				],
-				pname: null,
-				pid: "11853"
-			},
-			{
-				vid: [
-					"589951"
-				],
-				vname: [
-					"有跟"
-				],
-				pname: null,
-				pid: "91806"
-			},
-			{
-				vid: [
-					"609630"
-				],
-				vname: [
-					"线上销售"
-				],
-				pname: null,
-				pid: "104857"
-			},
-			{
-				vid: [
-					"570340"
-				],
-				vname: [
-					"日常休闲"
-				],
-				pname: null,
-				pid: "91768"
-			},
-			{
-				vid: [
-					"222446"
-				],
-				vname: [
-					"黑色"
-				],
-				pname: null,
-				pid: "14951"
-			},
-			{
-				vid: [
-					"220845"
-				],
-				vname: [
-					"圆头"
-				],
-				pname: null,
-				pid: "14888"
-			},
-			{
-				vid: [
-					"609631"
-				],
-				vname: [
-					"牛皮"
-				],
-				pname: null,
-				pid: "11864"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t3013/16/1063043646/347441/40e4f362/57bbd432N7cc4b572.jpg",
-		lastSync: 1525920403476,
-		price: 718,
-		platStatus: "2",
-		name: "CAT卡特2016年春夏牛皮男士休闲鞋潮流密码(CODE)P719785F1KMC45",
-		shopCategories: [
-			{
-				name: "",
-				id: "5149081"
-			}
-		],
-		modified: 1525917928000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10596431933.html",
-		shopId: "23591",
-		id: "10121261577",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
-			}
-		],
-		listTime: 1472172648000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3304/10/590491122/44398/8b3d47bd/57bbd318Nca2c4683.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720762F1EMC40090",
-				id: "10596414242",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3304/10/590491122/44398/8b3d47bd/57bbd318Nca2c4683.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720762F1EMC40110",
-				id: "10596414244",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3304/10/590491122/44398/8b3d47bd/57bbd318Nca2c4683.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720762F1EMC40100",
-				id: "10596414243",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3304/10/590491122/44398/8b3d47bd/57bbd318Nca2c4683.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720762F1EMC40080",
-				id: "10596414241",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3304/10/590491122/44398/8b3d47bd/57bbd318Nca2c4683.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720762F1EMC40070",
-				id: "10596414240",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690050"
-						],
-						vname: [
-							"黄色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3031/139/1044107824/36037/c55c1f5c/57bbd312Nea587611.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720761F1EMC70100",
-				id: "10596414238",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3031/139/1044107824/36037/c55c1f5c/57bbd312Nea587611.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720761F1EMC70110",
-				id: "10596414239",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3031/139/1044107824/36037/c55c1f5c/57bbd312Nea587611.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720761F1EMC70090",
-				id: "10596414237",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3031/139/1044107824/36037/c55c1f5c/57bbd312Nea587611.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720761F1EMC70080",
-				id: "10596414236",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3031/139/1044107824/36037/c55c1f5c/57bbd312Nea587611.jpg",
-				quantity: 0,
-				price: 638,
-				created: 1471927051000,
-				platStatus: null,
-				modified: 1518317758000,
-				outerId: "P720761F1EMC70070",
-				id: "10596414235",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690018"
-						],
-						vname: [
-							"蓝色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			}
-		],
-		created: 1471927051000,
-		delistTime: 1503539898000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"221157"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14919"
-			},
-			{
-				vid: [
-					"609909"
-				],
-				vname: [
-					"2016春季"
-				],
-				pname: null,
-				pid: "104886"
-			},
-			{
-				vid: [
-					"570499"
-				],
-				vname: [
-					"猪皮"
-				],
-				pname: null,
-				pid: "11864"
-			},
-			{
-				vid: [
-					"589951"
-				],
-				vname: [
-					"有跟"
-				],
-				pname: null,
-				pid: "91806"
-			},
-			{
-				vid: [
-					"570340"
-				],
-				vname: [
-					"日常休闲"
-				],
-				pname: null,
-				pid: "91768"
-			},
-			{
-				vid: [
-					"220845"
-				],
-				vname: [
-					"圆头"
-				],
-				pname: null,
-				pid: "14888"
-			},
-			{
-				vid: [
-					"220191"
-				],
-				vname: [
-					"套脚"
-				],
-				pname: null,
-				pid: "14850"
-			},
-			{
-				vid: [
-					"589927"
-				],
-				vname: [
-					"休闲皮鞋"
-				],
-				pname: null,
-				pid: "11853"
-			},
-			{
-				vid: [
-					"112874"
-				],
-				vname: [
-					"500-999"
-				],
-				pname: null,
-				pid: "11839"
-			},
-			{
-				vid: [
-					"570692"
-				],
-				vname: [
-					"车缝线"
-				],
-				pname: null,
-				pid: "91800"
-			},
-			{
-				vid: [
-					"609629"
-				],
-				vname: [
-					"专柜同款"
-				],
-				pname: null,
-				pid: "104857"
-			},
-			{
-				vid: [
-					"589944"
-				],
-				vname: [
-					"防水"
-				],
-				pname: null,
-				pid: "91805"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t3205/351/633199128/235334/a16bc142/57bbd30bN0b4ae923.jpg",
-		lastSync: 1525920403950,
-		price: 638,
-		platStatus: "2",
-		name: "CAT/卡特2016年春夏猪皮革男休闲鞋潮流密码(CODE)P720761F1EMC70",
-		shopCategories: [
-			{
-				name: "",
-				id: "5149081"
-			}
-		],
-		modified: 1525917931000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10596414242.html",
-		shopId: "23591",
-		id: "10121260413",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
-			}
-		],
-		listTime: 1489372419000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3181/364/800148854/38737/cd1d23b5/57bee12dN1eebf4d5.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720297F3KMA36100",
-				id: "10606242461",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3181/364/800148854/38737/cd1d23b5/57bee12dN1eebf4d5.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720297F3KMA36110",
-				id: "10606242462",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3181/364/800148854/38737/cd1d23b5/57bee12dN1eebf4d5.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720297F3KMA36090",
-				id: "10606242460",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3295/293/828786116/36730/2350a767/57bee128N6c3cd69b.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720299F3KMA31110",
-				id: "10606242457",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1501092946"
-						],
-						vname: [
-							"44"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690123"
-						],
-						vname: [
-							"浅棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3181/364/800148854/38737/cd1d23b5/57bee12dN1eebf4d5.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720297F3KMA36070",
-				id: "10606242458",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3181/364/800148854/38737/cd1d23b5/57bee12dN1eebf4d5.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720297F3KMA36080",
-				id: "10606242459",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690067"
-						],
-						vname: [
-							"棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3295/293/828786116/36730/2350a767/57bee128N6c3cd69b.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720299F3KMA31100",
-				id: "10606242456",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690123"
-						],
-						vname: [
-							"浅棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690202"
-						],
-						vname: [
-							"43"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3295/293/828786116/36730/2350a767/57bee128N6c3cd69b.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720299F3KMA31090",
-				id: "10606242455",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690176"
-						],
-						vname: [
-							"42"
-						],
-						pname: null,
-						pid: "1000000016"
-					},
-					{
-						vid: [
-							"1500690123"
-						],
-						vname: [
-							"浅棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3295/293/828786116/36730/2350a767/57bee128N6c3cd69b.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720299F3KMA31080",
-				id: "10606242454",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690123"
-						],
-						vname: [
-							"浅棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690186"
-						],
-						vname: [
-							"41"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t3295/293/828786116/36730/2350a767/57bee128N6c3cd69b.jpg",
-				quantity: 0,
-				price: 958,
-				created: 1472127270000,
-				platStatus: null,
-				modified: 1518317759000,
-				outerId: "P720299F3KMA31070",
-				id: "10606242453",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690123"
-						],
-						vname: [
-							"浅棕色"
-						],
-						pname: null,
-						pid: "1000000013"
-					},
-					{
-						vid: [
-							"1500690175"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000000016"
-					}
-				]
-			}
-		],
-		created: 1472127270000,
-		delistTime: 1503539899000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"220185"
-				],
-				vname: [
-					"系带"
-				],
-				pname: null,
-				pid: "14850"
-			},
-			{
-				vid: [
-					"222446"
-				],
-				vname: [
-					"黑色"
-				],
-				pname: null,
-				pid: "14951"
-			},
-			{
-				vid: [
-					"112874"
-				],
-				vname: [
-					"500-999"
-				],
-				pname: null,
-				pid: "11839"
-			},
-			{
-				vid: [
-					"221157"
-				],
-				vname: [
-					"橡胶"
-				],
-				pname: null,
-				pid: "14919"
-			},
-			{
-				vid: [
-					"609629"
-				],
-				vname: [
-					"专柜同款"
-				],
-				pname: null,
-				pid: "104857"
-			},
-			{
-				vid: [
-					"611476"
-				],
-				vname: [
-					"2016秋季"
-				],
-				pname: null,
-				pid: "104886"
-			},
-			{
-				vid: [
-					"570659"
-				],
-				vname: [
-					"简约"
-				],
-				pname: null,
-				pid: "14941"
-			},
-			{
-				vid: [
-					"220845"
-				],
-				vname: [
-					"圆头"
-				],
-				pname: null,
-				pid: "14888"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t3163/16/766685940/243239/99cbc3df/57bee126N9af8bdbd.jpg",
-		lastSync: 1525920403953,
-		price: 958,
-		platStatus: "2",
-		name: "CAT卡特2016秋冬新款男士户外休闲鞋活跃装备P720297F3KMA36",
-		shopCategories: [
-			{
-				name: "",
-				id: "5149081"
-			}
-		],
-		modified: 1525917931000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10606242461.html",
-		shopId: "23591",
-		id: "10123396937",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6908"
-			}
-		],
-		listTime: 1474678765000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 1018,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19774/138/2383028247/74057/140b301f/5af29411Nfd97818e.jpg",
-				quantity: 183,
-				price: 859,
-				created: 1525847059000,
-				platStatus: null,
-				modified: 1525903222000,
-				outerId: "TBLCAD03DL1AQ8225",
-				id: "28036157105",
-				status: 1,
-				props: [
-					{
-						vid: [
-							"1501094018"
-						],
-						vname: [
-							"35"
-						],
-						pname: null,
-						pid: "1000003646"
-					},
-					{
-						vid: [
-							"1501093842"
-						],
-						vname: [
-							"红灰色"
-						],
-						pname: null,
-						pid: "1000003598"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19774/138/2383028247/74057/140b301f/5af29411Nfd97818e.jpg",
-				quantity: 269,
-				price: 859,
-				created: 1525847059000,
-				platStatus: null,
-				modified: 1525903222000,
-				outerId: "TBLCAD03DL1AQ8235",
-				id: "28036157103",
-				status: 1,
-				props: [
-					{
-						vid: [
-							"1501094295"
-						],
-						vname: [
-							"37"
-						],
-						pname: null,
-						pid: "1000003646"
-					},
-					{
-						vid: [
-							"1501093842"
-						],
-						vname: [
-							"红灰色"
-						],
-						pname: null,
-						pid: "1000003598"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19774/138/2383028247/74057/140b301f/5af29411Nfd97818e.jpg",
-				quantity: 61,
-				price: 859,
-				created: 1525847059000,
-				platStatus: null,
-				modified: 1525903222000,
-				outerId: "TBLCAD03DL1AQ8220",
-				id: "28036157106",
-				status: 1,
-				props: [
-					{
-						vid: [
-							"1501093842"
-						],
-						vname: [
-							"红灰色"
-						],
-						pname: null,
-						pid: "1000003598"
-					},
-					{
-						vid: [
-							"1501094127"
-						],
-						vname: [
-							"34"
-						],
-						pname: null,
-						pid: "1000003646"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19774/138/2383028247/74057/140b301f/5af29411Nfd97818e.jpg",
-				quantity: 264,
-				price: 859,
-				created: 1525847059000,
-				platStatus: null,
-				modified: 1525903222000,
-				outerId: "TBLCAD03DL1AQ8230",
-				id: "28036157104",
-				status: 1,
-				props: [
-					{
-						vid: [
-							"1501093842"
-						],
-						vname: [
-							"红灰色"
-						],
-						pname: null,
-						pid: "1000003598"
-					},
-					{
-						vid: [
-							"1501094294"
-						],
-						vname: [
-							"36"
-						],
-						pname: null,
-						pid: "1000003646"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19774/138/2383028247/74057/140b301f/5af29411Nfd97818e.jpg",
-				quantity: 65,
-				price: 859,
-				created: 1525847059000,
-				platStatus: null,
-				modified: 1525903222000,
-				outerId: "TBLCAD03DL1AQ8245",
-				id: "28036157101",
-				status: 1,
-				props: [
-					{
-						vid: [
-							"1501093842"
-						],
-						vname: [
-							"红灰色"
-						],
-						pname: null,
-						pid: "1000003598"
-					},
-					{
-						vid: [
-							"1501094019"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000003646"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19774/138/2383028247/74057/140b301f/5af29411Nfd97818e.jpg",
-				quantity: 176,
-				price: 859,
-				created: 1525847059000,
-				platStatus: null,
-				modified: 1525903222000,
-				outerId: "TBLCAD03DL1AQ8240",
-				id: "28036157102",
-				status: 1,
-				props: [
-					{
-						vid: [
-							"1501094297"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000003646"
-					},
-					{
-						vid: [
-							"1501093842"
-						],
-						vname: [
-							"红灰色"
-						],
-						pname: null,
-						pid: "1000003598"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19774/138/2383028247/74057/140b301f/5af29411Nfd97818e.jpg",
-				quantity: 0,
-				price: 859,
-				created: 1525847059000,
-				platStatus: null,
-				modified: 1525903222000,
-				outerId: "TBLCAD03DL1AQ8215",
-				id: "28036157107",
-				status: 1,
-				props: [
-					{
-						vid: [
-							"1501093842"
-						],
-						vname: [
-							"红灰色"
-						],
-						pname: null,
-						pid: "1000003598"
-					},
-					{
-						vid: [
-							"1501094293"
-						],
-						vname: [
-							"33"
-						],
-						pname: null,
-						pid: "1000003646"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t19774/138/2383028247/74057/140b301f/5af29411Nfd97818e.jpg",
-				quantity: 0,
-				price: 859,
-				created: 1525847059000,
-				platStatus: null,
-				modified: 1525903222000,
-				outerId: "TBLCAD03DL1AQ8250",
-				id: "28036149300",
-				status: 1,
-				props: [
-					{
-						vid: [
-							"1501093842"
-						],
-						vname: [
-							"红灰色"
-						],
-						pname: null,
-						pid: "1000003598"
-					},
-					{
-						vid: [
-							"1501094129"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000003646"
-					}
-				]
-			}
-		],
-		created: 1525847059000,
-		delistTime: 1525847059000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"573883"
-				],
-				vname: [
-					"休闲"
-				],
-				pname: null,
-				pid: "93251"
-			},
-			{
-				vid: [
-					"574189"
-				],
-				vname: [
-					"格子"
-				],
-				pname: null,
-				pid: "14766"
-			},
-			{
-				vid: [
-					"572897"
-				],
-				vname: [
-					"方头"
-				],
-				pname: null,
-				pid: "93168"
-			},
-			{
-				vid: [
-					"574181"
-				],
-				vname: [
-					"一字式扣带"
-				],
-				pname: null,
-				pid: "14764"
-			},
-			{
-				vid: [
-					"572838"
-				],
-				vname: [
-					"软面皮"
-				],
-				pname: null,
-				pid: "93160"
-			},
-			{
-				vid: [
-					"572885"
-				],
-				vname: [
-					"浅口<7"
-				],
-				pname: null,
-				pid: "93166"
-			},
-			{
-				vid: [
-					"112092",
-					"112093",
-					"112096",
-					"112098",
-					"112100",
-					"112103",
-					"112105",
-					"112108"
-				],
-				vname: [
-					"34",
-					"35",
-					"36",
-					"37",
-					"38",
-					"39",
-					"40",
-					"大于40"
-				],
-				pname: null,
-				pid: "11787"
-			},
-			{
-				vid: [
-					"217861"
-				],
-				vname: [
-					"橡胶底"
-				],
-				pname: null,
-				pid: "14765"
-			},
-			{
-				vid: [
-					"217833",
-					"217836",
-					"217838"
-				],
-				vname: [
-					"黑色",
-					"棕色",
-					"灰色"
-				],
-				pname: null,
-				pid: "14763"
-			},
-			{
-				vid: [
-					"572985"
-				],
-				vname: [
-					"胶粘鞋"
-				],
-				pname: null,
-				pid: "93174"
-			},
-			{
-				vid: [
-					"217787"
-				],
-				vname: [
-					"人造革"
-				],
-				pname: null,
-				pid: "14762"
-			},
-			{
-				vid: [
-					"112094"
-				],
-				vname: [
-					"布面"
-				],
-				pname: null,
-				pid: "11786"
-			},
-			{
-				vid: [
-					"111889"
-				],
-				vname: [
-					"700-999"
-				],
-				pname: null,
-				pid: "11788"
-			},
-			{
-				vid: [
-					"112115"
-				],
-				vname: [
-					"低帮鞋"
-				],
-				pname: null,
-				pid: "11785"
-			},
-			{
-				vid: [
-					"736582"
+					"3267959"
 				],
 				vname: [
 					"青年"
 				],
-				pname: null,
-				pid: "93262"
+				pname: "适用对象",
+				pid: "122216608"
 			},
 			{
 				vid: [
-					"746654"
+					"3704835"
 				],
 				vname: [
-					"2018春季"
+					"89757"
 				],
-				pname: null,
-				pid: "110467"
-			},
-			{
-				vid: [
-					"572995"
-				],
-				vname: [
-					"格子"
-				],
-				pname: null,
-				pid: "93175"
-			},
-			{
-				vid: [
-					"736602"
-				],
-				vname: [
-					"其它"
-				],
-				pname: null,
-				pid: "142526"
+				pname: "货号",
+				pid: "13021751"
 			}
 		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t19774/138/2383028247/74057/140b301f/5af29411Nfd97818e.jpg",
-		lastSync: 1526001259073,
-		price: 859,
-		platStatus: "8",
-		name: "Teenmix/天美意2018春季专柜同款纺织品复古格纹玛丽珍鞋女单鞋CAD03AQ8",
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2NcxRlpXXXXarXXXXXXXXXXXX_!!1849722037.png",
+		lastSync: 1527695661170,
+		price: 0.01,
+		platStatus: "instock",
+		promotionIn: [
+			{
+				promoPrice: "0.01",
+				skus: [
+					{
+						price: 0.02,
+						id: "3690119039609"
+					},
+					{
+						price: 0.01,
+						id: "3690119039610"
+					}
+				],
+				startTime: 1527152682000,
+				endTime: 1527843882000
+			},
+			{
+				promoPrice: "0.01",
+				skus: [
+					{
+						price: 0.02,
+						id: "3690119039609"
+					},
+					{
+						price: 0.01,
+						id: "3690119039610"
+					}
+				],
+				startTime: 1527157943000,
+				endTime: 1527762743000
+			}
+		],
+		name: "黄渤测试",
 		shopCategories: [
 			{
-				name: null,
-				id: "250365"
-			},
-			{
-				name: null,
-				id: "211328"
-			},
-			{
-				name: "",
-				id: "7945467"
+				name: "井饭定食",
+				id: "809546839"
 			}
 		],
-		modified: 1525997489000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/28036157105.html",
-		shopId: "23591",
-		id: "11622746302",
+		modified: 1527682873000,
+		outerId: "89757",
+		detailUrl: "https://item.taobao.com/item.htm?id=554594751444&spm=2014.12440355.0.0",
+		shopId: "106878997",
 		categories: [
 			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6916"
+				name: "卡包",
+				id: "121400005"
 			}
 		],
-		listTime: 1525903222000,
+		id: "554594751444",
+		listTime: 1499333872000,
+		status: 0,
+		order: 0
+	},
+	{
+		skus: [
+			{
+				price: 0.1,
+				outerId: "skusjbm123456789",
+				id: "3614276334775",
+				props: [
+					{
+						vid: [
+							"28320"
+						],
+						vname: [
+							"白色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				price: 0.1,
+				outerId: "skusjbm123456789",
+				id: "3614276334776",
+				props: [
+					{
+						vid: [
+							"28326"
+						],
+						vname: [
+							"红色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				price: 0.1,
+				outerId: "skusjbm123456789",
+				id: "3614276334779",
+				props: [
+					{
+						vid: [
+							"28341"
+						],
+						vname: [
+							"黑色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				price: 0.1,
+				outerId: "skusjbm123456789",
+				id: "3614276334777",
+				props: [
+					{
+						vid: [
+							"28328"
+						],
+						vname: [
+							"金色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				price: 0.1,
+				outerId: "skusjbm123456789",
+				id: "3614276334778",
+				props: [
+					{
+						vid: [
+							"28340"
+						],
+						vname: [
+							"深蓝色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			}
+		],
+		delistTime: 1515488220000,
+		props: [
+			{
+				vid: [
+					"131863"
+				],
+				vname: [
+					"边夹"
+				],
+				pname: "发饰分类",
+				pid: "21495"
+			},
+			{
+				vid: [
+					"28320"
+				],
+				vname: [
+					"白色"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"28326"
+				],
+				vname: [
+					"红色"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"28328"
+				],
+				vname: [
+					"金色"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"28340"
+				],
+				vname: [
+					"深蓝色"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"28341"
+				],
+				vname: [
+					"黑色"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"3365534"
+				],
+				vname: [
+					"8023"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"81034"
+				],
+				vname: [
+					"0.01-0.99元"
+				],
+				pname: "价格区间",
+				pid: "21541"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB2Z8Jqx.hnpuFjSZFpXXcpuXXa_!!1849722037.jpg",
+		lastSync: 1524580873206,
+		price: 0.1,
+		platStatus: "instock",
+		name: "狗狗发夹",
+		modified: 1516691945000,
+		outerId: "sjbm123456789",
+		detailUrl: "https://item.taobao.com/item.htm?id=554837536149&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "发饰",
+				id: "50013878"
+			}
+		],
+		id: "554837536149",
+		listTime: 1515138065000,
+		status: 0
+	},
+	{
+		skus: [
+			{
+				picUrl: null,
+				quantity: 1495,
+				price: 2,
+				created: 1501580929000,
+				platStatus: null,
+				modified: 1528858502000,
+				outerId: "123456",
+				id: "3606148094129",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"57640979"
+						],
+						vname: [
+							"175/76A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"90554"
+						],
+						vname: [
+							"桔色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 994,
+				price: 2,
+				created: 1501580929000,
+				platStatus: null,
+				modified: 1528858502000,
+				outerId: "123456",
+				id: "3606148094128",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"18424903"
+						],
+						vname: [
+							"170/72A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"90554"
+						],
+						vname: [
+							"桔色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 1395,
+				price: 2,
+				created: 1501580929000,
+				platStatus: null,
+				modified: 1528858502000,
+				outerId: "123456",
+				id: "3606148094127",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"29325359"
+						],
+						vname: [
+							"165/68A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"90554"
+						],
+						vname: [
+							"桔色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 1397,
+				price: 2,
+				created: 1501580929000,
+				platStatus: null,
+				modified: 1528858502000,
+				outerId: "123456",
+				id: "3606148094126",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"57640979"
+						],
+						vname: [
+							"175/76A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"132476"
+						],
+						vname: [
+							"柠檬黄"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 1798,
+				price: 2,
+				created: 1501580929000,
+				platStatus: null,
+				modified: 1528858502000,
+				outerId: "123456",
+				id: "3606148094125",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"18424903"
+						],
+						vname: [
+							"170/72A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"132476"
+						],
+						vname: [
+							"柠檬黄"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 3981,
+				price: 2,
+				created: 1501580929000,
+				platStatus: null,
+				modified: 1528858502000,
+				outerId: "123456",
+				id: "3606148094124",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"29325359"
+						],
+						vname: [
+							"165/68A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"132476"
+						],
+						vname: [
+							"柠檬黄"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			}
+		],
+		quantity: 11060,
+		created: 0,
+		delistTime: 1531820928000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: [
+			{
+				vid: [
+					"57640979"
+				],
+				vname: [
+					"175/76A"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"18424903"
+				],
+				vname: [
+					"170/72A"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"29325359"
+				],
+				vname: [
+					"165/68A"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"132476"
+				],
+				vname: [
+					"柠檬黄"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"90554"
+				],
+				vname: [
+					"桔色"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"379930774"
+				],
+				vname: [
+					"2014年春季"
+				],
+				pname: "年份季节",
+				pid: "122216347"
+			},
+			{
+				vid: [
+					"33691944"
+				],
+				vname: [
+					"100F1/百分之一"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"325149691"
+				],
+				vname: [
+					"sjbm123"
+				],
+				pname: "货号",
+				pid: "13021751"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i2/1849722037/TB2g24NmL5TBuNjSspcXXbnGFXa_!!1849722037.png",
+		lastSync: 1531765281782,
+		price: 2,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "1.80",
+				skus: [
+					{
+						price: 1.8,
+						id: "3606148094129"
+					},
+					{
+						price: 1.8,
+						id: "3606148094128"
+					},
+					{
+						price: 1.8,
+						id: "3606148094127"
+					},
+					{
+						price: 1.8,
+						id: "3606148094126"
+					},
+					{
+						price: 1.8,
+						id: "3606148094125"
+					},
+					{
+						price: 1.8,
+						id: "3606148094124"
+					}
+				],
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "商家测试",
+		shopCategories: [
+			{
+				name: "牛井",
+				id: "809546836"
+			}
+		],
+		modified: 1531536027000,
+		outerId: "654321",
+		detailUrl: "https://item.taobao.com/item.htm?id=556274548367&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "半身裙",
+				id: "1623"
+			}
+		],
+		id: "556274548367",
+		listTime: 1531216128000,
+		status: 1,
+		order: 0
+	},
+	{
+		delistTime: 1509431289000,
+		picUrl: "https://img.alicdn.com/bao/uploaded/i4/1849722037/TB21Gf9iV9gSKJjSspbXXbeNXXa_!!1849722037.png",
+		lastSync: 1524574049415,
+		price: 0.01,
+		platStatus: "instock",
+		name: "测试商品请勿购买-2017春秋季新款长袖西装职业装气质ol律师4正装",
+		modified: 1509795725000,
+		outerId: "sjbm201709190011",
+		detailUrl: "https://item.taobao.com/item.htm?id=558739060419&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "剪纸",
+				id: "122258009"
+			}
+		],
+		id: "558739060419",
+		listTime: 1509431289000,
+		status: 0
+	},
+	{
+		skus: [
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1529398642000,
+				platStatus: null,
+				modified: 1529398642000,
+				outerId: "skusjbm20170919123",
+				id: "3878198034432",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"71744989"
+						],
+						vname: [
+							"175/100A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3743025"
+						],
+						vname: [
+							"西瓜红"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1529398642000,
+				platStatus: null,
+				modified: 1529398642000,
+				outerId: "skusjbm20170919123",
+				id: "3878198034429",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"3267944"
+						],
+						vname: [
+							"175/96A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3743025"
+						],
+						vname: [
+							"西瓜红"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1529398642000,
+				platStatus: null,
+				modified: 1529398642000,
+				outerId: "skusjbm20170919123",
+				id: "3878198034428",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"3267943"
+						],
+						vname: [
+							"170/92A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3743025"
+						],
+						vname: [
+							"西瓜红"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1529398642000,
+				platStatus: null,
+				modified: 1529398642000,
+				outerId: "skusjbm20170919123",
+				id: "3878198034427",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"3267942"
+						],
+						vname: [
+							"165/88A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3743025"
+						],
+						vname: [
+							"西瓜红"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1529398642000,
+				platStatus: null,
+				modified: 1529398642000,
+				outerId: "skusjbm20170919123",
+				id: "3878198034430",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"6215318"
+						],
+						vname: [
+							"160/84A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3743025"
+						],
+						vname: [
+							"西瓜红"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1529398642000,
+				platStatus: null,
+				modified: 1529398642000,
+				outerId: "skusjbm20170919123",
+				id: "3878198034431",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"66579689"
+						],
+						vname: [
+							"150/80A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3743025"
+						],
+						vname: [
+							"西瓜红"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 1989,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1529461117000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071726",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"71744989"
+						],
+						vname: [
+							"175/100A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"28332"
+						],
+						vname: [
+							"浅灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071725",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"3267944"
+						],
+						vname: [
+							"175/96A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"28332"
+						],
+						vname: [
+							"浅灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071724",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"3267943"
+						],
+						vname: [
+							"170/92A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"28332"
+						],
+						vname: [
+							"浅灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071723",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"3267942"
+						],
+						vname: [
+							"165/88A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"28332"
+						],
+						vname: [
+							"浅灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 1997,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071722",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"6215318"
+						],
+						vname: [
+							"160/84A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"28332"
+						],
+						vname: [
+							"浅灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071721",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"66579689"
+						],
+						vname: [
+							"150/80A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"28332"
+						],
+						vname: [
+							"浅灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 1999,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071720",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"71744989"
+						],
+						vname: [
+							"175/100A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3232478"
+						],
+						vname: [
+							"深灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071719",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"3267944"
+						],
+						vname: [
+							"175/96A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3232478"
+						],
+						vname: [
+							"深灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071718",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"3267943"
+						],
+						vname: [
+							"170/92A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3232478"
+						],
+						vname: [
+							"深灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071717",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"3267942"
+						],
+						vname: [
+							"165/88A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3232478"
+						],
+						vname: [
+							"深灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 2000,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071716",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"6215318"
+						],
+						vname: [
+							"160/84A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3232478"
+						],
+						vname: [
+							"深灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			},
+			{
+				picUrl: null,
+				quantity: 1998,
+				price: 7,
+				created: 1505802625000,
+				platStatus: null,
+				modified: 1527649962000,
+				outerId: "skusjbm20170919123",
+				id: "3643555071715",
+				status: 1,
+				props: [
+					{
+						vid: [
+							"66579689"
+						],
+						vname: [
+							"150/80A"
+						],
+						pname: "尺码",
+						pid: "20509"
+					},
+					{
+						vid: [
+							"3232478"
+						],
+						vname: [
+							"深灰色"
+						],
+						pname: "颜色分类",
+						pid: "1627207"
+					}
+				]
+			}
+		],
+		quantity: 35983,
+		created: 0,
+		delistTime: 1531809024000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: [
+			{
+				vid: [
+					"71744989"
+				],
+				vname: [
+					"175/100A"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"3267944"
+				],
+				vname: [
+					"175/96A"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"3267943"
+				],
+				vname: [
+					"170/92A"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"3267942"
+				],
+				vname: [
+					"165/88A"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"6215318"
+				],
+				vname: [
+					"160/84A"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"66579689"
+				],
+				vname: [
+					"150/80A"
+				],
+				pname: "尺码",
+				pid: "20509"
+			},
+			{
+				vid: [
+					"3743025"
+				],
+				vname: [
+					"西瓜红"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"3232478"
+				],
+				vname: [
+					"深灰色"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"28332"
+				],
+				vname: [
+					"浅灰色"
+				],
+				pname: "颜色分类",
+				pid: "1627207"
+			},
+			{
+				vid: [
+					"740138901"
+				],
+				vname: [
+					"2016年冬季"
+				],
+				pname: "上市年份/季节",
+				pid: "122216347"
+			},
+			{
+				vid: [
+					"28352"
+				],
+				vname: [
+					"羊毛"
+				],
+				pname: "面料",
+				pid: "20551"
+			},
+			{
+				vid: [
+					"492838732"
+				],
+				vname: [
+					"81%(含)-90%(含)"
+				],
+				pname: "成分含量",
+				pid: "13328588"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB2gblsa6ihSKJjy0FlXXadEXXa_!!1849722037.jpg",
+		lastSync: 1531765281790,
+		price: 7,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "6.30",
+				skus: [
+					{
+						price: 6.3,
+						id: "3878198034432"
+					},
+					{
+						price: 6.3,
+						id: "3878198034429"
+					},
+					{
+						price: 6.3,
+						id: "3878198034428"
+					},
+					{
+						price: 6.3,
+						id: "3878198034427"
+					},
+					{
+						price: 6.3,
+						id: "3878198034430"
+					},
+					{
+						price: 6.3,
+						id: "3878198034431"
+					},
+					{
+						price: 6.3,
+						id: "3643555071726"
+					},
+					{
+						price: 6.3,
+						id: "3643555071725"
+					},
+					{
+						price: 6.3,
+						id: "3643555071724"
+					},
+					{
+						price: 6.3,
+						id: "3643555071723"
+					},
+					{
+						price: 6.3,
+						id: "3643555071722"
+					},
+					{
+						price: 6.3,
+						id: "3643555071721"
+					},
+					{
+						price: 6.3,
+						id: "3643555071720"
+					},
+					{
+						price: 6.3,
+						id: "3643555071719"
+					},
+					{
+						price: 6.3,
+						id: "3643555071718"
+					},
+					{
+						price: 6.3,
+						id: "3643555071717"
+					},
+					{
+						price: 6.3,
+						id: "3643555071716"
+					},
+					{
+						price: 6.3,
+						id: "3643555071715"
+					}
+				],
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "测试商品请勿购买--女上衣",
+		shopCategories: [
+			{
+				name: "井饭定食",
+				id: "809546839"
+			}
+		],
+		modified: 1530239045000,
+		outerId: "sjbm20170919123",
+		detailUrl: "https://item.taobao.com/item.htm?id=558898206660&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "毛针织衫",
+				id: "50000697"
+			}
+		],
+		id: "558898206660",
+		listTime: 1531204224000,
+		status: 1,
+		order: 0
+	},
+	{
+		skus: null,
+		quantity: 9999,
+		created: 1511942198000,
+		delistTime: 1512546998000,
+		inputStr: "",
+		inputPids: "",
+		props: [
+			{
+				vid: [
+					"3708921"
+				],
+				vname: [
+					"10x1"
+				],
+				pname: "品牌",
+				pid: "20000"
+			},
+			{
+				vid: [
+					"19253708"
+				],
+				vname: [
+					"亮面"
+				],
+				pname: "材质工艺",
+				pid: "122216629"
+			},
+			{
+				vid: [
+					"3323086"
+				],
+				vname: [
+					"PU"
+				],
+				pname: "质地",
+				pid: "20021"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i2/1849722037/TB2i5nXa7fb_uJkSnaVXXXFmVXa_!!1849722037.gif",
+		lastSync: 1526659978024,
+		price: 1,
+		platStatus: "instock",
+		name: "全款预售--测试",
+		shopCategories: [
+			{
+				name: "井饭定食",
+				id: "809546839"
+			}
+		],
+		modified: 1526659652000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=562099525613&spm=2014.12440355.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "卡包",
+				id: "121400005"
+			}
+		],
+		id: "562099525613",
+		listTime: 1512546998000,
+		status: 0,
+		order: 0
+	},
+	{
+		skus: null,
+		quantity: 10000,
+		created: 0,
+		delistTime: 1531879204000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: [
+			{
+				vid: [
+					"28346"
+				],
+				vname: [
+					"亚麻"
+				],
+				pname: "主要材质",
+				pid: "20021"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i3/1849722037/TB2ARTmfwfH8KJjy1zcXXcTzpXa_!!1849722037.jpg",
+		lastSync: 1531765281809,
+		price: 1,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "0.90",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "测试商品--定时预售",
+		shopCategories: [
+			{
+				name: "牛井",
+				id: "809546836"
+			}
+		],
+		modified: 1525924562000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=562241967042&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "帽子",
+				id: "302910"
+			}
+		],
+		id: "562241967042",
+		listTime: 1531274404000,
+		status: 1,
+		order: 0
+	},
+	{
+		skus: null,
+		quantity: 1000,
+		created: 0,
+		delistTime: 1531813559000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: [
+			{
+				vid: [
+					"3361582"
+				],
+				vname: [
+					"7888"
+				],
+				pname: "型号",
+				pid: "51006536"
+			},
+			{
+				vid: [
+					"237446858"
+				],
+				vname: [
+					"ECOBLING"
+				],
+				pname: "品牌",
+				pid: "20000"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i2/1849722037/TB2BRoKcFXXXXazXpXXXXXXXXXX_!!1849722037.jpg",
+		lastSync: 1531765281769,
+		price: 67,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "60.30",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "hhhh",
+		shopCategories: [
+			{
+				name: "数云正太",
+				id: "1352225503"
+			}
+		],
+		modified: 1529394359000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=567939483733&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		categories: [
+			{
+				name: "其它清洁美容配件",
+				id: "50011881"
+			}
+		],
+		id: "567939483733",
+		listTime: 1531208759000,
+		status: 1,
+		order: 0
+	},
+	{
+		quantity: 95000,
+		skus: null,
+		created: 0,
+		delistTime: 1531797931000,
+		inputStr: null,
+		inputPids: null,
+		brandId: '1111',
+		props: [
+			{
+				vid: [
+					"9464813"
+				],
+				vname: [
+					"789415"
+				],
+				pname: "型号",
+				pid: "214154536"
+			},
+			{
+				vid: [
+					"1486863729"
+				],
+				vname: [
+					"宝优坊"
+				],
+				pname: "品牌",
+				pid: "20000"
+			}
+		],
+		picUrl: "https://img.alicdn.com/bao/uploaded/i1/1849722037/TB2L1H7sL5TBuNjSspmXXaDRVXa_!!1849722037.jpg",
+		lastSync: 1531765281796,
+		price: 200,
+		platStatus: "onsale",
+		promotionIn: [
+			{
+				promoPrice: "180.00",
+				skus: null,
+				startTime: 1530844951000,
+				endTime: 1530931345000
+			}
+		],
+		name: "新鲜桃子非常好吃的桃子",
+		shopCategories: [
+			{
+				name: "",
+				id: "-1"
+			}
+		],
+		modified: 1529397651000,
+		outerId: "",
+		detailUrl: "https://item.taobao.com/item.htm?id=570032748365&spm=2015.12283535.0.0",
+		shopId: "106878997",
+		id: "570032748365",
+		categories: [
+			{
+				name: "挤牙膏器",
+				id: "50018416"
+			}
+		],
+		listTime: 1531193131000,
 		order: 0,
 		status: 1
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2302/330/1479197918/49060/5c94262a/56c1998eN2c958c3e.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DU1AH6230",
-				id: "10126011242",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690021"
-						],
-						vname: [
-							"36"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2302/330/1479197918/49060/5c94262a/56c1998eN2c958c3e.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DU1AH6225",
-				id: "10126011241",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690005"
-						],
-						vname: [
-							"35"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2044/123/2141039906/47019/a206a384/56c19994N1503501c.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DM8AH6250",
-				id: "10126011254",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500692648"
-						],
-						vname: [
-							"深兰色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500689978"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2302/330/1479197918/49060/5c94262a/56c1998eN2c958c3e.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DU1AH6240",
-				id: "10126011244",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500689977"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2044/123/2141039906/47019/a206a384/56c19994N1503501c.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DM8AH6245",
-				id: "10126011253",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690007"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500692648"
-						],
-						vname: [
-							"深兰色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2044/123/2141039906/47019/a206a384/56c19994N1503501c.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DM8AH6240",
-				id: "10126011252",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689977"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500692648"
-						],
-						vname: [
-							"深兰色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2044/123/2141039906/47019/a206a384/56c19994N1503501c.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DM8AH6230",
-				id: "10126011250",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690021"
-						],
-						vname: [
-							"36"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500692648"
-						],
-						vname: [
-							"深兰色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2044/123/2141039906/47019/a206a384/56c19994N1503501c.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DM8AH6235",
-				id: "10126011251",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500692648"
-						],
-						vname: [
-							"深兰色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690022"
-						],
-						vname: [
-							"37"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2044/123/2141039906/47019/a206a384/56c19994N1503501c.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DM8AH6225",
-				id: "10126011249",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690005"
-						],
-						vname: [
-							"35"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500692648"
-						],
-						vname: [
-							"深兰色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2044/123/2141039906/47019/a206a384/56c19994N1503501c.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DM8AH6220",
-				id: "10126011248",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689996"
-						],
-						vname: [
-							"34"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500692648"
-						],
-						vname: [
-							"深兰色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2302/330/1479197918/49060/5c94262a/56c1998eN2c958c3e.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DU1AH6250",
-				id: "10126011246",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689978"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2044/123/2141039906/47019/a206a384/56c19994N1503501c.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DM8AH6215",
-				id: "10126011247",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690004"
-						],
-						vname: [
-							"33"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500692648"
-						],
-						vname: [
-							"深兰色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2302/330/1479197918/49060/5c94262a/56c1998eN2c958c3e.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DU1AH6245",
-				id: "10126011245",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690007"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2302/330/1479197918/49060/5c94262a/56c1998eN2c958c3e.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DU1AH6235",
-				id: "10126011243",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690022"
-						],
-						vname: [
-							"37"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2302/330/1479197918/49060/5c94262a/56c1998eN2c958c3e.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DU1AH6220",
-				id: "10126011240",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689996"
-						],
-						vname: [
-							"34"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2302/330/1479197918/49060/5c94262a/56c1998eN2c958c3e.jpg",
-				quantity: 0,
-				price: 1118,
-				created: 1455528332000,
-				platStatus: null,
-				modified: 1496402563000,
-				outerId: "SZP9YF02DU1AH6215",
-				id: "10126011239",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690004"
-						],
-						vname: [
-							"33"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500685585"
-						],
-						vname: [
-							"黑色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			}
-		],
-		created: 1455528332000,
-		delistTime: 1469606114000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"572235"
-				],
-				vname: [
-					"胶粘鞋"
-				],
-				pname: null,
-				pid: "93114"
-			},
-			{
-				vid: [
-					"572188"
-				],
-				vname: [
-					"漆皮"
-				],
-				pname: null,
-				pid: "93111"
-			},
-			{
-				vid: [
-					"573915"
-				],
-				vname: [
-					"欧美"
-				],
-				pname: null,
-				pid: "93252"
-			},
-			{
-				vid: [
-					"220162"
-				],
-				vname: [
-					"包头"
-				],
-				pname: null,
-				pid: "14821"
-			},
-			{
-				vid: [
-					"220168"
-				],
-				vname: [
-					"橡胶底"
-				],
-				pname: null,
-				pid: "14822"
-			},
-			{
-				vid: [
-					"112306"
-				],
-				vname: [
-					"高跟6-8"
-				],
-				pname: null,
-				pid: "11792"
-			},
-			{
-				vid: [
-					"573944"
-				],
-				vname: [
-					"办公室"
-				],
-				pname: null,
-				pid: "93254"
-			},
-			{
-				vid: [
-					"112024"
-				],
-				vname: [
-					"铆钉"
-				],
-				pname: null,
-				pid: "11790"
-			},
-			{
-				vid: [
-					"112321"
-				],
-				vname: [
-					"细跟"
-				],
-				pname: null,
-				pid: "11793"
-			},
-			{
-				vid: [
-					"112052"
-				],
-				vname: [
-					"大于700元"
-				],
-				pname: null,
-				pid: "11798"
-			},
-			{
-				vid: [
-					"572238"
-				],
-				vname: [
-					"纯色"
-				],
-				pname: null,
-				pid: "93115"
-			},
-			{
-				vid: [
-					"220082"
-				],
-				vname: [
-					"一字式扣带"
-				],
-				pname: null,
-				pid: "14826"
-			},
-			{
-				vid: [
-					"220110"
-				],
-				vname: [
-					"黑色"
-				],
-				pname: null,
-				pid: "14825"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t1888/149/2151566256/246906/41929c0d/56c1998bNa3f99be7.jpg",
-		lastSync: 1526459516693,
-		price: 1118,
-		platStatus: "2",
-		name: "STACCATO/思加图2016年春季专柜同款黑色胎牛皮女鞋9YF02AH6 专柜2",
-		shopCategories: [
-			{
-				name: null,
-				id: "211327"
-			},
-			{
-				name: "",
-				id: "4825753"
-			}
-		],
-		modified: 1526454712000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10126011242.html",
-		shopId: "23591",
-		id: "10027179143",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6917"
-			}
-		],
-		listTime: 1468996004000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2896/358/2372621640/30340/b284ae01/5762063dN697b3db3.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208906263",
-				id: "10421638704",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1506948636"
-						],
-						vname: [
-							"黑"
-						],
-						pname: null,
-						pid: "1000021625"
-					},
-					{
-						vid: [
-							"1520693459"
-						],
-						vname: [
-							"S"
-						],
-						pname: null,
-						pid: "1000021643"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2644/261/2373215637/35258/6d2fa293/57620647N36bdc669.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "886548489329",
-				id: "10421638709",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520807635"
-						],
-						vname: [
-							"L"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948982"
-						],
-						vname: [
-							"蓝"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2644/261/2373215637/35258/6d2fa293/57620647N36bdc669.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "886548489336",
-				id: "10421638710",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1506948982"
-						],
-						vname: [
-							"蓝"
-						],
-						pname: null,
-						pid: "1000021625"
-					},
-					{
-						vid: [
-							"1520693479"
-						],
-						vname: [
-							"XL"
-						],
-						pname: null,
-						pid: "1000021643"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2644/261/2373215637/35258/6d2fa293/57620647N36bdc669.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "886548489305",
-				id: "10421638708",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1506948982"
-						],
-						vname: [
-							"蓝"
-						],
-						pname: null,
-						pid: "1000021625"
-					},
-					{
-						vid: [
-							"1520693458"
-						],
-						vname: [
-							"M"
-						],
-						pname: null,
-						pid: "1000021643"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2896/358/2372621640/30340/b284ae01/5762063dN697b3db3.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208908618",
-				id: "10421638707",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520693479"
-						],
-						vname: [
-							"XL"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948636"
-						],
-						vname: [
-							"黑"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2896/358/2372621640/30340/b284ae01/5762063dN697b3db3.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208906836",
-				id: "10421638706",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520807635"
-						],
-						vname: [
-							"L"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948636"
-						],
-						vname: [
-							"黑"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2593/192/2297998227/26563/3063b949/57620637N60db5fd5.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208928111",
-				id: "10421638703",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520693479"
-						],
-						vname: [
-							"XL"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948866"
-						],
-						vname: [
-							"黄"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2593/192/2297998227/26563/3063b949/57620637N60db5fd5.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208927084",
-				id: "10421638701",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520693458"
-						],
-						vname: [
-							"M"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948866"
-						],
-						vname: [
-							"黄"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2593/192/2297998227/26563/3063b949/57620637N60db5fd5.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208928104",
-				id: "10421638702",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520807635"
-						],
-						vname: [
-							"L"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948866"
-						],
-						vname: [
-							"黄"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2758/281/2329031087/24234/e89e2e7f/5762062eN31557853.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208915937",
-				id: "10421633999",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1506948906"
-						],
-						vname: [
-							"白"
-						],
-						pname: null,
-						pid: "1000021625"
-					},
-					{
-						vid: [
-							"1520807635"
-						],
-						vname: [
-							"L"
-						],
-						pname: null,
-						pid: "1000021643"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2758/281/2329031087/24234/e89e2e7f/5762062eN31557853.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208916064",
-				id: "10421634000",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520693479"
-						],
-						vname: [
-							"XL"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948906"
-						],
-						vname: [
-							"白"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2758/281/2329031087/24234/e89e2e7f/5762062eN31557853.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208915920",
-				id: "10421633998",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1506948906"
-						],
-						vname: [
-							"白"
-						],
-						pname: null,
-						pid: "1000021625"
-					},
-					{
-						vid: [
-							"1520693458"
-						],
-						vname: [
-							"M"
-						],
-						pname: null,
-						pid: "1000021643"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2938/203/629719006/39470/23c7e6a9/57620625N108369ac.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "886548455188",
-				id: "10421633997",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520693479"
-						],
-						vname: [
-							"XL"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948791"
-						],
-						vname: [
-							"紫"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2938/203/629719006/39470/23c7e6a9/57620625N108369ac.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "886548455164",
-				id: "10421633995",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1506948791"
-						],
-						vname: [
-							"紫"
-						],
-						pname: null,
-						pid: "1000021625"
-					},
-					{
-						vid: [
-							"1520693458"
-						],
-						vname: [
-							"M"
-						],
-						pname: null,
-						pid: "1000021643"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2938/203/629719006/39470/23c7e6a9/57620625N108369ac.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "886548455171",
-				id: "10421633996",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1506948791"
-						],
-						vname: [
-							"紫"
-						],
-						pname: null,
-						pid: "1000021625"
-					},
-					{
-						vid: [
-							"1520807635"
-						],
-						vname: [
-							"L"
-						],
-						pname: null,
-						pid: "1000021643"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2878/261/2329724034/29986/4714527/5762061fN7313f57a.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208923956",
-				id: "10421633994",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1506948925"
-						],
-						vname: [
-							"红\粉红\玫瑰红"
-						],
-						pname: null,
-						pid: "1000021625"
-					},
-					{
-						vid: [
-							"1520693479"
-						],
-						vname: [
-							"XL"
-						],
-						pname: null,
-						pid: "1000021643"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2878/261/2329724034/29986/4714527/5762061fN7313f57a.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208923314",
-				id: "10421633993",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520807635"
-						],
-						vname: [
-							"L"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948925"
-						],
-						vname: [
-							"红\粉红\玫瑰红"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2878/261/2329724034/29986/4714527/5762061fN7313f57a.jpg",
-				quantity: 0,
-				price: 99,
-				created: 1466041886000,
-				platStatus: null,
-				modified: 1481280157000,
-				outerId: "091208919294",
-				id: "10421633992",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1520693458"
-						],
-						vname: [
-							"M"
-						],
-						pname: null,
-						pid: "1000021643"
-					},
-					{
-						vid: [
-							"1506948925"
-						],
-						vname: [
-							"红\粉红\玫瑰红"
-						],
-						pname: null,
-						pid: "1000021625"
-					}
-				]
-			}
-		],
-		created: 1466041886000,
-		delistTime: 1481280157000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"541978"
-				],
-				vname: [
-					"袜子"
-				],
-				pname: null,
-				pid: "86003"
-			},
-			{
-				vid: [
-					"639417"
-				],
-				vname: [
-					"中性"
-				],
-				pname: null,
-				pid: "111912"
-			},
-			{
-				vid: [
-					"541970"
-				],
-				vname: [
-					"1-100"
-				],
-				pname: null,
-				pid: "86002"
-			},
-			{
-				vid: [
-					"546624"
-				],
-				vname: [
-					"M"
-				],
-				pname: null,
-				pid: "86793"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t2617/171/2397501040/56505/e1c64069/5762061eN68d85ccc.jpg",
-		lastSync: 1526553152986,
-		price: 99,
-		platStatus: "2",
-		name: "NIKE耐克2016年新款中性U NK ELT LTWT QT中筒袜SX5194-671",
-		shopCategories: [
-			{
-				name: null,
-				id: "250367"
-			},
-			{
-				name: "",
-				id: "214726"
-			}
-		],
-		modified: 1526545876000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10421638705.html",
-		shopId: "23591",
-		id: "10092098494",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "12103"
-			}
-		],
-		listTime: 1466472973000,
-		order: 0,
-		status: 0
-	},
-	{
-		quantity: 0,
-		skus: [
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2701/44/2728981980/80147/c96fe7b8/57720819Nc62dd7ad.jpg",
-				quantity: 0,
-				price: 1268,
-				created: 1467090967000,
-				platStatus: null,
-				modified: 1496402845000,
-				outerId: "SZP9JR03DU1BL6240",
-				id: "10445171473",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"黑/白色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500689977"
-						],
-						vname: [
-							"38"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2701/44/2728981980/80147/c96fe7b8/57720819Nc62dd7ad.jpg",
-				quantity: 0,
-				price: 1268,
-				created: 1467090967000,
-				platStatus: null,
-				modified: 1496402845000,
-				outerId: "SZP9JR03DU1BL6235",
-				id: "10445171472",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"黑/白色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690022"
-						],
-						vname: [
-							"37"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2701/44/2728981980/80147/c96fe7b8/57720819Nc62dd7ad.jpg",
-				quantity: 0,
-				price: 1268,
-				created: 1467090967000,
-				platStatus: null,
-				modified: 1496402845000,
-				outerId: "SZP9JR03DU1BL6230",
-				id: "10445171471",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"黑/白色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690021"
-						],
-						vname: [
-							"36"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2701/44/2728981980/80147/c96fe7b8/57720819Nc62dd7ad.jpg",
-				quantity: 0,
-				price: 1268,
-				created: 1467090967000,
-				platStatus: null,
-				modified: 1496402845000,
-				outerId: "SZP9JR03DU1BL6225",
-				id: "10445171470",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"黑/白色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690005"
-						],
-						vname: [
-							"35"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2701/44/2728981980/80147/c96fe7b8/57720819Nc62dd7ad.jpg",
-				quantity: 0,
-				price: 1268,
-				created: 1467090967000,
-				platStatus: null,
-				modified: 1496402845000,
-				outerId: "SZP9JR03DU1BL6220",
-				id: "10445171469",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500689996"
-						],
-						vname: [
-							"34"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"黑/白色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2701/44/2728981980/80147/c96fe7b8/57720819Nc62dd7ad.jpg",
-				quantity: 0,
-				price: 1268,
-				created: 1467090967000,
-				platStatus: null,
-				modified: 1496402845000,
-				outerId: "SZP9JR03DU1BL6215",
-				id: "10445171468",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500690004"
-						],
-						vname: [
-							"33"
-						],
-						pname: null,
-						pid: "1000003592"
-					},
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"黑/白色"
-						],
-						pname: null,
-						pid: "1000003624"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2701/44/2728981980/80147/c96fe7b8/57720819Nc62dd7ad.jpg",
-				quantity: 0,
-				price: 1268,
-				created: 1467090967000,
-				platStatus: null,
-				modified: 1496402845000,
-				outerId: "SZP9JR03DU1BL6245",
-				id: "10445171474",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"黑/白色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500690007"
-						],
-						vname: [
-							"39"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			},
-			{
-				picUrl: "http://img13.360buyimg.com/n1/jfs/t2701/44/2728981980/80147/c96fe7b8/57720819Nc62dd7ad.jpg",
-				quantity: 0,
-				price: 1268,
-				created: 1467090967000,
-				platStatus: null,
-				modified: 1496402845000,
-				outerId: "SZP9JR03DU1BL6250",
-				id: "10445171475",
-				status: 0,
-				props: [
-					{
-						vid: [
-							"1500684721"
-						],
-						vname: [
-							"黑/白色"
-						],
-						pname: null,
-						pid: "1000003624"
-					},
-					{
-						vid: [
-							"1500689978"
-						],
-						vname: [
-							"40"
-						],
-						pname: null,
-						pid: "1000003592"
-					}
-				]
-			}
-		],
-		created: 1467090967000,
-		delistTime: 1469759372000,
-		inputStr: null,
-		inputPids: null,
-		props: [
-			{
-				vid: [
-					"220150"
-				],
-				vname: [
-					"露趾"
-				],
-				pname: null,
-				pid: "14821"
-			},
-			{
-				vid: [
-					"112306"
-				],
-				vname: [
-					"高跟6-8"
-				],
-				pname: null,
-				pid: "11792"
-			},
-			{
-				vid: [
-					"220110"
-				],
-				vname: [
-					"黑色"
-				],
-				pname: null,
-				pid: "14825"
-			},
-			{
-				vid: [
-					"220101"
-				],
-				vname: [
-					"魔术贴"
-				],
-				pname: null,
-				pid: "14826"
-			},
-			{
-				vid: [
-					"572235"
-				],
-				vname: [
-					"胶粘鞋"
-				],
-				pname: null,
-				pid: "93114"
-			},
-			{
-				vid: [
-					"112319"
-				],
-				vname: [
-					"坡跟"
-				],
-				pname: null,
-				pid: "11793"
-			},
-			{
-				vid: [
-					"112052"
-				],
-				vname: [
-					"大于700元"
-				],
-				pname: null,
-				pid: "11798"
-			},
-			{
-				vid: [
-					"573916"
-				],
-				vname: [
-					"休闲"
-				],
-				pname: null,
-				pid: "93252"
-			},
-			{
-				vid: [
-					"306815"
-				],
-				vname: [
-					"猪皮"
-				],
-				pname: null,
-				pid: "14823"
-			},
-			{
-				vid: [
-					"573943"
-				],
-				vname: [
-					"日常"
-				],
-				pname: null,
-				pid: "93254"
-			},
-			{
-				vid: [
-					"220168"
-				],
-				vname: [
-					"橡胶底"
-				],
-				pname: null,
-				pid: "14822"
-			}
-		],
-		picUrl: "http://img13.360buyimg.com/n1/jfs/t2644/62/2751556990/384077/15603799/57720817Nddfbe10b.jpg",
-		lastSync: 1526546098080,
-		price: 1268,
-		platStatus: "2",
-		name: "STACCATO/思加图2016年夏季专柜同款黑/白-牛毛皮女凉鞋JR03DBL6专柜2",
-		shopCategories: [
-			{
-				name: null,
-				id: "211327"
-			},
-			{
-				name: "",
-				id: "4825753"
-			}
-		],
-		modified: 1526540727000,
-		outerId: "",
-		detailUrl: "https://item.jd.com/10445171473.html",
-		shopId: "23591",
-		id: "10095832610",
-		categories: [
-			{
-				name: "",
-				id: "0"
-			},
-			{
-				name: "",
-				id: "6917"
-			}
-		],
-		listTime: 1468996863000,
-		order: 0,
-		status: 0
 	}
 ];
 
@@ -9725,6 +3892,7 @@ module.exports = function(configurations) {
 				body: function(req) {
 					let pageNum = 1;
 					let pageSize = 10000;
+					let result = [];
 					let arr1 = req.originalUrl.split('?');
 					if (arr1.length > 1) {
 						let paramsArr = arr1[1].split('&');
@@ -9738,6 +3906,33 @@ module.exports = function(configurations) {
 							}
 						});
 					}
+					data.forEach(item => {
+						if (req.body.id.length > 0) {
+							req.body.id.forEach(id => {
+								if (id === item.id) {
+									result.push(item);
+								}
+							});
+						} else if (req.body.outerId.length) {
+							req.body.outerId.forEach(outerId => {
+								if (outerId === item.outerId) {
+									result.push(item);
+								}
+							});
+						} else if (req.body['skus.outerId'].length) {
+							req.body['skus.outerId'].forEach(skuOuterId => {
+								if (item.skus && item.skus.length) {
+									for (let i = 0; i < item.skus.length; i++) {
+										if (item.skus[i].outerId === skuOuterId) {
+											result.push(item);
+											break;
+										}
+									}
+								}
+							});
+						}
+					});
+					console.log('result:', result);
 					return {
 						pageNum: pageNum,
 						pageSize: pageSize,
@@ -9745,7 +3940,7 @@ module.exports = function(configurations) {
 						totalCount: data.length,
 						flag: 'success',
 						msg: 'ok',
-						data: data.slice((pageNum - 1) * pageSize, pageNum * pageSize)
+						data: result.length ? result : data.slice((pageNum - 1) * pageSize, pageNum * pageSize)
 					};
 				},
 				headers: {

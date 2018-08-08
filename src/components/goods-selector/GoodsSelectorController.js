@@ -25,13 +25,15 @@ import service from './service';
 export default class GoodsSelectorCtrl {
 
 	$onInit() {
+		this.showLoading = true;
+		// 是否是单选
 		this.isSingleSelect = this._isSingleSelect;
+		// 单选按钮配置
 		this.radio = {
 			value: null,
 			setting: [],
 			disabled: false
 		};
-		this.showLoading = true;
 		// 已选的商品标签
 		this.selectedLabels = [];
 		this.selectedLabelsOfAll = [];
@@ -128,7 +130,7 @@ export default class GoodsSelectorCtrl {
 			// 获取商品标签数据并对selectedLabels进行初始化
 			this.getTags();
 			// 商品自自定义类目数据
-			this.getShopCatories();
+			this.getShopCategories();
 		} else if (this.isQiake) {
 			// 获取商品品牌
 			this.getBrands();
@@ -142,32 +144,7 @@ export default class GoodsSelectorCtrl {
 			platform: this.formModel.platform
 		};
 
-		// 全部商品->表格配置
-		this.selectedItems = [];
-		// selectedItemsBuffer 保存 selectedItems 中数据的副本（深拷贝）。维护 selectedItems 中数据状态。
-		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
-		this.selectedItemsBuffer = [];
-
-		// 用户传进来的已选商品处理
-		const goodsDataParams = {
-			shopInfo: this.shopList[0],
-			selectedGoods: this.selectedData,
-			serverName: this.serverName,
-			isSupportedSku: this.isSupportedSku
-		};
-		transformGoodsData(goodsDataParams).then(data => {
-			if (data && data.length) {
-				data.forEach(entity => {
-					this.updateSelectedItems(entity);
-					this.updateSelectedItemsBuffer();
-					if (this.isSingleSelect) {
-						this.radio.value = entity.id;
-					}
-				});
-				this.updateAllGoodsGrid();
-			}
-		});
-
+		this.initSelectedItems();
 		this.preparePagerGridOptions();
 		this.prepareSelectedPagerGridOptions();
 	}
@@ -233,6 +210,34 @@ export default class GoodsSelectorCtrl {
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		// 将已选商品 form 表单恢复初始状态 —> 在初始化表单的时候由于已经存在的搜索条件，导致 form 表单项被赋值
 		this.reset(this.selectedGoodsFormModel, this.selectedDateRangeModel);
+	}
+
+	// 初始化 selectedItems 和 selectedItemsBuffer
+	initSelectedItems() {
+		this.selectedItems = [];
+		// selectedItemsBuffer 保存 selectedItems 中数据的副本（深拷贝）。维护 selectedItems 中数据状态。
+		// 用作返回上一页时进行数据 merge，保持全部商品 tab 和已选商品 tab 的商品状态（checked/unchecked/partial、extend）一致。
+		this.selectedItemsBuffer = [];
+
+		// 用户传进来的已选商品处理
+		const goodsDataParams = {
+			shopInfo: this.shopList[0],
+			selectedGoods: this.selectedData,
+			serverName: this.serverName,
+			isSupportedSku: this.isSupportedSku
+		};
+		transformGoodsData(goodsDataParams).then(data => {
+			if (data && data.length) {
+				data.forEach(entity => {
+					this.updateSelectedItems(entity);
+					this.updateSelectedItemsBuffer();
+					if (this.isSingleSelect) {
+						this.radio.value = entity.id;
+					}
+				});
+				this.updateAllGoodsGrid();
+			}
+		});
 	}
 
 	// 全部商品表格配置
@@ -463,7 +468,7 @@ export default class GoodsSelectorCtrl {
 	}
 
 	// 获取商品自自定义类目数据
-	getShopCatories() {
+	getShopCategories() {
 		service.getShopCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get(res => {
 			let data = res.data || [];
 			// 只显示叶子类目
@@ -521,7 +526,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品标签，初始化的时候调用
 	getTags() {
-		service.getTags(this.serverName, this.formModel.platform, this.tenantId).get().$promise.then(res => {
+		service.getTags(this.serverName, this.formModel.platform, this.tenantId).get(res => {
 			res.data = res.data || [];
 			if (res.data.length) {
 				if (this.conditions.tags && this.conditions.tags.length) {
@@ -538,7 +543,7 @@ export default class GoodsSelectorCtrl {
 					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
 				}
 			}
-		}).catch(res => {
+		}, res => {
 		});
 	}
 
@@ -597,7 +602,7 @@ export default class GoodsSelectorCtrl {
 
 	// 店铺 select 框 change
 	shopSelectChange(newValue, oldValue, itemIndex, item) {
-		this.getShopCatories();
+		this.getShopCategories();
 		this.getCategories();
 	};
 
