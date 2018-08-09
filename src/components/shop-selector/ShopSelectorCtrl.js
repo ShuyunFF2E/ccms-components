@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import cloneDeep from 'lodash.clonedeep';
-import { commonGridColumnDef } from './Constant';
+import { commonGridColumnDef, apiPrefix } from './Constant';
 
 import allShopFormTemplate from './tpls/all-shop-form.tpl.html';
 import selectedShopFormTemplate from './tpls/selected-shop-form.tpl.html';
@@ -22,7 +22,13 @@ function findEntityById(collection, entity) {
 export default class ShopSelectorCtrl {
 	constructor() {
 		this.isSingleSelected = this._isSingleSelected; // 是否是单选
-		this.selectedItems = [{id: '35647605646', age: 25, gender: '男', $selected: true}];
+		this.selectedItems = [{
+			id: 'qiakr_69988687',
+			name: '源桐林旗舰店',
+			channel: 'qiakr',
+			type: 'direct',
+			address: '浙江省杭州市桐庐县文一西路998号'
+		}];
 		this.selectedItemsBuffer = cloneDeep(this.selectedItems);
 		this.radio = {
 			value: this.selectedItems.length ? this.selectedItems[0].id : null,
@@ -41,7 +47,7 @@ export default class ShopSelectorCtrl {
 
 	prepareAllShopGridOptions() {
 		this.allShopGridOptions = {
-			resource: this._$resource('/api/test'),
+			resource: this._$resource(`${ apiPrefix }/shopDetails`),
 			queryParams: {
 				pageNum: 1,  // 当前页码
 				pageSize: 20 // 每页大小
@@ -104,7 +110,7 @@ export default class ShopSelectorCtrl {
 				...commonGridColumnDef,
 				{
 					displayName: '操作',
-					align: 'left',
+					align: 'center',
 					cellTemplate: '<span ng-click="$ctrl.removeItem(entity)">移除</span>'
 				}
 			],

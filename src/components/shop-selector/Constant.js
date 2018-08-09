@@ -1,28 +1,29 @@
+export const apiPrefix = '/api';
 export const commonGridColumnDef = [
 	{
 		field: 'id',
 		displayName: '店铺ID',
-		align: 'left'
+		align: 'center'
 	},
 	{
-		cellTemplate: '<span style="color:#145681" ng-bind="entity.id" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
+		cellTemplate: '<span class="grid-shop-name" ng-bind="entity.name" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
 		displayName: '店铺名称',
-		align: 'left'
+		align: 'center'
 	},
 	{
-		field: 'id',
+		field: 'channel',
 		displayName: '渠道',
-		align: 'left'
+		align: 'center'
 	},
 	{
-		field: 'id',
+		cellTemplate: '<span ng-bind="entity.type ? entity.type : \'---\'"></span>',
 		displayName: '店铺类型',
-		align: 'left'
+		align: 'center'
 	},
 	{
-		field: 'id',
+		cellTemplate: '<span class="grid-shop-address" ng-bind="entity.address ? entity.address : \'---\'" cc-tooltip="entity.address" tooltip-append-to-body="true"></span>',
 		displayName: '店铺详细地址',
-		align: 'left'
+		align: 'center'
 	}
 ];
 
