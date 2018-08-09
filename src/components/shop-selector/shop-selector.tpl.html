@@ -1,7 +1,7 @@
 <div class="shop-selector">
+	<section class="form-area" cc-bind-html="$ctrl.shopFormTemplate"></section>
 	<gs-tabs>
 		<gs-panel text="全部店铺" tab-click="$ctrl.tabClick(text)">
-			<section class="form-area" cc-bind-html="$ctrl.allShopFormTemplate"></section>
 			<section class="grid-area">
 				<div class="operation">
 					<cc-checkbox ng-if="!$ctrl.isSingleSelected"
@@ -14,7 +14,6 @@
 			</section>
 		</gs-panel>
 		<gs-panel text="已选店铺" tab-click="$ctrl.tabClick(text)">
-			<section class="form-area" cc-bind-html="$ctrl.selectedShopFormTemplate"></section>
 			<section class="grid-area">
 				<div class="operation" ng-if="!$ctrl.isSingleSelected">
 					<span ng-click="$ctrl.removeAll()">移除全部</span>

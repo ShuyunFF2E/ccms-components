@@ -226,6 +226,8 @@ module.exports = function(configurations) {
 					let pageNum = 1;
 					let pageSize = 10000;
 					let paramsArr1 = req.originalUrl.split('?');
+					let ids = [];
+					let result = [];
 					if (paramsArr1.length > 1) {
 						let paramsArr = paramsArr1[1].split('&');
 						paramsArr.forEach(item => {
@@ -236,6 +238,14 @@ module.exports = function(configurations) {
 							if (param[0] === 'pageSize') {
 								pageSize = Number(param[1]);
 							}
+							if (param[0] === 'id') {
+								ids.push(param[1]);
+							}
+						});
+						data.forEach(item => {
+							if (ids.indexOf(item.id) >= 0) {
+								result.push(item);
+							}
 						});
 					}
 					return {
@@ -245,7 +255,7 @@ module.exports = function(configurations) {
 						totals: data.length,
 						flag: 'success',
 						msg: 'ok',
-						list: data.slice((pageNum - 1) * pageSize, pageNum * pageSize)
+						list: result.length ? result : data.slice((pageNum - 1) * pageSize, pageNum * pageSize)
 					};
 				},
 				headers: {

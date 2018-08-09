@@ -26,4 +26,9 @@ export const commonGridColumnDef = [
 		align: 'center'
 	}
 ];
+export const commonListFieldsMap = {
+	valueField: 'id',
+	displayField: 'name'
+};
+export const errorMsg = '后台服务出错，请联系数云客服人员';
 
