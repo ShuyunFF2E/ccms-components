@@ -11,12 +11,12 @@ export const commonGridColumnDef = [
 		align: 'center'
 	},
 	{
-		field: 'channel',
+		field: 'channelName',
 		displayName: '渠道',
 		align: 'center'
 	},
 	{
-		cellTemplate: '<span ng-bind="entity.type ? entity.type : \'---\'"></span>',
+		cellTemplate: '<span ng-bind="entity.typeName ? entity.typeName : \'---\'"></span>',
 		displayName: '店铺类型',
 		align: 'center'
 	},
@@ -31,4 +31,94 @@ export const commonListFieldsMap = {
 	displayField: 'name'
 };
 export const errorMsg = '后台服务出错，请联系数云客服人员';
-
+export const channelList = [
+	{
+		'id': 'qiakr',
+		'name': '恰克',
+		'shopTypes': [
+			{
+				'id': '0',
+				'name': '直营'
+			},
+			{
+				'id': '1',
+				'name': '商超'
+			},
+			{
+				'id': '2',
+				'name': '旗舰'
+			},
+			{
+				'id': '3',
+				'name': '加盟'
+			}
+		],
+		'districtSelector': true
+	},
+	{
+		'id': 'taobao',
+		'name': '淘宝',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'jos',
+		'name': '京东',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'weixin',
+		'name': '微信',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'yhd',
+		'name': '一号店',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'suning',
+		'name': '苏宁',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'weixin',
+		'name': '微信',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'paipai',
+		'name': '拍拍',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'dangdang',
+		'name': '当当',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'belle',
+		'name': '百丽',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'youzan',
+		'name': '友赞',
+		'shopTypes': [],
+		'districtSelector': false
+	},
+	{
+		'id': 'mogujie',
+		'name': '蘑菇街',
+		'shopTypes': [],
+		'districtSelector': false
+	}
+];

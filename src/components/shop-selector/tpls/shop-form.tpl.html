@@ -48,6 +48,6 @@
 		</cc-dropdown-select>
 	</fieldset>
 	<fieldset class="operation">
-		<button type="button" class="btn-ok" ng-click="$ctrl.search()">查询</button>
+		<button type="button" class="btn-ok" ng-click="$ctrl.search()" ng-if="!$ctrl.isSelectedTab && $ctrl.isSingleSelected || !$ctrl.isSingleSelected">查询</button>
 	</fieldset>
 </form>

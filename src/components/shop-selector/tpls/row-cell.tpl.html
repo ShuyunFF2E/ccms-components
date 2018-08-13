@@ -2,6 +2,7 @@
 <td class="checkbox">
 	<cc-checkbox ng-if="!$ctrl.opts.isSingleSelected" ng-checked="entity.$selected"></cc-checkbox>
 	<cc-radio ng-if="$ctrl.opts.isSingleSelected" ng-model="$ctrl.opts.radio.value" value="{{entity.id}}"></cc-radio>
+	<p>{{entity.isHide}}</p>
 </td>
 <!--引入默认的表格行元素 html-loader -->
 ${require('../../grid/tpls/default-row-cell.tpl.html')}

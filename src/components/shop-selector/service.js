@@ -21,8 +21,8 @@ function transformParams(params, paramsName) {
 
 export default {
 	// 获取渠道列表
-	getChannelList(serverName) {
-		return genResource(`${ serverName }${ apiPrefix }/channel`, null, null, {
+	getAreaData(serverName, platform) {
+		return genResource(`${ serverName }${ apiPrefix }/area?platform=${ platform }`, null, null, {
 			get: {
 				method: 'GET',
 				isArray: true

@@ -1,9 +1,9 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import cloneDeep from 'lodash.clonedeep';
-import { commonGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg } from './Constant';
-import { areaData } from './tbAreas';
+import { commonGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg, channelList } from './Constant';
 import service from './service';
+import utils from './utils';
 
 import shopFormTemplate from './tpls/shop-form.tpl.html';
 import rowTemplate from './tpls/row.tpl.html';
@@ -15,8 +15,8 @@ import emptyTemplate from './tpls/empty.tpl.html';
 /**
  * 从集合中获取entity的index,找不到返回-1
  */
-function findEntityById(collection, entity) {
-	return collection.findIndex(item => angular.equals(item.id, entity.id));
+function findEntityById(collection, id) {
+	return collection.findIndex(item => angular.equals(item.id, id));
 }
 
 @Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop')
@@ -35,8 +35,8 @@ export default class ShopSelectorCtrl {
 			disabled: false
 		};
 
-		this.getSelectedShop();
 		this.initForm();
+		this.initSelectedShopForm();
 		this.prepareAllShopGridOptions();
 		this.prepareSelectedShopGridOptions();
 	}
@@ -81,6 +81,14 @@ export default class ShopSelectorCtrl {
 		this.getAreaData();
 	}
 
+	// 已选店铺表单初始化
+	initSelectedShopForm() {
+		this.formMatchConfig = {
+			channel: 'equal', // 渠道
+			type: 'equal' // 店铺类型
+		};
+	}
+
 	prepareAllShopGridOptions() {
 		this.allShopGridOptions = {
 			resource: this._$resource(`${ apiPrefix }/shopDetails`),
@@ -106,13 +114,9 @@ export default class ShopSelectorCtrl {
 			radio: this.radio,
 			selectedItems: this.selectedItems,
 			// 多选
-			switchSelectItem: ($selected, entity) => {
-				if ($selected) {
-					this.selectedItems.push(entity);
-				} else {
-					this.selectedItems.splice(findEntityById(this.selectedItems, entity), 1);
-				}
-				this.updateSelectedItemsBuffer(entity);
+			switchSelectItem: entity => {
+				this.updateSelectedItems(entity);
+				this.isSelectedPage = this.isSelectedPageAll();
 			},
 			// 单选
 			switchSingleSelectItem: entity => {
@@ -120,11 +124,16 @@ export default class ShopSelectorCtrl {
 				this.selectedItems.splice(0, this.selectedItems.length, entity);
 			},
 			isEntitySelected: entity => {
-				return findEntityById(this.selectedItems, entity) !== -1;
+				return findEntityById(this.selectedItems, entity.id) !== -1;
 			},
 			transformer: res => {
 				this.resData = res.list || [];
-				this.resListMerge(res.list, this.selectedItemsBuffer);
+				this.getSelectedShop().then(() => {
+					this.getNameByGridList(res.list);
+					this.getNameByGridList(this.selectedItems);
+					this.resListMerge(res.list, this.selectedItemsBuffer);
+				}).catch(() => {});
+
 				if (this.isSingleSelected) {
 					res.list.forEach(entity => {
 						this.allShopGridOptions.radio.setting.push(entity.id);
@@ -167,7 +176,7 @@ export default class ShopSelectorCtrl {
 
 	// 获取已选店铺列表
 	getSelectedShop() {
-		service.getShopList(this.serverName, this.selectedShop, 'id').get(res => {
+		return service.getShopList(this.serverName, this.selectedShop, 'id').get().$promise.then(res => {
 			res.list = res.list || [];
 			res.list.forEach(entity => {
 				if (this.isSingleSelected) {
@@ -175,9 +184,10 @@ export default class ShopSelectorCtrl {
 				}
 				entity.$selected = true;
 				this.updateSelectedItems(entity);
-				this.updateSelectedItemsBuffer(entity);
 			});
-		}, res => {});
+		}).catch(() => {
+			this._$ccTips.error(errorMsg);
+		});
 	}
 
 	// 已选店铺 tab 刷新表格
@@ -195,29 +205,20 @@ export default class ShopSelectorCtrl {
 		this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
 	}
 
-	// 获取去重后的 selectedItemsBuffer
-	updateSelectedItemsBuffer(entity) {
-		let targetIndex = findEntityById(this.selectedItemsBuffer, entity);
-		if (targetIndex === -1 && entity.$selected) {
-			this.selectedItemsBuffer.push(cloneDeep(entity));
-		} else if (targetIndex !== -1 && !entity.$selected) {
-			this.selectedItemsBuffer.splice(targetIndex, 1);
-		}
-	}
-
-	// 获取去重后的 selectedItems
+	// 获取去重后的 selectedItems 并更新 selectedItemsBuffer
 	updateSelectedItems(entity) {
-		let targetIndex = findEntityById(this.selectedItems, entity);
+		let targetIndex = findEntityById(this.selectedItems, entity.id);
 		if (targetIndex === -1 && entity.$selected) {
 			this.selectedItems.push(entity);
 		} else if (targetIndex !== -1 && !entity.$selected) {
 			this.selectedItems.splice(targetIndex, 1);
 		}
+		this.selectedItemsBuffer = cloneDeep(this.selectedItems);
 	}
 
 	resListMerge(resList = [], buffer = []) {
 		buffer.forEach(entity => {
-			let targetIndex = findEntityById(resList, entity);
+			let targetIndex = findEntityById(resList, entity.id);
 			if (targetIndex !== -1) {
 				resList[targetIndex].$selected = true;
 			}
@@ -229,7 +230,6 @@ export default class ShopSelectorCtrl {
 		this.allShopGridOptions.data.forEach(entity => {
 			entity.$selected = isSelectedPage;
 			this.updateSelectedItems(entity);
-			this.updateSelectedItemsBuffer(entity);
 		});
 	}
 
@@ -244,9 +244,8 @@ export default class ShopSelectorCtrl {
 			// 移除 (多选)
 			entity.$selected = false;
 			this.updateSelectedItems(entity);
-			this.updateSelectedItemsBuffer(entity);
 			this.onRefresh(this.selectedShopGridOptions);
-			let targetIndex = findEntityById(this.allShopGridOptions.data, entity);
+			let targetIndex = findEntityById(this.allShopGridOptions.data, entity.id);
 			if (targetIndex !== -1) {
 				this.allShopGridOptions.data[targetIndex].$selected = false;
 			}
@@ -258,8 +257,7 @@ export default class ShopSelectorCtrl {
 		this.selectedShopGridOptions.externalData.forEach(entity => {
 			entity.$selected = false;
 			this.updateSelectedItems(entity);
-			this.updateSelectedItemsBuffer(entity);
-			let targetIndex = findEntityById(this.allShopGridOptions.data, entity);
+			let targetIndex = findEntityById(this.allShopGridOptions.data, entity.id);
 			if (targetIndex !== -1) {
 				this.allShopGridOptions.data[targetIndex].$selected = false;
 			}
@@ -301,7 +299,10 @@ export default class ShopSelectorCtrl {
 	}
 
 	handleFormModel(formModel) {
-		let expectList = ['type', 'city', 'district'];
+		const channel = this.formModel.channel;
+		const province = this.formModel.province;
+		const city = this.formModel.city;
+		const expectList = ['type', 'city', 'district'];
 		for (let attr in formModel) {
 			if (formModel.hasOwnProperty(attr) && expectList.indexOf(attr) < 0) {
 				this.formModel[attr] = cloneDeep(formModel[attr]);
@@ -309,27 +310,38 @@ export default class ShopSelectorCtrl {
 				this.formModel[attr] = null;
 			}
 		}
+		// 处理级联菜单
 		this.type = formModel.type;
+		if (channel === formModel.channel) {
+			this.formModel.type = this.type;
+		}
 		this.city = formModel.city;
+		if (province === formModel.province) {
+			this.formModel.city = this.city;
+		}
 		this.district = formModel.district;
+		if (city === this.formModel.city) {
+			this.formModel.district = this.district;
+		}
 	}
 
-	ok() {
-		this._modalInstance.ok(this.selectedItems);
+	// 获取地区数据
+	getAreaData() {
+		service.getAreaData(this.serverName, 'top').get(res => {
+			this.provinceList = res || [];
+			this.resolveDataList(this.provinceList);
+		}, () => {
+			this._$ccTips.error(errorMsg);
+		});
 	}
 
 	// 获取渠道列表
 	getChannelList() {
-		service.getChannelList(this.serverName).get(res => {
-			this.channelList = this.resolveDataList(res);
-			this.channelList.forEach(item => {
-				if (item.shopTypes && item.shopTypes.length) {
-					this.resolveDataList(item.shopTypes);
-				}
-			});
-		}, res => {
-			this._$ccTips.error(errorMsg);
-		});
+		this.channelList = this.resolveDataList(channelList);
+	}
+
+	ok() {
+		this._modalInstance.ok(this.selectedItems);
 	}
 
 	// 处理返回的数据
@@ -345,32 +357,27 @@ export default class ShopSelectorCtrl {
 
 	// 渠道 select 框 change
 	channelSelectChange(model, oldModel, itemIndex, item) {
-		if (itemIndex > 0 && item.shopTypes && item.shopTypes.length) {
-			this.typeList = item.shopTypes;
+		if (itemIndex > 0) {
 			if (model !== oldModel) {
-				this.formModel.type = this.type ? this.type : null;
+				this.formModel.type = this.type;
 				this.type = null;
+				this.typeList = item.shopTypes && item.shopTypes.length ? this.resolveDataList(item.shopTypes) : [];
 			}
 		} else {
+			this.formModel.type = null;
 			this.typeList = [];
-			this.formModel.type = this.type ? this.type : null;
 		}
-	}
-
-	// 获取地区数据
-	getAreaData() {
-		this.provinceList = this.resolveDataList(areaData);
 	}
 
 	// 省份 select 框 change
 	provinceSelectChange(model, oldModel, itemIndex, item) {
 		if (itemIndex > 0) {
-			this.cityList = item.children && item.children.length ? this.resolveDataList(item.children) : [];
 			if (model !== oldModel) {
-				this.formModel.city = this.city ? this.city : null;
+				this.formModel.city = this.city;
 				this.city = null;
+				this.formModel.provinceName = item[this.commonListFieldsMap.displayField];
+				this.cityList = item.children && item.children.length ? this.resolveDataList(item.children) : [];
 			}
-			this.formModel.provinceName = item[this.commonListFieldsMap.displayField];
 		} else {
 			this.formModel.city = null;
 			this.formModel.provinceName = null;
@@ -381,12 +388,10 @@ export default class ShopSelectorCtrl {
 	// 城市 select 框 change
 	citySelectChange(model, oldModel, itemIndex, item) {
 		if (itemIndex > 0) {
-			this.districtList = item.children && item.children.length ? this.resolveDataList(item.children) : [];
-			if (model !== oldModel) {
-				this.formModel.district = this.district ? this.district : null;
-				this.district = null;
-			}
+			this.formModel.district = this.district;
+			this.district = null;
 			this.formModel.cityName = item[this.commonListFieldsMap.displayField];
+			this.districtList = item.children && item.children.length ? this.resolveDataList(item.children) : [];
 		} else {
 			this.formModel.district = null;
 			this.formModel.cityName = null;
@@ -394,25 +399,26 @@ export default class ShopSelectorCtrl {
 		}
 	}
 
+	// 地区 select 框 change
 	districtSelectChange(model, oldModel, itemIndex, item) {
 		if (itemIndex > 0) {
 			this.formModel.districtName = item[this.commonListFieldsMap.displayField];
-		} else {
-			this.formModel.districtName = null;
 		}
 	}
 
 	search() {
-		console.log(this.formModel);
 		if (this.isSelectedTab) {
 			// 已选商品 tab 搜索 -> 前端搜索
+			utils.match(this.formModel, this.selectedItems, this.formMatchConfig);
+			this.onRefresh(this.selectedShopGridOptions);
 		} else {
 			// 全部商品 tab 搜索 -> 后端搜索
 			this.getAllShopPagerQueryParams();
-			this.updateAllShopGrid();
+			this._$ccGrid.refresh(this.allShopGridOptions);
 		}
 	}
 
+	// 获取表格查询参数
 	getAllShopPagerQueryParams() {
 		let collection = cloneDeep(this.formModel);
 		let attrList = ['province', 'city', 'district'];
@@ -425,7 +431,20 @@ export default class ShopSelectorCtrl {
 		return Object.assign(this.allShopGridOptions.queryParams, collection);
 	}
 
-	updateAllShopGrid() {
-		this._$ccGrid.refresh(this.allShopGridOptions);
+	// 获取渠道名称和店铺类型
+	getNameByGridList(list) {
+		list.forEach(entity => {
+			const displayField = this.commonListFieldsMap.displayField;
+			entity['channelName'] = this.channelList[findEntityById(this.channelList, entity.channel)][displayField];
+			this.channelList.forEach(item => {
+				let shopTypes = item.shopTypes;
+				if (shopTypes && shopTypes.length) {
+					let targetIndex = findEntityById(shopTypes, entity.type);
+					if (targetIndex !== -1) {
+						entity['typeName'] = shopTypes[targetIndex][displayField];
+					}
+				}
+			});
+		});
 	}
 }

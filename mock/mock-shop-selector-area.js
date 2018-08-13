@@ -1,4 +1,4 @@
-export const areaData = [
+var area = [
 	{
 		'id': '110000',
 		'name': '北京市',
@@ -17975,4 +17975,23 @@ export const areaData = [
 	}
 
 ];
+module.exports = function(configurations) {
 
+	configurations.add([
+		{
+			request: {
+				method: 'GET',
+				urlPattern: '/area'
+			},
+			response: {
+				status: 200,
+				body: function() {
+					return area;
+				},
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}
+		}
+	]);
+}

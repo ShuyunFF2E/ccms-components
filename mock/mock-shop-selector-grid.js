@@ -3,7 +3,7 @@ var data = [
 		'id': 'qiakr_69988687', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -17,7 +17,7 @@ var data = [
 		'id': 'qiakr_699886871', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -31,7 +31,7 @@ var data = [
 		'id': 'qiakr_699886873', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -45,7 +45,7 @@ var data = [
 		'id': 'qiakr_699886875', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -59,7 +59,7 @@ var data = [
 		'id': 'qiakr_699886877a', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -73,7 +73,7 @@ var data = [
 		'id': 'qiakr_69988687c', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -87,7 +87,7 @@ var data = [
 		'id': 'qiakr_699886871e', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -101,7 +101,7 @@ var data = [
 		'id': 'qiakr_699886873g', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -115,7 +115,7 @@ var data = [
 		'id': 'qiakr_699886875i', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -129,7 +129,7 @@ var data = [
 		'id': 'qiakr_699886877k', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -143,7 +143,7 @@ var data = [
 		'id': 'qiakr_69988687m', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -157,7 +157,7 @@ var data = [
 		'id': 'qiakr_699886871o', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -171,7 +171,7 @@ var data = [
 		'id': 'qiakr_699886873q', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -185,7 +185,7 @@ var data = [
 		'id': 'qiakr_699886875s', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
@@ -199,7 +199,7 @@ var data = [
 		'id': 'qiakr_699886877u', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'direct', // 店铺类型，直营
+		'type': 'directSale', // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
