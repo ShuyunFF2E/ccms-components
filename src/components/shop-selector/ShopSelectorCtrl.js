@@ -176,6 +176,23 @@ export default class ShopSelectorCtrl {
 		});
 	}
 
+	// 获取渠道名称和店铺类型
+	getNameByGridList(list) {
+		list.forEach(entity => {
+			const displayField = this.commonListFieldsMap.displayField;
+			entity['channelName'] = this.channelList[findEntityById(this.channelList, entity.channel)][displayField];
+			this.channelList.forEach(item => {
+				let shopType = item.shopType;
+				if (shopType && shopType.length) {
+					let targetIndex = findEntityById(shopType, String(entity.type));
+					if (targetIndex !== -1) {
+						entity['typeName'] = shopType[targetIndex][displayField];
+					}
+				}
+			});
+		});
+	}
+
 	// 已选店铺 tab 刷新表格
 	onRefresh(opts) {
 		const wrapGridData = (currentPage, pageSize, data) => {
@@ -421,20 +438,12 @@ export default class ShopSelectorCtrl {
 		return Object.assign(this.allShopGridOptions.queryParams, collection);
 	}
 
-	// 获取渠道名称和店铺类型
-	getNameByGridList(list) {
-		list.forEach(entity => {
-			const displayField = this.commonListFieldsMap.displayField;
-			entity['channelName'] = this.channelList[findEntityById(this.channelList, entity.channel)][displayField];
-			this.channelList.forEach(item => {
-				let shopType = item.shopType;
-				if (shopType && shopType.length) {
-					let targetIndex = findEntityById(shopType, String(entity.type));
-					if (targetIndex !== -1) {
-						entity['typeName'] = shopType[targetIndex][displayField];
-					}
-				}
-			});
-		});
+	// 重置
+	reset() {
+		for (let attr in this.formModel) {
+			if (this.formModel.hasOwnProperty(attr)) {
+				this.formModel[attr] = null;
+			}
+		}
 	}
 }

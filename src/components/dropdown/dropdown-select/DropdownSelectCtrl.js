@@ -221,6 +221,7 @@ export default class DropdownSelectCtrl {
 
 	clear() {
 		this._searchText = null;
+		this.model = null;
 		this.setModelValue(null);
 		this.getInputElement().focus();
 		this.focusAt(0);
