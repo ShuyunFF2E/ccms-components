@@ -9,7 +9,7 @@
 			let tenantId = 'test';
 			let serverName = '';
 
-			let singleSelectedShop = ['qiakr_69988687'];
+			let singleSelectedShop = ['qiakr_6998868227'];
 			let singleOptions = {
 				isOnlyChecked,
 				selectedShop: singleSelectedShop,
@@ -17,7 +17,7 @@
 				serverName
 			};
 
-			let mutipleSelectedShop = ['qiakr_69988687', 'qiakr_699886871', 'taobao_699886882p'];
+			let mutipleSelectedShop = ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
 			let multipleOptions = {
 				isOnlyChecked,
 				selectedShop: mutipleSelectedShop,

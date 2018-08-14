@@ -22,7 +22,7 @@ function transformParams(params, paramsName) {
 export default {
 	// 获取渠道列表
 	getAreaData(serverName, platform) {
-		return genResource(`${ serverName }${ apiPrefix }/area?platform=${ platform }`, null, null, {
+		return genResource(`${ serverName }${ apiPrefix }/shopArea?platform=${ platform }`, null, null, {
 			get: {
 				method: 'GET',
 				isArray: true

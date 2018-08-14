@@ -1,212 +1,212 @@
 var data = [
 	{
-		'id': 'qiakr_69988687', // 店铺ID
-		'name': '源桐林旗舰店',  // 店铺名称
+		'id': 'qiakr_6998868227', // 店铺ID
+		'name': '源桐林旗舰店1',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
-		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
+		'type': 0, // 店铺类型，直营
+		'address': '黑龙江省哈尔滨市松北区' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_69988688', // 店铺ID
+		'id': 'taobao_69988683345348', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886871', // 店铺ID
-		'name': '源桐林旗舰店',  // 店铺名称
+		'id': 'qiakr_699886823271', // 店铺ID
+		'name': '源桐林旗舰店2',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 1, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886882', // 店铺ID
+		'id': 'taobao_69988656765882', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886873', // 店铺ID
-		'name': '源桐林旗舰店',  // 店铺名称
+		'id': 'qiakr_69983486873', // 店铺ID
+		'name': '源桐林旗舰店3',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
-		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
+		'type': 2, // 店铺类型，直营
+		'address': '黑龙江省哈尔滨市松北区' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886884', // 店铺ID
+		'id': 'taobao_699886456546884', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886875', // 店铺ID
-		'name': '源桐林旗舰店',  // 店铺名称
+		'id': 'qiakr_699834586875', // 店铺ID
+		'name': '源桐林旗舰店4',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 3, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886886', // 店铺ID
+		'id': 'taobao_69988684534586', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886877a', // 店铺ID
-		'name': '源桐林旗舰店',  // 店铺名称
+		'id': 'qiakr_699845686877a', // 店铺ID
+		'name': '源桐林旗舰店5',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 0, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886888b', // 店铺ID
+		'id': 'taobao_699886888456456b', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_69988687c', // 店铺ID
-		'name': '源桐林旗舰店',  // 店铺名称
+		'id': 'qiakr_69957688687c', // 店铺ID
+		'name': '源桐林旗舰店6',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 1, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_69988688d', // 店铺ID
+		'id': 'taobao_6994564588688d', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886871e', // 店铺ID
-		'name': '源桐林旗舰店',  // 店铺名称
+		'id': 'qiakr_699886576871e', // 店铺ID
+		'name': '源桐林旗舰店7',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 2, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886882f', // 店铺ID
+		'id': 'taobao_6994564564886882f', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886873g', // 店铺ID
-		'name': '源桐林旗舰店',  // 店铺名称
+		'id': 'qiakr_69985686873g', // 店铺ID
+		'name': '源桐林旗舰店8',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 3, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886884h', // 店铺ID
+		'id': 'taobao_65465499886884h', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886875i', // 店铺ID
+		'id': 'qiakr_699885676875i', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 3, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886886j', // 店铺ID
+		'id': 'taobao_6456499886886j', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886877k', // 店铺ID
+		'id': 'qiakr_699886876877k', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
-		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
+		'type': 3, // 店铺类型，直营
+		'address': '江苏省徐州市泉山区' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886888l', // 店铺ID
+		'id': 'taobao_6956469886888l', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_69988687m', // 店铺ID
+		'id': 'qiakr_699886345387m', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 2, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_69988688n', // 店铺ID
+		'id': '45645645', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886871o', // 店铺ID
+		'id': 'qiakr_69988345356871o', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 2, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886882p', // 店铺ID
+		'id': 'taobao_699886845645682p', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886873q', // 店铺ID
+		'id': 'qiakr_69983463486873q', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 2, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886884r', // 店铺ID
+		'id': 'taobao_69988645645645884r', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886875s', // 店铺ID
-		'name': '源桐林旗舰店',  // 店铺名称
+		'id': 'qiakr_69985675686875s', // 店铺ID
+		'name': '源桐林旗舰店1',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
+		'type': 1, // 店铺类型，直营
 		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886886t', // 店铺ID
+		'id': 'taobao_699885645646886t', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
 		'type': '', // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	},
 	{
-		'id': 'qiakr_699886877u', // 店铺ID
+		'id': 'qiakr_699882342346877u', // 店铺ID
 		'name': '源桐林旗舰店',  // 店铺名称
 		'channel': 'qiakr', // 店铺
-		'type': 'directSale', // 店铺类型，直营
-		'address': '浙江省杭州市桐庐县文一西路998号' // 店铺详细地址
+		'type': 1, // 店铺类型，直营
+		'address': '江苏省徐州市泉山区' // 店铺详细地址
 	},
 	{
-		'id': 'taobao_699886888v', // 店铺ID
+		'id': 'taobao_699823423486888v', // 店铺ID
 		'name': 'TOMIC家居旗舰店',  // 店铺名称
 		'channel': 'taobao', // 店铺
-		'type': '', // 店铺类型,无类型
+		'type': 0, // 店铺类型,无类型
 		'address': '' // 店铺详细地址,无地址
 	}
 ];

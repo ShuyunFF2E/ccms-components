@@ -35,7 +35,7 @@ export const channelList = [
 	{
 		'id': 'qiakr',
 		'name': '恰克',
-		'shopTypes': [
+		'shopType': [
 			{
 				'id': '0',
 				'name': '直营'
@@ -58,67 +58,67 @@ export const channelList = [
 	{
 		'id': 'taobao',
 		'name': '淘宝',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'jos',
 		'name': '京东',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'weixin',
 		'name': '微信',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'yhd',
 		'name': '一号店',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'suning',
 		'name': '苏宁',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'weixin',
 		'name': '微信',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'paipai',
 		'name': '拍拍',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'dangdang',
 		'name': '当当',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'belle',
 		'name': '百丽',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'youzan',
 		'name': '友赞',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'mogujie',
 		'name': '蘑菇街',
-		'shopTypes': [],
+		'shopType': [],
 		'districtSelector': false
 	}
 ];

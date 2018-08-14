@@ -17981,7 +17981,7 @@ module.exports = function(configurations) {
 		{
 			request: {
 				method: 'GET',
-				urlPattern: '/area'
+				urlPattern: '/shopArea'
 			},
 			response: {
 				status: 200,

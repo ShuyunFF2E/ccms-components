@@ -1,26 +1,27 @@
 export default {
-	match(form, list, config) {
+	match(form, list) {
 		if (!list) {
 			list = [];
 		}
 		let methods = this.getMethods();
-		// 将配置转换为对应的程序
-		for (let field in config) {
-			if (typeof config[field] === 'string') {
-				config[field] = methods[config[field]];
-			}
-		}
 		// 开始过滤
 		list.forEach(entity => {
 			let buf = [];
-			for (let field in config) {
-				buf.push(config[field](form[field], entity[field]));
+			for (let field in form) {
+				if (field === 'channel' || field === 'type') {
+					buf.push(methods.equal(form[field], entity[field]));
+				} else if (field === 'sign') {
+					buf.push(methods.fuzzySearchGroup(['name', 'id'], form[field], entity));
+				} else if (field === 'province') {
+					let provinceName = form['provinceName'] ? form['provinceName'] : '',
+						cityName = form['cityName'] ? form['cityName'] : '',
+						districtName = form['districtName'] ? form['districtName'] : '',
+						formVal = provinceName ? `${provinceName}${cityName}${districtName}` : '';
+					buf.push(methods.fuzzySearch(formVal, entity.address));
+				}
 			}
-			if (buf.indexOf(false) !== -1) {
-				entity.isHide = true;
-			}
+			entity.isHide = buf.indexOf(false) !== -1;
 		});
-		return list;
 	},
 	getMethods() {
 		return {
@@ -29,8 +30,14 @@ export default {
 			equal: (formVal, val) => {
 				return !formVal && formVal !== 0 || String(formVal).replace(/\s/g, '') === String(val);
 			},
+			fuzzySearchGroup: (group, formVal, entity) => {
+				let buf = [];
+				group.forEach(item => {
+					buf.push(!formVal && formVal !== 0 || String(entity[item]).replace(/\s/g, '').search(String(formVal)) !== -1);
+				});
+				return buf.indexOf(true) !== -1;
+			},
 			// 模糊匹配字符串
-			// 店铺名称和店铺ID sign
 			fuzzySearch: (formVal, val) => {
 				return !formVal && formVal !== 0 || String(val).replace(/\s/g, '').search(String(formVal)) !== -1;
 			}

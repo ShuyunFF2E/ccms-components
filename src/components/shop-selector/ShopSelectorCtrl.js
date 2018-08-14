@@ -10,6 +10,8 @@ import rowTemplate from './tpls/row.tpl.html';
 import rowCellTemplate from './tpls/row-cell.tpl.html';
 import footerTemplate from './tpls/grid-footer.tpl.html';
 import emptyTemplate from './tpls/empty.tpl.html';
+import selectedRowTemplate from './tpls/selected-row.tpl.html';
+import selectedRowCellTemplate from '../grid/tpls/default-row-cell.tpl.html';
 
 
 /**
@@ -36,7 +38,6 @@ export default class ShopSelectorCtrl {
 		};
 
 		this.initForm();
-		this.initSelectedShopForm();
 		this.prepareAllShopGridOptions();
 		this.prepareSelectedShopGridOptions();
 	}
@@ -81,14 +82,6 @@ export default class ShopSelectorCtrl {
 		this.getAreaData();
 	}
 
-	// 已选店铺表单初始化
-	initSelectedShopForm() {
-		this.formMatchConfig = {
-			channel: 'equal', // 渠道
-			type: 'equal' // 店铺类型
-		};
-	}
-
 	prepareAllShopGridOptions() {
 		this.allShopGridOptions = {
 			resource: this._$resource(`${ apiPrefix }/shopDetails`),
@@ -128,11 +121,12 @@ export default class ShopSelectorCtrl {
 			},
 			transformer: res => {
 				this.resData = res.list || [];
+				this.getNameByGridList(res.list);
 				this.getSelectedShop().then(() => {
-					this.getNameByGridList(res.list);
-					this.getNameByGridList(this.selectedItems);
 					this.resListMerge(res.list, this.selectedItemsBuffer);
-				}).catch(() => {});
+				}).catch(() => {
+					this._$ccTips.error(errorMsg);
+				});
 
 				if (this.isSingleSelected) {
 					res.list.forEach(entity => {
@@ -160,6 +154,8 @@ export default class ShopSelectorCtrl {
 					cellTemplate: '<span ng-click="$ctrl.removeItem(entity)">移除</span>'
 				}
 			],
+			rowTpl: selectedRowTemplate,
+			rowCellTemplate: selectedRowCellTemplate,
 			footerTpl: footerTemplate,
 			emptyTipTpl: emptyTemplate,
 			pager: {
@@ -178,6 +174,7 @@ export default class ShopSelectorCtrl {
 	getSelectedShop() {
 		return service.getShopList(this.serverName, this.selectedShop, 'id').get().$promise.then(res => {
 			res.list = res.list || [];
+			this.getNameByGridList(res.list);
 			res.list.forEach(entity => {
 				if (this.isSingleSelected) {
 					this.radio.value = entity.id;
@@ -201,7 +198,11 @@ export default class ShopSelectorCtrl {
 		};
 		const currentPage = opts.pager.pageNum;
 		const pageSize = opts.pager.pageSize;
-		const data = this.selectedItems;
+		const data = this.selectedItems.filter(entity => {
+			if (!entity.isHide) {
+				return entity;
+			}
+		});
 		this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
 	}
 
@@ -245,10 +246,7 @@ export default class ShopSelectorCtrl {
 			entity.$selected = false;
 			this.updateSelectedItems(entity);
 			this.onRefresh(this.selectedShopGridOptions);
-			let targetIndex = findEntityById(this.allShopGridOptions.data, entity.id);
-			if (targetIndex !== -1) {
-				this.allShopGridOptions.data[targetIndex].$selected = false;
-			}
+			this.resetShopStatus(entity);
 		}
 	};
 
@@ -257,12 +255,17 @@ export default class ShopSelectorCtrl {
 		this.selectedShopGridOptions.externalData.forEach(entity => {
 			entity.$selected = false;
 			this.updateSelectedItems(entity);
-			let targetIndex = findEntityById(this.allShopGridOptions.data, entity.id);
-			if (targetIndex !== -1) {
-				this.allShopGridOptions.data[targetIndex].$selected = false;
-			}
+			this.resetShopStatus(entity);
 		});
 		this.onRefresh(this.selectedShopGridOptions);
+	}
+
+	// 重置店铺列表中被移除的店铺状态
+	resetShopStatus(entity) {
+		let targetIndex = findEntityById(this.allShopGridOptions.data, entity.id);
+		if (targetIndex !== -1) {
+			this.allShopGridOptions.data[targetIndex].$selected = false;
+		}
 	}
 
 	// 移除全部
@@ -329,7 +332,6 @@ export default class ShopSelectorCtrl {
 	getAreaData() {
 		service.getAreaData(this.serverName, 'top').get(res => {
 			this.provinceList = res || [];
-			this.resolveDataList(this.provinceList);
 		}, () => {
 			this._$ccTips.error(errorMsg);
 		});
@@ -361,7 +363,7 @@ export default class ShopSelectorCtrl {
 			if (model !== oldModel) {
 				this.formModel.type = this.type;
 				this.type = null;
-				this.typeList = item.shopTypes && item.shopTypes.length ? this.resolveDataList(item.shopTypes) : [];
+				this.typeList = item.shopType && item.shopType.length ? this.resolveDataList(item.shopType) : [];
 			}
 		} else {
 			this.formModel.type = null;
@@ -371,12 +373,13 @@ export default class ShopSelectorCtrl {
 
 	// 省份 select 框 change
 	provinceSelectChange(model, oldModel, itemIndex, item) {
-		if (itemIndex > 0) {
+		console.log(model, oldModel, itemIndex, item);
+		if (itemIndex >= 0) {
 			if (model !== oldModel) {
 				this.formModel.city = this.city;
 				this.city = null;
 				this.formModel.provinceName = item[this.commonListFieldsMap.displayField];
-				this.cityList = item.children && item.children.length ? this.resolveDataList(item.children) : [];
+				this.cityList = item.children && item.children.length ? item.children : [];
 			}
 		} else {
 			this.formModel.city = null;
@@ -387,11 +390,11 @@ export default class ShopSelectorCtrl {
 
 	// 城市 select 框 change
 	citySelectChange(model, oldModel, itemIndex, item) {
-		if (itemIndex > 0) {
+		if (itemIndex >= 0) {
 			this.formModel.district = this.district;
 			this.district = null;
 			this.formModel.cityName = item[this.commonListFieldsMap.displayField];
-			this.districtList = item.children && item.children.length ? this.resolveDataList(item.children) : [];
+			this.districtList = item.children && item.children.length ? item.children : [];
 		} else {
 			this.formModel.district = null;
 			this.formModel.cityName = null;
@@ -401,7 +404,7 @@ export default class ShopSelectorCtrl {
 
 	// 地区 select 框 change
 	districtSelectChange(model, oldModel, itemIndex, item) {
-		if (itemIndex > 0) {
+		if (itemIndex >= 0) {
 			this.formModel.districtName = item[this.commonListFieldsMap.displayField];
 		}
 	}
@@ -409,7 +412,7 @@ export default class ShopSelectorCtrl {
 	search() {
 		if (this.isSelectedTab) {
 			// 已选商品 tab 搜索 -> 前端搜索
-			utils.match(this.formModel, this.selectedItems, this.formMatchConfig);
+			utils.match(this.formModel, this.selectedItems);
 			this.onRefresh(this.selectedShopGridOptions);
 		} else {
 			// 全部商品 tab 搜索 -> 后端搜索
@@ -437,11 +440,11 @@ export default class ShopSelectorCtrl {
 			const displayField = this.commonListFieldsMap.displayField;
 			entity['channelName'] = this.channelList[findEntityById(this.channelList, entity.channel)][displayField];
 			this.channelList.forEach(item => {
-				let shopTypes = item.shopTypes;
-				if (shopTypes && shopTypes.length) {
-					let targetIndex = findEntityById(shopTypes, entity.type);
+				let shopType = item.shopType;
+				if (shopType && shopType.length) {
+					let targetIndex = findEntityById(shopType, String(entity.type));
 					if (targetIndex !== -1) {
-						entity['typeName'] = shopTypes[targetIndex][displayField];
+						entity['typeName'] = shopType[targetIndex][displayField];
 					}
 				}
 			});

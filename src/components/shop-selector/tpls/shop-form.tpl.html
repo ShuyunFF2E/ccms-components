@@ -24,6 +24,7 @@
 		<label>省份：</label>
 		<cc-dropdown-select
 				model="$ctrl.formModel.province"
+				searchable="true"
 				datalist="$ctrl.provinceList"
 				mapping="$ctrl.commonListFieldsMap"
 				on-select-change="$ctrl.provinceSelectChange(model, oldModel, itemIndex, item)">
@@ -33,6 +34,7 @@
 		<label>地级市：</label>
 		<cc-dropdown-select
 				model="$ctrl.formModel.city"
+				searchable="true"
 				datalist="$ctrl.cityList"
 				mapping="$ctrl.commonListFieldsMap"
 				on-select-change="$ctrl.citySelectChange(model, oldModel, itemIndex, item)">
@@ -42,6 +44,7 @@
 		<label>市/县/区：</label>
 		<cc-dropdown-select
 				model="$ctrl.formModel.district"
+				searchable="true"
 				datalist="$ctrl.districtList"
 				mapping="$ctrl.commonListFieldsMap"
 				on-select-change="$ctrl.districtSelectChange(model, oldModel, itemIndex, item)">
