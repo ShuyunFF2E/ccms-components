@@ -59,13 +59,6 @@ export default class ShopSelectorCtrl {
 		this.selectedShopFormModel = cloneDeep(this.formModel);
 
 		this.validators = {
-			shopName: {
-				msg: '只能输入中文、英文、数字和符号(@、.、_、*、(、))',
-				fn: (modelValue, viewValue) => {
-					const value = modelValue || viewValue;
-					return value ? (/^[0-9a-zA-Z\4E00-\u9FA5\@\.\_\*]/).test(value) : !value;
-				}
-			},
 			maxLength: {
 				msg: '最多允许输入100个字符',
 				fn: (modelValue, viewValue) => {
