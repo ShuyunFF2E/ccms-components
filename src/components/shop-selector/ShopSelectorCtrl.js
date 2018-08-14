@@ -5,7 +5,6 @@ import { getGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg, channelList
 import service from './service';
 import utils from './utils';
 
-import shopFormTemplate from './tpls/shop-form.tpl.html';
 import rowTemplate from './tpls/row.tpl.html';
 import rowCellTemplate from './tpls/row-cell.tpl.html';
 import footerTemplate from './tpls/grid-footer.tpl.html';
@@ -45,8 +44,6 @@ export default class ShopSelectorCtrl {
 	}
 
 	initForm() {
-		this.shopFormTemplate = shopFormTemplate;
-
 		this.formModel = {
 			channel: null, // 渠道
 			type: null, // 店铺类型
@@ -117,9 +114,6 @@ export default class ShopSelectorCtrl {
 			switchSingleSelectItem: entity => {
 				this.allShopGridOptions.radio.value = entity.id;
 				this.selectedItems.splice(0, this.selectedItems.length, entity);
-			},
-			isEntitySelected: entity => {
-				return findEntityById(this.selectedItems, entity.id) !== -1;
 			},
 			transformer: res => {
 				this.resData = res.list || [];
@@ -362,7 +356,7 @@ export default class ShopSelectorCtrl {
 	channelSelectChange(model, oldModel, itemIndex, item) {
 		if (itemIndex > 0) {
 			if (model !== oldModel) {
-				this.formModel.type = this.type;
+				this.formModel.type = this.type || null;
 				this.type = null;
 				this.typeList = item.shopType && item.shopType.length ? this.resolveDataList(item.shopType) : [];
 			}
@@ -374,7 +368,6 @@ export default class ShopSelectorCtrl {
 
 	// 省份 select 框 change
 	provinceSelectChange(model, oldModel, itemIndex, item) {
-		console.log(model, oldModel, itemIndex, item);
 		if (itemIndex >= 0) {
 			if (model !== oldModel) {
 				this.formModel.city = this.city;

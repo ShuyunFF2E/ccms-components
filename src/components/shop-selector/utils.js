@@ -11,12 +11,13 @@ export default {
 				if (field === 'channel' || field === 'type') {
 					buf.push(methods.equal(form[field], entity[field]));
 				} else if (field === 'sign') {
-					buf.push(methods.fuzzySearchGroup(['name', 'id'], form[field], entity));
+					const group = ['name', 'id'];
+					buf.push(methods.fuzzySearchGroup(group, form[field], entity));
 				} else if (field === 'province') {
 					let provinceName = form['provinceName'] ? form['provinceName'] : '',
 						cityName = form['cityName'] ? form['cityName'] : '',
 						districtName = form['districtName'] ? form['districtName'] : '',
-						formVal = provinceName ? `${provinceName}${cityName}${districtName}` : '';
+						formVal = `${provinceName}${cityName}${districtName}`;
 					buf.push(methods.fuzzySearch(formVal, entity.address));
 				}
 			}
@@ -30,6 +31,7 @@ export default {
 			equal: (formVal, val) => {
 				return !formVal && formVal !== 0 || String(formVal).replace(/\s/g, '') === String(val);
 			},
+			// 返回多个条件过滤后的并集
 			fuzzySearchGroup: (group, formVal, entity) => {
 				let buf = [];
 				group.forEach(item => {

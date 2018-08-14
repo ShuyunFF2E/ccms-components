@@ -1,7 +1,61 @@
 <div class="shop-selector">
-	<section class="form-area"
-			 ng-class="{'form-area-no-channel': !$ctrl.isSupportedChannel}"
-			 cc-bind-html="$ctrl.shopFormTemplate">
+	<section class="form-area" ng-class="{'form-area-no-channel': !$ctrl.isSupportedChannel}">
+		<form class="form-wrapper" name="$ctrl.allShopForm" cc-validators="$ctrl.validators">
+			<fieldset ng-if="$ctrl.isSupportedChannel">
+				<label>渠道：</label>
+				<cc-dropdown-select
+						model="$ctrl.formModel.channel"
+						datalist="$ctrl.channelList"
+						mapping="$ctrl.commonListFieldsMap"
+						on-select-change="$ctrl.channelSelectChange(model, oldModel, itemIndex, item)">
+				</cc-dropdown-select>
+			</fieldset>
+			<fieldset ng-if="$ctrl.isSupportedChannel">
+				<label>店铺类型：</label>
+				<cc-dropdown-select
+						model="$ctrl.formModel.type"
+						datalist="$ctrl.typeList"
+						mapping="$ctrl.commonListFieldsMap">
+				</cc-dropdown-select>
+			</fieldset>
+			<fieldset>
+				<label>店铺名称：</label>
+				<input type="text" placeholder="请输入店铺名称/ID" ng-model="$ctrl.formModel.sign" cc-validator="shopName, maxLength">
+			</fieldset>
+			<fieldset>
+				<label>省份：</label>
+				<cc-dropdown-select
+						model="$ctrl.formModel.province"
+						searchable="true"
+						datalist="$ctrl.provinceList"
+						mapping="$ctrl.commonListFieldsMap"
+						on-select-change="$ctrl.provinceSelectChange(model, oldModel, itemIndex, item)">
+				</cc-dropdown-select>
+			</fieldset>
+			<fieldset>
+				<label>地级市：</label>
+				<cc-dropdown-select
+						model="$ctrl.formModel.city"
+						searchable="true"
+						datalist="$ctrl.cityList"
+						mapping="$ctrl.commonListFieldsMap"
+						on-select-change="$ctrl.citySelectChange(model, oldModel, itemIndex, item)">
+				</cc-dropdown-select>
+			</fieldset>
+			<fieldset>
+				<label>市/县/区：</label>
+				<cc-dropdown-select
+						model="$ctrl.formModel.district"
+						searchable="true"
+						datalist="$ctrl.districtList"
+						mapping="$ctrl.commonListFieldsMap"
+						on-select-change="$ctrl.districtSelectChange(model, oldModel, itemIndex, item)">
+				</cc-dropdown-select>
+			</fieldset>
+			<fieldset class="operation">
+				<button type="button" class="btn-ok" ng-click="$ctrl.search()">查询</button>
+			</fieldset>
+		</form>
 	</section>
 	<gs-tabs>
 		<gs-panel text="全部店铺" tab-click="$ctrl.tabClick(text)">
