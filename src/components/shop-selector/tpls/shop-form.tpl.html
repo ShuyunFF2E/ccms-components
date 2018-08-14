@@ -1,5 +1,5 @@
 <form class="form-wrapper" name="$ctrl.allShopForm" cc-validators="$ctrl.validators">
-	<fieldset>
+	<fieldset ng-if="$ctrl.isSupportedChannel">
 		<label>渠道：</label>
 		<cc-dropdown-select
 				model="$ctrl.formModel.channel"
@@ -8,7 +8,7 @@
 				on-select-change="$ctrl.channelSelectChange(model, oldModel, itemIndex, item)">
 		</cc-dropdown-select>
 	</fieldset>
-	<fieldset>
+	<fieldset ng-if="$ctrl.isSupportedChannel">
 		<label>店铺类型：</label>
 		<cc-dropdown-select
 				model="$ctrl.formModel.type"
@@ -51,6 +51,6 @@
 		</cc-dropdown-select>
 	</fieldset>
 	<fieldset class="operation">
-		<button type="button" class="btn-ok" ng-click="$ctrl.search()" ng-if="!$ctrl.isSelectedTab && $ctrl.isSingleSelected || !$ctrl.isSingleSelected">查询</button>
+		<button type="button" class="btn-ok" ng-click="$ctrl.search()">查询</button>
 	</fieldset>
 </form>

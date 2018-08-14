@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import cloneDeep from 'lodash.clonedeep';
-import { commonGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg, channelList } from './Constant';
+import { getGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg, channelList } from './Constant';
 import service from './service';
 import utils from './utils';
 
@@ -21,14 +21,16 @@ function findEntityById(collection, id) {
 	return collection.findIndex(item => angular.equals(item.id, id));
 }
 
-@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop')
+@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel')
 export default class ShopSelectorCtrl {
 	constructor() {
 		this.isSingleSelected = this._isSingleSelected; // 是否是单选
 		this.tenantId = this._tenantId; // 租户 ID
 		this.serverName = this._serverName;
 		this.selectedShop = this._selectedShop; // 用户传进来的已选店铺列表
+		this.isSupportedChannel = this._isSupportedChannel; // 是否支持渠道
 
+		this.commonGridColumnDef = getGridColumnDef(this.isSupportedChannel);
 		this.selectedItems = [];
 		this.selectedItemsBuffer = cloneDeep(this.selectedItems);
 		this.radio = {
@@ -90,7 +92,7 @@ export default class ShopSelectorCtrl {
 				pageSize: 20, // 每页大小
 				tenantId: this.tenantId // 租户 ID
 			},
-			columnsDef: commonGridColumnDef,
+			columnsDef: this.commonGridColumnDef,
 			rowTpl: rowTemplate,
 			rowCellTemplate: rowCellTemplate,
 			footerTpl: footerTemplate,
@@ -147,7 +149,7 @@ export default class ShopSelectorCtrl {
 				pageSize: 20 // 每页大小
 			},
 			columnsDef: [
-				...commonGridColumnDef,
+				...this.commonGridColumnDef,
 				{
 					displayName: '操作',
 					align: 'center',
@@ -234,7 +236,6 @@ export default class ShopSelectorCtrl {
 		});
 	}
 
-	// 之前的做法是将单选移除和多选移除分成两个函数分别在自定义的 cellTemplate 里面调用，但是多选的移除操作得不到 entity 的值，没有找到原因
 	removeItem(entity) {
 		// 移除 (单选)
 		if (this.isSingleSelected) {

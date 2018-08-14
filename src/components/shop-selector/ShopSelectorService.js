@@ -11,10 +11,11 @@ const ShopSelectorService = {
 	 * @param isOnlyChecked: 是否有footer，默认有
 	 * @param isSingleChecked: 单选店铺选择器还是多选店铺选择器，默认是多选
 	 * @param selectedShop: 已选店铺
+	 * @param isSupportedChannel: 是否支持渠道选项，默认支持
 	 * @param serverName
 	 * @returns {*|Modal}
 	 */
-	shopSelector(tenantId, {isOnlyChecked = false, isSingleSelected = false, selectedShop = [], serverName = ''}) {
+	shopSelector(tenantId, {isOnlyChecked = false, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true}) {
 		if (!tenantId && tenantId !== 0) {
 			throw new Error('shopSelector 缺少 tenantId 参数');
 		}
@@ -29,7 +30,8 @@ const ShopSelectorService = {
 					isSingleSelected: isSingleSelected,
 					tenantId: tenantId,
 					selectedShop: selectedShop,
-					serverName: serverName
+					serverName: serverName,
+					isSupportedChannel: isSupportedChannel
 				},
 				controller: ShopSelectorCtrl,
 				controllerAs: '$ctrl',

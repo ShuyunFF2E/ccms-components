@@ -1,5 +1,8 @@
 <div class="shop-selector">
-	<section class="form-area" cc-bind-html="$ctrl.shopFormTemplate"></section>
+	<section class="form-area"
+			 ng-class="{'form-area-no-channel': !$ctrl.isSupportedChannel}"
+			 cc-bind-html="$ctrl.shopFormTemplate">
+	</section>
 	<gs-tabs>
 		<gs-panel text="全部店铺" tab-click="$ctrl.tabClick(text)">
 			<section class="grid-area">
