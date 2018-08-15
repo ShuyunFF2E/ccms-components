@@ -38,6 +38,7 @@ export default class ShopSelectorCtrl {
 			disabled: false
 		};
 
+		this.getSelectedShop();
 		this.initForm();
 		this.prepareAllShopGridOptions();
 		this.prepareSelectedShopGridOptions();
@@ -111,12 +112,7 @@ export default class ShopSelectorCtrl {
 			transformer: res => {
 				this.resData = res.list || [];
 				this.getNameByGridList(res.list);
-				this.getSelectedShop().then(() => {
-					this.resListMerge(res.list, this.selectedItemsBuffer);
-				}).catch(() => {
-					this._$ccTips.error(errorMsg);
-				});
-
+				this.resListMerge(res.list, this.selectedItemsBuffer);
 				if (this.isSingleSelected) {
 					res.list.forEach(entity => {
 						this.allShopGridOptions.radio.setting.push(entity.id);
@@ -171,6 +167,9 @@ export default class ShopSelectorCtrl {
 				entity.$selected = true;
 				this.updateSelectedItems(entity);
 			});
+			if (this.resData && this.resData.length) {
+				this.resListMerge(this.resData, this.selectedItemsBuffer);
+			}
 		}).catch(() => {
 			this._$ccTips.error(errorMsg);
 		});
