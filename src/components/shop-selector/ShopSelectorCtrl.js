@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import cloneDeep from 'lodash.clonedeep';
-import { getGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg, channelList } from './Constant';
+import { getGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg } from './Constant';
 import service from './service';
 import utils from './utils';
 
@@ -38,7 +38,6 @@ export default class ShopSelectorCtrl {
 			disabled: false
 		};
 
-		this.getSelectedShop();
 		this.initForm();
 		this.prepareAllShopGridOptions();
 		this.prepareSelectedShopGridOptions();
@@ -71,7 +70,12 @@ export default class ShopSelectorCtrl {
 
 		this.commonListFieldsMap = commonListFieldsMap;
 
-		this.getChannelList();
+		this.getChannelList().then(() => {
+			if (this.resData && this.resData.length) {
+				this.getNameByGridList(this.resData);
+			}
+			this.getSelectedShop();
+		});
 		this.getAreaData();
 	}
 
@@ -157,7 +161,7 @@ export default class ShopSelectorCtrl {
 
 	// 获取已选店铺列表
 	getSelectedShop() {
-		return service.getShopList(this.serverName, this.selectedShop, 'id').get().$promise.then(res => {
+		return service.getShopList(this.serverName, this.selectedShop, 'id').get(res => {
 			res.list = res.list || [];
 			this.getNameByGridList(res.list);
 			res.list.forEach(entity => {
@@ -170,7 +174,7 @@ export default class ShopSelectorCtrl {
 			if (this.resData && this.resData.length) {
 				this.resListMerge(this.resData, this.selectedItemsBuffer);
 			}
-		}).catch(() => {
+		}, () => {
 			this._$ccTips.error(errorMsg);
 		});
 	}
@@ -343,7 +347,11 @@ export default class ShopSelectorCtrl {
 
 	// 获取渠道列表
 	getChannelList() {
-		this.channelList = this.resolveDataList(channelList);
+		return service.getChannelList(this.serverName).get().$promise.then(res => {
+			this.channelList = this.resolveDataList(res || []);
+		}).catch(() => {
+			this._$ccTips.error(errorMsg);
+		});
 	}
 
 	ok() {

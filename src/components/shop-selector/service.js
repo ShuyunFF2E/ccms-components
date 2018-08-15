@@ -21,6 +21,16 @@ function transformParams(params, paramsName) {
 
 export default {
 	// 获取渠道列表
+	getChannelList(serverName) {
+		return genResource(`${ serverName }${ apiPrefix }/channel`, null, null, {
+			get: {
+				method: 'GET',
+				isArray: true
+			}
+		});
+	},
+
+	// 获取地区列表
 	getAreaData(serverName, platform) {
 		return genResource(`${ serverName }${ apiPrefix }/shopArea?platform=${ platform }`, null, null, {
 			get: {
