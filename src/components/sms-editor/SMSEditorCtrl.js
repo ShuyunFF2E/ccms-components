@@ -32,6 +32,8 @@ export default class SMSEditorCtrl {
 
 		// 初始化编辑框及显示
 		this.opts || (this.opts = {});
+		this.keywordPrefix = this.opts.keywordPrefix || '$$';
+		this.keywordSuffix = this.opts.keywordSuffix || '$$';
 		this.trimContent = angular.isDefined(this.opts.trimContent) ? this.opts.trimContent : true;
 
 		this._content = $element[0].querySelector('[data-content]');
@@ -327,9 +329,9 @@ export default class SMSEditorCtrl {
 		this.opts.text = parsed
 			.replace(inputReg, (result, $1, $2) => {
 				if ($1 === DEFAULT_TYPE_NAME) {
-					return `$$_${this.keywordTextNameConvert($2)}_$$`;
+					return `${this.keywordPrefix}_${this.keywordTextNameConvert($2)}_${this.keywordSuffix}`;
 				}
-				return `$$_[${$1}]${this.keywordTextNameConvert($2)}_$$`;
+				return `${this.keywordPrefix}_[${$1}]${this.keywordTextNameConvert($2)}_${this.keywordSuffix}`;
 			})
 			.replace(imgReg, (result, $1) => {
 				return `{${$1}}`;
