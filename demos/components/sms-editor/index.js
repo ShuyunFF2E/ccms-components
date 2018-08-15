@@ -20,6 +20,8 @@ angular.module('componentsApp', ['ccms.components'])
 			{
 				name: 'GatewayType 0',
 				gatewayType: 0,
+				keywordPrefix: '?', // default $$
+				keywordSuffix: '】', // default $$
 				keywords: [
 					// {
 					// 	name: 'XBL',
