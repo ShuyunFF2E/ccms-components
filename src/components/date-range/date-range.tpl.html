@@ -9,7 +9,9 @@
 					on-calendar-open="ctrl.onCalendarOpen()"
 					on-calendar-close="ctrl.onCalendarClose()"
 					is-festival="ctrl.isFestival"
-					custom-festivals="ctrl.customFestivals"></cc-date-picker>
+					custom-festivals="ctrl.customFestivals"
+					disable-year="ctrl.opts.disableYear"
+					disable-month="ctrl.opts.disableMonth"></cc-date-picker>
 	<span class="date-range-sep">-</span>
 	<cc-date-picker ng-model="ctrl.opts.end"
 					min-date="ctrl.opts.start || ctrl.opts.minDate"
@@ -21,5 +23,7 @@
 					on-calendar-open="ctrl.onCalendarOpen()"
 					on-calendar-close="ctrl.onCalendarClose()"
 					is-festival="ctrl.isFestival"
-					custom-festivals="ctrl.customFestivals"></cc-date-picker>
+					custom-festivals="ctrl.customFestivals"
+					disable-year="ctrl.opts.disableYear"
+					disable-month="ctrl.opts.disableMonth"></cc-date-picker>
 </div>
