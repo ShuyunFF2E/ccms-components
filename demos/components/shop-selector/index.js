@@ -5,7 +5,7 @@
 	angular.module('app', ['ccms.components'])
 
 		.controller('ctrl', function($scope, $ccShopSelector) {
-			let isOnlyChecked = false;
+			let hasFooter = false;
 			let tenantId = 'test';
 			let serverName = '';
 			let isSupportedChannel = true;
@@ -13,7 +13,7 @@
 			let multipleSelectedShop = ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
 
 			let singleOptions = {
-				isOnlyChecked,
+				hasFooter,
 				selectedShop: singleSelectedShop,
 				isSingleSelected: true,
 				serverName,
@@ -21,7 +21,7 @@
 			};
 
 			let multipleOptions = {
-				isOnlyChecked,
+				hasFooter,
 				selectedShop: multipleSelectedShop,
 				isSingleSelected: false,
 				serverName,

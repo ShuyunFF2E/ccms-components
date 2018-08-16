@@ -2,20 +2,17 @@ import ModalService from '../modal/ModalService';
 import bodyTemplate from './shop-selector.tpl.html';
 import ShopSelectorCtrl from './ShopSelectorCtrl';
 
-const noop = () => {
-};
-
 const ShopSelectorService = {
 	/**
 	 * @param tenantId: 租户ID 必填
-	 * @param isOnlyChecked: 是否有footer，默认有
-	 * @param isSingleChecked: 单选店铺选择器还是多选店铺选择器，默认是多选
+	 * @param hasFooter: 是否有footer，默认有
+	 * @param isSingleSelected: 单选店铺选择器还是多选店铺选择器，默认是多选
 	 * @param selectedShop: 已选店铺
-	 * @param isSupportedChannel: 是否支持渠道选项，默认支持
 	 * @param serverName
+	 * @param isSupportedChannel: 是否支持渠道选项，默认支持
 	 * @returns {*|Modal}
 	 */
-	shopSelector(tenantId, {isOnlyChecked = false, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true}) {
+	shopSelector(tenantId, {hasFooter = false, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true}) {
 		if (!tenantId && tenantId !== 0) {
 			throw new Error('shopSelector 缺少 tenantId 参数');
 		}
@@ -24,7 +21,7 @@ const ShopSelectorService = {
 				title: '请选择店铺',
 				style: {'width': '1025px', 'min-height': '510px'},
 				fullscreen: false,
-				hasFooter: !isOnlyChecked,
+				hasFooter: !hasFooter,
 				__body: bodyTemplate,
 				locals: {
 					isSingleSelected: isSingleSelected,
@@ -35,7 +32,7 @@ const ShopSelectorService = {
 				},
 				controller: ShopSelectorCtrl,
 				controllerAs: '$ctrl',
-				onClose: noop
+				onClose: () => {}
 			}
 		);
 	}
