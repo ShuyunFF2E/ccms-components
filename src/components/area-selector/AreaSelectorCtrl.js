@@ -36,6 +36,8 @@ export default class AreaSelectorCtrl {
 		this.initCommonAreas();
 		this.selectedValue = this._marketingOnly ? this.toOriginFormat(this._selectedData) : this._selectedData;
 		this.analyzeSelectedData();
+		// TODO: 需要调研
+		this.getCommonAreaSelectedStatus();
 		this.getSelectedAreaNumber();
 		this.validateAreasData();
 		this.initInstantSearch();
@@ -81,7 +83,7 @@ export default class AreaSelectorCtrl {
 	initCommonAreas() {
 
 		if (this._marketingOnly) {
-			this.commonAreas = MARKETING_COMMON_AREAS;
+			this.commonAreas = unionBy(this.customAreas, MARKETING_COMMON_AREAS, 'id');
 		} else {
 			this.commonAreas = unionBy(this.customAreas, COMMON_AREAS[this.platform], 'id').sort((a, b) => a.id > b.id);
 		}
