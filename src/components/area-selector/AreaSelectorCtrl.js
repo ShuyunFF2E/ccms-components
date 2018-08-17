@@ -452,7 +452,7 @@ export default class AreaSelectorCtrl {
 				this.getResponseId(selectedValue, area);
 			}
 		});
-		this._modalInstance.ok(selectedValue);
+		this._modalInstance.ok(this.toMarketingFormat(selectedValue));
 	}
 
 	/**
@@ -639,4 +639,80 @@ export default class AreaSelectorCtrl {
 		this.searchAreaByKeyword(context.searchText);
 		this.datalist = this.searchList;
 	}
+
+	/**
+	 * @name 为主动营销格式化输出
+	 */
+	toMarketingFormat(output) {
+
+		output = output.map(o => {
+			if (this.valueFormat === AreaSelectorCtrl.ID_NAME) {
+
+				let tempArr = o.split(',');
+
+				for (let i = 0; i < this.commonAreas.length; i++) {
+
+					if (!this.commonAreas[i].selected && !this.commonAreas[i].selectedAll) {
+						continue;
+					}
+
+					// 区域全部选择的情况
+					if (this.commonAreas[i].selectedAll) {
+						if (this.commonAreas[i].subArea.includes(tempArr[0])) {
+							return null;
+						}
+					// 区域部分选择的情况
+					} else if (this.commonAreas[i].selected && !this.commonAreas[i].selectedAll) {
+						if (this.commonAreas[i].subArea.includes(tempArr[0])) {
+							return this.commonAreas[i].id + ',' + o;
+						}
+					}
+				}
+
+			} else {
+
+				let tempArr = o.id.split(',');
+
+				for (let i = 0; i < this.commonAreas.length; i++) {
+
+					if (!this.commonAreas[i].selected && !this.commonAreas[i].selectedAll) {
+						continue;
+					}
+
+					// 区域全部选择的情况
+					if (this.commonAreas[i].selectedAll) {
+						if (this.commonAreas[i].subArea.includes(tempArr[0])) {
+							return null;
+						}
+						// 区域部分选择的情况
+					} else if (this.commonAreas[i].selected && !this.commonAreas[i].selectedAll) {
+						if (this.commonAreas[i].subArea.includes(tempArr[0])) {
+							return {
+								id: this.commonAreas[i].id + ',' + o.id,
+								name: this.commonAreas[i].name + ' > ' + o.name
+							};
+						}
+					}
+				}
+			}
+		});
+
+		const selectedAllAreas = this.commonAreas.filter(a => a.selectedAll);
+		output = output.filter(o => o !== null);
+
+		if (this.valueFormat === AreaSelectorCtrl.ID_ONLY) {
+			output.push(...selectedAllAreas.map(a => ({id: a.id, name: a.name})));
+		} else if (this.valueFormat === AreaSelectorCtrl.ID_NAME) {
+			output.push(...selectedAllAreas.map(a => a.id));
+		}
+
+		return output;
+	}
+
+	/**
+	 * @name 将主动营销输入格式化为原地址选择器输入
+	 */
+	// toOriginFormat(input) {
+	//
+	// }
 }
