@@ -121,59 +121,24 @@
 					});
 			};
 
-			const MARKETING_COMMON_AREAS = [
-				{
-					'id': 1,
-					'name': '华东地区',
-					'subArea': ['310000', '320000', '330000', '340000', '350000', '370000']
-				},
-				{
-					'id': 2,
-					'name': '华南地区',
-					'subArea': ['440000', '450000', '460000']
-				},
-				{
-					'id': 3,
-					'name': '华中地区',
-					'subArea': ['360000', '410000', '420000', '430000']
-				},
-				{
-					'id': 4,
-					'name': '华北地区',
-					'subArea': ['110000', '120000', '130000', '140000', '150000']
-				},
-				{
-					'id': 5,
-					'name': '西北地区',
-					'subArea': ['610000', '620000', '630000', '640000', '650000']
-				},
-				{
-					'id': 6,
-					'name': '西南地区',
-					'subArea': ['500000', '510000', '520000', '530000', '540000']
-				},
-				{
-					'id': 7,
-					'name': '东北地区',
-					'subArea': ['210000', '220000', '230000']
-				},
-				{
-					'id': 8,
-					'name': '台港澳地区',
-					'subArea': ['710000', '810000', '820000']
-				}
-			];
 
-
+			const markingData = [
+				{id: "4,110000,110100", name: "华北地区 > 北京市 > 市辖区"},
+			    {id: "4,120000,120200,120223", name: "华北地区 > 天津市 > 县 > 静海县"},
+				{id: "4,120000,120200,120225", name: "华北地区 > 天津市 > 县 > 蓟县"},
+				{id: "4,130000,130200", name: "华北地区 > 河北省 > 唐山市"},
+				{id: "4,150000", name: "华北地区 > 内蒙古自治区"},
+				{id: "1", name: "华东地区"}
+		    ];
 
 			$scope.responseMarketing = function () {
 
 				var areaSelectorInstance = $ccAreaSelector
 
 					.areaSelector({
-						areaSelectorData: [],
+						areaSelectorData: markingData,
 						valueFormat: $ccAreaSelector.ID_NAME,
-						customAreas: MARKETING_COMMON_AREAS,
+						marketingOnly: true
 					})
 
 					.open().result.then(function(response) {
@@ -190,9 +155,9 @@
 				var areaSelectorInstance = $ccAreaSelector
 
 					.areaSelector({
-						areaSelectorData: [],
+						areaSelectorData: markingData,
 						valueFormat: $ccAreaSelector.ID_ONLY,
-						customAreas: MARKETING_COMMON_AREAS,
+						marketingOnly: true
 					})
 
 					.open().result.then(function(response) {
