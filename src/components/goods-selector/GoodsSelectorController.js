@@ -524,18 +524,17 @@ export default class GoodsSelectorCtrl {
 	getTags() {
 		service.getTags(this.serverName, this.formModel.platform, this.tenantId).get(res => {
 			res.data = res.data || [];
-			if (res.data.length) {
-				if (this.conditions.tags && this.conditions.tags.length) {
-					// 如果用户传进来的商品标签存在于商品标签列表中，那么将商品标签 push 到 selectedLabels 中
-					this.conditions.tags.forEach(tag => {
-						let targetIndex = this.findEntity(res.data, tag);
-						if (targetIndex !== -1) {
-							this.selectedLabels.push(tag);
-						}
-					});
-				}
+			if (res.data.length && this.conditions.tags && this.conditions.tags.length) {
+				// 如果用户传进来的商品标签存在于商品标签列表中，那么将商品标签 push 到 selectedLabels 中
+				this.conditions.tags.forEach(tag => {
+					let targetIndex = this.findEntity(res.data, tag);
+					if (targetIndex !== -1) {
+						this.selectedLabels.push(tag);
+					}
+				});
 			}
-		}, res => {
+		}, () => {
+			this._$ccTips.error(errorMsg);
 		});
 	}
 
@@ -621,14 +620,13 @@ export default class GoodsSelectorCtrl {
 	tabClick(text) {
 		if (text === '已选商品') {
 			this.isSelectedGoodsTab = true;
-			// 获取搜索条件信息，条件之间用';'分隔
+			// 初始化搜索条件信息，只执行一次
 			this.initConditionsMsg();
 			// 克隆表单数据，保存到allDateRangeModel、allGoodsFormModel、selectedLabelsOfAll中，当切换回全部商品tab时用作数据回显
 			this.allDateRangeModel = cloneDeep(this.dateRange);
 			this.allGoodsFormModel = cloneDeep(this.formModel);
 			this.selectedLabelsOfAll = cloneDeep(this.selectedLabels);
-			this.selectedLabels = cloneDeep(this.selectedLabelsOfSelected);
-			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel);
+			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel, this.selectedLabelsOfSelected);
 			this.isSelectedExtendAll = utils.isAllChildrenExtend(this.selectedItems);
 			this.showLoading = true;
 			setTimeout(() => {
@@ -641,8 +639,7 @@ export default class GoodsSelectorCtrl {
 			this.selectedDateRangeModel = cloneDeep(this.dateRange);
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.selectedLabelsOfSelected = cloneDeep(this.selectedLabels);
-			this.selectedLabels = cloneDeep(this.selectedLabelsOfAll);
-			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel);
+			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel, this.selectedLabelsOfAll);
 			if (this.isAddSection) {
 				this.getBatchImportApi();
 				this._$ccGrid.refresh(this.pagerGridOptions).then(() => {
@@ -650,12 +647,12 @@ export default class GoodsSelectorCtrl {
 				});
 				this.isCheckedAll = false;
 			}
-			this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
-			this.currentPageChecked = utils.isAllChildrenSelected(this.resInfo.list);
+			this.hasResInfoList() && this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
+			this.currentPageChecked = this.hasResInfoList() ? utils.isAllChildrenSelected(this.resInfo.list) : false;
 		}
 	};
 
-	// 初始化条件信息，只调用一次
+	// 初始化搜索条件信息，只调用一次
 	initConditionsMsg() {
 		this.getConditionMsg(this.formModel);
 		this.initConditionsMsg = () => {};
@@ -679,8 +676,9 @@ export default class GoodsSelectorCtrl {
 	}
 
 	// tab 切换时 form 表单处理
-	handleForm(dateRangeModel, formModel) {
+	handleForm(dateRangeModel, formModel, selectedLabels) {
 		this.dateRange = cloneDeep(dateRangeModel);
+		this.selectedLabels = cloneDeep(selectedLabels);
 		const categoriesId = this.formModel.categoriesId;
 		const propsPid = this.formModel.propsPid;
 		for (let attr in formModel) {
@@ -709,13 +707,9 @@ export default class GoodsSelectorCtrl {
 			this.transformDateParams();
 			if (!isSelectedGoodsTab) {
 				// 全部商品 tab，后端搜索
-				this.allGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId;
+				this.allGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId; // 搜索条件是否包含 sku
 				utils.transformParams(this.pagerGridOptions.queryParams, this.formModel);
 				this.updateAllGoodsGrid();
-				// 当点击搜索后，更新全部全选的查询参数
-				this.checkedAllQueryParams = Object.assign({}, this.pagerGridOptions.queryParams);
-				delete this.checkedAllQueryParams.pageNum;
-				delete this.checkedAllQueryParams.pageSize;
 			} else {
 				// 已选商品 tab，前端搜索
 				this.selectedGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId;
@@ -802,22 +796,26 @@ export default class GoodsSelectorCtrl {
 
 	// 展开/折叠全部
 	extendAll(isExtend, data) {
-		data.forEach(item => {
+		data && data.length && data.forEach(item => {
 			item.extend = isExtend;
 		});
 	};
 
+	// this.resInfo.list 是否存在
+	hasResInfoList() {
+		return this.resInfo && this.resInfo.list && this.resInfo.list.length;
+	}
 	// 全选当页
 	selectCurrentPageAll() {
 		this.currentPageChecked = !this.currentPageChecked;
-		this.resInfo.list.forEach(item => {
+		this.hasResInfoList() && this.resInfo.list.forEach(item => {
 			item['checked'] = this.currentPageChecked;
 			item['partial'] = false;
 			item.skus && item.skus.length && item.skus.forEach(sku => {
 				sku['checked'] = this.currentPageChecked;
 			});
 		});
-		this.resInfo.list.forEach(entity => {
+		this.hasResInfoList() && this.resInfo.list.forEach(entity => {
 			this.updateSelectedItems(entity);
 		});
 		this.updateSelectedItemsBuffer();
@@ -829,7 +827,7 @@ export default class GoodsSelectorCtrl {
 			this.checkRootItem(entity);
 			this.updateSelectedItems(entity); // 更新已选商品数组
 		});
-		this.resInfo.list.forEach(entity => {
+		this.hasResInfoList() && this.resInfo.list.forEach(entity => {
 			this.checkRootItem(entity);
 			this.updateSelectedItems(entity); // 维持已选商品和全部商品的引用关系
 		});
@@ -844,7 +842,7 @@ export default class GoodsSelectorCtrl {
 			this.resetRootItem(entity);
 			this.updateSelectedItems(entity); // 更新已选商品数组
 		});
-		this.resInfo.list.forEach(entity => {
+		this.hasResInfoList() && this.resInfo.list.forEach(entity => {
 			this.resetRootItem(entity);
 			this.updateSelectedItems(entity); // 维持已选商品和全部商品的引用关系
 		});
@@ -941,7 +939,7 @@ export default class GoodsSelectorCtrl {
 	checkCurrentPageBefore(event) {
 		const target = event.target;
 		const targetScope = angular.element(target).scope();
-		const uncheckedItems = this.getUncheckedItems(this.resInfo.list);
+		const uncheckedItems = this.hasResInfoList() ? this.getUncheckedItems(this.resInfo.list) : [];
 		if (!targetScope.$parent.$ctrl.ngChecked && this.selectedItems.length + uncheckedItems.length > this._maxSelectedNumber) {
 			this.moreThanSelectedMaxNumber(event);
 		}
