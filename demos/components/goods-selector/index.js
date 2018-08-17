@@ -33,7 +33,7 @@
 			var isSupportedAddCondition = true; // 是否支持添加为搜索条件
 			var conditions = { // 搜索条件
 				categoriesId: '111111', // 商品标准类目 1629
-				// endListTime: new Date(1531843200000), // 下架时间
+				endListTime: new Date(1531843200000), // 下架时间
 				id: ['11111'], // 商品ID
 				maxPrice: '200', // 最高价
 				minPrice: '100', // 最低价
@@ -43,8 +43,8 @@
 				propsVid: '11', // 属性值 21540056
 				propsVname: null, // 属性值名称
 				shopCategoriesId: ['111111'], // 商品自定义类目 ['810124529', '809546836']
-				// shopId: 24058, // 店铺ID
-				// skusId: ['22342343'], // 商品编号
+				shopId: 157263193, // 店铺ID
+				skusId: ['22342343'], // 商品编号
 				skusOuterId: '44444', // sku 商家编码
 				skusPropsVname: '55555', // sku 规格
 				startListTime: new Date(1530374400000), // 上架时间
@@ -77,7 +77,7 @@
 						tenantId: 'sjyj',
 						name: 'wetian',
 						tagCreated: 1414570968000,
-						id: 8,
+						id: '标签ID1',
 						createrName: 'lucong',
 						status: 1
 					},
@@ -125,8 +125,8 @@
 						createrName: 'lucong',
 						status: 1
 					}
-				]
-				// brandId: '1111'
+				],
+				brandId: '1111'
 			};
 			var options = {
 				isOnlyChecked,

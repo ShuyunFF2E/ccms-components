@@ -1,13 +1,17 @@
-export const apiPrefix = '/api';
-// export const apiPrefix = '/shuyun-searchapi/1.0';
+// export const apiPrefix = '/api';
+export const apiPrefix = '/shuyun-searchapi/1.0';
 export const onceMaxSelectedNumber = 500;
+
 export const getExceedSelectedNumberMsg = function(number) {
 	return `<span>最多允许选择${number}条数据</span>`;
 };
+
 export const getExceedSelectedAllNumberMsg = function(number) {
 	return `当前商品超过${ number }个，不支持全部选中，请修改条件后重新搜索。`;
 };
+
 export const errorMsg = '出错提示：后台服务出错，请联系数云客服人员';
+
 export const getNotFoundMsg = function(currentTime, value) {
 	return `<span class="not-found-details" ng-click="$ctrl.checkNotFoundDetails(${currentTime})">查看未成功明细</span>
 			<div class="details-wrap" ng-show="$ctrl.isShowNotFoundDetails${currentTime}">
@@ -25,6 +29,7 @@ export const getNotFoundMsg = function(currentTime, value) {
 				<div class="angle"></div>
 			</div>`;
 };
+
 export const statusList = [
 	{
 		'title': '不限',
@@ -39,6 +44,7 @@ export const statusList = [
 		'value': '0'
 	}
 ];
+
 export const getFieldsMap = function() {
 	return {
 		shopListFieldsMap: {
@@ -63,6 +69,7 @@ export const getFieldsMap = function() {
 		}
 	};
 };
+
 export const getFormConfig = function() {
 	return {
 		// 已选商品 form 表单搜索配置项（前端搜索）
