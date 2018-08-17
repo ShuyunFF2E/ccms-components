@@ -13,7 +13,7 @@ import rowTemplate from './tpls/customer-row.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './addSection/SectionAddCtrl';
-import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList, getFieldsMap, getFormConfig } from './constant';
+import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList, getFieldsMap, getExceedSelectedAllNumberMsg, getFormConfig, errorMsg } from './constant';
 import { transformGoodsData, getSkuName, lightText, getPrice, listCharacterIntercept, htmlDecodeByRegExp, isAllChildrenExtend, isAllChildrenHide, isAllChildrenRemoved, isAllChildrenSelected, isSomeChildrenSelected } from './utils';
 import service from './service';
 
@@ -210,6 +210,10 @@ export default class GoodsSelectorCtrl {
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
 		// 将已选商品 form 表单恢复初始状态 —> 在初始化表单的时候由于已经存在的搜索条件，导致 form 表单项被赋值
 		this.reset(this.selectedGoodsFormModel, this.selectedDateRangeModel);
+
+		this.propsPid = this.formModel.propsPid;
+		this.propsVid = this.formModel.propsVid;
+		this.propsVname = this.formModel.propsVname;
 	}
 
 	// 初始化 selectedItems 和 selectedItemsBuffer
@@ -476,15 +480,13 @@ export default class GoodsSelectorCtrl {
 			this.shopCategoriesList.forEach(item => {
 				item.name = htmlDecodeByRegExp(item.name);
 			});
-			// 由于商品自定义类目数据是异步请求，所以需要在数据回来以后更新表单中 shopCategoriesId 的值，更新后清空，保证数据只加载一次
+			// 由于商品自定义类目数据是异步请求，所以需要在数据回来以后更新表单中 shopCategoriesId 的值，更新后清空，保证数据只赋值一次
 			if (this.conditions.shopCategoriesId && this.conditions.shopCategoriesId.length) {
 				this.formModel.shopCategoriesId = this.conditions.shopCategoriesId;
 				this.conditions.shopCategoriesId = [];
 			}
-		}, res => {
-			if (!this.tips || !this.tips.element) {
-				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
-			}
+		}, () => {
+			this._$ccTips.error(errorMsg);
 		});
 	}
 
@@ -493,7 +495,7 @@ export default class GoodsSelectorCtrl {
 		service.getCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get(res => {
 			let data = res.data || [];
 			this.categoriesList = data.filter(item => item.isLeaf === true);
-			// 由于商品标准类目数据是异步请求，所以需要在数据回来以后更新表单中 categoriesId 的值，更新后清空，保证数据只加载一次
+			// 由于商品标准类目数据是异步请求，所以需要在数据回来以后更新表单中 categoriesId 的值，更新后清空，保证数据只赋值一次
 			if (this.conditions.categoriesId) {
 				this.formModel.categoriesId = this.conditions.categoriesId;
 				this.conditions.categoriesId = null;
@@ -501,10 +503,8 @@ export default class GoodsSelectorCtrl {
 			if (!this.formModel.categoriesId) {
 				this.formModel.categoriesId = null;
 			}
-		}, res => {
-			if (!this.tips || !this.tips.element) {
-				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
-			}
+		}, () => {
+			this._$ccTips.error(errorMsg);
 		});
 	}
 
@@ -512,15 +512,13 @@ export default class GoodsSelectorCtrl {
 	getBrands() {
 		service.getBrands(this.serverName, this.formModel.platform, this.formModel.shopId).get(res => {
 			this.brandsList = res.data || [];
-			// 由于商品品牌数据是异步请求，所以需要在数据回来以后更新表单中 brandId 的值，更新后清空，保证数据只加载一次
+			// 由于商品品牌数据是异步请求，所以需要在数据回来以后更新表单中 brandId 的值，更新后清空，保证数据只赋值一次
 			if (this.conditions.brandId) {
 				this.formModel.brandId = this.conditions.brandId;
 				this.conditions.brandId = null;
 			}
-		}, res => {
-			if (!this.tips || !this.tips.element) {
-				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
-			}
+		}, () => {
+			this._$ccTips.error(errorMsg);
 		});
 	}
 
@@ -552,19 +550,12 @@ export default class GoodsSelectorCtrl {
 		if (this.formModel.categoriesId && item) {
 			service.getProperties(this.serverName, this.formModel.platform, this.formModel.shopId, item.id).get(res => {
 				this.propsPidList = res.data || [];
-				// 仅在初始化时执行：如果用户传进来的商品属性不为空，那么更新 form 表单的 propsPid 值，并清空 this.conditions.propsPid，保证懒加载
-				if (this.conditions.propsPid) {
-					this.formModel.propsPid = this.conditions.propsPid;
-					this.getConditionMsg();
-					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
-					this.conditions.propsPid = null;
-				} else {
-					this.formModel.propsPid = this.propsPid;
-				}
-			}, res => {
-				if (!this.tips || !this.tips.element) {
-					this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
-				}
+				this.formModel.propsPid = this.propsPid;
+				this.propsPid = null;
+				this.getConditionMsg();
+				this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
+			}, () => {
+				this._$ccTips.error(errorMsg);
 			});
 		} else {
 			this.propsPidList = [];
@@ -577,22 +568,10 @@ export default class GoodsSelectorCtrl {
 	propSelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.propsPid && itemIndex !== -1) {
 			this.propsVidList = this.propsPidList[itemIndex].values;
-			// 仅在初始化时执行：如果用户传进来的商品属性值不为空，那么更新 form 表单的 propsVid 值，并清空 this.conditions.propsVid，保证懒加载
-			if (this.conditions.propsVid) {
-				this.formModel.propsVid = cloneDeep(this.conditions.propsVid);
-				this.getConditionMsg();
-				this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
-				this.conditions.propsVid = null;
-			} else {
-				if (this.conditions.propsVname) {
-					this.formModel.propsVid = this.conditions.propsVname;
-					this.getConditionMsg();
-					this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
-					this.conditions.propsVname = null;
-				} else {
-					this.formModel.propsVid = cloneDeep(this.propsVid);
-				}
-			}
+			this.formModel.propsVid = this.propsVid || this.propsVname;
+			this.propsVid = this.propsVname = null;
+			this.getConditionMsg();
+			this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionLength();
 		} else {
 			this.propsVidList = [];
 			this.formModel.propsVid = undefined;
@@ -621,7 +600,7 @@ export default class GoodsSelectorCtrl {
 		// 查询参数
 		const queryCollection = this.pagerGridOptions.queryParams;
 		queryCollection['pageNum'] = 1;
-		// 将部分参数属性名的驼峰形式转换成以 '.' 连接的形式
+		// 将部分参数属性名的驼峰转换成以 '.' 连接的形式
 		for (let prop in this.formModel) {
 			if (this.formModel.hasOwnProperty(prop)) {
 				switch (prop) {
@@ -759,6 +738,8 @@ export default class GoodsSelectorCtrl {
 	// tab 切换时 form 表单处理
 	handleForm(dateRangeModel, formModel) {
 		this.dateRange = cloneDeep(dateRangeModel);
+		const categoriesId = this.formModel.categoriesId;
+		const propsPid = this.formModel.propsPid;
 		for (let attr in formModel) {
 			if (formModel.hasOwnProperty(attr)) {
 				if (attr !== 'propsPid' && attr !== 'propsVid') {
@@ -766,13 +747,12 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		}
-		this.categoriesId = cloneDeep(formModel.categoriesId);
-		this.propsPid = cloneDeep(formModel.propsPid);
-		this.propsVid = cloneDeep(formModel.propsVid);
-		if (this.categoriesId === formModel.categoriesId) {
+		this.propsPid = formModel.propsPid;
+		if (categoriesId === formModel.categoriesId) {
 			this.formModel.propsPid = this.propsPid;
 		}
-		if (this.categoriesId === formModel.categoriesId && this.propsPid === formModel.propsPid) {
+		this.propsVid = formModel.propsVid;
+		if (propsPid === formModel.propsPid) {
 			this.formModel.propsVid = this.propsVid;
 		}
 	}
@@ -1169,7 +1149,7 @@ export default class GoodsSelectorCtrl {
 	// 已选商品数超过单次最大允许全选商品数
 	moreThanOnceSelectedMaxNumber(event) {
 		event.stopPropagation();
-		this._$ccTips.error(`当前商品超过${ onceMaxSelectedNumber }个，不支持全部选中，请修改条件后重新搜索。`);
+		this._$ccTips.error(getExceedSelectedAllNumberMsg(onceMaxSelectedNumber));
 		this.isShowMask = false;
 		this.isCheckedAll = false;
 	}
@@ -1268,10 +1248,8 @@ export default class GoodsSelectorCtrl {
 				}
 				this._$ccTips.success(msg, document.querySelector('.goods-selector'));
 			}
-		}, res => {
-			if (!this.tips || !this.tips.element) {
-				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
-			}
+		}, () => {
+			this._$ccTips.error(errorMsg);
 		});
 	}
 
@@ -1295,10 +1273,8 @@ export default class GoodsSelectorCtrl {
 				this.updateSelectedItemsBuffer();
 				this.jumpToSelectedGoodsTabs(this._$scope);
 			}
-		}, res => {
-			if (!this.tips || !this.tips.element) {
-				this.tips = this._$ccTips.error('<span style="color: red;">出错提示：</span>后台服务出错，请联系数云客服人员');
-			}
+		}, () => {
+			this._$ccTips.error(errorMsg);
 		});
 	}
 

@@ -32,17 +32,17 @@
 			var tenantId = 'sjyj'; // 如果支持商品标签，那么租户ID tenantId 必填
 			var isSupportedAddCondition = true; // 是否支持添加为搜索条件
 			var conditions = { // 搜索条件
-				categoriesId: '1629', // 商品标准类目
+				categoriesId: '111111', // 商品标准类目 1629
 				// endListTime: new Date(1531843200000), // 下架时间
 				id: ['11111'], // 商品ID
 				maxPrice: '200', // 最高价
 				minPrice: '100', // 最低价
 				name: '22222', // 商品名称
 				outerId: '33333', // 商品商家编码
-				propsPid: '20021', // 商品属性
-				propsVid: '21540056', // 属性值
+				propsPid: '1', // 商品属性 20021
+				propsVid: '11', // 属性值 21540056
 				propsVname: null, // 属性值名称
-				shopCategoriesId: ['810124529', '809546836'], // 商品自定义类目
+				shopCategoriesId: ['111111'], // 商品自定义类目 ['810124529', '809546836']
 				// shopId: 24058, // 店铺ID
 				// skusId: ['22342343'], // 商品编号
 				skusOuterId: '44444', // sku 商家编码
