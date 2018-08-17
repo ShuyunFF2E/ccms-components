@@ -13,7 +13,7 @@ import rowTemplate from './tpls/customer-row.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './addSection/SectionAddCtrl';
-import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList, getFieldsMap, getExceedSelectedAllNumberMsg, getFormConfig, errorMsg } from './constant';
+import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList, getFieldsMap, getExceedSelectedAllNumberMsg, getFormConfig, errorMsg, getBatchImportMsg } from './constant';
 import { utils } from './utils';
 import service from './service';
 
@@ -135,12 +135,6 @@ export default class GoodsSelectorCtrl {
 		}
 		// 商品标准类目列表
 		this.getCategories();
-
-		// 全部全选操作的查询参数，考虑到当用户选择条件后，并没有点击搜索触发搜索操作，因此这时全部全选操作不能使用当前form表单作为查询参数。
-		this.checkedAllQueryParams = {
-			shopId: this.formModel.shopId,
-			platform: this.formModel.platform
-		};
 
 		this.initSelectedItems();
 		this.preparePagerGridOptions();
@@ -1017,7 +1011,11 @@ export default class GoodsSelectorCtrl {
 			postData = this.pagerGridOptions.postData;
 			// 不是批量导入
 			let exceptList = ['pageNum', 'pageSize', 'tagItemIds'];
-			let paramStr = utils.getStandardParams(this.checkedAllQueryParams, exceptList);
+			const checkAllQueryParams = {
+				shopId: this.formModel.shopId,
+				platform: this.formModel.platform
+			};
+			let paramStr = utils.getStandardParams(checkAllQueryParams, exceptList);
 			return service.getGridItems(this.serverName, 1, totals, paramStr).save(postData).$promise;
 		} else {
 			return service.getGridBatchItems(this.serverName, 1, totals).save(postData).$promise;
@@ -1118,24 +1116,17 @@ export default class GoodsSelectorCtrl {
 		service.getBatchImportResult(this.serverName).save(queryParams, res => {
 			let currentTime = Date.parse(new Date());
 			this[`addSectionFailedData${currentTime}`] = res.notFound; // 导入失败的数据
-			let addSectionTotalsNumber = queryParams['id'].length ? queryParams['id'].length : (queryParams['outerId'].length ? queryParams['outerId'].length : queryParams['skus.outerId'].length); // 导入数据总量
-			let successExportNumber = res.foundNum; // 导入成功的数据总量
-			let failedExportNumber = res.notFound.length; // 导入失败的数据总量
-			let repeatNumber = addSectionTotalsNumber - successExportNumber - failedExportNumber; // 重复的数据量
+			const addSectionTotalsNumber = queryParams['id'].length ? queryParams['id'].length : (queryParams['outerId'].length ? queryParams['outerId'].length : queryParams['skus.outerId'].length); // 导入数据总量
+			const successNumber = res.foundNum; // 导入成功的数据总量
+			const failedNumber = res.notFound.length; // 导入失败的数据总量
+			const repeatNumber = addSectionTotalsNumber - successNumber - failedNumber; // 重复的数据量
+			let msg = getBatchImportMsg(currentTime, inputObjHash[obj.inputKey], successNumber, failedNumber, repeatNumber);
 			// 批量导入结果提示信息
-			if (failedExportNumber) {
-				let msg = `<span class="check-details" id="batch-${ currentTime }">成功导入${ inputObjHash[obj.inputKey] }${ successExportNumber }个，失败${ failedExportNumber }个</span>`;
-				if (repeatNumber > 0) {
-					msg = `<span class="check-details" id="batch-${ currentTime }">成功导入${ inputObjHash[obj.inputKey] }${ successExportNumber }个，失败${ failedExportNumber }个，重复${repeatNumber}个</span>`;
-				}
+			if (failedNumber) {
 				this._$ccTips.error(msg, document.querySelector('.goods-selector'));
-				let notFoundMsg = this._$compile(getNotFoundMsg(currentTime, inputObjHash[obj.inputKey]))(this._$scope);
-				angular.element(document.querySelector(`#batch-${currentTime}`)).append(notFoundMsg);
+				let notFoundNode = this._$compile(getNotFoundMsg(currentTime, inputObjHash[obj.inputKey]))(this._$scope);
+				angular.element(document.querySelector(`#batch-${currentTime}`)).append(notFoundNode);
 			} else {
-				let msg = `成功添加${ inputObjHash[obj.inputKey] }${ res.total }个`;
-				if (repeatNumber > 0) {
-					msg = `成功添加${ inputObjHash[obj.inputKey] }${ res.total }个，重复${ repeatNumber }个`;
-				}
 				this._$ccTips.success(msg, document.querySelector('.goods-selector'));
 			}
 		}, () => {

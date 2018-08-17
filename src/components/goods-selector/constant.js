@@ -2,17 +2,17 @@
 export const apiPrefix = '/shuyun-searchapi/1.0';
 export const onceMaxSelectedNumber = 500;
 
-export const getExceedSelectedNumberMsg = function(number) {
+export const getExceedSelectedNumberMsg = number => {
 	return `<span>最多允许选择${number}条数据</span>`;
 };
 
-export const getExceedSelectedAllNumberMsg = function(number) {
+export const getExceedSelectedAllNumberMsg = number => {
 	return `当前商品超过${ number }个，不支持全部选中，请修改条件后重新搜索。`;
 };
 
 export const errorMsg = '出错提示：后台服务出错，请联系数云客服人员';
 
-export const getNotFoundMsg = function(currentTime, value) {
+export const getNotFoundMsg = (currentTime, value) => {
 	return `<span class="not-found-details" ng-click="$ctrl.checkNotFoundDetails(${currentTime})">查看未成功明细</span>
 			<div class="details-wrap" ng-show="$ctrl.isShowNotFoundDetails${currentTime}">
 				<div class="title">
@@ -45,7 +45,7 @@ export const statusList = [
 	}
 ];
 
-export const getFieldsMap = function() {
+export const getFieldsMap = () => {
 	return {
 		shopListFieldsMap: {
 			valueField: 'shopId',
@@ -70,7 +70,7 @@ export const getFieldsMap = function() {
 	};
 };
 
-export const getFormConfig = function() {
+export const getFormConfig = () => {
 	return {
 		// 已选商品 form 表单搜索配置项（前端搜索）
 		formConfig: {
@@ -99,4 +99,19 @@ export const getFormConfig = function() {
 	};
 };
 
+export const getBatchImportMsg = (currentTime, key, successNumber, failedNumber, repeatNumber) => {
+	if (failedNumber) {
+		if (repeatNumber > 0) {
+			return `<span class="check-details" id="batch-${currentTime}">成功导入${key}${successNumber}个，失败${failedNumber}个，重复${repeatNumber}个</span>`;
+		} else {
+			return `<span class="check-details" id="batch-${currentTime}">成功导入${key}${successNumber}个，失败${failedNumber}个</span>`;
+		}
+	} else {
+		if (repeatNumber > 0) {
+			return `成功导入${key}${successNumber}个，重复${repeatNumber}个`;
+		} else {
+			return `成功导入${key}${successNumber}个`;
+		}
+	}
+};
 
