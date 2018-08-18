@@ -343,6 +343,9 @@
 		  height: 200px;
 		  width: 987px;
 		  margin-left: -2px;
+		  &.single-select {
+			margin-top: 22px;
+		  }
 		  .cc-grid {
 			border: none;
 			.cc-grid-body {

@@ -61,6 +61,8 @@ export default class GoodsSelectorCtrl {
 		this.isShowShopList = Array.isArray(this.shopInfoData);
 		this.isTaobao = this.isShowShopList ? this.shopInfoData[0].plat === 'top' : this.shopInfoData.plat === 'top';
 		this.isQiake = this.isShowShopList ? this.shopInfoData[0].plat === 'qiakr' : this.shopInfoData.plat === 'qiakr';
+		this.isJingdong = this.isShowShopList ? this.shopInfoData[0].plat === 'jos' : this.shopInfoData.plat === 'jos';
+
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this.shopInfoData : [this.shopInfoData];
 		this.tips = null;
