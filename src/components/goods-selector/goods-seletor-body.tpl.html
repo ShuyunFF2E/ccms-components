@@ -130,17 +130,16 @@
 			</form>
 		</section>
 		<!--row-1: 不存在商铺列表选项并且简单搜索，表格区域距离上侧的距离
-			row-3: 没有商铺列表选项并且不是简单搜索并且不支持显示sku，表格距离上侧的距离
+			row-3: 没有商铺列表选项并且不是简单搜索并且不支持显示 sku，表格距离上侧的距离
 			row-4: 存在商铺列表选项或者是高级搜索支持显示sku，表格距离上侧的距离-->
-		<gs-tabs ng-class="{'row-1': !$ctrl.isShowShopList && $ctrl.isSimpleSearch && !$ctrl.isSupportedAddCondition && !$ctrl.isSingleSelect,
-							'row-2': $ctrl.isQiake && (!$ctrl.isSimpleSearch || $ctrl.isSupportedAddCondition) && !$ctrl.isSingleSelect,
-							'row-3': !$ctrl.isSupportedSku && !$ctrl.isSimpleSearch && !$ctrl.isShowShopList && !$ctrl.isSingleSelect,
-		 					'row-4': ($ctrl.isShowShopList || !$ctrl.isSimpleSearch && $ctrl.isSupportedSku || $ctrl.isSupportedAddCondition) && !$ctrl.isSingleSelect,
-							'row-single': $ctrl.isSingleSelect}">
+		<!-- TODO this is exactly not property!!!!-->
+		<gs-tabs ng-class="{'row-1': !$ctrl.isShowShopList && $ctrl.isSimpleSearch && !$ctrl.isSupportedAddCondition,
+							'row-2': $ctrl.isQiake && (!$ctrl.isSimpleSearch || $ctrl.isSupportedAddCondition),
+							'row-3': !$ctrl.isSupportedSku && !$ctrl.isShowShopList && (!$ctrl.isSimpleSearch || $ctrl.isSupportedAddCondition && !$ctrl.isTaobao) || $ctrl.isSupportedSku && !$ctrl.isTaobao && $ctrl.isSupportedAddCondition,
+		 					'row-4': ($ctrl.isShowShopList || !$ctrl.isSimpleSearch && ($ctrl.isSupportedSku || $ctrl.isTaobao) || $ctrl.isSupportedAddCondition && $ctrl.isTaobao)}">
 			<gs-panel text="全部商品" class="all-goods-panel" tab-click="$ctrl.tabClick(text)">
 				<section class="grid-area">
 					<div class="all-goods-operation" ng-if="!$ctrl.isSingleSelect">
-						<!--<cc-checkbox class="select-all" ng-checked="$ctrl.selectAll">全选</cc-checkbox>-->
 						<cc-checkbox cc-capture-click="$ctrl.checkAllBefore($event)" class="select-all" ng-checked="$ctrl.isCheckedAll" ng-click="$ctrl.isCheckedAll = !$ctrl.isCheckedAll;">全部全选</cc-checkbox>
 						<cc-checkbox cc-capture-click="$ctrl.checkCurrentPageBefore($event)" class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.selectCurrentPageAll()">全选当页</cc-checkbox>
 						<span class="slide-toggle-btn"
