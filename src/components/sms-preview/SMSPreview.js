@@ -18,13 +18,15 @@ export default {
 	link(scope, element) {
 
 		const opts = scope.opts || (scope.opts = {});
+		const keywordPrefix = scope.opts.keywordPrefix || '$$';
+		const keywordSuffix = scope.opts.keywordSuffix || '$$';
 		const trimContent = angular.isDefined(opts.trimContent) ? opts.trimContent : true;
 		scope.smsPreviewStatText = trimContent ? '不含变量' : '含空格，不含变量';
 		scope.smsPreviewTipsText = trimContent ? '上图仅为操作预览，最终计数以实际发送为准，查看' : '上图仅为操作预览，变量无固定长度，最终计数以实际发送为准，建议先测试执行，查看';
 		scope.smsPreviewTipsInTipsText = opts.smsChargeTips || '单条短信字数限制 70 字；超出 70 字，按 67 字条计费；<br>字数和计费条数以实际执行时发送为准。';
 
 		scope.$watch('opts', () => {
-			const varReg = /\$\$_(\[[^]]+])?(.+?)_\$\$/g;
+			const varReg = RegExp(`${this.escapeRegExp(keywordPrefix)}_(\[[^]]+])?(.+?)_${this.escapeRegExp(keywordSuffix)}`, 'g');
 
 			const gatewayType = opts.gatewayType;
 			const text = opts.text || '';
@@ -93,5 +95,13 @@ export default {
 			sms.push(content);
 		}
 		return sms.join('');
+	},
+
+	/**
+	 * 转义正则表达式中特殊字符
+	 * */
+
+	escapeRegExp(str) {
+		return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 	}
 };
