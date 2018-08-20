@@ -24,7 +24,7 @@
 			var jdWithShopList = [{shopId: 23591, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
 			var taobaoWithoutShopList = {shopId: 106878997, shopName: '黑色', plat: 'top'};
 			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
-			var qkWithoutShopList = {shopId: 2260, shopName: '恰客', plat: 'qiakr'};
+			var qkWithoutShopList = [{shopId: 2260, shopName: '恰客', plat: 'qiakr'}, {shopId: 234234, shopName: '恰客1', plat: 'qiakr'}];
 
 			var isOnlyChecked = false; // 是否包含 footer
 			var maxSelectedNumber = 1000; // 最大允许选择的商品数量
@@ -191,13 +191,13 @@
 				minPrice: '100', // 最低价
 				name: '22222', // 商品名称
 				platform: 'top', // 平台
-				categoriesId: '222222', // 商品标准类目
+				categoriesId: '44556677881', // 商品标准类目
 				shopId: 2260, // 店铺ID
 				skusId: ['22342343'], // 商品编号
 				skusPropsVname: '55555', // sku 规格
 				startListTime: new Date(1530374400000), // 上架时间
 				status: '1',
-				brandId: '1611'
+				brandId: '7654321'
 			};
 			var qiakeOptions = {
 				isOnlyChecked,

@@ -187,7 +187,7 @@ export default class GoodsSelectorCtrl {
 			propsVid: this.isQiake ? null : (c.propsVid ? c.propsVid : null), // props.vid 商品属性值 ID
 			propsVname: this.isQiake ? null : (c.propsVid ? null : c.propsVname), // props.vname 商品属性值对应的属性名称
 			status: c.status ? String(c.status) : this.statusList[0].value, // 状态, 1 在架, 0 不在架， -1 不限
-			skusPropsVname: this.isQiake || !this.isSupportedSku ? null : (c.skusPropsVname ? c.skusPropsVname : null), // skus.props.vname SKU属性值 模糊匹配
+			skusPropsVname: !this.isSupportedSku ? null : (c.skusPropsVname ? c.skusPropsVname : null), // skus.props.vname SKU属性值 模糊匹配
 			outerId: this.isQiake ? null : (c.outerId ? c.outerId : null), // 商品商家编码
 			skusOuterId: this.isQiake || !this.isSupportedSku ? null : (c.skusOuterId ? c.skusOuterId : null), // skus.outerId SKU 商家编码
 			skusId: this.isTaobao ? [] : (c.skusId ? c.skusId : []), // skus.id SKUID 数组
