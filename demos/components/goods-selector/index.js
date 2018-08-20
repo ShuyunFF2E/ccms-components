@@ -30,7 +30,7 @@
 			var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 			var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
 			var tenantId = 'sjyj'; // 如果支持商品标签，那么租户ID tenantId 必填
-			var isSupportedAddCondition = true; // 是否支持添加为搜索条件
+			var isSupportedAddCondition = false; // 是否支持添加为搜索条件
 			var conditions = { // 搜索条件
 				categoriesId: '111111', // 商品标准类目 1629
 				endListTime: new Date(1531843200000), // 下架时间
