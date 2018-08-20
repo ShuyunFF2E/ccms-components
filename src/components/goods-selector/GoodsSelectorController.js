@@ -199,6 +199,7 @@ export default class GoodsSelectorCtrl {
 			brandId: !this.isQiake ? null : (c.brandId ? c.brandId : null) // 品牌
 		};
 
+		this.formModelCopy = cloneDeep(this.formModel);
 		this.allGoodsFormModel = {};
 		this.selectedDateRangeModel = cloneDeep(this.dateRange);
 		this.selectedGoodsFormModel = cloneDeep(this.formModel);
@@ -650,7 +651,7 @@ export default class GoodsSelectorCtrl {
 
 	// 初始化搜索条件信息，只调用一次
 	initConditionsMsg() {
-		this.getConditionMsg(this.formModel);
+		this.getConditionMsg(this.formModelCopy);
 		this.initConditionsMsg = () => {};
 	}
 	// 批量添加操作下的 api 和 表格查询参数
