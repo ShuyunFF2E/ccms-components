@@ -107,6 +107,29 @@
 		<cc-date-range opts="app.dateIssue1"></cc-date-range>
 		<button ng-click="app.changeDate()">切换mindate</button>
 	</p>
+
+	<h1>DEMO: 7  disableYear and disableMonth</h1>
+	<p>
+		<cc-date-picker ng-if="!app.hideDates"
+						ng-model="app.dateValue"
+						min-date="app.minDate"
+						max-date="app.maxDate"
+						required="true"
+						date-only="false"
+						disabled="false"
+						on-calendar-open="app.onCalendarOpen()"
+						on-calendar-close="app.onCalendarClose()"
+						is-festival="true"
+						custom-festivals="app.customFestivals"
+						disable-year="true"
+						disable-month="true"
+		></cc-date-picker>
+	</p>
+
+	<h1>DEMO: 8 disableYear, disableMonth  and range</h1>
+	<p>
+		<cc-date-range opts="app.disableRange"></cc-date-range>
+	</p>
 </main>
 
 <script src="/components.js"></script>
@@ -214,6 +237,18 @@
 				console.log(now.getTime());
 				self.dateIssue1.minDate = now;
 				console.log(now.getTime());
+			};
+
+
+			self.disableRange = {
+				start: null,
+				end: null,
+				minDate: null,
+				maxDate: null,
+				// 是否禁用 (false)
+				disabled: false,
+				required: false,
+				disableYear: true
 			};
 
 		});
