@@ -20,7 +20,9 @@ export default {
 		onCalendarOpen: '&?',
 		onCalendarClose: '&?',
 		isFestival: '<?',
-		customFestivals: '<?'
+		customFestivals: '<?',
+		disableYear: '<?',
+		disableMonth: '<?'
 	},
 	template,
 

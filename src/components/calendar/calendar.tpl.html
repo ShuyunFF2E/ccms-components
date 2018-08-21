@@ -1,9 +1,9 @@
 <div class="calendar" ng-click="ctrl.preventDefault($event)">
 	<div class="calendar-header">
 		<span class="calendar-prev iconfont icon-rightarrow" ng-click="ctrl.switchMonth(-1)"></span><select ng-model="ctrl.parts.month"
-						ng-options="index as month for (index, month) in ctrl.months"
+						ng-options="index as month for (index, month) in ctrl.months" ng-disabled="ctrl.disableMonth"
 						ng-change="ctrl.changeMonth()"></select><select ng-model="ctrl.parts.year"
-						ng-options="year for year in ctrl.years"
+						ng-options="year for year in ctrl.years" ng-disabled="ctrl.disableYear"
 						ng-change="ctrl.changeYear()"></select><span class="calendar-next iconfont icon-rightarrow" ng-click="ctrl.switchMonth(1)"></span>
 	</div>
 
