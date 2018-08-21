@@ -22,7 +22,7 @@ const AreaSelectorService = {
 
 	ID_NAME: AreaSelectorController.ID_NAME,
 
-	areaSelector({areaSelectorData, valueFormat, platform = 'tb', customAreas = []}) {
+	areaSelector({areaSelectorData, valueFormat, platform = 'tb', customAreas = [], marketingOnly = false}) {
 
 		return ModalService.modal(
 			{
@@ -31,7 +31,7 @@ const AreaSelectorService = {
 				fullscreen: false,
 				hasFooter: true,
 				__body: bodyTemplate,
-				locals: {selectedData: areaSelectorData, valueFormat, platform, customAreas},
+				locals: {selectedData: areaSelectorData, valueFormat, platform, customAreas, marketingOnly},
 				controller: AreaSelectorController,
 				controllerAs: '$ctrl',
 				onClose: noop
