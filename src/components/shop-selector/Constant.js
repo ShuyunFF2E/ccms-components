@@ -1,4 +1,6 @@
-export const apiPrefix = '/api';
+// export const apiPrefix = '/api';
+export const apiPrefix = '/tenant/v2';
+export const areaUrl = 'http://qa-ual.fenxibao.com/shuyun-searchapi/1.0/area?platform=top';
 export const getGridColumnDef = isSupportedChannel => {
 	let column = [
 		{

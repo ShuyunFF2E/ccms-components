@@ -41,6 +41,7 @@ export default class ShopSelectorCtrl {
 		this.initForm();
 		this.prepareAllShopGridOptions();
 		this.prepareSelectedShopGridOptions();
+		this.getSelectedShop();
 	}
 
 	initForm() {
@@ -71,10 +72,8 @@ export default class ShopSelectorCtrl {
 		this.commonListFieldsMap = commonListFieldsMap;
 
 		this.getChannelList().then(() => {
-			if (this.resData && this.resData.length) {
-				this.getNameByGridList(this.resData);
-			}
-			this.getSelectedShop();
+			this.resData && this.resData.length && this.getNameByGridList(this.resData);
+			this.selectedItems.length && this.getNameByGridList(this.selectedItems);
 		});
 		this.getAreaData();
 	}
@@ -115,7 +114,7 @@ export default class ShopSelectorCtrl {
 			},
 			transformer: res => {
 				this.resData = res.list || [];
-				this.getNameByGridList(res.list);
+				res.list && res.list.length && this.getNameByGridList(res.list);
 				this.resListMerge(res.list, this.selectedItemsBuffer);
 				if (this.isSingleSelected) {
 					res.list.forEach(entity => {
@@ -161,7 +160,7 @@ export default class ShopSelectorCtrl {
 
 	// 获取已选店铺列表
 	getSelectedShop() {
-		return service.getShopList(this.serverName, this.selectedShop, 'id').get(res => {
+		return service.getShopList(this.serverName, this.tenantId, this.selectedShop, 'shopIdIn').get(res => {
 			res.list = res.list || [];
 			this.getNameByGridList(res.list);
 			res.list.forEach(entity => {
@@ -183,16 +182,18 @@ export default class ShopSelectorCtrl {
 	getNameByGridList(list) {
 		list.forEach(entity => {
 			const displayField = this.commonListFieldsMap.displayField;
-			entity['channelName'] = this.channelList[findEntityById(this.channelList, entity.channel)][displayField];
-			this.channelList.forEach(item => {
-				let shopType = item.shopType;
-				if (shopType && shopType.length) {
-					let targetIndex = findEntityById(shopType, String(entity.type));
-					if (targetIndex !== -1) {
-						entity['typeName'] = shopType[targetIndex][displayField];
+			if (this.channelList && this.channelList.length) {
+				entity['channelName'] = this.channelList[findEntityById(this.channelList, entity.channel)][displayField];
+				this.channelList.forEach(item => {
+					let shopTypes = item.shopTypes;
+					if (shopTypes && shopTypes.length) {
+						let targetIndex = findEntityById(shopTypes, String(entity.type));
+						if (targetIndex !== -1) {
+							entity['typeName'] = shopTypes[targetIndex][displayField];
+						}
 					}
-				}
-			});
+				});
+			}
 		});
 	}
 
@@ -338,7 +339,7 @@ export default class ShopSelectorCtrl {
 
 	// 获取地区数据
 	getAreaData() {
-		service.getAreaData(this.serverName, 'top').get(res => {
+		service.getAreaData().get(res => {
 			this.provinceList = res || [];
 		}, () => {
 			this._$ccTips.error(errorMsg);
@@ -375,7 +376,7 @@ export default class ShopSelectorCtrl {
 			if (model !== oldModel) {
 				this.formModel.type = this.type || null;
 				this.type = null;
-				this.typeList = item.shopType && item.shopType.length ? this.resolveDataList(item.shopType) : [];
+				this.typeList = item.shopTypes && item.shopTypes.length ? this.resolveDataList(item.shopTypes) : [];
 			}
 		} else {
 			this.formModel.type = null;
@@ -442,6 +443,7 @@ export default class ShopSelectorCtrl {
 				delete collection[`${attr}Name`];
 			}
 		}
+		collection.pageNum = 1;
 		return Object.assign(this.allShopGridOptions.queryParams, collection);
 	}
 

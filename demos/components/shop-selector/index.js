@@ -6,11 +6,11 @@
 
 		.controller('ctrl', function($scope, $ccShopSelector) {
 			let hasFooter = false;
-			let tenantId = 'test';
+			let tenantId = 'yangyangyang3';
 			let serverName = '';
 			let isSupportedChannel = true;
-			let singleSelectedShop = ['qiakr_6998868227'];
-			let multipleSelectedShop = ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
+			let singleSelectedShop = ['jos_317761122']; // ['qiakr_6998868227'];
+			let multipleSelectedShop = ['yhd_012231211', 'qiakr_2260']; // ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
 
 			let singleOptions = {
 				hasFooter,
