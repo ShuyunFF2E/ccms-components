@@ -6,6 +6,7 @@
 import './_sms-preview.scss';
 import template from './sms-preview.tpl.html';
 import angular from 'angular';
+import { escapeRegExp } from '../../common/bases/common';
 
 export default {
 
@@ -26,7 +27,7 @@ export default {
 		scope.smsPreviewTipsInTipsText = opts.smsChargeTips || '单条短信字数限制 70 字；超出 70 字，按 67 字条计费；<br>字数和计费条数以实际执行时发送为准。';
 
 		scope.$watch('opts', () => {
-			const varReg = RegExp(`${this.escapeRegExp(keywordPrefix)}_(\[[^]]+])?(.+?)_${this.escapeRegExp(keywordSuffix)}`, 'g');
+			const varReg = RegExp(`${escapeRegExp(keywordPrefix)}_(\\[[^]]+])?(.+?)_${escapeRegExp(keywordSuffix)}`, 'g');
 
 			const gatewayType = opts.gatewayType;
 			const text = opts.text || '';
@@ -95,13 +96,5 @@ export default {
 			sms.push(content);
 		}
 		return sms.join('');
-	},
-
-	/**
-	 * 转义正则表达式中特殊字符
-	 * */
-
-	escapeRegExp(str) {
-		return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 	}
 };
