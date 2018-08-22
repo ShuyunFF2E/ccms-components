@@ -49,7 +49,7 @@
 	</div>
 
 	<div class="calendar-buttons">
-		<button class="calendar-button-cancel" type="button" ng-click="ctrl.setNow()">现在</button>
+		<button class="calendar-button-cancel" ng-hide="ctrl.hideMonth() || ctrl.hideYear() || ctrl.disableMonth || ctrl.disableYear" type="button" ng-click="ctrl.setNow()">现在</button>
 		<button class="calendar-button-ok"
 						type="button"
 						ng-click="ctrl.confirm()"
