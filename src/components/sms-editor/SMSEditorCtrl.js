@@ -4,6 +4,7 @@
 
 import angular from 'angular';
 import { Inject } from 'angular-es-utils';
+import { escapeRegExp } from '../../common/bases/common';
 
 const regUrlBase = '((([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[-;:&=\\+\\$,\\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\\+\\$,\\w]+@)[A-Za-z0-9.-]+)((?:\\/[\\+~%\\/.\\w-_]*)?\\??(?:[-\\+=&;%@.\\w_]*)#?(?:[.\\!\\/\\\\w]*))?)';
 
@@ -222,8 +223,9 @@ export default class SMSEditorCtrl {
 	 * @returns {string}
 	 */
 	parseTag(text = '') {
+		const varReg = RegExp(`${escapeRegExp(this.keywordPrefix)}_(?:\\[(\\S*?)])?(.+?)_${escapeRegExp(this.keywordSuffix)}`, 'g');
 		return SMSEditorCtrl.flatCode(text, this.trimContent)
-			.replace(/\$\$_(?:\[(\S*?)])?(.+?)_\$\$/g, (result, $1, $2) => {
+			.replace(varReg, (result, $1, $2) => {
 				return this.createInput(this.keywordTextNameConvert($2, false), $1);
 			});
 	}
