@@ -284,7 +284,7 @@ export default class GoodsSelectorCtrl {
 			resInfo: this.resInfo,
 			formModel: this.formModel,
 			isQiake: this.isQiake,
-			conditionLength: this.getConditionsLength(this.formModel), // 已选条件数量
+			conditionLength: this.isSupportedAddCondition ? this.getConditionsLength(this.formModel) : 0, // 已选条件数量
 			postData: {},
 			radio: this.radio,
 			isSingleSelect: this.isSingleSelect,
@@ -1449,5 +1449,12 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 		return conditionsLength;
+	}
+
+	// 移除已选的搜索条件
+	removeCondition() {
+		this.conditionContent = null;
+		this.conditionsModel = {};
+		this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = 0;
 	}
 }

@@ -174,7 +174,7 @@
 					</div>
 					<div class="support-condition" ng-if="$ctrl.conditionContent">
 						<span class="condition-title">条件</span>
-						<i ng-click="$ctrl.conditionContent = null;" class="icon iconfont icon-dele"></i>
+						<i ng-click="$ctrl.removeCondition();" class="icon iconfont icon-dele"></i>
 						<span class="condition-content" cc-tooltip="$ctrl.conditionContent" tooltip-placement="top-left">
 							<span class="content">条件：</span>{{$ctrl.conditionContent}}
 						</span>

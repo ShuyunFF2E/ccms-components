@@ -244,8 +244,8 @@
 					top: 1px;
 				  }
 				  &.indeterminate .cc-checkbox-input:before {
-					left: 2px;
-					top: 5px;
+					left: 1px;
+					top: 1px;
 				  }
 				}
 			  }
@@ -266,9 +266,6 @@
 			.total-items-count, .reload, .selected-items-count {
 			  display: none;
 			}
-		  }
-		  .no-data-message .init-msg {
-			margin-left: 216px;
 		  }
 		}
 		.footer-info {
