@@ -10,10 +10,12 @@ import bodyTemplate from './addSection/customer-modal-body.tpl.html';
 import headerTemplate from './tpls/customer-header.tpl.html';
 import footerTemplate from './tpls/customer-footer.tpl.html';
 import rowTemplate from './tpls/customer-row.tpl.html';
+import formTpl from './tpls/form-template.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './addSection/SectionAddCtrl';
-import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList, getFieldsMap, getExceedSelectedAllNumberMsg, getFormConfig, errorMsg, getBatchImportMsg } from './constant';
+import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList,
+	getFieldsMap, getExceedSelectedAllNumberMsg, getFormConfig, errorMsg, getBatchImportMsg, fieldsetConfig } from './constant';
 import { utils } from './utils';
 import service from './service';
 
@@ -26,6 +28,7 @@ export default class GoodsSelectorCtrl {
 
 	$onInit() {
 		this.showLoading = true;
+		this.formTpl = formTpl;
 		// 是否是单选
 		this.isSingleSelect = this._isSingleSelect;
 		// 单选按钮配置
@@ -61,11 +64,10 @@ export default class GoodsSelectorCtrl {
 		this.isShowShopList = Array.isArray(this.shopInfoData);
 		this.isTaobao = this.isShowShopList ? this.shopInfoData[0].plat === 'top' : this.shopInfoData.plat === 'top';
 		this.isQiake = this.isShowShopList ? this.shopInfoData[0].plat === 'qiakr' : this.shopInfoData.plat === 'qiakr';
-		this.isJingdong = this.isShowShopList ? this.shopInfoData[0].plat === 'jos' : this.shopInfoData.plat === 'jos';
 
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this.shopInfoData : [this.shopInfoData];
-		this.tips = null;
+
 		// 商品状态
 		this.statusList = statusList;
 
@@ -126,17 +128,18 @@ export default class GoodsSelectorCtrl {
 
 		this.initForm();
 
-		if (this.isTaobao) {
-			// 获取商品标签数据并对selectedLabels进行初始化
-			this.getTags();
-			// 商品自自定义类目数据
-			this.getShopCategories();
-		} else if (this.isQiake) {
-			// 获取商品品牌
-			this.getBrands();
-		}
+		// 获取表单项配置，不同平台的表单项有区别
+		this.formTplConfig = utils.getFormTemplateConfig(this.formModel, this.isSupportedSku, this.isShowShopList, this.isSupportedAddCondition);
+
+		const collection = fieldsetConfig[this.formModel.platform];
+		// 获取商品标签数据并对selectedLabels进行初始化
+		this.findEntityByName(collection, 'tagItemIds') >= 0 && this.getTags();
+		// 商品自自定义类目数据
+		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && this.getShopCategories();
+		// 获取商品品牌
+		this.findEntityByName(collection, 'brandId') && this.getBrands();
 		// 商品标准类目列表
-		this.getCategories();
+		this.findEntityByName(collection, 'categoriesId') && this.getCategories();
 
 		this.initSelectedItems();
 		this.preparePagerGridOptions();
@@ -176,28 +179,31 @@ export default class GoodsSelectorCtrl {
 			disabled: false,
 			dateOnly: true
 		};
-		this.formModel = {
-			platform: c.plat ? c.plat : this.shopList[0].plat, // 平台
+		const formModel = {
 			shopId: c.shopId ? c.shopId : this.shopList[0].shopId, // 店铺
 			id: c.id ? c.id : [], // 商品ID 数组
 			name: c.name ? c.name : null, // 商品名称 模糊匹配
-			shopCategoriesId: !this.isTaobao ? [] : (c.shopCategoriesId ? c.shopCategoriesId : []), // shopCategories.id 自定义类目 数组
+			shopCategoriesId: c.shopCategoriesId ? c.shopCategoriesId : [], // shopCategories.id 自定义类目 数组
 			categoriesId: c.categoriesId ? c.categoriesId : null, // categories.id 标准类目
-			propsPid: this.isQiake ? null : (c.propsPid ? c.propsPid : null), // props.pid 商品属性 ID
-			propsVid: this.isQiake ? null : (c.propsVid ? c.propsVid : null), // props.vid 商品属性值 ID
-			propsVname: this.isQiake ? null : (c.propsVid ? null : c.propsVname), // props.vname 商品属性值对应的属性名称
+			propsPid: c.propsPid ? c.propsPid : null, // props.pid 商品属性 ID
+			propsVid: c.propsVid ? c.propsVid : null, // props.vid 商品属性值 ID
+			propsVname: c.propsVid ? null : c.propsVname, // props.vname 商品属性值对应的属性名称
 			status: c.status ? String(c.status) : this.statusList[0].value, // 状态, 1 在架, 0 不在架， -1 不限
-			skusPropsVname: !this.isSupportedSku ? null : (c.skusPropsVname ? c.skusPropsVname : null), // skus.props.vname SKU属性值 模糊匹配
-			outerId: this.isQiake ? null : (c.outerId ? c.outerId : null), // 商品商家编码
-			skusOuterId: this.isQiake || !this.isSupportedSku ? null : (c.skusOuterId ? c.skusOuterId : null), // skus.outerId SKU 商家编码
-			skusId: this.isTaobao ? [] : (c.skusId ? c.skusId : []), // skus.id SKUID 数组
+			skusPropsVname: c.skusPropsVname ? c.skusPropsVname : null, // skus.props.vname SKU属性值 模糊匹配
+			outerId: c.outerId ? c.outerId : null, // 商品商家编码
+			skusOuterId: c.skusOuterId ? c.skusOuterId : null, // skus.outerId SKU 商家编码
+			skusId: c.skusId ? c.skusId : [], // skus.id SKUID 数组
 			startListTime: this.dateRange.start, // 上架时间起始值, Unix时间戳，毫秒
 			endListTime: this.dateRange.end, // 上架时间结束值, Unix时间戳，毫秒
 			minPrice: c.minPrice ? c.minPrice : null, // 商品价格下限
 			maxPrice: c.maxPrice ? c.maxPrice : null, // 商品价格下限,
 			tagItemIds: [], // 商品标签 数组
-			brandId: !this.isQiake ? null : (c.brandId ? c.brandId : null) // 品牌
+			brandId: c.brandId ? c.brandId : null // 品牌
 		};
+
+		this.formModel = Object.assign(utils.resolveFormModel(formModel, this.shopList[0].plat, this.isSupportedSku), {
+			platform: c.plat ? c.plat : this.shopList[0].plat // 平台
+		});
 
 		this.formModelCopy = cloneDeep(this.formModel);
 		this.allGoodsFormModel = {};
@@ -211,6 +217,9 @@ export default class GoodsSelectorCtrl {
 		this.propsVname = this.formModel.propsVname;
 	}
 
+	findEntityByName(collection, name) {
+		return collection.findIndex(item => angular.equals(item.name, name));
+	}
 	// 初始化 selectedItems 和 selectedItemsBuffer
 	initSelectedItems() {
 		this.selectedItems = [];
@@ -451,19 +460,27 @@ export default class GoodsSelectorCtrl {
 		};
 	}
 
-	// 点击简单搜索按钮时，表单重置（不改变引用，只恢复初始值）
-	initComplexForm() {
+	initComplexForm(isSimpleSearch) {
 		for (let attr in this.formModel) {
-			if (attr !== 'platform' && attr !== 'shopId' && attr !== 'id' && attr !== 'name' && attr !== 'categoriesId') {
-				if (Array.isArray(this.formModel[attr])) {
-					this.formModel[attr] = [];
-				} else {
-					this.formModel[attr] = null;
+			const index = this.findEntityByName(fieldsetConfig[this.formModel.platform], attr);
+			if (isSimpleSearch) {
+				// 点击简单搜索按钮
+				if (index >= 0 && !fieldsetConfig[this.formModel.platform][index].isSimpleSearchItem && attr !== 'shopId' && attr !== 'platform') {
+					if (Array.isArray(this.formModel[attr])) {
+						this.formModel[attr] = [];
+					} else {
+						this.formModel[attr] = null;
+					}
+					this.formTplConfig[`show-${attr}`] = false;
+				}
+			} else {
+				// 点击高级搜索按钮
+				if (index >= 0 && attr !== 'shopId' && attr !== 'platform') {
+					this.formTplConfig[`show-${attr}`] = true;
 				}
 			}
 		}
-		this.dateRange.start = null;
-		this.dateRange.end = null;
+		this.dateRange.start = this.dateRange.end = null;
 	}
 
 	// 获取商品自自定义类目数据
@@ -567,10 +584,9 @@ export default class GoodsSelectorCtrl {
 
 	// 店铺 select 框 change
 	shopSelectChange(newValue, oldValue, itemIndex, item) {
-		if (this.isTaobao) {
-			this.getShopCategories();
-		}
-		this.getCategories();
+		const collection = fieldsetConfig[this.formModel.platform];
+		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && this.getShopCategories();
+		this.findEntityByName(collection, 'categoriesId') && this.getCategories();
 	};
 
 	// 商品属性值 select 框 change
@@ -704,7 +720,7 @@ export default class GoodsSelectorCtrl {
 			this.transformDateParams();
 			if (!isSelectedGoodsTab) {
 				// 全部商品 tab，后端搜索
-				this.allGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId; // 搜索条件是否包含 sku
+				this.allGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId; // 搜索条件是否包含 sku
 				utils.transformParams(this.pagerGridOptions.queryParams, this.formModel);
 				this.updateAllGoodsGrid();
 			} else {

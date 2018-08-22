@@ -115,3 +115,221 @@ export const getBatchImportMsg = (currentTime, key, successNumber, failedNumber,
 	}
 };
 
+// 不同平台 form 表单项配置
+export const fieldsetConfig = {
+	jos: [
+		{
+			name: 'platform',
+			title: '平台'
+		},
+		{
+			name: 'skusId',
+			title: '商品编号',
+			isSkuItem: true
+		},
+		{
+			name: 'categoriesId',
+			title: '标准类目',
+			isSimpleSearchItem: true
+		},
+		{
+			name: 'endListTime',
+			title: '上架时间'
+		},
+		{
+			name: 'id',
+			title: '商品ID',
+			isSimpleSearchItem: true
+		},
+		{
+			name: 'maxPrice',
+			title: '价格'
+		},
+		{
+			name: 'minPrice',
+			title: '价格'
+		},
+		{
+			name: 'name',
+			title: '商品标题',
+			isSimpleSearchItem: true
+		},
+		{
+			name: 'outerId',
+			title: '商品商家编码'
+		},
+		{
+			name: 'propsPid',
+			title: '商品属性'
+		},
+		{
+			name: 'propsVid',
+			title: '属性值'
+		},
+		{
+			name: 'propsVname',
+			title: '商品属性值名称'
+		},
+		{
+			name: 'shopId',
+			title: '店铺选择'
+		},
+		{
+			name: 'skusOuterId',
+			title: 'SKU商家编码',
+			isSkuItem: true
+		},
+		{
+			name: 'skusPropsVname',
+			title: 'SKU规格',
+			isSkuItem: true
+		},
+		{
+			name: 'startListTime',
+			title: '上架时间'
+		},
+		{
+			name: 'status',
+			title: '商品状态'
+		}
+	],
+	top: [
+		{
+			name: 'platform',
+			title: '平台'
+		},
+		{
+			name: 'shopCategoriesId',
+			title: '自定义类目'
+		},
+		{
+			name: 'tagItemIds',
+			title: '商品标签'
+		},
+		{
+			name: 'categoriesId',
+			title: '标准类目',
+			isSimpleSearchItem: true
+		},
+		{
+			name: 'endListTime',
+			title: '上架时间'
+		},
+		{
+			name: 'id',
+			title: '商品ID',
+			isSimpleSearchItem: true
+		},
+		{
+			name: 'maxPrice',
+			title: '价格'
+		},
+		{
+			name: 'minPrice',
+			title: '价格'
+		},
+		{
+			name: 'name',
+			title: '商品标题',
+			isSimpleSearchItem: true
+		},
+		{
+			name: 'outerId',
+			title: '商品商家编码'
+		},
+		{
+			name: 'propsPid',
+			title: '商品属性'
+		},
+		{
+			name: 'propsVid',
+			title: '属性值'
+		},
+		{
+			name: 'propsVname',
+			title: '商品属性值名称'
+		},
+		{
+			name: 'shopId',
+			title: '店铺选择'
+		},
+		{
+			name: 'skusOuterId',
+			title: 'SKU商家编码',
+			isSkuItem: true
+		},
+		{
+			name: 'skusPropsVname',
+			title: 'SKU规格',
+			isSkuItem: true
+		},
+		{
+			name: 'startListTime',
+			title: '上架时间'
+		},
+		{
+			name: 'status',
+			title: '商品状态'
+		}
+	],
+	qiakr: [
+		{
+			name: 'platform',
+			title: '平台'
+		},
+		{
+			name: 'skusId',
+			title: 'SKU ID',
+			isSkuItem: true
+		},
+		{
+			name: 'brandId',
+			title: '品牌'
+		},
+		{
+			name: 'categoriesId',
+			title: '商品类目',
+			isSimpleSearchItem: true
+		},
+		{
+			name: 'endListTime',
+			title: '上架时间'
+		},
+		{
+			name: 'id',
+			title: '商品ID',
+			isSimpleSearchItem: true
+		},
+		{
+			name: 'maxPrice',
+			title: '价格'
+		},
+		{
+			name: 'minPrice',
+			title: '价格'
+		},
+		{
+			name: 'name',
+			title: '商品标题',
+			isSimpleSearchItem: true
+		},
+		{
+			name: 'shopId',
+			title: '店铺选择'
+		},
+		{
+			name: 'skusPropsVname',
+			title: 'SKU规格',
+			isSkuItem: true
+		},
+		{
+			name: 'startListTime',
+			title: '上架时间'
+		},
+		{
+			name: 'status',
+			title: '商品状态'
+		}
+	]
+};
+

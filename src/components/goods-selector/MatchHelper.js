@@ -6,7 +6,7 @@ export default {
 		let methods = this.getMethods();
 		// 将配置转换为对应的程序
 		for (let field in config) {
-			if (typeof config[field] === 'string') {
+			if (config.hasOwnProperty(field) && typeof config[field] === 'string') {
 				config[field] = methods[config[field]];
 			}
 		}
@@ -14,7 +14,9 @@ export default {
 		list.forEach(item => {
 			let buf = [];
 			for (let field in config) {
-				buf.push(config[field](form[field], item[field]));
+				if (config.hasOwnProperty(field)) {
+					buf.push(config[field](form[field], item[field]));
+				}
 			}
 			if (buf.indexOf(false) !== -1) {
 				item.isHide = true;
