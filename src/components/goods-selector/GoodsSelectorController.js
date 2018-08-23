@@ -460,27 +460,44 @@ export default class GoodsSelectorCtrl {
 		};
 	}
 
-	initComplexForm(isSimpleSearch) {
+	// 点击简单搜索按钮
+	clickSimpleSearch() {
 		for (let attr in this.formModel) {
 			const index = this.findEntityByName(fieldsetConfig[this.formModel.platform], attr);
-			if (isSimpleSearch) {
-				// 点击简单搜索按钮
-				if (index >= 0 && !fieldsetConfig[this.formModel.platform][index].isSimpleSearchItem && attr !== 'shopId' && attr !== 'platform') {
-					if (Array.isArray(this.formModel[attr])) {
-						this.formModel[attr] = [];
-					} else {
-						this.formModel[attr] = null;
-					}
-					this.formTplConfig[`show-${attr}`] = false;
+			if (index >= 0 && !fieldsetConfig[this.formModel.platform][index].isSimpleSearchItem && attr !== 'shopId' && attr !== 'platform') {
+				if (Array.isArray(this.formModel[attr])) {
+					this.formModel[attr] = [];
+				} else {
+					this.formModel[attr] = null;
 				}
-			} else {
-				// 点击高级搜索按钮
-				if (index >= 0 && attr !== 'shopId' && attr !== 'platform') {
-					this.formTplConfig[`show-${attr}`] = true;
-				}
+				this.formTplConfig[`show-${attr}`] = false;
 			}
 		}
-		this.dateRange.start = this.dateRange.end = null;
+		this.dataMerge.start = this.dateRange.end = null;
+		this.wakeupScroll();
+	}
+
+	// 点击高级搜索按钮
+	clickSeniorSearch() {
+		for (let attr in this.formModel) {
+			const index = this.findEntityByName(fieldsetConfig[this.formModel.platform], attr);
+			if (index >= 0 && attr !== 'shopId' && attr !== 'platform') {
+				this.formTplConfig[`show-${attr}`] = true;
+			}
+		}
+		this.wakeupScroll();
+	}
+
+	// 通过改变表格中的商品状态从而触发 scroll 监听的事件 TODO -> it is absolutely not a good solution
+	wakeupScroll() {
+		if (this.hasResInfoList()) {
+			const length = this.resInfo.list.length;
+			let entityChecked = this.resInfo.list[length - 1].checked;
+			this.resInfo.list[length - 1].checked = !entityChecked;
+			setTimeout(() => {
+				this.resInfo.list[length - 1].checked = entityChecked;
+			}, 100);
+		}
 	}
 
 	// 获取商品自自定义类目数据
