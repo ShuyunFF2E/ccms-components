@@ -137,9 +137,9 @@ export default class GoodsSelectorCtrl {
 		// 商品自自定义类目数据
 		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && this.getShopCategories();
 		// 获取商品品牌
-		this.findEntityByName(collection, 'brandId') && this.getBrands();
+		this.findEntityByName(collection, 'brandId') >= 0 && this.getBrands();
 		// 商品标准类目列表
-		this.findEntityByName(collection, 'categoriesId') && this.getCategories();
+		this.findEntityByName(collection, 'categoriesId') >= 0 && this.getCategories();
 
 		this.initSelectedItems();
 		this.preparePagerGridOptions();
