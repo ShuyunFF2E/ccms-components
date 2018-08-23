@@ -342,6 +342,7 @@ export default class GoodsSelectorCtrl {
 		this.pagerGridOptions.handleTreeIcon = entity => {
 			entity.extend = !entity.extend;
 			this.isSelectedGoodsTab ? this.isSelectedExtendAll = utils.isAllChildrenExtend(this.selectedItems) : utils.isAllChildrenExtend(this.resInfo.list);
+			this.wakeupScroll();
 		};
 
 		// checked 父亲, 所有孩子 checked, 反之 unchecked 父亲, 所有孩子 unchecked
@@ -460,27 +461,44 @@ export default class GoodsSelectorCtrl {
 		};
 	}
 
-	initComplexForm(isSimpleSearch) {
+	// 点击简单搜索按钮
+	clickSimpleSearch() {
 		for (let attr in this.formModel) {
 			const index = this.findEntityByName(fieldsetConfig[this.formModel.platform], attr);
-			if (isSimpleSearch) {
-				// 点击简单搜索按钮
-				if (index >= 0 && !fieldsetConfig[this.formModel.platform][index].isSimpleSearchItem && attr !== 'shopId' && attr !== 'platform') {
-					if (Array.isArray(this.formModel[attr])) {
-						this.formModel[attr] = [];
-					} else {
-						this.formModel[attr] = null;
-					}
-					this.formTplConfig[`show-${attr}`] = false;
+			if (index >= 0 && !fieldsetConfig[this.formModel.platform][index].isSimpleSearchItem && attr !== 'shopId' && attr !== 'platform') {
+				if (Array.isArray(this.formModel[attr])) {
+					this.formModel[attr] = [];
+				} else {
+					this.formModel[attr] = null;
 				}
-			} else {
-				// 点击高级搜索按钮
-				if (index >= 0 && attr !== 'shopId' && attr !== 'platform') {
-					this.formTplConfig[`show-${attr}`] = true;
-				}
+				this.formTplConfig[`show-${attr}`] = false;
 			}
 		}
-		this.dateRange.start = this.dateRange.end = null;
+		this.dataMerge.start = this.dateRange.end = null;
+		this.wakeupScroll();
+	}
+
+	// 点击高级搜索按钮
+	clickSeniorSearch() {
+		for (let attr in this.formModel) {
+			const index = this.findEntityByName(fieldsetConfig[this.formModel.platform], attr);
+			if (index >= 0 && attr !== 'shopId' && attr !== 'platform') {
+				this.formTplConfig[`show-${attr}`] = true;
+			}
+		}
+		this.wakeupScroll();
+	}
+
+	// 触发 scroll 监听的事件 TODO -> it is absolutely not a good solution
+	wakeupScroll() {
+		let node = document.createElement('span');
+		if (this.isSelectedGoodsTab) {
+			document.querySelector('.checked-goods-panel .cc-grid-table tbody').appendChild(node);
+			document.querySelector('.checked-goods-panel .cc-grid-table tbody').removeChild(node);
+		} else {
+			document.querySelector('.all-goods-panel .cc-grid-table tbody').appendChild(node);
+			document.querySelector('.all-goods-panel .cc-grid-table tbody').removeChild(node);
+		}
 	}
 
 	// 获取商品自自定义类目数据
@@ -812,6 +830,7 @@ export default class GoodsSelectorCtrl {
 		data && data.length && data.forEach(item => {
 			item.extend = isExtend;
 		});
+		this.wakeupScroll();
 	};
 
 	// this.resInfo.list 是否存在
@@ -1432,6 +1451,7 @@ export default class GoodsSelectorCtrl {
 		this.getConditionMsg(this.formModel);
 		this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = this.getConditionsLength(this.formModel);
 		this._$ccTips.success('成功添加一组搜索条件', document.querySelector('.goods-selector'));
+		this.wakeupScroll();
 	}
 
 	// 获取搜索条件的长度
@@ -1456,5 +1476,6 @@ export default class GoodsSelectorCtrl {
 		this.conditionContent = null;
 		this.conditionsModel = {};
 		this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = 0;
+		this.wakeupScroll();
 	}
 }

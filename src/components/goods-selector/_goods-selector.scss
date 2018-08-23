@@ -143,12 +143,10 @@
 	  display: table;
 	  .seize-seat {
 		display: table-row;
-		height: fit-content;
 		visibility: hidden;
 	  }
 	  .all-goods-operation {
 		display: table-row;
-		height: fit-content;
 	  }
 	  cc-grid {
 		display: table-row;
@@ -258,8 +256,13 @@
 			  cursor: pointer;
 			}
 		  }
-		  .cc-grid-body  cc-radio .radio-button-icon {
-			position: relative;
+		  .cc-grid-body {
+			cc-radio .radio-button-icon {
+			  position: relative;
+			}
+			.datalist {
+			  overflow: auto;
+			}
 		  }
 		  > .cc-grid-footer {
 			padding: 10px 11px 10px 11px;
@@ -387,7 +390,6 @@
 		  padding-left: 9px;
 		  margin-bottom: 6px;
 		  color: #333333;
-		  height: fit-content;
 		  .cc-checkbox {
 			margin-right: 15px;
 			margin-top: 6px;

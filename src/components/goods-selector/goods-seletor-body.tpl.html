@@ -134,8 +134,8 @@
 				<fieldset class="operate">
 					<button type="button" class="btn-ok search" ng-click="$ctrl.search($ctrl.isSelectedGoodsTab)">搜索</button>
 					<span class="reset" ng-click="$ctrl.reset($ctrl.formModel, $ctrl.dateRange, $ctrl.goodsSelectorForm)">重置</span>
-					<span ng-if="!$ctrl.isSupportedAddCondition && $ctrl.isSimpleSearch && !$ctrl.isShowShopList" class="add-addition" ng-click="$ctrl.isSimpleSearch = false; $ctrl.initComplexForm($ctrl.isSimpleSearch);">高级搜索</span>
-					<span ng-if="!$ctrl.isSupportedAddCondition && !$ctrl.isSimpleSearch && !$ctrl.isShowShopList" class="add-addition" ng-click="$ctrl.isSimpleSearch = true; $ctrl.initComplexForm($ctrl.isSimpleSearch);">简单搜索</span>
+					<span ng-if="!$ctrl.isSupportedAddCondition && $ctrl.isSimpleSearch && !$ctrl.isShowShopList" class="add-addition" ng-click="$ctrl.isSimpleSearch = false; $ctrl.clickSeniorSearch();">高级搜索</span>
+					<span ng-if="!$ctrl.isSupportedAddCondition && !$ctrl.isSimpleSearch && !$ctrl.isShowShopList" class="add-addition" ng-click="$ctrl.isSimpleSearch = true; $ctrl.clickSimpleSearch();">简单搜索</span>
 					<span class="add-condition" ng-if="$ctrl.isSupportedAddCondition && !$ctrl.isSelectedGoodsTab" ng-click="$ctrl.clickCondition()">添加为搜索条件</span>
 				</fieldset>
 			</form>
