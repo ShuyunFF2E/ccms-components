@@ -6,6 +6,8 @@ import angular from 'angular';
 
 import { Inject } from 'angular-es-utils';
 
+import { DISPLAY_FORMAT } from '../../common/bases/constant';
+
 import { addZero, parseNumber, setTextWidth } from './dateUtils';
 import Tooltip from '../tooltip/Tooltip';
 import { TOOLTIP_TYPE } from '../tooltip/Contants';
@@ -20,6 +22,7 @@ export default class DatePickerCtrl {
 		this.inputs = [].slice.call($element[0].querySelectorAll('input'));
 		this.$scope = $scope;
 		this.$element = $element;
+		this.DISPLAY_FORMAT = DISPLAY_FORMAT;
 
 		if (this.minDate instanceof Date) {
 			this.minDate = new Date(
@@ -49,6 +52,14 @@ export default class DatePickerCtrl {
 		};
 	}
 
+
+	hideYear() {
+		return this.DISPLAY_FORMAT[this.displayFormat] === 1 || this.DISPLAY_FORMAT[this.displayFormat] === 2;
+	}
+
+	hideMonth() {
+		return this.DISPLAY_FORMAT[this.displayFormat] === 2;
+	}
 
 	/**
 	 * 根据输入的年份和月份, 计算日期的上限

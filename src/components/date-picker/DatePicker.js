@@ -31,7 +31,8 @@ export default {
 		isFestival: '<?',
 		customFestivals: '<?',
 		disableYear: '<?',
-		disableMonth: '<?'
+		disableMonth: '<?',
+		displayFormat: '@?'
 	},
 	template,
 

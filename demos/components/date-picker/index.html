@@ -130,6 +130,33 @@
 	<p>
 		<cc-date-range opts="app.disableRange"></cc-date-range>
 	</p>
+
+	<h1>DEMO: 9  DisplayFormat: MMDD and DD </h1>
+	<p>
+		<cc-date-picker
+						ng-model="app.MMDDValue"
+						required="true"
+						date-only="true"
+						disabled="false"
+						on-calendar-open="app.onCalendarOpen()"
+						on-calendar-close="app.onCalendarClose()"
+						is-festival="true"
+						custom-festivals="app.customFestivals"
+						display-format="MMDD"
+		></cc-date-picker>
+
+		<cc-date-picker
+						ng-model="app.DDValue"
+						required="true"
+						date-only="true"
+						disabled="false"
+						on-calendar-open="app.onCalendarOpen()"
+						on-calendar-close="app.onCalendarClose()"
+						is-festival="true"
+						custom-festivals="app.customFestivals"
+						display-format="DD"
+		></cc-date-picker>
+	</p>
 </main>
 
 <script src="/components.js"></script>

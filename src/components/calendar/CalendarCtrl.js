@@ -7,6 +7,8 @@ import chineseLunar from 'chinese-lunar';
 
 import { Inject } from 'angular-es-utils';
 
+import { DISPLAY_FORMAT } from '../../common/bases/constant';
+
 import { addZero, destructDate, parseNumber } from '../date-picker/dateUtils';
 
 const festivals = {
@@ -66,6 +68,7 @@ export default class DatePickerCtrl {
 		this.$scope = $scope;
 		this.$element = $element;
 
+		this.DISPLAY_FORMAT = DISPLAY_FORMAT;
 		this.years = yearList;
 		this.months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 		this.customFestivals = this.customFestivals || {};
@@ -88,6 +91,13 @@ export default class DatePickerCtrl {
 		});
 	}
 
+	hideYear() {
+		return this.DISPLAY_FORMAT[this.displayFormat] === 1 || this.DISPLAY_FORMAT[this.displayFormat] === 2;
+	}
+
+	hideMonth() {
+		return this.DISPLAY_FORMAT[this.displayFormat] === 2;
+	}
 
 	/**
 	 * 改变月份
@@ -262,6 +272,7 @@ export default class DatePickerCtrl {
 	 * @param delta
 	 */
 	switchMonth(delta) {
+		if (this.disableYear || this.disableMonth) return;
 		this.value = new Date(new Date(this.value).setMonth(this.value.getMonth() + delta));
 	};
 
