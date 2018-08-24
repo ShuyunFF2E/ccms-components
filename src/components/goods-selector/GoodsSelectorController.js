@@ -549,6 +549,7 @@ export default class GoodsSelectorCtrl {
 				.then(res => {
 					this.propsPidList = res.data || [];
 					this.formModel.propsPid = this.propsPid;
+					this.propsPid = null;
 				})
 				.catch(res => {
 					if (!this.tips || !this.tips.element) {
@@ -566,6 +567,7 @@ export default class GoodsSelectorCtrl {
 		if (this.formModel.propsPid && itemIndex !== -1) {
 			this.propsVidList = this.propsPidList[itemIndex].values;
 			this.formModel.propsVid = cloneDeep(this.propsVid);
+			this.propsPid = null;
 		} else {
 			this.propsVidList = [];
 			this.formModel.propsVid = undefined;
@@ -704,6 +706,8 @@ export default class GoodsSelectorCtrl {
 	// tab 切换时 form 表单处理
 	handleForm(dateRangeModel, formModel) {
 		this.dateRange = cloneDeep(dateRangeModel);
+		const categoriesId = this.formModel.categoriesId;
+		const propsPid = this.formModel.propsPid;
 		for (let attr in formModel) {
 			if (formModel.hasOwnProperty(attr)) {
 				if (attr !== 'propsPid' && attr !== 'propsVid') {
@@ -711,13 +715,12 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		}
-		this.categoriesId = cloneDeep(formModel.categoriesId);
-		this.propsPid = cloneDeep(formModel.propsPid);
-		this.propsVid = cloneDeep(formModel.propsVid);
-		if (this.categoriesId === formModel.categoriesId) {
+		this.propsPid = formModel.propsPid;
+		if (categoriesId === formModel.categoriesId) {
 			this.formModel.propsPid = this.propsPid;
 		}
-		if (this.categoriesId === formModel.categoriesId && this.propsPid === formModel.propsPid) {
+		this.propsVid = formModel.propsVid;
+		if (propsPid === formModel.propsPid) {
 			this.formModel.propsVid = this.propsVid;
 		}
 	}
