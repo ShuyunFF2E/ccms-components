@@ -30,7 +30,6 @@ import pagination from './pagination';
 import radio from './radio';
 import smsEditor from './sms-editor';
 import smsPreview from './sms-preview';
-import shopSelector from './shop-selector';
 import tabset from './tabset';
 import tips from './tips';
 import toggle from './toggle';
@@ -63,7 +62,6 @@ export default angular
 		radio,
 		smsEditor,
 		smsPreview,
-		shopSelector,
 		tabset,
 		tips,
 		toggle,
