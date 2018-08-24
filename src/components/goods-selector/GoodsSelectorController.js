@@ -200,7 +200,11 @@ export default class GoodsSelectorCtrl {
 			tagItemIds: [], // 商品标签 数组
 			brandId: c.brandId ? c.brandId : null // 品牌
 		};
-
+		// 初始化 tagItemIds
+		if (c.tags && c.tags.length) {
+			let ids = this.getTagItemIds(c.tags);
+			formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
+		}
 		this.formModel = Object.assign(utils.resolveFormModel(formModel, this.shopList[0].plat, this.isSupportedSku), {
 			platform: c.plat ? c.plat : this.shopList[0].plat // 平台
 		});
@@ -651,7 +655,6 @@ export default class GoodsSelectorCtrl {
 	tabClick(text) {
 		if (text === '已选商品') {
 			this.isSelectedGoodsTab = true;
-			// 初始化搜索条件信息，只执行一次
 			this.initConditionsMsg();
 			// 克隆表单数据，保存到allDateRangeModel、allGoodsFormModel、selectedLabelsOfAll中，当切换回全部商品tab时用作数据回显
 			this.allDateRangeModel = cloneDeep(this.dateRange);
@@ -683,10 +686,10 @@ export default class GoodsSelectorCtrl {
 		}
 	};
 
-	// 初始化搜索条件信息，只调用一次
+	// 初始化搜索条件信息，只调用一次（打开弹窗 -> 重置操作/选择商品标签/点击已选商品 tab -> 获取条件信息后并关闭操作）
 	initConditionsMsg() {
-		this.getConditionMsg(this.formModelCopy);
-		this.initConditionsMsg = () => {};
+		!this.hasInitConditionMsg && this.getConditionMsg(this.formModelCopy);
+		this.hasInitConditionMsg = true;
 	}
 	// 批量添加操作下的 api 和 表格查询参数
 	getBatchImportApi() {
@@ -743,7 +746,7 @@ export default class GoodsSelectorCtrl {
 				this.updateAllGoodsGrid();
 			} else {
 				// 已选商品 tab，前端搜索
-				this.selectedGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId.length || this.formModel.skusOuterId;
+				this.selectedGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId;
 				this.transformSelectedItems();
 				matchHelper.match(this.formModel, this.selectedItems, this.formConfig);
 				this.selectedItems.forEach(item => {
@@ -781,6 +784,7 @@ export default class GoodsSelectorCtrl {
 	reset(formModel, dateRange, formCtrl = null) {
 		if (formCtrl) {
 			this._$ccValidator.setPristine(formCtrl);
+			this.initConditionsMsg();
 			this.selectedLabels = [];
 		}
 		if (this.isSelectedGoodsTab) {
@@ -1245,6 +1249,8 @@ export default class GoodsSelectorCtrl {
 			res.data = res.data || [];
 			this._$labelChoose.labelChoose(title, res.data, opts).open()
 				.result.then(res => {
+					// 获取搜索条件信息
+					this.initConditionsMsg();
 					this.selectedLabels = res.length ? res : [];
 					// 处理商品标签数组，取出所有商品标签对应的商品ID并去重
 					let ids = this.getTagItemIds(this.selectedLabels);
@@ -1430,22 +1436,27 @@ export default class GoodsSelectorCtrl {
 		}
 	}
 
-	// 点击添加为搜索条件按钮 this.conditionsModel -> 关闭弹出框传给用户
+	// 点击添加为搜索条件按钮 this.conditionsModel -> 关闭弹出框时传给用户
 	clickCondition() {
+		this.hasInitConditionMsg = true;
 		for (let attr in this.formModel) {
-			if (this.formModel.hasOwnProperty(attr) && attr !== 'platform') {
-				let item = this.formModel[attr];
-				if (Array.isArray(item) && item.length || !Array.isArray(item) && (item || item === 0)) {
-					this.conditionsModel[attr] = cloneDeep(item);
-				} else {
-					delete this.conditionsModel[attr];
+			if (this.formModel.hasOwnProperty(attr)) {
+				if (attr !== 'platform' && attr !== 'startListTime' && attr !== 'endListTime') {
+					let item = this.formModel[attr];
+					if (Array.isArray(item) && (item.length > 1 || item.length === 1 && item[0] !== '') || !Array.isArray(item) && (item || item === 0)) {
+						this.conditionsModel[attr] = cloneDeep(item);
+					} else {
+						delete this.conditionsModel[attr];
+					}
 				}
 			}
+			// 日期组件 单独处理
+			attr === 'startListTime' && !this.dateRange.start && delete this.conditionsModel.startListTime;
+			attr === 'endListTime' && !this.dateRange.end && delete this.conditionsModel.endListTime;
+			attr === 'platform' && delete this.conditionsModel.platform;
 		}
-		if (Number(this.conditionsModel.status) < 0) {
-			delete this.conditionsModel['status'];
-		}
-		this.conditionsModel.tags = cloneDeep(this.selectedLabels);
+		// 商品标签 单独处理
+		this.selectedLabels.length ? this.conditionsModel.tags = cloneDeep(this.selectedLabels) : delete this.conditionsModel.tags;
 		delete this.conditionsModel.tagItemIds;
 
 		this.getConditionMsg(this.formModel);
@@ -1457,15 +1468,23 @@ export default class GoodsSelectorCtrl {
 	// 获取搜索条件的长度
 	getConditionsLength(formModel) {
 		let conditionsLength = 0;
-		const exceptList = ['platform'];
+		const exceptList = ['platform', 'startListTime', 'endListTime'];
 		for (let attr in formModel) {
 			if (formModel.hasOwnProperty(attr) && exceptList.indexOf(attr) === -1) {
 				let value = formModel[attr];
 				if (Array.isArray(value)) {
-					value.length && conditionsLength++;
+					// TODO 商品 ID 数组在手动清空后变成了['']而非[]
+					value.length && (value.length > 1 || value.length === 1 && value[0] !== '') && conditionsLength++;
 				} else if (value && value !== 0 || value === 0) {
 					conditionsLength++;
 				}
+			}
+			// 日期组件 单独处理
+			if (formModel.hasOwnProperty(attr) && attr === 'startListTime') {
+				this.dateRange.start && conditionsLength++;
+			}
+			if (formModel.hasOwnProperty(attr) && attr === 'endListTime') {
+				this.dateRange.end && conditionsLength++;
 			}
 		}
 		return conditionsLength;

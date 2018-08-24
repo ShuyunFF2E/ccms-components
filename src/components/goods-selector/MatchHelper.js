@@ -192,7 +192,7 @@ export default {
 
 			getValue({value, title}) {
 				if (Array.isArray(value)) {
-					return value.length ? title + '=' + value.join(',') : '';
+					return value.length > 1 || value.length === 1 && value[0] !== '' ? title + '=' + value.join(',') : '';
 				} else {
 					return (value || value === 0) ? title + '=' + value : '';
 				}
