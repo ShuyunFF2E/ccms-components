@@ -63,7 +63,6 @@ export default class DropdownSelectCtrl {
 		const scope = this.getScope();
 
 		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
-			this.model = this.modelCopy ? this.modelCopy : this.model;
 			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
 			// TODO: SB requirement
 			if (this.supportInputValue) {
@@ -76,9 +75,6 @@ export default class DropdownSelectCtrl {
 		});
 
 		scope.$watch(() => this.model, (model, oldModel) => {
-			if (this.model && (!this.items || !this.items.length)) {
-				this.modelCopy = this.model;
-			}
 			if (!angular.equals(model, oldModel)) {
 				const item = this.getItemByValue(this.model);
 				const itemIndex = this.getItemIndexByItemValue(this.model, this.items);
@@ -216,7 +212,7 @@ export default class DropdownSelectCtrl {
 				this.items = this._clampedDatalist;
 			} else {
 				this.title = '';
-				this.model = null;
+				// this.model = null;
 				this.icon = false;
 				this.items = this._clampedDatalist;
 			}
@@ -225,7 +221,7 @@ export default class DropdownSelectCtrl {
 
 	clear() {
 		this._searchText = null;
-		this.modelCopy = null;
+		this.model = null;
 		this.setModelValue(null);
 		this.getInputElement().focus();
 		this.focusAt(0);
