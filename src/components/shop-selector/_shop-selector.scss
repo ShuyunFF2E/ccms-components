@@ -78,6 +78,9 @@
 	  span {
 		color: #0083ba;
 		margin-right: 15px;
+		&:hover {
+		  cursor: pointer;
+		}
 	  }
 	}
 	cc-grid {
@@ -122,6 +125,14 @@
 			}
 		  }
 		}
+	  }
+	}
+  }
+  .selected-shop-panel {
+	td:last-child {
+	  color: #0083ba;
+	  &:hover {
+		cursor: pointer;
 	  }
 	}
   }
