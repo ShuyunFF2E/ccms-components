@@ -29,7 +29,10 @@ export default {
 		onCalendarOpen: '&?',
 		onCalendarClose: '&?',
 		isFestival: '<?',
-		customFestivals: '<?'
+		customFestivals: '<?',
+		disableYear: '<?',
+		disableMonth: '<?',
+		displayFormat: '@?'
 	},
 	template,
 

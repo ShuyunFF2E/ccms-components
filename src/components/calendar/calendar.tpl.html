@@ -1,10 +1,10 @@
 <div class="calendar" ng-click="ctrl.preventDefault($event)">
-	<div class="calendar-header">
-		<span class="calendar-prev iconfont icon-rightarrow" ng-click="ctrl.switchMonth(-1)"></span><select ng-model="ctrl.parts.month"
-						ng-options="index as month for (index, month) in ctrl.months"
+	<div class="calendar-header" ng-hide="ctrl.hideMonth()">
+		<span class="calendar-prev iconfont icon-rightarrow" ng-style="{'visibility': ctrl.hideYear() ? 'hidden' : 'inherit'}" ng-click="ctrl.switchMonth(-1)"></span><select ng-model="ctrl.parts.month"
+						ng-options="index as month for (index, month) in ctrl.months" ng-disabled="ctrl.disableMonth" ng-hide="ctrl.hideMonth()"
 						ng-change="ctrl.changeMonth()"></select><select ng-model="ctrl.parts.year"
-						ng-options="year for year in ctrl.years"
-						ng-change="ctrl.changeYear()"></select><span class="calendar-next iconfont icon-rightarrow" ng-click="ctrl.switchMonth(1)"></span>
+						ng-options="year for year in ctrl.years" ng-disabled="ctrl.disableYear" ng-hide="ctrl.hideYear()"
+						ng-change="ctrl.changeYear()"></select><span class="calendar-next iconfont icon-rightarrow" ng-style="{'visibility': ctrl.hideYear() ? 'hidden' : 'inherit'}" ng-click="ctrl.switchMonth(1)"></span>
 	</div>
 
 	<ul class="calendar-week-title">
@@ -49,7 +49,7 @@
 	</div>
 
 	<div class="calendar-buttons">
-		<button class="calendar-button-cancel" type="button" ng-click="ctrl.setNow()">现在</button>
+		<button class="calendar-button-cancel" ng-hide="ctrl.hideMonth() || ctrl.hideYear() || ctrl.disableMonth || ctrl.disableYear" type="button" ng-click="ctrl.setNow()">现在</button>
 		<button class="calendar-button-ok"
 						type="button"
 						ng-click="ctrl.confirm()"
