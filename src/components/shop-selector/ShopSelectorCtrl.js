@@ -326,6 +326,8 @@ export default class ShopSelectorCtrl {
 		this.type = formModel.type;
 		if (channel === formModel.channel) {
 			this.formModel.type = this.type;
+		} else if (formModel.channel === 'qiakr') {
+			this.provinceList = this._provinceList;
 		}
 		this.city = formModel.city;
 		if (province === formModel.province) {
@@ -340,7 +342,7 @@ export default class ShopSelectorCtrl {
 	// 获取地区数据
 	getAreaData() {
 		service.getAreaData().get(res => {
-			this.provinceList = res || [];
+			this._provinceList = res || [];
 		}, () => {
 			this._$ccTips.error(errorMsg);
 		});
@@ -381,6 +383,11 @@ export default class ShopSelectorCtrl {
 		} else {
 			this.formModel.type = null;
 			this.typeList = [];
+		}
+		if (model === 'qiakr') {
+			this.provinceList = this._provinceList;
+		} else {
+			this.provinceList = [];
 		}
 	}
 
