@@ -21,6 +21,11 @@ cc-dropdown-multiselect {
 			border-color: $input-active-border;
 		}
 
+	  	@at-root .disabled#{&} {
+			background-color: #eee;
+			border: solid 1px #ccc;
+	  	}
+
 		.dropdown-select-input {
 			flex: 1;
 			min-width: 0;
