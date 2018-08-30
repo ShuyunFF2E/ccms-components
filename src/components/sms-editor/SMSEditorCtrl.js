@@ -203,7 +203,24 @@ export default class SMSEditorCtrl {
 		// const padding = (this.keywordTypes.length < 1 || !type) ? 0 : 1.5;
 
 		// return `&nbsp;<input class="sms-keyword-inserted ${padding ? type : DEFAULT_TYPE_NAME}" value="${text}" style="width: ${padding + text.length}em" disabled>&nbsp;`;
-		return `${prefix}<input class="sms-keyword-inserted ${type}" value="${text}" style="width: ${text.length}em" disabled>${suffix}`;
+		let width = this.getTextWidth(text);
+
+		return `${prefix}<input class="sms-keyword-inserted ${type}" value="${text}" style="width: ${width + 2}px" disabled>${suffix}`;
+	}
+
+	getTextWidth(text) {
+		let element = document.createElement('div');
+		element.className = 'sms-content';
+		element.style.display = 'inline-block';
+		element.style.opacity = 0;
+		element.innerHTML = text;
+		document.body.appendChild(element);
+
+		let width = window.getComputedStyle(element).width;
+
+		document.body.removeChild(element);
+
+		return parseInt(width, 10);
 	}
 
 
