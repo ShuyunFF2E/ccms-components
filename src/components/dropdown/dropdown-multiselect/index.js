@@ -18,6 +18,7 @@ const dropdownMultiselectDDO = {
 		hasSelectAll: '<?',
 		autoClose: '<?',
 		mapping: '<?',
+		disabled: '<?',
 		datalist: '<',
 		searchable: '<?',
 		confirmButton: '<?',

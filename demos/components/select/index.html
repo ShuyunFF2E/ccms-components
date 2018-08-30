@@ -86,6 +86,20 @@
 			</cc-dropdown-multiselect>
 		</div>
 		<div class="demo">
+			<h3>多选(disabled)</h3>
+			<span>当前值: <span ng-bind="ctrl.value33 | json"></span></span>
+			<cc-dropdown-multiselect
+					placeholder="快，快选我。。啊！"
+					model="ctrl.value33"
+					datalist="ctrl.datalist1"
+					mapping="ctrl.fieldsMap"
+					disabled="true"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
+			</cc-dropdown-multiselect>
+		</div>
+		<div class="demo">
 			<h3>多选（可搜索）</h3>
 			<span>当前值: <span ng-bind="ctrl.value4 | json"></span></span>
 			<cc-dropdown-multiselect
@@ -100,6 +114,20 @@
 			<div style="margin: 0.5em 0;">
 				<button class="btn-ok" ng-click="ctrl.setList()">设置新值</button>
 			</div>
+		</div>
+		<div class="demo">
+			<h3>多选（可搜索, disabled)</h3>
+			<span>当前值: <span ng-bind="ctrl.value44 | json"></span></span>
+			<cc-dropdown-multiselect
+					placeholder="快，快选我。。啊！"
+					model="ctrl.value44"
+					datalist="ctrl.datalist1"
+					searchable="true"
+					confirm-button="true"
+					disabled="true"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
+					mapping="ctrl.fieldsMap">
+			</cc-dropdown-multiselect>
 		</div>
 	</div>
 	<div class="group">
@@ -220,7 +248,9 @@
 			this.value1 = '上海';
 			this.value2 = 'xa';
 			this.value3 = [];
+			this.value33 = [];
 			this.value4 = ['xa', 'sh'];
+			this.value44 = ['xa'];
 			this.value5 = '上海';
 			this.value10 = 123789;
 			this.list10 = [
