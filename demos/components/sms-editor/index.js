@@ -64,7 +64,7 @@ angular.module('componentsApp', ['ccms.components'])
 					{
 						type: 'taobao',
 						name: 'shortlink',
-						text: '淘短链',
+						text: '淘短链AAAAAAAAAA111111111',
 						prefix: '&nbsp;',
 						suffix: '&nbsp;',
 						defaultValue: 'c.tb.cn/c.0zYeW#'
@@ -183,6 +183,6 @@ angular.module('componentsApp', ['ccms.components'])
 		}
 
 		self.insertKeyword = function () {
-			self.channel.api.insertKeyword('淘短链', 'taobao');
+			self.channel.api.insertKeyword('淘短链AAAAAAAAAA111111111', 'taobao');
 		}
 	});
