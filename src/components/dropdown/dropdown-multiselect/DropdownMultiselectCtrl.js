@@ -59,6 +59,10 @@ export default class DropdownMultiselectCtrl {
 			this.autoClose = false;
 		}
 
+		if (typeof this.disabled === 'undefined') {
+			this.disabled = false;
+		}
+
 		this.onSelectChange = this.onSelectChange || (() => {});
 	}
 
@@ -91,6 +95,12 @@ export default class DropdownMultiselectCtrl {
 
 		scope.$watchCollection(() => this.selection, () => {
 			this.updateTitle();
+		});
+
+		scope.$watch(() => this.isOpen, (openState, oldOpenstate) => {
+			if (this.disabled && openState) {
+				this.isOpen = false;
+			}
 		});
 	}
 
@@ -265,6 +275,7 @@ export default class DropdownMultiselectCtrl {
 	}
 
 	clear() {
+		if (this.disabled === true) return;
 		this.items = this._clampedDatalist;
 		this.selection = this.selection.filter(item => item.disabled === true);
 		this.selectAll = false;
