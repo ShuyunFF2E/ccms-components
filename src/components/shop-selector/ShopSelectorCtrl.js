@@ -341,7 +341,7 @@ export default class ShopSelectorCtrl {
 
 	// 获取地区数据
 	getAreaData() {
-		service.getAreaData().get(res => {
+		service.getAreaData(this.serverName).get(res => {
 			this._provinceList = res || [];
 		}, () => {
 			this._$ccTips.error(errorMsg);
