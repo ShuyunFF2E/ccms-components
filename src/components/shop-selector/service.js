@@ -1,5 +1,5 @@
 import genResource from 'angular-es-utils/rs-generator';
-import { apiPrefix, areaUrl } from './Constant';
+import { apiPrefix } from './Constant';
 
 // 参数转换
 function transformParams(params, paramsName) {
@@ -22,8 +22,8 @@ export default {
 	},
 
 	// 获取地区列表
-	getAreaData() {
-		return genResource(`${areaUrl}`, null, null, {
+	getAreaData(serverName) {
+		return genResource(`${ serverName }/shuyun-searchapi/1.0/area?platform=top`, null, null, {
 			get: {
 				method: 'GET',
 				isArray: true
