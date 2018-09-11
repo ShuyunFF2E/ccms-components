@@ -1,7 +1,7 @@
 <div class="dropdown-multiselect" cc-dropdown
 		is-open="$ctrl.isOpen"
 		auto-close="$ctrl.autoClose"
-		ng-class="{active: $ctrl.isActive}"
+		ng-class="{active: $ctrl.isActive, disabled: $ctrl.disabled}"
 		on-dropdown-open="$ctrl.onOpen()"
 		on-dropdown-close="$ctrl.onClose()">
 	<div class="dropdown-select-input-wrap">
@@ -10,11 +10,12 @@
 				ng-focus="$ctrl.setActiveState(true)"
 				ng-blur="$ctrl.setActiveState(false)"
 				ng-change="$ctrl.onSearchTextChange($ctrl.title)"
+			    ng-disabled="$ctrl.disabled"
 				ng-model="$ctrl.title">
 		<div class="dropdown-select-icons"
 			><span class="dropdown-select-clear"
 					ng-class="{visible: $ctrl.title.length}"
-					ng-if="$ctrl.searchable"
+					ng-if="!$ctrl.disabled && $ctrl.searchable"
 					ng-click="$ctrl.clear()"></span
 			><span class="dropdown-select-down" cc-dropdown-toggle></span>
 		</div>
@@ -36,7 +37,7 @@
 							ng-checked="$ctrl.selection.indexOf(item) > -1"
 							ng-click="$ctrl.toggleSelection(item)"
 							ng-disabled="item.disabled">
-					<span cc-bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
+					<span ng-bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
 				</label>
 			</li>
 			<li class="empty-list-item"

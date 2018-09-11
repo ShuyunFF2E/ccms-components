@@ -6,11 +6,11 @@
 
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
-import { COMMON_AREAS, localStorageKeys } from './Constant';
+import { COMMON_AREAS, localStorageKeys, MARKETING_COMMON_AREAS } from './Constant';
 import unionBy from 'lodash.unionby';
 
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'valueFormat', 'platform', 'customAreas')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'valueFormat', 'platform', 'customAreas', 'marketingOnly')
 export default class AreaSelectorCtrl {
 	static ID_ONLY = 1;
 	static ID_NAME = 2;
@@ -18,7 +18,6 @@ export default class AreaSelectorCtrl {
 	$onInit() {
 
 		// 外部调用参数初始化
-		this.selectedValue = this._selectedData;
 		this.valueFormat = this._valueFormat;
 		this.platform = this._platform;
 		this.customAreas = this._customAreas;
@@ -34,9 +33,12 @@ export default class AreaSelectorCtrl {
 		this.districtNumber = 0;
 		this.areas = this.getAreasFromLocalStorage();
 		this.provinces = this.areas;
-		this.analyzeSelectedData();
-		this.getSelectedAreaNumber();
 		this.initCommonAreas();
+		this.selectedValue = this._marketingOnly ? this.toOriginFormat(this._selectedData) : this._selectedData;
+		this.analyzeSelectedData();
+		// TODO: 需要调研
+		this.getCommonAreaSelectedStatus();
+		this.getSelectedAreaNumber();
 		this.validateAreasData();
 		this.initInstantSearch();
 	}
@@ -79,7 +81,12 @@ export default class AreaSelectorCtrl {
 	 * @name initCommonAreas 初始化常用区域
 	 */
 	initCommonAreas() {
-		this.commonAreas = unionBy(this.customAreas, COMMON_AREAS[this.platform], 'id').sort((a, b) => a.id > b.id);
+
+		if (this._marketingOnly) {
+			this.commonAreas = unionBy(this.customAreas, MARKETING_COMMON_AREAS, 'id');
+		} else {
+			this.commonAreas = unionBy(this.customAreas, COMMON_AREAS[this.platform], 'id').sort((a, b) => a.id > b.id);
+		}
 
 		this.getCommonAreaSelectedStatus();
 	}
@@ -452,7 +459,7 @@ export default class AreaSelectorCtrl {
 				this.getResponseId(selectedValue, area);
 			}
 		});
-		this._modalInstance.ok(selectedValue);
+		this._modalInstance.ok(this._marketingOnly ? this.toMarketingFormat(selectedValue) : selectedValue);
 	}
 
 	/**
@@ -638,5 +645,96 @@ export default class AreaSelectorCtrl {
 	onSearch(datalist, context) {
 		this.searchAreaByKeyword(context.searchText);
 		this.datalist = this.searchList;
+	}
+
+	/**
+	 * @name 为主动营销格式化输出
+	 */
+	toMarketingFormat(output) {
+
+		output = output.map(o => {
+			if (this.valueFormat === AreaSelectorCtrl.ID_NAME) {
+
+				let tempArr = o.split(',');
+
+				for (let i = 0; i < this.commonAreas.length; i++) {
+
+					if (!this.commonAreas[i].selected && !this.commonAreas[i].selectedAll) {
+						continue;
+					}
+
+					// 区域全部选择的情况
+					if (this.commonAreas[i].selectedAll) {
+						if (this.commonAreas[i].subArea.includes(tempArr[0])) {
+							return null;
+						}
+					// 区域部分选择的情况
+					} else if (this.commonAreas[i].selected && !this.commonAreas[i].selectedAll) {
+						if (this.commonAreas[i].subArea.includes(tempArr[0])) {
+							return this.commonAreas[i].id + ',' + o;
+						}
+					}
+				}
+
+			} else {
+
+				let tempArr = o.id.split(',');
+
+				for (let i = 0; i < this.commonAreas.length; i++) {
+
+					if (!this.commonAreas[i].selected && !this.commonAreas[i].selectedAll) {
+						continue;
+					}
+
+					// 区域全部选择的情况
+					if (this.commonAreas[i].selectedAll) {
+						if (this.commonAreas[i].subArea.includes(tempArr[0])) {
+							return null;
+						}
+					// 区域部分选择的情况
+					} else if (this.commonAreas[i].selected && !this.commonAreas[i].selectedAll) {
+						if (this.commonAreas[i].subArea.includes(tempArr[0])) {
+							return {
+								id: this.commonAreas[i].id + ',' + o.id,
+								name: this.commonAreas[i].name + ' > ' + o.name
+							};
+						}
+					}
+				}
+			}
+		});
+
+		const selectedAllAreas = this.commonAreas.filter(a => a.selectedAll);
+		output = output.filter(o => o !== null);
+
+		if (this.valueFormat === AreaSelectorCtrl.ID_ONLY) {
+			output.push(...selectedAllAreas.map(a => ({id: a.id, name: a.name})));
+		} else if (this.valueFormat === AreaSelectorCtrl.ID_NAME) {
+			output.push(...selectedAllAreas.map(a => a.id));
+		}
+
+		return output;
+	}
+
+	/**
+	 * @name 将主动营销输入格式化为原地址选择器输入
+	 */
+	toOriginFormat(input) {
+
+		const temp = [];
+
+		input.forEach(a => {
+			let tempArr = a.id.split(',');
+			let tempNameArr = a.name.split(' > ');
+			if (tempArr.length === 1) {
+				temp.push(...this.commonAreas[a.id - 1].children);
+			} else {
+				tempArr.shift();
+				tempNameArr.shift();
+				temp.push({id: tempArr.join(','), name: tempNameArr.join(' > ')});
+			}
+		});
+
+		return temp;
 	}
 }

@@ -34,6 +34,7 @@ describe('AreaSelectorCtrl', () => {
 			'selectedData': [],
 			'valueFormat': [],
 			'platform': 'tb',
+			'marketingOnly': false,
 			'customAreas': [],
 			'$ccTips': {
 				error: () => Promise.resolve()

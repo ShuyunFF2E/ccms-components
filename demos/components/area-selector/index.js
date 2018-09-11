@@ -122,6 +122,54 @@
 			};
 
 
+			const markingData = [
+				{id: "4,110000,110100", name: "华北地区 > 北京市 > 市辖区"},
+			    {id: "4,120000,120200,120223", name: "华北地区 > 天津市 > 县 > 静海县"},
+				{id: "4,120000,120200,120225", name: "华北地区 > 天津市 > 县 > 蓟县"},
+				{id: "4,130000,130200", name: "华北地区 > 河北省 > 唐山市"},
+				{id: "4,150000", name: "华北地区 > 内蒙古自治区"},
+				{id: "1", name: "华东地区"}
+		    ];
+
+			$scope.responseMarketing = function () {
+
+				var areaSelectorInstance = $ccAreaSelector
+
+					.areaSelector({
+						areaSelectorData: markingData,
+						valueFormat: $ccAreaSelector.ID_NAME,
+						marketingOnly: true
+					})
+
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+			$scope.responseMarketingIDNAME = function () {
+
+				var areaSelectorInstance = $ccAreaSelector
+
+					.areaSelector({
+						areaSelectorData: markingData,
+						valueFormat: $ccAreaSelector.ID_ONLY,
+						marketingOnly: true
+					})
+
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+
 		});
 
 })(window.angular);

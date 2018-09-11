@@ -5,6 +5,7 @@
 				ng-mouseout="onMouseover = false"
 				ng-click="ctrl.toggleCalendar($event)">
 		<input class="date-picker-input date-picker-input-year"
+			   		 ng-hide="ctrl.hideYear()"
 					 name="year"
 					 placeholder="YYYY"
 					 maxlength="4"
@@ -17,7 +18,10 @@
 					 ng-keydown="ctrl.setInputLength($event)"
 					 ng-keyup="ctrl.validateValue($event)"
 					 ng-focus="ctrl.focusInput($event)"
-					 ng-blur="ctrl.updateValue($event)"><span class="delimiter">/</span><input class="date-picker-input date-picker-input-month"
+					 ng-blur="ctrl.updateValue($event)"><span ng-hide="ctrl.hideYear()" class="delimiter">/</span><input
+					 ng-hide="ctrl.hideMonth()"
+					 class="date-picker-input date-picker-input-month"
+					 ng-style="{'marginLeft': ctrl.hideYear() ? '5px' : '0'}"
 					 name="month"
 					 placeholder="MM"
 					 maxlength="2"
@@ -30,7 +34,9 @@
 					 ng-keydown="ctrl.setInputLength($event)"
 					 ng-keyup="ctrl.validateValue($event)"
 					 ng-focus="ctrl.focusInput($event)"
-					 ng-blur="ctrl.updateValue($event)"><span class="delimiter">/</span><input class="date-picker-input date-picker-input-date"
+					 ng-blur="ctrl.updateValue($event)"><span ng-hide="ctrl.hideMonth()" class="delimiter">/</span><input
+					 class="date-picker-input date-picker-input-date"
+					 ng-style="{'marginLeft': ctrl.hideMonth() ? '5px' : '0'}"
 					 name="date"
 					 placeholder="DD"
 					 maxlength="2"
@@ -95,5 +101,12 @@
 		<span class="date-picker-icon date-picker-icon-calendar iconfont icon-calendar"></span>
 	</form>
 
-	<cc-calendar on-calendar-open="ctrl.onCalendarOpen()" on-calendar-close="ctrl.onCalendarClose()" is-festival="ctrl.isFestival" custom-festivals="ctrl.customFestivals"></cc-calendar>
+	<cc-calendar on-calendar-open="ctrl.onCalendarOpen()"
+				 on-calendar-close="ctrl.onCalendarClose()"
+				 is-festival="ctrl.isFestival"
+				 custom-festivals="ctrl.customFestivals"
+				 disable-year="ctrl.disableYear"
+				 disable-month="ctrl.disableMonth"
+				 display-format="{{ctrl.displayFormat}}"
+	></cc-calendar>
 </div>
