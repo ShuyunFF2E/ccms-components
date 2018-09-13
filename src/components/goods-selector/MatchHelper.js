@@ -26,9 +26,14 @@ export default {
 	getMethods() {
 		return {
 			// 判断两个字符串是否相等
-			// 商品所属店铺 shopId; 商品标准类目 categories; 商品属性 propsPid
+			// 商品标准类目 categories; 商品属性 propsPid
 			equal: (formVal, val) => {
 				return !formVal && formVal !== 0 || String(formVal).replace(/\s/g, '') === String(val);
+			},
+			// 商品所属店铺 shopId;
+			equalStr: (formVal, val) => {
+				formVal && (formVal = formVal.split(','));
+				return !formVal || !formVal.length || !formVal[0] && formVal[0] !== 0 || formVal.indexOf(String(val)) !== -1;
 			},
 			// 商品状态 status;
 			equalStatus: (formVal, val) => {
@@ -47,7 +52,7 @@ export default {
 			// 判断数组中是否存在某值
 			// 商品 id
 			equalArray: (formVal, val) => {
-				return !formVal.length || !formVal[0] && formVal[0] !== 0 || formVal.indexOf(String(val)) !== -1;
+				return !formVal || !formVal.length || !formVal[0] && formVal[0] !== 0 || formVal.indexOf(String(val)) !== -1;
 			},
 			// 模糊匹配字符串
 			// 商品标题 name; 商品商家编码 outerId; SKU 商家编码 skusOuterId
@@ -58,7 +63,7 @@ export default {
 			// 商品自定义类目 shopCategories; 属性值 propsVid
 			fuzzymutipleArray: (formVal, val) => {
 				let isMatched = false;
-				if (formVal.length) {
+				if (formVal && formVal.length) {
 					for (let i = 0; i < formVal.length; i++) {
 						if (val.indexOf(formVal[i]) !== -1) {
 							isMatched = true;
@@ -115,8 +120,9 @@ export default {
 		for (let attr in config) {
 			if (config.hasOwnProperty(attr)) {
 				let item = config[attr];
-				if (methods[item.method](item.params)) {
-					result.push(methods[item.method](item.params));
+				let itemResult = methods[item.method](item.params);
+				if (itemResult) {
+					result.push(itemResult);
 				}
 			}
 		}
@@ -142,6 +148,11 @@ export default {
 					}
 				});
 				return result ? title + '=' + result : '';
+			},
+
+			queryTitleByValueStr({dataList, valueName, value, titleName, title}) {
+				value = value.split(',');
+				return this.queryTitleByValueArray({dataList, valueName, value, titleName, title});
 			},
 
 			queryTitleByValueArray({dataList, valueName, value, titleName, title}) {

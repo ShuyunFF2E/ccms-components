@@ -3,15 +3,19 @@
 		<section class="form-area">
 			<form class="form-wrapper" cc-validators="$ctrl.validators" name="$ctrl.goodsSelectorForm" ng-init="$ctrl.isSimpleSearch=true;">
 				<!--店铺选择-->
-				<fieldset ng-if="$ctrl.formTplConfig['show-shopId']">
+				<fieldset ng-if="$ctrl.formTplConfig['show-shopId']" class="multiple-shop-list">
 					<label class="goods-label">{{$ctrl.formTplConfig.shopIdTitle}}：</label>
 					<cc-dropdown-select
+							ng-if="$ctrl.isSingleSelectShopList"
 							disabled="$ctrl.isShopListDisabled"
 							model="$ctrl.formModel.shopId"
 							datalist="$ctrl.shopList"
 							mapping="$ctrl.shopListFieldsMap"
 							on-select-change="$ctrl.shopSelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
+					<div class="shop-list-btn" ng-if="!$ctrl.isSingleSelectShopList" ng-click="$ctrl.chooseShop()">
+						<span>您选择了{{$ctrl.selectedShopIdList.length}}个店铺</span>
+					</div>
 				</fieldset>
 				<!--商品ID-->
 				<fieldset ng-if="$ctrl.formTplConfig['show-id']">

@@ -20,11 +20,20 @@
 				10000229165: ['10001562137']
 			};
 
-			var taobaoWithShopList = [{shopId: 106878997, shopName: '数云食堂', plat: 'top'}, {shopId: 157263193, shopName: '0黑色的琴键0', plat: 'top'}, {shopId: 65305757, shopName: '安踏', plat: 'top'}];
-			var jdWithShopList = [{shopId: 23591, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
-			var taobaoWithoutShopList = {shopId: 106878997, shopName: '黑色', plat: 'top'};
-			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
-			var qkWithoutShopList = [{shopId: 2260, shopName: '恰客', plat: 'qiakr'}, {shopId: 234234, shopName: '恰客1', plat: 'qiakr'}];
+			var taobaoWithShopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
+			var jdWithShopList = [{shopId: '23591', shopName: 'JD数云食堂', plat: 'jos'}, {shopId: '24058', shopName: '数云食堂', plat: 'jos'}];
+			var taobaoWithoutShopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
+			var jdWithoutShopList = {shopId: '70866974', shopName: 'JD数云食堂', plat: 'jos'};
+			var qkWithShopList = [{shopId: '2260', shopName: '恰客', plat: 'qiakr'}, {shopId: '234234', shopName: '恰客1', plat: 'qiakr'}];
+			var qkWithMultipleSelectShopList = [];
+			var shopIdArr = ['qiakr_699886823271', 'taobao_69988656765882', 'qiakr_69983486873', 'qiakr_6998868227', 'taobao_69988683345348', 'taobao_699886456546884', 'qiakr_699834586875', 'taobao_69988684534586', 'qiakr_699845686877a', 'taobao_699886888456456b', 'qiakr_69957688687c', 'taobao_6994564588688d', 'qiakr_699886576871e', 'taobao_6994564564886882f', 'qiakr_69985686873g', 'taobao_65465499886884h', 'qiakr_699885676875i', 'taobao_6456499886886j', 'qiakr_699886876877k', 'taobao_6956469886888l', 'qiakr_699886345387m', '45645645', 'qiakr_69988345356871o', 'taobao_699886845645682p', 'qiakr_69983463486873q', 'taobao_69988645645645884r', 'qiakr_69985675686875s', 'taobao_699885645646886t', 'qiakr_699882342346877u', 'taobao_699823423486888v'];
+			qkWithMultipleSelectShopList = shopIdArr.map(id => {
+				return {
+					shopId: id,
+					shopName: '洽课' + id,
+					plat: 'qiakr'
+				};
+			});
 
 			var isOnlyChecked = false; // 是否包含 footer
 			var maxSelectedNumber = 1000; // 最大允许选择的商品数量
@@ -192,7 +201,7 @@
 				name: '22222', // 商品名称
 				platform: 'top', // 平台
 				categoriesId: '44556677881', // 商品标准类目
-				shopId: 2260, // 店铺ID
+				shopId: 'taobao_69988656765882, qiakr_699886823271',
 				skusId: ['22342343'], // 商品编号
 				skusPropsVname: '55555', // sku 规格
 				startListTime: new Date(1530374400000), // 上架时间
@@ -211,7 +220,27 @@
 			// qk 无店铺选择
 			$scope.openQKGoodsSelector = function() {
 				$ccGoodsSelector
-					.goodsSelector(qkWithoutShopList, qiakeOptions)
+					.goodsSelector(qkWithShopList, qiakeOptions)
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+			// qk 无店铺选择
+			var qiakeOptions1 = {
+				isSingleSelectShopList: false,
+				isOnlyChecked,
+				maxSelectedNumber,
+				tenantId,
+				isSupportedAddCondition,
+				conditions: qiakeConditions
+			};
+			$scope.openQKGoodsSelectorMultipleSelectShopList = function() {
+				$ccGoodsSelector
+					.goodsSelector(qkWithMultipleSelectShopList, qiakeOptions1)
 					.open().result.then(function(response) {
 						console.log('-----------ok-----------');
 						console.log(response);

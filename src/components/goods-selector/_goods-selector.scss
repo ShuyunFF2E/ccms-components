@@ -64,11 +64,11 @@
 		&.goods-price input {
 		  width: 69px;
 		}
-		&.goods-selector-label {
+		&.goods-selector-label, &.multiple-shop-list {
 		  .goods-label {
 			margin-top: 8px;
 		  }
-		  .goods-label-btn {
+		  .goods-label-btn, .shop-list-btn {
 			float: right;
 			width: 150px;
 			height: 30px;
@@ -80,6 +80,9 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			color: #3d3d3d;
+			&:hover {
+			  cursor: pointer;
+			}
 		  }
 		}
 		&.operate {

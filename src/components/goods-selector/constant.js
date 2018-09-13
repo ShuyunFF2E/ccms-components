@@ -6,9 +6,7 @@ export const getExceedSelectedNumberMsg = number => {
 	return `<span>最多允许选择${number}条数据</span>`;
 };
 
-export const getExceedSelectedAllNumberMsg = number => {
-	return `当前商品超过${ number }个，不支持全部选中，请修改条件后重新搜索。`;
-};
+export const exceedSelectedAllNumberMsg = '您选择的商品过多，不支持全部选中，请修改条件后重新搜索。';
 
 export const errorMsg = '出错提示：后台服务出错，请联系数云客服人员';
 
@@ -74,7 +72,7 @@ export const getFormConfig = () => {
 	return {
 		// 已选商品 form 表单搜索配置项（前端搜索）
 		formConfig: {
-			shopId: 'equal',
+			shopId: 'equalStr',
 			id: 'equalArray',
 			name: 'fuzzySearch',
 			shopCategoriesId: 'fuzzymutipleArray',
