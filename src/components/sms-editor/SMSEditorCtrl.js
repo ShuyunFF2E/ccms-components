@@ -35,6 +35,8 @@ export default class SMSEditorCtrl {
 		this.opts || (this.opts = {});
 		this.keywordPrefix = this.opts.keywordPrefix || '$$';
 		this.keywordSuffix = this.opts.keywordSuffix || '$$';
+		// 是否支持图片
+		this.isSupportImage = angular.isDefined(this.opts.isSupportImage) ? this.opts.isSupportImage : true;
 		this.trimContent = angular.isDefined(this.opts.trimContent) ? this.opts.trimContent : true;
 
 		this._content = $element[0].querySelector('[data-content]');
@@ -308,9 +310,14 @@ export default class SMSEditorCtrl {
 			const content = item.length ? `<div>${item}</div>` : '<div><br/></div>';
 			sms.push(content);
 		}
-		const parsed = sms.join('').replace(/\{([^}]+)}/g, (result, $1) => {
-			return this.createImage($1);
-		});
+
+		let parsed = sms.join('');
+
+		if (this.isSupportImage) {
+			parsed = parsed.replace(/\{([^}]+)}/g, (result, $1) => {
+				return this.createImage($1);
+			});
+		}
 		return parsed;
 	}
 
