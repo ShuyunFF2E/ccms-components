@@ -21,6 +21,11 @@
 	<button type="button" ng-click="openJosSingleSelectWithShopList()">Open Goods Selector(JD + 店铺选择)</button>
 	<button type="button" ng-click="openTopSingleSelectWithoutShopList()">Open Goods Selector(Taobao)</button>
 	<button type="button" ng-click="openJosSingleSelectWithoutShopList()">Open Goods Selector(JD)</button>
+
+	<button ng-click="isSupportedAddCondition = !isSupportedAddCondition" class="btn-ok" style="display: block; margin-top: 20px;">
+		<span ng-if="isSupportedAddCondition">关闭添加为搜索条件功能</span>
+		<span ng-if="!isSupportedAddCondition">开启添加为搜索条件功能</span>
+	</button>
 </main>
 
 <script src="/components.js"></script>

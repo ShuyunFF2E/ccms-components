@@ -17,19 +17,18 @@
 	var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 	var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
 	var tenantId = 'sjyj'; // 租户ID tenantId
-	var isSupportedAddCondition = true; // 是否支持添加为搜索条件
 	var conditions = { // 搜索条件
-		categoriesId: '111111', // 商品标准类目 1629
+		categoriesId: '50012906', // 商品标准类目 '111111'
 		endListTime: new Date(1531843200000), // 下架时间
 		id: ['11111'], // 商品ID
 		maxPrice: '200', // 最高价
 		minPrice: '100', // 最低价
 		name: '22222', // 商品名称
 		outerId: '33333', // 商品商家编码
-		propsPid: '1', // 商品属性 20021
-		propsVid: '11', // 属性值 21540056
+		propsPid: '122216563', // 商品属性 '1'
+		propsVid: '3376399', // 属性值 '11'
 		propsVname: null, // 属性值名称
-		shopCategoriesId: ['111111'], // 商品自定义类目 ['810124529', '809546836']
+		shopCategoriesId: ['810124529', '809546836'], // 商品自定义类目 ['111111']
 		shopId: 157263193, // 店铺ID
 		skusOuterId: '44444', // sku 商家编码
 		skusPropsVname: '55555', // sku 规格
@@ -117,7 +116,8 @@
 	var isSingleSelect = true; // 是否是单选列表
 
 	// top + sku 维度 + 店铺选择
-	function openTopWithShopList($scope, $ccGoodsSelector) {
+	function openTopWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+		console.log(isSupportedAddCondition);
 		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
@@ -144,7 +144,7 @@
 	}
 
 	// top + sku 维度 + 单店铺
-	function openTopWithoutShopList($scope, $ccGoodsSelector) {
+	function openTopWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
@@ -171,7 +171,7 @@
 	}
 
 	// top + 商品维度 + 店铺选择
-	function openTopWithoutSkuWithShopList($scope, $ccGoodsSelector) {
+	function openTopWithoutSkuWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
@@ -199,7 +199,7 @@
 	}
 
 	// top + 商品维度 + 单店铺
-	function openTopWithoutSkuWithoutShopList($scope, $ccGoodsSelector) {
+	function openTopWithoutSkuWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
@@ -227,7 +227,7 @@
 	}
 
 	// top + 商品维度 + 店铺选择 + 单选（微信CRM）
-	function openTopSingleSelectWithShopList($scope, $ccGoodsSelector) {
+	function openTopSingleSelectWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
@@ -239,7 +239,7 @@
 			isSupportedSku,
 			isSingleSelect
 		};
-		var selectedGoods = { 541920723552: null };
+		var selectedGoods = { 35647605646: null };
 		$ccGoodsSelector
 			.goodsSelector(shopList, options, selectedGoods)
 			.open().result.then(function(response) {
@@ -251,7 +251,7 @@
 	}
 
 	// top + 商品维度 + 单店铺 + 单选（微信CRM）
-	function openTopSingleSelectWithoutShopList($scope, $ccGoodsSelector) {
+	function openTopSingleSelectWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
@@ -263,7 +263,7 @@
 			isSupportedSku,
 			isSingleSelect
 		};
-		var selectedGoods = { 541920723552: null };
+		var selectedGoods = { 35647605646: null };
 		$ccGoodsSelector
 			.goodsSelector(shopList, options, selectedGoods)
 			.open().result.then(function(response) {

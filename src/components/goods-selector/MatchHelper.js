@@ -32,8 +32,11 @@ export default {
 			},
 			// 商品所属店铺 shopId;
 			equalStr: (formVal, val) => {
-				formVal && (formVal = formVal.split(','));
-				return !formVal || !formVal.length || !formVal[0] && formVal[0] !== 0 || formVal.indexOf(String(val)) !== -1;
+				if (Array.isArray(formVal)) {
+					return !formVal.length || !formVal[0] && formVal[0] !== 0 || formVal.indexOf(String(val)) !== -1;
+				} else {
+					return !formVal && formVal !== 0 || String(formVal).replace(/\s/g, '') === String(val);
+				}
 			},
 			// 商品状态 status;
 			equalStatus: (formVal, val) => {
@@ -151,8 +154,11 @@ export default {
 			},
 
 			queryTitleByValueStr({dataList, valueName, value, titleName, title}) {
-				value = value.split(',');
-				return this.queryTitleByValueArray({dataList, valueName, value, titleName, title});
+				if (Array.isArray(value)) {
+					return this.queryTitleByValueArray({dataList, valueName, value, titleName, title});
+				} else {
+					return this.queryTitleByValue({dataList, valueName, value, titleName, title});
+				}
 			},
 
 			queryTitleByValueArray({dataList, valueName, value, titleName, title}) {

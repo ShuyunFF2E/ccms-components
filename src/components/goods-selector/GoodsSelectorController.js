@@ -194,7 +194,7 @@ export default class GoodsSelectorCtrl {
 			dateOnly: true
 		};
 		const formModel = {
-			shopId: this.selectedShopIdList.join(','), // 店铺
+			shopId: this.isSingleSelectShopList ? this.selectedShopIdList[0] : this.selectedShopIdList, // 店铺
 			id: c.id || [], // 商品ID 数组
 			name: c.name || null, // 商品名称 模糊匹配
 			shopCategoriesId: c.shopCategoriesId || [], // shopCategories.id 自定义类目 数组
@@ -247,7 +247,8 @@ export default class GoodsSelectorCtrl {
 
 		// 用户传进来的已选商品处理
 		const goodsDataParams = {
-			shopInfo: this.shopList[0],
+			shopId: this.selectedShopIdList,
+			plat: this.shopList[0].plat,
 			selectedGoods: this.selectedData,
 			serverName: this.serverName,
 			isSupportedSku: this.isSupportedSku
@@ -804,12 +805,8 @@ export default class GoodsSelectorCtrl {
 			this._$ccValidator.setPristine(formCtrl);
 			this.initConditionsMsg();
 			this.selectedLabels = [];
-			if (this.isSingleSelectShopList) {
-				this.selectedShopIdList = [this.shopList[0].shopId];
-			} else {
-				this.selectedShopIdList = this.shopList.map(item => item.shopId);
-			}
-			this.formModel.shopId = this.selectedShopIdList.join(',');
+			this.selectedShopIdList = this.isSingleSelectShopList ? [this.shopList[0].shopId] : this.shopList.map(item => item.shopId);
+			this.formModel.shopId = this.isSingleSelectShopList ? this.shopList[0].shopId : this.shopList.map(item => item.shopId);
 		}
 		if (this.isSelectedGoodsTab) {
 			this.selectedLabelsOfSelected = [];
@@ -827,7 +824,7 @@ export default class GoodsSelectorCtrl {
 				}
 			}
 		}
-		formModel.shopId = this.selectedShopIdList.join(',');
+		formModel.shopId = this.isSingleSelectShopList ? this.shopList[0].shopId : this.shopList.map(item => item.shopId);
 		formModel.status = '-1';
 		dateRange.start = dateRange.end = null;
 	};
@@ -1526,19 +1523,16 @@ export default class GoodsSelectorCtrl {
 
 	// 店铺选择器
 	chooseShop() {
-		console.log(this.selectedShopIdList);
 		this._$ccShopSelector.shopSelector(this.tenantId, {selectedShop: this.selectedShopIdList})
 			.open()
 			.result
 			.then(res => {
 				if (res && res.length) {
 					this.selectedShopIdList = res.map(item => item.id);
-					this.formModel.shopId = this.selectedShopIdList.join(',');
+					this.formModel.shopId = this.selectedShopIdList;
 				} else {
 					this._$ccTips.error('请至少选择一个店铺');
 				}
-			}, () => {
-				this._$ccTips.error(errorMsg);
 			});
 	}
 }

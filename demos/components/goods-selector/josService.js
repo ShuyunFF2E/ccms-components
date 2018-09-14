@@ -16,17 +16,16 @@
 	var isOnlyChecked = false; // 是否包含 footer
 	var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 	var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
-	var isSupportedAddCondition = true; // 是否支持添加为搜索条件
 	var conditions = { // 搜索条件
-		categoriesId: '111111', // 商品标准类目 1629
+		categoriesId: '9756', // 商品标准类目 '111111'
 		endListTime: new Date(1531843200000), // 下架时间
 		id: ['11111'], // 商品ID
 		maxPrice: '200', // 最高价
 		minPrice: '100', // 最低价
 		name: '22222', // 商品名称
 		outerId: '33333', // 商品商家编码
-		propsPid: '1', // 商品属性 20021
-		propsVid: '11', // 属性值 21540056
+		propsPid: '142844', // 商品属性 '1'
+		propsVid: '739099', // 属性值 '11'
 		propsVname: null, // 属性值名称
 		shopId: 24058, // 店铺ID
 		skusId: ['22342343'], // 商品编号
@@ -39,7 +38,7 @@
 	var isSingleSelect = true; // 是否是单选列表
 
 	// jos + sku 维度 + 店铺选择
-	function openJosWithShopList($scope, $ccGoodsSelector) {
+	function openJosWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = [{shopId: '23591', shopName: 'JD数云食堂', plat: 'jos'}, {shopId: '24058', shopName: '数云食堂', plat: 'jos'}];
 		var options = {
 			isOnlyChecked,
@@ -49,10 +48,8 @@
 			conditions
 		};
 		var selectedGoods = {
-			541920723552: ['3419076274289'],
-			532988558193: null,
-			554208360201: ['3577205138168'],
-			562099525613: null
+			10000227589: null,
+			10000199519: ['10001403018']
 		};
 		$ccGoodsSelector
 			.goodsSelector(shopList, options, selectedGoods)
@@ -65,7 +62,7 @@
 	}
 
 	// jos + sku 维度 + 单店铺
-	function openJosWithoutShopList($scope, $ccGoodsSelector) {
+	function openJosWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = {shopId: '23591', shopName: 'JD数云食堂', plat: 'jos'};
 		var options = {
 			isOnlyChecked,
@@ -91,7 +88,7 @@
 	}
 
 	// jos + 商品维度 + 店铺选择
-	function openJosWithoutSkuWithShopList($scope, $ccGoodsSelector) {
+	function openJosWithoutSkuWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = [{shopId: '23591', shopName: 'JD数云食堂', plat: 'jos'}, {shopId: '24058', shopName: '数云食堂', plat: 'jos'}];
 		var options = {
 			isOnlyChecked,
@@ -118,7 +115,7 @@
 	}
 
 	// jos + 商品维度 + 单店铺
-	function openJosWithoutSkuWithoutShopList($scope, $ccGoodsSelector) {
+	function openJosWithoutSkuWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = {shopId: '23591', shopName: 'JD数云食堂', plat: 'jos'};
 		var options = {
 			isOnlyChecked,
@@ -145,7 +142,7 @@
 	}
 
 	// jos + 商品维度 + 店铺选择 + 单选（微信CRM）
-	function openJosSingleSelectWithShopList($scope, $ccGoodsSelector) {
+	function openJosSingleSelectWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = [{shopId: '23591', shopName: 'JD数云食堂', plat: 'jos'}, {shopId: '24058', shopName: '数云食堂', plat: 'jos'}];
 		var options = {
 			isOnlyChecked,
@@ -156,7 +153,7 @@
 			isSupportedSku,
 			isSingleSelect
 		};
-		var selectedGoods = { 10000227589: null };
+		var selectedGoods = { 10000198283: null };
 		$ccGoodsSelector
 			.goodsSelector(shopList, options, selectedGoods)
 			.open().result.then(function(response) {
@@ -168,7 +165,7 @@
 	}
 
 	// top + 商品维度 + 单店铺 + 单选（微信CRM）
-	function openJosSingleSelectWithoutShopList($scope, $ccGoodsSelector) {
+	function openJosSingleSelectWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
 		var shopList = {shopId: '23591', shopName: 'JD数云食堂', plat: 'jos'};
 		var options = {
 			isOnlyChecked,
@@ -179,7 +176,7 @@
 			isSupportedSku,
 			isSingleSelect
 		};
-		var selectedGoods = { 10000227589: null };
+		var selectedGoods = { 10000198283: null };
 		$ccGoodsSelector
 			.goodsSelector(shopList, options, selectedGoods)
 			.open().result.then(function(response) {
