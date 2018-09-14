@@ -4,16 +4,19 @@ import { apiPrefix } from './constant';
 export default {
 	// 获取商品自自定义类目数据
 	getShopCategories(serverName, platform, shopId) {
+		shopId = String(shopId).split(',').join('&shopId=');
 		return genResource(`${ serverName }${ apiPrefix }/shop_categories?platform=${ platform }&shopId=${ shopId }`);
 	},
 
 	// 获取商品标准类目列表
 	getCategories(serverName, platform, shopId) {
+		shopId = String(shopId).split(',').join('&shopId=');
 		return genResource(`${ serverName }${ apiPrefix }/categories?platform=${platform}&shopId=${ shopId }`);
 	},
 
 	// 获取商品品牌
 	getBrands(serverName, platform, shopId) {
+		shopId = String(shopId).split(',').join('&shopId=');
 		return genResource(`${ serverName }${ apiPrefix }/brands?platform=${ platform }&shopId=${ shopId }`);
 	},
 
@@ -24,6 +27,7 @@ export default {
 
 	// 获取商品属性
 	getProperties(serverName, platform, shopId, itemId) {
+		shopId = String(shopId).split(',').join('&shopId=');
 		return genResource(`${ serverName }${ apiPrefix }/categories/${ itemId }/properties?platform=${ platform }&shopId=${ shopId }`);
 	},
 
