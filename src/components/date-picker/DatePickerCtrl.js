@@ -4,7 +4,7 @@
 
 import angular from 'angular';
 
-import { Inject } from 'angular-es-utils';
+import {Debounce, Inject} from 'angular-es-utils/decorators';
 
 import { DISPLAY_FORMAT } from '../../common/bases/constant';
 
@@ -221,9 +221,9 @@ export default class DatePickerCtrl {
 				parseNumber(parts.year),
 				parseNumber(parts.month) - 1,
 				parseNumber(parts.date),
-				parseNumber(parts.hour),
-				parseNumber(parts.minute),
-				parseNumber(parts.second)
+				parseNumber(parts.hour || 0),
+				parseNumber(parts.minute || 0),
+				parseNumber(parts.second || 0)
 			);
 		} else {
 			return null;
@@ -258,6 +258,7 @@ export default class DatePickerCtrl {
 	 * 输入/修改年月日值时, 验证合法性
 	 * @param $event
 	 */
+	@Debounce(300)
 	validateValue($event) {
 		const input = $event.target,
 			value = +input.value,
