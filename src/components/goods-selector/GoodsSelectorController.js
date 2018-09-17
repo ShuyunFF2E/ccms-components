@@ -22,7 +22,7 @@ import service from './service';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
-	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions', 'isSingleSelect', 'isSingleSelectShopList', '$ccShopSelector', 'selectedShopId')
+	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions', 'isSingleSelect', 'isSingleSelectShopList', '$ccShopSelector')
 
 export default class GoodsSelectorCtrl {
 
@@ -66,22 +66,11 @@ export default class GoodsSelectorCtrl {
 		this.isShowShopList = Array.isArray(this.shopInfoData);
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this.shopInfoData : [this.shopInfoData];
-		this.selectedShopId = this._selectedShopId;
-		// 已选店铺 ID 列表，如果是店铺多选，那么默认值是所有店铺 ID，如果是店铺多选，那么默认值是第一个店铺 ID
-		this.selectedShopIdList = [this.shopList[0].shopId];
-		if (!this.isSingleSelectShopList) {
-			if (this.isSupportedAddCondition && this.conditions.shopId) {
-				this.selectedShopIdList = this.conditions.shopId.split(',').map(item => item.replace(/^\s+|\s+$/g, ''));
-			} else {
-				this.selectedShopIdList = this.selectedShopId.length ? cloneDeep(this.selectedShopId) : this.shopList.map(item => item.shopId);
-			}
-		}
-
-		this.selectedShopIdListOfAll = cloneDeep(this.selectedShopIdList);
-		this.selectedShopIdListOfSelected = cloneDeep(this.selectedShopIdList);
-
 		this.isTaobao = this.shopList[0].plat === 'top';
 		this.isQiake = this.shopList[0].plat === 'qiakr';
+
+		// 获取已选店铺 ID 数组
+		this.selectedShopIdList = this.getSelectedShopIdList();
 
 		// 商品状态
 		this.statusList = statusList;
@@ -161,7 +150,26 @@ export default class GoodsSelectorCtrl {
 		this.prepareSelectedPagerGridOptions();
 	}
 
+	// 获取已选店铺 ID 数组
+	getSelectedShopIdList() {
+		let selectedShopIdList = [];
+		if (!this.isSingleSelectShopList) {
+			if (this.isSupportedAddCondition && this.conditions.shopId) {
+				selectedShopIdList = this.conditions.shopId.split(',').map(item => item.replace(/^\s+|\s+$/g, ''));
+			} else {
+				selectedShopIdList = this.shopList.map(item => item.shopId);
+			}
+		} else {
+			if (this.isSupportedAddCondition && this.conditions.shopId) {
+				selectedShopIdList = [this.conditions.shopId];
+			} else {
+				selectedShopIdList = [this.shopList[0].shopId];
+			}
+		}
+		return selectedShopIdList;
+	}
 	// 更新已选商品数组
+
 	updateSelectedItems(entity) {
 		let targetIndex = this.findEntity(this.selectedItems, entity);
 		if (entity.checked || entity.partial) {
@@ -677,8 +685,7 @@ export default class GoodsSelectorCtrl {
 			this.allDateRangeModel = cloneDeep(this.dateRange);
 			this.allGoodsFormModel = cloneDeep(this.formModel);
 			this.selectedLabelsOfAll = cloneDeep(this.selectedLabels);
-			this.selectedShopIdListOfAll = cloneDeep(this.selectedShopIdList);
-			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel, this.selectedLabelsOfSelected, this.selectedShopIdListOfSelected);
+			this.handleForm(this.selectedDateRangeModel, this.selectedGoodsFormModel, this.selectedLabelsOfSelected);
 			this.isSelectedExtendAll = utils.isAllChildrenExtend(this.selectedItems);
 			this.showLoading = true;
 			setTimeout(() => {
@@ -691,8 +698,7 @@ export default class GoodsSelectorCtrl {
 			this.selectedDateRangeModel = cloneDeep(this.dateRange);
 			this.selectedGoodsFormModel = cloneDeep(this.formModel);
 			this.selectedLabelsOfSelected = cloneDeep(this.selectedLabels);
-			this.selectedShopIdListOfSelected = cloneDeep(this.selectedShopIdList);
-			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel, this.selectedLabelsOfAll, this.selectedShopIdListOfAll);
+			this.handleForm(this.allDateRangeModel, this.allGoodsFormModel, this.selectedLabelsOfAll);
 			if (this.isAddSection) {
 				this.getBatchImportApi();
 				this._$ccGrid.refresh(this.pagerGridOptions).then(() => {
@@ -729,10 +735,9 @@ export default class GoodsSelectorCtrl {
 	}
 
 	// tab 切换时 form 表单处理
-	handleForm(dateRangeModel, formModel, selectedLabels, selectedShopIdList) {
+	handleForm(dateRangeModel, formModel, selectedLabels) {
 		this.dateRange = cloneDeep(dateRangeModel);
 		this.selectedLabels = cloneDeep(selectedLabels);
-		this.selectedShopIdList = cloneDeep(selectedShopIdList);
 		const categoriesId = this.formModel.categoriesId;
 		const propsPid = this.formModel.propsPid;
 		for (let attr in formModel) {
@@ -757,34 +762,38 @@ export default class GoodsSelectorCtrl {
 		this.getSearchApi();
 		this.isAddSectionExtend = false;
 		this.isCheckedAll = false;
-		this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
-			this.transformDateParams();
-			if (!isSelectedGoodsTab) {
-				// 全部商品 tab，后端搜索
-				this.allGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId; // 搜索条件是否包含 sku
-				utils.transformParams(this.pagerGridOptions.queryParams, this.formModel);
-				this.updateAllGoodsGrid();
-			} else {
-				// 已选商品 tab，前端搜索
-				this.selectedGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId;
-				this.transformSelectedItems();
-				matchHelper.match(this.formModel, this.selectedItems, this.formConfig);
-				this.selectedItems.forEach(item => {
-					if (!item.skus || !item.skus.length) {
-						if (this.formModel.skusOuterId || this.formModel.skusPropsVname) {
-							item.isHide = true;
+		if (!this.formModel.shopId || this.formModel.shopId && !this.formModel.shopId.length) {
+			this._$ccTips.error('请至少选择一个店铺');
+		} else {
+			this._$ccValidator.validate(this.goodsSelectorForm).then(() => {
+				this.transformDateParams();
+				if (!isSelectedGoodsTab) {
+					// 全部商品 tab，后端搜索
+					this.allGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId; // 搜索条件是否包含 sku
+					utils.transformParams(this.pagerGridOptions.queryParams, this.formModel);
+					this.updateAllGoodsGrid();
+				} else {
+					// 已选商品 tab，前端搜索
+					this.selectedGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId;
+					this.transformSelectedItems();
+					matchHelper.match(this.formModel, this.selectedItems, this.formConfig);
+					this.selectedItems.forEach(item => {
+						if (!item.skus || !item.skus.length) {
+							if (this.formModel.skusOuterId || this.formModel.skusPropsVname) {
+								item.isHide = true;
+							}
+						} else {
+							if (utils.isAllChildrenHide(item.skus)) {
+								item.isHide = true;
+							}
 						}
-					} else {
-						if (utils.isAllChildrenHide(item.skus)) {
-							item.isHide = true;
-						}
-					}
-				});
-				// 商品标签筛选单独处理，因为 form 表单中保存的是商品标签对应的商品ID数组，而不是商品标签本身，查询的时候需要直接筛选出包含在商品ID数组中的所有商品
-				matchHelper.goodsLabelSearch(this.selectedItems, this.selectedLabels);
-				this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
-			}
-		}, () => {});
+					});
+					// 商品标签筛选单独处理，因为 form 表单中保存的是商品标签对应的商品ID数组，而不是商品标签本身，查询的时候需要直接筛选出包含在商品ID数组中的所有商品
+					matchHelper.goodsLabelSearch(this.selectedItems, this.selectedLabels);
+					this.selectedPagerGridOptions.onRefresh(this.selectedPagerGridOptions);
+				}
+			}, () => {});
+		}
 	};
 
 	// 搜索操作下的 api 和 表格查询参数
@@ -806,15 +815,13 @@ export default class GoodsSelectorCtrl {
 			this._$ccValidator.setPristine(formCtrl);
 			this.initConditionsMsg();
 			this.selectedLabels = [];
-			this.selectedShopIdList = this.isSingleSelectShopList ? [this.shopList[0].shopId] : (this.isSupportedAddCondition ? this.shopList.map(item => item.shopId) : cloneDeep(this.selectedShopId));
+			this.selectedShopIdList = this.isSingleSelectShopList ? [this.shopList[0].shopId] : cloneDeep(this.selectedShopIdList);
 			this.formModel.shopId = this.isSingleSelectShopList ? this.selectedShopIdList[0] : cloneDeep(this.selectedShopIdList);
 		}
 		if (this.isSelectedGoodsTab) {
 			this.selectedLabelsOfSelected = [];
-			this.selectedShopIdListOfSelected = this.isSupportedAddCondition ? this.shopList.map(item => item.shopId) : cloneDeep(this.selectedShopId);
 		} else {
 			this.selectedLabelsOfAll = [];
-			this.selectedShopIdListOfAll = this.isSupportedAddCondition ? this.shopList.map(item => item.shopId) : cloneDeep(this.selectedShopId);
 		}
 		for (let attr in formModel) {
 			if (formModel.hasOwnProperty(attr) && attr !== 'platform' && attr !== 'shopId' && attr !== 'status') {
@@ -1520,20 +1527,5 @@ export default class GoodsSelectorCtrl {
 		this.conditionsModel = {};
 		this.pagerGridOptions.conditionLength = this.selectedPagerGridOptions.conditionLength = 0;
 		this.wakeupScroll();
-	}
-
-	// 店铺选择器
-	chooseShop() {
-		this._$ccShopSelector.shopSelector(this.tenantId, {selectedShop: this.selectedShopIdList})
-			.open()
-			.result
-			.then(res => {
-				if (res && res.length) {
-					this.selectedShopIdList = res.map(item => item.id);
-					this.formModel.shopId = this.selectedShopIdList;
-				} else {
-					this._$ccTips.error('请至少选择一个店铺');
-				}
-			});
 	}
 }

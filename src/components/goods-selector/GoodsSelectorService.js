@@ -20,11 +20,10 @@ const GoodsSelectorService = {
 	 * @params isSupportedAddCondition bool 是否支持添加为搜索条件，默认不支持
 	 * @params isSingleSelect bool 单选 or 多选 默认是多选
 	 * @params isSingleSelectShopList Object 店铺单选/多选，默认是单选
-	 * @params selectedShopId Array 店铺多选情况下已选店铺ID数组
 	 * */
 	goodsSelector(shopInfo, { isOnlyChecked = false, maxSelectedNumber = 100, serverName = '',
 		isSupportedSku = true, tenantId = null, isSupportedAddCondition = false, conditions = {},
-		isSingleSelect = false, isSingleSelectShopList = true, selectedShopId = [] }, selectedGoods = []) {
+		isSingleSelect = false, isSingleSelectShopList = true }, selectedGoods = []) {
 
 		if (typeof shopInfo === 'undefined') {
 			throw new Error('goodsSelector 缺少 shopInfo 参数');
@@ -33,10 +32,6 @@ const GoodsSelectorService = {
 		let isTaobao = Array.isArray(shopInfo) ? shopInfo[0].plat === 'top' : shopInfo === 'top';
 		if ((isTaobao || !isSingleSelectShopList) && (!tenantId || tenantId === 0)) {
 			throw new Error('goodsSelector 缺少 tenantId 参数');
-		}
-
-		if (!isSingleSelectShopList && !selectedShopId.length) {
-			throw new Error('至少传入一个店铺 -> selectedShopId (Array)');
 		}
 
 		if (!isSupportedAddCondition && JSON.stringify(conditions) !== '{}') {
@@ -60,8 +55,7 @@ const GoodsSelectorService = {
 					isSupportedAddCondition: isSupportedAddCondition,
 					conditions: conditions,
 					isSingleSelect: isSingleSelect,
-					isSingleSelectShopList: isSingleSelectShopList,
-					selectedShopId: selectedShopId
+					isSingleSelectShopList: isSingleSelectShopList
 				},
 				controller: GoodsSelectorController,
 				controllerAs: '$ctrl',

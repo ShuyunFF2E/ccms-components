@@ -13,9 +13,16 @@
 							mapping="$ctrl.shopListFieldsMap"
 							on-select-change="$ctrl.shopSelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
-					<div class="shop-list-btn" ng-if="!$ctrl.isSingleSelectShopList" ng-click="$ctrl.chooseShop()">
-						<span>您选择了{{$ctrl.selectedShopIdList.length}}个店铺</span>
-					</div>
+					<cc-dropdown-multiselect
+							ng-if="!$ctrl.isSingleSelectShopList"
+							placeholder="请选择店铺"
+							model="$ctrl.formModel.shopId"
+							datalist="$ctrl.shopList"
+							searchable="true"
+							mapping="$ctrl.shopListFieldsMap"
+							has-select-all="true"
+							on-select-change="$ctrl.shopSelectChange(newValue, oldValue, itemIndex, item)">
+					</cc-dropdown-multiselect>
 				</fieldset>
 				<!--商品ID-->
 				<fieldset ng-if="$ctrl.formTplConfig['show-id']">
