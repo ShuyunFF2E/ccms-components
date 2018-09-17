@@ -48,6 +48,7 @@ export default class GoodsSelectorCtrl {
 		// 是否支持添加为搜索条件
 		this.isSupportedAddCondition = this._isSupportedAddCondition;
 		// 搜索条件
+		this._conditions.shopId = String(this._conditions.shopId);
 		this.conditions = cloneDeep(this._conditions);
 		this.conditionsModel = cloneDeep(this._conditions);
 		// 店铺是否是单选
@@ -155,7 +156,7 @@ export default class GoodsSelectorCtrl {
 		let selectedShopIdList = [];
 		if (!this.isSingleSelectShopList) {
 			if (this.isSupportedAddCondition && this.conditions.shopId) {
-				selectedShopIdList = this.conditions.shopId.split(',').map(item => item.replace(/^\s+|\s+$/g, ''));
+				selectedShopIdList = String(this.conditions.shopId).split(',').map(item => item.replace(/^\s+|\s+$/g, ''));
 			} else {
 				selectedShopIdList = this.shopList.map(item => item.shopId);
 			}

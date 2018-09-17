@@ -21,7 +21,7 @@
 		name: '22222', // 商品名称
 		platform: 'top', // 平台
 		categoriesId: '1089', // 商品标准类目 '111111'
-		shopId: '72897, 72903',
+		shopId: '72897',
 		skusId: ['22342343'], // 商品编号
 		skusPropsVname: '55555', // sku 规格
 		startListTime: new Date(1530374400000), // 上架时间
@@ -32,7 +32,7 @@
 
 	// qiakr + sku 维度 + 店铺选择（单选）
 	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
-		var shopList = [{shopId: '2260', shopName: '恰客', plat: 'qiakr'}, {shopId: '234234', shopName: '恰客1', plat: 'qiakr'}];
+		var shopList = [{shopId: '72903', shopName: '恰客', plat: 'qiakr'}, {shopId: '72897', shopName: '恰客1', plat: 'qiakr'}];
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,

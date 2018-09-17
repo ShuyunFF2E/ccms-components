@@ -2,7 +2,7 @@
 	<fieldset ng-if="$ctrl.formTplConfig['show-shopId']" class="multiple-shop-list">
 		<label class="goods-label">店铺选择：</label>
 		<cc-dropdown-select ng-if="$ctrl.isSingleSelectShopList"></cc-dropdown-select>
-		<div class="shop-list-btn" ng-if="!$ctrl.isSingleSelectShopList"></div>
+		<cc-dropdown-multiselect ng-if="!$ctrl.isSingleSelectShopList"></cc-dropdown-multiselect>
 	</fieldset>
 	<fieldset ng-if="$ctrl.formTplConfig['show-id']">
 		<label class="goods-label">商品ID：</label>

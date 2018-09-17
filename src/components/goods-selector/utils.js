@@ -243,6 +243,7 @@ export const utils = {
 					} else {
 						result[`show-${attr}`] = itemsIndex >= 0 && !items[itemsIndex].isSkuItem;
 					}
+					result['show-shopId'] = isShowShopList;
 				} else {
 					if (isSupportedSku) {
 						if (isShowShopList) {
