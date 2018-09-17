@@ -50,7 +50,7 @@ const lunnarFestivals = {
 
 
 const yearList = (function() {
-	const end = new Date().getFullYear() + 10,
+	const end = new Date().getFullYear() + 30,
 		result = [];
 
 	for (let i = 1900; i <= end; i += 1) {

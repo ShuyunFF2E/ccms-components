@@ -20,6 +20,7 @@ export default {
 	scope: {
 		dateOnly: '=',
 		disabled: '=',
+		disabledInput: '=',
 		minDate: '=',
 		maxDate: '=',
 		rangeStart: '=',
