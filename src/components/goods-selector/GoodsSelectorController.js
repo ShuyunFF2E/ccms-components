@@ -22,7 +22,7 @@ import service from './service';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
-	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions', 'isSingleSelect', 'isSingleSelectShopList', '$ccShopSelector')
+	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions', 'isSingleSelect', 'isSingleSelectShopList', '$ccShopSelector', 'selectedShopId')
 
 export default class GoodsSelectorCtrl {
 
@@ -66,13 +66,14 @@ export default class GoodsSelectorCtrl {
 		this.isShowShopList = Array.isArray(this.shopInfoData);
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this.shopInfoData : [this.shopInfoData];
+		this.selectedShopId = this._selectedShopId;
 		// 已选店铺 ID 列表，如果是店铺多选，那么默认值是所有店铺 ID，如果是店铺多选，那么默认值是第一个店铺 ID
 		this.selectedShopIdList = [this.shopList[0].shopId];
 		if (!this.isSingleSelectShopList) {
 			if (this.isSupportedAddCondition && this.conditions.shopId) {
 				this.selectedShopIdList = this.conditions.shopId.split(',').map(item => item.replace(/^\s+|\s+$/g, ''));
 			} else {
-				this.selectedShopIdList = this.shopList.map(item => item.shopId);
+				this.selectedShopIdList = this.selectedShopId.length ? cloneDeep(this.selectedShopId) : this.shopList.map(item => item.shopId);
 			}
 		}
 
@@ -805,15 +806,15 @@ export default class GoodsSelectorCtrl {
 			this._$ccValidator.setPristine(formCtrl);
 			this.initConditionsMsg();
 			this.selectedLabels = [];
-			this.selectedShopIdList = this.isSingleSelectShopList ? [this.shopList[0].shopId] : this.shopList.map(item => item.shopId);
-			this.formModel.shopId = this.isSingleSelectShopList ? this.shopList[0].shopId : this.shopList.map(item => item.shopId);
+			this.selectedShopIdList = this.isSingleSelectShopList ? [this.shopList[0].shopId] : (this.isSupportedAddCondition ? this.shopList.map(item => item.shopId) : cloneDeep(this.selectedShopId));
+			this.formModel.shopId = this.isSingleSelectShopList ? this.selectedShopIdList[0] : cloneDeep(this.selectedShopIdList);
 		}
 		if (this.isSelectedGoodsTab) {
 			this.selectedLabelsOfSelected = [];
-			this.selectedShopIdListOfSelected = cloneDeep(this.shopList);
+			this.selectedShopIdListOfSelected = this.isSupportedAddCondition ? this.shopList.map(item => item.shopId) : cloneDeep(this.selectedShopId);
 		} else {
 			this.selectedLabelsOfAll = [];
-			this.selectedShopIdListOfAll = cloneDeep(this.shopList);
+			this.selectedShopIdListOfAll = this.isSupportedAddCondition ? this.shopList.map(item => item.shopId) : cloneDeep(this.selectedShopId);
 		}
 		for (let attr in formModel) {
 			if (formModel.hasOwnProperty(attr) && attr !== 'platform' && attr !== 'shopId' && attr !== 'status') {

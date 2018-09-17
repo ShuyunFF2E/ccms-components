@@ -12,7 +12,7 @@
 	var isOnlyChecked = false; // 是否包含 footer
 	var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 	var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
-	var tenantId = 'sjyj'; // 租户ID
+	var tenantId = 'yangyangyang3'; // 租户ID
 	var conditions = { // 搜索条件
 		endListTime: new Date(1531843200000), // 下架时间
 		id: ['11111'], // 商品ID
@@ -21,7 +21,7 @@
 		name: '22222', // 商品名称
 		platform: 'top', // 平台
 		categoriesId: '1089', // 商品标准类目 '111111'
-		shopId: '72897, 72903',
+		shopId: 'qiakr_2230, qiakr_2223',
 		skusId: ['22342343'], // 商品编号
 		skusPropsVname: '55555', // sku 规格
 		startListTime: new Date(1530374400000), // 上架时间
@@ -29,6 +29,7 @@
 		brandId: '1111'
 	};
 	var isSingleSelectShopList = false; // 店铺选择（单选/多选）
+	var selectedShopId = ['taobao_23456789', 'qiakr_2230', 'qiakr_2223']; // 店铺多选时，已选店铺ID数组
 
 	// qiakr + sku 维度 + 店铺选择（单选）
 	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
@@ -74,7 +75,8 @@
 			isSupportedAddCondition,
 			conditions,
 			isSingleSelectShopList,
-			tenantId
+			tenantId,
+			selectedShopId
 		};
 		var selectedGoods = {
 			556820: null,
