@@ -22,12 +22,25 @@
 					max-date="app.maxDate"
 					required="true"
 					date-only="false"
-					disabled="false"
+					disabled-input="true"
 					on-calendar-open="app.onCalendarOpen()"
 					on-calendar-close="app.onCalendarClose()"
 					is-festival="true"
 					custom-festivals="app.customFestivals"
 					></cc-date-picker>
+	<cc-date-picker ng-if="!app.hideDates"
+					ng-model="app.dateValue"
+					min-date="app.minDate"
+					max-date="app.maxDate"
+					required="true"
+					date-only="false"
+					disabled="true"
+					disabled-input="true"
+					on-calendar-open="app.onCalendarOpen()"
+					on-calendar-close="app.onCalendarClose()"
+					is-festival="true"
+					custom-festivals="app.customFestivals"
+	></cc-date-picker>
 
 	<cc-date-range ng-if="!app.hideDates"
 				   opts="app.anotherRange"
@@ -131,7 +144,7 @@
 		<cc-date-range opts="app.disableRange"></cc-date-range>
 	</p>
 
-	<h1>DEMO: 9  DisplayFormat: MMDD and DD </h1>
+	<h1>DEMO: 9  DisplayFormat: MMDD and DD (有 bug 暂时不要用)</h1>
 	<p>
 		<cc-date-picker
 						ng-model="app.MMDDValue"
@@ -155,6 +168,35 @@
 						is-festival="true"
 						custom-festivals="app.customFestivals"
 						display-format="DD"
+		></cc-date-picker>
+	</p>
+
+	<h1>DEMO: 10 disabledInput  DisplayFormat: MMDD and DD </h1>
+	<p>
+		<cc-date-picker
+				ng-model="app.MMDDValue"
+				required="true"
+				date-only="true"
+				disabled="false"
+				disabled-input="true"
+				on-calendar-open="app.onCalendarOpen()"
+				on-calendar-close="app.onCalendarClose()"
+				is-festival="true"
+				custom-festivals="app.customFestivals"
+				display-format="MMDD"
+		></cc-date-picker>
+
+		<cc-date-picker
+				ng-model="app.DDValue"
+				required="true"
+				date-only="true"
+				disabled="false"
+				disabled-input="true"
+				on-calendar-open="app.onCalendarOpen()"
+				on-calendar-close="app.onCalendarClose()"
+				is-festival="true"
+				custom-festivals="app.customFestivals"
+				display-format="DD"
 		></cc-date-picker>
 	</p>
 </main>
