@@ -4,7 +4,7 @@
 
 import angular from 'angular';
 
-import {Debounce, Inject} from 'angular-es-utils/decorators';
+import {Inject} from 'angular-es-utils/decorators';
 
 import { DISPLAY_FORMAT } from '../../common/bases/constant';
 
@@ -258,7 +258,6 @@ export default class DatePickerCtrl {
 	 * 输入/修改年月日值时, 验证合法性
 	 * @param $event
 	 */
-	@Debounce(300)
 	validateValue($event) {
 		const input = $event.target,
 			value = +input.value,
@@ -316,6 +315,14 @@ export default class DatePickerCtrl {
 
 		// 判断是否输入完成, 跳到下一个单元格
 		if (input.value.length === +input.maxLength) {
+			// 校验年的范围
+			if (input.name === 'year') {
+				if (input.value < 1900 || input.value > new Date().getFullYear() + 30) {
+					this.parts[input.name] = '';
+					setTextWidth(input);
+					return;
+				}
+			}
 			this.focusNextInput(input, 1);
 		}
 
