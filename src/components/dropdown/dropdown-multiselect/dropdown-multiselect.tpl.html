@@ -11,7 +11,8 @@
 				ng-blur="$ctrl.setActiveState(false)"
 				ng-change="$ctrl.onSearchTextChange($ctrl.title)"
 			    ng-disabled="$ctrl.disabled"
-				ng-model="$ctrl.title">
+				ng-model="$ctrl.title"
+				title="{{ $ctrl.title }}">
 		<div class="dropdown-select-icons"
 			><span class="dropdown-select-clear"
 					ng-class="{visible: $ctrl.title.length}"

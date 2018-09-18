@@ -108,6 +108,7 @@
 					datalist="ctrl.datalist1"
 					searchable="true"
 					confirm-button="true"
+					search-fields="ctrl.searchFields"
 					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
 					mapping="ctrl.fieldsMap">
 			</cc-dropdown-multiselect>
@@ -245,6 +246,8 @@
 				}
 			})
 		.controller('DemoCtrl', function($scope) {
+
+			this.searchFields = undefined; // ['displayField', 'valueField'] //;
 			this.value1 = '上海';
 			this.value2 = 'xa';
 			this.value3 = [];
