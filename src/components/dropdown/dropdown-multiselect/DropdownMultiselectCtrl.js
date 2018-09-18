@@ -48,6 +48,12 @@ export default class DropdownMultiselectCtrl {
 	_prepareOptions() {
 		this.mapping = Object.assign({}, DropdownMultiselectCtrl.defaultMapping, this.mapping);
 
+		if (typeof this.searchFields === 'undefined') {
+			this.searchFields = [this.mapping.valueField, this.mapping.displayField];
+		} else {
+			this.searchFields = this.searchFields.map(field => this.mapping[field]);
+		}
+
 		if (typeof this.searchable === 'undefined') {
 			this.searchable = false;
 		}
@@ -387,11 +393,9 @@ export default class DropdownMultiselectCtrl {
 
 	_search(text) {
 		let datalist = this._clampedDatalist;
-		let mapping = this.mapping;
-		let searchFields = [mapping.valueField, mapping.displayField];
 		let filteredItems = [];
 
-		searchFields.forEach(field => {
+		this.searchFields.forEach(field => {
 			datalist.forEach(item => {
 				const fieldValue = item[field];
 				if (fieldValue.toString().toLocaleUpperCase().indexOf(text && text.toLocaleUpperCase()) !== -1 &&
