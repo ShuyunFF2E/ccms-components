@@ -1169,7 +1169,7 @@ export default class GoodsSelectorCtrl {
 		modalInstance.result.then(obj => {
 			this.addSectionQueryParams = {
 				platform: this.formModel.platform,
-				shopId: this.formModel.shopId,
+				shopId: Array.isArray(this.formModel.shopId) ? this.formModel.shopId.join(',') : this.formModel.shopId,
 				id: obj.inputKey === 'id' ? obj.inputValue : [],
 				outerId: obj.inputKey === 'number' ? obj.inputValue : [],
 				'skus.outerId': obj.inputKey === 'skuNumber' ? obj.inputValue : []
