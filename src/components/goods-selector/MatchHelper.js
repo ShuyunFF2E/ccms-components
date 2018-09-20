@@ -33,9 +33,9 @@ export default {
 			// 商品所属店铺 shopId;
 			equalStr: (formVal, val) => {
 				if (Array.isArray(formVal)) {
-					return !formVal.length || !formVal[0] && formVal[0] !== 0 || formVal.indexOf(String(val)) !== -1;
+					return formVal.indexOf(String(val)) !== -1;
 				} else {
-					return !formVal && formVal !== 0 || String(formVal).replace(/\s/g, '') === String(val);
+					return String(formVal).replace(/\s/g, '') === String(val);
 				}
 			},
 			// 商品状态 status;

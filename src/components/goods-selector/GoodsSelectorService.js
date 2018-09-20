@@ -40,7 +40,7 @@ const GoodsSelectorService = {
 		return ModalService.modal(
 			{
 				title: '商品选择',
-				style: {'width': '1025px', 'min-height': '510px'},
+				style: {'width': '1036px', 'min-height': '510px'},
 				fullscreen: false,
 				hasFooter: !isOnlyChecked,
 				__body: bodyTemplate,

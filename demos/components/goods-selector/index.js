@@ -6,7 +6,7 @@
 
 		.controller('ctrl', function($scope, $ccGoodsSelector, topFactory, josFactory, qkFactory) {
 
-			$scope.isSupportedAddCondition = true;
+			$scope.isSupportedAddCondition = false;
 
 			// top + sku 维度 + 店铺选择
 			$scope.openTopWithShopList = function() {
