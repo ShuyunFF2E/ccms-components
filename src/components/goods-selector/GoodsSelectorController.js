@@ -20,7 +20,7 @@ import { utils } from './utils';
 import service from './service';
 
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName',
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName', '$q',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
 	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions', 'isSingleSelect', 'isSingleSelectShopList', '$ccShopSelector')
 
@@ -51,6 +51,9 @@ export default class GoodsSelectorCtrl {
 		this._conditions.shopId = String(this._conditions.shopId);
 		this.conditions = cloneDeep(this._conditions);
 		this.conditionsModel = cloneDeep(this._conditions);
+
+		this.isShowMaskOfLoading = this.isSupportedAddCondition;
+
 		// 店铺是否是单选
 		this.isSingleSelectShopList = this._isSingleSelectShopList;
 		// 用户传进来的店铺信息
@@ -137,14 +140,21 @@ export default class GoodsSelectorCtrl {
 		this.formTplConfig = utils.getFormTemplateConfig(this.formModel, this.isSupportedSku, this.isShowShopList, this.isSupportedAddCondition);
 
 		const collection = fieldsetConfig[this.formModel.platform];
+		let asyncMethods = [];
 		// 获取商品标签数据并对selectedLabels进行初始化
-		this.findEntityByName(collection, 'tagItemIds') >= 0 && this.getTags();
+		this.findEntityByName(collection, 'tagItemIds') >= 0 && asyncMethods.push(this.getTags());
 		// 商品自自定义类目数据
-		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && this.getShopCategories();
+		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && asyncMethods.push(this.getShopCategories());
 		// 获取商品品牌
-		this.findEntityByName(collection, 'brandId') >= 0 && this.getBrands();
+		this.findEntityByName(collection, 'brandId') >= 0 && asyncMethods.push(this.getBrands());
 		// 商品标准类目列表
-		this.findEntityByName(collection, 'categoriesId') >= 0 && this.getCategories();
+		this.findEntityByName(collection, 'categoriesId') >= 0 && asyncMethods.push(this.getCategories());
+
+		this._$q.all(asyncMethods).then(res => {
+			if (res.every(item => item)) {
+				this.isShowMaskOfLoading = false;
+			}
+		});
 
 		this.initSelectedItems();
 		this.preparePagerGridOptions();
@@ -533,7 +543,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品自自定义类目数据
 	getShopCategories() {
-		service.getShopCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get(res => {
+		return service.getShopCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get().$promise.then(res => {
 			let data = res.data || [];
 			// 只显示叶子类目
 			this.shopCategoriesList = data.filter(item => item.isLeaf === true);
@@ -545,14 +555,15 @@ export default class GoodsSelectorCtrl {
 				this.formModel.shopCategoriesId = this.conditions.shopCategoriesId;
 				this.conditions.shopCategoriesId = [];
 			}
-		}, () => {
+			return this.shopCategoriesList;
+		}).catch(() => {
 			this._$ccTips.error(errorMsg);
 		});
 	}
 
 	// 获取商品标准类目列表
 	getCategories() {
-		service.getCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get(res => {
+		return service.getCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get().$promise.then(res => {
 			let data = res.data || [];
 			this.categoriesList = data.filter(item => item.isLeaf === true);
 			// 由于商品标准类目数据是异步请求，所以需要在数据回来以后更新表单中 categoriesId 的值，更新后清空，保证数据只赋值一次
@@ -563,28 +574,30 @@ export default class GoodsSelectorCtrl {
 			if (!this.formModel.categoriesId) {
 				this.formModel.categoriesId = null;
 			}
-		}, () => {
+			return this.categoriesList;
+		}).catch(() => {
 			this._$ccTips.error(errorMsg);
 		});
 	}
 
 	// 获取商品品牌
 	getBrands() {
-		service.getBrands(this.serverName, this.formModel.platform, this.formModel.shopId).get(res => {
+		return service.getBrands(this.serverName, this.formModel.platform, this.formModel.shopId).get().$promise.then(res => {
 			this.brandsList = res.data || [];
 			// 由于商品品牌数据是异步请求，所以需要在数据回来以后更新表单中 brandId 的值，更新后清空，保证数据只赋值一次
 			if (this.conditions.brandId) {
 				this.formModel.brandId = this.conditions.brandId;
 				this.conditions.brandId = null;
 			}
-		}, () => {
+			return this.brandsList;
+		}).catch(() => {
 			this._$ccTips.error(errorMsg);
 		});
 	}
 
 	// 获取商品标签，初始化的时候调用
 	getTags() {
-		service.getTags(this.serverName, this.formModel.platform, this.tenantId).get(res => {
+		return service.getTags(this.serverName, this.formModel.platform, this.tenantId).get().$promise.then(res => {
 			res.data = res.data || [];
 			if (res.data.length && this.conditions.tags && this.conditions.tags.length) {
 				// 如果用户传进来的商品标签存在于商品标签列表中，那么将商品标签 push 到 selectedLabels 中
@@ -595,7 +608,8 @@ export default class GoodsSelectorCtrl {
 					}
 				});
 			}
-		}, () => {
+			return res.data;
+		}).catch(() => {
 			this._$ccTips.error(errorMsg);
 		});
 	}

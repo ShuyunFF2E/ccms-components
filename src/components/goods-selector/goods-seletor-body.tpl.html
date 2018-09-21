@@ -200,7 +200,8 @@
 			</gs-panel>
 		</gs-tabs>
 	</div>
-	<div class="goods-selector-mask" ng-if="$ctrl.isShowMask">
-		<cc-loading type="layer">数据更新中</cc-loading>
+	<div class="goods-selector-mask" ng-class="{'goods-selector-loading-mask': $ctrl.isShowMaskOfLoading}" ng-if="$ctrl.isShowMask || $ctrl.isShowMaskOfLoading">
+		<cc-loading type="layer" ng-show="$ctrl.isShowMask">数据更新中</cc-loading>
+		<cc-loading ng-show="$ctrl.isShowMaskOfLoading"></cc-loading>
 	</div>
 </div>
