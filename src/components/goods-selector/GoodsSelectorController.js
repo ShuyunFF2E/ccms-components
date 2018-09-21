@@ -290,7 +290,7 @@ export default class GoodsSelectorCtrl {
 			queryParams: {
 				shopId: this.formModel.shopId,
 				platform: this.formModel.platform,
-				pageSize: 15,
+				pageSize: this.isQiake ? 50 : 15,
 				pageNum: 1
 			},
 			pager: {
@@ -420,7 +420,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.emptyTipTpl = selectedEmptyTpl;
 		this.selectedPagerGridOptions.pager = {
 			pageNum: 1,
-			pageSize: 15,
+			pageSize: this.isQiake ? 50 : 15,
 			pageSizeList: [10, 15, 20, 25, 50]
 		};
 
