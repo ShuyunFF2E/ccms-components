@@ -183,7 +183,7 @@
 							  ng-if="$ctrl.isSupportedSku"
 							  ng-click="$ctrl.isSelectedExtendAll = !$ctrl.isSelectedExtendAll; $ctrl.extendAll($ctrl.isSelectedExtendAll, $ctrl.selectedItems);">{{$ctrl.isSelectedExtendAll ? '全部折叠' : '全部展开'}}</span>
 					</div>
-					<div class="support-condition" ng-if="$ctrl.conditionContent">
+					<div class="support-condition" ng-if="$ctrl.conditionContent && $ctrl.isSupportedAddCondition">
 						<span class="condition-title">条件</span>
 						<i ng-click="$ctrl.removeCondition();" class="icon iconfont icon-dele"></i>
 						<span class="condition-content" cc-tooltip="$ctrl.conditionContent" tooltip-placement="top-left">
