@@ -3885,18 +3885,17 @@ module.exports = function(configurations) {
 		{
 			request: {
 				method: 'POST',
-				urlPattern: '/items'
+				urlPattern: '/items/batchImportIds'
 			},
 			response: {
 				status: 200,
 				body: function(req) {
-					console.log(req.originalUrl);
 					let pageNum = 1;
 					let pageSize = 10000;
-					let paramsArr1 = req.originalUrl.split('?');
 					let result = [];
-					if (paramsArr1.length > 1) {
-						let paramsArr = paramsArr1[1].split('&');
+					let arr1 = req.originalUrl.split('?');
+					if (arr1.length > 1) {
+						let paramsArr = arr1[1].split('&');
 						paramsArr.forEach(item => {
 							let param = item.split('=');
 							if (param[0] === 'pageNum') {
@@ -3905,15 +3904,35 @@ module.exports = function(configurations) {
 							if (param[0] === 'pageSize') {
 								pageSize = Number(param[1]);
 							}
-							if (param[0] === 'id') {
-								data.forEach(item => {
-									if (item.id === param[1]) {
-										result.push(item);
-									}
-								});
-							}
 						});
 					}
+					data.forEach(item => {
+						if (req.body.id.length > 0) {
+							req.body.id.forEach(id => {
+								if (id === item.id) {
+									result.push(item);
+								}
+							});
+						} else if (req.body.outerId.length) {
+							req.body.outerId.forEach(outerId => {
+								if (outerId === item.outerId) {
+									result.push(item);
+								}
+							});
+						} else if (req.body['skus.outerId'].length) {
+							req.body['skus.outerId'].forEach(skuOuterId => {
+								if (item.skus && item.skus.length) {
+									for (let i = 0; i < item.skus.length; i++) {
+										if (item.skus[i].outerId === skuOuterId) {
+											result.push(item);
+											break;
+										}
+									}
+								}
+							});
+						}
+					});
+					console.log('result:', result);
 					return {
 						pageNum: pageNum,
 						pageSize: pageSize,

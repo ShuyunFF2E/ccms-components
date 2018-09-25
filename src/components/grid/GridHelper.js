@@ -28,6 +28,8 @@ export default {
 	fillOpts(gridOptions) {
 
 		let DEFAULT_CONFIGS = {
+			actionName: 'get', // 调用 $resource 那个方法默认是 get
+			postData: null, // 如果调用的方法是 post, 请提供 post Data
 			resource: null, // 资源$resource
 			response: null, // 对外暴露的response
 			queryParams: null, // 外部查询参数
@@ -72,7 +74,8 @@ export default {
 
 			const params = filter(Object.assign({}, pageParams, gridOptions.queryParams, queryParams), value => !!value);
 
-			gridOptions.lastRequest = gridOptions.resource.get(params);
+			// 如果参数中包含 postData ，使用自定义请求
+			gridOptions.lastRequest = gridOptions.postData ? gridOptions.resource[gridOptions.actionName](params, gridOptions.postData) : gridOptions.resource[gridOptions.actionName](params);
 
 			return gridOptions.lastRequest.$promise
 

@@ -1,0 +1,22 @@
+<div class="label-list">
+	<div class="search-label">
+		<input type="text" ng-model="$ctrl.labelName" placeholder="{{ $ctrl.placeholderText }}">
+		<i class="icon iconfont icon-search"></i>
+	</div>
+	<div class="label-list-content">
+		<ul>
+			<li ng-repeat="item in $ctrl.labelList track by $index"
+				ng-show="item.isShowLabel"
+				ng-bind-html="$ctrl.lightText(item[$ctrl.mapping.displayField], $ctrl.labelName)"
+				ng-class="{active: item.isSelected}"
+				ng-click="item.isSelected = !item.isSelected;"
+				cc-tooltip="'<span>{{item[$ctrl.mapping.displayField]}}</span>'"
+				tooltip-append-to-body="true" tooltip-compilable="true">
+			</li>
+		</ul>
+		<div class="empty-label" ng-if="$ctrl.isShowEmpty">
+			<i class="icon iconfont icon-tips"></i>
+			<p>暂时没有数据</p>
+		</div>
+	</div>
+</div>

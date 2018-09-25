@@ -16,7 +16,7 @@ var categories = [
 				'values': [
 					{
 						'id': '11',
-						'name': '属性值11',
+						'value': '属性值11',
 						'order': '排序',
 						'status': '状态',
 						'created': '创建时间',
@@ -26,7 +26,7 @@ var categories = [
 					},
 					{
 						'id': '12',
-						'name': '属性值12',
+						'value': '属性值12',
 						'order': '排序',
 						'status': '状态',
 						'created': '创建时间',
@@ -51,7 +51,7 @@ var categories = [
 				'values': [
 					{
 						'id': '21',
-						'name': '属性值21',
+						'value': '属性值21',
 						'order': '排序',
 						'status': '状态',
 						'created': '创建时间',
@@ -61,7 +61,7 @@ var categories = [
 					},
 					{
 						'id': '22',
-						'name': '属性值22',
+						'value': '属性值22',
 						'order': '排序',
 						'status': '状态',
 						'created': '创建时间',
@@ -91,7 +91,7 @@ var categories = [
 				'values': [
 					{
 						'id': '31',
-						'name': '属性值11',
+						'value': '属性值11',
 						'order': '排序',
 						'status': '状态',
 						'created': '创建时间',
@@ -101,7 +101,7 @@ var categories = [
 					},
 					{
 						'id': '32',
-						'name': '属性值12',
+						'value': '属性值12',
 						'order': '排序',
 						'status': '状态',
 						'created': '创建时间',
@@ -126,7 +126,7 @@ var categories = [
 				'values': [
 					{
 						'id': '41',
-						'name': '属性值21',
+						'value': '属性值21',
 						'order': '排序',
 						'status': '状态',
 						'created': '创建时间',
@@ -136,7 +136,7 @@ var categories = [
 					},
 					{
 						'id': '42',
-						'name': '属性值22',
+						'value': '属性值22',
 						'order': '排序',
 						'status': '状态',
 						'created': '创建时间',
@@ -176,5 +176,6 @@ module.exports = function(configurations) {
 			}
 		}
 	]);
-}
+};
+
 

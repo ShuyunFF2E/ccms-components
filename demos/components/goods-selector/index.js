@@ -2,140 +2,80 @@
 
 	'use strict';
 
-	angular.module('app', ['ccms.components'])
+	angular.module('app', ['ccms.components', 'topService', 'josService', 'qkService'])
 
-		.controller('ctrl', function($scope, $ccGoodsSelector) {
-			// 当需要从外部传入已选商品时 --> 支持 sku -> 已选商品作为对象传入，key 值代表商品 ID，value 是由该商品包含的被选中的 sku id 组成的数组
-			// 					       --> 不支持 sku 即商品维度选择 -> key 值代表商品 ID，value 为 null
-			// 当无需从外部传入已选商品时 -->  省略 selectedGoods 参数
-			var selectedGoods = {
-				541920723552: ['3419076274289'],
-				532988558193: null,
-				554208360201: ['3577205138168'],
-				562099525613: null
+		.controller('ctrl', function($scope, $ccGoodsSelector, topFactory, josFactory, qkFactory) {
+
+			$scope.isSupportedAddCondition = false;
+
+			// top + sku 维度 + 店铺选择
+			$scope.openTopWithShopList = function() {
+				topFactory.openTopWithShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
 			};
 
-			var taobaoWithShopList = [{shopId: 106878997, shopName: '数云食堂', plat: 'top'}, {shopId: 157263193, shopName: '0黑色的琴键0', plat: 'top'}, {shopId: 65305757, shopName: '安踏', plat: 'top'}];
-			// var jsWithShopList = [{shopId: 24058, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
-			var jsWithShopList = [{shopId: 23591, shopName: 'JD数云食堂', plat: 'jos'}, {shopId: 24058, shopName: '数云食堂', plat: 'jos'}];
-			var taobaoWithoutShopList = {shopId: 106878997, shopName: '黑色', plat: 'top'};
-			var jdWithoutShopList = {shopId: 70866974, shopName: 'JD数云食堂', plat: 'jos'};
-
-			var isOnlyChecked = false;
-			var maxSelectedNumber = 100;
-			var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
-			var options = {
-				isOnlyChecked,
-				maxSelectedNumber,
-				serverName
-			};
-			// 如果是商品维度选择，isSupportedSku 值为 false，否则为 true，默认值为 true
-			var isSupportedSku = false;
-			var selectedGoodsWithoutSku = {
-				541920723552: null,
-				532988558193: null,
-				554208360201: null,
-				562099525613: null
-			};
-			var optionsWithoutSku = {
-				isOnlyChecked,
-				maxSelectedNumber,
-				serverName,
-				isSupportedSku
-			};
-			// taobao + 店铺选择
-			$scope.openTaobaoGoodsSelectorWithShopList = function() {
-				$ccGoodsSelector
-					.goodsSelector(taobaoWithShopList, options)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
+			// jos + sku 维度 + 店铺选择
+			$scope.openJosWithShopList = function() {
+				josFactory.openJosWithShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
 			};
 
-			// jd + 店铺选择
-			$scope.openJDGoodsSelectorWithShopList = function() {
-				$ccGoodsSelector
-					.goodsSelector(jsWithShopList, options, selectedGoods)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
+			// top + sku 维度 + 单店铺
+			$scope.openTopWithoutShopList = function() {
+				topFactory.openTopWithoutShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
 			};
 
-			// taobao 无店铺选择
-			$scope.openTaobaoGoodsSelector = function() {
-				$ccGoodsSelector
-					.goodsSelector(taobaoWithoutShopList, options, selectedGoods)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
+			// jos + sku 维度 + 单店铺
+			$scope.openJosWithoutShopList = function() {
+				josFactory.openJosWithoutShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
 			};
 
-			// jd 无店铺选择
-			$scope.openJDGoodsSelector = function() {
-				$ccGoodsSelector
-					.goodsSelector(jdWithoutShopList, options)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
-			};
-			// taobao + 店铺选择 + 商品维度选择
-			$scope.openTaobaoGoodsSelectorWithShopListWithoutSku = function() {
-				$ccGoodsSelector
-					.goodsSelector(taobaoWithShopList, optionsWithoutSku)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
+			// qiakr + sku 维度 + 店铺选择（单选）
+			$scope.openQkSingleSelectShopList = function() {
+				qkFactory.openQkSingleSelectShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
 			};
 
-			// jd + 店铺选择 + 商品维度选择
-			$scope.openJDGoodsSelectorWithShopListWithoutSku = function() {
-				$ccGoodsSelector
-					.goodsSelector(jsWithShopList, optionsWithoutSku, selectedGoodsWithoutSku)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-					});
+			// qiakr + sku 维度 + 店铺选择（多选）
+			$scope.openQkMultipleSelectShopList = function() {
+				qkFactory.openQkMultipleSelectShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
 			};
 
-			// taobao 无店铺选择 + 商品维度选择
-			$scope.openTaobaoGoodsSelectorWithoutSku = function() {
-				$ccGoodsSelector
-					.goodsSelector(taobaoWithoutShopList, optionsWithoutSku, selectedGoodsWithoutSku)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-				});
+			// top + 商品维度 + 店铺选择
+			$scope.openTopWithoutSkuWithShopList = function() {
+				topFactory.openTopWithoutSkuWithShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
 			};
 
-			// jd 无店铺选择 + 商品维度选择
-			$scope.openJDGoodsSelectorWithoutSku = function() {
-				$ccGoodsSelector
-					.goodsSelector(jdWithoutShopList, optionsWithoutSku)
-					.open().result.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('----------cancel---------');
-				});
+			// jos + 商品维度 + 店铺选择
+			$scope.openJosWithoutSkuWithShopList = function() {
+				josFactory.openJosWithoutSkuWithShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
+			};
+
+			// top + 商品维度 + 单店铺
+			$scope.openTopWithoutSkuWithoutShopList = function() {
+				topFactory.openTopWithoutSkuWithoutShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
+			};
+
+			// jos + 商品维度 + 单店铺
+			$scope.openJosWithoutSkuWithoutShopList = function() {
+				josFactory.openJosWithoutSkuWithoutShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
+			};
+
+			// top + 商品维度 + 店铺选择 + 单选（微信CRM）
+			$scope.openTopSingleSelectWithShopList = function() {
+				topFactory.openTopSingleSelectWithShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
+			};
+
+			// jos + 商品维度 + 店铺选择 + 单选（微信CRM）
+			$scope.openJosSingleSelectWithShopList = function() {
+				josFactory.openJosSingleSelectWithShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
+			};
+
+			// top + 商品维度 + 单店铺 + 单选（微信CRM）
+			$scope.openTopSingleSelectWithoutShopList = function() {
+				topFactory.openTopSingleSelectWithoutShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
+			};
+
+			// top + 商品维度 + 单店铺 + 单选（微信CRM）
+			$scope.openJosSingleSelectWithoutShopList = function() {
+				josFactory.openJosSingleSelectWithoutShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition);
 			};
 		});
 
