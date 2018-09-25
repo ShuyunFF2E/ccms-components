@@ -125,7 +125,7 @@
 			serverName,
 			tenantId,
 			isSupportedAddCondition,
-			// conditions,
+			conditions,
 			isSupportedTag,
 			isSupportedBatchAddition
 		};

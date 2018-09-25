@@ -51,7 +51,7 @@ export default class GoodsSelectorCtrl {
 		// 是否支持添加为搜索条件
 		this.isSupportedAddCondition = this._isSupportedAddCondition;
 		// 搜索条件
-		this._conditions.shopId = String(this._conditions.shopId);
+		this._conditions && (this._conditions.shopId = String(this._conditions.shopId));
 		this.conditions = cloneDeep(this._conditions);
 		this.conditionsModel = cloneDeep(this._conditions);
 
@@ -734,7 +734,7 @@ export default class GoodsSelectorCtrl {
 
 	// 初始化搜索条件信息，只调用一次（打开弹窗 -> 重置操作/选择商品标签/点击已选商品 tab -> 获取条件信息后并关闭操作）
 	initConditionsMsg() {
-		!this.hasInitConditionMsg && this.getConditionMsg(this.formModelCopy);
+		!this.hasInitConditionMsg && this.conditions && this.getConditionMsg(this.formModelCopy);
 		this.hasInitConditionMsg = true;
 	}
 	// 批量添加操作下的 api 和 表格查询参数
