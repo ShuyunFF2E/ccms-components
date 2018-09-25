@@ -1,11 +1,13 @@
 <div class="footer-info">
-	<span>已选：商品({{$ctrl.opts.selectedData.length}})件</span>
+	<span ng-if="!$ctrl.opts.conditionLength">已选：商品({{$ctrl.opts.selectedData.length}})件</span>
+	<span ng-if="$ctrl.opts.conditionLength">已选：条件({{$ctrl.opts.conditionLength}})条，商品({{$ctrl.opts.selectedData.length}})件</span>
 </div>
 <span class="delimiter"></span>
 <cc-pagination
 		page-num="$ctrl.opts.pager.pageNum"
 		page-size="$ctrl.opts.pager.pageSize"
 		page-size-list="$ctrl.opts.pager.pageSizeList"
+		page-size-list-hidden="!$ctrl.opts.isSingleSelectShopList"
 		total-pages="$ctrl.opts.pager.totalPages"
 		on-change="$ctrl.onPagerChange(pageNum, pageSize)">
 </cc-pagination>

@@ -3878,51 +3878,78 @@ var data = [
 		status: 1
 	}
 ];
-
+function getImportResult(collection = [], name, resultData) {
+	resultData.total = collection.length;
+	collection.forEach(entity => {
+		let targetIndex = data.findIndex(item => Object.is(item[name], entity));
+		if (targetIndex === -1) {
+			resultData.notFound.push(entity);
+		} else {
+			resultData.foundNum++;
+		}
+	});
+}
 module.exports = function(configurations) {
 
 	configurations.add([
 		{
 			request: {
 				method: 'POST',
-				urlPattern: '/items'
+				urlPattern: '/items/batchImport/result'
 			},
 			response: {
 				status: 200,
 				body: function(req) {
-					console.log(req.originalUrl);
-					let pageNum = 1;
-					let pageSize = 10000;
-					let paramsArr1 = req.originalUrl.split('?');
-					let result = [];
-					if (paramsArr1.length > 1) {
-						let paramsArr = paramsArr1[1].split('&');
-						paramsArr.forEach(item => {
-							let param = item.split('=');
-							if (param[0] === 'pageNum') {
-								pageNum = Number(param[1]);
-							}
-							if (param[0] === 'pageSize') {
-								pageSize = Number(param[1]);
-							}
-							if (param[0] === 'id') {
-								data.forEach(item => {
-									if (item.id === param[1]) {
-										result.push(item);
+					if (req.body.id.length) {
+						let resultData = {
+							'total': 0, // 导入总量
+							'foundNum': 0, // 导入成功的数量
+							'notFound': [] // 导入失败的数据
+						};
+						getImportResult(req.body.id, 'id', resultData);
+						return resultData;
+					} else if (req.body.outerId.length) {
+						let resultData = {
+							'total': 0, // 导入总量
+							'foundNum': 0, // 导入成功的数量
+							'notFound': [] // 导入失败的数据
+						};
+						getImportResult(req.body.outerId, 'outerId', resultData);
+						return resultData;
+					} else if (req.body['skus.outerId'].length) {
+						let resultData = {
+							'total': 0, // 导入总量
+							'foundNum': 0, // 导入成功的数量
+							'notFound': [] // 导入失败的数据
+						};
+						let foundData = [];
+						let skusOuterIds = req.body['skus.outerId'];
+						resultData.total = skusOuterIds.length;
+						skusOuterIds.forEach(skusOuterId => {
+							for (let i = 0; i < data.length; i++) {
+								let item = data[i];
+								if (item.skus && item.skus.length) {
+									let targetIndex = item.skus.findIndex(sku => Object.is(sku.outerId, skusOuterId));
+									if (targetIndex !== -1) {
+										resultData.foundNum++;
+										foundData.push(skusOuterId);
+										break;
 									}
-								});
+								}
 							}
 						});
+						console.log(foundData); // 123456
+						console.log(skusOuterIds); // 123456 3453
+						if (foundData.length) {
+							skusOuterIds.forEach(item => {
+								let targetIndex = foundData.findIndex(skusOuterId => Object.is(item, skusOuterId));
+								if (targetIndex === -1) {
+									resultData.notFound.push(item);
+								}
+							});
+						}
+						return resultData;
 					}
-					return {
-						pageNum: pageNum,
-						pageSize: pageSize,
-						totalPage: Math.ceil(data.length / pageSize),
-						totalCount: data.length,
-						flag: 'success',
-						msg: 'ok',
-						data: result.length ? result : data.slice((pageNum - 1) * pageSize, pageNum * pageSize)
-					};
 				},
 				headers: {
 					'Content-Type': 'application/json'
@@ -3931,4 +3958,3 @@ module.exports = function(configurations) {
 		}
 	]);
 };
-
