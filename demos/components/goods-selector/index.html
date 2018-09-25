@@ -26,6 +26,11 @@
 		<span ng-if="isSupportedAddCondition">关闭添加为搜索条件功能</span>
 		<span ng-if="!isSupportedAddCondition">开启添加为搜索条件功能</span>
 	</button>
+
+	<button ng-click="isSupportedBatchAddition = !isSupportedBatchAddition" class="btn-ok" style="display: block; margin-top: 20px;">
+		<span ng-if="isSupportedBatchAddition">关闭批量添加功能</span>
+		<span ng-if="!isSupportedBatchAddition">开启批量添加功能</span>
+	</button>
 </main>
 
 <script src="/components.js"></script>

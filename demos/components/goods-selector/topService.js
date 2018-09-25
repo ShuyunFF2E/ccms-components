@@ -16,6 +16,7 @@
 	var isOnlyChecked = false; // 是否包含 footer
 	var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 	var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
+	var isSupportedTag = false; // 是否支持商品标签
 	var tenantId = 'sjyj'; // 租户ID tenantId
 	var conditions = { // 搜索条件
 		categoriesId: '50012906', // 商品标准类目 '111111'
@@ -116,8 +117,7 @@
 	var isSingleSelect = true; // 是否是单选列表
 
 	// top + sku 维度 + 店铺选择
-	function openTopWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
-		console.log(isSupportedAddCondition);
+	function openTopWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
@@ -125,7 +125,9 @@
 			serverName,
 			tenantId,
 			isSupportedAddCondition,
-			conditions
+			conditions,
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -144,7 +146,7 @@
 	}
 
 	// top + sku 维度 + 单店铺
-	function openTopWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
@@ -152,7 +154,9 @@
 			serverName,
 			tenantId,
 			isSupportedAddCondition,
-			conditions
+			conditions,
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -171,7 +175,7 @@
 	}
 
 	// top + 商品维度 + 店铺选择
-	function openTopWithoutSkuWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopWithoutSkuWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
@@ -180,7 +184,9 @@
 			tenantId,
 			isSupportedAddCondition,
 			conditions,
-			isSupportedSku
+			isSupportedSku,
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			541920723552: null,
@@ -199,7 +205,7 @@
 	}
 
 	// top + 商品维度 + 单店铺
-	function openTopWithoutSkuWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopWithoutSkuWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
@@ -208,7 +214,9 @@
 			tenantId,
 			isSupportedAddCondition,
 			conditions,
-			isSupportedSku
+			isSupportedSku,
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			541920723552: null,
@@ -227,7 +235,7 @@
 	}
 
 	// top + 商品维度 + 店铺选择 + 单选（微信CRM）
-	function openTopSingleSelectWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopSingleSelectWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
@@ -237,7 +245,9 @@
 			isSupportedAddCondition,
 			conditions,
 			isSupportedSku,
-			isSingleSelect
+			isSingleSelect,
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = { 35647605646: null };
 		$ccGoodsSelector
@@ -251,7 +261,7 @@
 	}
 
 	// top + 商品维度 + 单店铺 + 单选（微信CRM）
-	function openTopSingleSelectWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopSingleSelectWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
@@ -261,7 +271,9 @@
 			isSupportedAddCondition,
 			conditions,
 			isSupportedSku,
-			isSingleSelect
+			isSingleSelect,
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = { 35647605646: null };
 		$ccGoodsSelector
