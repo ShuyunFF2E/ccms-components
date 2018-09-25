@@ -11,7 +11,7 @@ var categories = {
 			'shopId': '店铺',
 			'pid': '上级类目',
 			'level': '级别',
-			'isLeaf': '是否叶子节点'
+			'isLeaf': true
 		},
 		{
 			'id': '222222',
@@ -24,7 +24,7 @@ var categories = {
 			'shopId': '店铺',
 			'pid': '上级类目',
 			'level': '级别',
-			'isLeaf': '是否叶子节点'
+			'isLeaf': true
 		}
 	]
 };

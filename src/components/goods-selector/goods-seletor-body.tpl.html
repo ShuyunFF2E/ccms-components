@@ -2,26 +2,41 @@
 	<div class="main-area">
 		<section class="form-area">
 			<form class="form-wrapper" cc-validators="$ctrl.validators" name="$ctrl.goodsSelectorForm" ng-init="$ctrl.isSimpleSearch=true;">
-				<fieldset ng-if="$ctrl.isShowShopList">
-					<label class="goods-label">店铺选择：</label>
+				<!--店铺选择-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-shopId']" class="multiple-shop-list">
+					<label class="goods-label">{{$ctrl.formTplConfig.shopIdTitle}}：</label>
 					<cc-dropdown-select
+							ng-if="$ctrl.isSingleSelectShopList"
 							disabled="$ctrl.isShopListDisabled"
 							model="$ctrl.formModel.shopId"
 							datalist="$ctrl.shopList"
 							mapping="$ctrl.shopListFieldsMap"
 							on-select-change="$ctrl.shopSelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
+					<cc-dropdown-multiselect
+							ng-if="!$ctrl.isSingleSelectShopList"
+							placeholder="请选择店铺"
+							model="$ctrl.formModel.shopId"
+							datalist="$ctrl.shopList"
+							searchable="true"
+							mapping="$ctrl.shopListFieldsMap"
+							has-select-all="true"
+							on-select-change="$ctrl.shopSelectChange(newValue, oldValue, itemIndex, item)">
+					</cc-dropdown-multiselect>
 				</fieldset>
-				<fieldset>
-					<label class="goods-label">商品ID：</label>
-					<input type="text" ng-model="$ctrl.formModel.id[0]" cc-validator='number' placeholder="商品ID">
+				<!--商品ID-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-id']">
+					<label class="goods-label">{{$ctrl.formTplConfig.idTitle}}：</label>
+					<input type="text" ng-model="$ctrl.formModel.id[0]" cc-validator='number' placeholder="{{$ctrl.formTplConfig.idTitle}}">
 				</fieldset>
-				<fieldset>
-					<label class="goods-label">商品标题：</label>
-					<input type="text" ng-model="$ctrl.formModel.name" placeholder="商品标题">
+				<!--商品标题-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-name']">
+					<label class="goods-label">{{$ctrl.formTplConfig.nameTitle}}：</label>
+					<input type="text" ng-model="$ctrl.formModel.name" placeholder="{{$ctrl.formTplConfig.nameTitle}}">
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isTaobao">
-					<label class="goods-label">自定义类目：</label>
+				<!--自定义类目-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-shopCategoriesId']">
+					<label class="goods-label">{{$ctrl.formTplConfig.shopCategoriesIdTitle}}：</label>
 					<cc-dropdown-multiselect
 							placeholder=""
 							model="$ctrl.formModel.shopCategoriesId"
@@ -30,12 +45,17 @@
 							mapping="$ctrl.shopCategoriesFieldsMap">
 					</cc-dropdown-multiselect>
 				</fieldset>
-				<!--<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isTaobao">-->
-				<!--<label class="goods-label">商品标签：</label>-->
-				<!--<input type="text" ng-model="$ctrl.formModel.goodsLabel" placeholder="商品标签" ng-focus="$ctrl.openGoodsLabel($ctrl.selectedGoods.goodsLabelList)">-->
-				<!--</fieldset>-->
-				<fieldset ng-class="{'shop-categories': !$ctrl.isSimpleSearch}">
-					<label class="goods-label">标准类目：</label>
+				<!--商品标签-->
+				<fieldset class="goods-selector-label" ng-if="$ctrl.formTplConfig['show-tagItemIds']">
+					<label class="goods-label">{{$ctrl.formTplConfig.tagItemIdsTitle}}：</label>
+					<div class="goods-label-btn"
+						 ng-click="$ctrl.openGoodsLabelModel()">
+						您选择了{{ $ctrl.selectedLabels.length }}个标签
+					</div>
+				</fieldset>
+				<!--标准类目-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-categoriesId']" ng-class="{'shop-categories': !$ctrl.isSimpleSearch || $ctrl.isSupportedAddCondition}">
+					<label class="goods-label">{{$ctrl.formTplConfig.categoriesIdTitle}}：</label>
 					<cc-dropdown-select
 							placeholder="请选择"
 							model="$ctrl.formModel.categoriesId"
@@ -45,8 +65,20 @@
 							on-select-change="$ctrl.categorySelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
-					<label class="goods-label">商品属性：</label>
+				<!--品牌-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-brandId']">
+					<label class="goods-label">{{$ctrl.formTplConfig.brandIdTitle}}：</label>
+					<cc-dropdown-select
+							placeholder="请选择"
+							model="$ctrl.formModel.brandId"
+							datalist="$ctrl.brandsList"
+							searchable="true"
+							mapping="$ctrl.brandsListFieldsMap">
+					</cc-dropdown-select>
+				</fieldset>
+				<!--商品属性-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-propsPid']">
+					<label class="goods-label">{{$ctrl.formTplConfig.propsPidTitle}}：</label>
 					<cc-dropdown-select
 							placeholder="请选择"
 							model="$ctrl.formModel.propsPid"
@@ -56,8 +88,9 @@
 							on-select-change="$ctrl.propSelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
-					<label class="goods-label">属性值：</label>
+				<!--属性值-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-propsVid']">
+					<label class="goods-label">{{$ctrl.formTplConfig.propsVidTitle}}：</label>
 					<cc-dropdown-select
 							placeholder="请选择或输入"
 							model="$ctrl.formModel.propsVid"
@@ -68,66 +101,70 @@
 							mapping="$ctrl.propsVidFieldsMap">
 					</cc-dropdown-select>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
-					<label class="goods-label">商品状态：</label>
+				<!--商品状态-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-status']">
+					<label class="goods-label">{{$ctrl.formTplConfig.statusTitle}}：</label>
 					<cc-dropdown-select
 							model="$ctrl.formModel.status"
 							datalist="$ctrl.statusList"
 							mapping="$ctrl.statusFieldsMap">
 					</cc-dropdown-select>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && !$ctrl.isTaobao">
-					<label class="goods-label">商品编号：</label>
+				<!--商品编号/SKU ID-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-skusId']">
+					<label class="goods-label">{{$ctrl.formTplConfig.skusIdTitle}}：</label>
 					<input type="text" ng-model="$ctrl.formModel.skusId[0]" cc-validator='number' placeholder="">
 				</fieldset>
-				<fieldset class="goods-price" ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
-					<label class="goods-label">价格：</label>
+				<!--价格-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-minPrice']" class="goods-price">
+					<label class="goods-label">{{$ctrl.formTplConfig.minPriceTitle}}：</label>
 					<input class="goods-input" type="text" ng-model="$ctrl.formModel.minPrice" cc-validator="price, lowPrice">
 					<span>-</span>
 					<input class="goods-input" type="text" ng-model="$ctrl.formModel.maxPrice" cc-validator="price, highPrice">
 				</fieldset>
-				<fieldset class="stack-date" ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
-					<label class="goods-label">上架时间：</label>
+				<!--上架时间-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-startListTime']" class="stack-date">
+					<label class="goods-label">{{$ctrl.formTplConfig.startListTimeTitle}}：</label>
 					<cc-date-range opts="$ctrl.dateRange"></cc-date-range>
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList)">
-					<label class="goods-label">商品商家编码：</label>
+				<!--商品商家编码-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-outerId']">
+					<label class="goods-label">{{$ctrl.formTplConfig.outerIdTitle}}：</label>
 					<input type="text" ng-model="$ctrl.formModel.outerId" placeholder="">
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isSupportedSku">
-					<label class="goods-label">SKU商家编码：</label>
+				<!--SKU商家编码-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-skusOuterId']">
+					<label class="goods-label">{{$ctrl.formTplConfig.skusOuterIdTitle}}：</label>
 					<input type="text" ng-model="$ctrl.formModel.skusOuterId" placeholder="">
 				</fieldset>
-				<fieldset ng-if="(!$ctrl.isSimpleSearch || $ctrl.isShowShopList) && $ctrl.isSupportedSku">
-					<label class="goods-label">SKU规格：</label>
+				<!--SKU规格-->
+				<fieldset ng-if="$ctrl.formTplConfig['show-skusPropsVname']">
+					<label class="goods-label">{{$ctrl.formTplConfig.skusPropsVnameTitle}}：</label>
 					<input type="text" ng-model="$ctrl.formModel.skusPropsVname" placeholder="">
 				</fieldset>
 				<fieldset class="operate">
-					<button type="button" class="btn-ok search" ng-click="$ctrl.search($ctrl.isSelectedGoodsTab); $ctrl.hasSearched = true;">搜索</button>
-					<span class="reset" ng-click="$ctrl.reset($ctrl.goodsSelectorForm)">重置</span>
-					<span class="add-addition" ng-if="$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = false">高级搜索</span>
-					<span class="add-addition" ng-if="!$ctrl.isSimpleSearch && !$ctrl.isShowShopList" ng-click="$ctrl.isSimpleSearch = true; $ctrl.initComplexForm();">简单搜索</span>
-					<!--<span class="add-addition" ng-if="$ctrl.isShowShopList">添加为搜索条件</span>-->
+					<button type="button" class="btn-ok search" ng-click="$ctrl.search($ctrl.isSelectedGoodsTab)">搜索</button>
+					<span class="reset" ng-click="$ctrl.reset($ctrl.formModel, $ctrl.dateRange, $ctrl.goodsSelectorForm)">重置</span>
+					<span ng-if="!$ctrl.isSupportedAddCondition && $ctrl.isSimpleSearch && !$ctrl.isShowShopList" class="add-addition" ng-click="$ctrl.isSimpleSearch = false; $ctrl.clickSeniorSearch();">高级搜索</span>
+					<span ng-if="!$ctrl.isSupportedAddCondition && !$ctrl.isSimpleSearch && !$ctrl.isShowShopList" class="add-addition" ng-click="$ctrl.isSimpleSearch = true; $ctrl.clickSimpleSearch();">简单搜索</span>
+					<span class="add-condition" ng-if="$ctrl.isSupportedAddCondition && !$ctrl.isSelectedGoodsTab" ng-click="$ctrl.clickCondition()">添加为搜索条件</span>
 				</fieldset>
 			</form>
 		</section>
-		<!--row-1: 不存在商铺列表选项并且简单搜索，表格区域距离上侧的距离
-			row-3: 没有商铺列表选项并且不是简单搜索并且不支持显示sku，表格距离上侧的距离
-			row-4: 存在商铺列表选项或者是高级搜索支持显示sku，表格距离上侧的距离-->
-		<gs-tabs ng-class="{'row-1': !$ctrl.isShowShopList && $ctrl.isSimpleSearch,
-							'row-3': !$ctrl.isSupportedSku && !$ctrl.isSimpleSearch && !$ctrl.isShowShopList,
-		 					'row-4': $ctrl.isShowShopList || !$ctrl.isSimpleSearch && $ctrl.isSupportedSku}">
+		<gs-tabs>
 			<gs-panel text="全部商品" class="all-goods-panel" tab-click="$ctrl.tabClick(text)">
 				<section class="grid-area">
-					<div class="all-goods-operation">
-						<!--<cc-checkbox class="select-all" ng-checked="$ctrl.selectAll">全选</cc-checkbox>-->
+					<!--此处和表单内容一样，只起占位作用-->
+					<section class="form-area seize-seat" cc-bind-html="$ctrl.formTpl"></section>
+					<div class="all-goods-operation" ng-if="!$ctrl.isSingleSelect">
+						<cc-checkbox cc-capture-click="$ctrl.checkAllBefore($event)" class="select-all" ng-checked="$ctrl.isCheckedAll" ng-click="$ctrl.isCheckedAll = !$ctrl.isCheckedAll;">全部全选</cc-checkbox>
 						<cc-checkbox cc-capture-click="$ctrl.checkCurrentPageBefore($event)" class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.selectCurrentPageAll()">全选当页</cc-checkbox>
 						<span class="slide-toggle-btn"
 							  ng-if="$ctrl.isSupportedSku"
 							  ng-click="$ctrl.isExtendAll = !$ctrl.isExtendAll; $ctrl.extendAll($ctrl.isExtendAll, $ctrl.resInfo.list);">{{$ctrl.isExtendAll ? '全部折叠' : '全部展开'}}</span>
-						<!--<span class="add-section" style="float: right; color: #0083ba; margin-right: 4px; margin-top: 6px;" ng-click="$ctrl.addSection()">批量添加</span>-->
+						<span class="add-section" ng-click="$ctrl.addSection()">批量添加</span>
 					</div>
-					<cc-grid ng-class="{'not-sku': !$ctrl.isSupportedSku}"
+					<cc-grid ng-class="{'not-sku': !$ctrl.isSupportedSku, 'single-select': $ctrl.isSingleSelect}"
 							 opts="$ctrl.pagerGridOptions"
 							 selected-items="$ctrl.selectedItems"
 							 type="default"
@@ -137,15 +174,23 @@
 			</gs-panel>
 			<gs-panel text="已选商品" class="checked-goods-panel" tab-click="$ctrl.tabClick(text)">
 				<section class="grid-area">
-					<div class="checked-goods-operation">
+					<!--此处和表单内容一样，只起占位作用-->
+					<section class="form-area seize-seat" cc-bind-html="$ctrl.formTpl"></section>
+					<div class="checked-goods-operation" ng-if="!$ctrl.isSingleSelect">
 						<span ng-click="$ctrl.removeAll()">移除全部</span>
 						<span ng-click="$ctrl.removeCurrentPage()">移除当页</span>
 						<span class="slide-toggle-btn"
 							  ng-if="$ctrl.isSupportedSku"
 							  ng-click="$ctrl.isSelectedExtendAll = !$ctrl.isSelectedExtendAll; $ctrl.extendAll($ctrl.isSelectedExtendAll, $ctrl.selectedItems);">{{$ctrl.isSelectedExtendAll ? '全部折叠' : '全部展开'}}</span>
-						<!--<span class="add-section" style="float: right;margin-right: 4px; margin-top: 0">批量添加</span>-->
 					</div>
-					<cc-grid ng-class="{'not-sku': !$ctrl.isSupportedSku}"
+					<div class="support-condition" ng-if="$ctrl.conditionContent">
+						<span class="condition-title">条件</span>
+						<i ng-click="$ctrl.removeCondition();" class="icon iconfont icon-dele"></i>
+						<span class="condition-content" cc-tooltip="$ctrl.conditionContent" tooltip-placement="top-left">
+							<span class="content">条件：</span>{{$ctrl.conditionContent}}
+						</span>
+					</div>
+					<cc-grid ng-class="{'not-sku': !$ctrl.isSupportedSku, 'single-select': $ctrl.isSingleSelect}"
 							 opts="$ctrl.selectedPagerGridOptions"
 							 type="default"
 							 on-refresh="$ctrl.selectedPagerGridOptions.onRefresh(opts)">
@@ -154,6 +199,9 @@
 				</section>
 			</gs-panel>
 		</gs-tabs>
-		<!--<p class="refresh-data">更新数据</p>-->
+	</div>
+	<div class="goods-selector-mask" ng-class="{'goods-selector-loading-mask': $ctrl.isShowMaskOfLoading}" ng-if="$ctrl.isShowMask || $ctrl.isShowMaskOfLoading">
+		<cc-loading type="layer" ng-show="$ctrl.isShowMask">数据更新中</cc-loading>
+		<cc-loading ng-show="$ctrl.isShowMaskOfLoading"></cc-loading>
 	</div>
 </div>
