@@ -22,7 +22,7 @@ import service from './service';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName', '$q',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
-	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions', 'isSingleSelect', 'isSingleSelectShopList', '$ccShopSelector')
+	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'isSupportedTag', 'tenantId', 'conditions', 'isSingleSelect', 'isSingleSelectShopList', '$ccShopSelector')
 
 export default class GoodsSelectorCtrl {
 
@@ -43,6 +43,8 @@ export default class GoodsSelectorCtrl {
 		this.selectedLabelsOfSelected = [];
 		// 商品维度选择（是否支持显示sku）
 		this.isSupportedSku = this._isSupportedSku;
+		// 是否支持商品标签
+		this.isSupportedTag = this._isSupportedTag;
 		// 租户ID -> 查询商品标签参数
 		this.tenantId = this._tenantId;
 		// 是否支持添加为搜索条件
@@ -142,7 +144,7 @@ export default class GoodsSelectorCtrl {
 		const collection = fieldsetConfig[this.formModel.platform];
 		let asyncMethods = [];
 		// 获取商品标签数据并对selectedLabels进行初始化
-		this.findEntityByName(collection, 'tagItemIds') >= 0 && asyncMethods.push(this.getTags());
+		this.findEntityByName(collection, 'tagItemIds') >= 0 && this.isSupportedAddCondition && asyncMethods.push(this.getTags());
 		// 商品自自定义类目数据
 		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && asyncMethods.push(this.getShopCategories());
 		// 获取商品品牌
@@ -649,6 +651,7 @@ export default class GoodsSelectorCtrl {
 		const collection = fieldsetConfig[this.formModel.platform];
 		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && this.getShopCategories();
 		this.findEntityByName(collection, 'categoriesId') && this.getCategories();
+		this.findEntityByName(collection, 'brandId') >= 0 && this.getBrands();
 	};
 
 	// 商品属性值 select 框 change

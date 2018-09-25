@@ -12,7 +12,6 @@
 	var isOnlyChecked = false; // 是否包含 footer
 	var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 	var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
-	var tenantId = 'xz'; // 租户ID
 	var conditions = { // 搜索条件
 		endListTime: new Date(1531843200000), // 下架时间
 		id: ['11111'], // 商品ID
@@ -38,8 +37,7 @@
 			maxSelectedNumber,
 			serverName,
 			isSupportedAddCondition,
-			conditions,
-			tenantId
+			conditions
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -72,8 +70,7 @@
 			serverName,
 			isSupportedAddCondition,
 			conditions,
-			isSingleSelectShopList,
-			tenantId
+			isSingleSelectShopList
 		};
 		var selectedGoods = {
 			556820: null,

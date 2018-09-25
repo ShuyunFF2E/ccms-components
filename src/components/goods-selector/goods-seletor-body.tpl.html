@@ -46,7 +46,7 @@
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<!--商品标签-->
-				<fieldset class="goods-selector-label" ng-if="$ctrl.formTplConfig['show-tagItemIds']">
+				<fieldset class="goods-selector-label" ng-if="$ctrl.formTplConfig['show-tagItemIds'] && $ctrl.isSupportedTag">
 					<label class="goods-label">{{$ctrl.formTplConfig.tagItemIdsTitle}}：</label>
 					<div class="goods-label-btn"
 						 ng-click="$ctrl.openGoodsLabelModel()">
