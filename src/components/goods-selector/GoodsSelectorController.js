@@ -22,7 +22,8 @@ import service from './service';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName', '$q',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
-	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'isSupportedTag', 'tenantId', 'conditions', 'isSingleSelect', 'isSingleSelectShopList', '$ccShopSelector')
+	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'isSupportedTag', 'tenantId', 'conditions', 'isSingleSelect',
+	'isSingleSelectShopList', '$ccShopSelector', 'isSupportedBatchAddition')
 
 export default class GoodsSelectorCtrl {
 
@@ -63,6 +64,8 @@ export default class GoodsSelectorCtrl {
 		// 用户传进来的已选商品数组
 		this.selectedData = this._selectedData;
 		this.serverName = this._serverName;
+		// 是否支持批量导入
+		this.isSupportedBatchAddition = this._isSupportedBatchAddition;
 		// 批量导入和搜索是本质上都是根据条件对表格数据进行筛选，但是却是两个不相关的操作，把它们看成两个开关，不同的开关对应不同的API，其下的分页操作分别使用对应的API
 		this.gridPrefixApi = `${this.serverName}${apiPrefix}/items`;
 
@@ -173,7 +176,7 @@ export default class GoodsSelectorCtrl {
 				selectedShopIdList = this.shopList.map(item => item.shopId);
 			}
 		} else {
-			if (this.isSupportedAddCondition && this.conditions.shopId) {
+			if (this.isSupportedAddCondition && this.conditions.shopId && this.conditions.shopId !== 'undefined') {
 				selectedShopIdList = [this.conditions.shopId];
 			} else {
 				selectedShopIdList = [this.shopList[0].shopId];
@@ -780,7 +783,7 @@ export default class GoodsSelectorCtrl {
 		this.getSearchApi();
 		this.isAddSectionExtend = false;
 		this.isCheckedAll = false;
-		if (!this.formModel.shopId || this.formModel.shopId && !this.formModel.shopId.length) {
+		if (!this.formModel.shopId || Array.isArray(this.formModel.shopId) && !this.formModel.shopId.length) {
 			this._$ccTips.error('请至少选择一个店铺');
 		} else {
 			this._$ccValidator.validate(this.goodsSelectorForm).then(() => {

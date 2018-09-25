@@ -21,10 +21,11 @@ const GoodsSelectorService = {
 	 * @params isSupportedAddCondition bool 是否支持添加为搜索条件，默认不支持
 	 * @params isSingleSelect bool 单选 or 多选 默认是多选
 	 * @params isSingleSelectShopList Object 店铺单选/多选，默认是单选
+	 * @params isSupportedBatchAddition bool 是否支持批量添加功能，默认不支持
 	 * */
 	goodsSelector(shopInfo, { isOnlyChecked = false, maxSelectedNumber = 100, serverName = '',
 		isSupportedSku = true, tenantId = null, isSupportedAddCondition = false, conditions = {},
-		isSingleSelect = false, isSingleSelectShopList = true, isSupportedTag = false }, selectedGoods = []) {
+		isSingleSelect = false, isSingleSelectShopList = true, isSupportedTag = false, isSupportedBatchAddition = false }, selectedGoods = []) {
 
 		if (typeof shopInfo === 'undefined') {
 			throw new Error('goodsSelector 缺少 shopInfo 参数');
@@ -56,7 +57,8 @@ const GoodsSelectorService = {
 					conditions: conditions,
 					isSingleSelect: isSingleSelect,
 					isSingleSelectShopList: isSingleSelectShopList,
-					isSupportedTag: isSupportedTag
+					isSupportedTag: isSupportedTag,
+					isSupportedBatchAddition: isSupportedBatchAddition
 				},
 				controller: GoodsSelectorController,
 				controllerAs: '$ctrl',

@@ -117,7 +117,7 @@
 	var isSingleSelect = true; // 是否是单选列表
 
 	// top + sku 维度 + 店铺选择
-	function openTopWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
@@ -125,8 +125,9 @@
 			serverName,
 			tenantId,
 			isSupportedAddCondition,
-			conditions,
-			isSupportedTag
+			// conditions,
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -145,7 +146,7 @@
 	}
 
 	// top + sku 维度 + 单店铺
-	function openTopWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
@@ -154,7 +155,8 @@
 			tenantId,
 			isSupportedAddCondition,
 			conditions,
-			isSupportedTag
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -173,7 +175,7 @@
 	}
 
 	// top + 商品维度 + 店铺选择
-	function openTopWithoutSkuWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopWithoutSkuWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
@@ -183,7 +185,8 @@
 			isSupportedAddCondition,
 			conditions,
 			isSupportedSku,
-			isSupportedTag
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			541920723552: null,
@@ -202,7 +205,7 @@
 	}
 
 	// top + 商品维度 + 单店铺
-	function openTopWithoutSkuWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopWithoutSkuWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
@@ -212,7 +215,8 @@
 			isSupportedAddCondition,
 			conditions,
 			isSupportedSku,
-			isSupportedTag
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			541920723552: null,
@@ -231,7 +235,7 @@
 	}
 
 	// top + 商品维度 + 店铺选择 + 单选（微信CRM）
-	function openTopSingleSelectWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopSingleSelectWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
@@ -242,7 +246,8 @@
 			conditions,
 			isSupportedSku,
 			isSingleSelect,
-			isSupportedTag
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = { 35647605646: null };
 		$ccGoodsSelector
@@ -256,7 +261,7 @@
 	}
 
 	// top + 商品维度 + 单店铺 + 单选（微信CRM）
-	function openTopSingleSelectWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openTopSingleSelectWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
@@ -267,7 +272,8 @@
 			conditions,
 			isSupportedSku,
 			isSingleSelect,
-			isSupportedTag
+			isSupportedTag,
+			isSupportedBatchAddition
 		};
 		var selectedGoods = { 35647605646: null };
 		$ccGoodsSelector

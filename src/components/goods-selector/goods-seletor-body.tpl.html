@@ -162,7 +162,7 @@
 						<span class="slide-toggle-btn"
 							  ng-if="$ctrl.isSupportedSku"
 							  ng-click="$ctrl.isExtendAll = !$ctrl.isExtendAll; $ctrl.extendAll($ctrl.isExtendAll, $ctrl.resInfo.list);">{{$ctrl.isExtendAll ? '全部折叠' : '全部展开'}}</span>
-						<span class="add-section" ng-click="$ctrl.addSection()">批量添加</span>
+						<span class="add-section" ng-click="$ctrl.addSection()" ng-if="$ctrl.isSupportedBatchAddition">批量添加</span>
 					</div>
 					<cc-grid ng-class="{'not-sku': !$ctrl.isSupportedSku, 'single-select': $ctrl.isSingleSelect}"
 							 opts="$ctrl.pagerGridOptions"
