@@ -12,7 +12,6 @@
 	var isOnlyChecked = false; // 是否包含 footer
 	var maxSelectedNumber = 1000; // 最大允许选择的商品数量
 	var serverName = ''; // http://qa-ual.fenxibao.com  或  http://ual.fenxibao.com
-	var tenantId = 'xz'; // 租户ID
 	var conditions = { // 搜索条件
 		endListTime: new Date(1531843200000), // 下架时间
 		id: ['11111'], // 商品ID
@@ -31,7 +30,7 @@
 	var isSingleSelectShopList = false; // 店铺选择（单选/多选）
 
 	// qiakr + sku 维度 + 店铺选择（单选）
-	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = [{shopId: '72903', shopName: '恰客', plat: 'qiakr'}, {shopId: '72897', shopName: '恰客1', plat: 'qiakr'}];
 		var options = {
 			isOnlyChecked,
@@ -39,7 +38,7 @@
 			serverName,
 			isSupportedAddCondition,
 			conditions,
-			tenantId
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -58,7 +57,7 @@
 	}
 
 	// qiakr + sku 维度 + 店铺选择（多选）
-	function openQkMultipleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition) {
+	function openQkMultipleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = [
 				{shopId: '72903', shopName: '恰客', plat: 'qiakr'},
 				{shopId: '72899', shopName: '恰客1', plat: 'qiakr'},
@@ -73,7 +72,7 @@
 			isSupportedAddCondition,
 			conditions,
 			isSingleSelectShopList,
-			tenantId
+			isSupportedBatchAddition
 		};
 		var selectedGoods = {
 			556820: null,

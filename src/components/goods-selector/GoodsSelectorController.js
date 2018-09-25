@@ -22,7 +22,8 @@ import service from './service';
 
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName', '$q',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
-	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'tenantId', 'conditions', 'isSingleSelect', 'isSingleSelectShopList', '$ccShopSelector')
+	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'isSupportedTag', 'tenantId', 'conditions', 'isSingleSelect',
+	'isSingleSelectShopList', '$ccShopSelector', 'isSupportedBatchAddition')
 
 export default class GoodsSelectorCtrl {
 
@@ -43,12 +44,14 @@ export default class GoodsSelectorCtrl {
 		this.selectedLabelsOfSelected = [];
 		// 商品维度选择（是否支持显示sku）
 		this.isSupportedSku = this._isSupportedSku;
+		// 是否支持商品标签
+		this.isSupportedTag = this._isSupportedTag;
 		// 租户ID -> 查询商品标签参数
 		this.tenantId = this._tenantId;
 		// 是否支持添加为搜索条件
 		this.isSupportedAddCondition = this._isSupportedAddCondition;
 		// 搜索条件
-		this._conditions.shopId = String(this._conditions.shopId);
+		this._conditions && (this._conditions.shopId = String(this._conditions.shopId));
 		this.conditions = cloneDeep(this._conditions);
 		this.conditionsModel = cloneDeep(this._conditions);
 
@@ -61,6 +64,8 @@ export default class GoodsSelectorCtrl {
 		// 用户传进来的已选商品数组
 		this.selectedData = this._selectedData;
 		this.serverName = this._serverName;
+		// 是否支持批量导入
+		this.isSupportedBatchAddition = this._isSupportedBatchAddition;
 		// 批量导入和搜索是本质上都是根据条件对表格数据进行筛选，但是却是两个不相关的操作，把它们看成两个开关，不同的开关对应不同的API，其下的分页操作分别使用对应的API
 		this.gridPrefixApi = `${this.serverName}${apiPrefix}/items`;
 
@@ -142,7 +147,7 @@ export default class GoodsSelectorCtrl {
 		const collection = fieldsetConfig[this.formModel.platform];
 		let asyncMethods = [];
 		// 获取商品标签数据并对selectedLabels进行初始化
-		this.findEntityByName(collection, 'tagItemIds') >= 0 && asyncMethods.push(this.getTags());
+		this.findEntityByName(collection, 'tagItemIds') >= 0 && this.isSupportedAddCondition && asyncMethods.push(this.getTags());
 		// 商品自自定义类目数据
 		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && asyncMethods.push(this.getShopCategories());
 		// 获取商品品牌
@@ -171,7 +176,7 @@ export default class GoodsSelectorCtrl {
 				selectedShopIdList = this.shopList.map(item => item.shopId);
 			}
 		} else {
-			if (this.isSupportedAddCondition && this.conditions.shopId) {
+			if (this.isSupportedAddCondition && this.conditions.shopId && this.conditions.shopId !== 'undefined') {
 				selectedShopIdList = [this.conditions.shopId];
 			} else {
 				selectedShopIdList = [this.shopList[0].shopId];
@@ -649,6 +654,7 @@ export default class GoodsSelectorCtrl {
 		const collection = fieldsetConfig[this.formModel.platform];
 		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && this.getShopCategories();
 		this.findEntityByName(collection, 'categoriesId') && this.getCategories();
+		this.findEntityByName(collection, 'brandId') >= 0 && this.getBrands();
 	};
 
 	// 商品属性值 select 框 change
@@ -728,7 +734,7 @@ export default class GoodsSelectorCtrl {
 
 	// 初始化搜索条件信息，只调用一次（打开弹窗 -> 重置操作/选择商品标签/点击已选商品 tab -> 获取条件信息后并关闭操作）
 	initConditionsMsg() {
-		!this.hasInitConditionMsg && this.getConditionMsg(this.formModelCopy);
+		!this.hasInitConditionMsg && this.conditions && this.getConditionMsg(this.formModelCopy);
 		this.hasInitConditionMsg = true;
 	}
 	// 批量添加操作下的 api 和 表格查询参数
@@ -777,7 +783,7 @@ export default class GoodsSelectorCtrl {
 		this.getSearchApi();
 		this.isAddSectionExtend = false;
 		this.isCheckedAll = false;
-		if (!this.formModel.shopId || this.formModel.shopId && !this.formModel.shopId.length) {
+		if (!this.formModel.shopId || Array.isArray(this.formModel.shopId) && !this.formModel.shopId.length) {
 			this._$ccTips.error('请至少选择一个店铺');
 		} else {
 			this._$ccValidator.validate(this.goodsSelectorForm).then(() => {

@@ -46,7 +46,7 @@
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<!--商品标签-->
-				<fieldset class="goods-selector-label" ng-if="$ctrl.formTplConfig['show-tagItemIds']">
+				<fieldset class="goods-selector-label" ng-if="$ctrl.formTplConfig['show-tagItemIds'] && $ctrl.isSupportedTag">
 					<label class="goods-label">{{$ctrl.formTplConfig.tagItemIdsTitle}}：</label>
 					<div class="goods-label-btn"
 						 ng-click="$ctrl.openGoodsLabelModel()">
@@ -162,7 +162,7 @@
 						<span class="slide-toggle-btn"
 							  ng-if="$ctrl.isSupportedSku"
 							  ng-click="$ctrl.isExtendAll = !$ctrl.isExtendAll; $ctrl.extendAll($ctrl.isExtendAll, $ctrl.resInfo.list);">{{$ctrl.isExtendAll ? '全部折叠' : '全部展开'}}</span>
-						<span class="add-section" ng-click="$ctrl.addSection()">批量添加</span>
+						<span class="add-section" ng-click="$ctrl.addSection()" ng-if="$ctrl.isSupportedBatchAddition">批量添加</span>
 					</div>
 					<cc-grid ng-class="{'not-sku': !$ctrl.isSupportedSku, 'single-select': $ctrl.isSingleSelect}"
 							 opts="$ctrl.pagerGridOptions"
@@ -183,7 +183,7 @@
 							  ng-if="$ctrl.isSupportedSku"
 							  ng-click="$ctrl.isSelectedExtendAll = !$ctrl.isSelectedExtendAll; $ctrl.extendAll($ctrl.isSelectedExtendAll, $ctrl.selectedItems);">{{$ctrl.isSelectedExtendAll ? '全部折叠' : '全部展开'}}</span>
 					</div>
-					<div class="support-condition" ng-if="$ctrl.conditionContent">
+					<div class="support-condition" ng-if="$ctrl.conditionContent && $ctrl.isSupportedAddCondition">
 						<span class="condition-title">条件</span>
 						<i ng-click="$ctrl.removeCondition();" class="icon iconfont icon-dele"></i>
 						<span class="condition-content" cc-tooltip="$ctrl.conditionContent" tooltip-placement="top-left">

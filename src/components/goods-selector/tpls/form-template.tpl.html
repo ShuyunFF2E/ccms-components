@@ -16,7 +16,7 @@
 		<label class="goods-label">自定义类目：</label>
 		<cc-dropdown-multiselect></cc-dropdown-multiselect>
 	</fieldset>
-	<fieldset class="goods-selector-label" ng-if="$ctrl.formTplConfig['show-tagItemIds']">
+	<fieldset class="goods-selector-label" ng-if="$ctrl.formTplConfig['show-tagItemIds'] && $ctrl.isSupportedTag">
 		<label class="goods-label">商品标签：</label>
 		<div class="goods-label-btn"></div>
 	</fieldset>
