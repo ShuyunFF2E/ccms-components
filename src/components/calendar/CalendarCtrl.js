@@ -292,6 +292,7 @@ export default class DatePickerCtrl {
 				(value < +input.getAttribute('ng-min')) ||
 				(value > +input.getAttribute('ng-max'))) {
 			this.parts[input.name] = '00';
+			this.setDate(this.value);
 		} else {
 			this.parts[input.name] = value;
 			this.setDate(this.value);
