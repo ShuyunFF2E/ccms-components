@@ -271,8 +271,9 @@ export default class GoodsSelectorCtrl {
 		this.selectedItemsBuffer = [];
 
 		// 用户传进来的已选商品处理
+		const shopIdList = this.shopInfoData.map(item => item.shopId);
 		const goodsDataParams = {
-			shopId: this.selectedShopIdList,
+			shopId: shopIdList,
 			plat: this.shopList[0].plat,
 			selectedGoods: this.selectedData,
 			serverName: this.serverName,
