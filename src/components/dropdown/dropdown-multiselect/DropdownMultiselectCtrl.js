@@ -146,7 +146,7 @@ export default class DropdownMultiselectCtrl {
 			} else {
 				switch (keyCode) {
 					case 13: // enter
-						this.toggleSelection(this.items[this.focusIndex]);
+						if (this.focusIndex > -1) this.toggleSelection(this.items[this.focusIndex]);
 						break;
 					case 38: // up
 						this.focusUp();
