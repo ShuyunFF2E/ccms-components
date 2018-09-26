@@ -51,11 +51,10 @@ export default class GoodsSelectorCtrl {
 		// 是否支持添加为搜索条件
 		this.isSupportedAddCondition = this._isSupportedAddCondition;
 		// 搜索条件
-		this._conditions && (this._conditions.shopId = String(this._conditions.shopId));
 		this.conditions = cloneDeep(this._conditions);
 		this.conditionsModel = cloneDeep(this._conditions);
 
-		this.isShowMaskOfLoading = this.isSupportedAddCondition;
+		this.isShowMaskOfLoading = this.isSupportedAddCondition && this._conditions && JSON.stringify(this._conditions) !== '{}';
 
 		// 店铺是否是单选
 		this.isSingleSelectShopList = this._isSingleSelectShopList;
@@ -75,6 +74,7 @@ export default class GoodsSelectorCtrl {
 		this.isShowShopList = Array.isArray(this.shopInfoData);
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this.shopInfoData : [this.shopInfoData];
+		this.shopList.map(item => { item.shopId = String(item.shopId); return item; });
 		this.isTaobao = this.shopList[0].plat === 'top';
 		this.isQiake = this.shopList[0].plat === 'qiakr';
 
@@ -173,13 +173,13 @@ export default class GoodsSelectorCtrl {
 			if (this.isSupportedAddCondition && this.conditions.shopId) {
 				selectedShopIdList = String(this.conditions.shopId).split(',').map(item => item.replace(/^\s+|\s+$/g, ''));
 			} else {
-				selectedShopIdList = this.shopList.map(item => item.shopId);
+				selectedShopIdList = this.shopList.map(item => String(item.shopId));
 			}
 		} else {
 			if (this.isSupportedAddCondition && this.conditions.shopId && this.conditions.shopId !== 'undefined') {
-				selectedShopIdList = [this.conditions.shopId];
+				selectedShopIdList = [String(this.conditions.shopId)];
 			} else {
-				selectedShopIdList = [this.shopList[0].shopId];
+				selectedShopIdList = [String(this.shopList[0].shopId)];
 			}
 		}
 		return selectedShopIdList;
@@ -271,7 +271,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedItemsBuffer = [];
 
 		// 用户传进来的已选商品处理
-		const shopIdList = this.shopInfoData.map(item => item.shopId);
+		const shopIdList = this.shopList.map(item => item.shopId);
 		const goodsDataParams = {
 			shopId: shopIdList,
 			plat: this.shopList[0].plat,
