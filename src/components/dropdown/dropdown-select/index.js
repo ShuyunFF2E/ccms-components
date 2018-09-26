@@ -25,7 +25,8 @@ const dropdownSelectDDO = {
 		placeholder: '@?',
 		onSelectChange: '&?',
 		onDropdownOpen: '&?',
-		onDropdownClose: '&?'
+		onDropdownClose: '&?',
+		onBeforeSelectChange: '&?'
 	},
 	bindToController: true
 };

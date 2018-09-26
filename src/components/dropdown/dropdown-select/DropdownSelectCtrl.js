@@ -29,6 +29,7 @@ export default class DropdownSelectCtrl {
 		this.onSelectChange = () => {};
 		this.onDropdownOpen = () => {};
 		this.onDropdownClose = () => {};
+		this.onBeforeSelectChange = () => Promise.resolve();
 
 		this._openFn = null;
 	}
@@ -57,6 +58,7 @@ export default class DropdownSelectCtrl {
 		}
 
 		this.onSelectChange = this.onSelectChange || (() => {});
+		this.onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
 	}
 
 	_prepareWatches() {
@@ -251,14 +253,26 @@ export default class DropdownSelectCtrl {
 	}
 
 	selectItemAt(index) {
-		let item = this.items[index];
-		if (item) {
-			this.title = item[this.mapping.displayField];
-			this.model = item[this.mapping.valueField];
-			this.icon = item[this.mapping.iconField];
-			this.focusAt(index);
-			this.close();
+		const item = this.items[index];
+		const scope = this.getScope();
+
+		if (!item) {
+			return;
 		}
+
+		this.onBeforeSelectChange({ item })
+			.then(() => {
+				this.title = item[this.mapping.displayField];
+				this.model = item[this.mapping.valueField];
+				this.icon = item[this.mapping.iconField];
+
+				this.focusAt(index);
+			})
+			.catch(() => {})
+			.finally(() => {
+				this.close();
+				scope.$apply();
+			});
 	}
 
 	focusAt(index) {
