@@ -150,6 +150,9 @@
 					<span class="add-condition" ng-if="$ctrl.isSupportedAddCondition && !$ctrl.isSelectedGoodsTab" ng-click="$ctrl.clickCondition()">添加为搜索条件</span>
 				</fieldset>
 			</form>
+			<div class="goods-selector-loading-mask" ng-if="$ctrl.isShowMaskOfLoading">
+				<cc-loading></cc-loading>
+			</div>
 		</section>
 		<gs-tabs>
 			<gs-panel text="全部商品" class="all-goods-panel" tab-click="$ctrl.tabClick(text)">
@@ -200,8 +203,7 @@
 			</gs-panel>
 		</gs-tabs>
 	</div>
-	<div class="goods-selector-mask" ng-class="{'goods-selector-loading-mask': $ctrl.isShowMaskOfLoading}" ng-if="$ctrl.isShowMask || $ctrl.isShowMaskOfLoading">
-		<cc-loading type="layer" ng-show="$ctrl.isShowMask">数据更新中</cc-loading>
-		<cc-loading ng-show="$ctrl.isShowMaskOfLoading"></cc-loading>
+	<div class="goods-selector-mask" ng-if="$ctrl.isShowMask">
+		<cc-loading type="layer">数据更新中</cc-loading>
 	</div>
 </div>
