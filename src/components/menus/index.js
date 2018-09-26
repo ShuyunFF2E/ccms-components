@@ -25,6 +25,8 @@ const menusBarDDO = {
 		bindings: {
 			unfold: '=',
 			onUnfold: '&?',
+			collapse: '<?', // 是否允许同时展开多个 menu, 默认值 true
+			expandMenus: '<?', // 初始化时, 是否展开所有菜单 默认值 false (除去含有 active 的菜单)
 			menuSource: '<',
 			shopSource: '<?',
 			searchPlaceholder: '<?',
