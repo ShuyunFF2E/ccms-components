@@ -17,19 +17,13 @@
 	  left: 49%;
 	}
   }
-  .goods-selector-loading-mask {
-	cc-loading {
-	  position: absolute;
-	  top: 30%;
-	  left: 49%;
-	}
-  }
   .main-area>.form-area {
 	position: absolute;
 	top: 6px;
 	left: 0;
   }
   .form-area {
+	position: relative;
 	padding-top: 28px;
 	.form-wrapper {
 	  margin-left: -18px;
@@ -144,6 +138,18 @@
 			right: 0;
 		  }
 		}
+	  }
+	}
+	.goods-selector-loading-mask {
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  right: 0;
+	  bottom: 0;
+	  cc-loading {
+		position: absolute;
+		top: 40%;
+		left: 48%;
 	  }
 	}
   }
