@@ -29,7 +29,6 @@ export default class DropdownSelectCtrl {
 		this.onSelectChange = () => {};
 		this.onDropdownOpen = () => {};
 		this.onDropdownClose = () => {};
-		this.onBeforeSelectChange = () => Promise.resolve();
 
 		this._openFn = null;
 	}
@@ -58,7 +57,6 @@ export default class DropdownSelectCtrl {
 		}
 
 		this.onSelectChange = this.onSelectChange || (() => {});
-		this.onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
 	}
 
 	_prepareWatches() {
@@ -260,7 +258,9 @@ export default class DropdownSelectCtrl {
 			return;
 		}
 
-		this.onBeforeSelectChange({ item })
+		const onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
+
+		onBeforeSelectChange({ item })
 			.then(() => {
 				this.title = item[this.mapping.displayField];
 				this.model = item[this.mapping.valueField];
