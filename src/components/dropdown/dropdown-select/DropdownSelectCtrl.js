@@ -267,12 +267,14 @@ export default class DropdownSelectCtrl {
 				this.icon = item[this.mapping.iconField];
 
 				this.focusAt(index);
+				this.close();
+				scope.$apply();
 			})
-			.catch(() => {})
-			.finally(() => {
+			.catch(() => {
 				this.close();
 				scope.$apply();
 			});
+		// todo Promise.prototype.finally travis-ci  暂时不支持等支持后修改
 	}
 
 	focusAt(index) {
