@@ -161,9 +161,24 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 
+		this.initCheckedAllStatus();
 		this.initSelectedItems();
 		this.preparePagerGridOptions();
 		this.prepareSelectedPagerGridOptions();
+	}
+
+	// 初始化全部全选 checkbox 的状态
+	initCheckedAllStatus() {
+		service.getSelectedItemsAll(this.serverName, this.shopList[0].plat, this.selectedShopIdList).get().$promise.then(res => {
+			const data = res.data || [];
+			const idArr = Object.keys(this.selectedData);
+			this.isCheckedAll = data.every(item => {
+				return idArr.findIndex(id => angular.equals(id, item.id)) >= 0;
+			});
+			if (this.isCheckedAll) {
+				this.data = data;
+			}
+		});
 	}
 
 	// 获取已选店铺 ID 数组
