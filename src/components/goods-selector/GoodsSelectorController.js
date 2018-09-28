@@ -411,6 +411,7 @@ export default class GoodsSelectorCtrl {
 			entity.checked = utils.isAllChildrenSelected(entity.skus);
 			entity.partial = utils.isSomeChildrenSelected(entity.skus);
 			this.currentPageChecked = utils.isAllChildrenSelected(this.resInfo.list);
+			!entity.checked && (this.isCheckedAll = false);
 
 			this.updateSelectedItems(entity);
 			this.updateSelectedItemsBuffer();
@@ -445,6 +446,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.removeTreeRootItem = entity => {
 			this.resetRootItem(entity);
 			this.currentPageChecked = utils.isAllChildrenSelected(this.resInfo.list);
+			this.isCheckedAll = false;
 
 			this.updateSelectedItems(entity);
 			this.updateSelectedItemsBuffer();
@@ -465,6 +467,7 @@ export default class GoodsSelectorCtrl {
 				entity.checked = false;
 			}
 			this.currentPageChecked = utils.isAllChildrenSelected(this.resInfo.list);
+			this.isCheckedAll = false;
 			this.updateSelectedItems(entity);
 			this.updateSelectedItemsBuffer();
 			// 移除部分孩子不需要刷新表格
