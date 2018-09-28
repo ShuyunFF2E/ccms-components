@@ -399,6 +399,7 @@ export default class GoodsSelectorCtrl {
 				item.checked = entity.checked;
 			});
 			this.currentPageChecked = utils.isAllChildrenSelected(this.resInfo.list);
+			!entity.checked && (this.isCheckedAll = false);
 
 			this.updateSelectedItems(entity);
 			this.updateSelectedItemsBuffer();
@@ -897,6 +898,7 @@ export default class GoodsSelectorCtrl {
 	// 全选当页
 	selectCurrentPageAll() {
 		this.currentPageChecked = !this.currentPageChecked;
+		!this.currentPageChecked && (this.isCheckedAll = false);
 		this.hasResInfoList() && this.resInfo.list.forEach(item => {
 			item['checked'] = this.currentPageChecked;
 			item['partial'] = false;
@@ -912,6 +914,7 @@ export default class GoodsSelectorCtrl {
 
 	// 全部全选
 	checkedAll() {
+		this.currentPageChecked = true;
 		this.data.forEach(entity => {
 			this.checkRootItem(entity);
 			this.updateSelectedItems(entity); // 更新已选商品数组
