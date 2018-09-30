@@ -273,6 +273,11 @@ export default class GoodsSelectorCtrl {
 		this.propsPid = this.formModel.propsPid;
 		this.propsVid = this.formModel.propsVid;
 		this.propsVname = this.formModel.propsVname;
+
+		this.checkAllQueryParams = {
+			shopId: this.formModel.shopId,
+			platform: this.formModel.platform
+		};
 	}
 
 	findEntityByName(collection, name) {
@@ -813,6 +818,7 @@ export default class GoodsSelectorCtrl {
 					this.allGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId; // 搜索条件是否包含 sku
 					utils.transformParams(this.pagerGridOptions.queryParams, this.formModel);
 					this.updateAllGoodsGrid();
+					Object.assign(this.checkAllQueryParams, this.formModel);
 				} else {
 					// 已选商品 tab，前端搜索
 					this.selectedGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId;
@@ -1127,11 +1133,7 @@ export default class GoodsSelectorCtrl {
 			postData = this.pagerGridOptions.postData;
 			// 不是批量导入
 			let exceptList = ['pageNum', 'pageSize', 'tagItemIds'];
-			const checkAllQueryParams = {
-				shopId: this.formModel.shopId,
-				platform: this.formModel.platform
-			};
-			let paramStr = utils.getStandardParams(checkAllQueryParams, exceptList);
+			let paramStr = utils.getStandardParams(this.checkAllQueryParams, exceptList);
 			return service.getGridItems(this.serverName, 1, totals, paramStr).save(postData).$promise;
 		} else {
 			return service.getGridBatchItems(this.serverName, 1, totals).save(postData).$promise;
