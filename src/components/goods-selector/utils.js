@@ -212,13 +212,17 @@ export const utils = {
 		for (let attr in queryParams) {
 			if (queryParams.hasOwnProperty(attr) && (queryParams[attr] || queryParams[attr] === 0)) {
 				let param = queryParams[attr];
-				if (!Array.isArray(param) && exceptList.indexOf(attr) === -1) {
-					paramsArr.push(`${attr}=${param}`);
-				}
-				if (Array.isArray(param)) {
-					param.forEach(item => {
-						paramsArr.push(`${attr}=${item}`);
-					});
+				if (attr === 'status') {
+					queryParams[attr] !== '-1' && paramsArr.push(`${attr}=${param}`);
+				} else {
+					if (!Array.isArray(param) && exceptList.indexOf(attr) === -1) {
+						paramsArr.push(`${attr}=${param}`);
+					}
+					if (Array.isArray(param)) {
+						param.forEach(item => {
+							paramsArr.push(`${attr}=${item}`);
+						});
+					}
 				}
 			}
 		}
