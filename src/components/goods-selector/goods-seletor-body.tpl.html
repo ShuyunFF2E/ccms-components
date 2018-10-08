@@ -161,7 +161,7 @@
 					<section class="form-area seize-seat" cc-bind-html="$ctrl.formTpl"></section>
 					<div class="all-goods-operation" ng-if="!$ctrl.isSingleSelect">
 						<cc-checkbox cc-capture-click="$ctrl.checkAllBefore($event)" class="select-all" ng-checked="$ctrl.isCheckedAll" ng-click="$ctrl.isCheckedAll = !$ctrl.isCheckedAll;">全部全选</cc-checkbox>
-						<cc-checkbox cc-capture-click="$ctrl.checkCurrentPageBefore($event)" class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.selectCurrentPageAll()">全选当页</cc-checkbox>
+						<cc-checkbox cc-capture-click="$ctrl.checkCurrentPageBefore($event)" class="select-none" ng-checked="$ctrl.currentPageChecked" ng-click="$ctrl.selectCurrentPageAll()" ng-disabled="$ctrl.isCheckedAll">全选当页</cc-checkbox>
 						<span class="slide-toggle-btn"
 							  ng-if="$ctrl.isSupportedSku"
 							  ng-click="$ctrl.isExtendAll = !$ctrl.isExtendAll; $ctrl.extendAll($ctrl.isExtendAll, $ctrl.resInfo.list);">{{$ctrl.isExtendAll ? '全部折叠' : '全部展开'}}</span>

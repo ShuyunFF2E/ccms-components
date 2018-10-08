@@ -161,9 +161,24 @@ export default class GoodsSelectorCtrl {
 			}
 		});
 
+		this.initCheckedAllStatus();
 		this.initSelectedItems();
 		this.preparePagerGridOptions();
 		this.prepareSelectedPagerGridOptions();
+	}
+
+	// 初始化全部全选 checkbox 的状态
+	initCheckedAllStatus() {
+		service.getSelectedItemsAll(this.serverName, this.shopList[0].plat, this.selectedShopIdList).get().$promise.then(res => {
+			const data = res.data || [];
+			const idArr = Object.keys(this.selectedData);
+			this.isCheckedAll = data.every(item => {
+				return idArr.findIndex(id => angular.equals(id, item.id)) >= 0;
+			});
+			if (this.isCheckedAll) {
+				this.data = data;
+			}
+		});
 	}
 
 	// 获取已选店铺 ID 数组
@@ -258,6 +273,11 @@ export default class GoodsSelectorCtrl {
 		this.propsPid = this.formModel.propsPid;
 		this.propsVid = this.formModel.propsVid;
 		this.propsVname = this.formModel.propsVname;
+
+		this.checkAllQueryParams = {
+			shopId: this.formModel.shopId,
+			platform: this.formModel.platform
+		};
 	}
 
 	findEntityByName(collection, name) {
@@ -399,6 +419,7 @@ export default class GoodsSelectorCtrl {
 				item.checked = entity.checked;
 			});
 			this.currentPageChecked = utils.isAllChildrenSelected(this.resInfo.list);
+			!entity.checked && (this.isCheckedAll = false);
 
 			this.updateSelectedItems(entity);
 			this.updateSelectedItemsBuffer();
@@ -410,6 +431,7 @@ export default class GoodsSelectorCtrl {
 			entity.checked = utils.isAllChildrenSelected(entity.skus);
 			entity.partial = utils.isSomeChildrenSelected(entity.skus);
 			this.currentPageChecked = utils.isAllChildrenSelected(this.resInfo.list);
+			!entity.checked && (this.isCheckedAll = false);
 
 			this.updateSelectedItems(entity);
 			this.updateSelectedItemsBuffer();
@@ -444,6 +466,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedPagerGridOptions.removeTreeRootItem = entity => {
 			this.resetRootItem(entity);
 			this.currentPageChecked = utils.isAllChildrenSelected(this.resInfo.list);
+			this.isCheckedAll = false;
 
 			this.updateSelectedItems(entity);
 			this.updateSelectedItemsBuffer();
@@ -464,6 +487,7 @@ export default class GoodsSelectorCtrl {
 				entity.checked = false;
 			}
 			this.currentPageChecked = utils.isAllChildrenSelected(this.resInfo.list);
+			this.isCheckedAll = false;
 			this.updateSelectedItems(entity);
 			this.updateSelectedItemsBuffer();
 			// 移除部分孩子不需要刷新表格
@@ -794,6 +818,7 @@ export default class GoodsSelectorCtrl {
 					this.allGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId; // 搜索条件是否包含 sku
 					utils.transformParams(this.pagerGridOptions.queryParams, this.formModel);
 					this.updateAllGoodsGrid();
+					Object.assign(this.checkAllQueryParams, this.formModel);
 				} else {
 					// 已选商品 tab，前端搜索
 					this.selectedGoodsSkuSearch = this.formModel.skusPropsVname || this.formModel.skusId && this.formModel.skusId.length || this.formModel.skusOuterId;
@@ -897,6 +922,7 @@ export default class GoodsSelectorCtrl {
 	// 全选当页
 	selectCurrentPageAll() {
 		this.currentPageChecked = !this.currentPageChecked;
+		!this.currentPageChecked && (this.isCheckedAll = false);
 		this.hasResInfoList() && this.resInfo.list.forEach(item => {
 			item['checked'] = this.currentPageChecked;
 			item['partial'] = false;
@@ -912,6 +938,7 @@ export default class GoodsSelectorCtrl {
 
 	// 全部全选
 	checkedAll() {
+		this.currentPageChecked = true;
 		this.data.forEach(entity => {
 			this.checkRootItem(entity);
 			this.updateSelectedItems(entity); // 更新已选商品数组
@@ -1106,11 +1133,7 @@ export default class GoodsSelectorCtrl {
 			postData = this.pagerGridOptions.postData;
 			// 不是批量导入
 			let exceptList = ['pageNum', 'pageSize', 'tagItemIds'];
-			const checkAllQueryParams = {
-				shopId: this.formModel.shopId,
-				platform: this.formModel.platform
-			};
-			let paramStr = utils.getStandardParams(checkAllQueryParams, exceptList);
+			let paramStr = utils.getStandardParams(this.checkAllQueryParams, exceptList);
 			return service.getGridItems(this.serverName, 1, totals, paramStr).save(postData).$promise;
 		} else {
 			return service.getGridBatchItems(this.serverName, 1, totals).save(postData).$promise;
