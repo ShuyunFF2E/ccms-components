@@ -30,6 +30,7 @@
 					is-open="ctrl.isOpen"
 					datalist="ctrl.datalist2"
 					mapping="ctrl.fieldsMap"
+					on-before-select-change="ctrl.beforeChange(item)"
 					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					on-dropdown-open="ctrl.dropdownOpen()"
 					on-dropdown-close="ctrl.dropdownClose()">
@@ -369,6 +370,10 @@
 				this.cascadeAreaDataList = this.areaDataList[this.cascadeDataList.indexOf(newValue)] || [];
 				this.value7 = this.cascadeAreaDataList[0] || '';
 			};
+
+			this.beforeChange = (item) => {
+				return Promise.resolve();
+			}
 
 
 		});
