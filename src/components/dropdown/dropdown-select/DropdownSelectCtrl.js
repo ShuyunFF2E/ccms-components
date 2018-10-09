@@ -262,17 +262,17 @@ export default class DropdownSelectCtrl {
 
 		onBeforeSelectChange({ item })
 			.then(() => {
-				this.title = item[this.mapping.displayField];
-				this.model = item[this.mapping.valueField];
-				this.icon = item[this.mapping.iconField];
+				scope.$evalAsync(() => {
+					this.title = item[this.mapping.displayField];
+					this.model = item[this.mapping.valueField];
+					this.icon = item[this.mapping.iconField];
 
-				this.focusAt(index);
-				this.close();
-				scope.$apply();
+					this.focusAt(index);
+					this.close();
+				});
 			})
 			.catch(() => {
-				this.close();
-				scope.$apply();
+				scope.$evalAsync(() => this.close());
 			});
 		// todo Promise.prototype.finally travis-ci  暂时不支持等支持后修改
 	}
