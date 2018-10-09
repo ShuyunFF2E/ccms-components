@@ -74,13 +74,6 @@ describe('cc-dropdown-select', () => {
 			assert.strictEqual(ctrl.focusIndex, 2);
 		});
 
-		it('.selectItemAt()', () => {
-			ctrl.selectItemAt(1);
-			assert.strictEqual(ctrl.title, '上海');
-			assert.strictEqual(ctrl.model, 'sh');
-			assert.strictEqual(ctrl.focusIndex, 1);
-		});
-
 		it('.clear()', () => {
 			ctrl.clear();
 			assert.strictEqual(ctrl.title, '');
@@ -105,6 +98,18 @@ describe('cc-dropdown-select', () => {
 
 		it('.getElement()', () => {
 			assert.strictEqual(ctrl.getElement(), selectEl[0]);
+		});
+
+		it('.selectItemAt()', done => {
+			ctrl.selectItemAt(1);
+			scope.$digest();  // model 重设, 需要触发脏检查
+			setTimeout(() => {
+				assert.strictEqual(ctrl.title, '上海');
+				assert.strictEqual(ctrl.model, 'sh');
+				assert.strictEqual(ctrl.focusIndex, 1);
+				done();
+			}, 0);
+
 		});
 	});
 });
