@@ -138,6 +138,8 @@ angular
 		self.titleName = '头部XXX';
 
 		self.menusOptions = {
+			collapse: true, // 是否关闭其他菜单, 当激活某个子菜单时 默认值是 true
+			expandMenus: false, // 初始化时, 是否展开所有菜单 (不包含含有 active 的子菜单) 默认值是 false
 			unfold: true,
 			unfoldClick: function (unfold) {
 				console.log('结果:', unfold);

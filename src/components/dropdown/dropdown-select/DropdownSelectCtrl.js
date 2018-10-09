@@ -251,14 +251,30 @@ export default class DropdownSelectCtrl {
 	}
 
 	selectItemAt(index) {
-		let item = this.items[index];
-		if (item) {
-			this.title = item[this.mapping.displayField];
-			this.model = item[this.mapping.valueField];
-			this.icon = item[this.mapping.iconField];
-			this.focusAt(index);
-			this.close();
+		const item = this.items[index];
+		const scope = this.getScope();
+
+		if (!item) {
+			return;
 		}
+
+		const onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
+
+		onBeforeSelectChange({ item })
+			.then(() => {
+				this.title = item[this.mapping.displayField];
+				this.model = item[this.mapping.valueField];
+				this.icon = item[this.mapping.iconField];
+
+				this.focusAt(index);
+				this.close();
+				scope.$apply();
+			})
+			.catch(() => {
+				this.close();
+				scope.$apply();
+			});
+		// todo Promise.prototype.finally travis-ci  暂时不支持等支持后修改
 	}
 
 	focusAt(index) {

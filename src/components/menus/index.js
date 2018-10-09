@@ -25,6 +25,8 @@ const menusBarDDO = {
 		bindings: {
 			unfold: '=',
 			onUnfold: '&?',
+			collapse: '<?', // 是否关闭其他菜单, 当激活某个子菜单时 默认值是 true
+			expandMenus: '<?', // 初始化时, 是否展开所有菜单 (不包含, 含有 active 的子菜单) 默认值是 false
 			menuSource: '<',
 			shopSource: '<?',
 			searchPlaceholder: '<?',
