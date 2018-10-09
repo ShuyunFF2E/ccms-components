@@ -286,14 +286,28 @@ export default class DatePickerCtrl {
 
 		if (!input.value) return;
 
-		const value = parseNumber(input.value);
+		// 非数字清为 '00'
+		if (input.value.match(/[^\d]{1,2}/g)) {
+			this.parts[input.name] = '00';
+			this.setDate(this.value);
+			return;
+		}
 
-		if (isNaN(value) ||
+		// 数字且为二位数, 校验, 不在范围内, 清为 '00'
+		if (input.value.match(/[0-9]{2}/g)) {
+
+			const value = parseNumber(input.value);
+
+			if (isNaN(value) ||
 				(value < +input.getAttribute('ng-min')) ||
 				(value > +input.getAttribute('ng-max'))) {
-			this.parts[input.name] = '00';
+				this.parts[input.name] = '00';
+				this.setDate(this.value);
+			} else {
+				this.parts[input.name] = addZero(value);
+				this.setDate(this.value);
+			}
 		} else {
-			this.parts[input.name] = value;
 			this.setDate(this.value);
 		}
 	}
