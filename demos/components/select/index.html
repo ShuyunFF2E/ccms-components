@@ -246,7 +246,7 @@
 					`
 				}
 			})
-		.controller('DemoCtrl', function($scope) {
+		.controller('DemoCtrl', function($scope, $ccModal) {
 
 			this.searchFields = undefined; // ['displayField', 'valueField'] //;
 			this.value1 = '上海';
@@ -372,7 +372,8 @@
 			};
 
 			this.beforeChange = (item) => {
-				return Promise.resolve();
+				// return Promise.resolve();
+				return $ccModal.confirm('是否选择').open().result;
 			}
 
 
