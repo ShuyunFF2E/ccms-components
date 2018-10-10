@@ -286,6 +286,7 @@ export default class DropdownMultiselectCtrl {
 		this.selection = this.selection.filter(item => item.disabled === true);
 		this.selectAll = false;
 		this.setTitle('');
+		this.oldText = '';
 		// this.getInputElement().focus();
 		if (!this.isOpen) {
 			this.open();
