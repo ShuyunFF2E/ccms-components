@@ -319,9 +319,14 @@ export default class DatePickerCtrl {
    */
 	addTimeZero($event) {
 		const input = $event.target,
-			value = parseNumber(input.value);
-
+			originValue = input.value,
+			value = parseNumber(originValue);
 		this.parts[input.name] = addZero(value);
+
+		// 用户未输入任何值, 对齐补领时, 需要重新 setDate
+		if (originValue === '') {
+			this.setDate(this.value);
+		}
 	}
 
 	/**
