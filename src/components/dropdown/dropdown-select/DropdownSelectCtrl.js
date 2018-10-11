@@ -1,5 +1,6 @@
 import angular from 'angular';
 import { Inject, Bind } from 'angular-es-utils';
+import {hasScrolled} from '../../../common/utils/style-helper';
 
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
@@ -181,6 +182,13 @@ export default class DropdownSelectCtrl {
 			this.focusAt(0);
 			scope.$root.$$phase || scope.$apply();
 		}
+
+		// 如果有下拉选项框有滚动条, 且滚动条没有置顶, 进行置顶
+		const itemList = this.getItemListElement();
+		if (hasScrolled(itemList) && itemList.scrollTop !== 0) {
+			itemList.scrollTop = 0;
+		}
+
 		this.onDropdownOpen();
 	}
 
@@ -316,9 +324,13 @@ export default class DropdownSelectCtrl {
 		return this.getElement().querySelector('.dropdown-select-input');
 	}
 
-	getItemElementAt(index) {
+	getItemListElement() {
 		return this.getElement()
-			.querySelector('.dropdown-list')
+			.querySelector('.dropdown-list');
+	}
+
+	getItemElementAt(index) {
+		return this.getItemListElement()
 			.querySelectorAll('li:not(.empty-list-item)')[index];
 	}
 

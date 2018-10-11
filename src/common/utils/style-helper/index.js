@@ -399,6 +399,14 @@ const isContentOverflow = (element, content) => {
 
 };
 
+const hasScrolled = function(el, direction = 'vertical') {
+	if (direction === 'vertical') {
+		return el.scrollHeight > el.clientHeight;
+	} else if (direction === 'horizontal') {
+		return el.scrollWidth > el.clientWidth;
+	}
+};
+
 export {
 	chopStyle2Num,
 	isContentOverflow,
@@ -407,5 +415,6 @@ export {
 	position,
 	positionElements,
 	adjustTop,
-	offset
+	offset,
+	hasScrolled
 };
