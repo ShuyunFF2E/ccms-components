@@ -222,6 +222,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 					tooltip: '这是一个tooltip!'
 				}
 			],
+			resetScrollBar: true,
 			transformer: {
 				pageNum: 'currentPage',
 				totals: 'totalCount'
