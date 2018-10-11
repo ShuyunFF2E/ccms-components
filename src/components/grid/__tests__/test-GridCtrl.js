@@ -16,7 +16,10 @@ describe('GridCtrl', () => {
 
 	before(() => {
 
-		gridCtrl = new GridCtrl();
+		const div = document.createElement('div');
+		div.innerHTML = '<div class="datalist" cc-nice-scroll=""></div>';
+
+		gridCtrl = new GridCtrl({}, [div]);
 		gridCtrl.opts = {
 			response: null,
 			queryParams: {
