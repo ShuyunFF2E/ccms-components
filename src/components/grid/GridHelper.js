@@ -43,6 +43,7 @@ export default {
 			rowTpl: null, // 表格行模板,允许 字符串 or 模板url
 			emptyTipTpl: null,  // 表格为空时的提示 允许 字符串 or 模板url
 			transformer: null, // 数据格式转换方法 | 字段映射对象
+			resetScrollBar: false, // 排序, 刷新, 分页操作重置 scrollBar 位置为 0
 			pager: {
 				totals: 0,  // 总条数
 				totalPages: 1,  // 总页数
