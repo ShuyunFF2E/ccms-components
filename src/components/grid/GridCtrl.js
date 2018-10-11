@@ -177,6 +177,8 @@ export default class GridCtrl {
 			.then(gridOptions => this.onRefresh && this.onRefresh({opts: gridOptions}));
 
 		// 排序,刷新和切换分页数据操作后, 将 scrollTop 重置为 0
-		this._$element[0].querySelector('div[cc-nice-scroll]').scrollTop = 0;
+		if (this.opts.resetScrollBar) {
+			this._$element[0].querySelector('div[cc-nice-scroll]').scrollTop = 0;
+		}
 	}
 }
