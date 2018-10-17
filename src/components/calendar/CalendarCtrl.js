@@ -48,12 +48,21 @@ const lunnarFestivals = {
 	'腊月廿三': '小年'
 };
 
+const dateRange = {
+	preMinDate: new Date(1900, 1, 1),
+	preMaxDate: new Date((new Date()).getFullYear() + 30, 11, 1),
+	minDate: new Date(1900, 0, 1), // 闭
+	maxDate: new Date((new Date()).getFullYear() + 31, 0, 1) // 开
+};
+
+const MIN_YEAR = 1900;
+const MAX_YEAR = new Date().getFullYear() + 30;
+
 
 const yearList = (function() {
-	const end = new Date().getFullYear() + 30,
-		result = [];
+	const result = [];
 
-	for (let i = 1900; i <= end; i += 1) {
+	for (let i = MIN_YEAR; i <= MAX_YEAR; i += 1) {
 		result.push(i + '');
 	}
 
@@ -99,10 +108,25 @@ export default class DatePickerCtrl {
 		return this.DISPLAY_FORMAT[this.displayFormat] === 2;
 	}
 
+	setLGButtonStatus() {
+		if (this.parts.month === '0' && this.parts.year === MIN_YEAR + '') {
+			this.disabledL = true;
+		} else {
+			this.disabledL = false;
+		}
+
+		if (this.parts.month === '11' && this.parts.year === MAX_YEAR + '') {
+			this.disabledG = true;
+		} else {
+			this.disabledG = false;
+		}
+	}
+
 	/**
 	 * 改变月份
 	 */
 	changeMonth() {
+		this.setLGButtonStatus();
 		this.value = new Date(new Date(this.value).setMonth(this.parts.month));
 	}
 
@@ -111,6 +135,7 @@ export default class DatePickerCtrl {
 	 * 改变年份
 	 */
 	changeYear() {
+		this.setLGButtonStatus();
 		this.value = new Date(new Date(this.value).setFullYear(this.parts.year));
 	}
 
@@ -273,7 +298,23 @@ export default class DatePickerCtrl {
 	 */
 	switchMonth(delta) {
 		if (this.disableYear || this.disableMonth) return;
-		this.value = new Date(new Date(this.value).setMonth(this.value.getMonth() + delta));
+		const newDate = new Date(new Date(this.value).setMonth(this.value.getMonth() + delta));
+
+		if (newDate < dateRange.preMinDate) {
+			this.disabledL = true;
+		} else {
+			this.disabledL = false;
+		}
+
+		if (newDate >= dateRange.preMaxDate) {
+			this.disabledG = true;
+		} else {
+			this.disabledG = false;
+		}
+
+		if (newDate >= dateRange.minDate && newDate < dateRange.maxDate) {
+			this.value = newDate;
+		}
 	};
 
 
