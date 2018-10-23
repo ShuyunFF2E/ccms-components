@@ -176,7 +176,9 @@ export default class DropdownSelectCtrl {
 
 	onOpen() {
 		let scope = this.getScope();
-		this.getInputElement().focus();
+		const input = this.getInputElement();
+		input.focus();
+
 		if (this.searchable && this.title && this.title.length) {
 			this._search(this.title);
 			this.focusAt(0);
@@ -187,6 +189,11 @@ export default class DropdownSelectCtrl {
 		const itemList = this.getItemListElement();
 		if (hasScrolled(itemList) && itemList.scrollTop !== 0) {
 			itemList.scrollTop = 0;
+		}
+
+		// 将菜单滚动到可视区域
+		if (input.getClientRects()[0].bottom + itemList.getClientRects()[0].height > document.documentElement.clientHeight) {
+			itemList.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
 		}
 
 		this.onDropdownOpen();

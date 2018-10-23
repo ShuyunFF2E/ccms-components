@@ -7,8 +7,8 @@ header 默认使用的是 flex 布局, 可以根据自己需要调整, 再外层
 	<cc-icon symbol="{{'icon-cl-wx'}}"></cc-icon>
 </h3>
 <div class="icons">
-	<span ng-if="fullscreen" class="set-fullscreen" ng-click="$parent.isFullScreen=true"></span>
-	<span class="cancel-fullscreen" ng-click="isFullScreen=false"></span>
+	<span ng-if="fullscreen" class="set-fullscreen" ng-click="$toggleFullScreen(true)"></span>
+	<span class="cancel-fullscreen" ng-click="$toggleFullScreen(false)"></span>
 	<span class="close-modal" ng-click="$ctrl.fuckOff()"></span>
 </div>
 
