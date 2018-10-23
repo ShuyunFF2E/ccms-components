@@ -15,7 +15,7 @@ import { TOOLTIP_TYPE } from '../tooltip/Contants';
 
 let service;
 
-@Inject('$scope', '$element', '$filter')
+@Inject('$scope', '$element', '$filter', '$timeout')
 export default class DatePickerCtrl {
 
 	constructor($scope, $element, $filter) {
@@ -205,6 +205,15 @@ export default class DatePickerCtrl {
 			if (this.$element[0] === $event.target) {
 				this.inputs[0].focus();
 			}
+
+			// 将日历弹框 scroll into view
+			const datePickerEle = this.$element[0].querySelector('form.date-picker');
+			const calendarEle = this.$element[0].querySelector('.calendar');
+			setTimeout(() => {
+				if (datePickerEle.getClientRects()[0].bottom + calendarEle.getClientRects()[0].height > document.documentElement.clientHeight) {
+					calendarEle.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
+				}
+			});
 		}
 	}
 
