@@ -51,6 +51,7 @@ const ModalService = {
 
 		let modalElement = angular.element(modalTemplate);
 		let modalHTMLElement = modalElement[0];
+		let modalContainer$Element = angular.element(modalHTMLElement.querySelector('.container'));
 
 		// 如果指定了scope,则以该scope为父作用域构建modal作用域,否则以rootScope为父作用域构建
 		const providedScope = scope || $rootScope;
@@ -82,12 +83,29 @@ const ModalService = {
 			modalScope.$close = () => {
 				modalInstance.close(onClose);
 			};
+			modalScope.$toggleFullScreen = isFullScreen => {
+				modalScope.$parent.isFullScreen = isFullScreen;
+				if (isFullScreen) {
+					const clientRect = modalContainer$Element[0].getClientRects()[0];
+					modalScope.top = clientRect.top;
+					modalScope.left = clientRect.left;
+					modalContainer$Element.css({
+						top: 0,
+						left: 0
+					});
+				} else {
+					modalContainer$Element.css({
+						top: `${modalScope.top}px`,
+						left: `${modalScope.left}px`
+					});
+				}
+			};
 
 			if (controller) {
 
 				const ctrlLocals = Object.assign({
 					$scope: modalScope,
-					$element: angular.element(modalHTMLElement.querySelector('.container')),
+					$element: modalContainer$Element,
 					modalInstance: modalInstance
 				}, locals);
 
