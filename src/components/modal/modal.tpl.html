@@ -1,14 +1,14 @@
 <div class="ccms-modal" data-uid="{{::uid}}">
 
-	<div class="container modal" ng-class="{'fullscreen':isFullScreen}"
+	<div class="container modal" cc-draggable ng-class="{'fullscreen':isFullScreen}"
 	     ng-style="isFullScreen?{}:{width:style.width,'max-width':style['max-width'],'min-width':style['min-width']}">
 
-		<header>
+		<header cc-drag-handler>
 
 			<h3 ng-bind="::title"></h3>
 			<div class="icons">
-				<span ng-if="fullscreen" class="set-fullscreen" ng-click="$parent.isFullScreen=true"></span>
-				<span class="cancel-fullscreen" ng-click="isFullScreen=false"></span>
+				<span ng-if="fullscreen" class="set-fullscreen" ng-click="$toggleFullScreen(true)"></span>
+				<span class="cancel-fullscreen" ng-click="$toggleFullScreen(false)"></span>
 				<span class="close-modal" ng-click="$close()"></span>
 			</div>
 
