@@ -30,6 +30,7 @@
 					is-open="ctrl.isOpen"
 					datalist="ctrl.datalist2"
 					mapping="ctrl.fieldsMap"
+					on-before-select-change="ctrl.beforeChange(item)"
 					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
 					on-dropdown-open="ctrl.dropdownOpen()"
 					on-dropdown-close="ctrl.dropdownClose()">
@@ -245,7 +246,7 @@
 					`
 				}
 			})
-		.controller('DemoCtrl', function($scope) {
+		.controller('DemoCtrl', function($scope, $ccModal) {
 
 			this.searchFields = undefined; // ['displayField', 'valueField'] //;
 			this.value1 = '上海';
@@ -369,6 +370,11 @@
 				this.cascadeAreaDataList = this.areaDataList[this.cascadeDataList.indexOf(newValue)] || [];
 				this.value7 = this.cascadeAreaDataList[0] || '';
 			};
+
+			this.beforeChange = (item) => {
+				// return Promise.resolve();
+				return $ccModal.confirm('是否选择').open().result;
+			}
 
 
 		});

@@ -1,5 +1,6 @@
 import angular from 'angular';
 import { Inject, Bind } from 'angular-es-utils';
+import {hasScrolled} from '../../../common/utils/style-helper';
 
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
@@ -175,12 +176,26 @@ export default class DropdownSelectCtrl {
 
 	onOpen() {
 		let scope = this.getScope();
-		this.getInputElement().focus();
+		const input = this.getInputElement();
+		input.focus();
+
 		if (this.searchable && this.title && this.title.length) {
 			this._search(this.title);
 			this.focusAt(0);
 			scope.$root.$$phase || scope.$apply();
 		}
+
+		// 如果有下拉选项框有滚动条, 且滚动条没有置顶, 进行置顶
+		const itemList = this.getItemListElement();
+		if (hasScrolled(itemList) && itemList.scrollTop !== 0) {
+			itemList.scrollTop = 0;
+		}
+
+		// 将菜单滚动到可视区域
+		if (input.getClientRects()[0].bottom + itemList.getClientRects()[0].height > document.documentElement.clientHeight) {
+			itemList.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
+		}
+
 		this.onDropdownOpen();
 	}
 
@@ -251,14 +266,30 @@ export default class DropdownSelectCtrl {
 	}
 
 	selectItemAt(index) {
-		let item = this.items[index];
-		if (item) {
-			this.title = item[this.mapping.displayField];
-			this.model = item[this.mapping.valueField];
-			this.icon = item[this.mapping.iconField];
-			this.focusAt(index);
-			this.close();
+		const item = this.items[index];
+		const scope = this.getScope();
+
+		if (!item) {
+			return;
 		}
+
+		const onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
+
+		onBeforeSelectChange({ item })
+			.then(() => {
+				scope.$evalAsync(() => {
+					this.title = item[this.mapping.displayField];
+					this.model = item[this.mapping.valueField];
+					this.icon = item[this.mapping.iconField];
+
+					this.focusAt(index);
+					this.close();
+				});
+			})
+			.catch(() => {
+				scope.$evalAsync(() => this.close());
+			});
+		// todo Promise.prototype.finally travis-ci  暂时不支持等支持后修改
 	}
 
 	focusAt(index) {
@@ -300,9 +331,13 @@ export default class DropdownSelectCtrl {
 		return this.getElement().querySelector('.dropdown-select-input');
 	}
 
-	getItemElementAt(index) {
+	getItemListElement() {
 		return this.getElement()
-			.querySelector('.dropdown-list')
+			.querySelector('.dropdown-list');
+	}
+
+	getItemElementAt(index) {
+		return this.getItemListElement()
 			.querySelectorAll('li:not(.empty-list-item)')[index];
 	}
 

@@ -199,11 +199,16 @@ $confirm-icon-margin: 15px;
 
 		.container {
 			display: block;
+		    position: absolute;
 		}
 
 		.mask {
 			opacity: 1;
 		}
+	}
+
+  	header[cc-drag-handler] {
+	  cursor: move;
 	}
 
 }

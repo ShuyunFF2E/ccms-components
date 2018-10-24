@@ -33,7 +33,7 @@ function findEntity(collection, entity) {
 
 const SORT_ORDERS = ['asc', 'desc'];
 
-@Inject('$scope')
+@Inject('$scope', '$element')
 export default class GridCtrl {
 
 	$onInit() {
@@ -57,6 +57,8 @@ export default class GridCtrl {
 			this.rowCellTemplate = GRID_TEMPLATES[type][1];
 		}
 		this.sortGridData();
+
+		this.opts._gridElement = this._$element[0];
 	}
 
 	get $allSelected() {
@@ -172,6 +174,12 @@ export default class GridCtrl {
 		this.onBeforeRefresh && this.onBeforeRefresh({opts, queryParams});
 		GridHelper
 			.refresh(opts, queryParams)
-			.then(gridOptions => this.onRefresh && this.onRefresh({opts: gridOptions}));
+			.then(gridOptions => {
+				// 排序,刷新和切换分页数据操作后, 将 scrollTop 重置为 0
+				if (this.opts.resetScrollBar) {
+					this._$element[0].querySelector('div[cc-nice-scroll]').scrollTop = 0;
+				}
+				return this.onRefresh && this.onRefresh({opts: gridOptions});
+			});
 	}
 }

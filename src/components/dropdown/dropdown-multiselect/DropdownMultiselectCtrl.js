@@ -1,5 +1,6 @@
 import angular from 'angular';
 import {Inject, Bind} from 'angular-es-utils';
+import {hasScrolled} from '../../../common/utils/style-helper';
 
 @Inject('$scope', '$element')
 export default class DropdownMultiselectCtrl {
@@ -146,7 +147,7 @@ export default class DropdownMultiselectCtrl {
 			} else {
 				switch (keyCode) {
 					case 13: // enter
-						this.toggleSelection(this.items[this.focusIndex]);
+						if (this.focusIndex > -1) this.toggleSelection(this.items[this.focusIndex]);
 						break;
 					case 38: // up
 						this.focusUp();
@@ -256,11 +257,25 @@ export default class DropdownMultiselectCtrl {
 
 	onOpen() {
 		let scope = this.getScope();
-		this.getInputElement().focus();
+
+		const input = this.getInputElement();
+		input.focus();
+
 		if (this.searchable && this.title.length) {
 			this._search(this.title);
 			scope.$root.$$phase || scope.$apply();
 		}
+		// 如果有下拉选项框有滚动条, 且滚动条没有置顶, 进行置顶
+		const itemList = this.getItemListElement();
+		if (hasScrolled(itemList) && itemList.scrollTop !== 0) {
+			itemList.scrollTop = 0;
+		}
+
+		// 将菜单滚动到可视区域
+		if (input.getClientRects()[0].bottom + itemList.getClientRects()[0].height > document.documentElement.clientHeight) {
+			itemList.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
+		}
+
 		this.onDropdownOpen();
 	}
 
@@ -286,6 +301,7 @@ export default class DropdownMultiselectCtrl {
 		this.selection = this.selection.filter(item => item.disabled === true);
 		this.selectAll = false;
 		this.setTitle('');
+		this.oldText = '';
 		// this.getInputElement().focus();
 		if (!this.isOpen) {
 			this.open();
@@ -358,9 +374,13 @@ export default class DropdownMultiselectCtrl {
 		return this.getElement().querySelector('.dropdown-select-input');
 	}
 
-	getItemElementAt(index) {
+	getItemListElement() {
 		return this.getElement()
-				.querySelector('.dropdown-list')
+			.querySelector('.dropdown-list');
+	}
+
+	getItemElementAt(index) {
+		return this.getItemListElement()
 				.querySelectorAll('li:not(.empty-list-item)')[index];
 	}
 

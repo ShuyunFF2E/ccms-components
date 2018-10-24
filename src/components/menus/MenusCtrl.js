@@ -4,6 +4,7 @@
  * @Author: maxsmu
  * @Date: 2016-02-29 6:52 PM
  */
+import angular from 'angular';
 import {Inject} from 'angular-es-utils';
 import $menus, {reset} from './MenuService';
 import EventBus from 'angular-es-utils/event-bus';
@@ -24,6 +25,10 @@ export default class MenusCtrl {
 
 		// - 重置$menus中的私有变量,原因:各个产品间切换,避免A产品中的数据携带到B产品中
 		reset();
+
+		// 初始化数据
+		this.collapse = angular.isDefined(this.collapse) ? this.collapse : true;
+		this.expandMenus = angular.isDefined(this.expandMenus) ? this.expandMenus : false;
 
 		// - 获取菜单数据
 		const menus = $menus.getMenus(this.menuSource);
@@ -53,7 +58,7 @@ export default class MenusCtrl {
 
 	updateList(list) {
 		Array.isArray(list) && list.forEach(item => {
-			item.toggle = item.toggleNode = this._$state.includes(item.state);
+			this._$state.includes(item.state) ? item.toggle = item.toggleNode = true : (this.collapse ? item.toggle = item.toggleNode = false : null);
 			this.updateList(item.children);
 		});
 	}
@@ -88,12 +93,39 @@ export default class MenusCtrl {
 			menus.resource.$promise
 				.then(res => {
 					this.menuList = res || [];
+					this.expandMenus ? this.expandAllMenus(this.menuList) : this.collapseAllMenus(this.menuList);
 					this.selectedMenus(this.menuList);
 				});
 		} else {
 			this.menuList = Array.isArray(menus.resource) ? menus.resource : [];
 			this.selectedMenus(this.menuList);
 		}
+	}
+
+	operateAllMenus(menuList = [], expand = true) {
+		menuList.forEach(menu => {
+			if (menu) {
+				menu.toggleNode = expand;
+				const child = menu.children;
+				Array.isArray(child) && child.length > 0 ? this.operateAllMenus(child) : null;
+			}
+		});
+	}
+
+	/**
+	 * 展开所有菜单
+	 * @param menuList
+	 */
+	expandAllMenus(menuList = []) {
+		this.operateAllMenus(menuList, true);
+	}
+
+	/**
+	 * 关闭所有菜单
+	 * @param menuList
+	 */
+	collapseAllMenus(menuList = []) {
+		this.operateAllMenus(menuList, false);
 	}
 
 	/**
