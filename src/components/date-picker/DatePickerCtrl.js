@@ -210,7 +210,8 @@ export default class DatePickerCtrl {
 			const datePickerEle = this.$element[0].querySelector('form.date-picker');
 			const calendarEle = this.$element[0].querySelector('.calendar');
 			setTimeout(() => {
-				if (datePickerEle.getClientRects()[0].bottom + calendarEle.getClientRects()[0].height > document.documentElement.clientHeight) {
+				const containerHeight = this.containerElement ? this.containerElement.getClientRects()[0].bottom : document.documentElement.clientHeight;
+				if (datePickerEle.getClientRects()[0].bottom + calendarEle.getClientRects()[0].height > containerHeight) {
 					calendarEle.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
 				}
 			});

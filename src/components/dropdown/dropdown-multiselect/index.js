@@ -15,6 +15,7 @@ const dropdownMultiselectDDO = {
 	scope: {
 		model: '=?',
 		isOpen: '<?',
+		containerElement: '=?',
 		hasSelectAll: '<?',
 		autoClose: '<?',
 		mapping: '<?',
