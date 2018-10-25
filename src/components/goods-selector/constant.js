@@ -270,7 +270,7 @@ export const fieldsetConfig = {
 			title: '商品状态'
 		}
 	],
-	qiakr: [
+	offline: [
 		{
 			name: 'platform',
 			title: '平台'
