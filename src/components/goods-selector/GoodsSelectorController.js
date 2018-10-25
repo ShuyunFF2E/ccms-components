@@ -172,7 +172,7 @@ export default class GoodsSelectorCtrl {
 		service.getSelectedItemsAll(this.serverName, this.shopList[0].plat, this.selectedShopIdList).get().$promise.then(res => {
 			const data = res.data || [];
 			const idArr = Object.keys(this.selectedData);
-			this.isCheckedAll = data.every(item => {
+			this.isCheckedAll = data.length && data.every(item => {
 				return idArr.findIndex(id => angular.equals(id, item.id)) >= 0;
 			});
 			if (this.isCheckedAll) {
@@ -753,6 +753,7 @@ export default class GoodsSelectorCtrl {
 				this.isCheckedAll = false;
 			}
 			this.hasResInfoList() && this.dataMerge(this.resInfo.list, this.selectedItemsBuffer);
+			this.extendAll(this.isExtendAll, this.resInfo.list);
 			this.currentPageChecked = this.hasResInfoList() ? utils.isAllChildrenSelected(this.resInfo.list) : false;
 		}
 	};

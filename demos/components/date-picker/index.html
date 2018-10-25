@@ -22,7 +22,21 @@
 					max-date="app.maxDate"
 					required="true"
 					date-only="false"
-					disabled-input="true"
+					on-calendar-open="app.onCalendarOpen()"
+					on-calendar-close="app.onCalendarClose()"
+					is-festival="true"
+					disabled="app.disabled"
+					custom-festivals="app.customFestivals"
+	></cc-date-picker>
+
+	<button ng-click="app.toggle()">toggle disabled</button>
+
+	<cc-date-picker ng-if="!app.hideDates"
+					ng-model="app.dateValue"
+					min-date="app.minDate"
+					max-date="app.maxDate"
+					required="true"
+					date-only="false"
 					on-calendar-open="app.onCalendarOpen()"
 					on-calendar-close="app.onCalendarClose()"
 					is-festival="true"
@@ -206,6 +220,11 @@
 	angular.module('componentsApp', ['ccms.components'])
 		.controller('ctrl', function ($scope, $timeout) {
 			var self = this;
+
+			self.disabled = true;
+			self.toggle = function () {
+				self.disabled = !self.disabled;
+			};
 			self.customFestivals = {
 				'0905': '豪举的生日',
 				'0915': '豪举生日后10天'
