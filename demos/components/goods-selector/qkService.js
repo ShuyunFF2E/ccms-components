@@ -31,7 +31,7 @@
 
 	// qiakr + sku 维度 + 店铺选择（单选）
 	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
-		var shopList = [{shopId: '72903', shopName: '恰客', plat: 'qiakr'}, {shopId: '72897', shopName: '恰客1', plat: 'qiakr'}];
+		var shopList = [{shopId: '72903', shopName: '恰客', plat: 'offline'}, {shopId: '72897', shopName: '恰客1', plat: 'offline'}];
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,
@@ -59,11 +59,11 @@
 	// qiakr + sku 维度 + 店铺选择（多选）
 	function openQkMultipleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
 		var shopList = [
-				{shopId: '72903', shopName: '恰客', plat: 'qiakr'},
-				{shopId: '72899', shopName: '恰客1', plat: 'qiakr'},
-				{shopId: '64674', shopName: '恰客2', plat: 'qiakr'},
-				{shopId: '72916', shopName: '恰客3', plat: 'qiakr'},
-				{shopId: '72897', shopName: '恰客4', plat: 'qiakr'}
+				{shopId: '72903', shopName: '恰客', plat: 'offline'},
+				{shopId: '72899', shopName: '恰客1', plat: 'offline'},
+				{shopId: '64674', shopName: '恰客2', plat: 'offline'},
+				{shopId: '72916', shopName: '恰客3', plat: 'offline'},
+				{shopId: '72897', shopName: '恰客4', plat: 'offline'}
 		];
 		var options = {
 			isOnlyChecked,
