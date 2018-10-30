@@ -213,6 +213,19 @@
 			>
 			</cc-dropdown-select>
 		</div>
+		<div class="demo" id="container" style="height:120px; overflow-y:auto;">
+			<h3>异步获取数据(单选)</h3>
+			<h4>当前值: {{ctrl.selectedOneShop}}</h4>
+			<cc-dropdown-select
+					style="max-width: 220px;"
+					placeholder="请选择店铺"
+					model="ctrl.selectedOneShop"
+					datalist="ctrl.shopList"
+					has-select-all="true"
+					container-element="ctrl.container"
+			>
+			</cc-dropdown-select>
+		</div>
 	</div>
 </main>
 
@@ -247,6 +260,8 @@
 				}
 			})
 		.controller('DemoCtrl', function($scope, $ccModal) {
+
+			this.container = document.getElementById('container');
 
 			this.searchFields = undefined; // ['displayField', 'valueField'] //;
 			this.value1 = '上海';
