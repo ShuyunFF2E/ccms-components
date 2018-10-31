@@ -25,12 +25,16 @@ export default class TreeNodeController {
 		this.updateStatus({ isClosed: !this.node.isClosed });
 	}
 
-	clickHandler() {
+	onClick($event) {
 		this.onSelected(this.node.id, this.node.name);
 	}
 
+	// clickHandler() {
+	// 	this.onSelected(this.node.id, this.node.name);
+	// }
+    //
 	rightClickHandler($event) {
-		this.onRightClicked(this.node, $event);
+		this.onOpenMenu(this.node, $event);
 	}
 
 	exitIconClickHander() {

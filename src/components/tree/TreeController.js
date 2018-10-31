@@ -48,7 +48,7 @@ export default class TreeCtrl {
 		}
 	};
 
-	rightClickNode = (node, $event) => {
+	onOpenMenu = (node, $event) => {
 		this.selectNode(node.id);
 		this.showContextMenu(node, $event);
 	};
@@ -134,6 +134,7 @@ export default class TreeCtrl {
 	};
 
 	showContextMenu = (node, $event) => {
+		console.log(node);
 		this.contextStyle = {
 			display: 'block',
 			left: `${$event.pageX}px`,

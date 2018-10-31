@@ -2,7 +2,7 @@
 	<div class="cc-tree-node"
 		 ng-style="{'padding-left': $ctrl.paddingLeft}"
 		 ng-dblclick="$ctrl.toggleExpandHandler($event)"
-		 ng-click="$ctrl.clickHandler($event);"
+		 ng-click="$ctrl.onClick($event)"
 		 ng-class="{ selected: $ctrl.node.isSelected }"
 		 cc-tree-right-click="$ctrl.rightClickHandler($event)"
 		 ng-hide="$ctrl.node.isEditing"
@@ -32,7 +32,7 @@
 			on-node-added="$ctrl.onAdded"
 			on-node-renamed="$ctrl.onRenamed"
 			on-node-removed="$ctrl.onRemoved"
-			on-node-right-clicked="$ctrl.onRightClicked"
+			on-open-menu="$ctrl.onOpenMenu"
 			on-node-status-updated="$ctrl.onStatusUpdated"
 		></cc-tree-list>
 	</div>
