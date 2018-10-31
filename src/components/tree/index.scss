@@ -1,0 +1,103 @@
+@import '../styles/placeholders';
+
+.action-bar {
+	@extend %absolute-center-flex;
+
+	> input {
+		width: 150px;
+		height: 25px;
+		border: 1px solid #d9d9d9;
+		padding: 1px 24px 1px 1px;
+		margin-right: 3px;
+	}
+
+	> .icon-add-folder {
+		color: #90b9d2;
+		cursor: pointer;
+	}
+}
+
+.cc-tree {
+	.select-all {
+		line-height: 25px;
+		cursor: pointer;
+		border-bottom: 1px solid #e8e8e8;
+
+		&.selected {
+			background-color: #90b9d2 !important;
+			color: #ffffff;
+		}
+		&:hover {
+			background-color: #e9e9e9;
+		}
+	}
+}
+
+.cc-tree-list {
+	user-select: none;
+	color: #3d3d3d;
+	width: 100%;
+}
+
+.icon-folder {
+	color: #90b9d2;
+	font-size: 14px;
+}
+
+.icon-nextpage {
+	color: #999;
+}
+
+.cc-tree-node {
+	line-height: 25px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+
+	&.selected {
+		background-color: #90b9d2 !important;
+		color: #fff;
+	}
+
+	&.root {
+		border-bottom: 1px solid #e8e8e8;
+	}
+	&:hover {
+		background-color: #e9e9e9;
+	}
+
+	.icon-nextpage {
+		font-size: 12px;
+		display: inline-block;
+		transform: scale(.9);
+		&.open {
+			transform: rotate(90deg);
+		}
+	}
+
+	.icon-folder {
+		color: #90b9d2;
+		margin: 0 5px 0 2px;
+	}
+
+	> .name {
+		white-space: nowrap;
+	}
+}
+
+.cc-tree-node.editing {
+	> * {
+		vertical-align: middle;
+	}
+
+	> input {
+		display: inline-block;
+		height: 20px;
+		width: 80px;
+		margin-right: 0.5em;
+	}
+
+	> .icon-close {
+		font-size: 0.8em;
+	}
+}

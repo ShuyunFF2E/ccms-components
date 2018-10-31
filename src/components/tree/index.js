@@ -1,49 +1,67 @@
-import './_tree.scss';
-
+import './index.scss';
 import angular from 'angular';
+import treeController from './TreeController';
 import treeTemplate from './tree.tpl.html';
-import treeItemTemplate from './tree-item.tpl.html';
 
-import TreeCtrl from './TreeCtrl';
-import TreeItemCtrl from './TreeItemCtrl';
+import treeListTemplate from './list/list.tpl.html';
+import treeListController from './list/TreeListController.js';
+
+import treeNodeController from './node/TreeNodeController';
+import treeNodeTemplate from './node/node.tpl.html';
+
+import treeMenu from './menu';
+
 
 const treeDDO = {
-	restrict: 'E',
+	controller: treeController,
 	template: treeTemplate,
-	scope: {
-		treeData: '<',
-		onSelected: '&',
-		hasCheckbox: '<',
-		selectedIds: '<'
-	},
-	bindToController: true,
-	controller: TreeCtrl,
-	controllerAs: '$ctrl'
-};
-
-
-const treeItemDDO = {
-	restrict: 'E',
-	template: treeItemTemplate,
-	scope: {
+	bindings: {
 		data: '<',
-		parentId: '<'
-	},
-	bindToController: true,
-	controllerAs: '$ctrl',
-	replace: true,
-	require: '^^ccTree',
-	controller: TreeItemCtrl,
-	link: function(scope, element, attrs, $ctrl) {
-		$ctrl.scopes.push(scope);
-		scope.$ctrl.hasCheckbox = $ctrl.hasCheckbox;
-		if (!$ctrl.hasCheckbox) {
-			scope.$ctrl.selected = $ctrl.selectedIds ? $ctrl.selectedIds.includes(scope.$ctrl.data.id) : false;
-		}
+		filter: '<?',
+		selectAll: '<?',
+		onClickAction: '<?',
+		onRemoveAction: '<?',
+		onAddAction: '<?',
+		onRenameAction: '<?',
+		hideRoot: '<?'
 	}
 };
 
-export default angular.module('ccms.components.tree', [])
-	.directive('ccTreeItem', () => treeItemDDO)
-	.directive('ccTree', () => treeDDO)
+
+const treeListDDO = {
+	controller: treeListController,
+	template: treeListTemplate,
+	bindings: {
+		nodes: '<',
+		filter: '<?',
+		onNodeSelected: '<?',
+		onNodeAdded: '<?',
+		onNodeRenamed: '<?',
+		onNodeRemoved: '<?',
+		onNodeRightClicked: '<?',
+		onNodeStatusUpdated: '<?'
+	}
+};
+
+
+const treeNodeDDO = {
+	controller: treeNodeController,
+	template: treeNodeTemplate,
+	bindings: {
+		node: '<',
+		filter: '<?',
+		onSelected: '<?',
+		onAdded: '<?',
+		onRenamed: '<?',
+		onRemoved: '<?',
+		onRightClicked: '<?',
+		onStatusUpdated: '<?'
+	}
+};
+
+
+export default angular.module('ccms.components.tree', [treeMenu])
+	.component('ccTree', treeDDO)
+	.component('ccTreeList', treeListDDO)
+	.component('ccTreeNode', treeNodeDDO)
 	.name;

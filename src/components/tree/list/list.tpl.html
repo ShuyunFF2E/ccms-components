@@ -1,0 +1,14 @@
+<section class="cc-tree-list">
+	<div ng-repeat="node in $ctrl.nodes | filter: $ctrl.filterHandler">
+		<cc-tree-node
+			node="node"
+			filter="$ctrl.filter"
+			on-selected="$ctrl.onNodeSelected"
+			on-added="$ctrl.onNodeAdded"
+			on-renamed="$ctrl.onNodeRenamed"
+			on-removed="$ctrl.onNodeRemoved"
+			on-right-clicked="$ctrl.onNodeRightClicked"
+			on-status-updated="$ctrl.onNodeStatusUpdated"
+		></cc-tree-node>
+	</div>
+</section>
