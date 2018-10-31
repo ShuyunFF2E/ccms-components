@@ -1,6 +1,5 @@
 import classes from '../index.scss';
 import Inject from 'angular-es-utils/decorators/Inject';
-import bind from 'lodash-decorators/bind';
 
 @Inject('$ccTips')
 export default class TreeNodeController {
@@ -72,19 +71,15 @@ export default class TreeNodeController {
 		return this.onStatusUpdated(this.node.id, status);
 	}
 
-	@bind()
-	add(name) {
+	add = name => {
 		return this.onAdded(name);
-	}
+	};
 
-	@bind()
-	rename(name) {
+	rename = name => {
 		return this.onRenamed(this.node.id, name);
-	}
+	};
 
-	@bind()
-	exitEditing() {
+	exitEditing = () => {
 		this.updateStatus({ isEditing: false });
-	}
-
+	};
 }

@@ -1,5 +1,3 @@
-import bind from 'lodash-decorators/bind';
-
 export default class TreeCtrl {
 
 	constructor() {
@@ -11,11 +9,10 @@ export default class TreeCtrl {
 		return node.children && node.children.length;
 	}
 
-	@bind()
-	filterHandler(node) {
+	filterHandler = node => {
 		const test = this._filterHandler(node, this.filter);
 		return test;
-	}
+	};
 
 	_filterHandler(node, filterStr) {
 		if (!filterStr) {
@@ -30,9 +27,7 @@ export default class TreeCtrl {
 		return false;
 	}
 
-	@bind()
-	rightClick(nodeId, event) {
+	rightClick = (nodeId, event) => {
 		this.onRightClickAction(nodeId, event);
-	}
-
+	};
 }

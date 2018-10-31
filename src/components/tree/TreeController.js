@@ -1,4 +1,3 @@
-import bind from 'lodash-decorators/bind';
 import Inject from 'angular-es-utils/decorators/Inject';
 import { Node } from './Node';
 
@@ -32,29 +31,27 @@ export default class TreeCtrl {
 		return this.selectedNode && this.selectedNode.id;
 	}
 
-	@bind()
-	selectNode(nodeId) {
+	selectNode = nodeId => {
 		if (this.selectedId !== nodeId) {
 			if (this.selectedNode) {
 				this.selectedNode.update({ isSelected: false });
 			}
 			this.root.findChild(nodeId).update({ isSelected: true });
 		}
-	}
+	};
 
-	@bind()
-	clickNode(nodeId, nodeName) {
+	clickNode = (nodeId, nodeName) => {
+		console.log(this);
 		this.selectNode(nodeId, nodeName);
 		if (this.onClickAction) {
 			this.onClickAction(nodeId, nodeName);
 		}
-	}
+	};
 
-	@bind()
-	rightClickNode(node, $event) {
+	rightClickNode = (node, $event) => {
 		this.selectNode(node.id);
 		this.showContextMenu(node, $event);
-	}
+	};
 
 	checkSameName(name) {
 		return new Promise((reslove, reject) => {
@@ -67,9 +64,7 @@ export default class TreeCtrl {
 		});
 	}
 
-	@bind()
-	addNode(name) {
-
+	addNode = name => {
 		return this.checkSameName(name).then(() => {
 
 			const node = this.root.findChild();
@@ -80,10 +75,9 @@ export default class TreeCtrl {
 		}, () => {
 			throw new Error('该分类名已存在!');
 		});
-	}
+	};
 
-	@bind()
-	renameNode(nodeId, name) {
+	renameNode = (nodeId, name) => {
 
 		return this.checkSameName(name).then(() => {
 			const node = this.root.findChild(nodeId);
@@ -95,10 +89,9 @@ export default class TreeCtrl {
 		}, () => {
 			throw new Error('该分类名已存在!');
 		});
-	}
+	};
 
-	@bind()
-	removeNode(nodeId) {
+	removeNode = nodeId => {
 		const confirmModal = this._$ccModal.confirm('你确定删除此分类吗？');
 		const node = this.root.findChild(nodeId);
 		const { pId } = node;
@@ -113,10 +106,9 @@ export default class TreeCtrl {
 				});
 			}
 		});
-	}
+	};
 
-	@bind()
-	addBlankNode(pId) {
+	addBlankNode = pId => {
 
 		// 新增的节点，无id
 		const blankNode = new Node({name: '', pId: this.root.id, isEditing: true, menuItems: ['add', 'remove', 'rename']});
@@ -130,21 +122,18 @@ export default class TreeCtrl {
 			parentNode.addChild(blankNode);
 			parentNode.update({ isClosed: false });
 		}
-	}
+	};
 
-	@bind()
-	editNode(nodeId) {
+	editNode = nodeId => {
 		this.root.findChild(nodeId).update({ isEditing: true });
-	}
+	};
 
-	@bind()
-	updateNodeStatus(nodeId, status) {
+	updateNodeStatus = (nodeId, status) => {
 		const node = this.root.findChild(nodeId);
 		node.update(status);
-	}
+	};
 
-	@bind()
-	showContextMenu(node, $event) {
+	showContextMenu = (node, $event) => {
 		this.contextStyle = {
 			display: 'block',
 			left: `${$event.pageX}px`,
@@ -154,7 +143,7 @@ export default class TreeCtrl {
 		this.contextMenuItems = this.getContextMenuItems(node.menuItems, node.id);
 
 		$event.stopPropagation();
-	}
+	};
 
 	getContextMenuItems(itemTypes, nodeId) {
 		const menuItemMap = {
