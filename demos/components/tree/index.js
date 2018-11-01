@@ -3,7 +3,7 @@
  * @Date: 2018-10-30 09:54:52
  */
 
-;(function (angular, undefined) {
+;(function(angular) {
 	'use strict';
 
 	angular.module('demoApp', ['ccms.components'])
@@ -21,8 +21,8 @@
 			console.log('当前点击的节点id：' + nodeId, '节点名称：' + nodeName);
 		};
 
-		this.onAdd = function(parentId, name) {
-			console.log('新增节点的父级id：' + parentId, '节点名称：' + name);
+		this.onAdd = function(pId, name) {
+			console.log('新增节点的父级id：' + pId, '节点名称：' + name);
 		};
 
 		this.onRename = function(nodeId, nodeName) {
@@ -33,150 +33,68 @@
 			console.log('删除的节点id：' + nodeId);
 		};
 
-		this.tree = {
+		this.onAddAction = function(pId, name) {
+			// 这里需要模拟一条API请求
+			console.info(`向后端发送了一条请求，参数为{pId:${pId}, name: ${name}}`);
+			return new Promise((resolve, reject) => {
+				resolve('id', 6);
+			});
+		};
+
+		this.hideRoot = true;
+		this.tree = [{
 			id: 1,
 			name: '所有',
-			parentId: null,
-			categoryType: 0,
+			pId: null,
 			isClosed: false,
 			children: [
 				{
-					id: 36,
+					id: 11,
 					name: '85',
-					parentId: 1,
-					categoryType: 0,
+					pId: 1,
 					isClosed: false,
 					children: [
 						{
-							id: 123,
+							id: 111,
 							name: '22323',
-							parentId: 36,
+							pId: 11,
 							categoryType: 0,
-							isClosed: false,
-							parent: {
-								id: 36,
-								name: '85',
-								parentId: 1,
-								categoryType: 0,
-								isClosed: false,
-								parent: {
-									id: 1,
-									name: '所有',
-									parentId: null,
-									categoryType: 0,
-									isClosed: false
-								}
-							}
+							isClosed: false
 						}
-					],
-					parent: {
-						id: 1,
-						name: '所有',
-						parentId: null,
-						categoryType: 0,
-						isClosed: false
-					}
+					]
 				}, {
-					id: 98,
+					id: 12,
 					name: 'WYY分',
-					parentId: 1,
-					categoryType: 0,
+					pId: 1,
 					isClosed: false,
 					children: [
 						{
-							id: 102,
+							id: 121,
 							name: 'miaomiaozhu0620',
-							parentId: 98,
-							categoryType: 1,
+							pId: 12,
 							isClosed: false,
-							parent: {
-								id: 98,
-								name: 'WYY分',
-								parentId: 1,
-								categoryType: 0,
-								isClosed: false,
-								parent: {
-									id: 1,
-									name: '所有',
-									parentId: null,
-									categoryType: 0,
-									isClosed: false
-								}
-							},
 							children: [
 								{
-									id: 111,
+									id: 1211,
 									name: '2345',
-									parentId: 102,
-									categoryType: 0,
-									isClosed: false,
-									parent: {
-										id: 102,
-										name: 'miaomiaozhu0620',
-										parentId: 98,
-										categoryType: 1,
-										isClosed: false,
-										parent: {
-											id: 98,
-											name: 'WYY分',
-											parentId: 1,
-											categoryType: 0,
-											isClosed: false,
-											parent: {
-												id: 1,
-												name: '所有',
-												parentId: null,
-												categoryType: 0,
-												isClosed: false
-											}
-										}
-									}
+									pId: 121,
+									isClosed: false
 								}
 							]
 						}, {
-							id: 101,
+							id: 122,
 							name: 'lerous',
-							parentId: 98,
-							categoryType: 1,
-							isClosed: false,
-							parent: {
-								id: 98,
-								name: 'WYY分',
-								parentId: 1,
-								categoryType: 0,
-								isClosed: false,
-								parent: {
-									id: 1,
-									name: '所有',
-									parentId: null,
-									categoryType: 0,
-									isClosed: false
-								}
-							}
+							pId: 12,
+							isClosed: false
 						}
-					],
-					parent: {
-						id: 1,
-						name: '所有',
-						parentId: null,
-						categoryType: 0,
-						isClosed: false
-					}
+					]
 				}, {
-					id: 2,
+					id: 13,
 					name: '未分类',
-					parentId: 1,
-					categoryType: 0,
-					isClosed: false,
-					parent: {
-						id: 1,
-						name: '所有',
-						parentId: null,
-						categoryType: 0,
-						isClosed: false
-					}
+					pId: 1,
+					isClosed: false
 				}
 			]
-		};
+		}];
 	}
 })(window.angular);

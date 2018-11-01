@@ -1,30 +1,28 @@
 import Inject from 'angular-es-utils/decorators/Inject';
-import { Node } from './Node';
+import Store from './Store';
 
 @Inject('$ccTips', '$ccModal')
 export default class TreeCtrl {
 
-	contextStyle = {};
-	contextMenuItems = [];
+	// 右键菜单样式
+	contextMenuStyle = {};
 
-	constructor() {
-		console.log(this);
-	}
+	// 存储右键菜单项
+	contextMenuItems = null;
 
 	$onInit() {
-
 		this.documentListener = document.addEventListener('click', () => {
 			this.hideContextMenu();
 		}, true);
-
 	}
 
-	initData(data) {
-		this.root = new Node(data);
+	initData(treeData) {
+		Store.initData(treeData);
+		this.treeData = Store.treeData;
 	}
 
 	get selectedNode() {
-		return this.root.findChildByParam && this.root.findChildByParam('isSelected', true);
+		return this.findNodeByParam && this.findNodeByParam('isSelected', true);
 	}
 
 	get selectedId() {
@@ -33,29 +31,43 @@ export default class TreeCtrl {
 
 	selectNode = nodeId => {
 		if (this.selectedId !== nodeId) {
-			if (this.selectedNode) {
-				this.selectedNode.update({ isSelected: false });
-			}
-			this.root.findChild(nodeId).update({ isSelected: true });
+			Store.updateSelectedState(nodeId);
 		}
 	};
 
 	clickNode = (nodeId, nodeName) => {
-		console.log(this);
 		this.selectNode(nodeId, nodeName);
 		if (this.onClickAction) {
 			this.onClickAction(nodeId, nodeName);
 		}
 	};
 
+	/**
+	 * 事件：打开右键菜单
+	 * @param node
+	 * @param $event
+	 */
 	onOpenMenu = (node, $event) => {
 		this.selectNode(node.id);
-		this.showContextMenu(node, $event);
+		this.contextMenuStyle = {
+			display: 'block',
+			left: `${$event.pageX}px`,
+			top: `${$event.pageY + 10}px`
+		};
+
+		// 已经存在右键菜单数据
+		if (this.contextMenuItems) {
+			return;
+		}
+
+		this.contextMenuItems = this.getContextMenuItems(node.menuItems, node.id);
+
+		$event.stopPropagation();
 	};
 
 	checkSameName(name) {
 		return new Promise((reslove, reject) => {
-			const sameNameNode = this.root.findChildByParam('name', name);
+			const sameNameNode = this.root.findNodeByParam('name', name);
 			if (!sameNameNode) {
 				reslove();
 			} else {
@@ -64,10 +76,16 @@ export default class TreeCtrl {
 		});
 	}
 
+	/**
+	 * 新增节点
+	 * @param name
+	 * @returns {*}
+	 */
 	addNode = name => {
+		console.log(name);
 		return this.checkSameName(name).then(() => {
 
-			const node = this.root.findChild();
+			const node = this.root.findNodeById();
 			this.onAddAction(node.parent.id, name).then(({ id }) => {
 				// 后端返回id后将id赋值给当前Node
 				node.update({ id, name, isEditing: false });
@@ -80,7 +98,7 @@ export default class TreeCtrl {
 	renameNode = (nodeId, name) => {
 
 		return this.checkSameName(name).then(() => {
-			const node = this.root.findChild(nodeId);
+			const node = Store.findNodeById(nodeId);
 
 			return this.onRenameAction(nodeId, name).then(() => {
 				node.update({ name, isEditing: false });
@@ -93,9 +111,9 @@ export default class TreeCtrl {
 
 	removeNode = nodeId => {
 		const confirmModal = this._$ccModal.confirm('你确定删除此分类吗？');
-		const node = this.root.findChild(nodeId);
+		const node = Store.findNodeById(nodeId);
 		const { pId } = node;
-		const parent = this.root.findChild(pId);
+		const parent = Store.findNodeById(pId);
 
 		confirmModal.open().result.then(() => {
 			if (node.children.length) {
@@ -108,15 +126,19 @@ export default class TreeCtrl {
 		});
 	};
 
+	/**
+	 * 增加一个输入节点
+	 * @param pId
+	 */
 	addBlankNode = pId => {
-
+		console.log('addBlankNode addBlankNode=>', pId, this.root.id);
 		// 新增的节点，无id
-		const blankNode = new Node({name: '', pId: this.root.id, isEditing: true, menuItems: ['add', 'remove', 'rename']});
+		const blankNode = new Store({name: '', pId: this.root.id, isEditing: true, menuItems: ['add', 'remove', 'rename']});
 
 		if (!pId) {
 			this.root.addChild(blankNode);
 		} else {
-			const parentNode = this.root.findChild(pId);
+			const parentNode = Store.findNodeById(pId);
 
 			blankNode.update({ pId });
 			parentNode.addChild(blankNode);
@@ -125,25 +147,17 @@ export default class TreeCtrl {
 	};
 
 	editNode = nodeId => {
-		this.root.findChild(nodeId).update({ isEditing: true });
+		Store.findNodeById(nodeId).update({ isEditing: true });
 	};
 
-	updateNodeStatus = (nodeId, status) => {
-		const node = this.root.findChild(nodeId);
-		node.update(status);
-	};
-
-	showContextMenu = (node, $event) => {
-		console.log(node);
-		this.contextStyle = {
-			display: 'block',
-			left: `${$event.pageX}px`,
-			top: `${$event.pageY + 10}px`
-		};
-
-		this.contextMenuItems = this.getContextMenuItems(node.menuItems, node.id);
-
-		$event.stopPropagation();
+	/**
+	 * 更新节点打开关闭状态
+	 * @param nodeId
+	 * @param status
+	 */
+	onUpdateExpandState = (nodeId, status) => {
+		console.log('onUpdateExpandState');
+		Store.update(nodeId, status);
 	};
 
 	getContextMenuItems(itemTypes, nodeId) {
@@ -164,7 +178,7 @@ export default class TreeCtrl {
 	}
 
 	hideContextMenu() {
-		this.contextStyle = { display: 'none' };
+		this.contextMenuStyle = { display: 'none' };
 	}
 
 	$onChanges(changeObj) {

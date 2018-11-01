@@ -14,7 +14,7 @@ export default class TreeNodeController {
 		const toggleIconWidth = 12;
 		const levelWidth = 15;
 		const paddingLeft = (this.node.level - 2) * levelWidth;
-		return `${paddingLeft + (this.node.children.length ? 0 : toggleIconWidth)}px`;
+		return `${paddingLeft + (this.node.children && this.node.children.length ? 0 : toggleIconWidth)}px`;
 	}
 
 	/**
@@ -72,7 +72,7 @@ export default class TreeNodeController {
 	 * 一系列内部方法
 	 */
 	updateStatus(status) {
-		return this.onStatusUpdated(this.node.id, status);
+		return this.onUpdateExpandState(this.node.id, status);
 	}
 
 	add = name => {

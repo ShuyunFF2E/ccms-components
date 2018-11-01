@@ -39,7 +39,7 @@ const treeListDDO = {
 		onNodeRenamed: '<?',
 		onNodeRemoved: '<?',
 		onOpenMenu: '<?',
-		onNodeStatusUpdated: '<?'
+		onUpdateExpandState: '<?'
 	}
 };
 
@@ -55,7 +55,7 @@ const treeNodeDDO = {
 		onRenamed: '<?',
 		onRemoved: '<?',
 		onOpenMenu: '<?',
-		onStatusUpdated: '<?'
+		onUpdateExpandState: '<?'
 	}
 };
 

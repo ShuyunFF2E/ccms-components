@@ -1,15 +1,13 @@
-<section class="cc-tree" cc-tree-right-click="$ctrl.showContextMenu($event, false)">
-	<div ng-if="!$ctrl.hideRoot"  ng-class="[select-all, { selected: $ctrl.root.isSelected }]"
-		ng-click="$ctrl.clickNode($ctrl.root.id, $ctrl.root.name)">{{$ctrl.root.name}}</div>
+<section class="cc-tree">
 	<cc-tree-list
-		nodes="$ctrl.root.children"
+		nodes="$ctrl.treeData"
 		filter="$ctrl.filter"
 		on-node-selected="$ctrl.clickNode"
 		on-node-added="$ctrl.addNode"
 		on-node-renamed="$ctrl.renameNode"
 		on-node-removed="$ctrl.removeNode"
 		on-open-menu="$ctrl.onOpenMenu"
-		on-node-status-updated="$ctrl.updateNodeStatus"
+		on-update-expand-state="$ctrl.onUpdateExpandState"
 	></cc-tree-list>
-	<cc-tree-menu cm-style="$ctrl.contextStyle" selected-id="$ctrl.selectedId" items="$ctrl.contextMenuItems"></cc-tree-menu>
+	<cc-tree-menu cm-style="$ctrl.contextMenuStyle" selected-id="$ctrl.selectedId" items="$ctrl.contextMenuItems"></cc-tree-menu>
 </section>
