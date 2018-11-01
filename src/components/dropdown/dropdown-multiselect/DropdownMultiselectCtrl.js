@@ -27,6 +27,7 @@ export default class DropdownMultiselectCtrl {
 		this.isOpen = false;
 		this.isActive = false;
 		this.oldText = '';
+		this.containerElement = null;
 
 		this.onDropdownOpen = () => {};
 		this.onDropdownClose = () => {};
@@ -271,8 +272,10 @@ export default class DropdownMultiselectCtrl {
 			itemList.scrollTop = 0;
 		}
 
+		const containerHeight = this.containerElement ? this.containerElement.getClientRects()[0].bottom : document.documentElement.clientHeight;
+
 		// 将菜单滚动到可视区域
-		if (input.getClientRects()[0].bottom + itemList.getClientRects()[0].height > document.documentElement.clientHeight) {
+		if (input.getClientRects()[0].bottom + itemList.getClientRects()[0].height > containerHeight) {
 			itemList.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
 		}
 

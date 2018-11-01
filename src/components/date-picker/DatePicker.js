@@ -23,6 +23,7 @@ export default {
 		disabledInput: '=',
 		minDate: '=',
 		maxDate: '=',
+		containerElement: '=?',
 		rangeStart: '=',
 		rangeEnd: '=',
 		start: '=',
