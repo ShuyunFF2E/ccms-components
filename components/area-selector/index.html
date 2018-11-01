@@ -1,0 +1,33 @@
+<hr />
+<p>layout: docs
+title: Area Selector
+group: components
+maintainer: ying.du
+——————-</p>
+
+<p>  ## Contents  </p>
+
+<ul>
+  <li>toc 
+{:toc}  </li>
+</ul>
+
+<h2 id="section">使用说明</h2>
+<p> 通过调用<code class="highlighter-rouge">$ccAreaSelector</code>服务来触发地址选择器的弹框</p>
+
+<p>  ## Methods</p>
+
+<h3 id="areaselectoroptions"><code class="highlighter-rouge">areaSelector(options)</code></h3>
+<p>生成 areaSelector实例,可以通过调用实例的 open 方法呼出弹出框.</p>
+
+<p>options 包含以下配置:
+|———|———-|———–|
+|参数|类型|说明|
+|scope|$scope|default: <code class="highlighter-rouge">$rootScope</code> areaSelector需要继承的scope|
+|locals|object|default: <code class="highlighter-rouge">undefined</code> 需要传递到areaSelector控制器中的数据,以服务的方式注入|</p>
+
+<p><strong>Returns</strong>
+<code class="highlighter-rouge">object</code>	areaSelector实例,具备result属性。result为一个promise,modal确认时会触发promise resolve,取消时触发promise reject</p>
+
+<h2 id="examples">Examples</h2>
+<iframe width="100%" height="400" src="//jsfiddle.net/Dale_/hnbkk9sz/5/embed/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
