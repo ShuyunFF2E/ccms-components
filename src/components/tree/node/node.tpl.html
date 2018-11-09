@@ -4,7 +4,7 @@
 		 ng-dblclick="$ctrl.toggleExpandHandler($event)"
 		 ng-click="$ctrl.onClick($event)"
 		 ng-class="{ selected: $ctrl.node.isSelected }"
-		 cc-tree-right-click="$ctrl.rightClickHandler($event)"
+		 cc-tree-right-click="$ctrl.onRightClick($event)"
 		 ng-hide="$ctrl.node.isEditing">
 		<icon ng-if="$ctrl.node.children.length"
 				ng-click="$ctrl.toggleExpandHandler($event)"
@@ -18,20 +18,14 @@
 		 class="cc-tree-node editing"
 		 ng-style="{'padding-left': $ctrl.paddingLeft}">
 		<icon class="iconfont icon-folder"></icon>
-		<input type="text" ng-model="$ctrl.name" ng-keypress="$ctrl.inputChangeHandler($event)">
-		<icon class="iconfont icon-close" ng-click="$ctrl.exitIconClickHander()"></icon>
+		<input type="text" ng-model="$ctrl.name" ng-keypress="$ctrl.onInputChangeHandler($event)">
+		<icon class="iconfont icon-close" ng-click="$ctrl.onExitIconClickHander()"></icon>
 	</div>
 	<div ng-show="!$ctrl.node.isClosed || $ctrl.filter">
 		<cc-tree-list
 			nodes="$ctrl.node.children"
 			filter="$ctrl.filter"
-			on-node-selected="$ctrl.onSelected"
-			on-add-action="$ctrl.onAddAction"
-			on-node-added="$ctrl.onAdded"
-			on-node-renamed="$ctrl.onRenamed"
-			on-node-removed="$ctrl.onRemoved"
-			on-open-menu="$ctrl.onOpenMenu"
-			on-update-expand-state="$ctrl.onUpdateExpandState">
+			on-open-menu="$ctrl.onOpenMenu">
 		</cc-tree-list>
 	</div>
 </section>

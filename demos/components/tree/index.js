@@ -17,27 +17,33 @@
 			console.log(data);
 		};
 
-		this.onClick = function(nodeId, nodeName) {
-			console.log('当前点击的节点id：' + nodeId, '节点名称：' + nodeName);
-		};
-
-		this.onAdd = function(pId, name) {
-			console.log('新增节点的父级id：' + pId, '节点名称：' + name);
-		};
-
-		this.onRename = function(nodeId, nodeName) {
-			console.log('重命名的节点id：' + nodeId, '节点名称：' + nodeName);
-		};
-
-		this.onRemove = function(nodeId) {
-			console.log('删除的节点id：' + nodeId);
+		this.onClickAction = function(node) {
+			console.log('当前点击的节点id：' + node.id, '节点名称：' + node.name);
 		};
 
 		this.onAddAction = function(pId, name) {
 			// 这里需要模拟一条API请求
-			console.info(`向后端发送了一条请求，参数为{pId:${pId}, name: ${name}}`);
+			console.info(`向后端发送了一条新增请求，参数为{pId:${pId}, name: ${name}}`);
 			return new Promise((resolve, reject) => {
-				resolve('id', 6);
+				resolve({id: Math.random()});
+			});
+		};
+
+		this.onRenameAction = function(node) {
+			// 这里需要模拟一条API请求
+			console.info(`向后端发送了一条修改请求，参数为{id:${node.id}, name: ${node.name}}`);
+			return new Promise((resolve, reject) => {
+				resolve();
+				// reject('重命名失败了');
+			});
+		};
+
+		this.onRemoveAction = function(node) {
+			// 这里需要模拟一条API请求
+			console.info(`向后端发送了一条删除请求，参数为{id:${node.id}}`);
+			return new Promise((resolve, reject) => {
+				resolve();
+				// reject('该节点不允许删除');
 			});
 		};
 

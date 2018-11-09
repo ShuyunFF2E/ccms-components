@@ -2,12 +2,7 @@
 	<cc-tree-list
 		nodes="$ctrl.treeData"
 		filter="$ctrl.filter"
-		on-node-selected="$ctrl.clickNode"
-		on-node-added="$ctrl.addNode"
-		on-node-renamed="$ctrl.renameNode"
-		on-node-removed="$ctrl.removeNode"
 		on-open-menu="$ctrl.onOpenMenu"
-		on-update-expand-state="$ctrl.onUpdateExpandState"
 	></cc-tree-list>
-	<cc-tree-menu cm-style="$ctrl.contextMenuStyle" selected-id="$ctrl.selectedId" items="$ctrl.contextMenuItems"></cc-tree-menu>
+	<cc-tree-menu cm-style="$ctrl.contextMenuStyle" selected-node="$ctrl.selectedNode" items="$ctrl.contextMenuItems"></cc-tree-menu>
 </section>

@@ -23,3 +23,9 @@
 	}
 ]
 ```
+
+# 回调函数
+onClickAction: 节点点击事件
+onRemoveAction: 节点删除事件, 需要返回promise
+onAddAction: 新增节点事件, 需要返回promise
+onRenameAction: 节点重命名事件, 需要返回promise

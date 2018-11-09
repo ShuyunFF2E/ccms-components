@@ -7,6 +7,12 @@ class Store {
 	// 当前选中的节点
 	selectedNode = null;
 
+	// 当新当前选中节点
+	updateSelectedNode(node) {
+		this.selectedNode && this.updateById(this.selectedNode.id, { isSelected: false });
+		this.selectedNode = this.updateById(node.id, { isSelected: true });
+	}
+
 	/**
 	 * 初始化数据
 	 * @param treeData
@@ -29,38 +35,9 @@ class Store {
 		};
 
 		this.treeData = treeData.map(item => {
-			return format(item, 0);
+			return format(item, 1);
 		});
 	}
-
-	/**
-	 * 展开数据为map格式
-	 * @param treeData
-	 */
-	// flatMap(treeData) {
-	// 	const flatMap = {};
-	// 	const install = (node, level) => {
-	// 		const { id, pId, name, children, isClosed } = node;
-	// 		flatMap['' + id] = {
-	// 			id,
-	// 			pId,
-	// 			name,
-	// 			isClosed,
-	// 			level: level
-	// 		};
-	// 		if (!children || !children.length) {
-	// 			return;
-	// 		}
-	// 		children.forEach(item => {
-	// 			install(item, flatMap[item.pId].level + 1);
-	// 		});
-	// 	};
-    //
-	// 	treeData.forEach(item => {
-	// 		install(item, 0);
-	// 	});
-	// 	return flatMap;
-	// }
 
 	/**
 	 * 通过id获取节点
@@ -99,38 +76,62 @@ class Store {
 		return node;
 	}
 
-	addChild(node, index) {
-		index = index || this.children.length;
-		this.children.splice(index, 0, node);
+	/**
+	 * 新增子节点数据
+	 * @param pId
+	 * @param newNode
+	 */
+	addChild(pId, newNode) {
+		// index = index || this.children.length;
+		// this.children.splice(index, 0, node);
+		const pNode = this.findNodeById(pId);
+		if (!pNode.children) {
+			pNode.children = [];
+		}
+		pNode.children.push(newNode);
 	}
 
-	removeChild(nodeId) {
-		this.children.forEach((child, index) => {
-			if (child.id === nodeId) {
-				this.children.splice(index, 1);
+	/**
+	 * 删除节点
+	 * @param node
+	 */
+	removeChild(node) {
+		const parentNode = this.findNodeById(node.pId);
+		if (!parentNode) {
+			return;
+		}
+		parentNode.children.forEach((child, index) => {
+			// 新增的节点没有id， 所以使用name进行验证
+			if (child.name === node.name) {
+				parentNode.children.splice(index, 1);
 			}
 		});
+		// 删除后节点移至父节点
+		this.selectedNode = null;
+		this.updateSelectedNode(parentNode);
 	}
 
 	/**
-	 * 更新节点选中状态
+	 * 通过id更新节点数据
 	 * @param id
-	 */
-	updateSelectedState(id) {
-		this.selectedNode && this.update(this.selectedNode.id, { isSelected: false });
-		this.selectedNode = this.update(id, { isSelected: true });
-	}
-
-	/**
-	 * 更新节点数据
-	 * @param id
-	 * @param updatePart
+	 * @param updatePart: 更新部分
 	 * @returns {any}
 	 */
-	update(id, updatePart) {
+	updateById(id, updatePart) {
 		const node = this.findNodeById(id);
 		return Object.assign(node, updatePart);
 	}
+
+	/**
+	 * 更新新增节点的数据
+	 * @param updatePart: 更新部分
+	 * @returns {any}
+	 */
+	updateByEditing(updatePart) {
+		const node = this.findNodeByParam('isEditing', true);
+		return Object.assign(node, updatePart);
+	}
+
 }
 
 export default new Store();

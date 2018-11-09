@@ -6,7 +6,7 @@ const ddo = {
 	template,
 	bindings: {
 		cmStyle: '<',
-		selectedId: '<',
+		selectedNode: '<',
 		items: '<'
 	}
 };

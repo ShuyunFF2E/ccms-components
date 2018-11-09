@@ -22,8 +22,7 @@ const treeDDO = {
 		onClickAction: '<?',
 		onRemoveAction: '<?',
 		onAddAction: '<?',
-		onRenameAction: '<?',
-		hideRoot: '<?'
+		onRenameAction: '<?'
 	}
 };
 
@@ -34,12 +33,7 @@ const treeListDDO = {
 	bindings: {
 		nodes: '<',
 		filter: '<?',
-		onNodeSelected: '<?',
-		onNodeAdded: '<?',
-		onNodeRenamed: '<?',
-		onNodeRemoved: '<?',
-		onOpenMenu: '<?',
-		onUpdateExpandState: '<?'
+		onOpenMenu: '<?'
 	}
 };
 
@@ -50,12 +44,7 @@ const treeNodeDDO = {
 	bindings: {
 		node: '<',
 		filter: '<?',
-		onSelected: '<?',
-		onAdded: '<?',
-		onRenamed: '<?',
-		onRemoved: '<?',
-		onOpenMenu: '<?',
-		onUpdateExpandState: '<?'
+		onOpenMenu: '<?'
 	}
 };
 

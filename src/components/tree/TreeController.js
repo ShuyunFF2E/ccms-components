@@ -1,7 +1,8 @@
 import Inject from 'angular-es-utils/decorators/Inject';
 import Store from './Store';
+import Handler from './Handler';
 
-@Inject('$ccTips', '$ccModal')
+@Inject('$ccTips', '$ccModal', '$scope')
 export default class TreeCtrl {
 
 	// 右键菜单样式
@@ -11,6 +12,7 @@ export default class TreeCtrl {
 	contextMenuItems = null;
 
 	$onInit() {
+		this.initHandler();
 		this.documentListener = document.addEventListener('click', () => {
 			this.hideContextMenu();
 		}, true);
@@ -19,28 +21,28 @@ export default class TreeCtrl {
 	initData(treeData) {
 		Store.initData(treeData);
 		this.treeData = Store.treeData;
+
+	}
+
+	/**
+	 * 初始化handner
+	 */
+	initHandler() {
+		Handler.setEvent('onClickAction', this.onClickAction);
+		Handler.setEvent('onRemoveAction', this.onRemoveAction);
+		Handler.setEvent('onAddAction', this.onAddAction);
+		Handler.setEvent('onRenameAction', this.onRenameAction);
 	}
 
 	get selectedNode() {
-		return this.findNodeByParam && this.findNodeByParam('isSelected', true);
+		// console.log(this.findNodeByParam && this.findNodeByParam('isSelected', true));
+		return Store.selectedNode;
 	}
 
+	// 当前选中的节点ID
 	get selectedId() {
-		return this.selectedNode && this.selectedNode.id;
+		return Store.selectedNode && Store.selectedNode.id;
 	}
-
-	selectNode = nodeId => {
-		if (this.selectedId !== nodeId) {
-			Store.updateSelectedState(nodeId);
-		}
-	};
-
-	clickNode = (nodeId, nodeName) => {
-		this.selectNode(nodeId, nodeName);
-		if (this.onClickAction) {
-			this.onClickAction(nodeId, nodeName);
-		}
-	};
 
 	/**
 	 * 事件：打开右键菜单
@@ -48,7 +50,7 @@ export default class TreeCtrl {
 	 * @param $event
 	 */
 	onOpenMenu = (node, $event) => {
-		this.selectNode(node.id);
+		Store.updateSelectedNode(node);
 		this.contextMenuStyle = {
 			display: 'block',
 			left: `${$event.pageX}px`,
@@ -60,121 +62,69 @@ export default class TreeCtrl {
 			return;
 		}
 
-		this.contextMenuItems = this.getContextMenuItems(node.menuItems, node.id);
+		// 菜单项
+		this.contextMenuItems = this.getContextMenuItems(node);
 
 		$event.stopPropagation();
 	};
 
-	checkSameName(name) {
-		return new Promise((reslove, reject) => {
-			const sameNameNode = this.root.findNodeByParam('name', name);
-			if (!sameNameNode) {
-				reslove();
-			} else {
-				reject();
-			}
-		});
-	}
-
 	/**
-	 * 新增节点
-	 * @param name
-	 * @returns {*}
+	 * 删除节点
+	 * @param node
 	 */
-	addNode = name => {
-		console.log(name);
-		return this.checkSameName(name).then(() => {
-
-			const node = this.root.findNodeById();
-			this.onAddAction(node.parent.id, name).then(({ id }) => {
-				// 后端返回id后将id赋值给当前Node
-				node.update({ id, name, isEditing: false });
-			});
-		}, () => {
-			throw new Error('该分类名已存在!');
-		});
-	};
-
-	renameNode = (nodeId, name) => {
-
-		return this.checkSameName(name).then(() => {
-			const node = Store.findNodeById(nodeId);
-
-			return this.onRenameAction(nodeId, name).then(() => {
-				node.update({ name, isEditing: false });
-			});
-
-		}, () => {
-			throw new Error('该分类名已存在!');
-		});
-	};
-
-	removeNode = nodeId => {
+	removeNode = node => {
 		const confirmModal = this._$ccModal.confirm('你确定删除此分类吗？');
-		const node = Store.findNodeById(nodeId);
-		const { pId } = node;
-		const parent = Store.findNodeById(pId);
 
 		confirmModal.open().result.then(() => {
-			if (node.children.length) {
+			if (node.children && node.children.length) {
 				this._$ccTips.error('该节点含有子节点，无法删除！');
 			} else {
-				this.onRemoveAction(nodeId).then(() => {
-					parent.removeChild(nodeId);
+				Handler.run('onRemoveAction', node).then(() => {
+					Store.removeChild(node);
+					this._$scope.$apply();
+				})
+				.catch(msg => {
+					this._$ccTips.error(msg || '节点删除失败');
 				});
 			}
 		});
 	};
 
 	/**
-	 * 增加一个输入节点
-	 * @param pId
+	 * 编辑
+	 * @param node
 	 */
-	addBlankNode = pId => {
-		console.log('addBlankNode addBlankNode=>', pId, this.root.id);
-		// 新增的节点，无id
-		const blankNode = new Store({name: '', pId: this.root.id, isEditing: true, menuItems: ['add', 'remove', 'rename']});
-
-		if (!pId) {
-			this.root.addChild(blankNode);
-		} else {
-			const parentNode = Store.findNodeById(pId);
-
-			blankNode.update({ pId });
-			parentNode.addChild(blankNode);
-			parentNode.update({ isClosed: false });
-		}
-	};
-
-	editNode = nodeId => {
-		Store.findNodeById(nodeId).update({ isEditing: true });
+	editNode = node => {
+		Store.updateById(node.id, { isEditing: true });
 	};
 
 	/**
-	 * 更新节点打开关闭状态
-	 * @param nodeId
-	 * @param status
+	 * 增加一个输入节点
+	 * @param parentNode: 父节点
 	 */
-	onUpdateExpandState = (nodeId, status) => {
-		console.log('onUpdateExpandState');
-		Store.update(nodeId, status);
+	addBlankNode = parentNode => {
+		// 新增的节点，无id
+		const blankNode = {name: '', pId: parentNode.id, level: parentNode.level + 1, isEditing: true};
+
+		Store.addChild(parentNode.id, blankNode);
 	};
 
-	getContextMenuItems(itemTypes, nodeId) {
+	/**
+	 * 获取菜单项
+	 */
+	getContextMenuItems() {
 		const menuItemMap = {
-			'add': { name: '新增分类', click: () => {
-				this.addBlankNode(nodeId);
+			'add': { name: '新增分类', click: node => {
+				this.addBlankNode(node);
 			} },
-			'remove': { name: '删除分类', click: () => {
-				this.removeNode(nodeId);
+			'remove': { name: '删除分类', click: node => {
+				this.removeNode(node);
 			} },
-			'rename': { name: '重命名', click: () => {
-				this.editNode(nodeId);
+			'rename': { name: '重命名', click: node => {
+				this.editNode(node);
 			} }
 		};
-
-		return itemTypes ? itemTypes.map(itemType => menuItemMap[itemType]) : menuItemMap;
-
+		return menuItemMap;
 	}
 
 	hideContextMenu() {
