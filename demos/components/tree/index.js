@@ -10,7 +10,13 @@
 			.controller('DemoCtrl', DemoCtrl);
 
 	DemoCtrl.$inject = [];
-	function DemoCtrl() {
+	function DemoCtrl($scope) {
+
+		// 是否支持复选框
+		this.supportCheckbox = true;
+
+		// 是否支持搜索框
+		this.supportSearch = false;
 
 		this.select = function(item, data) {
 			console.log(item);

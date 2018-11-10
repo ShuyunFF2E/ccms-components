@@ -18,10 +18,13 @@ export default class TreeCtrl {
 		}, true);
 	}
 
+	/**
+	 * 初始化数据
+	 * @param treeData
+	 */
 	initData(treeData) {
 		Store.initData(treeData);
 		this.treeData = Store.treeData;
-
 	}
 
 	/**
@@ -34,12 +37,18 @@ export default class TreeCtrl {
 		Handler.setEvent('onRenameAction', this.onRenameAction);
 	}
 
+	/**
+	 * 当前选中的节点
+	 * @returns {*|string}
+	 */
 	get selectedNode() {
-		// console.log(this.findNodeByParam && this.findNodeByParam('isSelected', true));
 		return Store.selectedNode;
 	}
 
-	// 当前选中的节点ID
+	/**
+	 * 当前选中的节点ID
+	 * @returns {*|string}
+	 */
 	get selectedId() {
 		return Store.selectedNode && Store.selectedNode.id;
 	}
@@ -127,6 +136,9 @@ export default class TreeCtrl {
 		return menuItemMap;
 	}
 
+	/**
+	 * 隐藏右键菜单
+	 */
 	hideContextMenu() {
 		this.contextMenuStyle = { display: 'none' };
 	}

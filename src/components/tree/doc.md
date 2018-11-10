@@ -24,8 +24,12 @@
 ]
 ```
 
-# 回调函数
-onClickAction: 节点点击事件
-onRemoveAction: 节点删除事件, 需要返回promise
-onAddAction: 新增节点事件, 需要返回promise
-onRenameAction: 节点重命名事件, 需要返回promise
+# 参数
+data: 渲染所需数据 `Array`
+supportSearch: 是否支持搜索功能 `Boolean`
+supportCheckbox: 是否支持选择功能 `Boolean`
+onClickAction: 节点点击事件 `Function`
+onRemoveAction: 节点删除事件, 需要返回promise `Function`
+onAddAction: 新增节点事件, 需要返回promise `Function`
+onRenameAction: 节点重命名事件, 需要返回promise `Function`
+

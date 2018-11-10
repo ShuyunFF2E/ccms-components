@@ -43,6 +43,37 @@ export default class TreeNodeController {
 		Handler.run('onClickAction', this.node);
 	}
 
+	onChangeChecked() {
+		const { checked, children, pId } = this.node;
+
+		// 处理子项
+		const changeChildren = children => {
+			children.forEach(item => {
+				item.checked = checked;
+				const itemChildren = item.children;
+				if (itemChildren && itemChildren.length > 0) {
+					changeChildren(itemChildren);
+				}
+			});
+		};
+
+		// 处理父项
+		const changeParent = parentId => {
+			const parentNode = Store.findNodeById(parentId);
+			if (!parentNode) {
+				return;
+			}
+			parentNode.checked = parentNode.children.every(item => item.checked) || 'indeterminate';
+
+			if (parentNode.pId) {
+				changeParent(parentNode.pId);
+			}
+		};
+
+		changeChildren(children || []);
+		changeParent(pId);
+	}
+
 	/**
 	 * 右键事件
 	 * @param $event
@@ -143,7 +174,7 @@ export default class TreeNodeController {
 	updateHandler = name => {
 		const { id } = this.node;
 		return this.checkSameName(name, id).then(() => {
-			Handler.run('onRenameAction', id)
+			Handler.run('onRenameAction', this.node)
 				.then(() => {
 					// 更新成功后，清除正在编辑状态
 					Store.updateByEditing({ name, isEditing: false });

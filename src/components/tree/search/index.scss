@@ -1,0 +1,22 @@
+.cc-tree-search{
+	width: 250px;
+	max-width: 100%;
+	position: relative;
+	margin-bottom: 10px;
+	.search-input{
+		line-height: 30px;
+		vertical-align: top;
+		padding-right: 28px;
+	}
+	.search-icon{
+		position: absolute;
+		top: 0;
+		right: .5em;
+		line-height: 30px;
+		color: #dbdbdb;
+		cursor: pointer;
+		&:hover{
+			color: #aacbe1;
+		}
+	}
+}

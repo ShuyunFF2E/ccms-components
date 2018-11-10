@@ -1,16 +1,16 @@
-export default class TreeCtrl {
-
-	constructor() {
-		this.level = this.level ? this.level : 1;
-		this.filter = '';
-	}
-
+import Store from '../Store';
+export default class TreeListCtrl {
 	hasChildren(node) {
 		return node.children && node.children.length;
 	}
 
+	/**
+	 * 过滤器
+	 * @param node
+	 * @returns {*}
+	 */
 	filterHandler = node => {
-		const test = this._filterHandler(node, this.filter);
+		const test = this._filterHandler(node, Store.filterText);
 		return test;
 	};
 
@@ -26,8 +26,4 @@ export default class TreeCtrl {
 		}
 		return false;
 	}
-
-	rightClick = (nodeId, event) => {
-		this.onRightClickAction(nodeId, event);
-	};
 }

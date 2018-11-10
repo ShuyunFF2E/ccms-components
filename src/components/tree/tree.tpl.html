@@ -1,7 +1,10 @@
 <section class="cc-tree">
+	<cc-tree-search
+		ng-if="$ctrl.supportSearch"
+	></cc-tree-search>
 	<cc-tree-list
 		nodes="$ctrl.treeData"
-		filter="$ctrl.filter"
+		support-checkbox="$ctrl.supportCheckbox"
 		on-open-menu="$ctrl.onOpenMenu"
 	></cc-tree-list>
 	<cc-tree-menu cm-style="$ctrl.contextMenuStyle" selected-node="$ctrl.selectedNode" items="$ctrl.contextMenuItems"></cc-tree-menu>

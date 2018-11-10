@@ -2,7 +2,7 @@
 	<div ng-repeat="node in $ctrl.nodes | filter: $ctrl.filterHandler">
 		<cc-tree-node
 			node="node"
-			filter="$ctrl.filter"
+			support-checkbox="$ctrl.supportCheckbox"
 			on-open-menu="$ctrl.onOpenMenu"
 		></cc-tree-node>
 	</div>

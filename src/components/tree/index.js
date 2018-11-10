@@ -9,7 +9,9 @@ import treeListController from './list/TreeListController.js';
 import treeNodeController from './node/TreeNodeController';
 import treeNodeTemplate from './node/node.tpl.html';
 
+import checkbox from '../checkbox';
 import treeMenu from './menu';
+import treeSearch from './search';
 
 
 const treeDDO = {
@@ -17,8 +19,8 @@ const treeDDO = {
 	template: treeTemplate,
 	bindings: {
 		data: '<',
-		filter: '<?',
-		selectAll: '<?',
+		supportSearch: '<?',
+		supportCheckbox: '<?',
 		onClickAction: '<?',
 		onRemoveAction: '<?',
 		onAddAction: '<?',
@@ -32,7 +34,7 @@ const treeListDDO = {
 	template: treeListTemplate,
 	bindings: {
 		nodes: '<',
-		filter: '<?',
+		supportCheckbox: '<?',
 		onOpenMenu: '<?'
 	}
 };
@@ -43,13 +45,13 @@ const treeNodeDDO = {
 	template: treeNodeTemplate,
 	bindings: {
 		node: '<',
-		filter: '<?',
+		supportCheckbox: '<?',
 		onOpenMenu: '<?'
 	}
 };
 
 
-export default angular.module('ccms.components.tree', [treeMenu])
+export default angular.module('ccms.components.tree', [checkbox, treeMenu, treeSearch])
 	.component('ccTree', treeDDO)
 	.component('ccTreeList', treeListDDO)
 	.component('ccTreeNode', treeNodeDDO)
