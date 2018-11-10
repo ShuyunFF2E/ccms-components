@@ -24,7 +24,7 @@ export default class TreeNodeController {
 	}
 
 	/**
-	 *  一系列handler
+	 *  切换子节点折叠状态
 	 */
 	toggleExpandHandler(e) {
 		e.stopPropagation();

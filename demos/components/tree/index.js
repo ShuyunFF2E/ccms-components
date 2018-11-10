@@ -16,7 +16,7 @@
 		this.supportCheckbox = true;
 
 		// 是否支持搜索框
-		this.supportSearch = false;
+		this.supportSearch = true;
 
 		this.select = function(item, data) {
 			console.log(item);
