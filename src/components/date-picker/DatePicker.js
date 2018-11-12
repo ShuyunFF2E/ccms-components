@@ -32,6 +32,7 @@ export default {
 		onCalendarClose: '&?',
 		isFestival: '<?',
 		customFestivals: '<?',
+		disableScrollIntoView: '<?',
 		disableYear: '<?',
 		disableMonth: '<?',
 		displayFormat: '@?'
