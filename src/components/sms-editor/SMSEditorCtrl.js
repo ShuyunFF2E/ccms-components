@@ -378,7 +378,11 @@ export default class SMSEditorCtrl {
 		// 图片, 关键字高亮, URL, 手机及固话号码下划线
 		this.opts.preview = SMSEditorCtrl.flatCode(this._tempHolder.textContent, this.trimContent)
 			.replace(/\{\{([^}]+)}}/g, (result, $1) => {
-				return `<img src="${$1}">`;
+				if (this.isSupportImage) {
+					return `<img src="${$1}">`;
+				} else {
+					return result;
+				}
 			})
 			.replace(/%([^%]+)%/g, (result, $1) => {
 				return `<span class="sms-tag-preview">${$1.trim()}</span>`;
