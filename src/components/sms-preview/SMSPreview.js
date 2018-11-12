@@ -50,7 +50,7 @@ export default {
 			const varMatch = text.match(varReg);
 			scope.totalVars = opts.totalVars = varMatch ? varMatch.length : 0;
 
-			element[0].querySelector('.sms-preview-content').innerHTML = this.generateText(preview, unsubscribeText, signature, customSignature, gatewayType);
+			element[0].querySelector('.sms-preview-content').innerHTML = opts.generatedText = this.generateText(preview, unsubscribeText, signature, customSignature, gatewayType);
 		}, true);
 	},
 
