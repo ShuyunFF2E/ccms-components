@@ -40,7 +40,7 @@ export default {
 			scope.totalChars = opts.totalCharts = text
 					.replace(varReg, '')
 					.replace(/#_enter_#/g, '').length +
-				(gatewayType === 1 || gatewayType === 3 ? signature.length : 0) +
+				(gatewayType === 1 || gatewayType === 3 || gatewayType === 4 || gatewayType === 5 ? signature.length : 0) +
 				customSignature.length +
 				unsubscribeText.length;
 			// 换行统计
@@ -56,9 +56,9 @@ export default {
 
 	/*
 	 0: 短信 +【自定义签名】
-	 1: 短信 +【自定义签名】+ 备案签名
+	 1,5: 短信 +【自定义签名】+ 备案签名
 	 2: 【自定义签名】+ 短信
-	 3: 备案签名 +【自定义签名】+ 短信
+	 3,4: 备案签名 +【自定义签名】+ 短信
 	 */
 	generateText(preview, unsubscribeText, signature, customSignature, gatewayType) {
 		const content = preview.split('#_enter_#');
