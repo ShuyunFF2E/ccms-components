@@ -27,7 +27,7 @@
 					ng-class="{focus: $index === $ctrl.focusIndex}"
 					ng-disabled="item.disabled">
 				<cc-icon ng-if="item.icon" symbol="{{item.icon}}"></cc-icon>
-				<span ng-bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
+				<span ng-bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)" title="{{item[$ctrl.mapping.displayField]}}"></span>
 			</li>
 			<li class="empty-list-item"
 					ng-if="$ctrl.searchable" ng-show="!$ctrl.items.length && $ctrl.title.length">
