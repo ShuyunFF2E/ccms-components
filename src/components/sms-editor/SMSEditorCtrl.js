@@ -11,7 +11,7 @@ const regUrlBase = '((([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[-;:&=\\+\\$,\\w]+@)?[A-Za-z
 const REG_URL = new RegExp(regUrlBase);
 const REG_URL_HASH = new RegExp(regUrlBase + '#');
 const DEFAULT_TYPE_NAME = 'default';
-const BRACKET_REG = /[œþ]/g; // 特殊字符
+const BRACKET_REG = /[【】œþ]/g; // 特殊字符
 
 
 @Inject('$scope', '$element', '$timeout')
