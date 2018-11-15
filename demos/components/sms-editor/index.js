@@ -186,4 +186,10 @@ angular.module('componentsApp', ['ccms.components'])
 		self.insertKeyword = function () {
 			self.channel.api.insertKeyword('同城关怀_2018-08-07', 'taobao');
 		}
+
+		self.changeTips = function () {
+			self.channelInfo[0].smsChargeTips = "我变了 哈哈哈";
+		}
+
+
 	});
