@@ -19,12 +19,11 @@ export default {
 	link(scope, element) {
 
 		const opts = scope.opts || (scope.opts = {});
-		const keywordPrefix = scope.opts.keywordPrefix || '$$';
-		const keywordSuffix = scope.opts.keywordSuffix || '$$';
+		const keywordPrefix = scope.opts.keywordPrefix || 'œœ';
+		const keywordSuffix = scope.opts.keywordSuffix || 'œœ';
 		const trimContent = angular.isDefined(opts.trimContent) ? opts.trimContent : true;
 		scope.smsPreviewStatText = trimContent ? '不含变量' : '含空格，不含变量';
 		scope.smsPreviewTipsText = trimContent ? '上图仅为操作预览，最终计数以实际发送为准，查看' : '上图仅为操作预览，变量无固定长度，最终计数以实际发送为准，建议先测试执行，查看';
-		scope.smsPreviewTipsInTipsText = opts.smsChargeTips || '单条短信字数限制 70 字；超出 70 字，按 67 字条计费；<br>字数和计费条数以实际执行时发送为准。';
 
 		scope.$watch('opts', () => {
 			const varReg = RegExp(`${escapeRegExp(keywordPrefix)}_(\\[[^]]+])?(.+?)_${escapeRegExp(keywordSuffix)}`, 'g');
@@ -36,15 +35,16 @@ export default {
 			const customSignature = opts.customSignature ? `【${opts.customSignature.replace(/</g, '&lt;')}】` : '';
 			const unsubscribeText = opts.useUnsubscribe ? (opts.unsubscribeText || '') : '';
 
+			scope.smsPreviewTipsInTipsText = opts.smsChargeTips || '单条短信字数限制 70 字；超出 70 字，按 67 字条计费；<br>字数和计费条数以实际执行时发送为准。';
 			// 字数统计
 			scope.totalChars = opts.totalCharts = text
 					.replace(varReg, '')
-					.replace(/#_enter_#/g, '').length +
+					.replace(/þ_enter_þ/g, '').length +
 				(gatewayType === 1 || gatewayType === 3 || gatewayType === 4 || gatewayType === 5 ? signature.length : 0) +
 				customSignature.length +
 				unsubscribeText.length;
 			// 换行统计
-			scope.newLineNum = opts.newLineNum = text.split('#_enter_#').length - 1;
+			scope.newLineNum = opts.newLineNum = text.split('þ_enter_þ').length - 1;
 
 			// 变量统计
 			const varMatch = text.match(varReg);
@@ -61,7 +61,7 @@ export default {
 	 3,4: 备案签名 +【自定义签名】+ 短信
 	 */
 	generateText(preview, unsubscribeText, signature, customSignature, gatewayType) {
-		const content = preview.split('#_enter_#');
+		const content = preview.split('þ_enter_þ');
 		const len = content.length;
 
 		switch (gatewayType) {

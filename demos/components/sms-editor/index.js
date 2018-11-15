@@ -20,8 +20,8 @@ angular.module('componentsApp', ['ccms.components'])
 			{
 				name: 'GatewayType 0',
 				gatewayType: 0,
-				keywordPrefix: '?', // default $$
-				keywordSuffix: '】', // default $$
+				keywordPrefix: 'œœ', // default œœ
+				keywordSuffix: 'œœ', // default œœ
 				keywords: [
 					// {
 					// 	name: 'XBL',
@@ -120,7 +120,7 @@ angular.module('componentsApp', ['ccms.components'])
 				 */
 				shortLinkTip: '系统判断该短链为手动添加，为保证短链顺利打开请末尾加#号，前后分别加一个空格，例： c.tb.cn/c.2cmrV# 共18字。',
 				// content: '亲爱t.cn的?_[taobao]XMTB_】 / $$_[taobao]XMJDWMRZ_$$, 您的订单$$_[taobao]DDBH_$$t.cn$$_[taobao]DDBH_$$正在派送.  c.tb.cn($$ $ $$) 签名: $$_XBL_$$ http://www.taobao.com# {emo-5}',
-				content: '如果地区{选择器}要使用{{xxxx}}#_enter_##_enter_#后端数据, 请配置 ual 参数 ?_[taobao]shortlink_】?_[taobao]XMTB_】',
+				content: '如果地区{选择器}要使用{{xxxx}}þ_enter_þþ_enter_þ后端数据, 请配置 ual 参数 œœ_[taobao]shortlink_œœ œœ_[taobao]XMTB_œœ',
 				// trimContent: false, // 是否 trim content 两边的空格, 默认是 true, 注意 目前标准版是 trim 的. B 版不期望处理, 没办法你懂得, 真心不期望这样做, 期望产品经理可以统一行为
 				signature: '[通道签名 1]',
 				disabled: false,
@@ -186,4 +186,10 @@ angular.module('componentsApp', ['ccms.components'])
 		self.insertKeyword = function () {
 			self.channel.api.insertKeyword('同城关怀_2018-08-07', 'taobao');
 		}
+
+		self.changeTips = function () {
+			self.channelInfo[0].smsChargeTips = "我变了 哈哈哈";
+		}
+
+
 	});
