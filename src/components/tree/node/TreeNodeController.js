@@ -43,10 +43,13 @@ export default class TreeNodeController {
 		Handler.run('onClickAction', this.node);
 	}
 
+	/**
+	 * 事件: 选择事件
+	 */
 	onChangeChecked() {
 		const { checked, children, pId } = this.node;
 
-		// 处理子项
+		// 变更子项选中状态
 		const changeChildren = children => {
 			children.forEach(item => {
 				item.checked = checked;
@@ -57,13 +60,27 @@ export default class TreeNodeController {
 			});
 		};
 
-		// 处理父项
+		// 变更父项选中状态
 		const changeParent = parentId => {
 			const parentNode = Store.findNodeById(parentId);
 			if (!parentNode) {
 				return;
 			}
-			parentNode.checked = parentNode.children.every(item => item.checked) || 'indeterminate';
+			let childrenCheckedNumber = 0;
+			parentNode.children.forEach(item => {
+				item.checked && childrenCheckedNumber++;
+			});
+
+			// 子项全部都未选中
+			if (childrenCheckedNumber === 0) {
+				parentNode.checked = false;
+			} else if (childrenCheckedNumber === parentNode.children.length) {
+				// 子选项全部选中
+				parentNode.checked = true;
+			} else {
+				// 子选项部分选中
+				parentNode.checked = 'indeterminate';
+			}
 
 			if (parentNode.pId) {
 				changeParent(parentNode.pId);
