@@ -80,7 +80,7 @@ export default class ShopSelectorCtrl {
 
 	prepareAllShopGridOptions() {
 		this.allShopGridOptions = {
-			resource: this._$resource(`${ apiPrefix }/shopDetails`),
+			resource: this._$resource(`${ this.serverName }${ apiPrefix }/shopDetails`),
 			queryParams: {
 				pageNum: 1,  // 当前页码
 				pageSize: 20, // 每页大小
