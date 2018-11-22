@@ -238,8 +238,8 @@ module.exports = function(configurations) {
 							if (param[0] === 'pageSize') {
 								pageSize = Number(param[1]);
 							}
-							if (param[0] === 'id') {
-								ids.push(param[1]);
+							if (param[0] === 'shopIdIn') {
+								ids = param[1].split(',');
 							}
 						});
 						data.forEach(item => {

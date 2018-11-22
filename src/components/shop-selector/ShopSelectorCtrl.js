@@ -41,7 +41,7 @@ export default class ShopSelectorCtrl {
 		this.initForm();
 		this.prepareAllShopGridOptions();
 		this.prepareSelectedShopGridOptions();
-		this.getSelectedShop();
+		this.selectedShop.length && this.getSelectedShop();
 	}
 
 	initForm() {
