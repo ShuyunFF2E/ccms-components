@@ -36,10 +36,8 @@ export default class TreeNodeController {
 	 * @param $event
 	 */
 	onClick($event) {
-		// this.onSelected(this.node, $event);
-		Store.updateSelectedNode(this.node);
+		Store.updateActiveNode(this.node);
 
-		// const node = Store.selectedNode;
 		Handler.onClickAction && Handler.onClickAction(this.node);
 	}
 
@@ -89,6 +87,9 @@ export default class TreeNodeController {
 
 		changeChildren(children || []);
 		changeParent(pId);
+
+		// 执行选中事件
+		Handler.onSelectedAction && Handler.onSelectedAction(this.node, Store.selectedNodes);
 	}
 
 	/**
@@ -168,7 +169,7 @@ export default class TreeNodeController {
 	 */
 	insertHandler = name => {
 		return this.checkSameName(name).then(() => {
-			const parentNode = Store.selectedNode;
+			const parentNode = Store.activeNode;
 			Handler.onAddAction	&& Handler.onAddAction(parentNode.id, name)
 				.then(({id}) => {
 					// 后端返回id后将id赋值给当前Node

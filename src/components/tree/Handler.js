@@ -14,7 +14,6 @@ class Handler {
 		// 选中事件
 		this.onSelectedAction = treeObject.onSelectedAction;
 
-
 		// 右键事件: 新增节点事件
 		this.onAddAction = treeObject.onAddAction;
 

@@ -32,8 +32,8 @@ export default class TreeCtrl {
 	 * 当前选中的节点
 	 * @returns {*|string}
 	 */
-	get selectedNode() {
-		return Store.selectedNode;
+	get activeNode() {
+		return Store.activeNode;
 	}
 
 	/**
@@ -41,7 +41,7 @@ export default class TreeCtrl {
 	 * @returns {*|string}
 	 */
 	get selectedId() {
-		return Store.selectedNode && Store.selectedNode.id;
+		return Store.activeNode && Store.activeNode.id;
 	}
 
 	/**
@@ -50,7 +50,7 @@ export default class TreeCtrl {
 	 * @param $event
 	 */
 	onOpenMenu = (node, $event) => {
-		Store.updateSelectedNode(node);
+		Store.updateActiveNode(node);
 		this.contextMenuStyle = {
 			display: 'block',
 			left: `${$event.pageX}px`,

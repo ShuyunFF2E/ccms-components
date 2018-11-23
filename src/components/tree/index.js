@@ -23,6 +23,7 @@ const treeDDO = {
 		supportSearch: '<?',
 		supportCheckbox: '<?',
 		onClickAction: '<?',
+		onSelectedAction: '<?',
 		onRemoveAction: '<?',
 		onAddAction: '<?',
 		onRenameAction: '<?'

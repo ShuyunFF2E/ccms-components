@@ -4,16 +4,29 @@
 class Store {
 	treeData = [];
 
-	// 当前选中的节点
-	selectedNode = null;
+	// 当前节点
+	activeNode = null;
 
-	// 是否为单选模式
-	isRadioModel = false;
+	// 更新当前节点
+	updateActiveNode(node) {
+		this.activeNode && this.updateById(this.activeNode.id, { isSelected: false });
+		this.activeNode = this.updateById(node.id, { isSelected: true });
+	}
 
-	// 当新当前选中节点
-	updateSelectedNode(node) {
-		this.selectedNode && this.updateById(this.selectedNode.id, { isSelected: false });
-		this.selectedNode = this.updateById(node.id, { isSelected: true });
+	get selectedNodes() {
+		const selectedList = [];
+		function getSelected(nodeList) {
+			nodeList.forEach(item => {
+				if (item.checked && item.checked !== 'indeterminate') {
+					selectedList.push(item);
+				}
+				if (item.children && item.children.length > 0) {
+					getSelected(item.children);
+				}
+			});
+		}
+		getSelected(this.treeData);
+		return selectedList;
 	}
 
 	/**
@@ -110,8 +123,8 @@ class Store {
 			}
 		});
 		// 删除后节点移至父节点
-		this.selectedNode = null;
-		this.updateSelectedNode(parentNode);
+		this.activeNode = null;
+		this.updateActiveNode(parentNode);
 	}
 
 	/**

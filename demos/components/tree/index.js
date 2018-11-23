@@ -53,6 +53,10 @@
 			});
 		};
 
+		this.onSelectedAction = function(node, selectedList) {
+			console.log(node, selectedList);
+		};
+
 		this.tree = [{
 			id: 1,
 			name: '所有',
