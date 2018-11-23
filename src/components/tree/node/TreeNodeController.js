@@ -40,7 +40,7 @@ export default class TreeNodeController {
 		Store.updateSelectedNode(this.node);
 
 		// const node = Store.selectedNode;
-		Handler.run('onClickAction', this.node);
+		Handler.onClickAction && Handler.onClickAction(this.node);
 	}
 
 	/**
@@ -169,7 +169,7 @@ export default class TreeNodeController {
 	insertHandler = name => {
 		return this.checkSameName(name).then(() => {
 			const parentNode = Store.selectedNode;
-			Handler.run('onAddAction', parentNode.id, name)
+			Handler.onAddAction	&& Handler.onAddAction(parentNode.id, name)
 				.then(({id}) => {
 					// 后端返回id后将id赋值给当前Node
 					Store.updateByEditing({ id, name, isEditing: false });
@@ -190,8 +190,8 @@ export default class TreeNodeController {
 	 */
 	updateHandler = name => {
 		const { id } = this.node;
-		return this.checkSameName(name, id).then(() => {
-			Handler.run('onRenameAction', this.node)
+		this.checkSameName(name, id).then(() => {
+			Handler.onRenameAction && Handler.onRenameAction(this.node)
 				.then(() => {
 					// 更新成功后，清除正在编辑状态
 					Store.updateByEditing({ name, isEditing: false });

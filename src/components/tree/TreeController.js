@@ -12,7 +12,8 @@ export default class TreeCtrl {
 	contextMenuItems = null;
 
 	$onInit() {
-		this.initHandler();
+		// 初始化handner
+		Handler.init(this);
 		this.documentListener = document.addEventListener('click', () => {
 			this.hideContextMenu();
 		}, true);
@@ -25,16 +26,6 @@ export default class TreeCtrl {
 	initData(treeData) {
 		Store.initData(treeData);
 		this.treeData = Store.treeData;
-	}
-
-	/**
-	 * 初始化handner
-	 */
-	initHandler() {
-		Handler.setEvent('onClickAction', this.onClickAction);
-		Handler.setEvent('onRemoveAction', this.onRemoveAction);
-		Handler.setEvent('onAddAction', this.onAddAction);
-		Handler.setEvent('onRenameAction', this.onRenameAction);
 	}
 
 	/**
@@ -72,7 +63,7 @@ export default class TreeCtrl {
 		}
 
 		// 菜单项
-		this.contextMenuItems = this.getContextMenuItems(node);
+		this.contextMenuItems = this.getContextMenus(node);
 
 		$event.stopPropagation();
 	};
@@ -88,7 +79,7 @@ export default class TreeCtrl {
 			if (node.children && node.children.length) {
 				this._$ccTips.error('该节点含有子节点，无法删除！');
 			} else {
-				Handler.run('onRemoveAction', node).then(() => {
+				Handler.onRemoveAction && Handler.onRemoveAction(node).then(() => {
 					Store.removeChild(node);
 					this._$scope.$apply();
 				})
@@ -100,10 +91,10 @@ export default class TreeCtrl {
 	};
 
 	/**
-	 * 编辑
+	 * 将节点变更为编辑状态
 	 * @param node
 	 */
-	editNode = node => {
+	upateNodeEditing = node => {
 		Store.updateById(node.id, { isEditing: true });
 	};
 
@@ -121,19 +112,26 @@ export default class TreeCtrl {
 	/**
 	 * 获取菜单项
 	 */
-	getContextMenuItems() {
-		const menuItemMap = {
-			'add': { name: '新增分类', click: node => {
+	getContextMenus() {
+		const menuList = [];
+		Handler.onAddAction && menuList.push({
+			name: '新增分类', click: node => {
 				this.addBlankNode(node);
-			} },
-			'remove': { name: '删除分类', click: node => {
+			}
+		});
+
+		Handler.onRemoveAction && menuList.push({
+			name: '删除分类', click: node => {
 				this.removeNode(node);
-			} },
-			'rename': { name: '重命名', click: node => {
-				this.editNode(node);
-			} }
-		};
-		return menuItemMap;
+			}
+		});
+
+		Handler.onRenameAction && menuList.push({
+			name: '重命名', click: node => {
+				this.upateNodeEditing(node);
+			}
+		});
+		return menuList;
 	}
 
 	/**

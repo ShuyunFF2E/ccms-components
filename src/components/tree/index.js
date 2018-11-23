@@ -19,6 +19,7 @@ const treeDDO = {
 	template: treeTemplate,
 	bindings: {
 		data: '<',
+		isRadioModel: '<?',
 		supportSearch: '<?',
 		supportCheckbox: '<?',
 		onClickAction: '<?',

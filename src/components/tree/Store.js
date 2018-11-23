@@ -7,6 +7,9 @@ class Store {
 	// 当前选中的节点
 	selectedNode = null;
 
+	// 是否为单选模式
+	isRadioModel = false;
+
 	// 当新当前选中节点
 	updateSelectedNode(node) {
 		this.selectedNode && this.updateById(this.selectedNode.id, { isSelected: false });

@@ -53,58 +53,50 @@
 			});
 		};
 
-		this.hideRoot = true;
 		this.tree = [{
 			id: 1,
 			name: '所有',
 			pId: null,
-			isClosed: false,
+			isRadioModel: true,
 			children: [
 				{
 					id: 11,
 					name: '85',
 					pId: 1,
-					isClosed: false,
 					children: [
 						{
 							id: 111,
 							name: '22323',
 							pId: 11,
-							categoryType: 0,
-							isClosed: false
+							categoryType: 0
 						}
 					]
 				}, {
 					id: 12,
 					name: 'WYY分',
 					pId: 1,
-					isClosed: false,
 					children: [
 						{
 							id: 121,
 							name: 'miaomiaozhu0620',
 							pId: 12,
-							isClosed: false,
 							children: [
 								{
 									id: 1211,
 									name: '2345',
-									pId: 121,
-									isClosed: false
+									pId: 121
 								}
 							]
 						}, {
 							id: 122,
 							name: 'lerous',
-							pId: 12,
-							isClosed: false
+							pId: 12
 						}
 					]
 				}, {
 					id: 13,
 					name: '未分类',
-					pId: 1,
-					isClosed: false
+					pId: 1
 				}
 			]
 		}];
