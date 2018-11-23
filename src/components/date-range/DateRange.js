@@ -4,24 +4,23 @@
 
 
 import './_date-range.scss';
-
 import template from './date-range.tpl.html';
-
 import DateRangeCtrl from './DateRangeCtrl';
 
-export default class DateRange {
 
-	constructor() {
-		Object.assign(this, {
-			bindToController: true,
-			controller: DateRangeCtrl,
-			controllerAs: 'ctrl',
-			replace: true,
-			restrict: 'E',
-			scope: {
-				opts: '='
-			},
-			template
-		});
-	}
-}
+export default {
+
+	bindToController: true,
+	controller: DateRangeCtrl,
+	controllerAs: 'ctrl',
+	replace: true,
+	restrict: 'E',
+	scope: {
+		opts: '=',
+		onCalendarOpen: '&?',
+		onCalendarClose: '&?',
+		isFestival: '<?',
+		customFestivals: '<?'
+	},
+	template
+};

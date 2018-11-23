@@ -11,6 +11,12 @@ loaders.push(
 		test: /\.(sc|c)ss$/,
 		loaders: ['style', 'css', 'postcss', 'resolve-url', 'sass?sourceMap'],
 		exclude: /(node_modules|bower_components)/
+	},
+	{
+		test: /^((?!\.tpl).)*\.html$/,
+		loader: 'file?name=[path][name]-[hash:8].[ext]',
+		exclude: /(node_modules|bower_components)/,
+		include: /src(\/|\\).*(\/|\\)__tests__/
 	}
 );
 
@@ -92,7 +98,20 @@ module.exports = {
 
 	// start these browsers
 	// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-	browsers: ['Chrome'],
+        browsers: ['ChromeHeadlessNoSandbox'],
+        customLaunchers: {
+         ChromeHeadlessNoSandbox: {
+           base: 'Chrome',
+           flags: [
+             '--headless',
+             '--no-sandbox',
+             '--disable-gpu',
+             '--remote-debugging-address=0.0.0.0',
+             '--remote-debugging-port=9222',
+             '--user-data-dir=/data'
+           ]
+         }
+        },
 
 	// Continuous Integration mode
 	// if true, Karma captures browsers, runs the tests and exits

@@ -1,0 +1,42 @@
+<form class="customer-defined-attribute-editor" name="$ctrl.attributeForm" cc-validators="$ctrl.validators">
+	<ul class="customer-defined-attribute-editor-content">
+		<li class="attribute-editor-li">
+			<label class="attribute-editor-label">属性名称：</label><span class="attribute-editor-input"><input type="text"
+																																																		 ng-model="$ctrl.customerDefinedAttribute.name"
+																																																		 maxlength="20"
+																																																		 cc-validator="attributeName,duplicate"></span><span
+				class="iconfont attribute-remark-icon" cc-tooltip="$ctrl.customerDefinedAttribute.remark ? $ctrl.customerDefinedAttribute.remark : '备注'"
+				ng-class="{'attribute-remark-icon--active': !!$ctrl.customerDefinedAttribute.remark}"
+				ng-click="$ctrl.toggleRemarkTextArea()">&#xe635;</span>
+		</li>
+		<li class="attribute-editor-li">
+			<label class="attribute-editor-label">属性类型：</label><span class="attribute-editor-input"><select
+				ng-change="$ctrl.customerDefinedAttribute.optional = []"
+				ng-options="item.value as item.name for item in $ctrl.DefinedTypeOptionList"
+				ng-model="$ctrl.customerDefinedAttribute.type"></select></span>
+		</li>
+		{{$ctrl.customerData}}
+		<li class="attribute-editor-li">
+			<label class="attribute-editor-label">可选值：</label>
+			<cc-attribute-data-editor
+					attribute-optional-list="$ctrl.customerDefinedAttribute.optional"
+					number-only="$ctrl.customerDefinedAttribute.type === $ctrl.DefinedTypeOptionList[1].value"
+					set-child="$ctrl.getChildCtrl(child)"
+					ng-if="$ctrl.customerDefinedAttribute.type === $ctrl.DefinedTypeOptionList[0].value || $ctrl.customerDefinedAttribute.type === $ctrl.DefinedTypeOptionList[1].value"></cc-attribute-data-editor><span
+				ng-show="$ctrl.customerDefinedAttribute.type === $ctrl.DefinedTypeOptionList[2].value || $ctrl.customerDefinedAttribute.type === $ctrl.DefinedTypeOptionList[3].value || $ctrl.customerDefinedAttribute.type === $ctrl.DefinedTypeOptionList[4].value">当前属性类型无需设置可选值</span>
+		</li>
+	</ul>
+	<div class="attribute-remark-block" ng-show="$ctrl.showRemarkTextAreaState">
+		<textarea placeholder="备注" maxlength="2000"
+							ng-model="$ctrl.tmpRemark"></textarea>
+
+		<div class="button-row">
+			<button class="btn-remark-confirm" ng-click="$ctrl.confirmRemark()">确定</button>
+			<button class="btn-remark-cancel" ng-click="$ctrl.toggleRemarkTextArea()">取消</button>
+		</div>
+	</div>
+	<div class="button-row">
+		<button class="btn-ok" ng-click="$ctrl.confirmCustomerDefinedAttribute()">确定</button>
+		<button class="btn-cancel" ng-click="$ctrl.cancelSetting()">取消</button>
+	</div>
+</form>

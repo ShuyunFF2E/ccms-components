@@ -5,7 +5,6 @@
  */
 
 var path = require('path');
-var express = require('express');
 var jsonServer = require('json-mock-kuitos');
 var webpack = require('webpack');
 var config = require('./webpack-dev.config');
@@ -13,27 +12,32 @@ var config = require('./webpack-dev.config');
 var app = jsonServer.create();
 var compiler = webpack(config);
 
-var apiPrefix = '';
-var filename = path.resolve(__dirname, './mock/db.json');
-
 app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo    : false,
-  stats     : {
-    colors: true,
-    cached: false
-  },
-  publicPath: config.output.publicPath
+	noInfo: false,
+	stats: {
+		colors: true,
+		cached: false
+	},
+	publicPath: config.output.publicPath
 }));
+
+// redirect root location to demos index
+app.use(/\/$/, function(req, res) {
+	res.redirect('/demos/index.html');
+});
 
 app.use(require('webpack-hot-middleware')(compiler));
 app.use(jsonServer.defaults({static: path.resolve(__dirname)}));
-app.use(jsonServer.router(apiPrefix, filename));
+app.use('/api', jsonServer.proxy('http://localhost', 8989));
 
-app.listen(3000, 'localhost', function (err) {
-  if (err) {
-    console.log(err);
-    return;
-  }
+const port = 3000;
+const host = '0.0.0.0';
+app.listen(port, host, function(err) {
+	if (err) {
+		console.log(err);
+		return;
+	}
 
-  console.log('Listening at http://localhost:3000');
+	console.log(`Listening at http://${host}:${port}\n`);
 });
+

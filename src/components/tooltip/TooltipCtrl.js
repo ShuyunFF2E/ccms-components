@@ -10,9 +10,8 @@ import {TOOLTIP_TYPE} from './Contants';
 
 export default class TooltipCtrl {
 
-	constructor($element, $attrs, $compile, $scope) {
+	constructor($element, $compile, $scope) {
 		this._$element = $element;
-		this._$attrs = $attrs;
 		this._$compile = $compile;
 		this._$scope = $scope;
 
@@ -24,7 +23,7 @@ export default class TooltipCtrl {
 
 	$postLink() {
 		// 默认通过mouseenter/mouseleave触发(当未手动配置trigger/opened)
-		if (!this._$attrs.tooltipTrigger && !this._$attrs.tooltipOpened) {
+		if (!this.trigger && !this.opened) {
 			this.hostElement.bind('mouseenter mouseleave', this.toggle);
 		}
 
@@ -81,7 +80,7 @@ export default class TooltipCtrl {
 
 	open() {
 		if (!this.tooltip) {
-			this.tooltip = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody, this.placement);
+			this.tooltip = new Tooltip(this.hostElement[0], this.type || TOOLTIP_TYPE.NORMAL, this.appendToBody, this.placement, this.style);
 		}
 
 		let compiledContent = this.content;
@@ -123,4 +122,4 @@ export default class TooltipCtrl {
 
 }
 
-TooltipCtrl.$inject = ['$element', '$attrs', '$compile', '$scope'];
+TooltipCtrl.$inject = ['$element', '$compile', '$scope'];

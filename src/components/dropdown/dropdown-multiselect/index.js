@@ -8,23 +8,32 @@ import DropdownMultiselectCtrl from './DropdownMultiselectCtrl';
 
 const dropdownMultiselectDDO = {
 	restrict: 'E',
-	require: 'dropdown',
+	require: 'ccDropdown',
 	template,
 	controller: DropdownMultiselectCtrl,
 	controllerAs: '$ctrl',
 	scope: {
 		model: '=?',
+		isOpen: '<?',
+		containerElement: '=?',
+		hasSelectAll: '<?',
+		autoClose: '<?',
 		mapping: '<?',
+		disabled: '<?',
 		datalist: '<',
 		searchable: '<?',
 		confirmButton: '<?',
-		placeholder: '@?'
+		placeholder: '@?',
+		searchFields: '=?',
+		onSelectChange: '&?',
+		onDropdownOpen: '&?',
+		onDropdownClose: '&?'
 	},
 	bindToController: true
 };
 
 export default angular
 	.module('ccms.components.dropdownMultiselect', [bindHtml])
-	.directive('dropdownMultiselect', () => dropdownMultiselectDDO)
+	.directive('ccDropdownMultiselect', () => dropdownMultiselectDDO)
 	.name;
 

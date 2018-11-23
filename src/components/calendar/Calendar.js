@@ -4,26 +4,28 @@
 
 
 import './_calendar.scss';
-
 import template from './calendar.tpl.html';
-
 import CalendarCtrl from './CalendarCtrl';
 
 
-export default class Calendar {
+export default {
 
-	constructor() {
-		Object.assign(this, {
-			bindToController: true,
-			controller: CalendarCtrl,
-			controllerAs: 'ctrl',
-			replace: true,
-			require: ['^datePicker', '^^?dateRange'],
-			restrict: 'E',
-			scope: true,
-			template
-		});
-	}
+	bindToController: true,
+	controller: CalendarCtrl,
+	controllerAs: 'ctrl',
+	replace: true,
+	require: ['^ccDatePicker', '^^?ccDateRange'],
+	restrict: 'E',
+	scope: {
+		onCalendarOpen: '&?',
+		onCalendarClose: '&?',
+		isFestival: '<?',
+		customFestivals: '<?',
+		disableYear: '<?',
+		disableMonth: '<?',
+		displayFormat: '@?'
+	},
+	template,
 
 
 	link($scope, $element, $attrs, ctrls) {
@@ -31,22 +33,7 @@ export default class Calendar {
 
 		this._registerToDatePicker(ctrls[0]);
 		this._registerToRangePicker(ctrls[0], ctrls[1]);
-		this._registerCloseEvents($scope);
-	}
-
-
-	/**
-	 * 注册在 document 上的关闭事件
-	 * @param $scope
-	 * @private
-	 */
-	_registerCloseEvents($scope) {
-		document.addEventListener('click', $scope.ctrl.close, false);
-
-		$scope.$on('destroy', () => {
-			document.removeEventListener('click', $scope.ctrl.close, false);
-		});
-	}
+	},
 
 
 	/**
@@ -60,7 +47,7 @@ export default class Calendar {
 
 		this.$scope.ctrl.dateOnly = datePickerCtrl.dateOnly;
 		this.$scope.ctrl.disabled = datePickerCtrl.disabled;
-	}
+	},
 
 
 	/**
@@ -80,4 +67,4 @@ export default class Calendar {
 			rangeCtrl.endCalendar = this.$scope.ctrl;
 		}
 	}
-}
+};

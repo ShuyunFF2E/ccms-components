@@ -1,8 +1,8 @@
-@import "../../../assets/iconfont/iconfont";
+@import "../../../../node_modules/ccms-icons/iconfont";
 @import "../../styles/mixins";
 @import "../../styles/input";
 
-dropdown-select {
+cc-dropdown-select {
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -14,7 +14,9 @@ dropdown-select {
 
 	.dropdown-select-input-wrap {
 		display: flex;
+		background-color: #fff;
 		border: solid 1px $input-border-color;
+		align-items: center;
 
 		@at-root .active#{&} {
 			border-color: $input-active-border;
@@ -28,8 +30,9 @@ dropdown-select {
 		.dropdown-select-input {
 			flex: 1;
 			min-width: 0;
+			height: calc(#{$control-height} - 2px);
+			line-height: calc(#{$control-height} - 2px);
 			padding-right: 0;
-			line-height: $control-height;
 			vertical-align: top;
 			border: none;
 			background-color: inherit;
@@ -42,14 +45,14 @@ dropdown-select {
 
 		.dropdown-select-icons {
 			display: inline-block;
-			background: #ffffff;
+			background-color: inherit;
 		}
 
 		%action-icon {
 			@extend .iconfont;
 			display: inline-block;
 			padding-left: 8px;
-			line-height: $control-height;
+			line-height: calc(#{$control-height} - 2px);
 			cursor: pointer;
 			color: #c9c9c9;
 			&:last-child {
@@ -77,10 +80,15 @@ dropdown-select {
 		}
 	}
 
-	.dropdown-panel {
-		&.hide {
-			display: none !important;
+  	.dropdown-select-input-wrap.has-icon {
+	  	padding-left: 9px;
+
+	  	input {
+		  padding-left: 4px;
 		}
+	}
+
+	.dropdown-panel {
 		.dropdown-list {
 			position: absolute;
 			top: 100%;
@@ -90,16 +98,18 @@ dropdown-select {
 			min-width: 100%;
 			max-width: 150%;
 			max-height: 152px;
-			overflow-y: scroll;
+			overflow-y: auto;
 			padding: 0;
 			list-style: none;
 			border: solid 1px $input-border;
 			background-color: #fff;
 			li {
 				@include cut-long-text;
+				display: flex;
+				align-items: center;
 				box-sizing: border-box;
 				height: 30px;
-				line-height: 30px;
+				line-height: 1;
 				padding: 0 9px;
 				font-size: 12px;
 				background: #fff;
@@ -112,6 +122,10 @@ dropdown-select {
 					&:hover {
 						background-color: #fff;
 					}
+				}
+			    &[disabled=disabled] {
+				  	color: #888;
+					cursor: not-allowed;
 				}
 				.highlight {
 					color: #0083ba;

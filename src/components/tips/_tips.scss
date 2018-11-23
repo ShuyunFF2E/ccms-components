@@ -1,4 +1,4 @@
-@import "../../assets/iconfont/iconfont";
+@import "../../../node_modules/ccms-icons/iconfont";
 @import "../styles/variables";
 @import "../styles/animation";
 
@@ -12,10 +12,9 @@
 	color: $font-color;
 
 	font-size: 12px;
-
 }
 
-tips {
+cc-tips {
 	display: inline-block;
 
 	box-sizing: border-box;
@@ -97,14 +96,13 @@ tips {
 }
 
 .float-tips {
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	flex: 1;
-	margin: 2px 0 0 0;
-	width: 450px;
+	display: inline-flex;
+	line-height: 18px;
+	font-size: 12px;
+	padding: 8px 14px 7px 20px;
 	max-height: 120px;
 	overflow: hidden;
+	margin-top: 1px;
 
 	&.tips-opening {
 		animation-name: fade-in, slide-down;
@@ -132,32 +130,24 @@ tips {
 		@include tips-border(#ffdfe0, #ffdfe0, #853432);
 	}
 
-	span {
-		display: inline-block;
-	}
-
 	.message {
-		flex: 1;
-		max-width: 364px;
-		line-height: 18px;
-		margin: 8px 0 7px 5px;
+		width: 364px;
 		word-break: break-all;
 	}
 
 	.success-icon {
-		margin: 7px 0 0 20px;
-		font-size: 18px;
+		margin-right: 6px;
+		display: inline-block;
+		font-size: 16px;
 		color: #389d25;
-		-moz-transform: translateY(-2px); //处理火狐往下2px的偏差
 		@extend .iconfont;
 		@extend .icon-right;
 	}
 
 	.error-icon {
-		margin: 7px 0 0 20px;
-		font-size: 18px;
+		margin-right: 6px;
+		font-size: 16px;
 		color: #ff5243;
-		-moz-transform: translateY(-2px); //处理火狐往下2px的偏差
 		@extend .iconfont;
 		@extend .icon-caution;
 	}
@@ -165,10 +155,11 @@ tips {
 	.close-icon {
 		@extend .iconfont;
 		@extend .icon-close;
-		margin: 9px 14px 0 20px;
+		margin-left: 20px;
 		font-size: 12px;
 		cursor: pointer;
 		opacity: 0.6;
+
 		&:hover {
 			opacity: 0.8;
 		}

@@ -11,32 +11,25 @@ class DropdownService {
 	}
 
 	open(dropdownCtrl) {
-		// 关闭之前的下拉
-		if (this.lastDropdownCtrl) {
-			this.autoCloseFn();
-		}
-
 		// 为需要自动关闭的下拉注册处理事件
 		if (dropdownCtrl.autoClose) {
-			// 点击下拉自身内容阻止触发自动关闭
-			let element = dropdownCtrl.getElement();
-			let avoidAutoCloseFn = event => {
-				event.stopPropagation();
-			};
-			element.addEventListener('click', avoidAutoCloseFn);
-
 			this.lastDropdownCtrl = dropdownCtrl;
-			this.autoCloseFn = () => {
-				element.removeEventListener('click', avoidAutoCloseFn);
+
+			this.autoCloseFn = event => {
+				if (dropdownCtrl.getElement().contains(event.target)) {
+					// 点击元素自身不自动关闭
+					return;
+				}
 				this.lastDropdownCtrl.close();
 			};
-			document.addEventListener('click', this.autoCloseFn);
+
+			document.addEventListener('click', this.autoCloseFn, true);
 		}
 	}
 
 	close(dropdownCtrl) {
 		if (dropdownCtrl.autoClose) {
-			document.removeEventListener('click', this.autoCloseFn);
+			document.removeEventListener('click', this.autoCloseFn, true);
 			this.lastDropdownCtrl = null;
 			this.autoCloseFn = null;
 		}

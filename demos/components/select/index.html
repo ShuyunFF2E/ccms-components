@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>下拉</title>
+<link rel="import" href="../../common/layout.html">
+
+<style>
+	.group {
+		display: flex;
+	}
+	.group + .group {
+		margin-top: 1em;
+	}
+	.demo {
+		flex: 1;
+		margin: .5em;
+	}
+</style>
+
+<main ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+	<div class="group">
+		<div class="demo">
+			<h3>单选</h3>
+			<div style="margin: 0.5em 0;">
+				<button class="btn-ok" ng-click="ctrl.toggleOpen()">切换打开/关闭状态</button>
+			</div>
+			<span>当前值: <span ng-bind="ctrl.value1 | json"></span></span>
+			<cc-dropdown-select
+					placeholder="哈哈哈"
+					model="ctrl.value1"
+					is-open="ctrl.isOpen"
+					datalist="ctrl.datalist2"
+					mapping="ctrl.fieldsMap"
+					on-before-select-change="ctrl.beforeChange(item)"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
+			</cc-dropdown-select>
+			<div style="margin: 0.5em 0;">
+				<button class="btn-ok" ng-click="ctrl.value1 = '深圳'">选择深圳</button>
+			</div>
+		</div>
+		<div class="demo">
+			<h3>单选（只读）</h3>
+			<span>当前值: <span ng-bind="ctrl.value1 | json"></span></span>
+			<cc-dropdown-select ng-init="ctrl.disabled = true"
+					disabled="ctrl.disabled"
+					placeholder="哈哈哈"
+					model="ctrl.value1"
+					datalist="ctrl.datalist2"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					mapping="ctrl.fieldsMap">
+			</cc-dropdown-select>
+			<div style="margin: 0.5em 0;">
+				<button class="btn-ok" ng-click="ctrl.disabled = !ctrl.disabled">切换 disabled 状态</button>
+			</div>
+		</div>
+		<div class="demo">
+			<h3>单选（可搜索, 如果没有匹配值, 可使用用户输入的值）</h3>
+			<span>当前值: <span ng-bind="ctrl.value2 | json"></span></span>
+			<cc-dropdown-select
+					placeholder="快，快选我。。啊！"
+					model="ctrl.value2"
+					datalist="ctrl.datalist1"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					searchable="true"
+					support-input-value="true"
+					mapping="ctrl.fieldsMap">
+			</cc-dropdown-select>
+			<div style="margin: 0.5em 0;">
+				<input style="width: 50%;" ng-model="newValue">
+				<button class="btn-ok" ng-click="ctrl.setValue(newValue)">设置新值</button>
+			</div>
+		</div>
+	</div>
+	<div class="group">
+		<div class="demo">
+			<h3>多选</h3>
+			<span>当前值: <span ng-bind="ctrl.value3 | json"></span></span>
+			<cc-dropdown-multiselect
+					placeholder="快，快选我。。啊！"
+					model="ctrl.value3"
+					datalist="ctrl.datalist1"
+					mapping="ctrl.fieldsMap"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
+			</cc-dropdown-multiselect>
+		</div>
+		<div class="demo">
+			<h3>多选(disabled)</h3>
+			<span>当前值: <span ng-bind="ctrl.value33 | json"></span></span>
+			<cc-dropdown-multiselect
+					placeholder="快，快选我。。啊！"
+					model="ctrl.value33"
+					datalist="ctrl.datalist1"
+					mapping="ctrl.fieldsMap"
+					disabled="true"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
+			</cc-dropdown-multiselect>
+		</div>
+		<div class="demo">
+			<h3>多选（可搜索）</h3>
+			<span>当前值: <span ng-bind="ctrl.value4 | json"></span></span>
+			<cc-dropdown-multiselect
+					placeholder="快，快选我。。啊！"
+					model="ctrl.value4"
+					datalist="ctrl.datalist1"
+					searchable="true"
+					confirm-button="true"
+					search-fields="ctrl.searchFields"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
+					mapping="ctrl.fieldsMap">
+			</cc-dropdown-multiselect>
+			<div style="margin: 0.5em 0;">
+				<button class="btn-ok" ng-click="ctrl.setList()">设置新值</button>
+			</div>
+		</div>
+		<div class="demo">
+			<h3>多选（可搜索, disabled)</h3>
+			<span>当前值: <span ng-bind="ctrl.value44 | json"></span></span>
+			<cc-dropdown-multiselect
+					placeholder="快，快选我。。啊！"
+					model="ctrl.value44"
+					datalist="ctrl.datalist1"
+					searchable="true"
+					confirm-button="true"
+					disabled="true"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
+					mapping="ctrl.fieldsMap">
+			</cc-dropdown-multiselect>
+		</div>
+	</div>
+	<div class="group">
+		<div class="demo">
+			<h3>单选（带icon）</h3>
+			<span>当前值: {{ctrl.value5}}</span>
+			<cc-dropdown-select
+					placeholder="我默认"
+					model="ctrl.value5"
+					datalist="ctrl.datalist5"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					searchable="true"
+					mapping="ctrl.fieldsMap"
+			>
+			</cc-dropdown-select>
+		</div>
+	</div>
+	<div class="group">
+		<div class="demo">
+			<h3>级联选择</h3>
+			<h4>当前值: {{ctrl.value6}} {{ctrl.value7}}</h4>
+			<cc-dropdown-select
+					placeholder="选择城市"
+					model="ctrl.value6"
+					datalist="ctrl.cascadeDataList"
+					searchable="true"
+					on-select-change="ctrl.cascadeSelectChange(model)"
+			>
+			</cc-dropdown-select>
+			<cc-dropdown-select
+					placeholder="选择区"
+					model="ctrl.value7"
+					searchable="true"
+					datalist="ctrl.cascadeAreaDataList"
+			>
+			</cc-dropdown-select>
+		</div>
+		<div class="demo">
+			<h3>封装 dropdown-select</h3>
+			<h4>当前值: {{ctrl.value10}}</h4>
+			<my-cc-dropdown-select
+					v="ctrl.value10",
+					list="ctrl.list10"
+			>
+			</my-cc-dropdown-select>
+		</div>
+	</div>
+	<div class="group">
+		<div class="demo">
+			<h3>加全选 如果选项中有 disabled, 不在计算中</h3>
+			<h4>当前值: {{ctrl.value11}}</h4>
+			<cc-dropdown-multiselect
+					placeholder="xxxx"
+					model="ctrl.value11"
+					datalist="ctrl.datalist11"
+					mapping="ctrl.fieldsMap"
+					has-select-all="true">
+			</cc-dropdown-multiselect>
+		</div>
+		<div class="demo">
+			<h3>异步获取数据(多选)</h3>
+			<h4>当前值: {{ctrl.selectedShop}}</h4>
+			<cc-dropdown-multiselect
+					style="max-width: 220px;"
+					placeholder="请选择店铺"
+					model="ctrl.selectedShop"
+					datalist="ctrl.shopList"
+					has-select-all="true"
+			>
+			</cc-dropdown-multiselect>
+		</div>
+		<div class="demo">
+			<h3>异步获取数据(单选)</h3>
+			<h4>当前值: {{ctrl.selectedOneShop}}</h4>
+			<cc-dropdown-select
+					style="max-width: 220px;"
+					placeholder="请选择店铺"
+					model="ctrl.selectedOneShop"
+					datalist="ctrl.shopList"
+					has-select-all="true"
+			>
+			</cc-dropdown-select>
+		</div>
+		<div class="demo" id="container" style="height:120px; overflow-y:auto;">
+			<h3>异步获取数据(单选)</h3>
+			<h4>当前值: {{ctrl.selectedOneShop}}</h4>
+			<cc-dropdown-select
+					style="max-width: 220px;"
+					placeholder="请选择店铺"
+					model="ctrl.selectedOneShop"
+					datalist="ctrl.shopList"
+					has-select-all="true"
+					container-element="ctrl.container"
+			>
+			</cc-dropdown-select>
+		</div>
+	</div>
+</main>
+
+<script src="/components.js"></script>
+<script>
+	angular.module('demoApp', ['ccms.components'])
+			.directive('myCcDropdownSelect', function () {
+				return {
+					restrict: 'E',
+					scope: {
+						v: '<',
+						list: '<'
+					},
+					controllerAs: '$ctrl',
+					bindToController: true,
+					controller: function(){
+						console.log(this.v);
+						console.log(this.list);
+						this.cascadeDataList = this.list;
+						this.cascadeSelectChange = function(model){
+							console.log(model);
+						}
+					},
+					template: `
+						<cc-dropdown-select
+					      placeholder="测试"
+					      model="$ctrl.v"
+					      datalist="$ctrl.cascadeDataList"
+					      on-select-change="$ctrl.cascadeSelectChange(model)"
+			           >
+					`
+				}
+			})
+		.controller('DemoCtrl', function($scope, $ccModal) {
+
+			this.container = document.getElementById('container');
+
+			this.searchFields = undefined; // ['displayField', 'valueField'] //;
+			this.value1 = '上海';
+			this.value2 = 'xa';
+			this.value3 = [];
+			this.value33 = [];
+			this.value4 = ['xa', 'sh'];
+			this.value44 = ['xa'];
+			this.value5 = '上海';
+			this.value10 = 123789;
+			this.list10 = [
+				{title: '北京', value: 'bj'},
+				{title: '上海', value: 'sh', disabled: true},
+				{title: '123789', value: 123789},
+				{title: '123456', value: 123456}
+			];
+			this.datalist1 = [
+				{title: '北京', value: 'bj'},
+				{title: '上海', value: 'sh', disabled: true},
+				{title: '123789', value: 123789},
+				{title: '123456', value: 123456},
+				{title: '深圳', value: 'sz', disabled: true},
+				{title: '西安', value: 'xa'},
+				{title: '南京', value: 'nj'},
+				{title: '武汉', value: 'wh'},
+				{title: '重庆', value: 'cq'},
+				{title: '广州', value: 'gz'}
+			];
+			this.value11 = [];
+			this.datalist11 = [
+				{title: '北京', value: 'bj'},
+				{title: '上海', value: 'sh'},
+				{title: '深圳', value: 'sz', disabled: true},
+				{title: '西安', value: 'xa'},
+				{title: '南京', value: 'nj'},
+				{title: '武汉', value: 'wh'},
+				{title: '重庆', value: 'cq'},
+				{title: '广州', value: 'gz'}
+			];
+
+			this.shopList = [];
+			this.selectedShop = [];
+			this.selectedOneShop = null;
+			// 异步获取数据
+			setTimeout(() => {
+
+				this.shopList = [{title: "京东小店", value: "160112511"}, {
+				title: "京东测试店",
+				value: "712411761"
+				}, {title: "自己卖的一个店*要买的赶紧来试试买买买买", value: "317761122"}];
+
+
+
+
+				$scope.$apply();
+
+			}, 1000);
+
+			setTimeout(() => {
+				this.selectedOneShop = '160112511';
+			    this.selectedShop = ["160112511","712411761","317761122"];
+
+				$scope.$apply();
+
+		}, 500);
+
+
+			this.datalist5 = [
+				{title: '北京', value: 'bj', icon: 'icon-phone'},
+				{title: '上海', value: 'sh', icon: 'icon-phone', disabled: true},
+				{title: '123789', value: 123789, icon: 'icon-phone'},
+				{title: '123456', value: 123456, icon: 'icon-phone'},
+				{title: '深圳', value: 'sz', icon: 'icon-phone'},
+				{title: '西安', value: 'xa', icon: 'icon-phone'},
+				{title: '南京', value: 'nj', icon: 'icon-phone'},
+				{title: '武汉', value: 'wh', icon: 'icon-beizhu'},
+				{title: '重庆', value: 'cq', icon: 'icon-phone'},
+				{title: '广州', value: 'gz', icon: 'icon-cl-wx'}
+			];
+			this.setValue = function(newValue) {
+				this.value2 = newValue;
+			};
+			this.setList = function() {
+				this.value4 = ['nj', 'sh'];
+			};
+
+			this.isOpen = false;
+			this.toggleOpen = function() {
+				this.isOpen = !this.isOpen;
+			};
+
+			this.selectChange = function(newValue, oldValue, itemIndex, item) {
+				console.log('on-select-change:', newValue, oldValue, itemIndex, item);
+			};
+
+			this.multiSelectChange = function(newValue, oldValue, selection, oldSelection) {
+				console.log('on-select-change:', newValue, oldValue, selection, oldSelection)
+			};
+
+			this.dropdownOpen = function() {
+				console.log('on-dropdown-open');
+			};
+
+			this.dropdownClose = function() {
+				console.log('on-dropdown-close');
+			};
+
+			this.datalist2 = ['北京', '上海', '深圳', '广州'];
+			this.fieldsMap = {
+				valueField: 'value',
+				displayField: 'title',
+				iconField: 'icon'
+			};
+
+			// 数据结构比较简单, 当然你可以配合 fieldsMap 设计自己的数据结构, on-select-change 支持 model, oldModel, itemIndex, item
+			this.cascadeDataList = ['北京', '上海'];
+			this.areaDataList = [['海淀', '朝阳'], ['浦东', '徐汇']];
+
+			this.cascadeSelectChange = (newValue) => {
+				console.log(newValue);
+				this.cascadeAreaDataList = this.areaDataList[this.cascadeDataList.indexOf(newValue)] || [];
+				this.value7 = this.cascadeAreaDataList[0] || '';
+			};
+
+			this.beforeChange = (item) => {
+				// return Promise.resolve();
+				return $ccModal.confirm('是否选择').open().result;
+			}
+
+
+		});
+</script>
+

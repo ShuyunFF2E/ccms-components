@@ -6,11 +6,15 @@
 
 import angular from 'angular';
 
-import {Deferred, Animation, Throttle, Bind, getInjector} from 'angular-es-utils';
+import { isFunction } from 'angular-es-utils/type-auth';
+
+import { Deferred, Animation, Throttle, Bind, getInjector } from 'angular-es-utils';
 import Popup from '../../common/bases/Popup';
-import {chopStyle2Num} from '../../common/utils/style-helper';
+import { chopStyle2Num } from '../../common/utils/style-helper';
 import CONSTANT from './Constants';
 
+const noop = () => {
+};
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') !== -1;
 
 export default class Modal extends Popup {
@@ -94,6 +98,7 @@ export default class Modal extends Popup {
 	open(resizeable = true) {
 
 		this.init();
+		super.open();
 
 		// modal初始化完成后显示modal
 		this._renderDeferred.promise.then(() => {
@@ -107,11 +112,7 @@ export default class Modal extends Popup {
 				window.addEventListener('resize', this._resizeModal);
 			}
 
-			// 路由发生变更时自动关闭弹出框
-			// FIXME 因为会存在路由切换过程中弹出modal的场景,所以必须确保路由切换完成之后才对modal做新的hashchange绑定
-			setTimeout(() => {
-				window.addEventListener('hashchange', this.close);
-			}, 0);
+			this._onHashChange();
 
 		});
 
@@ -119,11 +120,11 @@ export default class Modal extends Popup {
 	}
 
 	@Bind
-	close() {
+	close(onClose = noop) {
 		this.element.removeChild(this._modalContainer || this._confirmContainer);
 
+		this._offHashChange();
 		window.removeEventListener('resize', this._resizeModal);
-		window.removeEventListener('hashchange', this.close);
 
 		// force firefox to repaint for attaching trasitionend/animationend event
 		if (isFirefox) {
@@ -137,6 +138,10 @@ export default class Modal extends Popup {
 			// 若modal绑定了ng-scope则手动回收scope
 			if (this.element.$scope && typeof this.element.$scope.$destroy === 'function') {
 				this.element.$scope.$destroy();
+			}
+
+			if (isFunction(onClose)) {
+				onClose();
 			}
 
 			this.destroy();

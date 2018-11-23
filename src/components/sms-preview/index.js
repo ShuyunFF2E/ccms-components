@@ -4,11 +4,11 @@
 
 
 import angular from 'angular';
-import {FactoryCreator} from 'angular-es-utils';
 
-import SMSPreview from './SMSPreview';
+import ddo from './SMSPreview';
+
 
 export default angular
 	.module('ccms.components.SMSPreview', ['ccms.components.tooltip'])
-	.directive('smsPreview', FactoryCreator.create(SMSPreview))
+	.directive('ccSmsPreview', () => ddo)
 	.name;

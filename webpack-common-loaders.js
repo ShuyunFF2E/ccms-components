@@ -8,20 +8,28 @@ module.exports = [
 	{
 		test: /\.js$/,
 		loaders: ['babel'],
+		exclude: /(node_modules|bower_components|assets)/
+	},
+	{
+		test: /\.json$/,
+		loaders: ['json'],
 		exclude: /(node_modules|bower_components)/
 	},
 	{
-		test: /\.html$/,
+		// for fucking jquery plugin
+		test: /node_modules(\/\\)jquery\.nicescroll\1jquery\.nicescroll\.js/,
+		loader: 'imports?define=>false'
+	},
+	{
+		test: /\.tpl\.html$/,
 		loader: 'html',
 		query: {interpolate: true},
 		exclude: /(node_modules|bower_components)/
 	},
-
 	{
 		test: /\.(jpe?g|png|gif)$/i,
 		loaders: [
-			'file?hash=sha512&digest=hex&name=[hash:8].[ext]',
-			'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+			'file?hash=sha512&digest=hex&name=[hash:8].[ext]'
 		]
 	},
 	{

@@ -1,10 +1,10 @@
 <div class="calendar" ng-click="ctrl.preventDefault($event)">
-	<div class="calendar-header">
-		<span class="calendar-prev iconfont icon-rightarrow" ng-click="ctrl.switchMonth(-1)"></span><select ng-model="ctrl.parts.month"
-						ng-options="index as month for (index, month) in ctrl.months"
+	<div class="calendar-header" ng-hide="ctrl.hideMonth()">
+		<span class="calendar-prev iconfont icon-rightarrow" ng-style="{'visibility': ctrl.hideYear() ? 'hidden' : 'inherit', 'cursor': ctrl.disabledL ? 'not-allowed' : 'pointer'}" ng-click="ctrl.switchMonth(-1)"></span><select ng-model="ctrl.parts.month"
+						ng-options="index as month for (index, month) in ctrl.months" ng-disabled="ctrl.disableMonth" ng-hide="ctrl.hideMonth()"
 						ng-change="ctrl.changeMonth()"></select><select ng-model="ctrl.parts.year"
-						ng-options="year for year in ctrl.years"
-						ng-change="ctrl.changeYear()"></select><span class="calendar-next iconfont icon-rightarrow" ng-click="ctrl.switchMonth(1)"></span>
+						ng-options="year for year in ctrl.years" ng-disabled="ctrl.disableYear" ng-hide="ctrl.hideYear()"
+						ng-change="ctrl.changeYear()"></select><span class="calendar-next iconfont icon-rightarrow" ng-style="{'visibility': ctrl.hideYear() ? 'hidden' : 'inherit', 'cursor': ctrl.disabledG ? 'not-allowed' : 'pointer'}" ng-click="ctrl.switchMonth(1)"></span>
 	</div>
 
 	<ul class="calendar-week-title">
@@ -12,10 +12,11 @@
 	</ul>
 
 	<ul class="calendar-days">
-		<li ng-repeat="date in ctrl.timeRange"
-			ng-class="{'calendar-day-other-month': date.otherMonth, 'active': date.active, 'disabled': date.disabled, 'in-range': date.inRange}"
+		<li ng-repeat="date in ctrl.timeRange" ng-init="isFesDefined = ctrl.isFestivalDefined(date)"
+			ng-class="{'calendar-day-other-month': date.otherMonth, 'active': date.active, 'disabled': date.disabled, 'in-range': date.inRange, 'festival': ctrl.isFestival && isFesDefined}"
 			ng-click="!date.disabled && ctrl.setDate(date)">
-			{{date.getDate()}}
+			<span ng-if="ctrl.isFestival && isFesDefined" cc-tooltip="ctrl.isFestivalDefined(date)">{{date.getDate()}}</span>
+			<span ng-if="!(ctrl.isFestival && isFesDefined)">{{date.getDate()}}</span>
 		</li>
 	</ul>
 
@@ -24,6 +25,7 @@
 		<input class="calendar-time-input"
 					 name="hour"
 					 ng-model="ctrl.parts.hour"
+			   		 autocomplete="off"
 					 maxlength="2"
 					 ng-min="0"
 					 ng-max="23"
@@ -32,6 +34,7 @@
 		<input class="calendar-time-input"
 					 name="minute"
 					 ng-model="ctrl.parts.minute"
+			   		 autocomplete="off"
 					 maxlength="2"
 					 ng-min="0"
 					 ng-max="59"
@@ -40,6 +43,7 @@
 		<input class="calendar-time-input"
 					 name="second"
 					 ng-model="ctrl.parts.second"
+			   		 autocomplete="off"
 					 maxlength="2"
 					 ng-min="0"
 					 ng-max="59"
@@ -48,7 +52,7 @@
 	</div>
 
 	<div class="calendar-buttons">
-		<button class="calendar-button-cancel" type="button" ng-click="ctrl.setNow()">现在</button>
+		<button class="calendar-button-cancel" ng-hide="ctrl.hideMonth() || ctrl.hideYear() || ctrl.disableMonth || ctrl.disableYear" type="button" ng-click="ctrl.setNow()">现在</button>
 		<button class="calendar-button-ok"
 						type="button"
 						ng-click="ctrl.confirm()"

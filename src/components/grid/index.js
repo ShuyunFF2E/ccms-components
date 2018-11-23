@@ -15,7 +15,6 @@ import controller from './GridCtrl';
 import link from './GridCellLink';
 
 import $grid from './GridHelper';
-import GRID_TEMPLATES from './Constant';
 
 const
 	gridDDO = {
@@ -25,6 +24,7 @@ const
 			opts: '=',
 			selectedItems: '=?',
 			type: '@?',
+			onBeforeRefresh: '&?',
 			onRefresh: '&?'
 		}
 	},
@@ -34,14 +34,14 @@ const
 		link,
 		scope: {
 			entity: '<',
-			column: '<'
+			column: '<',
+			baseScope: '<'
 		}
 	};
 
 export default angular
 	.module('ccms.components.grid', [loading, dynamicAttr, checkbox])
-	.component('grid', gridDDO)
-	.directive('gridCell', () => gridCellDDO)
-	.value('$grid', $grid)
-	.constant('GRID_TEMPLATES', GRID_TEMPLATES)
+	.directive('ccGridCell', () => gridCellDDO)
+	.component('ccGrid', gridDDO)
+	.value('$ccGrid', $grid)
 	.name;

@@ -9,22 +9,27 @@
 		<ul ng-class="'sms-keywords' + (ctrl._showAllKeywords ? ' expanded': '')">
 			<li class="sms-keyword"
 				ng-repeat="keyword in ctrl.opts.keywords | filter:{_display: true}"
-				ng-click="ctrl.insertKeyword(keyword.text, keyword.type)">#{{keyword.text}}
+				ng-class="{'sms-disabled-keyword': keyword.disabled}"
+				ng-click="ctrl.insertKeyword(keyword.text, keyword.type, keyword.disabled, keyword.prefix, keyword.suffix)">#{{keyword.text}}
 			</li>
 		</ul>
 
 		<span class="sms-keywords-toggle"
-					ng-show="ctrl.testShowToggleOrNot()"
-					ng-click="ctrl._showAllKeywords = !ctrl._showAllKeywords"></span>
+			  ng-show="ctrl.testShowToggleOrNot()"
+			  ng-click="ctrl._showAllKeywords = !ctrl._showAllKeywords"></span>
 	</div>
 
-	<div class="sms-content-holder">
+	<div class="sms-content-holder" id="sms-content-holder" style="position: relative">
 		<div contenteditable="{{!ctrl.opts.disabled}}"
 			 data-content
 			 ng-keyup="ctrl.onChange()"
 			 ng-mouseup="ctrl.onChange()"
+			 ng-keypress="ctrl.checkoutShortLink()"
 			 ng-class="'sms-content' + (ctrl.keywordTypes.length <= 1 ? ' sms-no-keyword-types' : '')"
-			 ng-paste="ctrl.onPaste($event)">请输入短信内容…</div>
+			 ng-paste="ctrl.onPaste($event)"
+			 id="sms-content" >
+			请输入短信内容…
+		</div>
 
 		<div class="sms-url-tips" ng-show="ctrl._hasUrl && !ctrl._urlTipClosed">输入短链地址时，请在后方加上 #，以确保短链能够正常打开，如 www.shuyun.com# <span class="sms-url-tips-close" ng-click="ctrl._urlTipClosed = true"></span></div>
 
@@ -35,7 +40,12 @@
 				<li ng-repeat="emo in ctrl.emoIcons" ng-click="ctrl.insertEmo(emo)"><img ng-src="{{ctrl.EMO_BASE_URL + emo + '.gif'}}" alt="{{emo}}" ></li>
 			</ul>
 		</div>
+		<!--手动收入淘短链tips-->
+		<div ng-style="ctrl.tipsPosition" id="tip" class="short-link-tip" ng-class="ctrl.showTips ? 'show-tips' : 'hide-tips'">
+			{{ctrl.opts.shortLinkTip}}
+			<span style="color: #f48b13">右侧字数提醒将视其为普通文案计数在内</span>
+			<span class="angle" ng-style="ctrl.angleStyle"></span>
+		</div>
 	</div>
-
 	<div class="sms-temp" ng-model="ctrl._tempText" style="display: none"></div>
 </div>

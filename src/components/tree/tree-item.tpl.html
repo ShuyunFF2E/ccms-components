@@ -1,0 +1,13 @@
+<li class="treeItem" ng-class="{'treeLeaf': $ctrl.isLeaf($ctrl.data)}">
+    <span class="treeItemContent">
+        <i ng-style="{visibility : $ctrl.isLeaf($ctrl.data) ? 'hidden' : 'visible'}" class="iconfont treeArrow"
+		   ng-class="{'icon-add': !$ctrl.showChildren, 'icon-subtract': $ctrl.showChildren}"></i>
+        <cc-checkbox ng-if="$ctrl.hasCheckbox" ng-model="$ctrl.data.checked" indeterminate="$ctrl.data.partial">
+            <span class="treeLabel" ng-bind="$ctrl.data.label" ng-class="{'selected': $ctrl.selected === true}"></span>
+        </cc-checkbox>
+        <span ng-if="!$ctrl.hasCheckbox" class="treeLabel noCheckbox" ng-bind="$ctrl.data.label" ng-class="{'selected': $ctrl.selected === true}"></span>
+    </span>
+	<ul class="treeChildren" ng-if="!$ctrl.isLeaf($ctrl.data)" ng-show="$ctrl.showChildren">
+		<cc-tree-item data="treeItem" parent-id="$ctrl.data.id" ng-repeat="treeItem in $ctrl.data.children track by $index"></cc-tree-item>
+	</ul>
+</li>

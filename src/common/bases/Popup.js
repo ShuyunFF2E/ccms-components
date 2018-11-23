@@ -4,6 +4,8 @@
  * @since 2016-03-10
  */
 
+import { addOnceEventListener } from '../../common/utils/dom-event';
+
 export default class Popup {
 
 	constructor(element, container, openedClass, closedClass) {
@@ -11,6 +13,7 @@ export default class Popup {
 		this.container = container;
 		this.openedClass = openedClass;
 		this.closedClass = closedClass;
+		this.hashChangeListener = null;
 	}
 
 	/**
@@ -18,6 +21,18 @@ export default class Popup {
 	 */
 	open() {
 
+	}
+
+	_onHashChange(onChange) {
+		// 路由发生变更时自动关闭弹出框
+		// FIXME 因为会存在路由切换过程中弹出modal的场景,所以必须确保路由切换完成之后才对modal做新的hashchange绑定
+		setTimeout(() => {
+			this.hashChangeListener = addOnceEventListener(window, 'hashchange', (onChange || this.close).bind(this));
+		}, 0);
+	}
+
+	_offHashChange() {
+		window.removeEventListener('hashchange', this.hashChangeListener);
 	}
 
 	/**

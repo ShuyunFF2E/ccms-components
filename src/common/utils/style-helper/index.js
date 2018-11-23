@@ -223,6 +223,26 @@ function positionElements(hostElem, targetElem, placement, appendToBody) {
 	return targetElemPos;
 }
 
+/**
+ * Provides a way to adjust the top positioning after first
+ * render to correctly align element to top after content
+ * rendering causes resized element height
+ *
+ * @param {array} placements - The array of strings of classes
+ * element should have.
+ * @param {object} containerPosition - The object with container
+ * position information
+ * @param {number} initialHeight - The initial height for the elem.
+ * @param {number} currentHeight - The current height for the elem.
+ */
+function adjustTop(placements, containerPosition, initialHeight, currentHeight) {
+	if (placements.indexOf('top') !== -1 && initialHeight !== currentHeight) {
+		return {
+			top: containerPosition.top - currentHeight
+		};
+	}
+}
+
 function getViewportOffset(elem, useDocument, includePadding) {
 	includePadding = includePadding !== false;
 
@@ -355,12 +375,12 @@ const isContentOverflow = (element, content) => {
 	let cloneElement = element.cloneNode(true);
 	cloneElement.style.display = 'inline-block';
 	cloneElement.style.opacity = 0;
+	cloneElement.style.width = element.offsetWidth + 'px';
 	document.body.appendChild(cloneElement);
 
 	// 创建临时 span
 	let span = document.createElement('span');
 	const computedStyle = window.getComputedStyle(element);
-
 	span.innerHTML = content;
 	span.style.opacity = 0;
 	span.style.display = 'inline-block';
@@ -379,6 +399,14 @@ const isContentOverflow = (element, content) => {
 
 };
 
+const hasScrolled = function(el, direction = 'vertical') {
+	if (direction === 'vertical') {
+		return el.scrollHeight > el.clientHeight;
+	} else if (direction === 'horizontal') {
+		return el.scrollWidth > el.clientWidth;
+	}
+};
+
 export {
 	chopStyle2Num,
 	isContentOverflow,
@@ -386,5 +414,7 @@ export {
 	closestAttrParent,
 	position,
 	positionElements,
-	offset
+	adjustTop,
+	offset,
+	hasScrolled
 };

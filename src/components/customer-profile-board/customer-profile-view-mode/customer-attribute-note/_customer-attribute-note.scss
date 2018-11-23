@@ -1,0 +1,43 @@
+@import "../../param";
+
+.customer-attribute-note{
+  background: $white;
+  margin-bottom: 12px;
+
+  .note-header{
+	height: 30px;
+	color: $white;
+	padding: 0 15px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.note-header-icon{
+	  width: 20px;
+	  height: 20px;
+	  cursor: pointer;
+
+	  &:after{
+		display: block;
+		content: ' ';
+		width: 0;
+		height: 0;
+		margin: 5px auto;
+		border-top: 5px solid transparent;
+		border-left: 10px solid $white;
+		border-bottom: 5px solid transparent;
+	  }
+	}
+  }
+
+  .note-content{
+	padding: 10px 15px;
+  }
+
+  .note-item{
+	color: $default-font-color;
+	line-height: 1.6667;
+	white-space: nowrap;
+	overflow: hidden;
+  }
+}

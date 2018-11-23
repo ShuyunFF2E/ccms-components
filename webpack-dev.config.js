@@ -18,8 +18,7 @@ loaders.push(
 module.exports = {
 	devtool: 'source-map',
 	entry: {
-		components: ['webpack-hot-middleware/client?path=/__webpack_hmr&reload=true', './src/index.js'],
-		style: ['webpack-hot-middleware/client?path=/__webpack_hmr&reload=true', './src/components/styles/index.js']
+		components: ['webpack-hot-middleware/client?path=/__webpack_hmr&reload=true', './src/index.js']
 	},
 	output: {
 		path: path.join(__dirname, 'build'),
@@ -35,7 +34,6 @@ module.exports = {
 		extensions: ['', '.js']
 	},
 	eslint: {
-		configFile: '.eslintrc',
 		emitWarning: true,
 		emitError: true,
 		formatter: require('eslint-friendly-formatter')
@@ -50,7 +48,6 @@ module.exports = {
 				include: [path.join(__dirname, 'src')]
 			}
 		],
-
 		loaders: loaders
 	}
 };

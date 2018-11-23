@@ -2,6 +2,7 @@
 layout: docs
 title: Checkbox
 group: components
+maintainer: jianzhe.ding
 ---
 
 ## Contents

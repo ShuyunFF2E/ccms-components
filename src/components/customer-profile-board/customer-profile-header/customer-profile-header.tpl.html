@@ -1,0 +1,23 @@
+<div class="customer-profile-header">
+	<span class="user-info"><label>客户：</label>{{$ctrl.customerData.nickName}}<a
+		class="wangwang-icon"
+		ng-if="$ctrl.customerData.nickName && $ctrl.customerData.platName === 'taobao'"
+		ng-href="http://amos.alicdn.com/msg.aw?v=2&uid={{$ctrl.customerData.nickName}}&site=cntaobao&s=2&charset=utf-8"
+		target="_blank"><img
+			border="0"
+			alt="点击这里给我发消息"
+			ng-src="http://amos.alicdn.com/online.aw?v=2&uid={{$ctrl.customerData.nickName}}&site=cntaobao&s=2&charset=utf-8"
+			class="vm"></a>
+	</span>
+	<span class="user-mobile-info"><label>常用手机：</label>{{$ctrl.customerData.mobile}}</span>
+	<span class="user-marketing-responsivities"><label>营销响应度：</label><span cc-tooltip="+$ctrl.customerData.marketingResponsivities < 3 ? '营销响应度较低，不建议营销' : +$ctrl.customerData.marketingResponsivities < 7 ? '营销响应度中等，建议适度营销' : '营销响应度较高，可适时提供营销服务'"><progress
+			class="marketing-responsivities-progress"
+			value="{{+$ctrl.customerData.marketingResponsivities}}"
+			max="10"></progress>{{+$ctrl.customerData.marketingResponsivities}}</span></span>
+	<div class="switch-view">
+		<div class="switch-view-icon iconfont" ng-class=" { 'switch-view-icon--active': $ctrl.viewMode } "
+				 ng-click="$ctrl.changeToView()">&#xe65d;</div>
+		<div class="switch-view-icon iconfont" ng-class=" { 'switch-view-icon--active': !$ctrl.viewMode } "
+				 ng-click="$ctrl.changeToList()">&#xe65a;</div>
+	</div>
+</div>

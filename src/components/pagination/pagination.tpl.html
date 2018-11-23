@@ -1,39 +1,25 @@
-<div class="p-pager" ng-cloak ng-switch on="$ctrl.type">
-	<div class="p-group"></div>
-	<div class="p-group" ng-class="{disabled:$ctrl.pageNum===1}">
-		<div class="p-first"
+<div class="pagination"
+		ng-switch="$ctrl.type"
+		ng-class="{ 'first-page': $ctrl.isFirstPage, 'last-page':  $ctrl.isLastPage}">
+
+	<a class="first" ng-switch-when="normal" ng-click="!$ctrl.isFirstPage && $ctrl.first()"><span>first</span></a>
+	<a class="previous" ng-click="!$ctrl.isFirstPage && $ctrl.previous()"><span>previous</span></a>
+	<span class="jump">
+		<input size="{{$ctrl.totalPages.toString().length}}"
 				ng-switch-when="normal"
-				ng-click="$ctrl.changePageNumByShortcut('first')"></div>
-		<div class="p-prev" ng-click="$ctrl.changePageNumByShortcut('prev')"></div>
-	</div>
-	<div class="p-group">
-		<span class="pcontrol">
-			<input type="text"
-					ng-switch-when="normal"
-                    ng-disabled="$ctrl.totalPages===1"
-					ng-blur="$ctrl.changePageNumByInput($event)"
-					ng-enter="$ctrl.changePageNumByInput($event)"
-					ng-dom-value="$ctrl.pageNum">
-			<span>
-				<span style="font-family: Tahoma"
-						ng-switch-when="simple"
-						ng-bind="$ctrl.pageNum"></span>
-				/ 共<span ng-bind="$ctrl.totalPages" style="font-family: Tahoma"></span>页</span>
-		</span>
-	</div>
-	<div class="p-group" ng-class="{disabled:$ctrl.pageNum===$ctrl.totalPages}">
-		<div class="p-next" ng-click="$ctrl.changePageNumByShortcut('next')"></div>
-		<div class="p-last"
-				ng-switch-when="normal"
-				ng-click="$ctrl.changePageNumByShortcut('last')"></div>
-	</div>
-	<div class="p-group" ng-switch-when="normal">
-		<select
-				ng-disabled="$ctrl.pageSizeListDisabled"
-				ng-options="pageSize for pageSize in ::$ctrl.pageSizeList track by pageSize"
-				ng-model="$ctrl.pageSize"
-				ng-change="$ctrl.changePageSize($ctrl.pageSize)">
-		</select>
-	</div>
+				ng-disabled="$ctrl.totalPages === 1"
+				ng-enter="$ctrl.goto($ctrl.inputPage) || ( $ctrl.inputPage = $ctrl.pageNum )"
+				ng-model="$ctrl.inputPage">
+		<span ng-switch-when="simple" ng-bind="$ctrl.pageNum"></span> / 共<span ng-bind="$ctrl.totalPages"></span>页
+	</span>
+	<a class="next" ng-click="!$ctrl.isLastPage && $ctrl.next()"><span>next</span></a>
+	<a class="last" ng-switch-when="normal" ng-click="!$ctrl.isLastPage && $ctrl.last()"><span>last</span></a>
+	<select ng-switch-when="normal"
+			ng-if="!$ctrl.pageSizeListHidden"
+			ng-options="pageSize for pageSize in ::$ctrl.pageSizeList track by pageSize"
+			ng-model="$ctrl.pageSize"
+			ng-change="$ctrl.setPageSize($ctrl.pageSize)"
+			ng-disabled="$ctrl.pageSizeListDisabled">
+	</select>
 </div>
 

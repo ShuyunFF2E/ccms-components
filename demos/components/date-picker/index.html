@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Date Picker</title>
+<link rel="import" href="../../common/layout.html">
+
+<main ng-app="componentsApp" ng-controller="ctrl as app">
+	<h1>DEMO: 1 date-picker</h1>
+
+	<p>当前值 ({{app.dateValue | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+	<p>触发打开事件: {{app.onCalendarOpenTimes}}次</p>
+	<p>触发关闭日历事件: {{app.onCalendarCloseTimes}}次</p>
+
+	<p>
+		<button type="button" ng-click="app.dateValue = null;">重置 date</button>
+		<button type="button" ng-click="app.setDateError()">设置 date 为 2012/8/10 (该值不在有效范围内)</button>
+		<button type="button" ng-click="app.setDateRight()">设置 date 为 2016/1/11</button>
+	</p>
+
+	<cc-date-picker ng-if="!app.hideDates"
+					ng-model="app.dateValue"
+					min-date="app.minDate"
+					max-date="app.maxDate"
+					required="true"
+					date-only="false"
+					on-calendar-open="app.onCalendarOpen()"
+					on-calendar-close="app.onCalendarClose()"
+					is-festival="true"
+					disabled="app.disabled"
+					custom-festivals="app.customFestivals"
+	></cc-date-picker>
+
+	<button ng-click="app.toggle()">toggle disabled</button>
+
+	<cc-date-picker ng-if="!app.hideDates"
+					ng-model="app.dateValue"
+					min-date="app.minDate"
+					max-date="app.maxDate"
+					required="true"
+					date-only="false"
+					on-calendar-open="app.onCalendarOpen()"
+					on-calendar-close="app.onCalendarClose()"
+					is-festival="true"
+					custom-festivals="app.customFestivals"
+					></cc-date-picker>
+	<cc-date-picker ng-if="!app.hideDates"
+					ng-model="app.dateValue"
+					min-date="app.minDate"
+					max-date="app.maxDate"
+					required="true"
+					date-only="false"
+					disabled="true"
+					disabled-input="true"
+					on-calendar-open="app.onCalendarOpen()"
+					on-calendar-close="app.onCalendarClose()"
+					is-festival="true"
+					custom-festivals="app.customFestivals"
+	></cc-date-picker>
+
+	<cc-date-range ng-if="!app.hideDates"
+				   opts="app.anotherRange"
+				   on-calendar-open="app.onCalendarOpen()"
+				   on-calendar-close="app.onCalendarClose()"
+				   is-festival="true"></cc-date-range>
+
+	<pre>
+		  ng-model="app.dateValue"
+		  min-date="app.minDate"
+		  max-date="app.maxDate"
+		  required="true"
+		  date-only="false"
+		  disabled="false"
+		  on-calendar-open="app.onCalendarOpen()"
+		  on-calendar-close="app.onCalendarClose()"
+		  is-festival="true"></pre>
+	<h1>DEMO: 2 date-picker 仅日期</h1>
+
+	<cc-date-picker ng-model="app.blankDate" date-only="true"></cc-date-picker>
+
+	<h1>DEMO: 3 date-range</h1>
+
+
+	<p>日期时间区间选择器 ({{app.dateRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+	<p>
+		<button type="button" ng-click="app.dateRange.start = null;">重置 start</button>
+		<button type="button" ng-click="app.dateRange.end = null">重置 end</button>
+		<button type="button" ng-click="app.setStartError()">设置 start 为 2012/8/10 (该值不在有效范围内)</button>
+		<button type="button" ng-click="app.setStartRight()">设置 start 为 2016/8/11</button>
+	</p>
+
+	<cc-date-range ng-if="!app.hideDates"
+							opts="app.dateRange"></cc-date-range>
+	<p>日期时间区间选择器 ({{app.anotherRange.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.anotherRange.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+	<cc-date-range ng-if="!app.hideDates"
+								 opts="app.anotherRange"></cc-date-range>
+	<h1>DEMO: 4 date-range 仅日期</h1>
+	<p>日期时间区间选择器 ({{app.dateOnly.start | date:'yyyy-MM-dd HH:mm:ss'}} – {{app.dateOnly.end | date:'yyyy-MM-dd HH:mm:ss'}})</p>
+
+	<p>
+		<button type="button" ng-click="app.dateOnly.start = null;">重置 start</button>
+		<button type="button" ng-click="app.dateOnly.end = null">重置 end</button>
+	</p>
+
+	<cc-date-range ng-if="!app.hideDates"
+								 opts="app.dateOnly"></cc-date-range>
+
+	<pre>
+	&lt;cc-date-range opts="app.dateRange">&lt;/cc-date-range>
+
+	self.dateRange = {
+		start: new Date(2016, 2, 10),
+		end: new Date(2016, 2, 20),
+
+		minDate: new Date(2016, 2, 1),
+		maxDate: new Date(2016, 2, 31),
+
+		// 是否禁用 (false)
+		disabled: false,
+
+		// 是否显示时间 (true)
+		dateOnly: false
+	};
+	</pre>
+
+	<h1>DEMO: 5 date-range 仅日期且未设置 maxDate 和 minDate</h1>
+	<p>
+		<cc-date-range opts="app.dateIssue"></cc-date-range>
+		<button ng-click="app.resetDateIssue()">重置</button>
+	</p>
+
+	<h1>DEMO: 6 date-range minDate === start || maxDate === end</h1>
+	<p>
+		<cc-date-range opts="app.dateIssue1"></cc-date-range>
+		<button ng-click="app.changeDate()">切换mindate</button>
+	</p>
+
+	<h1>DEMO: 7  disableYear and disableMonth</h1>
+	<p>
+		<cc-date-picker ng-if="!app.hideDates"
+						ng-model="app.dateValue"
+						min-date="app.minDate"
+						max-date="app.maxDate"
+						required="true"
+						date-only="false"
+						disabled="false"
+						on-calendar-open="app.onCalendarOpen()"
+						on-calendar-close="app.onCalendarClose()"
+						is-festival="true"
+						custom-festivals="app.customFestivals"
+						disable-year="true"
+						disable-month="true"
+		></cc-date-picker>
+	</p>
+
+	<h1>DEMO: 8 disableYear, disableMonth  and range</h1>
+	<p>
+		<cc-date-range opts="app.disableRange"></cc-date-range>
+	</p>
+
+	<h1>DEMO: 9  DisplayFormat: MMDD and DD (有 bug 暂时不要用)</h1>
+	<p>
+		<cc-date-picker
+						ng-model="app.MMDDValue"
+						required="true"
+						date-only="true"
+						disabled="false"
+						on-calendar-open="app.onCalendarOpen()"
+						on-calendar-close="app.onCalendarClose()"
+						is-festival="true"
+						custom-festivals="app.customFestivals"
+						display-format="MMDD"
+		></cc-date-picker>
+
+		<cc-date-picker
+						ng-model="app.DDValue"
+						required="true"
+						date-only="true"
+						disabled="false"
+						on-calendar-open="app.onCalendarOpen()"
+						on-calendar-close="app.onCalendarClose()"
+						is-festival="true"
+						custom-festivals="app.customFestivals"
+						display-format="DD"
+		></cc-date-picker>
+	</p>
+
+	<h1>DEMO: 10 disabledInput  DisplayFormat: MMDD and DD </h1>
+	<p>
+		<cc-date-picker
+				ng-model="app.MMDDValue"
+				required="true"
+				date-only="true"
+				disabled="false"
+				disabled-input="true"
+				on-calendar-open="app.onCalendarOpen()"
+				on-calendar-close="app.onCalendarClose()"
+				is-festival="true"
+				custom-festivals="app.customFestivals"
+				display-format="MMDD"
+		></cc-date-picker>
+
+		<cc-date-picker
+				ng-model="app.DDValue"
+				required="true"
+				date-only="true"
+				disabled="false"
+				disabled-input="true"
+				on-calendar-open="app.onCalendarOpen()"
+				on-calendar-close="app.onCalendarClose()"
+				is-festival="true"
+				custom-festivals="app.customFestivals"
+				disable-scroll-into-view="true"
+				display-format="DD"
+		></cc-date-picker>
+	</p>
+</main>
+
+<script src="/components.js"></script>
+<script>
+	angular.module('componentsApp', ['ccms.components'])
+		.controller('ctrl', function ($scope, $timeout) {
+			var self = this;
+
+			self.disabled = true;
+			self.toggle = function () {
+				self.disabled = !self.disabled;
+			};
+			self.customFestivals = {
+				'0905': '豪举的生日',
+				'0915': '豪举生日后10天'
+			};
+			self.onCalendarOpenTimes = 0;
+			self.onCalendarCloseTimes = 0;
+			self.onCalendarOpen = function () {
+				self.onCalendarOpenTimes += 1;
+			};
+			self.onCalendarClose = function () {
+				self.onCalendarCloseTimes += 1;
+			};
+
+			self.dateValue = new Date(2016, 1, 20);
+			self.minDate = new Date(2016, 1, 1);
+			self.maxDate = new Date(2016, 1, 28);
+
+			self.setDateError = function() {
+				self.dateValue = new Date(2012, 7, 10);
+			};
+
+			self.setDateRight = function() {
+				self.dateValue = new Date(2016, 1, 11);
+			};
+
+			self.dateRange = {
+				start: new Date(2016, 7, 10),
+				end: new Date(2016, 7, 20),
+
+				minDate: new Date(2016, 7, 1),
+				maxDate: new Date(2016, 7, 31),
+
+				// 是否禁用 (false)
+				disabled: false,
+
+				// 是否显示时间 (true)
+				dateOnly: false
+			};
+
+			self.setStartError = function() {
+				self.dateRange.start = new Date(2012, 7, 10);
+			};
+
+			self.setStartRight = function() {
+				self.dateRange.start = new Date(2016, 7, 11);
+			};
+
+			self.anotherRange = {
+//				maxDate: new Date()
+			};
+
+			self.dateOnly = {
+				start: null,
+				end: null,
+
+				minDate: null,
+				maxDate: new Date(),
+
+				// 是否禁用 (false)
+				disabled: false,
+
+				// 是否显示时间 (true)
+				dateOnly: true,
+
+				required: false
+			};
+
+			self.dateIssue = {
+				start: new Date(2012, 4, 19),
+				end: new Date(2012, 5, 10),
+				// 是否禁用 (false)
+				disabled: false,
+				// 是否显示时间 (true)
+				dateOnly: true,
+				required: false
+			};
+
+			self.resetDateIssue = function () {
+				self.dateIssue.start = new Date(2012, 4, 19);
+				self.dateIssue.end = new Date(2012, 5, 10);
+			};
+
+
+
+			self.dateIssue1 = {
+				start: null,
+				end: null,
+				minDate: null,
+				maxDate: null,
+				// 是否禁用 (false)
+				disabled: false,
+				required: false
+			};
+
+			self.changeDate = function () {
+				var now = new Date();
+				self.dateIssue1.start = now;
+				console.log(now.getTime());
+				self.dateIssue1.minDate = now;
+				console.log(now.getTime());
+			};
+
+
+			self.disableRange = {
+				start: null,
+				end: null,
+				minDate: null,
+				maxDate: null,
+				// 是否禁用 (false)
+				disabled: false,
+				required: false,
+				disableScrollIntoView: true,
+				disableYear: true
+			};
+
+		});
+</script>
+

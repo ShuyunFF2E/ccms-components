@@ -3,12 +3,12 @@
 @import "variables";
 @import "input";
 @import "layout";
+@import "layout-flex";
 
 /* 页面默认样式 */
 body {
 	font-family: $font-family;
 	font-size: $font-size-base;
-	line-height: $line-height;
 }
 
 ul, li, p {
@@ -19,3 +19,17 @@ ul, li, p {
 li {
 	list-style: none;
 }
+
+a {
+	text-decoration: none;
+	color: #0083ba;
+
+	&:link {
+		color: #0083ba;
+	}
+
+	&:hover {
+		color: #00aaf1;
+	}
+}
+

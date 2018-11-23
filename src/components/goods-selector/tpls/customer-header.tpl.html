@@ -1,0 +1,25 @@
+<!--默认表格头部模板-->
+<th ng-class="{'qiake-th': $ctrl.opts.isQiake}">商品</th>
+<th ng-repeat="column in $ctrl.opts.columnsDef track by $index"
+	ng-if="!column.isHidden"
+	ng-class="{'column-sort':column.sortProp}"
+	ng-style="{width:column.width, 'text-align':column.align}">
+
+	<span ng-click="$ctrl.toggleSort(column)">
+		<span ng-bind="column.displayName"></span>
+
+		<span class="iconfont icon-sort"
+			  ng-class="{'column-sort-none':column.sortOrder===undefined,'column-sort-asc':column.sortOrder==='asc','column-sort-desc':column.sortOrder==='desc'}"
+			  ng-if="column.sortProp"
+		></span>
+	</span>
+
+	<span ng-if="column.tooltip"
+		  cc-tooltip="column.tooltip"
+		  class="iconfont icon-question-mark tooltip"
+	></span>
+</th>
+<th ng-if="!$ctrl.opts.isQiake">库存</th>
+<th>价格</th>
+<th ng-if="!$ctrl.opts.isQiake">商家编码</th>
+<th>操作</th>

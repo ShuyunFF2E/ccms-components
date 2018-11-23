@@ -4,7 +4,7 @@
  * @since 2016-03-18
  */
 
-import {Inject} from 'angular-es-utils';
+import injector from 'angular-es-utils/injector';
 
 /**
  * <pre>
@@ -13,18 +13,18 @@ import {Inject} from 'angular-es-utils';
  *     service: $Validator
  * </pre>
  */
-@Inject('$q')
-export default class ValidatorService {
+export default {
 
 	/**
 	 * 验证指定表单
-	 * @requires ValidatorsDirective ValidatorDirective
 	 * @param {controller} formCtrl 要校验的表单控制器.通过在表单区块声明name的方式将其自动存入当前scope中
 	 * @return {Promise} 校验结果promise,校验成功会触发resolve,失败reject
 	 */
 	validate(formCtrl) {
 
-		let deferred = this._$q.defer();
+		const $q = injector.get('$q');
+
+		let deferred = $q.defer();
 		formCtrl.$$validatedDefer = deferred;
 
 		// 获取当前未校验通过的ngModel数量
@@ -41,7 +41,7 @@ export default class ValidatorService {
 		}
 
 		return deferred.promise;
-	}
+	},
 
 	setPristine(formCtrl) {
 
@@ -53,4 +53,4 @@ export default class ValidatorService {
 
 	}
 
-}
+};

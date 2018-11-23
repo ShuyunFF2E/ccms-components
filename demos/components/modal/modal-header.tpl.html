@@ -1,0 +1,14 @@
+<!--
+默认 header 模板, 你可以使用 modal 中自带的属性, 也可以使用自定义的属性或方法,
+header 默认使用的是 flex 布局, 可以根据自己需要调整, 再外层包一个 div 使用自己的布局
+-->
+<h3>
+	<span ng-bind="::title"></span>
+	<cc-icon symbol="{{'icon-cl-wx'}}"></cc-icon>
+</h3>
+<div class="icons">
+	<span ng-if="fullscreen" class="set-fullscreen" ng-click="$toggleFullScreen(true)"></span>
+	<span class="cancel-fullscreen" ng-click="$toggleFullScreen(false)"></span>
+	<span class="close-modal" ng-click="$ctrl.fuckOff()"></span>
+</div>
+

@@ -48,7 +48,7 @@
 	}
 
   > h2:not(:first-child) {
-    margin-top: 3rem;
+    margin-top: 2rem;
   }
 
   > h3 {
@@ -59,6 +59,16 @@
   > ol li {
     margin-bottom: .25rem;
   }
+
+	> header > .maintainer {
+		margin-top: 1.5em;
+		> span {
+			padding: 6px;
+			background-color: #55555c;
+			border-radius: 3px;
+			color: #fff;
+		}
+	}
 }
 
 .bd-title {

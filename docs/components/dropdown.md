@@ -2,6 +2,7 @@
 layout: docs
 title: Dropdown
 group: components
+maintainer: yazheng.yu
 ---
 
 ## Contents
@@ -9,9 +10,9 @@ group: components
 * toc
 {:toc}
 
-## 下拉 | dropdown / dropdown-toggle / dropdown-panel
+## 下拉 | cc-dropdown / cc-dropdown-toggle / cc-dropdown-panel
 
-### dropdown 指令配置参数
+### cc-dropdown 指令配置参数
 
 * `is-open`: (可选参数)，**双向绑定**的变量，控制/获取下拉打开/关闭的状态
 * `auto-close`: `Boolean(Expr)`，(default: true)，设置下拉是否自动关闭
@@ -21,7 +22,7 @@ group: components
 ### Examples
 <iframe width="100%" height="400" src="//jsfiddle.net/arzyu/dg3sm4nk/4/embedded/result,html,js/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
-## 单选 | dropdown-select
+## 单选 | cc-dropdown-select
 
 ### 指令配置参数
 
@@ -33,12 +34,17 @@ group: components
 * `placeholder`: `String` (default: '') 提示文本
 * `searchable`: `Boolean` (default: false) 启用搜索功能
 * `disabled` `Boolean` (default: false) 禁用下拉选择
+* `on-select-change`: `Function`，(可选参数)，改变选择的回调
+* `is-open`: 类似 cc-dropdown，但是是单向绑定
+* `auto-close`: 同 cc-dropdown
+* `on-dropdown-open`: 同 cc-dropdown
+* `on-dropdown-close`: 同 cc-dropdown
 
 ### Examples
 
 <iframe width="100%" height="400" src="//jsfiddle.net/arzyu/9hsa6ds1/embedded/result,html,js/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
-## 多选 | dropdown-multiselect
+## 多选 | cc-dropdown-multiselect
 
 ### 指令配置参数
 
@@ -50,6 +56,10 @@ group: components
 * `placeholder`: `String` (default: '') 提示文本
 * `searchable`: `Boolean` (default: false) 启用搜索功能
 * `confirm-button`: `Boolean` (default: false) 启用"确认/取消"选择的按钮
+* `is-open`: 类似 cc-dropdown，但是是单向绑定
+* `auto-close`: 同 cc-dropdown
+* `on-dropdown-open`: 同 cc-dropdown
+* `on-dropdown-close`: 同 cc-dropdown
 
 ### Examples
 

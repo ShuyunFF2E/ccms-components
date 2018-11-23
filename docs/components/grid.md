@@ -2,8 +2,10 @@
 layout: docs
 title: Grid表格组件
 group: components
-redirect_from: "/components/"
+maintainer: yazheng.yu, chaoyang.mu, kui.liu
 ---
+
+组件: cc-grid
 
 ### Grid配置
 
@@ -17,11 +19,14 @@ redirect_from: "/components/"
 		* align: `String`(default:'left') 对齐方式 可选: center、left、right
 		* width: `String` 列宽度 默认所有列等宽 如 width: '100px'
 		* cellTemplate: `String` 表格元素的自定义html模板，支持全量的angular模板语法，上下文中包含变量entity(行数据实体)、column(列定义)
+		* isHidden: `Boolean`(default: false) 隐藏此列（需要开启隐藏列功能）
 	* showPagination `Boolean`(default:true) 是否展示分页 
+	* enableHiddenColumns `Boolean`(default: false) 是否开启隐藏列功能
 	* externalData `Array|Promise`(default:null) 当分页数据不由resource接口查询而来，可通过配置该参数展示数据。数据可以是一个数组，也可以是一个已经被resolve了的promise。**注意：该配置与resource配置互斥，当resource不为`null|undefined`时，该配置失效。**
 	* headerTpl `String` 自定义表头模板，支持 字符串｜模板url
-	* cellTpl `String` 表格元素模板，支持 字符串｜模板url
+	* rowTpl `String` 表格行模板，支持 字符串｜模板url，可模仿已提供的[模板](https://github.com/ShuyunFF2E/ccms-components/blob/dev/src/components/grid/tpls/row-cell.tpl.html)编写自定义模板
 	* emptyTipTpl `String` 表格为空时的提示信息模板，支持 字符串｜模板url
+	* transformer `Object|Function` 字段映射配置，
 	* pager `Object` 分页信息定义
 		* totals `Number`(default:0) 数据总条数
 		* totalPages `Number`(default:1) 总页数
@@ -33,11 +38,11 @@ redirect_from: "/components/"
 
 ### Grid配套服务
 
-* $grid
+* $ccGrid
 	* refresh 手动刷新表格信息 return`Promise`
 
 		```
-		$grid.refresh(gridOpts, externalQueryParams).then(() => this.selectedItems.length = 0);
+		$ccGrid.refresh(gridOpts, externalQueryParams).then(() => this.selectedItems.length = 0);
 		```
 
 ### examples

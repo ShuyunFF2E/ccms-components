@@ -10,7 +10,7 @@ export default class CheckboxController {
 	 * controller init method, one of ngModel or value isn't set, method will console an error message
 	 */
 	$onInit() {
-		(typeof this.ngModel === 'undefined' || typeof this._value === 'undefined') && (console.error('Radio button have to used with ng-model & ng-value') || (this.isError = true));
+		(typeof this.ngModel === 'undefined' || typeof this._value === 'undefined') && (console.warn('Radio button have to used with ng-model & ng-value') || (this.isError = true));
 	}
 
 	/**

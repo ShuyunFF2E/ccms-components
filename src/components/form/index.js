@@ -12,14 +12,15 @@ import ValidatorsCtrl from './ValidatorsCtrl';
 import ValidatorCtrl from './ValidatorCtrl';
 
 const validatorsDDO = {
+	name: 'ccValidators',
 	restrict: 'A',
 	require: {
 		formCtrl: '?form'
 	},
 	controller: ValidatorsCtrl,
-	controllerAs: '$ctrl',
+	controllerAs: '$$validatorsCtrl',
 	bindToController: {
-		validators: '<',
+		validators: '<ccValidators',
 		name: '@'
 	}
 };
@@ -28,13 +29,13 @@ const validatorDDO = {
 	restrict: 'A',
 	require: {
 		ngModelCtrl: 'ngModel',
-		validatorsCtrl: '?^^validators',
+		validatorsCtrl: '?^^ccValidators',
 		formCtrl: '?^^form'
 	},
 	controller: ValidatorCtrl,
-	controllerAs: '$ctrl',
+	controllerAs: '$$validatorCtrl',
 	bindToController: {
-		validator: '@'
+		validator: '@ccValidator'
 	}
 };
 
@@ -47,10 +48,9 @@ const forbidFormNativeValidator = {
 
 export default angular
 	.module('ccms.components.form', [])
-	.directive('validators', () => validatorsDDO)
-	.directive('validator', () => validatorDDO)
+	.directive('ccValidators', () => validatorsDDO)
+	.directive('ccValidator', () => validatorDDO)
 	// 对built-in的表单添加额外逻辑
 	.directive('form', () => forbidFormNativeValidator)
-	.directive('ngForm', () => forbidFormNativeValidator)
-	.service('$Validator', ValidatorService)
+	.value('$ccValidator', ValidatorService)
 	.name;

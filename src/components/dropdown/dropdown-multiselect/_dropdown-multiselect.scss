@@ -1,8 +1,8 @@
-@import "../../../assets/iconfont/iconfont";
+@import "../../../../node_modules/ccms-icons/iconfont";
 @import "../../styles/mixins";
 @import "../../styles/input";
 
-dropdown-multiselect {
+cc-dropdown-multiselect {
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -14,18 +14,26 @@ dropdown-multiselect {
 
 	.dropdown-select-input-wrap {
 		display: flex;
+		background-color: #fff;
 		border: solid 1px $input-border-color;
 
 		@at-root .active#{&} {
 			border-color: $input-active-border;
 		}
 
+	  	@at-root .disabled#{&} {
+			background-color: #eee;
+			border: solid 1px #ccc;
+	  	}
+
 		.dropdown-select-input {
 			flex: 1;
 			min-width: 0;
+			height: calc(#{$control-height - 2px});
+			line-height: calc(#{$control-height - 2px});
 			padding-right: 0;
-			line-height: $control-height;
 			vertical-align: top;
+			background-color: inherit;
 			border: none;
 			// TODO: input 字体大小应该在基础组件中写？
 			font-size: 12px;
@@ -36,14 +44,14 @@ dropdown-multiselect {
 
 		.dropdown-select-icons {
 			display: inline-block;
-			background: #ffffff;
+			background: inherit;
 		}
 
 		%action-icon {
 			@extend .iconfont;
 			display: inline-block;
+			line-height: calc(#{$control-height - 2px});
 			padding-left: 8px;
-			line-height: $control-height;
 			cursor: pointer;
 			color: #c9c9c9;
 			&:last-child {
@@ -72,9 +80,6 @@ dropdown-multiselect {
 	}
 
 	.dropdown-panel {
-		&.hide {
-			display: none !important;
-		}
 		> .content {
 			position: absolute;
 			top: 100%;
@@ -88,7 +93,7 @@ dropdown-multiselect {
 		}
 		.dropdown-list {
 			max-height: 152px;
-			overflow-y: scroll;
+			overflow-y: auto;
 			padding: 0;
 			list-style: none;
 			border-bottom: solid 1px $input-border;
@@ -112,10 +117,17 @@ dropdown-multiselect {
 				}
 				> label {
 					display: block;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 					cursor: pointer;
 					> input[type="checkbox"] {
 						margin-right: 5px;
 					}
+				  	&[disabled=disabled] {
+						color: #888;
+						cursor: not-allowed;
+				  	}
 				}
 				.highlight {
 					color: #0083ba;

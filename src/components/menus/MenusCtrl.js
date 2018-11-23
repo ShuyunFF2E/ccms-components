@@ -4,106 +4,72 @@
  * @Author: maxsmu
  * @Date: 2016-02-29 6:52 PM
  */
-import {Inject, EventBus} from 'angular-es-utils';
-import $menus from './MenuService';
+import angular from 'angular';
+import {Inject} from 'angular-es-utils';
+import $menus, {reset} from './MenuService';
+import EventBus from 'angular-es-utils/event-bus';
+import logoUrl from '../../assets/images/logo-default.png';
+
 @Inject('$timeout', '$state', '$rootScope', '$document', '$scope')
 export default class MenusCtrl {
 
+	constructor() {
+		this.active = {};
+		this.shopSelectAvailable = true;
+		this.retract = false;
+		this.isInitShopSelect = true;
+		this.imgDefaultUrl = logoUrl;
+	}
+
 	$onInit() {
 
-		// - 初始化$menus中的私有变量,原因:各个产品间切换,避免A产品中的数据携带到B产品中
-		$menus.init();
+		// - 重置$menus中的私有变量,原因:各个产品间切换,避免A产品中的数据携带到B产品中
+		reset();
+
+		// 初始化数据
+		this.collapse = angular.isDefined(this.collapse) ? this.collapse : true;
+		this.expandMenus = angular.isDefined(this.expandMenus) ? this.expandMenus : false;
+
+		// - 获取菜单数据
+		const menus = $menus.getMenus(this.menuSource);
 
 		// - 生成 menu list 数据
-		this.createMenuList();
+		this.createMenuList(menus);
+
+		this.anyClickShopSelectClosed();
+
+		// 店铺状态变更处理
+		this.shopStatusChange();
+
+		this._$scope.$on('$stateChangeSuccess', (event, toState) => {
+			this.updateList(this.menuList);
+		});
+
+		if (this.shopLogoSubConfig) {
+			this.shopLogoSubStyle = this.shopLogoSubConfig.style || {};
+			this._$scope.$watch(() => this.active.shop, shop => {
+				const config = this.shopLogoSubConfig.getSubImg(shop);
+				this.shopLogoSubImg = config.img;
+				this.shopLogoSubOpened = config.opened;
+			});
+		}
+
+	}
+
+	updateList(list) {
+		Array.isArray(list) && list.forEach(item => {
+			this._$state.includes(item.state) ? item.toggle = item.toggleNode = true : (this.collapse ? item.toggle = item.toggleNode = false : null);
+			this.updateList(item.children);
+		});
 	}
 
 	/**
-	 * 选中一级菜单
-	 * @param menu
+	 * 店铺状态变更处理
 	 */
-	oneListClick(menu, $event) {
-		$event.preventDefault();
-		menu.toggle = !menu.toggle;
-	};
-
-	/**
-	 * 二级菜单容器样式
-	 * @param menu
-	 * @returns {*}
-	 */
-	menuStyle(menu) {
-		// this._$timeout(() => {
-		menu.toggle = typeof menu.toggle === 'undefined'
-			? this.$state && this.$state.includes(menu.state)
-			: menu.toggle;
-		return menu.toggle ? {display: 'block'} : {};
-		// }, 0);
-	};
-
-	/**
-	 * 获取当前选中的平台以及店铺
-	 * @param list
-	 * @private
-	 */
-	_getActiveShop(list) {
-		if (Array.isArray(list)) {
-
-			// - 是否展示店铺相关信息
-			this.isShowShopInfo = list.length > 0;
-
-			if (this.isShowShopInfo) {
-				// -点击非有效区域自动关闭shopSelect
-				this._$document.bind('click', event => {
-					const target = event.target,
-						targetName = target.className,
-						shopClosest = target.closest('.shop-choose-wrapper'),
-						retrackShopClosest = target.closest('.retrack-shop'),
-						menusClosest = target.closest('.menu-shop-show');
-					// -!targetName.includes('shop-search-clear') 清除点击清空收起店铺选择器问题
-					// -!targetName.includes('shop-list-btn') 清除点击查看全部收齐问题
-					if (shopClosest === null &&
-						retrackShopClosest == null &&
-						menusClosest === null && !targetName.includes('shop-search-clear') && !targetName.includes('menu-constract-icon') && !targetName.includes('expand') && !targetName.includes('shop-list-btn')) {
-						if (this.shopShow) {
-							this.shopShow = false;
-							this._$scope.$digest();
-						}
-					}
-				});
-			}
-
-			this.active = {};
-
-			// -查询所在平台
-			const plat = list.find(plat => {
-					return plat.active;
-				}),
-			// -查询在平台中选中的店铺
-				shop = plat && Array.isArray(plat.child) ? plat.child.find(shop => {
-					return shop.active;
-				}) : {};
-
-			this.active = {
-				plat,
-				shop
-			};
-
-			// - 设置当前选中的平台以及店铺
-			$menus.setCurrentPlatShop(plat, shop);
-
-			// -第一次广播时间通知调用者当前选择的店铺
-			this._$timeout(() => {
-
-				// - 获取当前选中的平台以及店铺
-				const currentPlatShop = $menus.getCurrentPlatShop();
-
-				// - 广播通知店铺选中
-				this._$rootScope.$broadcast('shop:change', currentPlatShop);
-
-				EventBus.dispatch('shop:change', currentPlatShop);
-			}, 0);
-		}
+	shopStatusChange() {
+		EventBus.on('cc:shopStatusChange', status => {
+			this.shopSelectAvailable = status;
+		});
 	}
 
 	/**
@@ -113,17 +79,13 @@ export default class MenusCtrl {
 		this.unfold = !this.unfold;
 
 		// -判断是否为function 是则执行函数   否则不作为
-		(typeof this.onUnfold === 'function')
-			? this.onUnfold(this.unfold)
-			: null;
+		this.onUnfold && this.onUnfold({unfold: this.unfold});
 	};
 
 	/**
 	 * 生成 menu list 数据源
 	 */
-	createMenuList() {
-		// -菜单列表
-		const menus = $menus.getMenus(this.menuSource);
+	createMenuList(menus) {
 
 		// -如果为Resource,则执行查询操作,否则返回原数据
 		if (menus.isResource) {
@@ -131,38 +93,39 @@ export default class MenusCtrl {
 			menus.resource.$promise
 				.then(res => {
 					this.menuList = res || [];
+					this.expandMenus ? this.expandAllMenus(this.menuList) : this.collapseAllMenus(this.menuList);
 					this.selectedMenus(this.menuList);
 				});
 		} else {
 			this.menuList = Array.isArray(menus.resource) ? menus.resource : [];
 			this.selectedMenus(this.menuList);
 		}
+	}
 
-		// -获取店铺信息
-		this.createShopList();
+	operateAllMenus(menuList = [], expand = true) {
+		menuList.forEach(menu => {
+			if (menu) {
+				menu.toggleNode = expand;
+				const child = menu.children;
+				Array.isArray(child) && child.length > 0 ? this.operateAllMenus(child) : null;
+			}
+		});
 	}
 
 	/**
-	 * 生成 shop list 数据源
+	 * 展开所有菜单
+	 * @param menuList
 	 */
-	createShopList() {
-		// -店铺列表
-		const shops = $menus.getShops(this.shopSource);
+	expandAllMenus(menuList = []) {
+		this.operateAllMenus(menuList, true);
+	}
 
-		if (shops.isResource) {
-
-			shops.resource
-				.$promise
-				.then(res => {
-					this.shopList = res || [];
-					this._getActiveShop(this.shopList);
-				});
-
-		} else {
-			const resourceIsArray = Array.isArray(shops.resource);
-			this.shopList = resourceIsArray ? shops.resource : [];
-			resourceIsArray && this._getActiveShop(this.shopList);
-		}
+	/**
+	 * 关闭所有菜单
+	 * @param menuList
+	 */
+	collapseAllMenus(menuList = []) {
+		this.operateAllMenus(menuList, false);
 	}
 
 	/**
@@ -186,12 +149,37 @@ export default class MenusCtrl {
 	 * 展示店铺列表
 	 */
 	showShopSelect() {
-		this.shopShow = !this.shopShow;
+		this.retract = !this.retract;
+		this.isInitShopSelect = false;
+	}
 
-		if (!this.shopShow) {
+	/**
+	 * 任意点击关闭
+	 */
+	anyClickShopSelectClosed() {
+		// - 是否展示店铺相关信息
+		this.isShowShopInfo = !!this.shopSource;
 
-			// -通知店铺列表收起
-			EventBus.dispatch('shop:listCollapsed', this.shopShow);
+		if (this.isShowShopInfo) {
+			// -点击非有效区域自动关闭shopSelect
+			this._$document.bind('click', event => {
+				const target = event.target,
+					targetClassList = target.classList,
+					shopClosest = target.closest('.shop-choose-wrapper'),
+					retrackShopClosest = target.closest('.retrack-shop'),
+					menusClosest = target.closest('.menu-shop-show');
+				// -!targetName.includes('shop-search-clear') 清除点击清空收起店铺选择器问题
+				// -!targetName.includes('shop-list-btn') 清除点击查看全部收齐问题
+				if (shopClosest === null &&
+					retrackShopClosest == null &&
+					menusClosest === null && !targetClassList.contains('shop-search-clear') && !targetClassList.contains('menu-constract-icon') && !targetClassList.contains('expand') && !targetClassList.contains('shop-list-btn')
+				) {
+					if (this.retract) {
+						this.retract = false;
+						this._$scope.$digest();
+					}
+				}
+			});
 		}
 	}
 }

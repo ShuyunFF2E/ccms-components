@@ -1,10 +1,7 @@
-node_modules
-build
-.idea
-.DS_Store
-lib
 .sass-cache/
 dist/
 docs/_gh_pages/
-dev-server-path
-coverage
+node_modules/
+test/coverage/
+npm-debug.log
+.idea/

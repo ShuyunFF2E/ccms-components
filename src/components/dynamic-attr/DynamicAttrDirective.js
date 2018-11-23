@@ -7,19 +7,15 @@
 
 import angular from 'angular';
 
-import {Inject} from 'angular-es-utils';
+import injector from 'angular-es-utils/injector';
 
 // 支持的angular事件集合
 const SUPPORTED_EVENTS = 'click dblclick mousedown mouseup mouseover mouseout mousemove mouseenter mouseleave keydown keyup keypress submit focus blur copy cut paste'.split(' ');
 
-@Inject('$parse')
-export default class DynamicAttr {
+export default {
 
-	constructor($parse) {
-		this.$parse = $parse;
-		this.restrict = 'A';
-		this.priority = 1;
-	}
+	restrict: 'A',
+	priority: 1,
 
 	compile(element) {
 
@@ -38,7 +34,7 @@ export default class DynamicAttr {
 				collectedNgEventMapper[ngEventAttr] = {
 					eventName,
 					expression: ngEventAttrValue,
-					fn: this.$parse(ngEventAttrValue, null, true)
+					fn: injector.get('$parse')(ngEventAttrValue, null, true)
 				};
 			}
 
@@ -47,7 +43,7 @@ export default class DynamicAttr {
 		return (scope, element, attr) => {
 
 			// 因为监听的是一个对象类型，所以这里watch的时候必须是true(调用angular.equals()对比而不是简单的===，简单的===可能会引发TTL负载异常)
-			scope.$watch(attr.dynamicAttr, attributes => {
+			scope.$watch(attr.ccDynamicAttr, attributes => {
 
 				if (attributes !== undefined) {
 
@@ -102,4 +98,4 @@ export default class DynamicAttr {
 		};
 	}
 
-}
+};

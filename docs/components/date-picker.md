@@ -2,7 +2,7 @@
 layout: docs
 title: Date Picker
 group: components
-redirect_from: "/components/"
+maintainer: lingying.zhang
 ---
 
 ## 输入单个日期
@@ -19,6 +19,8 @@ redirect_from: "/components/"
 | date-only | 为 true 时仅能输入日期，不能填写时间 | Boolean | false |
 | required | 是否为必填 | Boolean | false |
 | disabled | 是否为禁用 | Boolean | false |
+| on-calendar-open | 打开日历事件回调 | Function |  |
+| on-calendar-close | 关闭日历时间回调 | Function |  |
 
 {% highlight html %}
 <date-picker ng-model="dateValue"
@@ -26,7 +28,9 @@ redirect_from: "/components/"
              max-date="maxDate"
              date-only="false"
              required="true"
-             disabled="false"></date-picker>
+             disabled="false"
+             on-calendar-open="app.onCalendarOpen()"
+             on-calendar-close="app.onCalendarClose()"></date-picker>
 {% endhighlight %}
 
 ### 选择日期范围
@@ -44,6 +48,8 @@ redirect_from: "/components/"
 | dateOnly | 为 true 时仅能输入日期，不能填写时间 | Boolean | false |
 | required | 是否为必填 | Boolean | false |
 | disabled | 是否为禁用 | Boolean | false |
+| on-calendar-open | 打开日历事件回调 回调参数0/1代表左右日历| Function |  |
+| on-calendar-close | 关闭日历时间回调 回调参数0/1代表左右日历| Function |  |
 
 {% highlight html %}
 <date-range opts="dateRange"></date-range>

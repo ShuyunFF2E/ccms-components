@@ -4,60 +4,71 @@
  * @since 2016-01-04
  */
 
-
 import angular from 'angular';
 
-import grid from './grid';
-import pagination from './pagination';
-import smsEditor from './sms-editor';
-import smsPreview from './sms-preview';
-import tooltip from './tooltip';
-import ngEnter from './ng-enter';
-import inputCorrector from './input-corrector';
-import loading from './loading';
-import modal from './modal';
-import menuBar from './menus';
+import altSrc from './alt-src';
+import areaSelector from './area-selector';
+import calendar from './calendar';
+import captureEvent from './capture-event';
+import checkbox from './checkbox';
+import customerProfileBoard from './customer-profile-board';
 import datePicker from './date-picker';
 import dateRange from './date-range';
-import calendar from './calendar';
-import tips from './tips';
-import form from './form';
-import checkbox from './checkbox';
-import instantSearch from './instant-search';
-import dropdown from './dropdown/dropdown';
-import dropdownSelect from './dropdown/dropdown-select';
+import dropdown from './dropdown';
 import dropdownMultiselect from './dropdown/dropdown-multiselect';
-import tabset from './tabset';
-import title from './title';
+import dropdownSelect from './dropdown/dropdown-select';
+import form from './form';
+import grid from './grid';
+import goodsSelector from './goods-selector';
+import instantSearch from './instant-search';
+import loading from './loading';
+import menuBar from './menus';
+import modal from './modal';
+import ngEnter from './ng-enter';
+import niceScroll from './nice-scroll';
+import pagination from './pagination';
 import radio from './radio';
-import switchButton from './switch';
+import smsEditor from './sms-editor';
+import smsPreview from './sms-preview';
+import shopSelector from './shop-selector';
+import tabset from './tabset';
+import tips from './tips';
+import toggle from './toggle';
+import tooltip from './tooltip';
+import tree from './tree';
 
 export default angular
 	.module('ccms.components.ui', [
-		dropdown,
-		dropdownSelect,
-		dropdownMultiselect,
-		instantSearch,
+		altSrc,
+		areaSelector,
+		calendar,
+		captureEvent,
 		checkbox,
+		customerProfileBoard,
+		datePicker,
+		dateRange,
+		dropdown,
+		dropdownMultiselect,
+		dropdownSelect,
 		form,
 		grid,
-		pagination,
-		smsEditor,
-		smsPreview,
-		tooltip,
-		ngEnter,
-		inputCorrector,
+		goodsSelector,
+		instantSearch,
 		loading,
 		menuBar,
 		modal,
-		tips,
-		datePicker,
-		dateRange,
-		calendar,
-		tabset,
-		title,
+		ngEnter,
+		niceScroll,
+		pagination,
 		radio,
-		switchButton
+		smsEditor,
+		smsPreview,
+		shopSelector,
+		tabset,
+		tips,
+		toggle,
+		tooltip,
+		tree
 	])
 	.name;
 

@@ -57,16 +57,10 @@ module.exports = {
 		// 处理extract出来的css
 		new OptimizeCssAssetsPlugin({
 			assetNameRegExp: /\.css$/g,
-			cssProcessor: cssnano,
+			cssProcessor: cssnano({reduceIdents: false}),
 			cssProcessorOptions: Object.assign({
 				core: false
 			}, cssNanoCommonOpts),
-			canPrint: true
-		}),
-		new OptimizeCssAssetsPlugin({
-			assetNameRegExp: /\.min\.css$/g,
-			cssProcessor: cssnano,
-			cssProcessorOptions: cssNanoCommonOpts,
 			canPrint: true
 		}),
 		new webpack.optimize.DedupePlugin(),
@@ -76,7 +70,6 @@ module.exports = {
 		extensions: ['', '.js']
 	},
 	eslint: {
-		configFile: '.eslintrc',
 		emitWarning: true,
 		emitError: true,
 		formatter: require('eslint-friendly-formatter')

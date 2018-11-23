@@ -24,6 +24,6 @@ const ddo = {
 
 export default angular
 	.module('ccms.components.tips', [bindHtml])
-	.component('tips', ddo)
-	.service('TipsService', TipsService)
+	.component('ccTips', ddo)
+	.service('$ccTips', TipsService)
 	.name;

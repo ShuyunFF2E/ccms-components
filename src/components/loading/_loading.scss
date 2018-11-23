@@ -1,4 +1,4 @@
-@import "../../assets/iconfont/iconfont";
+@import "../../../node_modules/ccms-icons/iconfont";
 @import '../styles/variables';
 
 @mixin loader($width,$stroke-width) {
@@ -32,7 +32,7 @@
 	}
 }
 
-loading {
+cc-loading {
 	display: inline-block;
 
 	section {

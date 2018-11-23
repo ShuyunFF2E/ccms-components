@@ -1,0 +1,104 @@
+<div class="customer-attribute-editor">
+	<p class="attribute-editor-header" ng-bind="$ctrl.attributeSetting.title"></p>
+	<ul class="attribute-editor-content">
+		<li ng-repeat="attributeBlock in $ctrl.attributeSetting.attributeBlock track by $index">
+			<dl class="attribute-block" ng-if="attributeBlock.type !== 'List' && attributeBlock.attributeList.length > 0"
+					ng-show="$ctrl.attributeSetting.name !== 'customer' || !$ctrl.showCustomerAttributeEditor">
+				<dt class="attribute-block-title">{{attributeBlock.title}}</dt>
+				<dd class="attribute-block-item"
+						ng-show="attributeBlock.name !== 'customerDefined' || (attributeBlock.showMore || $index < 5)"
+						ng-repeat="attribute in attributeBlock.attributeList track by $index">
+					<label class="attribute-item-label" ng-bind="attribute.name + '：'"></label><div
+						class="attribute-item-content"
+						ng-mouseenter="attribute.displayEditIcon = true"
+						ng-mouseleave="attribute.displayEditIcon = false"
+					><span ng-bind="attribute.displayValue || attribute.defaultValue"></span><span class="iconfont icon-edit"
+																																												 ng-if="!attribute.isDisable && attribute.editable && !attribute.editingValue"
+																																												 ng-show="attribute.displayEditIcon"
+																																												 ng-click="$ctrl.showAttributeModifyBlock(attribute)"></span>
+					</div>
+					<div class="attribute-data-modify-block" ng-if="attribute.editable && attribute.editingValue">
+						<div ng-form="$ctrl.attributeModify" cc-validators="$ctrl.validators">
+							<input type="text" ng-if="attribute.type === 'CHAR_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="{{$ctrl.tmpValidate}}" maxlength="20">
+							<input type="text" ng-if="attribute.type === 'NUMBER_INPUT'" ng-model="$ctrl.tmpValue" cc-validator="{{$ctrl.tmpValidate}}" maxlength="20">
+							<select ng-if="attribute.type === 'CHAR_SELECT' || attribute.type === 'NUMBER_SELECT'"
+											ng-options="value for value in attribute.optional"
+											required
+											cc-validator
+											ng-model="$ctrl.tmpValue"></select>
+							<span ng-if="attribute.type === 'MONTH_DAY'">
+								<select
+									class="month-selector"
+									ng-options="month for month in $ctrl.monthArray"
+									ng-change="$ctrl.updateDayArray()"
+									required
+									cc-validator
+									ng-model="$ctrl.tmpMonth"></select> 月 <select
+								class="day-selector"
+								ng-options="day for day in $ctrl.dayArray"
+								required
+								cc-validator
+								ng-model="$ctrl.tmpDay"></select> 日
+							</span>
+							<cc-date-picker ng-if="attribute.type === 'DATE_SELECT'"
+													 ng-model="$ctrl.tmpValue"
+													 required="true"
+													 date-only="true"
+													 required
+													 cc-validator
+													 disabled="false"></cc-date-picker>
+						</div>
+						<div class="button-row">
+							<button class="btn-remark-confirm" ng-click="$ctrl.modifyAttributeValue(attribute, $ctrl.tmpValue, attributeBlock)">确定</button>
+							<button class="btn-remark-cancel" ng-click="attribute.editingValue = false">取消</button>
+						</div>
+					</div>
+				</dd>
+				<dd ng-if="attributeBlock.name === 'customerDefined'">
+					<p class="show-more__p" ng-if="attributeBlock.attributeList.length > 5">
+						<a href=""
+							 ng-click="attributeBlock.showMore = !attributeBlock.showMore"
+							 ng-bind="attributeBlock.showMore ? '收起' : '显示更多'"></a>
+					</p>
+					<!--<button class="add-attribute-button"
+									ng-click="$ctrl.changeCustomerDefinedBlockState(true)"
+									href=""> + 添加自定义属性
+					</button>-->
+				</dd>
+			</dl>
+			<dl class="attribute-block" ng-if="attributeBlock.type === 'List'">
+				<dt class="attribute-block-title">
+					{{attributeBlock.title}}
+					<cc-dropdown-select class="attribute-block-selector"
+													 ng-if="attributeBlock.listData.length"
+													 model="$ctrl.selectedRfmPeriod"
+													 mapping="$ctrl.rfmSelectorFieldsMap"
+													 datalist="attributeBlock.listData"></cc-dropdown-select>
+				</dt>
+				<dd class="attribute-block-item" ng-repeat="attribute in attributeBlock.attributeList track by $index">
+					<label class="attribute-item-label" ng-bind="attribute.name + '：'"></label>
+					<span class="attribute-item-content"
+								ng-if="$ctrl.selectedRfm"
+								ng-bind="$ctrl.selectedRfm[attribute.attribute]"></span>
+					<span class="attribute-item-content"
+								ng-if="!$ctrl.selectedRfm"
+								ng-bind="attribute.defaultValue"></span>
+				</dd>
+			</dl>
+		</li>
+		<li>
+			<dl class="attribute-block customer-defined-attribute-block"
+					ng-if="$ctrl.attributeSetting.name === 'customer' && $ctrl.showCustomerAttributeEditor">
+				<dt class="attribute-block-title">添加自定义属性<a class="back-to-normal" href=""
+																										ng-click="$ctrl.changeCustomerDefinedBlockState(false)"> &lt; 返回 </a>
+				</dt>
+				<dd class="attribute-block-item">
+					<cc-customer-defined-attribute-editor
+							validate-duplicate-name-fn="$ctrl.validateDuplicateNameFn()"
+							create-attribute-fn="$ctrl.saveCustomerDefinedAttribute(attribute)"
+							cancel-setting="$ctrl.changeCustomerDefinedBlockState(false)"></cc-customer-defined-attribute-editor>
+				</dd>
+			</dl>
+		</li>
+	</ul>
+</div>

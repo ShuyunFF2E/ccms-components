@@ -1,8 +1,10 @@
 - title: Components
   pages:
     - title: Checkbox
+    - title: Bind HTML
     - title: Date Picker
     - title: Dropdown
+    - title: Dynamic-Attr
     - title: Form
     - title: Grid
     - title: Iconfont
@@ -13,5 +15,7 @@
     - title: Pagination
     - title: Radio Button
     - title: Sample Component
+    - title: Tips
+    - title: Tooltip
     - title: Tabset
-
+    - title: Switch

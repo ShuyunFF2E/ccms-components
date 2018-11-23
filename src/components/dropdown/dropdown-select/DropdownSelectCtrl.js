@@ -1,12 +1,14 @@
 import angular from 'angular';
-import {Inject, Bind} from 'angular-es-utils';
+import { Inject, Bind } from 'angular-es-utils';
+import {hasScrolled} from '../../../common/utils/style-helper';
 
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
 	// 选项 item 字段映射
 	static defaultMapping = {
 		valueField: 'value',
-		displayField: 'title'
+		displayField: 'title',
+		iconField: 'icon'
 	};
 
 	constructor() {
@@ -17,10 +19,18 @@ export default class DropdownSelectCtrl {
 		this.title = '';
 		this.placeholder = '';
 		this.searchable = false;
+		this.supportInputValue = false;
 		this.model = null;
 		this.focusIndex = 0;
 		this.isOpen = false;
+		this.autoClose = true;
 		this.isActive = false;
+		this.oldText = '';
+		this.containerElement = null;
+
+		this.onSelectChange = () => {};
+		this.onDropdownOpen = () => {};
+		this.onDropdownClose = () => {};
 
 		this._openFn = null;
 	}
@@ -38,35 +48,57 @@ export default class DropdownSelectCtrl {
 	_prepareOptions() {
 		const defaultMapping = DropdownSelectCtrl.defaultMapping;
 		this.mapping = Object.assign({}, defaultMapping, this.mapping);
+		this.items = this._getClampedDatalist(this.datalist || []);
+
+		if (typeof this.autoClose !== 'undefined' && this.autoClose !== false) {
+			this.autoClose = true;
+		}
 
 		if (typeof this.disabled === 'undefined') {
 			this.disabled = false;
 		}
+
+		this.onSelectChange = this.onSelectChange || (() => {});
 	}
 
 	_prepareWatches() {
 		const scope = this.getScope();
 
 		scope.$watch(() => this.datalist, (datalist, oldDatalist) => {
+			this.model = this.modelCopy ? this.modelCopy : this.model;
 			this.items = this._clampedDatalist = this._getClampedDatalist(datalist || []);
-
+			// TODO: SB requirement
+			if (this.supportInputValue) {
+				this._searchText = this.model;
+			}
 			// 选中预设值
 			this.setModelValue(this.model);
+			// 设置预设值的 focusIndex
+			this.focusAt(this.getItemIndexByItemValue(this.model, this.items));
 		});
 
 		scope.$watch(() => this.model, (model, oldModel) => {
+			if (this.model && (!this.items || !this.items.length)) {
+				this.modelCopy = this.model;
+			}
 			if (!angular.equals(model, oldModel)) {
+				const item = this.getItemByValue(this.model);
+				const itemIndex = this.getItemIndexByItemValue(this.model, this.items);
+				if (this.supportInputValue) {
+					this._searchText = this.model;
+				}
 				this.setModelValue(this.model);
+				this.focusAt(itemIndex);
+				// 增加回调参数 itemIndex item
+				this.onSelectChange({ model, oldModel, itemIndex, item });
 			}
 		});
 
-		if (this.disabled) {
-			scope.$watch(() => this.isOpen, (openState, oldOpenstate) => {
-				if (openState) {
-					this.isOpen = false;
-				}
-			});
-		}
+		scope.$watch(() => this.isOpen, (openState, oldOpenstate) => {
+			if (this.disabled && openState) {
+				this.isOpen = false;
+			}
+		});
 	}
 
 	_prepareMouseEvents() {
@@ -110,7 +142,7 @@ export default class DropdownSelectCtrl {
 					default:
 				}
 			}
-			scope.$root.$$phase || scope.$apply();
+			scope.$root.$$phase || scope.$digest();
 		};
 
 		this.getScope().$watch(() => this.isActive, (isActive, oldState) => {
@@ -125,8 +157,10 @@ export default class DropdownSelectCtrl {
 		});
 	}
 
-	onSearchTextChange(text, oldText) {
-		if (text !== oldText) {
+	onSearchTextChange(text) {
+		this._searchText = text;
+		if (text !== this.oldText) {
+			this.oldText = text;
 			text = text.trim();
 			if (!this.isOpen) {
 				this.open();
@@ -143,12 +177,29 @@ export default class DropdownSelectCtrl {
 
 	onOpen() {
 		let scope = this.getScope();
-		this.getInputElement().focus();
-		if (this.searchable && this.title.length) {
+		const input = this.getInputElement();
+		input.focus();
+
+		if (this.searchable && this.title && this.title.length) {
 			this._search(this.title);
 			this.focusAt(0);
 			scope.$root.$$phase || scope.$apply();
 		}
+
+		// 如果有下拉选项框有滚动条, 且滚动条没有置顶, 进行置顶
+		const itemList = this.getItemListElement();
+		if (hasScrolled(itemList) && itemList.scrollTop !== 0) {
+			itemList.scrollTop = 0;
+		}
+
+		const containerHeight = this.containerElement ? this.containerElement.getClientRects()[0].bottom : document.documentElement.clientHeight;
+
+		// 将菜单滚动到可视区域
+		if (input.getClientRects()[0].bottom + itemList.getClientRects()[0].height > containerHeight) {
+			itemList.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
+		}
+
+		this.onDropdownOpen();
 	}
 
 	onClose() {
@@ -158,30 +209,42 @@ export default class DropdownSelectCtrl {
 			this.setModelValue(this.model);
 			scope.$root.$$phase || scope.$apply();
 		}
+		this.onDropdownClose();
+	}
+
+	getItemByValue(value) {
+		const valueField = this.mapping.valueField;
+		return this.items.find(item => angular.equals(item[valueField], value));
 	}
 
 	setModelValue(modelValue) {
-		if (modelValue !== null) {
-			let valueField = this.mapping.valueField;
-			let modelExisted = this.items.some(item => {
-				if (angular.equals(item[valueField], this.model)) {
-					this.title = item[this.mapping.displayField];
-					return true;
-				}
-			});
-			if (!modelExisted) {
+		const displayField = this.mapping.displayField;
+		const iconField = this.mapping.iconField;
+		const newItem = this.getItemByValue(modelValue);
+
+		if (newItem) {
+			this.title = newItem[displayField];
+			this.model = modelValue;
+			this.icon = newItem[iconField];
+		} else {
+			if (this.supportInputValue) {
+				this.title = this._searchText;
+				this.model = this._searchText;
+				this.icon = false;
+				this.items = this._clampedDatalist;
+			} else {
 				this.title = '';
 				this.model = null;
+				this.icon = false;
+				this.items = this._clampedDatalist;
 			}
-		} else {
-			this.title = '';
-			this.model = null;
 		}
 	}
 
 	clear() {
+		this._searchText = null;
+		this.modelCopy = null;
 		this.setModelValue(null);
-		this.items = this._getClampedDatalist(this.datalist);
 		this.getInputElement().focus();
 		this.focusAt(0);
 	}
@@ -206,13 +269,30 @@ export default class DropdownSelectCtrl {
 	}
 
 	selectItemAt(index) {
-		let item = this.items[index];
-		if (item) {
-			this.title = item[this.mapping.displayField];
-			this.model = item[this.mapping.valueField];
-			this.focusAt(index);
-			this.close();
+		const item = this.items[index];
+		const scope = this.getScope();
+
+		if (!item) {
+			return;
 		}
+
+		const onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
+
+		onBeforeSelectChange({ item })
+			.then(() => {
+				scope.$evalAsync(() => {
+					this.title = item[this.mapping.displayField];
+					this.model = item[this.mapping.valueField];
+					this.icon = item[this.mapping.iconField];
+
+					this.focusAt(index);
+					this.close();
+				});
+			})
+			.catch(() => {
+				scope.$evalAsync(() => this.close());
+			});
+		// todo Promise.prototype.finally travis-ci  暂时不支持等支持后修改
 	}
 
 	focusAt(index) {
@@ -254,10 +334,14 @@ export default class DropdownSelectCtrl {
 		return this.getElement().querySelector('.dropdown-select-input');
 	}
 
-	getItemElementAt(index) {
+	getItemListElement() {
 		return this.getElement()
-				.querySelector('.dropdown-list')
-				.querySelectorAll('li:not(.empty-list-item)')[index];
+			.querySelector('.dropdown-list');
+	}
+
+	getItemElementAt(index) {
+		return this.getItemListElement()
+			.querySelectorAll('li:not(.empty-list-item)')[index];
 	}
 
 	getScope() {
@@ -269,6 +353,12 @@ export default class DropdownSelectCtrl {
 			return content;
 		}
 		return content.replace(new RegExp(hiText, 'gi'), '<span class="highlight">$&</span>');
+	}
+
+	getItemIndexByItemValue(ItemValue, items) {
+		return items.findIndex(item => {
+			return item[this.mapping.valueField] === ItemValue;
+		});
 	}
 
 	_getClampedDatalist(datalist) {
@@ -295,7 +385,9 @@ export default class DropdownSelectCtrl {
 
 		searchFields.forEach(field => {
 			datalist.forEach(item => {
-				if (item[field].indexOf(text) !== -1 && filteredItems.indexOf(item) === -1) {
+				const fieldValue = item[field];
+				if (fieldValue.toString().toLocaleUpperCase().indexOf(text && text.toLocaleUpperCase()) !== -1 &&
+					filteredItems.indexOf(item) === -1) {
 					filteredItems.push(item);
 				}
 			});

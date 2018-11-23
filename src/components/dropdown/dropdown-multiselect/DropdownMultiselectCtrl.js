@@ -1,5 +1,6 @@
 import angular from 'angular';
 import {Inject, Bind} from 'angular-es-utils';
+import {hasScrolled} from '../../../common/utils/style-helper';
 
 @Inject('$scope', '$element')
 export default class DropdownMultiselectCtrl {
@@ -10,6 +11,7 @@ export default class DropdownMultiselectCtrl {
 	};
 
 	constructor() {
+		this.selectAll = false;
 		this.datalist = [];
 		this._clampedDatalist = [];
 		this.items = [];
@@ -24,6 +26,12 @@ export default class DropdownMultiselectCtrl {
 		this.focusIndex = -1;
 		this.isOpen = false;
 		this.isActive = false;
+		this.oldText = '';
+		this.containerElement = null;
+
+		this.onDropdownOpen = () => {};
+		this.onDropdownClose = () => {};
+		this.onSelectChange = () => {};
 
 		this._openFn = null;
 	}
@@ -31,6 +39,7 @@ export default class DropdownMultiselectCtrl {
 	$onInit() {
 		this._prepareOptions();
 		this._prepareWatches();
+		this._prepareSelection();
 	}
 
 	$postLink() {
@@ -40,6 +49,12 @@ export default class DropdownMultiselectCtrl {
 
 	_prepareOptions() {
 		this.mapping = Object.assign({}, DropdownMultiselectCtrl.defaultMapping, this.mapping);
+
+		if (typeof this.searchFields === 'undefined') {
+			this.searchFields = [this.mapping.valueField, this.mapping.displayField];
+		} else {
+			this.searchFields = this.searchFields.map(field => this.mapping[field]);
+		}
 
 		if (typeof this.searchable === 'undefined') {
 			this.searchable = false;
@@ -51,6 +66,12 @@ export default class DropdownMultiselectCtrl {
 		} else if (this.confirmButton !== false) {
 			this.autoClose = false;
 		}
+
+		if (typeof this.disabled === 'undefined') {
+			this.disabled = false;
+		}
+
+		this.onSelectChange = this.onSelectChange || (() => {});
 	}
 
 	_prepareWatches() {
@@ -62,18 +83,41 @@ export default class DropdownMultiselectCtrl {
 			// 选中预设值
 			this.selection = this._getItemsByValues(this.model);
 			this.updateTitle();
+
+			// 当 datalist 发生变化时. 这些常用的数据. 需要进行重算
+			this._clampedDatalist = this._getClampedDatalist(this.datalist || []);
+			this._clampedEnabledDatalist = this._getClampedDatalist(this._getEnabledItemFromDataList());
+			this.selectAll = this._clampedEnabledDatalist.length > 0 && this.selection.length >= this._clampedEnabledDatalist.length;
 		});
 
 		scope.$watch(() => this.model, (model, oldModel) => {
 			if (!angular.equals(model, oldModel)) {
+				let oldSelection = this._getItemsByValues(oldModel);
 				this.selection = this._getItemsByValues(model);
 				this.updateTitle();
+				this.selectAll = this._clampedEnabledDatalist.length > 0 && this.selection.length >= this._clampedEnabledDatalist.length;
+
+				this.onSelectChange({ model, oldModel, selection: this.selection, oldSelection });
 			}
 		});
 
 		scope.$watchCollection(() => this.selection, () => {
 			this.updateTitle();
 		});
+
+		scope.$watch(() => this.isOpen, (openState, oldOpenstate) => {
+			if (this.disabled && openState) {
+				this.isOpen = false;
+			}
+		});
+	}
+
+	_prepareSelection() {
+		this._clampedDatalist = this._getClampedDatalist(this.datalist || []);
+		this._clampedEnabledDatalist = this._getClampedDatalist(this._getEnabledItemFromDataList());
+		this.selection.push(...this._getItemsByValues(this.model));
+		// 初始化是否全选
+		this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
 	}
 
 	_prepareMouseEvents() {
@@ -104,7 +148,7 @@ export default class DropdownMultiselectCtrl {
 			} else {
 				switch (keyCode) {
 					case 13: // enter
-						this.toggleSelection(this.items[this.focusIndex]);
+						if (this.focusIndex > -1) this.toggleSelection(this.items[this.focusIndex]);
 						break;
 					case 38: // up
 						this.focusUp();
@@ -162,8 +206,28 @@ export default class DropdownMultiselectCtrl {
 		let index = this.selection.indexOf(item);
 		if (index > -1) {
 			this.selection.splice(index, 1);
+			this.selectAll = false;
 		} else {
 			this.selection.push(item);
+			this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
+		}
+	}
+
+	_getEnabledItemFromDataList() {
+		return (this.datalist || []).filter(item => item.disabled !== true);
+	}
+
+	toggleAll(selectAll) {
+		this.selectAll = selectAll;
+
+		// 已选择且 disabled item
+		let selectedAndDisabledItems = this.selection.filter(item => item.disabled === true);
+
+		if (this.selectAll) {
+			this.selection = this._clampedEnabledDatalist.concat(selectedAndDisabledItems);
+		} else {
+			this.items = this._clampedDatalist;
+			this.selection = selectedAndDisabledItems;
 		}
 	}
 
@@ -177,8 +241,9 @@ export default class DropdownMultiselectCtrl {
 		this.close();
 	}
 
-	onSearchTextChange(text, oldText) {
-		if (text !== oldText) {
+	onSearchTextChange(text) {
+		if (text !== this.oldText) {
+			this.oldText = text;
 			text = text.trim();
 			if (!this.isOpen) {
 				this.open();
@@ -193,11 +258,28 @@ export default class DropdownMultiselectCtrl {
 
 	onOpen() {
 		let scope = this.getScope();
-		this.getInputElement().focus();
+
+		const input = this.getInputElement();
+		input.focus();
+
 		if (this.searchable && this.title.length) {
 			this._search(this.title);
 			scope.$root.$$phase || scope.$apply();
 		}
+		// 如果有下拉选项框有滚动条, 且滚动条没有置顶, 进行置顶
+		const itemList = this.getItemListElement();
+		if (hasScrolled(itemList) && itemList.scrollTop !== 0) {
+			itemList.scrollTop = 0;
+		}
+
+		const containerHeight = this.containerElement ? this.containerElement.getClientRects()[0].bottom : document.documentElement.clientHeight;
+
+		// 将菜单滚动到可视区域
+		if (input.getClientRects()[0].bottom + itemList.getClientRects()[0].height > containerHeight) {
+			itemList.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
+		}
+
+		this.onDropdownOpen();
 	}
 
 	onClose() {
@@ -209,6 +291,7 @@ export default class DropdownMultiselectCtrl {
 		this.model = this.selection.map(item => item[this.mapping.valueField]);
 		this.updateTitle();
 		scope.$root.$$phase || scope.$apply();
+		this.onDropdownClose();
 	}
 
 	setValue(modelValue) {
@@ -216,9 +299,13 @@ export default class DropdownMultiselectCtrl {
 	}
 
 	clear() {
+		if (this.disabled === true) return;
 		this.items = this._clampedDatalist;
+		this.selection = this.selection.filter(item => item.disabled === true);
+		this.selectAll = false;
 		this.setTitle('');
-		this.getInputElement().focus();
+		this.oldText = '';
+		// this.getInputElement().focus();
 		if (!this.isOpen) {
 			this.open();
 		}
@@ -290,9 +377,13 @@ export default class DropdownMultiselectCtrl {
 		return this.getElement().querySelector('.dropdown-select-input');
 	}
 
-	getItemElementAt(index) {
+	getItemListElement() {
 		return this.getElement()
-				.querySelector('.dropdown-list')
+			.querySelector('.dropdown-list');
+	}
+
+	getItemElementAt(index) {
+		return this.getItemListElement()
 				.querySelectorAll('li:not(.empty-list-item)')[index];
 	}
 
@@ -325,13 +416,14 @@ export default class DropdownMultiselectCtrl {
 
 	_search(text) {
 		let datalist = this._clampedDatalist;
-		let mapping = this.mapping;
-		let searchFields = [mapping.valueField, mapping.displayField];
 		let filteredItems = [];
 
-		searchFields.forEach(field => {
+		this.searchFields.forEach(field => {
 			datalist.forEach(item => {
-				if (item[field].indexOf(text) !== -1 && filteredItems.indexOf(item) === -1) {
+				const fieldValue = item[field];
+				if (fieldValue.toString().toLocaleUpperCase().indexOf(text && text.toLocaleUpperCase()) !== -1 &&
+						filteredItems.indexOf(item) === -1) {
+
 					filteredItems.push(item);
 				}
 			});

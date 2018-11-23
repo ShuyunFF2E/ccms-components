@@ -2,11 +2,12 @@
 layout: docs
 title: tabset
 group: components
+maintainer: fengqiu.wu
 ---
 
 ## Tabset组件
 
-指令： tabset
+指令： cc-tabset
 
 参数说明：
 
@@ -15,7 +16,7 @@ group: components
 | active | 否 | 当前选中第几个选项，0开始 | Number |
 | type | 否 | 组件类型[smaller] | String |
 
-指令： tab
+指令： cc-tab
 
 | 参数名 | 是否必填 | 说明 | 类型 |
 | --- | --- | --- | --- |
@@ -24,5 +25,4 @@ group: components
 
 ## Examples
 
-	> 暂时没有
-<!-- <iframe width="100%" height="300" src="//jsfiddle.net/fawziwu/wbL4Lvef/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe> -->
+<iframe width="100%" height="300" src="//jsfiddle.net/fawziwu/wbL4Lvef/embedded/js,html,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>

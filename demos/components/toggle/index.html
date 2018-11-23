@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>开关 cc-toggle</title>
+<link rel="import" href="../../common/layout.html">
+
+<main ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
+	<h2>Demo1</h2>
+	<p>value: {{demo1}}</p>
+	<cc-switch ng-model="demo1"></cc-switch>
+
+	<p>value: {{demo1}}</p>
+	<cc-toggle ng-model="demo1" text-on="long-long-words-on" text-off="long-long-words-off"></cc-toggle>
+
+	<p>value: {{demo1}}</p>
+	<cc-toggle id="demo1" ng-model="demo1" text-on="short-words-on" text-off="short-words-off"></cc-toggle>
+
+	<h2>Demo2</h2>
+	<p>value: {{demo2}} | disabled: {{demo2Disabled}}</p>
+	<cc-toggle ng-model="demo2" ng-disabled="demo2Disabled"></cc-toggle>
+	<button ng-click="demo2Disabled=!demo2Disabled">change disabled</button>
+
+	<h2>Demo3: 自定义值</h2>
+	<p>value: {{demo3}}</p>
+	<cc-toggle ng-model="demo3" value-on="'快乐'" value-off="'悲伤'" text-on="快乐" text-off="悲伤"></cc-toggle>
+
+	<h2>Demo4: disabled</h2>
+	<cc-toggle ng-model="demo4" value-on="'生'" value-off="'死'" ng-disabled="true"></cc-toggle>
+</main>
+
+<script src="/components.js"></script>
+<script>
+	angular
+			.module('demoApp', ['ccms.components'])
+			.controller('DemoCtrl', DemoCtrl);
+
+	DemoCtrl.$inject = [];
+	function DemoCtrl() {
+
+	}
+
+</script>
+

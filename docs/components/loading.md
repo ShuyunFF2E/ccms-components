@@ -2,7 +2,7 @@
 layout: docs
 title: loading组件
 group: components
-redirect_from: "/components/"
+maintainer: kui.liu
 ---
 
 ## Contents
@@ -17,10 +17,10 @@ loading组件
 ### 用法
 
 {% highlight html %}
-<loading
+<cc-loading
     [type="string"]>
 	transclude template
-</form>
+</cc-loading>
 {% endhighlight %}
 
 ### 参数说明

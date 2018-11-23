@@ -1,4 +1,4 @@
-@import "../../assets/iconfont/iconfont";
+@import "../../../node_modules/ccms-icons/iconfont";
 @import "../styles/mixins";
 @import "../styles/input";
 
@@ -9,6 +9,7 @@
 	.instant-search-input {
 		line-height: $control-height;
 		vertical-align: top;
+	    padding-right: 28px;
 	}
 
 	.instant-search-icon {

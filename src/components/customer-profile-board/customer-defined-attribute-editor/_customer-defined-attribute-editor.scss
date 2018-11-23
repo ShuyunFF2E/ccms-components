@@ -1,0 +1,75 @@
+.customer-defined-attribute-editor {
+	height: 100%;
+	width: 400px;
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+
+	.customer-defined-attribute-editor-content {
+		flex: 1;
+	}
+
+	.attribute-editor-li {
+		display: flex;
+		margin-bottom: 15px;
+		line-height: 30px;
+
+		.attribute-editor-label {
+			width: 100px;
+			text-align: right;
+			margin-right: 12px;
+			flex: none;
+		}
+
+		.attribute-editor-input {
+			display: inline-block;
+			width: 160px;
+		}
+
+		.attribute-remark-icon {
+			margin-left: 16px;
+			color: #999;
+			cursor: pointer;
+		}
+
+		.attribute-remark-icon--active {
+			color: #00a6eb;
+		}
+	}
+
+	.button-row {
+		text-align: right;
+		margin: 5px;
+	}
+
+	.attribute-remark-block {
+		position: absolute;
+		top: 26px;
+		left: 150px;
+		padding: 10px;
+		background: #f8f8f8;
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+		border-radius: 2px;
+		width: 260px;
+		height: 120px;
+
+		textarea {
+			resize: none;
+			padding: 8px;
+			width: 240px;
+			height: 65px;
+		}
+
+		.button-row {
+			.btn-remark-confirm {
+				background: #00aaf1;
+				border: 0;
+				color: #fff;
+			}
+		}
+	}
+
+	attribute-data-editor {
+		flex: 1;
+	}
+}

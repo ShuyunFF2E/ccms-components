@@ -1,28 +1,33 @@
-<div class="dropdown-select" dropdown is-open="$ctrl.isOpen"
+<div class="dropdown-select" cc-dropdown
+		is-open="$ctrl.isOpen"
+		auto-close="$ctrl.autoClose"
 		ng-class="{active: $ctrl.isActive, disabled: $ctrl.disabled}"
 		on-dropdown-open="$ctrl.onOpen()"
 		on-dropdown-close="$ctrl.onClose()">
-	<div class="dropdown-select-input-wrap">
+	<div class="dropdown-select-input-wrap" ng-class="{ 'has-icon': $ctrl.icon }">
+		<cc-icon ng-if="$ctrl.icon" symbol="{{$ctrl.icon}}"></cc-icon>
 		<input type="text" class="dropdown-select-input" placeholder="{{$ctrl.placeholder}}"
 				ng-readonly="!$ctrl.searchable"
 				ng-focus="$ctrl.isActive = true"
 				ng-blur="$ctrl.isActive = false"
-				ng-change="$ctrl.onSearchTextChange($ctrl.title, '{{$ctrl.title}}')"
+				ng-change="$ctrl.onSearchTextChange($ctrl.title)"
 				ng-model="$ctrl.title">
 		<div class="dropdown-select-icons"
 			><span class="dropdown-select-clear"
 					ng-class="{visible: $ctrl.title.length}"
 					ng-if="$ctrl.searchable"
 					ng-click="$ctrl.clear()"></span
-			><span class="dropdown-select-down" dropdown-toggle></span>
+			><span class="dropdown-select-down" cc-dropdown-toggle></span>
 		</div>
 	</div>
-	<div class="dropdown-panel hide" dropdown-panel>
+	<div cc-dropdown-panel>
 		<ul class="dropdown-list">
 			<li ng-repeat="item in $ctrl.items track by $index"
-					ng-click="$ctrl.selectItemAt($index);"
-					ng-class="{focus: $index === $ctrl.focusIndex}">
-				<span bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)"></span>
+					ng-click="item.disabled === true || $ctrl.selectItemAt($index);"
+					ng-class="{focus: $index === $ctrl.focusIndex}"
+					ng-disabled="item.disabled">
+				<cc-icon ng-if="item.icon" symbol="{{item.icon}}"></cc-icon>
+				<span ng-bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)" title="{{item[$ctrl.mapping.displayField]}}"></span>
 			</li>
 			<li class="empty-list-item"
 					ng-if="$ctrl.searchable" ng-show="!$ctrl.items.length && $ctrl.title.length">

@@ -4,42 +4,19 @@
  * @since 2016-03-08
  */
 import angular from 'angular';
-import {Inject, FactoryCreator} from 'angular-es-utils';
 
-function isPromiseLik(object) {
-	return object && typeof object.then === 'function';
-}
+import controller from './BindHtmlCtrl';
 
-
-@Inject('$compile')
-class BindHtml {
-
-	constructor() {
-		this.restrict = 'A';
+const bindHTMLDDO = {
+	name: 'ccBindHtml',
+	restrict: 'A',
+	controller,
+	controllerAs: '$$bindHtmlCtrl',
+	bindToController: {
+		content: '<ccBindHtml'
 	}
-
-	link(scope, element, attr) {
-
-		scope.$watch(scope => {
-			return scope.$eval(attr.bindHtml);
-		}, newTpl => {
-
-			const compile = tpl => {
-				element[0].innerHTML = tpl;
-				this._$compile(element.contents())(scope);
-			};
-
-			if (isPromiseLik(newTpl)) {
-				newTpl.then(tpl => compile(tpl));
-			} else {
-				compile(newTpl);
-			}
-
-		});
-	}
-
-}
+};
 
 export default angular.module('ccms.components.bindHtml', [])
-	.directive('bindHtml', FactoryCreator.create(BindHtml))
+	.directive('ccBindHtml', () => bindHTMLDDO)
 	.name;

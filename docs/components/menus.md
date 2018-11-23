@@ -2,6 +2,7 @@
 layout: docs
 title: Menus组件使用说明
 group: components
+maintainer: chaoyang.mu
 ---
 
 ### menu-bar : 指令配置,其中包括如下:(*required*)
@@ -14,42 +15,19 @@ group: components
 *     search-placeholder: `String`(default:**请输入店铺名称**) 店铺搜索框placeholder提示文字
 
 
-### `$menus`配套服务
+### `$ccMenus`配套服务
 --
 
-* `const current = $menus.getCurrentPlatShop();` : 获取当前选中店铺信息 
+* `const current = $ccMenus.getCurrentPlatShop();` : 获取当前选中店铺信息 
 
-### `EventBus.on`事件订阅(需要引用angular-es-utils/event-bus,将其import到业务代码)
---
+* `$ccMenus.onShopChangeStart((defer, willPlatShop) => { // TODO 相关操作});`：店铺开始执行切换触发，回调中defer是一个推迟对象，willPlatShop是讲要切换的店铺信息。另外onShopChangeStart返回值为一个function，即销毁函数(在页面销毁的时候请运行此函数销毁此次监听)。 
 
-* `EventBus.on('menu:change', menu => { // TODO 相关操作 });`：监听菜单信息变化
+* `const shopChange = $ccMenus.onShopChange((current => { // TODO 相关操作}));`：店铺切换成功后触发，回调中的current是指改变后的店铺信息。另外onShopChange返回值为一个function，即销毁函数(在页面销毁的时候请运行此函数销毁此次监听)。
 
-* `EventBus.on('shop:changeStart', (shop, defer) => { // TODO 相关操作});`: 将要切换店铺时触发（不建议在其中使用`$menus.getCurrentPlatShop()`获取当前选中的店铺）
+* `$ccMenus.shopChangeEnable();`：设置店铺切换可用。
 
-* `EventBus.on('shop:change', (shop, defer) => { // TODO 相关操作});`: 店铺切换成功后触发
+* `$ccMenus.shopChangeDisable();`：设置店铺切换不可用。
 
-`EventBus`的使用步骤：
-
-	1. npm install angular-es-utils
-	
-	2. 在代码中使用import将其引入即 import {EventBus} from 'angular-es-utils';
-	
-	3. 接下来使用EventBus.on('订阅名称', change => {// TODO 相关操作});
-
-
-
-### `$scope.$on`事件广播**（此类监听不建议使用，并且此类监听将在下版本中移除，请修改为EventBus）**
----
-
-* `$scope.$on('shop:changeStart', (event, defer) => { // TODO 相关操作});`: 将要切换店铺时触发（不建议在其中使用`$menus.getCurrentPlatShop()`获取当前选中的店铺）
-
-* `$scope.$on('shop:change', (event, shop) => { // TODO 相关操作});`: 店铺切换成功后触发
-
-
-将要切换店铺时触发的使用步骤：
-
-	使用shop:changeStart监听,此监听会返回一个defer对象,当需要确认切换时调用defer.resolve();正常切换；当需要阻止切换调用defer.reject();阻止切换；
-    
 详细情况调用请查看下面例子:
 
 ## Example

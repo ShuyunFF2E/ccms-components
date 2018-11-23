@@ -10,8 +10,8 @@ const TEMPLATE_REGEXP = /<.+>/;
 
 export default (scope, element) => {
 
-	const outerScope = scope.$parent.$parent.$parent.$parent;
-	Object.setPrototypeOf(scope, outerScope);
+	const baseScope = scope.baseScope;
+	Object.setPrototypeOf(scope, baseScope);
 
 	if (TEMPLATE_REGEXP.test(scope.column.cellTemplate)) {
 		element.html(scope.column.cellTemplate);

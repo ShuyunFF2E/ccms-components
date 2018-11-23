@@ -1,48 +1,48 @@
 <ul class="menu-list" ng-show="childNode.toggle">
-    <li ng-repeat="menu in childNode.list track by $index">
+	<li ng-repeat="menu in childNode.list track by $index">
 
-        <!-- 一级菜单 -->
-        <a class="one-list"
-           ng-class="{'one-content':childNode.level > 0}"
-           ng-style="{'padding-left':childNode.level === 0 ? '20px' : (10*(childNode.level+2)+'px')}"
+		<!-- 一级菜单 -->
+		<a class="one-list"
+		   ng-class="{'one-content':childNode.level > 0}"
+		   ng-style="{'padding-left':childNode.level === 0 ? '20px' : (10*(childNode.level+2)+'px')}"
 
-           ng-if="menu.children && menu.children.length > 0"
+		   ng-if="menu.children && menu.children.length > 0"
 
-           ng-click="childNode.clickParents(menu)">
+		   ng-click="childNode.clickParents(menu)">
 
-            <span ng-bind="menu.name"></span>
+			<span ng-bind="menu.name"></span>
 
-            <!-- 角标 -->
+			<!-- 角标 -->
             <span class="iconfont"
-                  ng-class="{'up-icon':menu.toggleNode,'down-icon':!menu.toggleNode}"
-                  ng-if="menu.children && menu.children.length > 0 && childNode.level === 0">
-            </span>{{childNode.toggleNode}}
-            <!-- 角标 end -->
-        </a>
+				  ng-class="{'up-icon':menu.toggleNode,'down-icon':!menu.toggleNode}"
+				  ng-if="menu.children && menu.children.length > 0 && childNode.level === 0">
+            </span>
+			<!-- 角标 end -->
+		</a>
 
-        <a class="one-list"
-           ng-class="{'one-content':childNode.level > 0}"
-           ng-style="{'padding-left':childNode.level === 0 ? '20px' : (10*(childNode.level+2)+'px')}"
+		<a class="one-list"
+		   ng-class="{'one-content':childNode.level > 0}"
+		   ng-style="{'padding-left':childNode.level === 0 ? '20px' : (10*(childNode.level+2)+'px')}"
 
-           ui-sref="{{menu.state}}"
+		   ui-sref="{{menu.state}}"
 
-           ng-click="childNode.clickMenus(menu)"
+		   ng-click="childNode.clickMenus(menu)"
 
-           ui-sref-active="active"
+		   ui-sref-active="active"
 
-           ng-if="(menu.children && menu.children.length == 0)||!menu.children">
+		   ng-if="(menu.children && menu.children.length == 0)||!menu.children">
 
-            <span ng-bind="menu.name"></span>
-        </a>
+			<span ng-bind="menu.name"></span>
+		</a>
 
-        <!-- 一级菜单 end -->
-
-        <menu-node
-                ng-if="menu.children && menu.children.length > 0"
-                toggle="menu.toggleNode"
-                level="childNode.level+1"
-                list="menu.children">
-        </menu-node>
-    </li>
+		<!-- 一级菜单 end -->
+		<!--toggle="menu.toggleNode"-->
+		<cc-menu-node
+				ng-if="menu.children && menu.children.length > 0"
+				toggle="menu.toggleNode"
+				level="childNode.level+1"
+				list="menu.children">
+		</cc-menu-node>
+	</li>
 </ul>
 

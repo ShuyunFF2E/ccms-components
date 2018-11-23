@@ -22,7 +22,8 @@ const paginationDDO = {
 		pageNum: '<?',  // 当前页码
 		pageSize: '<?', // 每页大小
 		pageSizeList: '<?',
-		pageSizeListDisabled: '<?',
+		pageSizeListDisabled: '<?', // disabled翻页
+		pageSizeListHidden: '<?', // 隐藏翻页
 		onChange: '&?'	// 刷新回调
 	}
 
@@ -30,6 +31,6 @@ const paginationDDO = {
 
 export default angular
 	.module('ccms.components.pagination', [ngEnter, ngDomValue])
-	.component('pagination', paginationDDO)
+	.component('ccPagination', paginationDDO)
 	.name;
 

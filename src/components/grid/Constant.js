@@ -5,16 +5,17 @@
  */
 
 import defaultHeaderTpl from './tpls/default-header.tpl.html';
-import defaultCellTpl from './tpls/default-cell.tpl.html';
+import defaultRowCellTpl from './tpls/default-row-cell.tpl.html';
 import checkboxHeaderTpl from './tpls/checkbox-header.tpl.html';
-import checkboxCellTpl from './tpls/checkbox-cell.tpl.html';
+import checkboxRowCellTpl from './tpls/checkbox-row-cell.tpl.html';
 import emptyGridTipTpl from './tpls/empty-grid-tip.tpl.html';
+import defaultFooterTpl from './tpls/default-footer.tpl.html';
 
 /**
  * 表格模板,可配置
  * @warning 业务系统如果要配置自定义模板,请以系统名为前缀避免冲突,如 NEWBI_SORTABLE_TEMPLATE
  */
 export default {
-	DEFAULT: [defaultHeaderTpl, defaultCellTpl, emptyGridTipTpl],
-	SELECTABLE: [checkboxHeaderTpl, checkboxCellTpl, emptyGridTipTpl]
+	DEFAULT: [defaultHeaderTpl, defaultRowCellTpl, emptyGridTipTpl, defaultFooterTpl],
+	SELECTABLE: [checkboxHeaderTpl, checkboxRowCellTpl, emptyGridTipTpl, defaultFooterTpl]
 };

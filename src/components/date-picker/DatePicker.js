@@ -4,35 +4,40 @@
 
 
 import './_date-picker.scss';
-
 import template from './date-picker.tpl.html';
 import { destructDate, setTextWidth } from './dateUtils';
 import DatePickerCtrl from './DatePickerCtrl';
 
-export default class DatePicker {
 
-	constructor() {
-		Object.assign(this, {
-			bindToController: true,
-			controller: DatePickerCtrl,
-			controllerAs: 'ctrl',
-			replace: true,
-			require: 'ngModel',
-			restrict: 'E',
-			scope: {
-				dateOnly: '=',
-				disabled: '=',
-				minDate: '=',
-				maxDate: '=',
-				rangeStart: '=',
-				rangeEnd: '=',
-				start: '=',
-				end: '='
-			},
-			template
-		});
-	}
+export default {
 
+	bindToController: true,
+	controller: DatePickerCtrl,
+	controllerAs: 'ctrl',
+	replace: true,
+	require: 'ngModel',
+	restrict: 'E',
+	scope: {
+		dateOnly: '=',
+		disabled: '=',
+		disabledInput: '=',
+		minDate: '=',
+		maxDate: '=',
+		containerElement: '=?',
+		rangeStart: '=',
+		rangeEnd: '=',
+		start: '=',
+		end: '=',
+		onCalendarOpen: '&?',
+		onCalendarClose: '&?',
+		isFestival: '<?',
+		customFestivals: '<?',
+		disableScrollIntoView: '<?',
+		disableYear: '<?',
+		disableMonth: '<?',
+		displayFormat: '@?'
+	},
+	template,
 
 	link($scope, $element, $attrs, ngModelCtrl) {
 		$scope.inputs = [].slice.call($element[0].querySelectorAll('input'));
@@ -40,16 +45,16 @@ export default class DatePicker {
 
 		this.setAllInputsWidth($scope);
 
-
 		/**
 		 * 根据日期渲染模板
 		 */
 		ngModelCtrl.$render = () => {
 			$scope.ctrl.parts = destructDate(ngModelCtrl.$viewValue ? new Date(ngModelCtrl.$viewValue) : null, $scope.ctrl.dateOnly);
-
+			$scope.ctrl._displayValue = $scope.ctrl.toDateValue($scope.ctrl.parts);
+			$scope.ctrl.checkValidity($scope.ctrl._displayValue);
 			this.setAllInputsWidth($scope);
 		};
-	}
+	},
 
 
 	setAllInputsWidth($scope) {
@@ -57,4 +62,4 @@ export default class DatePicker {
 			setTextWidth($scope.inputs[i]);
 		}
 	}
-}
+};

@@ -1,0 +1,7 @@
+<!--每条数据前的checkbox-->
+<td class="checkbox" aria-init="{{$selected=$ctrl.isEntitySelected(entity)}}">
+	<input type="checkbox" ng-checked="$selected">
+</td>
+
+<!--引入默认的表格行元素 html-loader -->
+${require('./default-row-cell.tpl.html')}

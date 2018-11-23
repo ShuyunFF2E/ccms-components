@@ -1,5 +1,5 @@
 @import "../styles/_variables";
-@import "../../assets/iconfont/_iconfont";
+@import "../../../node_modules/ccms-icons/iconfont";
 
 $default-border-color: #d9d9d9;
 $border-style: 1px solid #33b5e5;
@@ -19,7 +19,7 @@ $remove-btn-size: 12px;
 }
 
 // tab样式
-tabset {
+cc-tabset {
 	display: block;
 	overflow: hidden;
 
@@ -106,7 +106,7 @@ tabset {
 			margin-right: 0;
 		}
 
-		& > tab {
+		& > cc-tab {
 			display: inline-block;
 			padding-right: 5px;
 
@@ -200,7 +200,7 @@ tabset {
 		}
 
 		&.tabset-smaller {
-			tab > div {
+			cc-tab > div {
 				line-height: 24px;
 			}
 

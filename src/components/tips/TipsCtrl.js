@@ -13,5 +13,4 @@ export default class TipsCtrl {
 	isContentOverflow(content) {
 		return isContentOverflow(this._$element[0].querySelector('p'), content);
 	}
-
 }

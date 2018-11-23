@@ -4,11 +4,11 @@
 
 
 import angular from 'angular';
-import { FactoryCreator } from 'angular-es-utils';
 
-import DateRange from './DateRange';
+import ddo from './DateRange';
+
 
 export default angular
 		.module('ccms.components.dateRange', ['ccms.components.datePicker'])
-		.directive('dateRange', FactoryCreator.create(DateRange))
+		.directive('ccDateRange', () => ddo)
 		.name;
