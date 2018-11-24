@@ -4,18 +4,44 @@
 <link rel="import" href="../../common/layout.html">
 
 <main ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<h2> Simple Tree </h2>
+	<h2> 搜索、复选 </h2>
 	<cc-tree
-		data="ctrl.tree"
-		support-checkbox="ctrl.supportCheckbox"
-		is-radio-model="ctrl.isRadioModel"
-		support-search="ctrl.supportSearch"
-		on-click-action="ctrl.onClickAction"
-		on-add-action="ctrl.onAddAction"
-		on-rename-action="ctrl.onRenameAction"
-		on-remove-action="ctrl.onRemoveAction"
-		on-selected-action="ctrl.onSelectedAction"
-		hide-root="true">
+		data="ctrl.tree_one.data"
+		support-checkbox="ctrl.tree_one.supportCheckbox"
+		is-radio-model="ctrl.tree_one.isRadioModel"
+		support-search="ctrl.tree_one.supportSearch"
+		on-click-action="ctrl.tree_one.onClickAction"
+		on-add-action="ctrl.tree_one.onAddAction"
+		on-rename-action="ctrl.tree_one.onRenameAction"
+		on-remove-action="ctrl.tree_one.onRemoveAction"
+		on-selected-action="ctrl.tree_one.onSelectedAction">
+	</cc-tree>
+
+	<h2> 无搜索、带单选 </h2>
+	<cc-tree
+		data="ctrl.tree_two.data"
+		support-checkbox="ctrl.tree_two.supportCheckbox"
+		is-radio-model="ctrl.tree_two.isRadioModel"
+		support-search="ctrl.tree_two.supportSearch"
+		on-click-action="ctrl.tree_two.onClickAction"
+		on-add-action="ctrl.tree_two.onAddAction"
+		on-rename-action="ctrl.tree_two.onRenameAction"
+		on-remove-action="ctrl.tree_two.onRemoveAction"
+		on-selected-action="ctrl.tree_two.onSelectedAction">
+	</cc-tree>
+
+
+	<h2> 无搜索、无选择 </h2>
+	<cc-tree
+		data="ctrl.tree_three.data"
+		support-checkbox="ctrl.tree_three.supportCheckbox"
+		is-radio-model="ctrl.tree_three.isRadioModel"
+		support-search="ctrl.tree_three.supportSearch"
+		on-click-action="ctrl.tree_three.onClickAction"
+		on-add-action="ctrl.tree_three.onAddAction"
+		on-rename-action="ctrl.tree_three.onRenameAction"
+		on-remove-action="ctrl.tree_three.onRemoveAction"
+		on-selected-action="ctrl.tree_three.onSelectedAction">
 	</cc-tree>
 </main>
 

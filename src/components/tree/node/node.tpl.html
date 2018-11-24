@@ -28,6 +28,11 @@
 				<span class="name" ng-bind="$ctrl.name"></span>
 			</div>
 		</div>
+
+		<div ng-if="!$ctrl.supportCheckbox">
+			<icon class="iconfont icon-folder"></icon>
+			<span class="name" ng-bind="$ctrl.name"></span>
+		</div>
 	</div>
 	<div ng-if="$ctrl.node.isEditing"
 		 class="cc-tree-node editing"
