@@ -1,13 +1,10 @@
-import classes from '../index.scss';
+import '../index.scss';
 import Inject from 'angular-es-utils/decorators/Inject';
 import Store from '../Store';
 import Handler from '../Handler';
 
 @Inject('$ccTips', '$scope')
 export default class TreeNodeController {
-
-	classes = classes;
-
 	constructor() {
 		this.name = this.node.name;
 	}
@@ -43,8 +40,40 @@ export default class TreeNodeController {
 
 	/**
 	 * 事件: 选择事件
+	 * @param type
 	 */
-	onChangeChecked() {
+	onChangeChecked(type) {
+		switch (type) {
+			case 'checkbox': {
+				this.changeForCheckbox();
+				break;
+			}
+			case 'radio': {
+				this.changeForRadio();
+				break;
+			}
+			default: break;
+		}
+
+		// 执行选中事件
+		Handler.onSelectedAction && Handler.onSelectedAction(this.node, Store.selectedNodes);
+	}
+
+	/**
+	 * 单选类型选中
+	 */
+	changeForRadio() {
+		// 清除之前的选中状态
+		Store.selectedNodes.forEach(item => {
+			item.checked = false;
+		});
+		this.node.checked = true;
+	}
+
+	/**
+	 * 多选类型选中
+	 */
+	changeForCheckbox() {
 		const { checked, children, pId } = this.node;
 
 		// 变更子项选中状态
@@ -87,9 +116,6 @@ export default class TreeNodeController {
 
 		changeChildren(children || []);
 		changeParent(pId);
-
-		// 执行选中事件
-		Handler.onSelectedAction && Handler.onSelectedAction(this.node, Store.selectedNodes);
 	}
 
 	/**

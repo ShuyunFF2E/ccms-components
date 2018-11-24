@@ -1,6 +1,5 @@
-import './index.scss';
 import angular from 'angular';
-import template from './index.tpl.html';
+import template from './search.tpl.html';
 import TreeSearchController from './TreeSearchController';
 
 const ddo = {

@@ -7,12 +7,19 @@ class Store {
 	// 当前节点
 	activeNode = null;
 
-	// 更新当前节点
+	/**
+	 * 更新当前节点
+	 * @param node
+	 */
 	updateActiveNode(node) {
 		this.activeNode && this.updateById(this.activeNode.id, { isSelected: false });
 		this.activeNode = this.updateById(node.id, { isSelected: true });
 	}
 
+	/**
+	 * 获取当前选中节点
+	 * @returns {Array}
+	 */
 	get selectedNodes() {
 		const selectedList = [];
 		function getSelected(nodeList) {

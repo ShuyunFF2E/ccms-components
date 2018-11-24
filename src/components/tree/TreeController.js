@@ -115,13 +115,13 @@ export default class TreeCtrl {
 	getContextMenus() {
 		const menuList = [];
 		Handler.onAddAction && menuList.push({
-			name: '新增分类', click: node => {
+			name: '新增', click: node => {
 				this.addBlankNode(node);
 			}
 		});
 
 		Handler.onRemoveAction && menuList.push({
-			name: '删除分类', click: node => {
+			name: '删除', click: node => {
 				this.removeNode(node);
 			}
 		});

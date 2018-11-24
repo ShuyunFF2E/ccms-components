@@ -12,8 +12,12 @@
 	DemoCtrl.$inject = [];
 	function DemoCtrl($scope) {
 
-		// 是否支持复选框
+		// 是否支持选择框
 		this.supportCheckbox = true;
+
+		// 是否为单选模式
+		this.isRadioModel = false;
+
 
 		// 是否支持搜索框
 		this.supportSearch = true;
@@ -61,7 +65,6 @@
 			id: 1,
 			name: '所有',
 			pId: null,
-			isRadioModel: true,
 			children: [
 				{
 					id: 11,
