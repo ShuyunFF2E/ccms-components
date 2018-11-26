@@ -4,16 +4,16 @@ import Handler from './Handler';
 
 @Inject('$ccTips', '$ccModal', '$scope')
 export default class TreeCtrl {
-
 	// 右键菜单样式
 	contextMenuStyle = {};
 
 	// 存储右键菜单项
 	contextMenuItems = null;
 
+	// 存储树所需要的数据和事件
+	treeMap = {};
+
 	$onInit() {
-		// 初始化handner
-		Handler.init(this);
 		this.documentListener = document.addEventListener('click', () => {
 			this.hideContextMenu();
 		}, true);
@@ -24,8 +24,10 @@ export default class TreeCtrl {
 	 * @param treeData
 	 */
 	initData(treeData) {
-		Store.initData(treeData);
-		this.treeData = Store.treeData;
+		// TODO 这个map实例化后，还是同一个map。 与直接使用Handler和Store没什么区别
+		this.treeMap.handler = new Handler(this);
+		this.treeMap.store = new Store(treeData);
+		this.treeData = this.treeMap.store.treeData;
 	}
 
 	/**
@@ -33,7 +35,7 @@ export default class TreeCtrl {
 	 * @returns {*|string}
 	 */
 	get activeNode() {
-		return Store.activeNode;
+		return this.treeMap.store.activeNode;
 	}
 
 	/**
@@ -41,7 +43,7 @@ export default class TreeCtrl {
 	 * @returns {*|string}
 	 */
 	get selectedId() {
-		return Store.activeNode && Store.activeNode.id;
+		return this.treeMap.store.activeNode && this.treeMap.store.activeNode.id;
 	}
 
 	/**
@@ -50,7 +52,7 @@ export default class TreeCtrl {
 	 * @param $event
 	 */
 	onOpenMenu = (node, $event) => {
-		Store.updateActiveNode(node);
+		this.treeMap.store.updateActiveNode(node);
 		this.contextMenuStyle = {
 			display: 'block',
 			left: `${$event.pageX}px`,
@@ -79,8 +81,8 @@ export default class TreeCtrl {
 			if (node.children && node.children.length) {
 				this._$ccTips.error('该节点含有子节点，无法删除！');
 			} else {
-				Handler.onRemoveAction && Handler.onRemoveAction(node).then(() => {
-					Store.removeChild(node);
+				this.treeMap.handler.onRemoveAction && this.treeMap.handler.onRemoveAction(node).then(() => {
+					this.treeMap.store.removeChild(node);
 					this._$scope.$apply();
 				})
 				.catch(msg => {
@@ -95,7 +97,7 @@ export default class TreeCtrl {
 	 * @param node
 	 */
 	upateNodeEditing = node => {
-		Store.updateById(node.id, { isEditing: true });
+		this.treeMap.store.updateById(node.id, { isEditing: true });
 	};
 
 	/**
@@ -106,7 +108,7 @@ export default class TreeCtrl {
 		// 新增的节点，无id
 		const blankNode = {name: '', pId: parentNode.id, level: parentNode.level + 1, isEditing: true};
 
-		Store.addChild(parentNode.id, blankNode);
+		this.treeMap.store.addChild(parentNode.id, blankNode);
 	};
 
 	/**
@@ -114,19 +116,19 @@ export default class TreeCtrl {
 	 */
 	getContextMenus() {
 		const menuList = [];
-		Handler.onAddAction && menuList.push({
+		this.treeMap.handler.onAddAction && menuList.push({
 			name: '新增', click: node => {
 				this.addBlankNode(node);
 			}
 		});
 
-		Handler.onRemoveAction && menuList.push({
+		this.treeMap.handler.onRemoveAction && menuList.push({
 			name: '删除', click: node => {
 				this.removeNode(node);
 			}
 		});
 
-		Handler.onRenameAction && menuList.push({
+		this.treeMap.handler.onRenameAction && menuList.push({
 			name: '重命名', click: node => {
 				this.upateNodeEditing(node);
 			}

@@ -2,6 +2,9 @@
  * 事件回调处理器
  */
 class Handler {
+	constructor(treeObject) {
+		this.init(treeObject);
+	}
 	/**
 	 * 配置事件回调
 	 * @param name
@@ -25,4 +28,4 @@ class Handler {
 	}
 }
 
-export default new Handler();
+export default Handler;

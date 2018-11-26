@@ -4,10 +4,11 @@
 <link rel="import" href="../../common/layout.html">
 
 <main ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<h2> 搜索、复选 </h2>
+	<h2> 搜索、菜单、复选 </h2>
 	<cc-tree
 		data="ctrl.tree_one.data"
 		support-checkbox="ctrl.tree_one.supportCheckbox"
+		support-menu="ctrl.tree_one.supportMenu"
 		is-radio-model="ctrl.tree_one.isRadioModel"
 		support-search="ctrl.tree_one.supportSearch"
 		on-click-action="ctrl.tree_one.onClickAction"
@@ -17,7 +18,7 @@
 		on-selected-action="ctrl.tree_one.onSelectedAction">
 	</cc-tree>
 
-	<h2> 无搜索、带单选 </h2>
+	<h2> 无搜索、无菜单、带单选 </h2>
 	<cc-tree
 		data="ctrl.tree_two.data"
 		support-checkbox="ctrl.tree_two.supportCheckbox"
@@ -31,7 +32,7 @@
 	</cc-tree>
 
 
-	<h2> 无搜索、无选择 </h2>
+	<h2> 无搜索、无菜单、无选择 </h2>
 	<cc-tree
 		data="ctrl.tree_three.data"
 		support-checkbox="ctrl.tree_three.supportCheckbox"

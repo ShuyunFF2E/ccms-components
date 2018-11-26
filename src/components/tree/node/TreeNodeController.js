@@ -1,7 +1,5 @@
 import '../index.scss';
 import Inject from 'angular-es-utils/decorators/Inject';
-import Store from '../Store';
-import Handler from '../Handler';
 
 @Inject('$ccTips', '$scope')
 export default class TreeNodeController {
@@ -33,9 +31,9 @@ export default class TreeNodeController {
 	 * @param $event
 	 */
 	onClick($event) {
-		Store.updateActiveNode(this.node);
+		this.treeMap.store.updateActiveNode(this.node);
 
-		Handler.onClickAction && Handler.onClickAction(this.node);
+		this.treeMap.handler.onClickAction && this.treeMap.handler.onClickAction(this.node);
 	}
 
 	/**
@@ -56,7 +54,7 @@ export default class TreeNodeController {
 		}
 
 		// 执行选中事件
-		Handler.onSelectedAction && Handler.onSelectedAction(this.node, Store.selectedNodes);
+		this.treeMap.handler.onSelectedAction && this.treeMap.handler.onSelectedAction(this.node, this.treeMap.store.selectedNodes);
 	}
 
 	/**
@@ -64,7 +62,7 @@ export default class TreeNodeController {
 	 */
 	changeForRadio() {
 		// 清除之前的选中状态
-		Store.selectedNodes.forEach(item => {
+		this.treeMap.store.selectedNodes.forEach(item => {
 			item.checked = false;
 		});
 		this.node.checked = true;
@@ -89,7 +87,7 @@ export default class TreeNodeController {
 
 		// 变更父项选中状态
 		const changeParent = parentId => {
-			const parentNode = Store.findNodeById(parentId);
+			const parentNode = this.treeMap.store.findNodeById(parentId);
 			if (!parentNode) {
 				return;
 			}
@@ -132,7 +130,7 @@ export default class TreeNodeController {
 	onExitIconClickHander() {
 		// 如果是新增节点，则删除该空白节点
 		if (!this.node.id) {
-			Store.removeChild(this.node);
+			this.treeMap.store.removeChild(this.node);
 		} else {
 			this.name = this.node.name;
 			this.exitEditing();
@@ -144,13 +142,10 @@ export default class TreeNodeController {
 	 * @param event
 	 */
 	onInputChangeHandler(event) {
-		const isNewNode = !this.node.id;
-		const enterHandler = isNewNode ? this.insertHandler : this.updateHandler;
-
 		switch (event.keyCode) {
 			// enter
 			case 13:
-				enterHandler(this.name);
+				this.onEditorNode();
 				break;
 			// esc
 			case 27:
@@ -162,10 +157,19 @@ export default class TreeNodeController {
 	}
 
 	/**
+	 * 节点编辑保存事件
+	 */
+	onEditorNode() {
+		const isNewNode = !this.node.id;
+		const enterHandler = isNewNode ? this.insertHandler : this.updateHandler;
+		enterHandler(this.name);
+	}
+
+	/**
 	 * 一系列内部方法
 	 */
 	updateStatus(status) {
-		return Store.updateById(this.node.id, status);
+		return this.treeMap.store.updateById(this.node.id, status);
 	}
 
 	/**
@@ -179,7 +183,7 @@ export default class TreeNodeController {
 			if (!name.trim()) {
 				reject('名称不能为空!');
 			}
-			const sameNameNode = Store.findNodeByParam('name', name);
+			const sameNameNode = this.treeMap.store.findNodeByParam('name', name);
 			if (!sameNameNode || sameNameNode.id === nowId) {
 				reslove();
 			} else {
@@ -195,11 +199,11 @@ export default class TreeNodeController {
 	 */
 	insertHandler = name => {
 		return this.checkSameName(name).then(() => {
-			const parentNode = Store.activeNode;
-			Handler.onAddAction	&& Handler.onAddAction(parentNode.id, name)
+			const parentNode = this.treeMap.store.activeNode;
+			this.treeMap.handler.onAddAction && this.treeMap.handler.onAddAction(parentNode.id, name)
 				.then(({id}) => {
 					// 后端返回id后将id赋值给当前Node
-					Store.updateByEditing({ id, name, isEditing: false });
+					this.treeMap.store.updateByEditing({ id, name, isEditing: false });
 					this._$scope.$digest();
 				})
 				.catch(msg => {
@@ -218,10 +222,10 @@ export default class TreeNodeController {
 	updateHandler = name => {
 		const { id } = this.node;
 		this.checkSameName(name, id).then(() => {
-			Handler.onRenameAction && Handler.onRenameAction(this.node)
+			this.treeMap.handler.onRenameAction && this.treeMap.handler.onRenameAction(this.node)
 				.then(() => {
 					// 更新成功后，清除正在编辑状态
-					Store.updateByEditing({ name, isEditing: false });
+					this.treeMap.store.updateByEditing({ name, isEditing: false });
 					this._$scope.$digest();
 				})
 				.catch(msg => {

@@ -1,6 +1,7 @@
 <section class="cc-tree-list">
 	<div ng-repeat="node in $ctrl.nodes | filter: $ctrl.filterHandler">
 		<cc-tree-node
+			tree-map="$ctrl.treeMap"
 			node="node"
 			support-checkbox="$ctrl.supportCheckbox"
 			is-radio-model="$ctrl.isRadioModel"

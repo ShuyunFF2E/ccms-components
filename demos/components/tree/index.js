@@ -11,8 +11,11 @@
 
 	DemoCtrl.$inject = [];
 	function DemoCtrl($scope) {
-		// 搜索、复选
+		// 搜索、菜单、复选
 		this.tree_one = {
+			// 是否支持菜单
+			supportMenu: true,
+
 			// 是否支持选择框
 			supportCheckbox: true,
 
@@ -24,7 +27,7 @@
 
 			// 节点点击事件
 			onClickAction: node => {
-				console.log('当前点击的节点id：' + node.id, '节点名称：' + node.name);
+				console.log('tree_one当前点击的节点id：' + node.id, '节点名称：' + node.name);
 			},
 
 			// 右键菜单: 新增节点处理器
@@ -110,8 +113,9 @@
 		};
 
 
-		// 无搜索、带单选
+		// 无搜索、无菜单、带单选
 		this.tree_two = {
+
 			// 是否支持选择框
 			supportCheckbox: true,
 
@@ -123,7 +127,7 @@
 
 			// 节点点击事件
 			onClickAction: node => {
-				console.log('当前点击的节点id：' + node.id, '节点名称：' + node.name);
+				console.log('tree_two当前点击的节点id：' + node.id, '节点名称：' + node.name);
 			},
 
 			// 右键菜单: 新增节点处理器
@@ -209,11 +213,12 @@
 		};
 
 
-		// 无搜索、无选择
+		// 无搜索、无选择、无菜单
 		this.tree_three = {
+
 			// 节点点击事件
 			onClickAction: node => {
-				console.log('当前点击的节点id：' + node.id, '节点名称：' + node.name);
+				console.log('tree_three当前点击的节点id：' + node.id, '节点名称：' + node.name);
 			},
 
 			// 右键菜单: 新增节点处理器

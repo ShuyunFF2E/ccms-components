@@ -23,8 +23,8 @@ const rightClickFactory = $parse => {
 };
 
 export default angular
-.module('ccms.components.treeMenu', [])
-.component('ccTreeMenu', ddo)
-.directive('ccTreeRightClick', rightClickFactory)
+	.module('ccms.components.treeMenu', [])
+	.component('ccTreeMenu', ddo)
+	.directive('ccTreeRightClick', rightClickFactory)
 	.name;
 

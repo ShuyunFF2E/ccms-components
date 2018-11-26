@@ -1,4 +1,3 @@
-import Store from '../Store';
 export default class TreeSearchController {
 	searchText = '';
 
@@ -6,7 +5,7 @@ export default class TreeSearchController {
 	 * 搜索事件
 	 */
 	onSearch() {
-		Store.filterText = this.searchText;
+		this.treeMap.store.filterText = this.searchText;
 	}
 
 	/**

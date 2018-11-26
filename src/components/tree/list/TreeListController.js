@@ -1,4 +1,3 @@
-import Store from '../Store';
 export default class TreeListCtrl {
 	hasChildren(node) {
 		return node.children && node.children.length;
@@ -10,7 +9,7 @@ export default class TreeListCtrl {
 	 * @returns {*}
 	 */
 	filterHandler = node => {
-		const test = this._filterHandler(node, Store.filterText);
+		const test = this._filterHandler(node, this.treeMap.store.filterText);
 		return test;
 	};
 

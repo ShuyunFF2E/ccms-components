@@ -3,14 +3,16 @@
 		ng-if="$ctrl.supportSearch"
 	></cc-tree-search>
 	<cc-tree-list
+		tree-map="$ctrl.treeMap"
 		nodes="$ctrl.treeData"
 		support-checkbox="$ctrl.supportCheckbox"
 		is-radio-model="$ctrl.isRadioModel"
 		on-open-menu="$ctrl.onOpenMenu"
 	></cc-tree-list>
 	<cc-tree-menu
+		tree-map="$ctrl.treeMap"
 		cm-style="$ctrl.contextMenuStyle"
 		active-node="$ctrl.activeNode"
 		items="$ctrl.contextMenuItems"
-		ng-if="$ctrl.contextMenuItems && $ctrl.contextMenuItems.length > 0"></cc-tree-menu>
+		ng-if="$ctrl.supportMenu && $ctrl.contextMenuItems && $ctrl.contextMenuItems.length > 0"></cc-tree-menu>
 </section>

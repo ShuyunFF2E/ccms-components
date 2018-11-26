@@ -3,6 +3,9 @@
  */
 class Store {
 	treeData = [];
+	constructor(treeData) {
+		this.initData(treeData);
+	}
 
 	// 当前节点
 	activeNode = null;
@@ -154,7 +157,6 @@ class Store {
 		const node = this.findNodeByParam('isEditing', true);
 		return Object.assign(node, updatePart);
 	}
-
 }
 
-export default new Store();
+export default Store;

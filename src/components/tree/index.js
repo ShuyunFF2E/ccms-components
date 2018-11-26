@@ -20,6 +20,7 @@ const treeDDO = {
 	template: treeTemplate,
 	bindings: {
 		data: '<',
+		supportMenu: '<?',
 		supportSearch: '<?',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
@@ -36,6 +37,7 @@ const treeListDDO = {
 	controller: treeListController,
 	template: treeListTemplate,
 	bindings: {
+		treeMap: '<',
 		nodes: '<',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
@@ -48,6 +50,7 @@ const treeNodeDDO = {
 	controller: treeNodeController,
 	template: treeNodeTemplate,
 	bindings: {
+		treeMap: '<',
 		node: '<',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',

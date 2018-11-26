@@ -32,8 +32,15 @@
 				margin-right: 0.5em;
 			}
 
+			> .icon-edit {
+				font-size: 0.8em;
+				margin-right: 8px;
+			}
 			> .icon-close {
 				font-size: 0.8em;
+			}
+			> .iconfont:hover{
+				color: #0083BA;
 			}
 		}
 		.fake-radio{
