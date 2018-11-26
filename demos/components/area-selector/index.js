@@ -121,6 +121,42 @@
 					});
 			};
 
+			$scope.responseWithIdAndNameUnification = function () {
+
+				var areaSelectorInstance = $ccAreaSelector
+
+					.areaSelector({
+						areaSelectorData: [],
+						valueFormat: $ccAreaSelector.ID_ONLY,
+						platform: 'unification'
+					})
+
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
+			$scope.responseWithNameUnification = function () {
+
+				var areaSelectorInstance = $ccAreaSelector
+
+					.areaSelector({
+						areaSelectorData: [],
+						valueFormat: $ccAreaSelector.ID_NAME,
+						platform: 'unification'
+					})
+
+					.open().result.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('----------cancel---------');
+					});
+			};
+
 
 			const markingData = [
 				{id: "4,110000,110100", name: "华北地区 > 北京市 > 市辖区"},

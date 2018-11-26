@@ -19,6 +19,7 @@ export default function AreaSelectorProvider() {
 					if (_platform === 'all') {
 						getData($http, 'jd');
 						getData($http, 'tb');
+						getData($http, 'unification');
 					} else {
 						getData($http, _platform);
 					}

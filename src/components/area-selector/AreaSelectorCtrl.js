@@ -74,6 +74,12 @@ export default class AreaSelectorCtrl {
 				localStorage.setItem(localStorageKeys[this.platform], angular.toJson(areas));
 			}
 			return angular.fromJson(localStorage.getItem(localStorageKeys[this.platform]));
+		} else if (this.platform === 'unification') {
+			if (!localStorage.getItem(localStorageKeys[this.platform])) {
+				const areas = require('./unificationAreas.json');
+				localStorage.setItem(localStorageKeys[this.platform], angular.toJson(areas));
+			}
+			return angular.fromJson(localStorage.getItem(localStorageKeys[this.platform]));
 		}
 	}
 
