@@ -88,12 +88,14 @@ export default class TreeNodeController {
 		// 变更父项选中状态
 		const changeParent = parentId => {
 			const parentNode = this.treeMap.store.findNodeById(parentId);
+
 			if (!parentNode) {
 				return;
 			}
 			let childrenCheckedNumber = 0;
 			parentNode.children.forEach(item => {
-				item.checked && childrenCheckedNumber++;
+				// checked存在三种情况: true, false, 'indeterminate', 所以这里需要与true进行比较
+				item.checked === true && childrenCheckedNumber++;
 			});
 
 			// 子项全部都未选中
@@ -106,7 +108,7 @@ export default class TreeNodeController {
 				// 子选项部分选中
 				parentNode.checked = 'indeterminate';
 			}
-
+			parentId === 1 && console.log(childrenCheckedNumber, parentNode.children.length);
 			if (parentNode.pId) {
 				changeParent(parentNode.pId);
 			}
