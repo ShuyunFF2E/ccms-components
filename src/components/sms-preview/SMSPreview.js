@@ -32,7 +32,7 @@ export default {
 
 		const keywordPrefix = scope.opts.keywordPrefix || defaultKeywordPrefix;
 		const keywordSuffix = scope.opts.keywordSuffix || defaultKeywordSuffix;
-		const keywordEnter = defaultKeywordEnter;
+		this.keywordEnter = defaultKeywordEnter;
 
 		const trimContent = angular.isDefined(opts.trimContent) ? opts.trimContent : true;
 		scope.smsPreviewStatText = trimContent ? '不含变量' : '含空格，不含变量';
@@ -52,12 +52,12 @@ export default {
 			// 字数统计
 			scope.totalChars = opts.totalCharts = text
 					.replace(varReg, '')
-					.replace(new RegExp(keywordEnter, 'g'), '').length +
+					.replace(new RegExp(this.keywordEnter, 'g'), '').length +
 				(gatewayType === 1 || gatewayType === 3 || gatewayType === 4 || gatewayType === 5 ? signature.length : 0) +
 				customSignature.length +
 				unsubscribeText.length;
 			// 换行统计
-			scope.newLineNum = opts.newLineNum = text.split(keywordEnter).length - 1;
+			scope.newLineNum = opts.newLineNum = text.split(this.keywordEnter).length - 1;
 
 			// 变量统计
 			const varMatch = text.match(varReg);
@@ -74,7 +74,7 @@ export default {
 	 3,4: 备案签名 +【自定义签名】+ 短信
 	 */
 	generateText(preview, unsubscribeText, signature, customSignature, gatewayType) {
-		const content = preview.split('þ_enter_þ');
+		const content = preview.split(this.keywordEnter);
 		const len = content.length;
 
 		switch (gatewayType) {
