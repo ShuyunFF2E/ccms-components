@@ -4,7 +4,10 @@ import TreeSearchController from './TreeSearchController';
 
 const ddo = {
 	controller: TreeSearchController,
-	template
+	template,
+	bindings: {
+		treeMap: '<'
+	}
 };
 
 
