@@ -1,7 +1,7 @@
 import '../index.scss';
 import Inject from 'angular-es-utils/decorators/Inject';
 
-@Inject('$ccTips', '$scope')
+@Inject('$ccTips', '$scope', '$timeout')
 export default class TreeNodeController {
 	constructor() {
 		this.name = this.node.name;
@@ -205,8 +205,9 @@ export default class TreeNodeController {
 			this.treeMap.handler.onAddAction && this.treeMap.handler.onAddAction(parentNode.id, name)
 				.then(({id}) => {
 					// 后端返回id后将id赋值给当前Node
-					this.treeMap.store.updateByEditing({ id, name, isEditing: false });
-					this._$scope.$digest();
+					this._$timeout(() => {
+						this.treeMap.store.updateByEditing({ id, name, isEditing: false });
+					});
 				})
 				.catch(msg => {
 					this._$ccTips.error(msg || '新增失败，请重试');
@@ -227,8 +228,9 @@ export default class TreeNodeController {
 			this.treeMap.handler.onRenameAction && this.treeMap.handler.onRenameAction(this.node)
 				.then(() => {
 					// 更新成功后，清除正在编辑状态
-					this.treeMap.store.updateByEditing({ name, isEditing: false });
-					this._$scope.$digest();
+					this._$timeout(() => {
+						this.treeMap.store.updateByEditing({ name, isEditing: false });
+					});
 				})
 				.catch(msg => {
 					this._$ccTips.error(msg || '重命名失败，请重试');

@@ -2,7 +2,7 @@ import Inject from 'angular-es-utils/decorators/Inject';
 import Store from './Store';
 import Handler from './Handler';
 
-@Inject('$ccTips', '$ccModal', '$scope')
+@Inject('$ccTips', '$ccModal', '$scope', '$timeout')
 export default class TreeCtrl {
 	// 右键菜单样式
 	contextMenuStyle = {};
@@ -82,8 +82,9 @@ export default class TreeCtrl {
 				this._$ccTips.error('该节点含有子节点，无法删除！');
 			} else {
 				this.treeMap.handler.onRemoveAction && this.treeMap.handler.onRemoveAction(node).then(() => {
-					this.treeMap.store.removeChild(node);
-					this._$scope.$apply();
+					this._$timeout(() => {
+						this.treeMap.store.removeChild(node);
+					});
 				})
 				.catch(msg => {
 					this._$ccTips.error(msg || '节点删除失败');
