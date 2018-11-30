@@ -231,9 +231,9 @@
 			},
 
 			// 右键菜单: 重命名节点处理器
-			onRenameAction: node => {
+			onRenameAction: (node, name) => {
 				// 这里需要模拟一条API请求
-				console.info(`向后端发送了一条修改请求，参数为{id:${node.id}, name: ${node.name}}`);
+				console.info(`向后端发送了一条修改请求，参数为{id:${node.id}, name: ${name}}`);
 				return new Promise((resolve, reject) => {
 					resolve();
 					// reject('重命名失败了');

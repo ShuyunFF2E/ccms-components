@@ -78,9 +78,10 @@ this.onRemoveAction = function(node) {
 /**
  * 节点重命名事件
  * @param node: 将要重命名的节点对象
+ * @param name: 变更的名称
  * @returns promise
  */
-this.onRenameAction = function(node) {
+this.onRenameAction = function(node, name) {
 	return new Promise((resolve, reject) => {
 		resolve();
 		// reject('重命名失败了');

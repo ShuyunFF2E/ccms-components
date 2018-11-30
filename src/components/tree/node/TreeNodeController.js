@@ -225,7 +225,7 @@ export default class TreeNodeController {
 	updateHandler = name => {
 		const { id } = this.node;
 		this.checkSameName(name, id).then(() => {
-			this.treeMap.handler.onRenameAction && this.treeMap.handler.onRenameAction(this.node)
+			this.treeMap.handler.onRenameAction && this.treeMap.handler.onRenameAction(this.node, name)
 				.then(() => {
 					// 更新成功后，清除正在编辑状态
 					this._$timeout(() => {
