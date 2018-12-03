@@ -6,16 +6,18 @@
 const data = [
 	{
 		id: 1,
+		pId: 0,
 		name: 'name',
 		children: [],
-		isClosed: false,  // 是否为闭合状态
-		isSelected: false,   // 是否处于被选中状态
-		disableAdd: false, // 该节点禁止新增功能
-		disableRemove: false, // 该节点禁止删除功能
-		disableRename: false, // 该节点禁止重命名功能
+		isClosed: false,  // 是否为闭合状态  `非必填项`
+		isSelected: false,   // 是否处于被选中状态 `非必填项`
+		disableAdd: false, // 该节点禁止新增功能 `非必填项`
+		disableRemove: false, // 该节点禁止删除功能 `非必填项`
+		disableRename: false, // 该节点禁止重命名功能 `非必填项`
 	}
 ];
 ```
+- maxLevel: 最大可新增层级，只有小于该数值的节点才可以新增节点 `Number`
 - supportMenu: 是否支持右键菜单功能 `Boolean`
 - supportSearch: 是否支持搜索功能 `Boolean`
 - supportCheckbox: 是否支持选择功能 `Boolean`

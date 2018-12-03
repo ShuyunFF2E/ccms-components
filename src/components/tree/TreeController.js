@@ -34,9 +34,9 @@ export default class TreeCtrl {
 	 * 初始化数据
 	 * @param treeData
 	 */
-	initData(treeData) {
+	initData(treeData, maxLevel) {
 		this.treeMap.handler = new Handler(this);
-		this.treeMap.store = new Store(treeData);
+		this.treeMap.store = new Store(treeData, maxLevel);
 		this.treeData = this.treeMap.store.treeData;
 	}
 
@@ -156,9 +156,9 @@ export default class TreeCtrl {
 	}
 
 	$onChanges(changeObj) {
-		const {data: { currentValue: treeData } = {}} = changeObj;
-		if (treeData) {
-			this.initData(treeData);
+		const {data, maxLevel = {currentValue: undefined}} = changeObj;
+		if (data && data.currentValue) {
+			this.initData(data.currentValue, maxLevel.currentValue);
 		}
 	}
 

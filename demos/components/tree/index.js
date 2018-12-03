@@ -16,6 +16,9 @@
 			// 是否支持菜单
 			supportMenu: true,
 
+			// 最大层级
+			maxLevel: 3,
+
 			// 是否支持选择框
 			supportCheckbox: true,
 

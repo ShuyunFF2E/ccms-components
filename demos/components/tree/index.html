@@ -4,9 +4,10 @@
 <link rel="import" href="../../common/layout.html">
 
 <main ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<h2> 搜索、菜单、复选 </h2>
+	<h2> 搜索、菜单、复选、最大可新增层级为3 </h2>
 	<cc-tree
 		data="ctrl.tree_one.data"
+		max-level="ctrl.tree_one.maxLevel"
 		support-checkbox="ctrl.tree_one.supportCheckbox"
 		support-menu="ctrl.tree_one.supportMenu"
 		is-radio-model="ctrl.tree_one.isRadioModel"

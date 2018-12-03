@@ -8,8 +8,12 @@ class Store {
 	// 过滤文本
 	filterText = '';
 
-	constructor(treeData) {
-		this.initData(treeData);
+	/**
+	 * @param treeData
+	 * @param maxLevel 允许的最大层级
+	 */
+	constructor(treeData, maxLevel) {
+		this.initData(treeData, maxLevel);
 	}
 
 	// 当前节点
@@ -47,14 +51,20 @@ class Store {
 	/**
 	 * 初始化数据
 	 * @param treeData
+	 * @param maxLevel
 	 * @returns {*}
 	 */
-	initData(treeData) {
+	initData(treeData, maxLevel) {
 		const format = (node, level) => {
 			const { children } = node;
 
 			// 层级
 			node.level = level;
+
+			// 超过最大层级的节点将不允许新增节点
+			if (maxLevel && node.level >= maxLevel) {
+				node.disableAdd = true;
+			}
 
 			if (!children || !children.length) {
 				return;
@@ -68,6 +78,7 @@ class Store {
 		this.treeData = treeData.map(item => {
 			return format(item, 1);
 		});
+		console.log(this.treeData);
 	}
 
 	/**
