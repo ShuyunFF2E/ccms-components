@@ -7,6 +7,7 @@ const ddo = {
 	template,
 	bindings: {
 		treeMap: '<',
+		searchPlaceholder: '<?',
 		onDone: '&'
 	}
 };

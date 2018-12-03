@@ -17,6 +17,7 @@ const data = [
 	}
 ];
 ```
+- searchPlaceholder: 为空提示 `String`
 - maxLevel: 最大可新增层级，只有小于该数值的节点才可以新增节点 `Number`
 - supportMenu: 是否支持右键菜单功能 `Boolean`
 - supportSearch: 是否支持搜索功能 `Boolean`

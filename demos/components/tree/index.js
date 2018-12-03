@@ -16,6 +16,9 @@
 			// 是否支持菜单
 			supportMenu: true,
 
+			// 为空提示
+			searchPlaceholder: '请输入搜索词',
+
 			// 最大层级
 			maxLevel: 3,
 

@@ -20,6 +20,7 @@ const treeDDO = {
 	template: treeTemplate,
 	bindings: {
 		data: '<',
+		searchPlaceholder: '<?',
 		maxLevel: '<?',
 		supportMenu: '<?',
 		supportSearch: '<?',
