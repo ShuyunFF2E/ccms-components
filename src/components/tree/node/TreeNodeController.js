@@ -19,6 +19,15 @@ export default class TreeNodeController {
 	}
 
 	/**
+	 * 节点文本
+	 * @returns {*}
+	 */
+	get nodeText() {
+		const searchText = this.treeMap.searchText;
+		return searchText ? this.name.replace(searchText, `<span class="hot-text">${searchText}</span>`) : this.node.name;
+	}
+
+	/**
 	 *  切换子节点折叠状态
 	 */
 	toggleExpandHandler(e) {

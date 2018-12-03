@@ -16,7 +16,7 @@
 			ng-model="$ctrl.node.checked"
 			ng-change="$ctrl.onChangeChecked('checkbox')">
 			<icon class="iconfont icon-folder"></icon>
-			<span class="tree-text" ng-bind="$ctrl.name"></span>
+			<span class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
 		</cc-checkbox>
 
 		<div class="fake-radio"
@@ -25,13 +25,13 @@
 			<div class="cc-radio" ng-class="{ 'checked': $ctrl.node.checked }">
 				<div class="radio-button-icon"></div>
 				<icon class="iconfont icon-folder"></icon>
-				<span class="tree-text" ng-bind="$ctrl.name"></span>
+				<span class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
 			</div>
 		</div>
 
 		<div ng-if="!$ctrl.supportCheckbox">
 			<icon class="iconfont icon-folder"></icon>
-			<span class="tree-text" ng-bind="$ctrl.name"></span>
+			<span class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
 		</div>
 	</div>
 	<div ng-if="$ctrl.node.isEditing"
