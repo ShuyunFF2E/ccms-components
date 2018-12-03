@@ -5,7 +5,7 @@ export default class TreeSearchController {
 	 * 搜索事件
 	 */
 	onSearch() {
-		this.treeMap.store.filterText = this.searchText;
+		this.onDone({searchText: this.searchText});
 	}
 
 	/**

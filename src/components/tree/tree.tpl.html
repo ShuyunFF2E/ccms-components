@@ -1,11 +1,13 @@
 <section class="cc-tree">
 	<cc-tree-search
 		tree-map="$ctrl.treeMap"
+		on-done="$ctrl.updateSearchText(searchText)"
 		ng-if="$ctrl.supportSearch"
 	></cc-tree-search>
 	<cc-tree-list
 		tree-map="$ctrl.treeMap"
 		nodes="$ctrl.treeData"
+		search-text="$ctrl.searchText"
 		support-checkbox="$ctrl.supportCheckbox"
 		is-radio-model="$ctrl.isRadioModel"
 		on-open-menu="$ctrl.onOpenMenu"

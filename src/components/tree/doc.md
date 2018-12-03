@@ -9,7 +9,10 @@ const data = [
 		name: 'name',
 		children: [],
 		isClosed: false,  // 是否为闭合状态
-		isSelected: false   // 是否处于被选中状态
+		isSelected: false,   // 是否处于被选中状态
+		disableAdd: false, // 该节点禁止新增功能
+		disableRemove: false, // 该节点禁止删除功能
+		disableRename: false, // 该节点禁止重命名功能
 	}
 ];
 ```
@@ -78,10 +81,10 @@ this.onRemoveAction = function(node) {
 /**
  * 节点重命名事件
  * @param node: 将要重命名的节点对象
- * @param name: 变更的名称
+ * @param newName: 变更的名称
  * @returns promise
  */
-this.onRenameAction = function(node, name) {
+this.onRenameAction = function(node, newName) {
 	return new Promise((resolve, reject) => {
 		resolve();
 		// reject('重命名失败了');

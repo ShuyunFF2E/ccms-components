@@ -1,7 +1,8 @@
 <section class="cc-tree-menu"
 		 ng-style="$ctrl.cmStyle"
 		 >
-	<li class="item" ng-repeat="item in $ctrl.items track by $index" ng-click="item.click($ctrl.activeNode)">
-		{{item.name}}
+	<li class="item" ng-repeat="item in $ctrl.items track by $index" ng-class="{'disabled': item.disabled}">
+		<span ng-bind="item.name" ng-if="!item.disabled" ng-click="item.click($ctrl.activeNode)"></span>
+		<span ng-bind="item.name" ng-if="item.disabled"></span>
 	</li>
 </section>

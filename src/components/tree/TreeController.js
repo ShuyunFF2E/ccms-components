@@ -4,6 +4,9 @@ import Handler from './Handler';
 
 @Inject('$ccTips', '$ccModal', '$scope', '$timeout')
 export default class TreeCtrl {
+	// 搜索词
+	searchText = '';
+
 	// 右键菜单样式
 	contextMenuStyle = {};
 
@@ -20,11 +23,18 @@ export default class TreeCtrl {
 	}
 
 	/**
+	 * 更新搜索词
+	 * @param searchText
+	 */
+	updateSearchText(searchText) {
+		this.treeMap.searchText	= searchText;
+	}
+
+	/**
 	 * 初始化数据
 	 * @param treeData
 	 */
 	initData(treeData) {
-		// TODO 这个map实例化后，还是同一个map。 与直接使用Handler和Store没什么区别
 		this.treeMap.handler = new Handler(this);
 		this.treeMap.store = new Store(treeData);
 		this.treeData = this.treeMap.store.treeData;
@@ -59,14 +69,8 @@ export default class TreeCtrl {
 			top: `${$event.pageY + 10}px`
 		};
 
-		// 已经存在右键菜单数据
-		if (this.contextMenuItems) {
-			return;
-		}
-
 		// 菜单项
 		this.contextMenuItems = this.getContextMenus(node);
-
 		$event.stopPropagation();
 	};
 
@@ -114,25 +118,32 @@ export default class TreeCtrl {
 
 	/**
 	 * 获取菜单项
+	 * @param node
 	 */
-	getContextMenus() {
+	getContextMenus(node) {
 		const menuList = [];
 		this.treeMap.handler.onAddAction && menuList.push({
-			name: '新增', click: node => {
+			name: '新增',
+			click: node => {
 				this.addBlankNode(node);
-			}
+			},
+			disabled: node.disableAdd
 		});
 
 		this.treeMap.handler.onRemoveAction && menuList.push({
-			name: '删除', click: node => {
+			name: '删除',
+			click: node => {
 				this.removeNode(node);
-			}
+			},
+			disabled: node.disableRemove
 		});
 
 		this.treeMap.handler.onRenameAction && menuList.push({
-			name: '重命名', click: node => {
+			name: '重命名',
+			click: node => {
 				this.upateNodeEditing(node);
-			}
+			},
+			disabled: node.disableRename
 		});
 		return menuList;
 	}

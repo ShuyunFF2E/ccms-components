@@ -2,7 +2,12 @@
  * Tree 数据管理
  */
 class Store {
+	// 数据存储
 	treeData = [];
+
+	// 过滤文本
+	filterText = '';
+
 	constructor(treeData) {
 		this.initData(treeData);
 	}

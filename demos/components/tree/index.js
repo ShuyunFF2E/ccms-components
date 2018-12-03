@@ -71,8 +71,9 @@
 				children: [
 					{
 						id: 11,
-						name: '85',
+						name: '禁止新增节点',
 						pId: 1,
+						disableAdd: true,
 						children: [
 							{
 								id: 111,
@@ -83,13 +84,15 @@
 						]
 					}, {
 						id: 12,
-						name: 'WYY分',
+						name: '禁止删除节点',
 						pId: 1,
+						disableRemove: true,
 						children: [
 							{
 								id: 121,
-								name: 'miaomiaozhu0620',
+								name: '禁止重命名节点',
 								pId: 12,
+								disableRename: true,
 								children: [
 									{
 										id: 1211,

@@ -39,6 +39,7 @@ const treeListDDO = {
 	bindings: {
 		treeMap: '<',
 		nodes: '<',
+		searchText: '<',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
 		onOpenMenu: '<?'
@@ -52,6 +53,7 @@ const treeNodeDDO = {
 	bindings: {
 		treeMap: '<',
 		node: '<',
+		searchText: '<',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
 		onOpenMenu: '<?'

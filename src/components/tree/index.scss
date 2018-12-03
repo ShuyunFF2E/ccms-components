@@ -73,7 +73,7 @@
 			margin: 0 5px 0 2px;
 		}
 
-		> .name {
+		.tree-text {
 			white-space: nowrap;
 		}
 		.cc-checkbox .cc-checkbox-input{
@@ -93,10 +93,16 @@
 		> li {
 			height: 22px;
 			line-height: 22px;
-			padding-left: 16px;
 			cursor: pointer;
-
-			&:hover {
+		  	> span{
+			  display: block;
+			  padding-left: 16px;
+			}
+		  	&.disabled{
+			  cursor: not-allowed;
+			  opacity: .6;
+			}
+			&:hover:not(.disabled) {
 				background-color: #e9e9e9;
 			}
 		}

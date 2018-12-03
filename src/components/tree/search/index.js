@@ -6,7 +6,8 @@ const ddo = {
 	controller: TreeSearchController,
 	template,
 	bindings: {
-		treeMap: '<'
+		treeMap: '<',
+		onDone: '&'
 	}
 };
 

@@ -16,7 +16,7 @@
 			ng-model="$ctrl.node.checked"
 			ng-change="$ctrl.onChangeChecked('checkbox')">
 			<icon class="iconfont icon-folder"></icon>
-			<span class="name" ng-bind="$ctrl.name"></span>
+			<span class="tree-text" ng-bind="$ctrl.name"></span>
 		</cc-checkbox>
 
 		<div class="fake-radio"
@@ -25,13 +25,13 @@
 			<div class="cc-radio" ng-class="{ 'checked': $ctrl.node.checked }">
 				<div class="radio-button-icon"></div>
 				<icon class="iconfont icon-folder"></icon>
-				<span class="name" ng-bind="$ctrl.name"></span>
+				<span class="tree-text" ng-bind="$ctrl.name"></span>
 			</div>
 		</div>
 
 		<div ng-if="!$ctrl.supportCheckbox">
 			<icon class="iconfont icon-folder"></icon>
-			<span class="name" ng-bind="$ctrl.name"></span>
+			<span class="tree-text" ng-bind="$ctrl.name"></span>
 		</div>
 	</div>
 	<div ng-if="$ctrl.node.isEditing"
@@ -42,10 +42,13 @@
 		<icon class="iconfont icon-edit" ng-click="$ctrl.onEditorNode()"></icon>
 		<icon class="iconfont icon-close" ng-click="$ctrl.onExitIconClickHander()"></icon>
 	</div>
-	<div ng-show="!$ctrl.node.isClosed">
+	<div
+		ng-if="$ctrl.node.children && $ctrl.node.children.length"
+		ng-show="!$ctrl.node.isClosed">
 		<cc-tree-list
 			tree-map="$ctrl.treeMap"
 			nodes="$ctrl.node.children"
+			search-text="$ctrl.searchText"
 			support-checkbox="$ctrl.supportCheckbox"
 			is-radio-model="$ctrl.isRadioModel"
 			on-open-menu="$ctrl.onOpenMenu">

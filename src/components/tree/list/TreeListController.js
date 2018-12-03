@@ -1,28 +1,23 @@
-export default class TreeListCtrl {
-	hasChildren(node) {
-		return node.children && node.children.length;
-	}
+import Inject from 'angular-es-utils/decorators/Inject';
 
+@Inject('$filter')
+export default class TreeListCtrl {
 	/**
 	 * 过滤器
 	 * @param node
 	 * @returns {*}
 	 */
 	filterHandler = node => {
-		const test = this._filterHandler(node, this.treeMap.store.filterText);
-		return test;
+		const filterText = this.treeMap.searchText || '';
+		const _filter = node => {
+			if (node.name.includes(filterText)) {
+				return true;
+			}
+			if (node.children && node.children.length) {
+				return node.children.some(child => _filter(child));
+			}
+			return false;
+		};
+		return _filter(node);
 	};
-
-	_filterHandler(node, filterStr) {
-		if (!filterStr) {
-			return true;
-		}
-		if (node.name.includes(filterStr)) {
-			return true;
-		}
-		if (node.children && node.children.length) {
-			return node.children.some(child => this._filterHandler(child, filterStr));
-		}
-		return false;
-	}
 }

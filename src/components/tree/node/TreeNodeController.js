@@ -108,7 +108,6 @@ export default class TreeNodeController {
 				// 子选项部分选中
 				parentNode.checked = 'indeterminate';
 			}
-			parentId === 1 && console.log(childrenCheckedNumber, parentNode.children.length);
 			if (parentNode.pId) {
 				changeParent(parentNode.pId);
 			}
@@ -222,14 +221,14 @@ export default class TreeNodeController {
 	 * @param name
 	 * @returns {*}
 	 */
-	updateHandler = name => {
+	updateHandler = newName => {
 		const { id } = this.node;
-		this.checkSameName(name, id).then(() => {
-			this.treeMap.handler.onRenameAction && this.treeMap.handler.onRenameAction(this.node, name)
+		this.checkSameName(newName, id).then(() => {
+			this.treeMap.handler.onRenameAction && this.treeMap.handler.onRenameAction(this.node, newName)
 				.then(() => {
 					// 更新成功后，清除正在编辑状态
 					this._$timeout(() => {
-						this.treeMap.store.updateByEditing({ name, isEditing: false });
+						this.treeMap.store.updateByEditing({ newName, isEditing: false });
 					});
 				})
 				.catch(msg => {
