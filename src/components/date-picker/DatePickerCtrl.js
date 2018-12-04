@@ -206,14 +206,17 @@ export default class DatePickerCtrl {
 				this.inputs[0].focus();
 			}
 
-			// 将日历弹框 scroll into view
-			const datePickerEle = this.$element[0].querySelector('form.date-picker');
-			const calendarEle = this.$element[0].querySelector('.calendar');
-			setTimeout(() => {
-				if (datePickerEle.getClientRects()[0].bottom + calendarEle.getClientRects()[0].height > document.documentElement.clientHeight) {
-					calendarEle.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
-				}
-			});
+			if (!this.disableScrollIntoView) {
+				// 将日历弹框 scroll into view
+				const datePickerEle = this.$element[0].querySelector('form.date-picker');
+				const calendarEle = this.$element[0].querySelector('.calendar');
+				setTimeout(() => {
+					const containerHeight = this.containerElement ? this.containerElement.getClientRects()[0].bottom : document.documentElement.clientHeight;
+					if (datePickerEle.getClientRects()[0].bottom + calendarEle.getClientRects()[0].height > containerHeight) {
+						calendarEle.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
+					}
+				});
+			}
 		}
 	}
 

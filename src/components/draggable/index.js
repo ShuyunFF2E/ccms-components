@@ -8,7 +8,7 @@ function ddo($parse) {
 
 			const dragHandler = element[0].querySelector('[cc-drag-handler]') || element[0];
 
-			element[0].onmousedown = function(evt) {
+			element[0].addEventListener('mousedown', function(evt) {
 
 				if (!dragHandler.contains(evt.target) && !evt.target.hasAttribute('cc-drag-handler')) {
 					return;
@@ -27,7 +27,7 @@ function ddo($parse) {
 				const disX = e.clientX - this.offsetLeft;
 				const disY = e.clientY - this.offsetTop;
 
-				document.onmousemove = evt => {
+				const mousemoveListener = function(evt) {
 
 					const e = evt || window.event;
 					L = e.clientX - disX;
@@ -51,8 +51,10 @@ function ddo($parse) {
 					element[0].style.top = `${T}px`;
 				};
 
-				document.onmouseup = () => {
-					document.onmousemove = document.onmouseup = null;
+				const mouseupListener = function() {
+
+					document.removeEventListener('mousemove', mousemoveListener, false);
+					document.removeEventListener('mouseup', mouseupListener, false);
 
 					if (element[0].releaseCapture) {
 						element[0].releaseCapture();
@@ -63,8 +65,12 @@ function ddo($parse) {
 					ccDragEnd({left: L, top: T});
 				};
 
-				return false;
-			};
+				document.addEventListener('mousemove', mousemoveListener, false);
+				document.addEventListener('mouseup', mouseupListener, false);
+
+				evt.preventDefault();
+
+			}, false);
 		}
 	};
 }

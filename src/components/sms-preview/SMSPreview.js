@@ -8,6 +8,10 @@ import template from './sms-preview.tpl.html';
 import angular from 'angular';
 import { escapeRegExp } from '../../common/bases/common';
 
+let defaultKeywordPrefix = 'œœ';
+let defaultKeywordSuffix = 'œœ';
+let defaultKeywordEnter = 'þ_enter_þ';
+
 export default {
 
 	restrict: 'E',
@@ -19,12 +23,20 @@ export default {
 	link(scope, element) {
 
 		const opts = scope.opts || (scope.opts = {});
-		const keywordPrefix = scope.opts.keywordPrefix || '$$';
-		const keywordSuffix = scope.opts.keywordSuffix || '$$';
+
+		if (!scope.opts.isMarketing) {
+			defaultKeywordPrefix = '$$';
+			defaultKeywordSuffix = '$$';
+			defaultKeywordEnter = '#_enter_#';
+		}
+
+		const keywordPrefix = scope.opts.keywordPrefix || defaultKeywordPrefix;
+		const keywordSuffix = scope.opts.keywordSuffix || defaultKeywordSuffix;
+		this.keywordEnter = defaultKeywordEnter;
+
 		const trimContent = angular.isDefined(opts.trimContent) ? opts.trimContent : true;
 		scope.smsPreviewStatText = trimContent ? '不含变量' : '含空格，不含变量';
 		scope.smsPreviewTipsText = trimContent ? '上图仅为操作预览，最终计数以实际发送为准，查看' : '上图仅为操作预览，变量无固定长度，最终计数以实际发送为准，建议先测试执行，查看';
-		scope.smsPreviewTipsInTipsText = opts.smsChargeTips || '单条短信字数限制 70 字；超出 70 字，按 67 字条计费；<br>字数和计费条数以实际执行时发送为准。';
 
 		scope.$watch('opts', () => {
 			const varReg = RegExp(`${escapeRegExp(keywordPrefix)}_(\\[[^]]+])?(.+?)_${escapeRegExp(keywordSuffix)}`, 'g');
@@ -36,32 +48,33 @@ export default {
 			const customSignature = opts.customSignature ? `【${opts.customSignature.replace(/</g, '&lt;')}】` : '';
 			const unsubscribeText = opts.useUnsubscribe ? (opts.unsubscribeText || '') : '';
 
+			scope.smsPreviewTipsInTipsText = opts.smsChargeTips || '单条短信字数限制 70 字；超出 70 字，按 67 字条计费；<br>字数和计费条数以实际执行时发送为准。';
 			// 字数统计
 			scope.totalChars = opts.totalCharts = text
 					.replace(varReg, '')
-					.replace(/#_enter_#/g, '').length +
-				(gatewayType === 1 || gatewayType === 3 ? signature.length : 0) +
+					.replace(new RegExp(this.keywordEnter, 'g'), '').length +
+				(gatewayType === 1 || gatewayType === 3 || gatewayType === 4 || gatewayType === 5 ? signature.length : 0) +
 				customSignature.length +
 				unsubscribeText.length;
 			// 换行统计
-			scope.newLineNum = opts.newLineNum = text.split('#_enter_#').length - 1;
+			scope.newLineNum = opts.newLineNum = text.split(this.keywordEnter).length - 1;
 
 			// 变量统计
 			const varMatch = text.match(varReg);
 			scope.totalVars = opts.totalVars = varMatch ? varMatch.length : 0;
 
-			element[0].querySelector('.sms-preview-content').innerHTML = this.generateText(preview, unsubscribeText, signature, customSignature, gatewayType);
+			element[0].querySelector('.sms-preview-content').innerHTML = opts.generatedText = this.generateText(preview, unsubscribeText, signature, customSignature, gatewayType);
 		}, true);
 	},
 
 	/*
 	 0: 短信 +【自定义签名】
-	 1: 短信 +【自定义签名】+ 备案签名
+	 1,5: 短信 +【自定义签名】+ 备案签名
 	 2: 【自定义签名】+ 短信
-	 3: 备案签名 +【自定义签名】+ 短信
+	 3,4: 备案签名 +【自定义签名】+ 短信
 	 */
 	generateText(preview, unsubscribeText, signature, customSignature, gatewayType) {
-		const content = preview.split('#_enter_#');
+		const content = preview.split(this.keywordEnter);
 		const len = content.length;
 
 		switch (gatewayType) {

@@ -15,6 +15,7 @@ const dropdownSelectDDO = {
 	controllerAs: '$ctrl',
 	scope: {
 		model: '=?',
+		containerElement: '=?',
 		isOpen: '<?',
 		autoClose: '<?',
 		mapping: '<?',

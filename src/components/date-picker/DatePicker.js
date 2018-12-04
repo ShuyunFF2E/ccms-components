@@ -23,6 +23,7 @@ export default {
 		disabledInput: '=',
 		minDate: '=',
 		maxDate: '=',
+		containerElement: '=?',
 		rangeStart: '=',
 		rangeEnd: '=',
 		start: '=',
@@ -31,6 +32,7 @@ export default {
 		onCalendarClose: '&?',
 		isFestival: '<?',
 		customFestivals: '<?',
+		disableScrollIntoView: '<?',
 		disableYear: '<?',
 		disableMonth: '<?',
 		displayFormat: '@?'

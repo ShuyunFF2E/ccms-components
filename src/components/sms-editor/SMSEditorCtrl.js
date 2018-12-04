@@ -11,7 +11,10 @@ const regUrlBase = '((([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[-;:&=\\+\\$,\\w]+@)?[A-Za-z
 const REG_URL = new RegExp(regUrlBase);
 const REG_URL_HASH = new RegExp(regUrlBase + '#');
 const DEFAULT_TYPE_NAME = 'default';
-const BRACKET_REG = /[【】]/g;
+const BRACKET_REG = /[【】œþ]/g; // 特殊字符
+let keywordPrefix = 'œœ';
+let keywordSuffix = 'œœ';
+let keywordEnter = 'þ_enter_þ';
 
 
 @Inject('$scope', '$element', '$timeout')
@@ -33,8 +36,16 @@ export default class SMSEditorCtrl {
 
 		// 初始化编辑框及显示
 		this.opts || (this.opts = {});
-		this.keywordPrefix = this.opts.keywordPrefix || '$$';
-		this.keywordSuffix = this.opts.keywordSuffix || '$$';
+
+		if (!this.opts.isMarketing) {
+			keywordPrefix = '$$';
+			keywordSuffix = '$$';
+			keywordEnter = '#_enter_#';
+		}
+
+		this.keywordPrefix = this.opts.keywordPrefix || keywordPrefix;
+		this.keywordSuffix = this.opts.keywordSuffix || keywordSuffix;
+		this.keywordEnter = this.opts.keywordEnter || keywordEnter;
 		// 是否支持图片
 		this.isSupportImage = angular.isDefined(this.opts.isSupportImage) ? this.opts.isSupportImage : true;
 		this.trimContent = angular.isDefined(this.opts.trimContent) ? this.opts.trimContent : true;
@@ -82,7 +93,7 @@ export default class SMSEditorCtrl {
 			return item.type === type && item.text === text;
 		})[0];
 
-		return matchedTag ? (matchedTag.defaultValue ? `%${matchedTag.defaultValue}%` : `%#${matchedTag.text}#%`) : `%#${text}#%`;
+		return matchedTag ? (matchedTag.defaultValue ? `œ${matchedTag.defaultValue}œ` : `œ#${matchedTag.text}#œ`) : `œ#${text}#œ`;
 	}
 
 
@@ -304,7 +315,7 @@ export default class SMSEditorCtrl {
 	 * 格式化短信数据
 	 * */
 	formatContent(text) {
-		const data = text.split('#_enter_#');
+		const data = text.split(this.keywordEnter);
 		const sms = [];
 		for (let item of data) {
 			const content = item.length ? `<div>${item}</div>` : '<div><br/></div>';
@@ -341,8 +352,8 @@ export default class SMSEditorCtrl {
 		}
 
 		parsed = parsed.replace(/<\/div>/g, '')
-			.replace(/<div>/g, '#_enter_#')
-			.replace(/#_enter_#/, '');
+			.replace(/<div>/g, this.keywordEnter)
+			.replace(new RegExp(this.keywordEnter), '');
 		this._tempHolder.innerHTML = parsed
 			.replace(inputReg, (result, $1, $2) => {
 				return SMSEditorCtrl.createTagPreview(this.opts.keywords, $2, $1);
@@ -378,9 +389,13 @@ export default class SMSEditorCtrl {
 		// 图片, 关键字高亮, URL, 手机及固话号码下划线
 		this.opts.preview = SMSEditorCtrl.flatCode(this._tempHolder.textContent, this.trimContent)
 			.replace(/\{\{([^}]+)}}/g, (result, $1) => {
-				return `<img src="${$1}">`;
+				if (this.isSupportImage) {
+					return `<img src="${$1}">`;
+				} else {
+					return result;
+				}
 			})
-			.replace(/%([^%]+)%/g, (result, $1) => {
+			.replace(/œ([^œ]+)œ/g, (result, $1) => {
 				return `<span class="sms-tag-preview">${$1.trim()}</span>`;
 			})
 			.replace(REG_URL_HASH, result => {

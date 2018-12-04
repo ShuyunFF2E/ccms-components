@@ -5,7 +5,7 @@
 
 		<header cc-drag-handler>
 
-			<h3 ng-bind="::title"></h3>
+			<h3 ng-bind="::title" ng-mousedown="$event.stopPropagation();"></h3>
 			<div class="icons">
 				<span ng-if="fullscreen" class="set-fullscreen" ng-click="$toggleFullScreen(true)"></span>
 				<span class="cancel-fullscreen" ng-click="$toggleFullScreen(false)"></span>

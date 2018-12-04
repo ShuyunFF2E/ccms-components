@@ -6,11 +6,11 @@
 
 		.controller('ctrl', function($scope, $ccShopSelector) {
 			let hasFooter = false;
-			let tenantId = 'yangyangyang3';
-			let serverName = '';
+			let tenantId = 'qiushi6';
+			let serverName = ''; // http://qa-ual.shuyun.com 或者 http://ual.shuyun.com
 			let isSupportedChannel = true;
-			let singleSelectedShop = ['jos_317761122']; // ['qiakr_6998868227'];
-			let multipleSelectedShop = ['yhd_012231211', 'qiakr_2260']; // ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
+			let singleSelectedShop = ['qiakr_6998868227']; // ['weixin_wxf8e64372a94529ac'] ['qiakr_6998868227'];
+			let multipleSelectedShop = ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l']; // ['weixin_wxf8e64372a94529ac', 'weixin_wxc724d28eef67468f'] ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
 
 			let singleOptions = {
 				hasFooter,
