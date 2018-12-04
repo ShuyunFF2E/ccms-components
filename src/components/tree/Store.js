@@ -78,7 +78,6 @@ class Store {
 		this.treeData = treeData.map(item => {
 			return format(item, 1);
 		});
-		console.log(this.treeData);
 	}
 
 	/**
