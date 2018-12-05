@@ -243,6 +243,16 @@ export default class DatePickerCtrl {
 		// 设置值 (默认今天)
 		this.setValue(datePicker.ngModelCtrl.$viewValue);
 
+		// 如果是 range 且为 rangeStart 时间设置为 00:00:00
+		if (this.range && this.datePicker.rangeStart && !datePicker.ngModelCtrl.$viewValue) {
+			this.setValue(datePicker.ngModelCtrl.$viewValue, true, false);
+		}
+
+		// 如果是 range 且为 rangeStart 时间设置为 23:59:59
+		if (this.range && this.datePicker.rangeEnd && !datePicker.ngModelCtrl.$viewValue) {
+			this.setValue(datePicker.ngModelCtrl.$viewValue, false, true);
+		}
+
 		// 隐藏其余日历
 		angular.element(document.querySelectorAll('.date-picker-holder > .calendar')).css('display', 'none');
 
@@ -281,11 +291,19 @@ export default class DatePickerCtrl {
 	 * 设置日期值
 	 * @param dateValue
 	 */
-	setValue(dateValue) {
+	setValue(dateValue, start = false, end = false) {
 		this.value = dateValue || new Date();
 
 		if (this.dateOnly) {
 			this.value = new Date(this.value.setHours(0, 0, 0, 0));
+		}
+
+		if (!this.dateOnly && start) {
+			this.value = new Date(this.value.setHours(0, 0, 0, 0));
+		}
+
+		if (!this.dateOnly && end) {
+			this.value = new Date(this.value.setHours(23, 59, 59, 0));
 		}
 
 		this._realValue = this.value;
