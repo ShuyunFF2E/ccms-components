@@ -80,13 +80,11 @@ const shopsList = [
 			{
 				"name": "小猫时尚旗舰店",
 				"active": true,
-				"value": "tb-cut",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+				"value": "tb-cut"
 			},
 			{
 				"name": "小狗时尚旗舰店",
-				"value": "tb-dog",
-				"logo": "http://himg.bdimg.com/sys/portrait/item/e999e992b1c2b7e58588e7949f7b16.jpg"
+				"value": "tb-dog"
 			},
 			{
 				"name": "小仔时尚旗舰店",

@@ -29,7 +29,7 @@ module.exports = [
 	{
 		test: /\.(jpe?g|png|gif)$/i,
 		loaders: [
-			'file?hash=sha512&digest=hex&name=[hash:8].[ext]'
+			'url?limit=1000'
 		]
 	},
 	{

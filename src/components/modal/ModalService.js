@@ -83,8 +83,10 @@ const ModalService = {
 			modalScope.$close = () => {
 				modalInstance.close(onClose);
 			};
+			// 初始化 isFullScreen
+			modalScope.isFullScreen = false;
 			modalScope.$toggleFullScreen = isFullScreen => {
-				modalScope.$parent.isFullScreen = isFullScreen;
+				modalScope.isFullScreen = isFullScreen;
 				if (isFullScreen) {
 					const clientRect = modalContainer$Element[0].getClientRects()[0];
 					modalScope.top = clientRect.top;
