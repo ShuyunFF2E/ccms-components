@@ -522,15 +522,26 @@ export default class ShopSelectorCtrl {
 			}
 		}
 		collection.pageNum = 1;
-		delete this.allShopGridOptions.queryParams['channel'];
 		Object.assign(this.allShopGridOptions.queryParams, collection);
+		// 如果平台由外部传入，那么平台选择'不限'的时候，参数为外部传入的所有平台
+		const { channel } = this.formModel;
+		if (this.platform && this.platform.length) {
+			this.allShopGridOptions.queryParams['channel'] = channel || this.platform;
+		} else {
+			this.allShopGridOptions.queryParams['channel'] = channel;
+		}
 	}
 
 	// 重置
 	reset() {
 		for (let attr in this.formModel) {
 			if (this.formModel.hasOwnProperty(attr)) {
-				this.formModel[attr] = null;
+				// 如果平台由外部传入，且只有一个平台，则重置平台为该平台
+				if (attr === 'channel' && this.platform && this.platform.length === 1) {
+					this.formModel.channel = this.platform[0];
+				} else {
+					this.formModel[attr] = null;
+				}
 			}
 		}
 	}
