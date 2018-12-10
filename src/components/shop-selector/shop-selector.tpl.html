@@ -1,7 +1,7 @@
 <div class="shop-selector">
-	<section class="form-area" ng-class="{'form-area-no-channel': !$ctrl.isSupportedPlatform}">
+	<section class="form-area" ng-class="{'form-area-no-channel': !$ctrl.isSupportedChannel}">
 		<form class="form-wrapper" name="$ctrl.allShopForm" cc-validators="$ctrl.validators">
-			<fieldset ng-if="$ctrl.isSupportedPlatform">
+			<fieldset ng-if="$ctrl.isSupportedChannel">
 				<label>平台：</label>
 				<cc-dropdown-select
 						model="$ctrl.formModel.channel"
@@ -10,7 +10,7 @@
 						on-select-change="$ctrl.channelSelectChange(model, oldModel, itemIndex, item)">
 				</cc-dropdown-select>
 			</fieldset>
-			<fieldset ng-if="$ctrl.isSupportedPlatform">
+			<fieldset ng-if="$ctrl.isSupportedChannel">
 				<label>店铺类型：</label>
 				<cc-dropdown-select
 						model="$ctrl.formModel.type"
@@ -79,6 +79,9 @@
 					</cc-checkbox>
 				</div>
 				<cc-grid type="selectable" opts="$ctrl.allShopGridOptions"></cc-grid>
+				<div class="shop-selector-mask" ng-if="$ctrl.isShowMask">
+					<cc-loading type="layer">数据更新中</cc-loading>
+				</div>
 			</section>
 		</gs-panel>
 		<gs-panel text="已选店铺" tab-click="$ctrl.tabClick(text)" class="selected-shop-panel">

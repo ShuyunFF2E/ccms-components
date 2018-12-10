@@ -263,6 +263,7 @@ export default class ShopSelectorCtrl {
 			entity.$selected = isSelectedAllPage;
 		});
 		if (isSelectedAllPage) {
+			this.isShowMask = true;
 			const { serverName, tenantId, allShopGridOptions, formModel } = this;
 			const { queryParams } = allShopGridOptions;
 			service.getShopListAll({ serverName, tenantId, queryParams, formModel }).get(res => {
@@ -271,8 +272,10 @@ export default class ShopSelectorCtrl {
 					entity.$selected = true;
 					this.updateSelectedItems(entity);
 				});
+				this.isShowMask = false;
 			}, () => {
 				this._$ccTips.error(errorMsg);
+				this.isShowMask = false;
 			});
 		} else {
 			this.allGoodsList.length && this.allGoodsList.forEach(entity => {
