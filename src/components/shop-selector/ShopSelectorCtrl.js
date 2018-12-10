@@ -249,7 +249,8 @@ export default class ShopSelectorCtrl {
 
 	// 全选当页
 	switchSelectPage(isSelectedPage) {
-		this.allShopGridOptions.data.forEach(entity => {
+		const { data } = this.allShopGridOptions;
+		data && data.length && data.forEach(entity => {
 			entity.$selected = isSelectedPage;
 			this.updateSelectedItems(entity);
 		});
@@ -259,15 +260,17 @@ export default class ShopSelectorCtrl {
 	// 全选全部，请求全部数据，更新selectedItems，全部商品只更新当页商品状态
 	switchSelectAllPage(isSelectedAllPage) {
 		// 更新当页数据状态
-		this.resData.forEach(entity => {
+		const { resData } = this;
+		resData && resData.length && resData.forEach(entity => {
 			entity.$selected = isSelectedAllPage;
 		});
 		if (isSelectedAllPage) {
 			this.isShowMask = true;
 			const { serverName, tenantId, allShopGridOptions, formModel } = this;
 			const { queryParams } = allShopGridOptions;
+			this.allGoodsList = [];
 			service.getShopListAll({ serverName, tenantId, queryParams, formModel }).get(res => {
-				this.allGoodsList = res.list || [];
+				res.list && res.list.length && (this.allGoodsList = res.list);
 				this.allGoodsList.forEach(entity => {
 					entity.$selected = true;
 					this.updateSelectedItems(entity);
@@ -324,13 +327,14 @@ export default class ShopSelectorCtrl {
 	removeAll() {
 		this.selectedItems.splice(0, this.selectedItems.length);
 		this.selectedItemsBuffer.splice(0, this.selectedItemsBuffer.length);
-		this.allShopGridOptions.data.forEach(entity => { entity.$selected = false; });
+		const { data } = this.allShopGridOptions;
+		data && data.length && data.forEach(entity => { entity.$selected = false; });
 		this.onRefresh(this.selectedShopGridOptions);
 		this.isSelectedAllPage = false;
 	}
 
 	// 是否全部被选
-	isSelectedPageAll(list) {
+	isSelectedPageAll(list = []) {
 		if (list.length) {
 			return list.every(item => {
 				return item.$selected;
