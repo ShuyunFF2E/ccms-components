@@ -10,12 +10,7 @@
         },
         "useBuiltIns": "usage"
       }
-    ],
-    ["minify", {
-        "builtIns": false,
-        "evaluate": true,
-        "mangle": true
-    }]
+    ]
   ],
   "plugins": [
     [
