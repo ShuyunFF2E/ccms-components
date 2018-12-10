@@ -19,6 +19,7 @@ export default {
 	scope: {
 		onCalendarOpen: '&?',
 		onCalendarClose: '&?',
+		defaultCalendarValue: '<?',
 		isFestival: '<?',
 		customFestivals: '<?',
 		disableYear: '<?',

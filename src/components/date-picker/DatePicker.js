@@ -30,6 +30,7 @@ export default {
 		end: '=',
 		onCalendarOpen: '&?',
 		onCalendarClose: '&?',
+		defaultCalendarValue: '<?',
 		isFestival: '<?',
 		customFestivals: '<?',
 		disableScrollIntoView: '<?',

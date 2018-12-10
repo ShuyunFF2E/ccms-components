@@ -211,7 +211,19 @@
 				is-festival="true"
 				custom-festivals="app.customFestivals"
 				disable-scroll-into-view="true"
+				default-calendar-value="app.defaultCalendarValue"
 				display-format="DD"
+		></cc-date-picker>
+
+		<cc-date-picker
+				ng-model="app.xxxxx"
+				required="true"
+				on-calendar-open="app.onCalendarOpen()"
+				on-calendar-close="app.onCalendarClose()"
+				is-festival="true"
+				custom-festivals="app.customFestivals"
+				disable-scroll-into-view="true"
+				default-calendar-value="app.defaultCalendarValue"
 		></cc-date-picker>
 	</p>
 </main>
@@ -222,6 +234,7 @@
 		.controller('ctrl', function ($scope, $timeout) {
 			var self = this;
 
+			self.defaultCalendarValue = new Date(2012,10,10);
 			self.disabled = true;
 			self.toggle = function () {
 				self.disabled = !self.disabled;
