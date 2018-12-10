@@ -3,7 +3,7 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-01-19
  */
-import '@babel/polyfill';
+// import '@babel/polyfill'; 参见 .babelrc useBuiltIns 参数
 import 'core-js/modules/es6.regexp.constructor.js';
 
 import angular from 'angular';

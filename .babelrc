@@ -8,12 +8,7 @@
             "last 2 versions"
           ]
         },
-        "useBuiltIns": false,
-        "include": [
-          "es6.object.assign",
-          "es6.array.find",
-          "es6.regexp.flags"
-        ]
+        "useBuiltIns": "usage"
       }
     ],
     ["minify", {
