@@ -20,17 +20,17 @@ function findEntityById(collection, id) {
 	return collection.findIndex(item => angular.equals(item.id, id));
 }
 
-@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedPlatform', 'platform')
+@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform')
 export default class ShopSelectorCtrl {
 	constructor() {
 		this.isSingleSelected = this._isSingleSelected; // 是否是单选
 		this.tenantId = this._tenantId; // 租户 ID
 		this.serverName = this._serverName;
 		this.selectedShop = this._selectedShop; // 用户传进来的已选店铺列表
-		this.isSupportedPlatform = this._isSupportedPlatform; // 是否支持平台
+		this.isSupportedChannel = this._isSupportedChannel; // 是否支持平台
 		this.platform = this._platform; // 用户传入的平台
 
-		this.commonGridColumnDef = getGridColumnDef(this.isSupportedPlatform);
+		this.commonGridColumnDef = getGridColumnDef(this.isSupportedChannel);
 		this.selectedItems = [];
 		this.selectedItemsBuffer = cloneDeep(this.selectedItems);
 		this.radio = {
@@ -73,7 +73,7 @@ export default class ShopSelectorCtrl {
 		this.commonListFieldsMap = commonListFieldsMap;
 
 		// 如果不显示平台，则不发请求，也不显示店铺类型，如果显示平台并且由用户传入，则发请求，然后过滤店铺
-		if (this.isSupportedPlatform) {
+		if (this.isSupportedChannel) {
 			this.getChannelList({ platform: this.platform }).then(channelList => {
 				this.channelList = channelList;
 				this.formModel.channel = channelList[0][this.commonListFieldsMap.valueField];

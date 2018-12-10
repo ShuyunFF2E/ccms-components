@@ -37,7 +37,7 @@ const ShopSelectorService = {
 					tenantId: tenantId,
 					selectedShop: selectedShop,
 					serverName: serverName,
-					isSupportedPlatform: isSupportedChannel,
+					isSupportedChannel: isSupportedChannel,
 					platform
 				},
 				controller: ShopSelectorCtrl,
