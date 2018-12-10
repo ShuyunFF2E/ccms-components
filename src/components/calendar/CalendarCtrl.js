@@ -253,6 +253,11 @@ export default class DatePickerCtrl {
 			this.setValue(datePicker.ngModelCtrl.$viewValue, false, true);
 		}
 
+		// 如果是设置了默认显示的CalendarValue
+		if (!angular.isUndefined(this.defaultCalendarValue) && !datePicker.ngModelCtrl.$viewValue) {
+			this.setValue(this.defaultCalendarValue);
+		}
+
 		// 隐藏其余日历
 		angular.element(document.querySelectorAll('.date-picker-holder > .calendar')).css('display', 'none');
 
