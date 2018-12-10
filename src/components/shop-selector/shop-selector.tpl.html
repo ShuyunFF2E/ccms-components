@@ -1,8 +1,8 @@
 <div class="shop-selector">
-	<section class="form-area" ng-class="{'form-area-no-channel': !$ctrl.isSupportedChannel}">
+	<section class="form-area" ng-class="{'form-area-no-channel': !$ctrl.isSupportedPlatform}">
 		<form class="form-wrapper" name="$ctrl.allShopForm" cc-validators="$ctrl.validators">
-			<fieldset ng-if="$ctrl.isSupportedChannel">
-				<label>渠道：</label>
+			<fieldset ng-if="$ctrl.isSupportedPlatform">
+				<label>平台：</label>
 				<cc-dropdown-select
 						model="$ctrl.formModel.channel"
 						datalist="$ctrl.channelList"
@@ -10,7 +10,7 @@
 						on-select-change="$ctrl.channelSelectChange(model, oldModel, itemIndex, item)">
 				</cc-dropdown-select>
 			</fieldset>
-			<fieldset ng-if="$ctrl.isSupportedChannel">
+			<fieldset ng-if="$ctrl.isSupportedPlatform">
 				<label>店铺类型：</label>
 				<cc-dropdown-select
 						model="$ctrl.formModel.type"
@@ -63,9 +63,15 @@
 		</form>
 	</section>
 	<gs-tabs>
+		<div class="selected-number" ng-if="$ctrl.selectedItems.length > 0">{{$ctrl.selectedItems.length > 999 ? '999+' : $ctrl.selectedItems.length}}</div>
 		<gs-panel text="全部店铺" tab-click="$ctrl.tabClick(text)">
 			<section class="grid-area">
 				<div class="operation">
+					<cc-checkbox ng-if="!$ctrl.isSingleSelected"
+								 class="check-all"
+								 ng-checked="$ctrl.isSelectedAllPage"
+								 ng-click="$ctrl.isSelectedAllPage = !$ctrl.isSelectedAllPage; $ctrl.switchSelectAllPage($ctrl.isSelectedAllPage)">全选全部
+					</cc-checkbox>
 					<cc-checkbox ng-if="!$ctrl.isSingleSelected"
 								 class="check-all"
 								 ng-checked="$ctrl.isSelectedPage"

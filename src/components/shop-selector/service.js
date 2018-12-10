@@ -34,5 +34,25 @@ export default {
 	// 获取店铺列表
 	getShopList(serverName, tenantId, params, paramsName) {
 		return genResource(`${ serverName }${ apiPrefix }/shopDetails?tenantId=${tenantId}&${transformParams(params, paramsName)}`);
+	},
+
+	// 获取所有店铺
+	getShopListAll({ serverName, tenantId, queryParams, formModel }) {
+		const paramsArr = [];
+		for (const attr in formModel) {
+			if (formModel.hasOwnProperty(attr) && queryParams.hasOwnProperty(attr)) {
+				const paramVal = queryParams[attr];
+				if (paramVal && !Array.isArray(paramVal)) {
+					paramsArr.push(`${attr}=${paramVal}`);
+				}
+				if (Array.isArray(paramVal) && paramVal.length) {
+					paramVal.forEach(item => {
+						paramsArr.push(`${attr}=${item}`);
+					});
+				}
+			}
+		}
+		const paramsStr = paramsArr.length ? `&${paramsArr.join('&')}` : '';
+		return genResource(`${ serverName }${ apiPrefix }/shopDetails?tenantId=${tenantId}${paramsStr}`);
 	}
 };

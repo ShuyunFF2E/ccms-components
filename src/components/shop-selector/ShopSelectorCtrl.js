@@ -20,16 +20,17 @@ function findEntityById(collection, id) {
 	return collection.findIndex(item => angular.equals(item.id, id));
 }
 
-@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel')
+@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedPlatform', 'platform')
 export default class ShopSelectorCtrl {
 	constructor() {
 		this.isSingleSelected = this._isSingleSelected; // 是否是单选
 		this.tenantId = this._tenantId; // 租户 ID
 		this.serverName = this._serverName;
 		this.selectedShop = this._selectedShop; // 用户传进来的已选店铺列表
-		this.isSupportedChannel = this._isSupportedChannel; // 是否支持渠道
+		this.isSupportedPlatform = this._isSupportedPlatform; // 是否支持平台
+		this.platform = this._platform; // 用户传入的平台
 
-		this.commonGridColumnDef = getGridColumnDef(this.isSupportedChannel);
+		this.commonGridColumnDef = getGridColumnDef(this.isSupportedPlatform);
 		this.selectedItems = [];
 		this.selectedItemsBuffer = cloneDeep(this.selectedItems);
 		this.radio = {
@@ -71,10 +72,15 @@ export default class ShopSelectorCtrl {
 
 		this.commonListFieldsMap = commonListFieldsMap;
 
-		this.getChannelList().then(() => {
-			this.resData && this.resData.length && this.getNameByGridList(this.resData);
-			this.selectedItems.length && this.getNameByGridList(this.selectedItems);
-		});
+		// 如果不显示平台，则不发请求，也不显示店铺类型，如果显示平台并且由用户传入，则发请求，然后过滤店铺
+		if (this.isSupportedPlatform) {
+			this.getChannelList({ platform: this.platform }).then(channelList => {
+				this.channelList = channelList;
+				this.formModel.channel = channelList[0][this.commonListFieldsMap.valueField];
+				this.resData && this.resData.length && this.getNameByGridList(this.resData, this.channelList);
+				this.selectedItems.length && this.getNameByGridList(this.selectedItems, this.channelList);
+			});
+		}
 		this.getAreaData();
 	}
 
@@ -84,7 +90,8 @@ export default class ShopSelectorCtrl {
 			queryParams: {
 				pageNum: 1,  // 当前页码
 				pageSize: 20, // 每页大小
-				tenantId: this.tenantId // 租户 ID
+				tenantId: this.tenantId, // 租户 ID
+				channel: this.platform // 平台
 			},
 			columnsDef: this.commonGridColumnDef,
 			rowTpl: rowTemplate,
@@ -105,7 +112,8 @@ export default class ShopSelectorCtrl {
 			// 多选
 			switchSelectItem: entity => {
 				this.updateSelectedItems(entity);
-				this.isSelectedPage = this.isSelectedPageAll();
+				this.isSelectedPage = this.isSelectedPageAll(this.resData);
+				!entity.$selected && (this.isSelectedAllPage = false);
 			},
 			// 单选
 			switchSingleSelectItem: entity => {
@@ -114,14 +122,14 @@ export default class ShopSelectorCtrl {
 			},
 			transformer: res => {
 				this.resData = res.list || [];
-				res.list && res.list.length && this.getNameByGridList(res.list);
+				res.list && res.list.length && this.getNameByGridList(res.list, this.channelList);
 				this.resListMerge(res.list, this.selectedItemsBuffer);
 				if (this.isSingleSelected) {
 					res.list.forEach(entity => {
 						this.allShopGridOptions.radio.setting.push(entity.id);
 					});
 				} else {
-					this.isSelectedPage = this.isSelectedPageAll();
+					this.isSelectedPage = this.isSelectedPageAll(this.resData);
 				}
 				return res;
 			}
@@ -162,7 +170,7 @@ export default class ShopSelectorCtrl {
 	getSelectedShop() {
 		return service.getShopList(this.serverName, this.tenantId, this.selectedShop, 'shopIdIn').get(res => {
 			res.list = res.list || [];
-			this.getNameByGridList(res.list);
+			this.getNameByGridList(res.list, this.channelList);
 			res.list.forEach(entity => {
 				if (this.isSingleSelected) {
 					this.radio.value = entity.id;
@@ -179,20 +187,23 @@ export default class ShopSelectorCtrl {
 	}
 
 	// 获取渠道名称和店铺类型
-	getNameByGridList(list) {
+	getNameByGridList(list, channelList) {
 		list.forEach(entity => {
 			const displayField = this.commonListFieldsMap.displayField;
-			if (this.channelList && this.channelList.length) {
-				entity['channelName'] = this.channelList[findEntityById(this.channelList, entity.channel)][displayField];
-				this.channelList.forEach(item => {
-					let shopTypes = item.shopTypes;
-					if (shopTypes && shopTypes.length) {
-						let targetIndex = findEntityById(shopTypes, String(entity.type));
-						if (targetIndex !== -1) {
-							entity['typeName'] = shopTypes[targetIndex][displayField];
+			if (channelList && channelList.length) {
+				const index = findEntityById(channelList, entity.channel);
+				if (index !== -1) {
+					entity['channelName'] = channelList[index][displayField];
+					channelList.forEach(item => {
+						let shopTypes = item.shopTypes;
+						if (shopTypes && shopTypes.length) {
+							let targetIndex = findEntityById(shopTypes, String(entity.type));
+							if (targetIndex !== -1) {
+								entity['typeName'] = shopTypes[targetIndex][displayField];
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 		});
 	}
@@ -242,6 +253,33 @@ export default class ShopSelectorCtrl {
 			entity.$selected = isSelectedPage;
 			this.updateSelectedItems(entity);
 		});
+		!isSelectedPage && (this.isSelectedAllPage = false);
+	}
+
+	// 全选全部，请求全部数据，更新selectedItems，全部商品只更新当页商品状态
+	switchSelectAllPage(isSelectedAllPage) {
+		// 更新当页数据状态
+		this.resData.forEach(entity => {
+			entity.$selected = isSelectedAllPage;
+		});
+		if (isSelectedAllPage) {
+			const { serverName, tenantId, allShopGridOptions, formModel } = this;
+			const { queryParams } = allShopGridOptions;
+			service.getShopListAll({ serverName, tenantId, queryParams, formModel }).get(res => {
+				this.allGoodsList = res.list || [];
+				this.allGoodsList.forEach(entity => {
+					entity.$selected = true;
+					this.updateSelectedItems(entity);
+				});
+			}, () => {
+				this._$ccTips.error(errorMsg);
+			});
+		} else {
+			this.allGoodsList.length && this.allGoodsList.forEach(entity => {
+				entity.$selected = false;
+				this.updateSelectedItems(entity);
+			});
+		}
 	}
 
 	removeItem(entity) {
@@ -256,6 +294,7 @@ export default class ShopSelectorCtrl {
 			this.updateSelectedItems(entity);
 			this.onRefresh(this.selectedShopGridOptions);
 			this.resetShopStatus(entity);
+			this.isSelectedAllPage = false;
 		}
 	};
 
@@ -267,6 +306,7 @@ export default class ShopSelectorCtrl {
 			this.resetShopStatus(entity);
 		});
 		this.onRefresh(this.selectedShopGridOptions);
+		this.isSelectedAllPage = false;
 	}
 
 	// 重置店铺列表中被移除的店铺状态
@@ -283,12 +323,13 @@ export default class ShopSelectorCtrl {
 		this.selectedItemsBuffer.splice(0, this.selectedItemsBuffer.length);
 		this.allShopGridOptions.data.forEach(entity => { entity.$selected = false; });
 		this.onRefresh(this.selectedShopGridOptions);
+		this.isSelectedAllPage = false;
 	}
 
 	// 是否全部被选
-	isSelectedPageAll() {
-		if (this.resData.length) {
-			return this.resData.every(item => {
+	isSelectedPageAll(list) {
+		if (list.length) {
+			return list.every(item => {
 				return item.$selected;
 			});
 		}
@@ -304,7 +345,7 @@ export default class ShopSelectorCtrl {
 			this.handleFormModel(this.selectedShopFormModel);
 		} else {
 			this.isSelectedTab = false;
-			this.isSelectedPage = this.isSelectedPageAll();
+			this.isSelectedPage = this.isSelectedPageAll(this.resData);
 			this.selectedShopFormModel = cloneDeep(this.formModel);
 			this.handleFormModel(this.allShopFormModel);
 		}
@@ -326,7 +367,7 @@ export default class ShopSelectorCtrl {
 		this.type = formModel.type;
 		if (channel === formModel.channel) {
 			this.formModel.type = this.type;
-		} else if (formModel.channel === 'qiakr') {
+		} else if (formModel.channel === 'offline') {
 			this.provinceList = this._provinceList;
 		}
 		this.city = formModel.city;
@@ -348,12 +389,27 @@ export default class ShopSelectorCtrl {
 		});
 	}
 
-	// 获取渠道列表
-	getChannelList() {
-		return service.getChannelList(this.serverName).get().$promise.then(res => {
-			this.channelList = this.resolveDataList(res || []);
-		}).catch(() => {
-			this._$ccTips.error(errorMsg);
+	// 获取渠道列表，如果平台从外部传入，需要进行过滤
+	getChannelList({ platform }) {
+		return new Promise((resolve, reject) => {
+			service.getChannelList(this.serverName).get().$promise.then(res => {
+				let channelList = res || [];
+				if (platform) {
+					if (platform.length === 1) {
+						// 传入一个平台，则只显示当前平台
+						channelList = this.filterPlatform(res, platform);
+					} else {
+						// 传入多个平台，则显示多个，默认'不限'
+						channelList = this.resolveDataList(this.filterPlatform(res, platform));
+					}
+				} else {
+					// 用户不传入平台，显示所有平台，默认'不限'
+					channelList = this.resolveDataList(res);
+				}
+				resolve(channelList);
+			}).catch(err => {
+				reject(err);
+			});
 		});
 	}
 
@@ -372,6 +428,18 @@ export default class ShopSelectorCtrl {
 		return dataList;
 	}
 
+	// 过滤平台数据，返回用户传入平台id对应的平台列表
+	filterPlatform(channelList, platform) {
+		let result = [];
+		platform.forEach(platId => {
+			const targetIndex = findEntityById(channelList, platId);
+			if (targetIndex !== -1) {
+				result.push(channelList[targetIndex]);
+			}
+		});
+		return result;
+	}
+
 	// 渠道 select 框 change
 	channelSelectChange(model, oldModel, itemIndex, item) {
 		if (itemIndex > 0) {
@@ -384,7 +452,7 @@ export default class ShopSelectorCtrl {
 			this.formModel.type = null;
 			this.typeList = [];
 		}
-		if (model === 'qiakr') {
+		if (model === 'offline') {
 			this.provinceList = this._provinceList;
 		} else {
 			this.provinceList = [];
@@ -451,7 +519,8 @@ export default class ShopSelectorCtrl {
 			}
 		}
 		collection.pageNum = 1;
-		return Object.assign(this.allShopGridOptions.queryParams, collection);
+		delete this.allShopGridOptions.queryParams['channel'];
+		Object.assign(this.allShopGridOptions.queryParams, collection);
 	}
 
 	// 重置
