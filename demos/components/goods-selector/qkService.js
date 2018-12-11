@@ -30,7 +30,7 @@
 	var isSingleSelectShopList = false; // 店铺选择（单选/多选）
 
 	// qiakr + sku 维度 + 店铺选择（单选）
-	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
+	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
 		var shopList = [{shopId: '72903', shopName: '恰客', plat: 'offline'}, {shopId: '72897', shopName: '恰客1', plat: 'offline'}];
 		var options = {
 			isOnlyChecked,
@@ -38,7 +38,8 @@
 			serverName,
 			isSupportedAddCondition,
 			conditions,
-			isSupportedBatchAddition
+			isSupportedBatchAddition,
+			isTotalChannel
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -57,7 +58,7 @@
 	}
 
 	// qiakr + sku 维度 + 店铺选择（多选）
-	function openQkMultipleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
+	function openQkMultipleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
 		var shopList = [
 				{shopId: '72903', shopName: '恰客', plat: 'offline'},
 				{shopId: '72899', shopName: '恰客1', plat: 'offline'},
@@ -72,7 +73,8 @@
 			isSupportedAddCondition,
 			conditions,
 			isSingleSelectShopList,
-			isSupportedBatchAddition
+			isSupportedBatchAddition,
+			isTotalChannel
 		};
 		var selectedGoods = {
 			556820: null,

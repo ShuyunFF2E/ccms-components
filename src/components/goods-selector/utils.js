@@ -234,7 +234,7 @@ export const utils = {
 	},
 
 	// 获取表单模板配置
-	getFormTemplateConfig(originFormModel, isSupportedSku, isShowShopList, isSupportedAddCondition) {
+	getFormTemplateConfig(originFormModel, isSupportedSku, isShowShopList, isSupportedAddCondition, isTotalChannel) {
 		let result = {};
 		const items = fieldsetConfig[originFormModel.platform];
 		for (let attr in originFormModel) {
@@ -243,23 +243,35 @@ export const utils = {
 				itemsIndex >= 0 && (result[`${attr}Title`] = items[itemsIndex].title);
 				if (isSupportedAddCondition) {
 					if (isSupportedSku) {
-						result[`show-${attr}`] = itemsIndex >= 0;
+						result[`show-${attr}`] = isTotalChannel
+							? itemsIndex >= 0 && items[itemsIndex].isTotalChannelItem
+							: itemsIndex >= 0;
 					} else {
-						result[`show-${attr}`] = itemsIndex >= 0 && !items[itemsIndex].isSkuItem;
+						result[`show-${attr}`] = isTotalChannel
+							? itemsIndex >= 0 && !items[itemsIndex].isSkuItem && items[itemsIndex].isTotalChannelItem
+							: itemsIndex >= 0 && !items[itemsIndex].isSkuItem;
 					}
 					result['show-shopId'] = isShowShopList;
 				} else {
 					if (isSupportedSku) {
 						if (isShowShopList) {
-							result[`show-${attr}`] = itemsIndex >= 0;
+							result[`show-${attr}`] = isTotalChannel
+								? itemsIndex >= 0 && items[itemsIndex].isTotalChannelItem
+								: itemsIndex >= 0;
 						} else {
-							result[`show-${attr}`] = itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem;
+							result[`show-${attr}`] = isTotalChannel
+								? itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem && items[itemsIndex].isTotalChannelItem
+								: itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem;
 						}
 					} else {
 						if (isShowShopList) {
-							result[`show-${attr}`] = itemsIndex >= 0 && !items[itemsIndex].isSkuItem;
+							result[`show-${attr}`] = isTotalChannel
+								? itemsIndex >= 0 && !items[itemsIndex].isSkuItem && items[itemsIndex].isTotalChannelItem
+								: itemsIndex >= 0 && !items[itemsIndex].isSkuItem;
 						} else {
-							result[`show-${attr}`] = itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem && !items[itemsIndex].isSkuItem;
+							result[`show-${attr}`] = isTotalChannel
+								? itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem && !items[itemsIndex].isSkuItem && items[itemsIndex].isTotalChannelItem
+								: itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem && !items[itemsIndex].isSkuItem;
 						}
 					}
 				}

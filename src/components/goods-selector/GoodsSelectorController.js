@@ -23,7 +23,7 @@ import service from './service';
 @Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'maxSelectedNumber', 'serverName', '$q',
 	'shopInfoData', '$ccValidator', '$resource', '$scope', '$ccGrid', '$ccModal', '$ccGoodsSelector', '$filter', '$sce', '$compile',
 	'isSupportedSku', '$labelChoose', 'isSupportedAddCondition', 'isSupportedTag', 'tenantId', 'conditions', 'isSingleSelect',
-	'isSingleSelectShopList', '$ccShopSelector', 'isSupportedBatchAddition')
+	'isSingleSelectShopList', '$ccShopSelector', 'isSupportedBatchAddition', 'isTotalChannel')
 
 export default class GoodsSelectorCtrl {
 
@@ -67,6 +67,8 @@ export default class GoodsSelectorCtrl {
 		this.isSupportedBatchAddition = this._isSupportedBatchAddition;
 		// 批量导入和搜索是本质上都是根据条件对表格数据进行筛选，但是却是两个不相关的操作，把它们看成两个开关，不同的开关对应不同的API，其下的分页操作分别使用对应的API
 		this.gridPrefixApi = `${this.serverName}${apiPrefix}/items`;
+		// 是否是全渠道
+		this.isTotalChannel = this._isTotalChannel;
 
 		// 店铺信息 -> 如果是 array 或者店铺多选, 说明需要显示店铺列表
 		//         -> 如果是 object并且不是店铺多选, 说明是单店铺
@@ -142,7 +144,7 @@ export default class GoodsSelectorCtrl {
 		this.initForm();
 
 		// 获取表单项配置，不同平台的表单项有区别
-		this.formTplConfig = utils.getFormTemplateConfig(this.formModel, this.isSupportedSku, this.isShowShopList, this.isSupportedAddCondition);
+		this.formTplConfig = utils.getFormTemplateConfig(this.formModel, this.isSupportedSku, this.isShowShopList, this.isSupportedAddCondition, this.isTotalChannel);
 
 		const collection = fieldsetConfig[this.formModel.platform];
 		let asyncMethods = [];
@@ -551,9 +553,14 @@ export default class GoodsSelectorCtrl {
 	// 点击高级搜索按钮
 	clickSeniorSearch() {
 		for (let attr in this.formModel) {
-			const index = this.findEntityByName(fieldsetConfig[this.formModel.platform], attr);
-			if (index >= 0 && attr !== 'shopId' && attr !== 'platform') {
-				this.formTplConfig[`show-${attr}`] = true;
+			const fieldSetList = fieldsetConfig[this.formModel.platform];
+			if (this.formModel.hasOwnProperty(attr)) {
+				const index = this.findEntityByName(fieldSetList, attr);
+				if (this.isTotalChannel) {
+					this.formTplConfig[`show-${attr}`] = index >= 0 && fieldSetList[index].isTotalChannelItem && attr !== 'shopId' && attr !== 'platform';
+				} else {
+					this.formTplConfig[`show-${attr}`] = index >= 0 && attr !== 'shopId' && attr !== 'platform';
+				}
 			}
 		}
 		this.wakeupScroll();

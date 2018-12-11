@@ -118,215 +118,262 @@ export const fieldsetConfig = {
 	jos: [
 		{
 			name: 'platform',
-			title: '平台'
+			title: '平台',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'skusId',
 			title: '商品编号',
-			isSkuItem: true
+			isSkuItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'categoriesId',
 			title: '标准类目',
-			isSimpleSearchItem: true
+			isSimpleSearchItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'endListTime',
-			title: '上架时间'
+			title: '上架时间',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'id',
 			title: '商品ID',
-			isSimpleSearchItem: true
+			isSimpleSearchItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'maxPrice',
-			title: '价格'
+			title: '价格',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'minPrice',
-			title: '价格'
+			title: '价格',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'name',
 			title: '商品标题',
-			isSimpleSearchItem: true
+			isSimpleSearchItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'outerId',
-			title: '商品商家编码'
+			title: '商品商家编码',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'propsPid',
-			title: '商品属性'
+			title: '商品属性',
+			isTotalChannelItem: false
 		},
 		{
 			name: 'propsVid',
-			title: '属性值'
+			title: '属性值',
+			isTotalChannelItem: false
 		},
 		{
 			name: 'propsVname',
-			title: '商品属性值名称'
+			title: '商品属性值名称',
+			isTotalChannelItem: false
 		},
 		{
 			name: 'shopId',
-			title: '店铺选择'
+			title: '店铺选择',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'skusOuterId',
 			title: 'SKU商家编码',
-			isSkuItem: true
+			isSkuItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'skusPropsVname',
 			title: 'SKU规格',
-			isSkuItem: true
+			isSkuItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'startListTime',
-			title: '上架时间'
+			title: '上架时间',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'status',
-			title: '商品状态'
+			title: '商品状态',
+			isTotalChannelItem: true
 		}
 	],
 	top: [
 		{
 			name: 'platform',
-			title: '平台'
+			title: '平台',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'shopCategoriesId',
-			title: '自定义类目'
+			title: '自定义类目',
+			isTotalChannelItem: false
 		},
 		{
 			name: 'tagItemIds',
-			title: '商品标签'
+			title: '商品标签',
+			isTotalChannelItem: false
 		},
 		{
 			name: 'categoriesId',
 			title: '标准类目',
-			isSimpleSearchItem: true
+			isSimpleSearchItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'endListTime',
-			title: '上架时间'
+			title: '上架时间',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'id',
 			title: '商品ID',
-			isSimpleSearchItem: true
+			isSimpleSearchItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'maxPrice',
-			title: '价格'
+			title: '价格',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'minPrice',
-			title: '价格'
+			title: '价格',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'name',
 			title: '商品标题',
-			isSimpleSearchItem: true
+			isSimpleSearchItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'outerId',
-			title: '商品商家编码'
+			title: '商品商家编码',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'propsPid',
-			title: '商品属性'
+			title: '商品属性',
+			isTotalChannelItem: false
 		},
 		{
 			name: 'propsVid',
-			title: '属性值'
+			title: '属性值',
+			isTotalChannelItem: false
 		},
 		{
 			name: 'propsVname',
-			title: '商品属性值名称'
+			title: '商品属性值名称',
+			isTotalChannelItem: false
 		},
 		{
 			name: 'shopId',
-			title: '店铺选择'
+			title: '店铺选择',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'skusOuterId',
 			title: 'SKU商家编码',
-			isSkuItem: true
+			isSkuItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'skusPropsVname',
 			title: 'SKU规格',
-			isSkuItem: true
+			isSkuItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'startListTime',
-			title: '上架时间'
+			title: '上架时间',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'status',
-			title: '商品状态'
+			title: '商品状态',
+			isTotalChannelItem: true
 		}
 	],
 	offline: [
 		{
 			name: 'platform',
-			title: '平台'
+			title: '平台',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'skusId',
 			title: 'SKU ID',
-			isSkuItem: true
+			isSkuItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'brandId',
-			title: '品牌'
+			title: '品牌',
+			isTotalChannelItem: false
 		},
 		{
 			name: 'categoriesId',
 			title: '商品类目',
-			isSimpleSearchItem: true
+			isSimpleSearchItem: false
 		},
 		{
 			name: 'endListTime',
-			title: '上架时间'
+			title: '上架时间',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'id',
 			title: '商品ID',
-			isSimpleSearchItem: true
+			isSimpleSearchItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'maxPrice',
-			title: '价格'
+			title: '价格',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'minPrice',
-			title: '价格'
+			title: '价格',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'name',
 			title: '商品标题',
-			isSimpleSearchItem: true
+			isSimpleSearchItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'shopId',
-			title: '店铺选择'
+			title: '店铺选择',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'skusPropsVname',
 			title: 'SKU规格',
-			isSkuItem: true
+			isSkuItem: true,
+			isTotalChannelItem: true
 		},
 		{
 			name: 'startListTime',
-			title: '上架时间'
+			title: '上架时间',
+			isTotalChannelItem: true
 		},
 		{
 			name: 'status',
-			title: '商品状态'
+			title: '商品状态',
+			isTotalChannelItem: true
 		}
 	]
 };
