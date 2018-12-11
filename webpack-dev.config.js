@@ -5,6 +5,7 @@
  */
 var path = require('path');
 var webpack = require('webpack');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var autoprefixer = require('autoprefixer');
 var loaders = require('./webpack-common-loaders');
 loaders.push(
@@ -28,7 +29,8 @@ module.exports = {
 	plugins: [
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin()
+		new webpack.NoErrorsPlugin(),
+		new BundleAnalyzerPlugin()
 	],
 	resolve: {
 		extensions: ['', '.js']
