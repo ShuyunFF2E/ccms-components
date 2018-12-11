@@ -142,21 +142,23 @@ export default class GoodsSelectorCtrl {
 		this.formConfig = formConfigGroup.formConfig; // 已选商品 form 表单搜索配置项（前端搜索）
 		this.skuFormConfig = formConfigGroup.skuFormConfig; // 已选商品 form 表单sku相关搜索配置项（前端搜索）
 
+		this.fieldsetConfigList = this.isTotalChannel ? fieldsetConfig['uni'] : fieldsetConfig[this.shopList[0].plat];
+
 		this.initForm();
 
 		// 获取表单项配置，不同平台的表单项有区别
-		this.formTplConfig = utils.getFormTemplateConfig(this.formModel, this.isSupportedSku, this.isShowShopList, this.isSupportedAddCondition, this.isTotalChannel);
+		this.formTplConfig = utils.getFormTemplateConfig(this.fieldsetConfigList, this.formModel, this.isSupportedSku, this.isShowShopList, this.isSupportedAddCondition, this.isTotalChannel);
 
-		const collection = fieldsetConfig[this.formModel.platform];
+		const { fieldsetConfigList } = this;
 		let asyncMethods = [];
 		// 获取商品标签数据并对selectedLabels进行初始化
-		this.findEntityByName(collection, 'tagItemIds') >= 0 && this.isSupportedAddCondition && asyncMethods.push(this.getTags());
+		this.findEntityByName(fieldsetConfigList, 'tagItemIds') >= 0 && this.isSupportedAddCondition && asyncMethods.push(this.getTags());
 		// 商品自自定义类目数据
-		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && asyncMethods.push(this.getShopCategories());
+		this.findEntityByName(fieldsetConfigList, 'shopCategoriesId') >= 0 && asyncMethods.push(this.getShopCategories());
 		// 获取商品品牌
-		this.findEntityByName(collection, 'brandId') >= 0 && asyncMethods.push(this.getBrands());
+		this.findEntityByName(fieldsetConfigList, 'brandId') >= 0 && asyncMethods.push(this.getBrands());
 		// 商品标准类目列表
-		this.findEntityByName(collection, 'categoriesId') >= 0 && asyncMethods.push(this.getCategories());
+		this.findEntityByName(fieldsetConfigList, 'categoriesId') >= 0 && asyncMethods.push(this.getCategories());
 
 		this._$q.all(asyncMethods).then(res => {
 			if (res.every(item => item)) {
@@ -263,7 +265,7 @@ export default class GoodsSelectorCtrl {
 			let ids = this.getTagItemIds(c.tags);
 			formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
 		}
-		this.formModel = Object.assign(utils.resolveFormModel(formModel, this.shopList[0].plat, this.isSupportedSku), {
+		this.formModel = Object.assign(utils.resolveFormModel(this.fieldsetConfigList, formModel, this.shopList[0].plat, this.isSupportedSku), {
 			platform: c.plat ? c.plat : this.shopList[0].plat // 平台
 		});
 
@@ -540,8 +542,8 @@ export default class GoodsSelectorCtrl {
 	// 点击简单搜索按钮
 	clickSimpleSearch() {
 		for (let attr in this.formModel) {
-			const index = this.findEntityByName(fieldsetConfig[this.formModel.platform], attr);
-			if (index >= 0 && !fieldsetConfig[this.formModel.platform][index].isSimpleSearchItem && attr !== 'shopId' && attr !== 'platform') {
+			const index = this.findEntityByName(this.fieldsetConfigList, attr);
+			if (index >= 0 && !this.fieldsetConfigList[index].isSimpleSearchItem && attr !== 'shopId' && attr !== 'platform') {
 				if (Array.isArray(this.formModel[attr])) {
 					this.formModel[attr] = [];
 				} else {
@@ -557,14 +559,9 @@ export default class GoodsSelectorCtrl {
 	// 点击高级搜索按钮
 	clickSeniorSearch() {
 		for (let attr in this.formModel) {
-			const fieldSetList = fieldsetConfig[this.formModel.platform];
 			if (this.formModel.hasOwnProperty(attr)) {
-				const index = this.findEntityByName(fieldSetList, attr);
-				if (this.isTotalChannel) {
-					this.formTplConfig[`show-${attr}`] = index >= 0 && fieldSetList[index].isTotalChannelItem && attr !== 'shopId' && attr !== 'platform';
-				} else {
-					this.formTplConfig[`show-${attr}`] = index >= 0 && attr !== 'shopId' && attr !== 'platform';
-				}
+				const index = this.findEntityByName(this.fieldsetConfigList, attr);
+				this.formTplConfig[`show-${attr}`] = index >= 0 && attr !== 'shopId' && attr !== 'platform';
 			}
 		}
 		this.wakeupScroll();
@@ -687,7 +684,7 @@ export default class GoodsSelectorCtrl {
 
 	// 店铺 select 框 change
 	shopSelectChange(newValue, oldValue, itemIndex, item) {
-		const collection = fieldsetConfig[this.formModel.platform];
+		const collection = this.fieldsetConfigList;
 		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && this.getShopCategories();
 		this.findEntityByName(collection, 'categoriesId') && this.getCategories();
 		this.findEntityByName(collection, 'brandId') >= 0 && this.getBrands();

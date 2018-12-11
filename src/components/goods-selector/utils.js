@@ -1,7 +1,6 @@
 import angular from 'angular';
 import injector from 'angular-es-utils/injector';
 import genResource from 'angular-es-utils/rs-generator';
-import { fieldsetConfig } from './constant';
 import cloneDeep from 'lodash.clonedeep';
 
 export const utils = {
@@ -235,44 +234,31 @@ export const utils = {
 	},
 
 	// 获取表单模板配置
-	getFormTemplateConfig(originFormModel, isSupportedSku, isShowShopList, isSupportedAddCondition, isTotalChannel) {
+	getFormTemplateConfig(fieldsetConfigList, originFormModel, isSupportedSku, isShowShopList, isSupportedAddCondition) {
 		let result = {};
-		const items = fieldsetConfig[originFormModel.platform];
 		for (let attr in originFormModel) {
 			if (originFormModel.hasOwnProperty(attr)) {
-				const itemsIndex = utils.findEntityByName(items, attr);
-				itemsIndex >= 0 && (result[`${attr}Title`] = items[itemsIndex].title);
+				const itemsIndex = utils.findEntityByName(fieldsetConfigList, attr);
+				itemsIndex >= 0 && (result[`${attr}Title`] = fieldsetConfigList[itemsIndex].title);
 				if (isSupportedAddCondition) {
 					if (isSupportedSku) {
-						result[`show-${attr}`] = isTotalChannel
-							? itemsIndex >= 0 && items[itemsIndex].isTotalChannelItem
-							: itemsIndex >= 0;
+						result[`show-${attr}`] = itemsIndex >= 0;
 					} else {
-						result[`show-${attr}`] = isTotalChannel
-							? itemsIndex >= 0 && !items[itemsIndex].isSkuItem && items[itemsIndex].isTotalChannelItem
-							: itemsIndex >= 0 && !items[itemsIndex].isSkuItem;
+						result[`show-${attr}`] = itemsIndex >= 0 && !fieldsetConfigList[itemsIndex].isSkuItem;
 					}
 					result['show-shopId'] = isShowShopList;
 				} else {
 					if (isSupportedSku) {
 						if (isShowShopList) {
-							result[`show-${attr}`] = isTotalChannel
-								? itemsIndex >= 0 && items[itemsIndex].isTotalChannelItem
-								: itemsIndex >= 0;
+							result[`show-${attr}`] = itemsIndex >= 0;
 						} else {
-							result[`show-${attr}`] = isTotalChannel
-								? itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem && items[itemsIndex].isTotalChannelItem
-								: itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem;
+							result[`show-${attr}`] = itemsIndex >= 0 && fieldsetConfigList[itemsIndex].isSimpleSearchItem;
 						}
 					} else {
 						if (isShowShopList) {
-							result[`show-${attr}`] = isTotalChannel
-								? itemsIndex >= 0 && !items[itemsIndex].isSkuItem && items[itemsIndex].isTotalChannelItem
-								: itemsIndex >= 0 && !items[itemsIndex].isSkuItem;
+							result[`show-${attr}`] = itemsIndex >= 0 && !fieldsetConfigList[itemsIndex].isSkuItem;
 						} else {
-							result[`show-${attr}`] = isTotalChannel
-								? itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem && !items[itemsIndex].isSkuItem && items[itemsIndex].isTotalChannelItem
-								: itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem && !items[itemsIndex].isSkuItem;
+							result[`show-${attr}`] = itemsIndex >= 0 && fieldsetConfigList[itemsIndex].isSimpleSearchItem && !fieldsetConfigList[itemsIndex].isSkuItem;
 						}
 					}
 				}
@@ -282,17 +268,16 @@ export const utils = {
 	},
 
 	// 处理表单项
-	resolveFormModel(originFormModel, platform, isSupportedSku) {
+	resolveFormModel(fieldsetConfigList, originFormModel, platform, isSupportedSku) {
 		let formModel = {};
-		const items = fieldsetConfig[platform];
 		for (let attr in originFormModel) {
 			if (originFormModel.hasOwnProperty(attr)) {
 				if (isSupportedSku) {
-					if (utils.findEntityByName(items, attr) >= 0) {
+					if (utils.findEntityByName(fieldsetConfigList, attr) >= 0) {
 						formModel[attr] = cloneDeep(originFormModel[attr]);
 					}
 				} else {
-					if (utils.findEntityByName(items, attr) >= 0 && !items[utils.findEntityByName(items, attr)].isSkuItem) {
+					if (utils.findEntityByName(fieldsetConfigList, attr) >= 0 && !fieldsetConfigList[utils.findEntityByName(fieldsetConfigList, attr)].isSkuItem) {
 						formModel[attr] = cloneDeep(originFormModel[attr]);
 					}
 				}
