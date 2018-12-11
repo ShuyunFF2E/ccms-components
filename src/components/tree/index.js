@@ -70,15 +70,17 @@ const treeNodeDDO = {
 	}
 };
 
-const rightClickFactory = $parse => {
-	return (scope, element, attrs) => {
-		const fn = $parse(attrs.ccTreeRightClick);
-		element.bind('contextmenu', event => {
-			scope.$apply(() => {
-				event.preventDefault();
-				fn(scope, { $event: event });
+const rightClickDirective = $parse => {
+	return {
+		link: (scope, element, attrs) => {
+			const fn = $parse(attrs.ccTreeRightClick);
+			element.bind('contextmenu', event => {
+				scope.$apply(() => {
+					event.preventDefault();
+					fn(scope, { $event: event });
+				});
 			});
-		});
+		}
 	};
 };
 
@@ -87,5 +89,5 @@ export default angular.module('ccms.components.tree', [ccCheckbox, ccRadio, tree
 	.component('ccTreeList', treeListDDO)
 	.component('ccTreeNode', treeNodeDDO)
 	.component('ccTreeMenu', menuDDO)
-	.directive('ccTreeRightClick', rightClickFactory)
+	.directive('ccTreeRightClick', ['$parse', rightClickDirective])
 	.name;
