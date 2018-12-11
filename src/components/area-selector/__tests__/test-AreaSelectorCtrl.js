@@ -520,12 +520,10 @@ describe('AreaSelectorCtrl', () => {
 		areaSelectorCtrl.platform = 'tb';
 
 		localStorage.getItem = sinon.stub();
-		localStorage.setItem = sinon.spy();
-		localStorage.getItem.withArgs('TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA').onFirstCall().returns(null).onSecondCall().returns(2);
+		localStorage.getItem.withArgs('TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA').onFirstCall().returns(null);
 
-		assert.equal(areaSelectorCtrl.getAreasFromLocalStorage(), 2);
-		sinon.assert.calledTwice(localStorage.getItem);
-		sinon.assert.calledOnce(localStorage.setItem);
+		assert.equal(areaSelectorCtrl.getAreasFromLocalStorage(), undefined);
+		sinon.assert.calledOnce(localStorage.getItem);
 	});
 
 	it('#increaseAreaNumber', () => {
