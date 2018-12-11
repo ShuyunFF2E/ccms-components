@@ -1,7 +1,7 @@
 import angular from 'angular';
 import injector from 'angular-es-utils/injector';
 import genResource from 'angular-es-utils/rs-generator';
-import { apiPrefix, fieldsetConfig } from './constant';
+import { fieldsetConfig } from './constant';
 import cloneDeep from 'lodash.clonedeep';
 
 export const utils = {
@@ -12,12 +12,13 @@ export const utils = {
 	 * @param serverName
 	 * @returns {Promise<any>}
 	 */
-	transformGoodsData({shopId, plat, selectedGoods, serverName, isSupportedSku}) {
+	transformGoodsData({shopId, plat, selectedGoods, serverName, isSupportedSku, apiPrefix}) {
 		const ids = Object.keys(selectedGoods);
 		const paramIdStr = ids.join('&id=');
 		const shopIdStr = shopId.join('&shopId=');
 		return new Promise((resolve, reject) => {
 			genResource(`${serverName}${apiPrefix}/items?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}`).save().$promise.then(res => {
+				console.log('初始化已选商品状态');
 				res['data'] = res['data'] || [];
 				let transformedData = res.data.map(d => {
 					if (isSupportedSku) {

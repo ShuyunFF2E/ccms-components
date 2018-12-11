@@ -1,5 +1,7 @@
 // export const apiPrefix = '/api';
 export const apiPrefix = '/shuyun-searchapi/1.0';
+export const uniApiPrefix = '/standard-selector/1.0';
+
 export const onceMaxSelectedNumber = 500;
 
 export const getExceedSelectedNumberMsg = number => {
@@ -112,269 +114,273 @@ export const getBatchImportMsg = (currentTime, key, successNumber, failedNumber,
 		}
 	}
 };
-
+const josConfig = [
+	{
+		name: 'platform',
+		title: '平台',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'skusId',
+		title: '商品编号',
+		isSkuItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'categoriesId',
+		title: '标准类目',
+		isSimpleSearchItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'endListTime',
+		title: '上架时间',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'id',
+		title: '商品ID',
+		isSimpleSearchItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'maxPrice',
+		title: '价格',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'minPrice',
+		title: '价格',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'name',
+		title: '商品标题',
+		isSimpleSearchItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'outerId',
+		title: '商品商家编码',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'propsPid',
+		title: '商品属性',
+		isTotalChannelItem: false
+	},
+	{
+		name: 'propsVid',
+		title: '属性值',
+		isTotalChannelItem: false
+	},
+	{
+		name: 'propsVname',
+		title: '商品属性值名称',
+		isTotalChannelItem: false
+	},
+	{
+		name: 'shopId',
+		title: '店铺选择',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'skusOuterId',
+		title: 'SKU商家编码',
+		isSkuItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'skusPropsVname',
+		title: 'SKU规格',
+		isSkuItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'startListTime',
+		title: '上架时间',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'status',
+		title: '商品状态',
+		isTotalChannelItem: true
+	}
+];
+const topConfig = [
+	{
+		name: 'platform',
+		title: '平台',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'shopCategoriesId',
+		title: '自定义类目',
+		isTotalChannelItem: false
+	},
+	{
+		name: 'tagItemIds',
+		title: '商品标签',
+		isTotalChannelItem: false
+	},
+	{
+		name: 'categoriesId',
+		title: '标准类目',
+		isSimpleSearchItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'endListTime',
+		title: '上架时间',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'id',
+		title: '商品ID',
+		isSimpleSearchItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'maxPrice',
+		title: '价格',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'minPrice',
+		title: '价格',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'name',
+		title: '商品标题',
+		isSimpleSearchItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'outerId',
+		title: '商品商家编码',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'propsPid',
+		title: '商品属性',
+		isTotalChannelItem: false
+	},
+	{
+		name: 'propsVid',
+		title: '属性值',
+		isTotalChannelItem: false
+	},
+	{
+		name: 'propsVname',
+		title: '商品属性值名称',
+		isTotalChannelItem: false
+	},
+	{
+		name: 'shopId',
+		title: '店铺选择',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'skusOuterId',
+		title: 'SKU商家编码',
+		isSkuItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'skusPropsVname',
+		title: 'SKU规格',
+		isSkuItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'startListTime',
+		title: '上架时间',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'status',
+		title: '商品状态',
+		isTotalChannelItem: true
+	}
+];
+const offlineConfig = [
+	{
+		name: 'platform',
+		title: '平台',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'skusId',
+		title: 'SKU ID',
+		isSkuItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'brandId',
+		title: '品牌',
+		isTotalChannelItem: false
+	},
+	{
+		name: 'categoriesId',
+		title: '商品类目',
+		isSimpleSearchItem: false
+	},
+	{
+		name: 'endListTime',
+		title: '上架时间',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'id',
+		title: '商品ID',
+		isSimpleSearchItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'maxPrice',
+		title: '价格',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'minPrice',
+		title: '价格',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'name',
+		title: '商品标题',
+		isSimpleSearchItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'shopId',
+		title: '店铺选择',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'skusPropsVname',
+		title: 'SKU规格',
+		isSkuItem: true,
+		isTotalChannelItem: true
+	},
+	{
+		name: 'startListTime',
+		title: '上架时间',
+		isTotalChannelItem: true
+	},
+	{
+		name: 'status',
+		title: '商品状态',
+		isTotalChannelItem: true
+	}
+];
 // 不同平台 form 表单项配置
-export const fieldsetConfig = {
-	jos: [
-		{
-			name: 'platform',
-			title: '平台',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'skusId',
-			title: '商品编号',
-			isSkuItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'categoriesId',
-			title: '标准类目',
-			isSimpleSearchItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'endListTime',
-			title: '上架时间',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'id',
-			title: '商品ID',
-			isSimpleSearchItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'maxPrice',
-			title: '价格',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'minPrice',
-			title: '价格',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'name',
-			title: '商品标题',
-			isSimpleSearchItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'outerId',
-			title: '商品商家编码',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'propsPid',
-			title: '商品属性',
-			isTotalChannelItem: false
-		},
-		{
-			name: 'propsVid',
-			title: '属性值',
-			isTotalChannelItem: false
-		},
-		{
-			name: 'propsVname',
-			title: '商品属性值名称',
-			isTotalChannelItem: false
-		},
-		{
-			name: 'shopId',
-			title: '店铺选择',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'skusOuterId',
-			title: 'SKU商家编码',
-			isSkuItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'skusPropsVname',
-			title: 'SKU规格',
-			isSkuItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'startListTime',
-			title: '上架时间',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'status',
-			title: '商品状态',
-			isTotalChannelItem: true
-		}
-	],
-	top: [
-		{
-			name: 'platform',
-			title: '平台',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'shopCategoriesId',
-			title: '自定义类目',
-			isTotalChannelItem: false
-		},
-		{
-			name: 'tagItemIds',
-			title: '商品标签',
-			isTotalChannelItem: false
-		},
-		{
-			name: 'categoriesId',
-			title: '标准类目',
-			isSimpleSearchItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'endListTime',
-			title: '上架时间',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'id',
-			title: '商品ID',
-			isSimpleSearchItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'maxPrice',
-			title: '价格',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'minPrice',
-			title: '价格',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'name',
-			title: '商品标题',
-			isSimpleSearchItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'outerId',
-			title: '商品商家编码',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'propsPid',
-			title: '商品属性',
-			isTotalChannelItem: false
-		},
-		{
-			name: 'propsVid',
-			title: '属性值',
-			isTotalChannelItem: false
-		},
-		{
-			name: 'propsVname',
-			title: '商品属性值名称',
-			isTotalChannelItem: false
-		},
-		{
-			name: 'shopId',
-			title: '店铺选择',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'skusOuterId',
-			title: 'SKU商家编码',
-			isSkuItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'skusPropsVname',
-			title: 'SKU规格',
-			isSkuItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'startListTime',
-			title: '上架时间',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'status',
-			title: '商品状态',
-			isTotalChannelItem: true
-		}
-	],
-	offline: [
-		{
-			name: 'platform',
-			title: '平台',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'skusId',
-			title: 'SKU ID',
-			isSkuItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'brandId',
-			title: '品牌',
-			isTotalChannelItem: false
-		},
-		{
-			name: 'categoriesId',
-			title: '商品类目',
-			isSimpleSearchItem: false
-		},
-		{
-			name: 'endListTime',
-			title: '上架时间',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'id',
-			title: '商品ID',
-			isSimpleSearchItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'maxPrice',
-			title: '价格',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'minPrice',
-			title: '价格',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'name',
-			title: '商品标题',
-			isSimpleSearchItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'shopId',
-			title: '店铺选择',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'skusPropsVname',
-			title: 'SKU规格',
-			isSkuItem: true,
-			isTotalChannelItem: true
-		},
-		{
-			name: 'startListTime',
-			title: '上架时间',
-			isTotalChannelItem: true
-		},
-		{
-			name: 'status',
-			title: '商品状态',
-			isTotalChannelItem: true
-		}
-	]
+export let fieldsetConfig = {
+	jos: josConfig,
+	'uni_jos': josConfig,
+	top: topConfig,
+	'uni_top': topConfig,
+	offline: offlineConfig,
+	'uni_offline': offlineConfig
 };
-

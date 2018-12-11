@@ -118,7 +118,9 @@
 
 	// top + sku 维度 + 店铺选择
 	function openTopWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
-		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
+		var shopList = isTotalChannel
+			? [{shopId: '106878997', shopName: '数云食堂', plat: 'uni_top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'uni_top'}, {shopId: '65305757', shopName: '安踏', plat: 'uni_top'}]
+			: [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,
@@ -193,7 +195,7 @@
 
 	// top + sku 维度 + 单店铺
 	function openTopWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
-		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
+		var shopList = isTotalChannel ? {shopId: '106878997', shopName: '黑色', plat: 'uni_top'} : {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,
@@ -223,7 +225,9 @@
 
 	// top + 商品维度 + 店铺选择
 	function openTopWithoutSkuWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
-		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
+		var shopList = isTotalChannel
+			? [{shopId: '106878997', shopName: '数云食堂', plat: 'uni_top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'uni_top'}, {shopId: '65305757', shopName: '安踏', plat: 'uni_top'}]
+			: [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,
@@ -254,7 +258,7 @@
 
 	// top + 商品维度 + 单店铺
 	function openTopWithoutSkuWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
-		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
+		var shopList = isTotalChannel ? {shopId: '106878997', shopName: '黑色', plat: 'uni_top'} : {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,
@@ -285,7 +289,9 @@
 
 	// top + 商品维度 + 店铺选择 + 单选（微信CRM）
 	function openTopSingleSelectWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
-		var shopList = [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
+		var shopList = isTotalChannel
+			? [{shopId: '106878997', shopName: '数云食堂', plat: 'uni_top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'uni_top'}, {shopId: '65305757', shopName: '安踏', plat: 'uni_top'}]
+			: [{shopId: '106878997', shopName: '数云食堂', plat: 'top'}, {shopId: '157263193', shopName: '0黑色的琴键0', plat: 'top'}, {shopId: '65305757', shopName: '安踏', plat: 'top'}];
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,
@@ -312,7 +318,7 @@
 
 	// top + 商品维度 + 单店铺 + 单选（微信CRM）
 	function openTopSingleSelectWithoutShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
-		var shopList = {shopId: '106878997', shopName: '黑色', plat: 'top'};
+		var shopList = isTotalChannel ? {shopId: '106878997', shopName: '黑色', plat: 'uni_top'} : {shopId: '106878997', shopName: '黑色', plat: 'top'};
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,

@@ -14,7 +14,7 @@ import formTpl from './tpls/form-template.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './addSection/SectionAddCtrl';
-import { apiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList,
+import { apiPrefix, uniApiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList,
 	getFieldsMap, exceedSelectedAllNumberMsg, getFormConfig, errorMsg, getBatchImportMsg, fieldsetConfig } from './constant';
 import { utils } from './utils';
 import service from './service';
@@ -30,6 +30,9 @@ export default class GoodsSelectorCtrl {
 	$onInit() {
 		this.showLoading = true;
 		this.formTpl = formTpl;
+		// 是否是全渠道
+		this.isTotalChannel = this._isTotalChannel;
+		this.apiPrefix = this.isTotalChannel ? uniApiPrefix : apiPrefix;
 		// 是否是单选
 		this.isSingleSelect = this._isSingleSelect;
 		// 单选按钮配置
@@ -66,9 +69,7 @@ export default class GoodsSelectorCtrl {
 		// 是否支持批量导入
 		this.isSupportedBatchAddition = this._isSupportedBatchAddition;
 		// 批量导入和搜索是本质上都是根据条件对表格数据进行筛选，但是却是两个不相关的操作，把它们看成两个开关，不同的开关对应不同的API，其下的分页操作分别使用对应的API
-		this.gridPrefixApi = `${this.serverName}${apiPrefix}/items`;
-		// 是否是全渠道
-		this.isTotalChannel = this._isTotalChannel;
+		this.gridPrefixApi = `${this.serverName}${this.apiPrefix}/items`;
 
 		// 店铺信息 -> 如果是 array 或者店铺多选, 说明需要显示店铺列表
 		//         -> 如果是 object并且不是店铺多选, 说明是单店铺
@@ -171,7 +172,8 @@ export default class GoodsSelectorCtrl {
 
 	// 初始化全部全选 checkbox 的状态
 	initCheckedAllStatus() {
-		service.getSelectedItemsAll(this.serverName, this.shopList[0].plat, this.selectedShopIdList).get().$promise.then(res => {
+		service.getSelectedItemsAll(this.serverName, this.shopList[0].plat, this.selectedShopIdList, this.apiPrefix).get().$promise.then(res => {
+			console.log('初始化全选checkbox');
 			const data = res.data || [];
 			const idArr = Object.keys(this.selectedData);
 			this.isCheckedAll = data.length && data.every(item => {
@@ -299,7 +301,8 @@ export default class GoodsSelectorCtrl {
 			plat: this.shopList[0].plat,
 			selectedGoods: this.selectedData,
 			serverName: this.serverName,
-			isSupportedSku: this.isSupportedSku
+			isSupportedSku: this.isSupportedSku,
+			apiPrefix: this.apiPrefix
 		};
 		utils.transformGoodsData(goodsDataParams).then(data => {
 			if (data && data.length) {
@@ -319,7 +322,7 @@ export default class GoodsSelectorCtrl {
 	preparePagerGridOptions() {
 		// 全部商品表格配置
 		this.pagerGridOptions = {
-			resource: this._$resource(`${this.serverName}${apiPrefix}/items`, null, {
+			resource: this._$resource(`${this.serverName}${this.apiPrefix}/items`, null, {
 				get: {
 					method: 'POST'
 				}
@@ -364,6 +367,7 @@ export default class GoodsSelectorCtrl {
 
 		// 对请求回来的表格数据进行处理
 		this.pagerGridOptions.transformer = res => {
+			console.log('表格刷新');
 			if (res.flag === 'fail' && res.msg === 'Result window is too large, window size must be less than or equal to: [10000]') {
 				this._$ccTips.error('<span class="sd-max-number-error-msg"></span>');
 				let warnMsg = this._$compile('<span>出错提示：最多允许查询10000条商品数据, 请刷新表格。&nbsp;</span><span style="color: #0083ba; cursor: pointer" ng-click="$ctrl.refreshAllGoodsGrid()">刷新</span>')(this._$scope);
@@ -580,7 +584,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品自自定义类目数据
 	getShopCategories() {
-		return service.getShopCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get().$promise.then(res => {
+		return service.getShopCategories(this.serverName, this.formModel.platform, this.formModel.shopId, this.apiPrefix).get().$promise.then(res => {
 			let data = res.data || [];
 			// 只显示叶子类目
 			this.shopCategoriesList = data.filter(item => item.isLeaf === true);
@@ -600,7 +604,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品标准类目列表
 	getCategories() {
-		return service.getCategories(this.serverName, this.formModel.platform, this.formModel.shopId).get().$promise.then(res => {
+		return service.getCategories(this.serverName, this.formModel.platform, this.formModel.shopId, this.apiPrefix).get().$promise.then(res => {
 			let data = res.data || [];
 			this.categoriesList = data.filter(item => item.isLeaf === true);
 			// 由于商品标准类目数据是异步请求，所以需要在数据回来以后更新表单中 categoriesId 的值，更新后清空，保证数据只赋值一次
@@ -619,7 +623,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品品牌
 	getBrands() {
-		return service.getBrands(this.serverName, this.formModel.platform, this.formModel.shopId).get().$promise.then(res => {
+		return service.getBrands(this.serverName, this.formModel.platform, this.formModel.shopId, this.apiPrefix).get().$promise.then(res => {
 			this.brandsList = res.data || [];
 			// 由于商品品牌数据是异步请求，所以需要在数据回来以后更新表单中 brandId 的值，更新后清空，保证数据只赋值一次
 			if (this.conditions.brandId) {
@@ -634,7 +638,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品标签，初始化的时候调用
 	getTags() {
-		return service.getTags(this.serverName, this.formModel.platform, this.tenantId).get().$promise.then(res => {
+		return service.getTags(this.serverName, this.formModel.platform, this.tenantId, this.apiPrefix).get().$promise.then(res => {
 			res.data = res.data || [];
 			if (res.data.length && this.conditions.tags && this.conditions.tags.length) {
 				// 如果用户传进来的商品标签存在于商品标签列表中，那么将商品标签 push 到 selectedLabels 中
@@ -654,7 +658,7 @@ export default class GoodsSelectorCtrl {
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.categoriesId && item) {
-			return service.getProperties(this.serverName, this.formModel.platform, this.formModel.shopId, item.id).get().$promise.then(res => {
+			return service.getProperties(this.serverName, this.formModel.platform, this.formModel.shopId, item.id, this.apiPrefix).get().$promise.then(res => {
 				this.propsPidList = res.data || [];
 				this.formModel.propsPid = this.propsPid;
 				this.propsPid = null;
@@ -773,7 +777,7 @@ export default class GoodsSelectorCtrl {
 	// 批量添加操作下的 api 和 表格查询参数
 	getBatchImportApi() {
 		// 当使用批量添加的时候一切表格数据相关请求访问该路径，当使用表单搜索的时候，一切表格数据相关请求访问原来的路径
-		this.gridPrefixApi = `${this.serverName}${apiPrefix}/items/batchImportIds`;
+		this.gridPrefixApi = `${this.serverName}${this.apiPrefix}/items/batchImportIds`;
 		// 更新表格，表格查询参数为 pageNum, pageSize, id/sku.outerId,outerId, shopId, platform
 		this.pagerGridOptions.resource = this._$resource(this.gridPrefixApi, null, {
 			get: {
@@ -853,7 +857,7 @@ export default class GoodsSelectorCtrl {
 
 	// 搜索操作下的 api 和 表格查询参数
 	getSearchApi() {
-		this.gridPrefixApi = `${this.serverName}${apiPrefix}/items`;
+		this.gridPrefixApi = `${this.serverName}${this.apiPrefix}/items`;
 		this.pagerGridOptions.resource = this._$resource(this.gridPrefixApi, null, {
 			get: {
 				method: 'POST'
@@ -1137,14 +1141,14 @@ export default class GoodsSelectorCtrl {
 	// 全部全选操作获取表格数据
 	getGridData(totals) {
 		let postData = this.addSectionQueryParams;
-		if (this.gridPrefixApi === `${this.serverName}${apiPrefix}/items`) {
+		if (this.gridPrefixApi === `${this.serverName}${this.apiPrefix}/items`) {
 			postData = this.pagerGridOptions.postData;
 			// 不是批量导入
 			let exceptList = ['pageNum', 'pageSize', 'tagItemIds'];
 			let paramStr = utils.getStandardParams(this.checkAllQueryParams, exceptList);
-			return service.getGridItems(this.serverName, 1, totals, paramStr).save(postData).$promise;
+			return service.getGridItems(this.serverName, 1, totals, paramStr, this.apiPrefix).save(postData).$promise;
 		} else {
-			return service.getGridBatchItems(this.serverName, 1, totals).save(postData).$promise;
+			return service.getGridBatchItems(this.serverName, 1, totals, this.apiPrefix).save(postData).$promise;
 		}
 	}
 
@@ -1239,7 +1243,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取批量导入数据的结果（导入总数、导入失败数据列表）
 	getBatchImportResult(obj, queryParams, inputObjHash) {
-		service.getBatchImportResult(this.serverName).save(queryParams, res => {
+		service.getBatchImportResult(this.serverName, this.apiPrefix).save(queryParams, res => {
 			let currentTime = Date.parse(new Date());
 			this[`addSectionFailedData${currentTime}`] = res.notFound; // 导入失败的数据
 			const addSectionTotalsNumber = queryParams['id'].length ? queryParams['id'].length : (queryParams['outerId'].length ? queryParams['outerId'].length : queryParams['skus.outerId'].length); // 导入数据总量
@@ -1262,7 +1266,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取批量导入数据后返回的表格数据
 	getBatchImportIds(obj, queryParams) {
-		service.getBatchImportIds(this.serverName).save(queryParams, res => {
+		service.getBatchImportIds(this.serverName, this.apiPrefix).save(queryParams, res => {
 			if (res.data && res.data.length) {
 				this.isAddSectionExtend = (obj.inputKey === 'skuNumber');
 				this.isAddSection = true; // 批量导入
@@ -1329,7 +1333,7 @@ export default class GoodsSelectorCtrl {
 			selectedLabels: this.selectedLabels,
 			mapping
 		};
-		service.getTags(this.serverName, this.formModel.platform, this.tenantId).get(res => {
+		service.getTags(this.serverName, this.formModel.platform, this.tenantId, this.apiPrefix).get(res => {
 			res.data = res.data || [];
 			this._$labelChoose.labelChoose(title, res.data, opts).open()
 				.result.then(res => {
