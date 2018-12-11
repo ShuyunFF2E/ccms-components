@@ -34,6 +34,10 @@ export default function AreaSelectorProvider() {
 			.then(res => {
 				localStorage.setItem(localStorageKeys[plat], JSON.stringify(res.data));
 			}).catch(err => {
+				// require.ensure([], function(require) {
+				// 	const areas = require(`./${plat}Areas.json`);
+				// 	localStorage.setItem(localStorageKeys[plat], angular.toJson(areas));
+				// });
 				console.error(err);
 			});
 	}

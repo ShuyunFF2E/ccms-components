@@ -32,6 +32,14 @@ export default class AreaSelectorCtrl {
 		this.areaNumber = 0;
 		this.districtNumber = 0;
 		this.areas = this.getAreasFromLocalStorage();
+		if (!this.areas) {
+			setTimeout(() => {
+				this._modalInstance._renderDeferred.promise.then(() => {
+					this._$ccTips.error('服务出错, 未拿到地址数据, 请联系数云客服', this._$element[0].querySelector('.modal-body'));
+				});
+			}, 0);
+			return;
+		}
 		this.provinces = this.areas;
 		this.initCommonAreas();
 		this.selectedValue = this._marketingOnly ? this.toOriginFormat(this._selectedData) : this._selectedData;
@@ -64,14 +72,12 @@ export default class AreaSelectorCtrl {
 	getAreasFromLocalStorage() {
 		if (this.platform === 'tb') {
 			if (!localStorage.getItem(localStorageKeys[this.platform])) {
-				const areas = require('./tbAreas.json');
-				localStorage.setItem(localStorageKeys[this.platform], angular.toJson(areas));
+				return;
 			}
 			return angular.fromJson(localStorage.getItem(localStorageKeys[this.platform]));
 		} else if (this.platform === 'jd') {
 			if (!localStorage.getItem(localStorageKeys[this.platform])) {
-				const areas = require('./jdAreas.json');
-				localStorage.setItem(localStorageKeys[this.platform], angular.toJson(areas));
+				return;
 			}
 			return angular.fromJson(localStorage.getItem(localStorageKeys[this.platform]));
 		}
