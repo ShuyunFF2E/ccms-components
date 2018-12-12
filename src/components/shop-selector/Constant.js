@@ -1,5 +1,5 @@
-export const apiPrefix = '/api';
-// export const apiPrefix = '/tenant/v2';
+// export const apiPrefix = '/api';
+export const apiPrefix = '/tenant/v2';
 export const getGridColumnDef = isSupportedPlatform => {
 	let column = [
 		{
