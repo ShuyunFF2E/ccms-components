@@ -34,7 +34,6 @@ const treeDDO = {
 		supportSearch: '<?',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
-		onClickAction: '<?',
 		onSelectedAction: '<?',
 		onRemoveAction: '<?',
 		onAddAction: '<?',

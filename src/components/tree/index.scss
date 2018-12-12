@@ -45,6 +45,7 @@
 		}
 		.fake-radio{
 			display: inline-block;
+			width: 100%;
 			.radio-button-icon{
 				margin: 0 4px;
 			}
@@ -79,9 +80,14 @@
 		&.selected .tree-text{
 			color: #00a6eb;
 		}
-		.cc-checkbox .cc-checkbox-input{
-			margin-left: 4px;
-			margin-right: 4px;
+		cc-checkbox{
+			width: 100%;
+			.cc-checkbox {
+				.cc-checkbox-input{
+					margin-left: 4px;
+					margin-right: 4px;
+				}
+			}
 		}
 	}
 	.cc-tree-menu {

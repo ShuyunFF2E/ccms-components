@@ -9,8 +9,8 @@ const data = [
 		pId: 0,
 		name: 'name',
 		children: [],
+		checked: false,   // 是否处于被选中状态 `非必填项`
 		isClosed: false,  // 是否为闭合状态  `非必填项`
-		isSelected: false,   // 是否处于被选中状态 `非必填项`
 		disableAdd: false, // 该节点禁止新增功能 `非必填项`
 		disableRemove: false, // 该节点禁止删除功能 `非必填项`
 		disableRename: false, // 该节点禁止重命名功能 `非必填项`
@@ -25,16 +25,6 @@ const data = [
 - isRadioModel: 是否为单选模试, 仅在supportCheckbox为true时生效 `Boolean`
 
 ### 事件列表
-- onClickAction: 节点点击事件 `Function`
-```
-/**
- * 节点点击事件
- * @param node: 当前点击的节点对象
- */
-this.onClickAction = function(node) {
-	console.log('当前点击的节点id：' + node.id, '节点名称：' + node.name);
-};
-```
 
 - onSelectedAction: 节点选中事件 `Function` 
 ```

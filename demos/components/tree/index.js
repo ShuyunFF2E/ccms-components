@@ -31,11 +31,6 @@
 			// 是否支持搜索框
 			supportSearch: true,
 
-			// 节点点击事件
-			onClickAction: node => {
-				console.log('tree_one当前点击的节点id：' + node.id, '节点名称：' + node.name);
-			},
-
 			// 右键菜单: 新增节点处理器
 			onAddAction: (pId, name) => {
 				// 这里需要模拟一条API请求
@@ -46,9 +41,9 @@
 			},
 
 			// 右键菜单: 重命名节点处理器
-			onRenameAction: node => {
+			onRenameAction: (node, newName) => {
 				// 这里需要模拟一条API请求
-				console.info(`向后端发送了一条修改请求，参数为{id:${node.id}, name: ${node.name}}`);
+				console.info(`向后端发送了一条修改请求，参数为{id:${node.id}, name: ${newName}}`);
 				return new Promise((resolve, reject) => {
 					resolve();
 					// reject('重命名失败了');
@@ -134,40 +129,6 @@
 			// 是否支持搜索框
 			supportSearch: false,
 
-			// 节点点击事件
-			onClickAction: node => {
-				console.log('tree_two当前点击的节点id：' + node.id, '节点名称：' + node.name);
-			},
-
-			// 右键菜单: 新增节点处理器
-			onAddAction: (pId, name) => {
-				// 这里需要模拟一条API请求
-				console.info(`向后端发送了一条新增请求，参数为{pId:${pId}, name: ${name}}`);
-				return new Promise((resolve, reject) => {
-					resolve({id: Math.random()});
-				});
-			},
-
-			// 右键菜单: 重命名节点处理器
-			onRenameAction: node => {
-				// 这里需要模拟一条API请求
-				console.info(`向后端发送了一条修改请求，参数为{id:${node.id}, name: ${node.name}}`);
-				return new Promise((resolve, reject) => {
-					resolve();
-					// reject('重命名失败了');
-				});
-			},
-
-			// 右键菜单: 删除节点处理器
-			onRemoveAction: node => {
-				// 这里需要模拟一条API请求
-				console.info(`向后端发送了一条删除请求，参数为{id:${node.id}}`);
-				return new Promise((resolve, reject) => {
-					resolve();
-					// reject('该节点不允许删除');
-				});
-			},
-
 			// 节点选中回调
 			onSelectedAction: (node, selectedList) => {
 				console.log(node, selectedList);
@@ -224,41 +185,6 @@
 
 		// 无搜索、无选择、无菜单
 		this.tree_three = {
-
-			// 节点点击事件
-			onClickAction: node => {
-				console.log('tree_three当前点击的节点id：' + node.id, '节点名称：' + node.name);
-			},
-
-			// 右键菜单: 新增节点处理器
-			onAddAction: (pId, name) => {
-				// 这里需要模拟一条API请求
-				console.info(`向后端发送了一条新增请求，参数为{pId:${pId}, name: ${name}}`);
-				return new Promise((resolve, reject) => {
-					resolve({id: Math.random()});
-				});
-			},
-
-			// 右键菜单: 重命名节点处理器
-			onRenameAction: (node, name) => {
-				// 这里需要模拟一条API请求
-				console.info(`向后端发送了一条修改请求，参数为{id:${node.id}, name: ${name}}`);
-				return new Promise((resolve, reject) => {
-					resolve();
-					// reject('重命名失败了');
-				});
-			},
-
-			// 右键菜单: 删除节点处理器
-			onRemoveAction: node => {
-				// 这里需要模拟一条API请求
-				console.info(`向后端发送了一条删除请求，参数为{id:${node.id}}`);
-				return new Promise((resolve, reject) => {
-					resolve();
-					// reject('该节点不允许删除');
-				});
-			},
-
 			// 节点选中回调
 			onSelectedAction: (node, selectedList) => {
 				console.log(node, selectedList);
@@ -278,6 +204,7 @@
 								id: 111,
 								name: '22323',
 								pId: 11,
+								checked: true,
 								categoryType: 0
 							}
 						]
@@ -290,6 +217,7 @@
 								id: 121,
 								name: 'miaomiaozhu0620',
 								pId: 12,
+								isSelected: true,
 								children: [
 									{
 										id: 1211,

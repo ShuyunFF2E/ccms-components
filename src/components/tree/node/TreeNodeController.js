@@ -5,6 +5,10 @@ import Inject from 'angular-es-utils/decorators/Inject';
 export default class TreeNodeController {
 	constructor() {
 		this.name = this.node.name;
+
+		// 节点类型
+		// 1.radio: 单选; 2.checkbox: 多选; 3.text 文本;
+		this.nodeType = this.supportCheckbox ? (this.isRadioModel ? 'radio' : 'checkbox') : 'text';
 	}
 
 	/**
@@ -36,21 +40,12 @@ export default class TreeNodeController {
 	}
 
 	/**
-	 * 节点点击事件
-	 * @param $event
-	 */
-	onClick($event) {
-		this.treeMap.store.updateActiveNode(this.node);
-
-		this.treeMap.handler.onClickAction && this.treeMap.handler.onClickAction(this.node);
-	}
-
-	/**
 	 * 事件: 选择事件
 	 * @param type
 	 */
 	onChangeChecked(type) {
-		switch (type) {
+		const { nodeType } = this;
+		switch (nodeType) {
 			case 'checkbox': {
 				this.changeForCheckbox();
 				break;
@@ -59,7 +54,14 @@ export default class TreeNodeController {
 				this.changeForRadio();
 				break;
 			}
-			default: break;
+			case 'text': {
+				this.changeForRadio();
+				break;
+			}
+			default: {
+				this.changeForRadio();
+				break;
+			}
 		}
 
 		// 执行选中事件
