@@ -108,6 +108,10 @@ export default class DatePickerCtrl {
 		return this.DISPLAY_FORMAT[this.displayFormat] === 2;
 	}
 
+	hideSeconds() {
+		return this.DISPLAY_FORMAT[this.displayFormat] === 3;
+	}
+
 	setLGButtonStatus() {
 		if (this.parts.month === '0' && this.parts.year === MIN_YEAR + '') {
 			this.disabledL = true;
