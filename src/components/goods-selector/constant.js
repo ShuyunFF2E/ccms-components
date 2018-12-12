@@ -1,4 +1,5 @@
 // export const apiPrefix = '/api';
+// export const uniApiPrefix = '/api';
 export const apiPrefix = '/shuyun-searchapi/1.0';
 export const uniApiPrefix = '/standard-selector/1.0';
 
@@ -334,6 +335,15 @@ export let fieldsetConfig = {
 		{
 			name: 'platform',
 			title: '平台'
+		},
+		{
+			name: 'skusId',
+			title: {
+				'uni_top': 'SKU ID',
+				'uni_jos': '商品编号',
+				'uni_offline': 'SKU ID'
+			},
+			isSkuItem: true
 		},
 		{
 			name: 'categoriesId',

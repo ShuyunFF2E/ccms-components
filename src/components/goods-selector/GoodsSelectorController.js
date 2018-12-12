@@ -78,7 +78,7 @@ export default class GoodsSelectorCtrl {
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this.shopInfoData : [this.shopInfoData];
 		this.shopList.map(item => { item.shopId = String(item.shopId); return item; });
-		this.isTaobao = this.shopList[0].plat === 'top';
+		this.isTaobao = this.shopList[0].plat === 'top' || this.shopList[0].plat === 'uni_top';
 		this.isQiake = this.shopList[0].plat === 'offline';
 
 		// 获取已选店铺 ID 数组

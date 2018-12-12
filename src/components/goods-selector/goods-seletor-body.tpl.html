@@ -112,7 +112,8 @@
 				</fieldset>
 				<!--商品编号/SKU ID-->
 				<fieldset ng-if="$ctrl.formTplConfig['show-skusId']">
-					<label class="goods-label">{{$ctrl.formTplConfig.skusIdTitle}}：</label>
+					<label class="goods-label" ng-if="$ctrl.isTotalChannel">{{$ctrl.formTplConfig.skusIdTitle[$ctrl.shopList[0].plat]}}：</label>
+					<label class="goods-label" ng-if="!$ctrl.isTotalChannel">{{$ctrl.formTplConfig.skusIdTitle}}：</label>
 					<input type="text" ng-model="$ctrl.formModel.skusId[0]" cc-validator='number' placeholder="">
 				</fieldset>
 				<!--价格-->

@@ -239,7 +239,9 @@ export const utils = {
 		for (let attr in originFormModel) {
 			if (originFormModel.hasOwnProperty(attr)) {
 				const itemsIndex = utils.findEntityByName(fieldsetConfigList, attr);
-				itemsIndex >= 0 && (result[`${attr}Title`] = fieldsetConfigList[itemsIndex].title);
+				if (itemsIndex >= 0) {
+					result[`${attr}Title`] = fieldsetConfigList[itemsIndex].title;
+				}
 				if (isSupportedAddCondition) {
 					if (isSupportedSku) {
 						result[`show-${attr}`] = itemsIndex >= 0;
