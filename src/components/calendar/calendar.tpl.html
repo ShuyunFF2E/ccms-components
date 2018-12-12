@@ -30,7 +30,7 @@
 					 ng-min="0"
 					 ng-max="23"
 					 ng-keyup="ctrl.updateTime($event)"
-					 ng-blur="ctrl.addTimeZero($event)"> :
+					 ng-blur="ctrl.addTimeZero($event)"> <span>:</span>
 		<input class="calendar-time-input"
 					 name="minute"
 					 ng-model="ctrl.parts.minute"
@@ -39,7 +39,7 @@
 					 ng-min="0"
 					 ng-max="59"
 					 ng-keyup="ctrl.updateTime($event)"
-					 ng-blur="ctrl.addTimeZero($event)"> :
+					 ng-blur="ctrl.addTimeZero($event)"> <span ng-hide="ctrl.hideSeconds()">:</span>
 		<input class="calendar-time-input"
 					 name="second"
 					 ng-model="ctrl.parts.second"
@@ -47,6 +47,7 @@
 					 maxlength="2"
 					 ng-min="0"
 					 ng-max="59"
+			         ng-hide="ctrl.hideSeconds()"
 					 ng-keyup="ctrl.updateTime($event)"
 					 ng-blur="ctrl.addTimeZero($event)">
 	</div>
