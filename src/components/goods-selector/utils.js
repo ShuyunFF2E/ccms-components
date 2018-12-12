@@ -17,7 +17,6 @@ export const utils = {
 		const shopIdStr = shopId.join('&shopId=');
 		return new Promise((resolve, reject) => {
 			genResource(`${serverName}${apiPrefix}/items?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}`).save().$promise.then(res => {
-				console.log('初始化已选商品状态');
 				res['data'] = res['data'] || [];
 				let transformedData = res.data.map(d => {
 					if (isSupportedSku) {
@@ -231,42 +230,6 @@ export const utils = {
 
 	findEntityByName(collection, name) {
 		return collection.findIndex(item => angular.equals(item.name, name));
-	},
-
-	// 获取表单模板配置
-	getFormTemplateConfig(fieldsetConfigList, originFormModel, isSupportedSku, isShowShopList, isSupportedAddCondition) {
-		let result = {};
-		for (let attr in originFormModel) {
-			if (originFormModel.hasOwnProperty(attr)) {
-				const itemsIndex = utils.findEntityByName(fieldsetConfigList, attr);
-				if (itemsIndex >= 0) {
-					result[`${attr}Title`] = fieldsetConfigList[itemsIndex].title;
-				}
-				if (isSupportedAddCondition) {
-					if (isSupportedSku) {
-						result[`show-${attr}`] = itemsIndex >= 0;
-					} else {
-						result[`show-${attr}`] = itemsIndex >= 0 && !fieldsetConfigList[itemsIndex].isSkuItem;
-					}
-					result['show-shopId'] = isShowShopList;
-				} else {
-					if (isSupportedSku) {
-						if (isShowShopList) {
-							result[`show-${attr}`] = itemsIndex >= 0;
-						} else {
-							result[`show-${attr}`] = itemsIndex >= 0 && fieldsetConfigList[itemsIndex].isSimpleSearchItem;
-						}
-					} else {
-						if (isShowShopList) {
-							result[`show-${attr}`] = itemsIndex >= 0 && !fieldsetConfigList[itemsIndex].isSkuItem;
-						} else {
-							result[`show-${attr}`] = itemsIndex >= 0 && fieldsetConfigList[itemsIndex].isSimpleSearchItem && !fieldsetConfigList[itemsIndex].isSkuItem;
-						}
-					}
-				}
-			}
-		}
-		return result;
 	},
 
 	// 处理表单项

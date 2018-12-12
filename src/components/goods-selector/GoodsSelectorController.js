@@ -17,6 +17,7 @@ import sectionAddCtrl from './addSection/SectionAddCtrl';
 import { apiPrefix, uniApiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList,
 	getFieldsMap, exceedSelectedAllNumberMsg, getFormConfig, errorMsg, getBatchImportMsg, fieldsetConfig } from './constant';
 import { utils } from './utils';
+import { getFormTemplateConfig } from './formItemConfig';
 import service from './service';
 
 
@@ -87,12 +88,12 @@ export default class GoodsSelectorCtrl {
 		// 商品状态
 		this.statusList = statusList;
 
-		let fieldsMapGroup = getFieldsMap();
-		this.shopListFieldsMap = fieldsMapGroup.shopListFieldsMap;
-		this.shopCategoriesFieldsMap = this.categoriesFieldsMap = this.propsPidFieldsMap = fieldsMapGroup.categoriesFieldsMap;
-		this.propsVidFieldsMap = fieldsMapGroup.propsVidFieldsMap;
-		this.statusListFieldsMap = fieldsMapGroup.statusListFieldsMap;
-		this.brandsListFieldsMap = fieldsMapGroup.brandsListFieldsMap;
+		const { shopListFieldsMap, categoriesFieldsMap, propsVidFieldsMap, statusListFieldsMap, brandsListFieldsMap } = getFieldsMap();
+		this.shopListFieldsMap = shopListFieldsMap;
+		this.shopCategoriesFieldsMap = this.categoriesFieldsMap = this.propsPidFieldsMap = categoriesFieldsMap;
+		this.propsVidFieldsMap = propsVidFieldsMap;
+		this.statusListFieldsMap = statusListFieldsMap;
+		this.brandsListFieldsMap = brandsListFieldsMap;
 
 		// form 区域价格校验
 		this.validators = {
@@ -142,12 +143,19 @@ export default class GoodsSelectorCtrl {
 		this.formConfig = formConfigGroup.formConfig; // 已选商品 form 表单搜索配置项（前端搜索）
 		this.skuFormConfig = formConfigGroup.skuFormConfig; // 已选商品 form 表单sku相关搜索配置项（前端搜索）
 
+		// 当前平台对应的 form 表单项列表
 		this.fieldsetConfigList = this.isTotalChannel ? fieldsetConfig['uni'] : fieldsetConfig[this.shopList[0].plat];
 
 		this.initForm();
 
-		// 获取表单项配置，不同平台的表单项有区别
-		this.formTplConfig = utils.getFormTemplateConfig(this.fieldsetConfigList, this.formModel, this.isSupportedSku, this.isShowShopList, this.isSupportedAddCondition, this.isTotalChannel);
+		const params = {
+			isSupportedSku: this.isSupportedSku,
+			isShowShopList: this.isShowShopList,
+			isSupportedTag: this.isSupportedTag,
+			isShowToggleSearchBtn: !this.isShowShopList && !this.isSupportedAddCondition
+		};
+		// 模板配置信息（模板项的显示隐藏、模板title文本）
+		this.formTplConfig = getFormTemplateConfig(this.fieldsetConfigList, this.formModel, params);
 
 		const { fieldsetConfigList } = this;
 		let asyncMethods = [];
@@ -175,7 +183,6 @@ export default class GoodsSelectorCtrl {
 	// 初始化全部全选 checkbox 的状态
 	initCheckedAllStatus() {
 		service.getSelectedItemsAll(this.serverName, this.shopList[0].plat, this.selectedShopIdList, this.apiPrefix).get().$promise.then(res => {
-			console.log('初始化全选checkbox');
 			const data = res.data || [];
 			const idArr = Object.keys(this.selectedData);
 			this.isCheckedAll = data.length && data.every(item => {
@@ -369,7 +376,6 @@ export default class GoodsSelectorCtrl {
 
 		// 对请求回来的表格数据进行处理
 		this.pagerGridOptions.transformer = res => {
-			console.log('表格刷新');
 			if (res.flag === 'fail' && res.msg === 'Result window is too large, window size must be less than or equal to: [10000]') {
 				this._$ccTips.error('<span class="sd-max-number-error-msg"></span>');
 				let warnMsg = this._$compile('<span>出错提示：最多允许查询10000条商品数据, 请刷新表格。&nbsp;</span><span style="color: #0083ba; cursor: pointer" ng-click="$ctrl.refreshAllGoodsGrid()">刷新</span>')(this._$scope);
