@@ -39,6 +39,10 @@ const GoodsSelectorService = {
 		if (!isSupportedAddCondition && JSON.stringify(conditions) !== '{}') {
 			conditions = {};
 		}
+
+		if (isTotalChannel && !tenantId) {
+			throw new Error('goodsSelector 全渠道模式下需要传入 tenantId 参数');
+		}
 		return ModalService.modal(
 			{
 				title: '商品选择',

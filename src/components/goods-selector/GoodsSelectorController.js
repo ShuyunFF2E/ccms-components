@@ -51,7 +51,7 @@ export default class GoodsSelectorCtrl {
 		// 是否支持商品标签
 		this.isSupportedTag = this._isSupportedTag;
 		// 租户ID -> 查询商品标签参数
-		this.tenantId = this._tenantId;
+		this.tenantId = this.isTotalChannel ? this._tenantId : null;
 		// 是否支持添加为搜索条件
 		this.isSupportedAddCondition = this._isSupportedAddCondition;
 		// 搜索条件
@@ -182,7 +182,7 @@ export default class GoodsSelectorCtrl {
 
 	// 初始化全部全选 checkbox 的状态
 	initCheckedAllStatus() {
-		service.getSelectedItemsAll(this.serverName, this.shopList[0].plat, this.selectedShopIdList, this.apiPrefix).get().$promise.then(res => {
+		service.getSelectedItemsAll(this.serverName, this.shopList[0].plat, this.selectedShopIdList, this.apiPrefix, this.tenantId).get().$promise.then(res => {
 			const data = res.data || [];
 			const idArr = Object.keys(this.selectedData);
 			this.isCheckedAll = data.length && data.every(item => {
@@ -311,7 +311,8 @@ export default class GoodsSelectorCtrl {
 			selectedGoods: this.selectedData,
 			serverName: this.serverName,
 			isSupportedSku: this.isSupportedSku,
-			apiPrefix: this.apiPrefix
+			apiPrefix: this.apiPrefix,
+			tenantId: this.tenantId
 		};
 		utils.transformGoodsData(goodsDataParams).then(data => {
 			if (data && data.length) {
@@ -340,6 +341,7 @@ export default class GoodsSelectorCtrl {
 			queryParams: {
 				shopId: this.formModel.shopId,
 				platform: this.formModel.platform,
+				tenantId: this.tenantId,
 				pageSize: this.isQiake ? 50 : 15,
 				pageNum: 1
 			},
@@ -587,7 +589,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品自自定义类目数据
 	getShopCategories() {
-		return service.getShopCategories(this.serverName, this.formModel.platform, this.formModel.shopId, this.apiPrefix).get().$promise.then(res => {
+		return service.getShopCategories(this.serverName, this.formModel.platform, this.formModel.shopId, this.apiPrefix, this.tenantId).get().$promise.then(res => {
 			let data = res.data || [];
 			// 只显示叶子类目
 			this.shopCategoriesList = data.filter(item => item.isLeaf === true);
@@ -607,7 +609,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品标准类目列表
 	getCategories() {
-		return service.getCategories(this.serverName, this.formModel.platform, this.formModel.shopId, this.apiPrefix).get().$promise.then(res => {
+		return service.getCategories(this.serverName, this.formModel.platform, this.formModel.shopId, this.apiPrefix, this.tenantId).get().$promise.then(res => {
 			let data = res.data || [];
 			this.categoriesList = data.filter(item => item.isLeaf === true);
 			// 由于商品标准类目数据是异步请求，所以需要在数据回来以后更新表单中 categoriesId 的值，更新后清空，保证数据只赋值一次
@@ -626,7 +628,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品品牌
 	getBrands() {
-		return service.getBrands(this.serverName, this.formModel.platform, this.formModel.shopId, this.apiPrefix).get().$promise.then(res => {
+		return service.getBrands(this.serverName, this.formModel.platform, this.formModel.shopId, this.apiPrefix, this.tenantId).get().$promise.then(res => {
 			this.brandsList = res.data || [];
 			// 由于商品品牌数据是异步请求，所以需要在数据回来以后更新表单中 brandId 的值，更新后清空，保证数据只赋值一次
 			if (this.conditions.brandId) {
@@ -641,7 +643,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品标签，初始化的时候调用
 	getTags() {
-		return service.getTags(this.serverName, this.formModel.platform, this.tenantId, this.apiPrefix).get().$promise.then(res => {
+		return service.getTags(this.serverName, this.formModel.platform, this.tenantId, this.apiPrefix, this.tenantId).get().$promise.then(res => {
 			res.data = res.data || [];
 			if (res.data.length && this.conditions.tags && this.conditions.tags.length) {
 				// 如果用户传进来的商品标签存在于商品标签列表中，那么将商品标签 push 到 selectedLabels 中
@@ -661,7 +663,7 @@ export default class GoodsSelectorCtrl {
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (this.formModel.categoriesId && item) {
-			return service.getProperties(this.serverName, this.formModel.platform, this.formModel.shopId, item.id, this.apiPrefix).get().$promise.then(res => {
+			return service.getProperties(this.serverName, this.formModel.platform, this.formModel.shopId, item.id, this.apiPrefix, this.tenantId).get().$promise.then(res => {
 				this.propsPidList = res.data || [];
 				this.formModel.propsPid = this.propsPid;
 				this.propsPid = null;
@@ -1149,9 +1151,9 @@ export default class GoodsSelectorCtrl {
 			// 不是批量导入
 			let exceptList = ['pageNum', 'pageSize', 'tagItemIds'];
 			let paramStr = utils.getStandardParams(this.checkAllQueryParams, exceptList);
-			return service.getGridItems(this.serverName, 1, totals, paramStr, this.apiPrefix).save(postData).$promise;
+			return service.getGridItems(this.serverName, 1, totals, paramStr, this.apiPrefix, this.tenantId).save(postData).$promise;
 		} else {
-			return service.getGridBatchItems(this.serverName, 1, totals, this.apiPrefix).save(postData).$promise;
+			return service.getGridBatchItems(this.serverName, 1, totals, this.apiPrefix, this.tenantId).save(postData).$promise;
 		}
 	}
 
@@ -1246,7 +1248,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取批量导入数据的结果（导入总数、导入失败数据列表）
 	getBatchImportResult(obj, queryParams, inputObjHash) {
-		service.getBatchImportResult(this.serverName, this.apiPrefix).save(queryParams, res => {
+		service.getBatchImportResult(this.serverName, this.apiPrefix, this.tenantId).save(queryParams, res => {
 			let currentTime = Date.parse(new Date());
 			this[`addSectionFailedData${currentTime}`] = res.notFound; // 导入失败的数据
 			const addSectionTotalsNumber = queryParams['id'].length ? queryParams['id'].length : (queryParams['outerId'].length ? queryParams['outerId'].length : queryParams['skus.outerId'].length); // 导入数据总量
@@ -1269,7 +1271,7 @@ export default class GoodsSelectorCtrl {
 
 	// 获取批量导入数据后返回的表格数据
 	getBatchImportIds(obj, queryParams) {
-		service.getBatchImportIds(this.serverName, this.apiPrefix).save(queryParams, res => {
+		service.getBatchImportIds(this.serverName, this.apiPrefix, this.tenantId).save(queryParams, res => {
 			if (res.data && res.data.length) {
 				this.isAddSectionExtend = (obj.inputKey === 'skuNumber');
 				this.isAddSection = true; // 批量导入
@@ -1336,7 +1338,7 @@ export default class GoodsSelectorCtrl {
 			selectedLabels: this.selectedLabels,
 			mapping
 		};
-		service.getTags(this.serverName, this.formModel.platform, this.tenantId, this.apiPrefix).get(res => {
+		service.getTags(this.serverName, this.formModel.platform, this.tenantId, this.apiPrefix, this.tenantId).get(res => {
 			res.data = res.data || [];
 			this._$labelChoose.labelChoose(title, res.data, opts).open()
 				.result.then(res => {

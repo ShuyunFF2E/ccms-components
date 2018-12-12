@@ -11,12 +11,13 @@ export const utils = {
 	 * @param serverName
 	 * @returns {Promise<any>}
 	 */
-	transformGoodsData({shopId, plat, selectedGoods, serverName, isSupportedSku, apiPrefix}) {
+	transformGoodsData({shopId, plat, selectedGoods, serverName, isSupportedSku, apiPrefix, tenantId}) {
 		const ids = Object.keys(selectedGoods);
 		const paramIdStr = ids.join('&id=');
 		const shopIdStr = shopId.join('&shopId=');
 		return new Promise((resolve, reject) => {
-			genResource(`${serverName}${apiPrefix}/items?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}`).save().$promise.then(res => {
+			let paramStr = tenantId ? `?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}&tenantId=${tenantId}` : `?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}`;
+			genResource(`${serverName}${apiPrefix}/items${paramStr}`).save().$promise.then(res => {
 				res['data'] = res['data'] || [];
 				let transformedData = res.data.map(d => {
 					if (isSupportedSku) {
