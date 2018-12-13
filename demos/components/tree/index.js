@@ -19,6 +19,9 @@
 			// 为空提示
 			searchPlaceholder: '请输入搜索词',
 
+			// 搜索区域的最大长度
+			searchMaxLen: 20,
+
 			// 最大层级
 			maxLevel: 3,
 

@@ -44,6 +44,8 @@ export default class TreeNodeController {
 	 * @param type
 	 */
 	onChangeChecked(type) {
+		this.treeMap.store.updateActiveNode(this.node);
+
 		const { nodeType } = this;
 		switch (nodeType) {
 			case 'checkbox': {

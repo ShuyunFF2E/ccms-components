@@ -29,6 +29,7 @@ const treeDDO = {
 	bindings: {
 		data: '<',
 		searchPlaceholder: '<?',
+		searchMaxLen: '<?',
 		maxLevel: '<?',
 		supportMenu: '<?',
 		supportSearch: '<?',
