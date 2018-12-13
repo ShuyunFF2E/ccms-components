@@ -108,6 +108,10 @@ export default class DatePickerCtrl {
 		return this.DISPLAY_FORMAT[this.displayFormat] === 2;
 	}
 
+	hideSeconds() {
+		return this.DISPLAY_FORMAT[this.displayFormat] === 3;
+	}
+
 	setLGButtonStatus() {
 		if (this.parts.month === '0' && this.parts.year === MIN_YEAR + '') {
 			this.disabledL = true;
@@ -251,6 +255,11 @@ export default class DatePickerCtrl {
 		// 如果是 range 且为 rangeStart 时间设置为 23:59:59
 		if (this.range && this.datePicker.rangeEnd && !datePicker.ngModelCtrl.$viewValue) {
 			this.setValue(datePicker.ngModelCtrl.$viewValue, false, true);
+		}
+
+		// 如果是设置了默认显示的CalendarValue
+		if (!angular.isUndefined(this.defaultCalendarValue) && !datePicker.ngModelCtrl.$viewValue) {
+			this.setValue(this.defaultCalendarValue);
 		}
 
 		// 隐藏其余日历
