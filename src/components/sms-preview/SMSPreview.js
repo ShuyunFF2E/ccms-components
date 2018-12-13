@@ -45,6 +45,10 @@ export default {
 			const text = opts.text || '';
 			const preview = opts.preview || '';
 			const signature = opts.signature || '';
+			// 禁止用户输入【,】,[,],{,},(,)
+			if (opts.customSignature) {
+				opts.customSignature = opts.customSignature.replace(/[{（(\[【】\])）}]/, '');
+			}
 			const customSignature = opts.customSignature ? `【${opts.customSignature.replace(/</g, '&lt;')}】` : '';
 			const unsubscribeText = opts.useUnsubscribe ? (opts.unsubscribeText || '') : '';
 
