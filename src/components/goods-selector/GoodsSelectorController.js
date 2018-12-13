@@ -185,7 +185,7 @@ export default class GoodsSelectorCtrl {
 	initCheckedAllStatus() {
 		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
 		const { platform, shopId } = formModel;
-		service.getSelectedItemsAll({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get().$promise.then(res => {
+		service.getSelectedItemsAll({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).save().$promise.then(res => {
 			const data = res.data || [];
 			const idArr = Object.keys(this.selectedData);
 			this.isCheckedAll = data.length && data.every(item => {
