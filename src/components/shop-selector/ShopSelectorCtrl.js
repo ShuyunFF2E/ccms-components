@@ -450,6 +450,7 @@ export default class ShopSelectorCtrl {
 				}
 				resolve(channelList);
 			}).catch(err => {
+				this._$ccTips.error(errorMsg);
 				reject(err);
 			});
 		});
