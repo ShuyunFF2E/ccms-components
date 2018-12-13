@@ -70,6 +70,7 @@
 					<cc-checkbox ng-if="!$ctrl.isSingleSelected"
 								 class="check-all"
 								 ng-checked="$ctrl.isSelectedAllPage"
+								 cc-capture-click="$ctrl.clickSelectAllPageBefore($event)"
 								 ng-click="$ctrl.isSelectedAllPage = !$ctrl.isSelectedAllPage; $ctrl.switchSelectAllPage($ctrl.isSelectedAllPage)">全选全部
 					</cc-checkbox>
 					<cc-checkbox ng-if="!$ctrl.isSingleSelected"
@@ -80,7 +81,7 @@
 				</div>
 				<cc-grid type="selectable" opts="$ctrl.allShopGridOptions"></cc-grid>
 				<div class="shop-selector-mask" ng-if="$ctrl.isShowMask">
-					<cc-loading type="layer">数据更新中</cc-loading>
+					<cc-loading></cc-loading>
 				</div>
 			</section>
 		</gs-panel>

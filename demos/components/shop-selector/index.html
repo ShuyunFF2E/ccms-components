@@ -4,8 +4,15 @@
 <link rel="import" href="../../common/layout.html">
 
 <main ng-app="app" ng-controller="ctrl as Ctrl">
+	<h3>用户传入多个平台</h3>
 	<button type="button" ng-click="openSingleShopSelector()">Open Shop Selector(单选店铺选择器)</button>
 	<button type="button" ng-click="openMultipleShopSelector()">Open Shop Selector(多选店铺选择器)</button>
+	<h3>用户传入1个平台</h3>
+	<button type="button" ng-click="openSingleShopSelector1()">Open Shop Selector(单选店铺选择器)</button>
+	<button type="button" ng-click="openMultipleShopSelector1()">Open Shop Selector(多选店铺选择器)</button>
+	<h3>用户不传平台</h3>
+	<button type="button" ng-click="openSingleShopSelector2()">Open Shop Selector(单选店铺选择器)</button>
+	<button type="button" ng-click="openMultipleShopSelector2()">Open Shop Selector(多选店铺选择器)</button>
 </main>
 
 <script src="/components.js"></script>

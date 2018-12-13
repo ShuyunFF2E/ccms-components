@@ -38,3 +38,5 @@ export const commonListFieldsMap = {
 	displayField: 'name'
 };
 export const errorMsg = '后台服务出错，请联系数云客服人员';
+// 全选允许最大值
+export const maxSelectNum = 500;

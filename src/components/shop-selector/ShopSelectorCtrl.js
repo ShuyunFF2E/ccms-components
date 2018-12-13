@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import cloneDeep from 'lodash.clonedeep';
-import { getGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg } from './Constant';
+import { getGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg, maxSelectNum } from './Constant';
 import service from './service';
 import utils from './utils';
 
@@ -38,11 +38,39 @@ export default class ShopSelectorCtrl {
 			setting: [],
 			disabled: false
 		};
+		// 前搜索条件下的全部商品
+		this.allGoodsList = [];
 
 		this.initForm();
 		this.prepareAllShopGridOptions();
 		this.prepareSelectedShopGridOptions();
-		this.selectedShop.length && this.getSelectedShop();
+		this.selectedShop.length && this.getSelectedShop().then(() => {
+			this.getAllGoodsList();
+		});
+	}
+
+	// 获取当前搜索条件下的全部商品, 每次进行搜索时更新全部商品
+	getAllGoodsList() {
+		// 获取全部商品，更新全部全选状态
+		this.isShowMask = true;
+		const { serverName, tenantId, allShopGridOptions, formModel } = this;
+		const { queryParams } = allShopGridOptions;
+		service.getShopListAll({ serverName, tenantId, queryParams, formModel }).get(res => {
+			const { list } = res;
+			list && list.length && (this.allGoodsList = list);
+			this.isSelectedAllPage = this.allGoodsList.length < maxSelectNum && this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
+			this.isShowMask = false;
+		}, () => {
+			this._$ccTips.error(errorMsg);
+			this.isShowMask = false;
+		});
+	}
+
+	// 是否所有商品都被选中
+	isAllEntitySelected(allGoodsList = [], selectedItems = []) {
+		return selectedItems.length && allGoodsList.every(entity => {
+			return findEntityById(selectedItems, entity.id) !== -1;
+		});
 	}
 
 	initForm() {
@@ -91,7 +119,7 @@ export default class ShopSelectorCtrl {
 				pageNum: 1,  // 当前页码
 				pageSize: 20, // 每页大小
 				tenantId: this.tenantId, // 租户 ID
-				channel: this.platform // 平台
+				channel: this.platform ? this.platform.join(',') : null // 平台
 			},
 			columnsDef: this.commonGridColumnDef,
 			rowTpl: rowTemplate,
@@ -113,7 +141,11 @@ export default class ShopSelectorCtrl {
 			switchSelectItem: entity => {
 				this.updateSelectedItems(entity);
 				this.isSelectedPage = this.isSelectedPageAll(this.resData);
-				!entity.$selected && (this.isSelectedAllPage = false);
+				if (entity.$selected) {
+					this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
+				} else {
+					this.isSelectedAllPage = false;
+				}
 			},
 			// 单选
 			switchSingleSelectItem: entity => {
@@ -168,7 +200,7 @@ export default class ShopSelectorCtrl {
 
 	// 获取已选店铺列表
 	getSelectedShop() {
-		return service.getShopList(this.serverName, this.tenantId, this.selectedShop, 'shopIdIn').get(res => {
+		return service.getShopList(this.serverName, this.tenantId, this.selectedShop, 'shopIdIn').get().$promise.then(res => {
 			res.list = res.list || [];
 			this.getNameByGridList(res.list, this.channelList);
 			res.list.forEach(entity => {
@@ -181,7 +213,7 @@ export default class ShopSelectorCtrl {
 			if (this.resData && this.resData.length) {
 				this.resListMerge(this.resData, this.selectedItemsBuffer);
 			}
-		}, () => {
+		}).catch(() => {
 			this._$ccTips.error(errorMsg);
 		});
 	}
@@ -254,38 +286,41 @@ export default class ShopSelectorCtrl {
 			entity.$selected = isSelectedPage;
 			this.updateSelectedItems(entity);
 		});
-		!isSelectedPage && (this.isSelectedAllPage = false);
+		if (isSelectedPage) {
+			this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
+		} else {
+			this.isSelectedAllPage = false;
+		}
 	}
 
-	// 全选全部，请求全部数据，更新selectedItems，全部商品只更新当页商品状态
+	// 点击全部全选前
+	clickSelectAllPageBefore(event) {
+		const target = event.target;
+		const targetScope = angular.element(target).scope();
+		if (target.classList.contains('cc-checkbox-input') && !targetScope.$ctrl.ngChecked || target.parentNode.parentNode.parentNode.classList.contains('check-all') && !targetScope.$parent.$ctrl.ngChecked) {
+			if (this.allGoodsList.length > maxSelectNum) {
+				event.stopPropagation();
+				this._$ccTips.error(`最多允许选择${maxSelectNum}数据`);
+			}
+		}
+	}
+
+	// 全选全部，更新selectedItems，全部商品只更新当页商品状态
 	switchSelectAllPage(isSelectedAllPage) {
-		// 更新当页数据状态
+		this.isSelectedPage = isSelectedAllPage;
+		this.updateCurrentItems(isSelectedAllPage);
+		this.allGoodsList.forEach(entity => {
+			entity.$selected = isSelectedAllPage;
+			this.updateSelectedItems(entity);
+		});
+	}
+
+	// 更新当页数据状态
+	updateCurrentItems(isSelectedAllPage) {
 		const { resData } = this;
 		resData && resData.length && resData.forEach(entity => {
 			entity.$selected = isSelectedAllPage;
 		});
-		if (isSelectedAllPage) {
-			this.isShowMask = true;
-			const { serverName, tenantId, allShopGridOptions, formModel } = this;
-			const { queryParams } = allShopGridOptions;
-			this.allGoodsList = [];
-			service.getShopListAll({ serverName, tenantId, queryParams, formModel }).get(res => {
-				res.list && res.list.length && (this.allGoodsList = res.list);
-				this.allGoodsList.forEach(entity => {
-					entity.$selected = true;
-					this.updateSelectedItems(entity);
-				});
-				this.isShowMask = false;
-			}, () => {
-				this._$ccTips.error(errorMsg);
-				this.isShowMask = false;
-			});
-		} else {
-			this.allGoodsList.length && this.allGoodsList.forEach(entity => {
-				entity.$selected = false;
-				this.updateSelectedItems(entity);
-			});
-		}
 	}
 
 	removeItem(entity) {
@@ -300,7 +335,7 @@ export default class ShopSelectorCtrl {
 			this.updateSelectedItems(entity);
 			this.onRefresh(this.selectedShopGridOptions);
 			this.resetShopStatus(entity);
-			this.isSelectedAllPage = false;
+			this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
 		}
 	};
 
@@ -312,7 +347,7 @@ export default class ShopSelectorCtrl {
 			this.resetShopStatus(entity);
 		});
 		this.onRefresh(this.selectedShopGridOptions);
-		this.isSelectedAllPage = false;
+		this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
 	}
 
 	// 重置店铺列表中被移除的店铺状态
@@ -512,6 +547,7 @@ export default class ShopSelectorCtrl {
 			// 全部商品 tab 搜索 -> 后端搜索
 			this.getAllShopPagerQueryParams();
 			this._$ccGrid.refresh(this.allShopGridOptions);
+			this.getAllGoodsList();
 		}
 	}
 
@@ -530,7 +566,7 @@ export default class ShopSelectorCtrl {
 		// 如果平台由外部传入，那么平台选择'不限'的时候，参数为外部传入的所有平台
 		const { channel } = this.formModel;
 		if (this.platform && this.platform.length) {
-			this.allShopGridOptions.queryParams['channel'] = channel || this.platform;
+			this.allShopGridOptions.queryParams['channel'] = channel || this.platform.join(',');
 		} else {
 			this.allShopGridOptions.queryParams['channel'] = channel;
 		}
