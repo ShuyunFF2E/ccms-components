@@ -1,71 +1,102 @@
 import genResource from 'angular-es-utils/rs-generator';
+import { utils } from './utils';
 
 export default {
 	// 获取商品自自定义类目数据
-	getShopCategories(serverName, platform, shopId, apiPrefix, tenantId = null) {
+	getShopCategories({ serverName, platform, shopId, apiPrefix, isTotalChannel = false, tenant = null, partner = null }) {
 		shopId = String(shopId).split(',').join('&shopId=');
-		let paramStr = tenantId ? `?platform=${ platform }&shopId=${ shopId }&tenantId=${ tenantId }` : `?platform=${ platform }&shopId=${ shopId }`;
+		let paramStr = `?platform=${ platform }&shopId=${ shopId }`;
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/shop_categories${ paramStr }`);
 	},
 
 	// 获取商品标准类目列表
-	getCategories(serverName, platform, shopId, apiPrefix, tenantId = null) {
+	getCategories({ serverName, platform, shopId, apiPrefix, isTotalChannel = false, tenant = null, partner = null }) {
 		shopId = String(shopId).split(',').join('&shopId=');
-		let paramStr = tenantId ? `?platform=${platform}&shopId=${ shopId }&tenantId=${ tenantId }` : `?platform=${platform}&shopId=${ shopId }`;
+		let paramStr = `?platform=${ platform }&shopId=${ shopId }`;
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/categories${ paramStr }`);
 	},
 
 	// 获取商品品牌
-	getBrands(serverName, platform, shopId, apiPrefix, tenantId = null) {
+	getBrands({ serverName, platform, shopId, apiPrefix, isTotalChannel = false, tenant = null, partner = null }) {
 		shopId = String(shopId).split(',').join('&shopId=');
-		let paramStr = tenantId ? `?platform=${ platform }&shopId=${ shopId }&tenantId=${ tenantId }` : `?platform=${ platform }&shopId=${ shopId }`;
+		let paramStr = `?platform=${ platform }&shopId=${ shopId }`;
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/brands${ paramStr }`);
 	},
 
 	// 获取商品标签
-	getTags(serverName, platform, tenantId, apiPrefix) {
-		let paramStr = tenantId ? `?platform=${ platform }&tenantId=${ tenantId }&status=1` : `?platform=${ platform }&status=1`;
+	getTags({ serverName, platform, tenant, apiPrefix, isTotalChannel = false, partner = null }) {
+		let paramStr = `?platform=${ platform }&status=1&tenantId=${ tenant }`;
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/tagSearch${ paramStr }`);
 	},
 
 	// 获取商品属性
-	getProperties(serverName, platform, shopId, itemId, apiPrefix, tenantId = null) {
+	getProperties({ serverName, platform, shopId, itemId, apiPrefix, isTotalChannel = false, tenant = null, partner = null }) {
 		shopId = String(shopId).split(',').join('&shopId=');
-		let paramStr = tenantId ? `?platform=${ platform }&shopId=${ shopId }&tenantId=${ tenantId }` : `?platform=${ platform }&shopId=${ shopId }`;
+		let paramStr = `?platform=${ platform }&shopId=${ shopId }`;
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/categories/${ itemId }/properties${ paramStr }`);
 	},
 
 	// 获取批量导入数据的结果（导入总数、导入失败数据列表）
-	getBatchImportResult(serverName, apiPrefix, tenantId = null) {
-		let paramStr = tenantId ? `&tenantId=${ tenantId }` : '';
+	getBatchImportResult({ serverName, apiPrefix, platform, isTotalChannel = false, tenant = null, partner = null }) {
+		let paramStr = '';
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/items/batchImport/result${ paramStr }`);
 	},
 
 	// 获取批量导入数据后返回的表格数据
-	getBatchImportIds(serverName, apiPrefix, tenantId = null) {
-		let paramStr = tenantId ? `&tenantId=${ tenantId }` : '';
+	getBatchImportIds({ serverName, apiPrefix, platform, isTotalChannel = false, tenant = null, partner = null }) {
+		let paramStr = '';
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/items/batchImportIds${ paramStr }`);
 	},
 
 	// 获取表格数据
-	getGridItems(serverName, pageNum, pageSize, paramStr, apiPrefix, tenantId = null) {
-		let str = tenantId ? `?pageNum=${ pageNum }&pageSize=${ pageSize }&${ paramStr }&tenantId=${ tenantId }` : `?pageNum=${ pageNum }&pageSize=${ pageSize }&${ paramStr }`;
+	getGridItems({ serverName, pageNum, pageSize, paramStr, apiPrefix, platform, isTotalChannel = false, tenant = null, partner = null }) {
+		let str = `?pageNum=${ pageNum }&pageSize=${ pageSize }&${ paramStr }`;
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/items${ str }`);
 	},
 
 	// 批量添加操作下获取表格数据
-	getGridBatchItems(serverName, pageNum, pageSize, apiPrefix, tenantId = null) {
-		let paramStr = tenantId ? `?pageNum=${ pageNum }&pageSize=${ pageSize }&tenantId=${ tenantId }` : `?pageNum=${ pageNum }&pageSize=${ pageSize }`;
+	getGridBatchItems({ serverName, pageNum, pageSize, apiPrefix, platform, isTotalChannel = false, tenant = null, partner = null }) {
+		let paramStr = `?pageNum=${ pageNum }&pageSize=${ pageSize }`;
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/items/batchImportIds${ paramStr }`);
 	},
 
 	// 获取所有表格数据
-	getSelectedItemsAll(serverName, plat, shopId, apiPrefix, tenantId = null) {
+	getSelectedItemsAll({ serverName, platform, shopId, apiPrefix, isTotalChannel = false, tenant = null, partner = null }) {
 		let shopIdStr = shopId;
 		if (Array.isArray(shopId)) {
 			shopIdStr = shopId.join('&shopId=');
 		}
-		let paramStr = tenantId ? `?platform=${ plat }&shopId=${ shopIdStr }&tenantId=${ tenantId }` : `?platform=${ plat }&shopId=${ shopIdStr }`;
+		let paramStr = `?platform=${ platform }&shopId=${ shopIdStr }`;
+		if (isTotalChannel) {
+			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+		}
 		return genResource(`${ serverName }${ apiPrefix }/items${ paramStr }`);
 	}
 };

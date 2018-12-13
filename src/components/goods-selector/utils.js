@@ -11,12 +11,15 @@ export const utils = {
 	 * @param serverName
 	 * @returns {Promise<any>}
 	 */
-	transformGoodsData({shopId, plat, selectedGoods, serverName, isSupportedSku, apiPrefix, tenantId}) {
+	transformGoodsData({shopId, plat, selectedGoods, serverName, isSupportedSku, apiPrefix, tenantId, isTotalChannel, partner}) {
 		const ids = Object.keys(selectedGoods);
 		const paramIdStr = ids.join('&id=');
 		const shopIdStr = shopId.join('&shopId=');
 		return new Promise((resolve, reject) => {
-			let paramStr = tenantId ? `?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}&tenantId=${tenantId}` : `?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}`;
+			let paramStr = `?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}`;
+			if (isTotalChannel) {
+				paramStr = this.isOffline(plat) ? `${paramStr}&tenant=${ tenantId }&partner=${ partner }` : `${paramStr}&tenant=${ tenantId }`;
+			}
 			genResource(`${serverName}${apiPrefix}/items${paramStr}`).save().$promise.then(res => {
 				res['data'] = res['data'] || [];
 				let transformedData = res.data.map(d => {
@@ -250,5 +253,10 @@ export const utils = {
 			}
 		}
 		return formModel;
+	},
+
+	// 是否是线下平台
+	isOffline(plat) {
+		return plat === 'uni_offline';
 	}
 };

@@ -36,6 +36,7 @@
 	};
 	var isSupportedSku = false; // 是否支持 sku
 	var isSingleSelect = true; // 是否是单选列表
+	var tenantId = 'sjyj';
 
 	// jos + sku 维度 + 店铺选择
 	function openJosWithShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
@@ -49,7 +50,8 @@
 			isSupportedAddCondition,
 			conditions,
 			isSupportedBatchAddition,
-			isTotalChannel
+			isTotalChannel,
+			tenantId
 		};
 		var selectedGoods = {
 			10000227589: null,
@@ -77,7 +79,8 @@
 			isSupportedAddCondition,
 			conditions,
 			isSupportedBatchAddition,
-			isTotalChannel
+			isTotalChannel,
+			tenantId
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -108,7 +111,8 @@
 			conditions,
 			isSupportedSku,
 			isSupportedBatchAddition,
-			isTotalChannel
+			isTotalChannel,
+			tenantId
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -139,7 +143,8 @@
 			conditions,
 			isSupportedSku,
 			isSupportedBatchAddition,
-			isTotalChannel
+			isTotalChannel,
+			tenantId
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -171,7 +176,8 @@
 			isSupportedSku,
 			isSingleSelect,
 			isSupportedBatchAddition,
-			isTotalChannel
+			isTotalChannel,
+			tenantId
 		};
 		var selectedGoods = { 10000198283: null };
 		$ccGoodsSelector
@@ -198,7 +204,8 @@
 			isSupportedSku,
 			isSingleSelect,
 			isSupportedBatchAddition,
-			isTotalChannel
+			isTotalChannel,
+			tenantId
 		};
 		var selectedGoods = { 10000198283: null };
 		$ccGoodsSelector
