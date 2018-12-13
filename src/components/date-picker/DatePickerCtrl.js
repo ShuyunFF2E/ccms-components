@@ -61,6 +61,10 @@ export default class DatePickerCtrl {
 		return this.DISPLAY_FORMAT[this.displayFormat] === 2;
 	}
 
+	hideSeconds() {
+		return this.DISPLAY_FORMAT[this.displayFormat] === 3;
+	}
+
 	/**
 	 * 根据输入的年份和月份, 计算日期的上限
 	 */
