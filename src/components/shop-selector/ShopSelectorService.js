@@ -13,8 +13,7 @@ const ShopSelectorService = {
 	 * @param platform: 平台
 	 * @returns {*|Modal}
 	 */
-	// todo: 添加用户平台参数platform，数组形式，['jos', 'top', 'offline']，默认为null，null代表不限平台，即所有
-	shopSelector(tenantId, {hasFooter = false, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null}) {
+	shopSelector(tenantId, {hasFooter = true, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null}) {
 		if (!tenantId && tenantId !== 0) {
 			throw new Error('shopSelector 缺少 tenantId 参数');
 		}
@@ -30,7 +29,7 @@ const ShopSelectorService = {
 				title: '请选择店铺',
 				style: {'width': '1025px', 'min-height': '510px'},
 				fullscreen: false,
-				hasFooter: !hasFooter,
+				hasFooter: hasFooter,
 				__body: bodyTemplate,
 				locals: {
 					isSingleSelected: isSingleSelected,

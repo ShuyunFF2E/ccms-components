@@ -6,7 +6,7 @@
 
 	// todo: 添加用户平台参数platform，数组形式，['jos', 'top', 'offline']
 		.controller('ctrl', function($scope, $ccShopSelector) {
-			let hasFooter = false;
+			let hasFooter = true;
 			let tenantId = 'qiushi6';
 			let serverName = ''; // http://qa-ual.shuyun.com 或者 http://ual.shuyun.com
 			let isSupportedChannel = true;
