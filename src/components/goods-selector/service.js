@@ -55,7 +55,7 @@ export default {
 	getBatchImportResult({ serverName, apiPrefix, platform, isTotalChannel = false, tenant = null, partner = null }) {
 		let paramStr = '';
 		if (isTotalChannel) {
-			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+			paramStr = utils.isOffline(platform) ? `?tenant=${ tenant }&partner=${ partner }` : `?tenant=${ tenant }`;
 		}
 		return genResource(`${ serverName }${ apiPrefix }/items/batchImport/result${ paramStr }`);
 	},
@@ -64,7 +64,7 @@ export default {
 	getBatchImportIds({ serverName, apiPrefix, platform, isTotalChannel = false, tenant = null, partner = null }) {
 		let paramStr = '';
 		if (isTotalChannel) {
-			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+			paramStr = utils.isOffline(platform) ? `?tenant=${ tenant }&partner=${ partner }` : `?tenant=${ tenant }`;
 		}
 		return genResource(`${ serverName }${ apiPrefix }/items/batchImportIds${ paramStr }`);
 	},
@@ -88,7 +88,7 @@ export default {
 	},
 
 	// 获取所有表格数据
-	getSelectedItemsAll({ serverName, platform, shopId, apiPrefix, isTotalChannel = false, tenant = null, partner = null }) {
+	getGoodsItemsAll({ serverName, platform, shopId, apiPrefix, isTotalChannel = false, tenant = null, partner = null }) {
 		let shopIdStr = shopId;
 		if (Array.isArray(shopId)) {
 			shopIdStr = shopId.join('&shopId=');

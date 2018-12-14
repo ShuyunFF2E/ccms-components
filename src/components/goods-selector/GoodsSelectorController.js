@@ -81,7 +81,8 @@ export default class GoodsSelectorCtrl {
 		this.shopList.map(item => { item.shopId = String(item.shopId); return item; });
 		this.isTaobao = this.shopList[0].plat === 'top' || this.shopList[0].plat === 'uni_top';
 		this.isQiake = this.shopList[0].plat === 'offline';
-		this.partner = this.shopList[0].partner;
+		this.partner = this.shopList[0].partner; // 合作伙伴(全渠道线下的相关请求需要该参数)
+		this.plat = this.shopList[0].plat; // 平台
 
 		// 获取已选店铺 ID 数组
 		this.selectedShopIdList = this.getSelectedShopIdList();
@@ -145,7 +146,7 @@ export default class GoodsSelectorCtrl {
 		this.skuFormConfig = formConfigGroup.skuFormConfig; // 已选商品 form 表单sku相关搜索配置项（前端搜索）
 
 		// 当前平台对应的 form 表单项列表
-		this.fieldsetConfigList = this.isTotalChannel ? fieldsetConfig['uni'] : fieldsetConfig[this.shopList[0].plat];
+		this.fieldsetConfigList = this.isTotalChannel ? fieldsetConfig['uni'] : fieldsetConfig[this.plat];
 
 		this.initForm();
 
@@ -185,7 +186,7 @@ export default class GoodsSelectorCtrl {
 	initCheckedAllStatus() {
 		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
 		const { platform, shopId } = formModel;
-		service.getSelectedItemsAll({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).save().$promise.then(res => {
+		service.getGoodsItemsAll({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).save().$promise.then(res => {
 			const data = res.data || [];
 			const idArr = Object.keys(this.selectedData);
 			this.isCheckedAll = data.length && data.every(item => {
@@ -682,20 +683,22 @@ export default class GoodsSelectorCtrl {
 
 	// 级联菜单 -> 商品标准类目 select 框 change
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
-		if (this.formModel.categoriesId && item) {
-			const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
-			const { platform, shopId } = formModel;
-			return service.getProperties({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner, itemId: item.id }).get().$promise.then(res => {
-				this.propsPidList = res.data || [];
-				this.formModel.propsPid = this.propsPid;
+		if (!this.isTotalChannel) {
+			if (this.formModel.categoriesId && item) {
+				const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
+				const { platform, shopId } = formModel;
+				return service.getProperties({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner, itemId: item.id }).get().$promise.then(res => {
+					this.propsPidList = res.data || [];
+					this.formModel.propsPid = this.propsPid;
+					this.propsPid = null;
+				}).catch(() => {
+					this._$ccTips.error(errorMsg);
+				});
+			} else {
+				this.propsPidList = [];
+				this.formModel.propsPid = null;
 				this.propsPid = null;
-			}).catch(() => {
-				this._$ccTips.error(errorMsg);
-			});
-		} else {
-			this.propsPidList = [];
-			this.formModel.propsPid = null;
-			this.propsPid = null;
+			}
 		}
 	};
 
@@ -816,7 +819,14 @@ export default class GoodsSelectorCtrl {
 			pageNum: 1,
 			pageSize: this.pagerGridOptions.queryParams.pageSize
 		};
-		this.pagerGridOptions.queryParams = Object.assign({}, pager);
+		if (this.isTotalChannel) {
+			this.pagerGridOptions.queryParams = Object.assign({}, pager, { tenant: this.tenantId });
+			if (utils.isOffline(this.plat)) {
+				this.pagerGridOptions.queryParams = Object.assign({}, pager, { tenant: this.tenantId, partner: this.partner });
+			}
+		} else {
+			this.pagerGridOptions.queryParams = Object.assign({}, pager);
+		}
 	}
 
 	// tab 切换时 form 表单处理
@@ -865,7 +875,7 @@ export default class GoodsSelectorCtrl {
 					matchHelper.match(this.formModel, this.selectedItems, this.formConfig);
 					this.selectedItems.forEach(item => {
 						if (!item.skus || !item.skus.length) {
-							if (this.formModel.skusOuterId || this.formModel.skusPropsVname) {
+							if (this.selectedGoodsSkuSearch) {
 								item.isHide = true;
 							}
 						} else {
