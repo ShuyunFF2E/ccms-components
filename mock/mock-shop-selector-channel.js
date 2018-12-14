@@ -1,8 +1,8 @@
 var data = [
 	{
-		'id': 'qiakr',
+		'id': 'offline',
 		'name': '恰克',
-		'shopType': [
+		'shopTypes': [
 			{
 				'id': '0',
 				'name': '直营'
@@ -25,67 +25,67 @@ var data = [
 	{
 		'id': 'taobao',
 		'name': '淘宝',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'jos',
 		'name': '京东',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'weixin',
 		'name': '微信',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'yhd',
 		'name': '一号店',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'suning',
 		'name': '苏宁',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'weixin',
 		'name': '微信',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'paipai',
 		'name': '拍拍',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'dangdang',
 		'name': '当当',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'belle',
 		'name': '百丽',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'youzan',
 		'name': '友赞',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	},
 	{
 		'id': 'mogujie',
 		'name': '蘑菇街',
-		'shopType': [],
+		'shopTypes': [],
 		'districtSelector': false
 	}
 ];
