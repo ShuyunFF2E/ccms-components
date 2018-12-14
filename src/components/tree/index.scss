@@ -81,32 +81,32 @@
 			}
 		}
 		&.active{
-			background: #00AAF1;
-			.tree-text{
-				color: #fff;
-				.hot-text{
-					color: #fff;
-				}
-			}
-			.iconfont{
-				color: #fff;
-			}
-			.cc-checkbox{
-				.cc-checkbox-input{
-					border-color: #fff;
-					&::before{
-						border-color: #fff;
-					}
-				}
-			}
-			.fake-radio{
-				.radio-button-icon{
-					border-color: #fff;
-					&::before{
-						background-color: #fff;
-					}
-				}
-			}
+			background: #e7f3fc;
+			//.tree-text{
+			//	color: #3d3d3d;
+			//	.hot-text{
+			//		color: #3d3d3d;
+			//	}
+			//}
+			//.iconfont{
+			//	color: #fff;
+			//}
+			//.cc-checkbox{
+			//	.cc-checkbox-input{
+			//		border-color: #fff;
+			//		&::before{
+			//			border-color: #fff;
+			//		}
+			//	}
+			//}
+			//.fake-radio{
+			//	.radio-button-icon{
+			//		border-color: #fff;
+			//		&::before{
+			//			background-color: #fff;
+			//		}
+			//	}
+			//}
 		}
 		cc-checkbox{
 			width: 100%;
