@@ -73,7 +73,7 @@ export default {
 	getGridItems({ serverName, pageNum, pageSize, paramStr, apiPrefix, platform, isTotalChannel = false, tenant = null, partner = null }) {
 		let str = `?pageNum=${ pageNum }&pageSize=${ pageSize }&${ paramStr }`;
 		if (isTotalChannel) {
-			paramStr = utils.isOffline(platform) ? `${paramStr}&tenant=${ tenant }&partner=${ partner }` : `${paramStr}&tenant=${ tenant }`;
+			str = utils.isOffline(platform) ? `${str}&tenant=${ tenant }&partner=${ partner }` : `${str}&tenant=${ tenant }`;
 		}
 		return genResource(`${ serverName }${ apiPrefix }/items${ str }`);
 	},

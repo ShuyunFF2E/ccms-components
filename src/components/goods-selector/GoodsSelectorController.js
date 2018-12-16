@@ -184,9 +184,9 @@ export default class GoodsSelectorCtrl {
 
 	// 初始化全部全选 checkbox 的状态
 	initCheckedAllStatus() {
-		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
-		const { platform, shopId } = formModel;
-		service.getGoodsItemsAll({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).save().$promise.then(res => {
+		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner, plat } = this;
+		const { shopId } = formModel;
+		service.getGoodsItemsAll({ serverName, platform: plat, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).save().$promise.then(res => {
 			const data = res.data || [];
 			const idArr = Object.keys(this.selectedData);
 			this.isCheckedAll = data.length && data.every(item => {
@@ -216,8 +216,8 @@ export default class GoodsSelectorCtrl {
 		}
 		return selectedShopIdList;
 	}
-	// 更新已选商品数组
 
+	// 更新已选商品数组
 	updateSelectedItems(entity) {
 		let targetIndex = this.findEntity(this.selectedItems, entity);
 		if (entity.checked || entity.partial) {
@@ -277,7 +277,7 @@ export default class GoodsSelectorCtrl {
 			formModel.tagItemIds = matchHelper.removeArrayDuplicate(ids);
 		}
 		this.formModel = Object.assign(utils.resolveFormModel(this.fieldsetConfigList, formModel, this.shopList[0].plat, this.isSupportedSku), {
-			platform: c.plat ? c.plat : this.shopList[0].plat // 平台
+			platform: c.plat ? c.plat : this.plat // 平台
 		});
 
 		this.formModelCopy = cloneDeep(this.formModel);
@@ -293,7 +293,7 @@ export default class GoodsSelectorCtrl {
 
 		this.checkAllQueryParams = {
 			shopId: this.formModel.shopId,
-			platform: this.formModel.platform
+			platform: this.plat
 		};
 	}
 
@@ -311,7 +311,7 @@ export default class GoodsSelectorCtrl {
 		const shopIdList = this.shopList.map(item => item.shopId);
 		const goodsDataParams = {
 			shopId: shopIdList,
-			plat: this.shopList[0].plat,
+			plat: this.plat,
 			selectedGoods: this.selectedData,
 			serverName: this.serverName,
 			isSupportedSku: this.isSupportedSku,
@@ -329,7 +329,11 @@ export default class GoodsSelectorCtrl {
 						this.radio.value = entity.id;
 					}
 				});
-				this.updateAllGoodsGrid();
+				const { list } = this.resInfo;
+				if (list && list.length) {
+					this.dataMerge(list, this.selectedItemsBuffer);
+					this.currentPageChecked = utils.isAllChildrenSelected(list);
+				}
 			}
 		});
 	}
@@ -346,7 +350,7 @@ export default class GoodsSelectorCtrl {
 			response: null,
 			queryParams: {
 				shopId: this.formModel.shopId,
-				platform: this.formModel.platform,
+				platform: this.plat,
 				pageSize: this.isQiake ? 50 : 15,
 				pageNum: 1
 			},
@@ -360,6 +364,7 @@ export default class GoodsSelectorCtrl {
 					align: 'left'
 				}
 			],
+			resetScrollBar: true,
 			headerTpl: headerTemplate,
 			rowTpl: rowTemplate,
 			footerTpl: footerTemplate,
@@ -384,7 +389,7 @@ export default class GoodsSelectorCtrl {
 		if (this.isTotalChannel) {
 			this.pagerGridOptions.queryParams.tenant = this.tenantId;
 			// 线下平台需要添加partner参数
-			if (utils.isOffline(this.shopList[0].plat)) {
+			if (utils.isOffline(this.plat)) {
 				this.pagerGridOptions.queryParams.partner = this.partner;
 			}
 		}
@@ -602,9 +607,9 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品自自定义类目数据
 	getShopCategories() {
-		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
-		const { platform, shopId } = formModel;
-		return service.getShopCategories({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get().$promise.then(res => {
+		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner, plat } = this;
+		const { shopId } = formModel;
+		return service.getShopCategories({ serverName, platform: plat, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get().$promise.then(res => {
 			let data = res.data || [];
 			// 只显示叶子类目
 			this.shopCategoriesList = data.filter(item => item.isLeaf === true);
@@ -624,9 +629,9 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品标准类目列表
 	getCategories() {
-		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
-		const { platform, shopId } = formModel;
-		return service.getCategories({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get().$promise.then(res => {
+		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner, plat } = this;
+		const { shopId } = formModel;
+		return service.getCategories({ serverName, platform: plat, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get().$promise.then(res => {
 			let data = res.data || [];
 			this.categoriesList = data.filter(item => item.isLeaf === true);
 			// 由于商品标准类目数据是异步请求，所以需要在数据回来以后更新表单中 categoriesId 的值，更新后清空，保证数据只赋值一次
@@ -645,9 +650,9 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品品牌
 	getBrands() {
-		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
-		const { platform, shopId } = formModel;
-		return service.getBrands({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get().$promise.then(res => {
+		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner, plat } = this;
+		const { shopId } = formModel;
+		return service.getBrands({ serverName, platform: plat, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get().$promise.then(res => {
 			this.brandsList = res.data || [];
 			// 由于商品品牌数据是异步请求，所以需要在数据回来以后更新表单中 brandId 的值，更新后清空，保证数据只赋值一次
 			if (this.conditions.brandId) {
@@ -662,9 +667,8 @@ export default class GoodsSelectorCtrl {
 
 	// 获取商品标签，初始化的时候调用
 	getTags() {
-		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
-		const { platform } = formModel;
-		return service.getTags({ serverName, platform, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get().$promise.then(res => {
+		const { serverName, apiPrefix, tenantId, plat, isTotalChannel, partner } = this;
+		return service.getTags({ serverName, platform: plat, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get().$promise.then(res => {
 			res.data = res.data || [];
 			if (res.data.length && this.conditions.tags && this.conditions.tags.length) {
 				// 如果用户传进来的商品标签存在于商品标签列表中，那么将商品标签 push 到 selectedLabels 中
@@ -685,9 +689,9 @@ export default class GoodsSelectorCtrl {
 	categorySelectChange(newValue, oldValue, itemIndex, item) {
 		if (!this.isTotalChannel) {
 			if (this.formModel.categoriesId && item) {
-				const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
-				const { platform, shopId } = formModel;
-				return service.getProperties({ serverName, platform, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner, itemId: item.id }).get().$promise.then(res => {
+				const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner, plat } = this;
+				const { shopId } = formModel;
+				return service.getProperties({ serverName, platform: plat, shopId, apiPrefix, tenant: tenantId, isTotalChannel, partner, itemId: item.id }).get().$promise.then(res => {
 					this.propsPidList = res.data || [];
 					this.formModel.propsPid = this.propsPid;
 					this.propsPid = null;
@@ -1183,13 +1187,11 @@ export default class GoodsSelectorCtrl {
 			// 不是批量导入
 			let exceptList = ['pageNum', 'pageSize', 'tagItemIds'];
 			let paramStr = utils.getStandardParams(this.checkAllQueryParams, exceptList);
-			const { serverName, apiPrefix, tenantId, isTotalChannel, partner, formModel } = this;
-			const { platform } = formModel;
-			return service.getGridItems({ serverName, apiPrefix, tenant: tenantId, isTotalChannel, partner, pageNum: 1, pageSize: totals, paramStr, platform }).save(postData).$promise;
+			const { serverName, apiPrefix, tenantId, isTotalChannel, partner, plat } = this;
+			return service.getGridItems({ serverName, apiPrefix, tenant: tenantId, isTotalChannel, partner, pageNum: 1, pageSize: totals, paramStr, platform: plat }).save(postData).$promise;
 		} else {
-			const { serverName, apiPrefix, tenantId, isTotalChannel, partner, formModel } = this;
-			const { platform } = formModel;
-			return service.getGridBatchItems({ serverName, apiPrefix, tenant: tenantId, isTotalChannel, partner, pageNum: 1, pageSize: totals, platform }).save(postData).$promise;
+			const { serverName, apiPrefix, tenantId, isTotalChannel, partner, plat } = this;
+			return service.getGridBatchItems({ serverName, apiPrefix, tenant: tenantId, isTotalChannel, partner, pageNum: 1, pageSize: totals, platform: plat }).save(postData).$promise;
 		}
 	}
 
@@ -1265,7 +1267,7 @@ export default class GoodsSelectorCtrl {
 		// 收集modal的操作反馈,确认为成功回调,取消为失败回调
 		modalInstance.result.then(obj => {
 			this.addSectionQueryParams = {
-				platform: this.formModel.platform,
+				platform: this.plat,
 				shopId: Array.isArray(this.formModel.shopId) ? this.formModel.shopId.join(',') : this.formModel.shopId,
 				id: obj.inputKey === 'id' ? obj.inputValue : [],
 				outerId: obj.inputKey === 'number' ? obj.inputValue : [],
@@ -1284,9 +1286,8 @@ export default class GoodsSelectorCtrl {
 
 	// 获取批量导入数据的结果（导入总数、导入失败数据列表）
 	getBatchImportResult(obj, queryParams, inputObjHash) {
-		const { serverName, apiPrefix, tenantId, isTotalChannel, partner, formModel } = this;
-		const { platform } = formModel;
-		service.getBatchImportResult({ serverName, apiPrefix, tenant: tenantId, isTotalChannel, partner, platform }).save(queryParams, res => {
+		const { serverName, apiPrefix, tenantId, isTotalChannel, partner, plat } = this;
+		service.getBatchImportResult({ serverName, apiPrefix, tenant: tenantId, isTotalChannel, partner, platform: plat }).save(queryParams, res => {
 			let currentTime = Date.parse(new Date());
 			this[`addSectionFailedData${currentTime}`] = res.notFound; // 导入失败的数据
 			const addSectionTotalsNumber = queryParams['id'].length ? queryParams['id'].length : (queryParams['outerId'].length ? queryParams['outerId'].length : queryParams['skus.outerId'].length); // 导入数据总量
@@ -1309,9 +1310,8 @@ export default class GoodsSelectorCtrl {
 
 	// 获取批量导入数据后返回的表格数据
 	getBatchImportIds(obj, queryParams) {
-		const { serverName, apiPrefix, tenantId, isTotalChannel, partner, formModel } = this;
-		const { platform } = formModel;
-		service.getBatchImportIds({ serverName, apiPrefix, tenant: tenantId, isTotalChannel, partner, platform }).save(queryParams, res => {
+		const { serverName, apiPrefix, tenantId, isTotalChannel, partner, plat } = this;
+		service.getBatchImportIds({ serverName, apiPrefix, tenant: tenantId, isTotalChannel, partner, platform: plat }).save(queryParams, res => {
 			if (res.data && res.data.length) {
 				this.isAddSectionExtend = (obj.inputKey === 'skuNumber');
 				this.isAddSection = true; // 批量导入
@@ -1378,9 +1378,8 @@ export default class GoodsSelectorCtrl {
 			selectedLabels: this.selectedLabels,
 			mapping
 		};
-		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, partner } = this;
-		const { platform } = formModel;
-		service.getTags({ serverName, platform, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get(res => {
+		const { serverName, apiPrefix, tenantId, plat, isTotalChannel, partner } = this;
+		service.getTags({ serverName, platform: plat, apiPrefix, tenant: tenantId, isTotalChannel, partner }).get(res => {
 			res.data = res.data || [];
 			this._$labelChoose.labelChoose(title, res.data, opts).open()
 				.result.then(res => {
