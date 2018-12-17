@@ -64,7 +64,7 @@
 			// 单选店铺选择器-用户传入1个平台
 			$scope.openSingleShopSelector1 = function() {
 				let singleOptions = {
-					platform: ['taobao'],
+					platform: ['offline'],
 					...commonSingleOptions
 				};
 				$ccShopSelector.shopSelector(tenantId, singleOptions)
@@ -80,7 +80,7 @@
 			// 多选店铺选择器-用户传入1个平台
 			$scope.openMultipleShopSelector1 = function() {
 				let multipleOptions1 = {
-					platform: ['taobao'],
+					platform: ['offline'],
 					...commonMultipleOptions
 				};
 				$ccShopSelector.shopSelector(tenantId, multipleOptions1)

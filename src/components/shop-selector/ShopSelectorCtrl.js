@@ -109,7 +109,6 @@ export default class ShopSelectorCtrl {
 				this.selectedItems.length && this.getNameByGridList(this.selectedItems, this.channelList);
 			});
 		}
-		this.getAreaData();
 	}
 
 	prepareAllShopGridOptions() {
@@ -424,9 +423,9 @@ export default class ShopSelectorCtrl {
 
 	// 获取地区数据
 	getAreaData() {
-		service.getAreaData(this.serverName).get(res => {
+		return service.getAreaData(this.serverName).get().$promise.then(res => {
 			this._provinceList = res || [];
-		}, () => {
+		}).catch(() => {
 			this._$ccTips.error(errorMsg);
 		});
 	}
@@ -496,7 +495,13 @@ export default class ShopSelectorCtrl {
 			this.typeList = [];
 		}
 		if (model === 'offline') {
-			this.provinceList = this._provinceList;
+			if (this._provinceList) {
+				this.provinceList = this._provinceList;
+			} else {
+				this.getAreaData().then(() => {
+					this.provinceList = this._provinceList;
+				});
+			}
 		} else {
 			this.provinceList = [];
 		}
