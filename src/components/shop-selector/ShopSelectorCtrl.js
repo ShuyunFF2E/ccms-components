@@ -20,7 +20,7 @@ function findEntityById(collection, id) {
 	return collection.findIndex(item => angular.equals(item.id, id));
 }
 
-@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform')
+@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform', 'areaUrl')
 export default class ShopSelectorCtrl {
 	constructor() {
 		this.isSingleSelected = this._isSingleSelected; // 是否是单选
@@ -29,6 +29,7 @@ export default class ShopSelectorCtrl {
 		this.selectedShop = this._selectedShop; // 用户传进来的已选店铺列表
 		this.isSupportedChannel = this._isSupportedChannel; // 是否支持平台
 		this.platform = this._platform; // 用户传入的平台
+		this.areaUrl = this._areaUrl;
 
 		this.commonGridColumnDef = getGridColumnDef(this.isSupportedChannel);
 		this.selectedItems = [];
@@ -423,7 +424,7 @@ export default class ShopSelectorCtrl {
 
 	// 获取地区数据
 	getAreaData() {
-		return service.getAreaData(this.serverName).get().$promise.then(res => {
+		return service.getAreaData(this.serverName, this.areaUrl).get().$promise.then(res => {
 			this._provinceList = res || [];
 		}).catch(() => {
 			this._$ccTips.error(errorMsg);

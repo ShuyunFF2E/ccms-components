@@ -11,9 +11,10 @@ const ShopSelectorService = {
 	 * @param serverName
 	 * @param isSupportedChannel: 是否支持平台选项，默认支持
 	 * @param platform: 平台
+	 * @param areaUrl: 地址 api
 	 * @returns {*|Modal}
 	 */
-	shopSelector(tenantId, {hasFooter = true, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null}) {
+	shopSelector(tenantId, {hasFooter = true, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null, areaUrl = ''}) {
 		if (!tenantId && tenantId !== 0) {
 			throw new Error('shopSelector 缺少 tenantId 参数');
 		}
@@ -37,7 +38,8 @@ const ShopSelectorService = {
 					selectedShop: selectedShop,
 					serverName: serverName,
 					isSupportedChannel: isSupportedChannel,
-					platform
+					platform,
+					areaUrl
 				},
 				controller: ShopSelectorCtrl,
 				controllerAs: '$ctrl',
