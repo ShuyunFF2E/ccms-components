@@ -12,6 +12,7 @@
 			let isSupportedChannel = true;
 			let singleSelectedShop = ['qiakr_6998868227']; // ['weixin_wxf8e64372a94529ac'] ['qiakr_6998868227'];
 			let multipleSelectedShop = ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l']; // ['weixin_wxf8e64372a94529ac', 'weixin_wxc724d28eef67468f'] ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
+			let areaUrl = 'http://qa-ual.shuyun.com/shuyun-searchapi/1.0/area?platform=top';
 
 			let commonSingleOptions = {
 				hasFooter,
@@ -19,6 +20,7 @@
 				isSingleSelected: true,
 				serverName,
 				isSupportedChannel
+				// areaUrl
 			};
 
 			let commonMultipleOptions = {
@@ -27,6 +29,7 @@
 				isSingleSelected: false,
 				serverName,
 				isSupportedChannel
+				// areaUrl
 			};
 
 			// 单选店铺选择器-用户传入多个平台
@@ -64,7 +67,7 @@
 			// 单选店铺选择器-用户传入1个平台
 			$scope.openSingleShopSelector1 = function() {
 				let singleOptions = {
-					platform: ['taobao'],
+					platform: ['offline'],
 					...commonSingleOptions
 				};
 				$ccShopSelector.shopSelector(tenantId, singleOptions)
@@ -80,7 +83,7 @@
 			// 多选店铺选择器-用户传入1个平台
 			$scope.openMultipleShopSelector1 = function() {
 				let multipleOptions1 = {
-					platform: ['taobao'],
+					platform: ['offline'],
 					...commonMultipleOptions
 				};
 				$ccShopSelector.shopSelector(tenantId, multipleOptions1)
