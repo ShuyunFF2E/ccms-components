@@ -20,8 +20,9 @@ angular.module('componentsApp', ['ccms.components'])
 			{
 				name: 'GatewayType 0',
 				gatewayType: 0,
-				keywordPrefix: 'œœ', // default œœ
-				keywordSuffix: 'œœ', // default œœ
+				isMarketing: true,
+				// keywordPrefix: 'œœ', // default œœ
+				// keywordSuffix: 'œœ', // default œœ
 				keywords: [
 					// {
 					// 	name: 'XBL',

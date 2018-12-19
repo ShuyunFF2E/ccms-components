@@ -5,8 +5,10 @@
  */
 var path = require('path');
 var webpack = require('webpack');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var autoprefixer = require('autoprefixer');
 var loaders = require('./webpack-common-loaders');
+const { version } = require('./package.json');
 loaders.push(
 	{
 		test: /\.(sc|c)ss$/,
@@ -26,9 +28,15 @@ module.exports = {
 		publicPath: '/' // hot loader publish dir
 	},
 	plugins: [
+		new webpack.DefinePlugin({
+			'process.env': {
+				VERSION: JSON.stringify(version)
+			}
+		}),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin()
+		new webpack.NoErrorsPlugin(),
+		new BundleAnalyzerPlugin()
 	],
 	resolve: {
 		extensions: ['', '.js']

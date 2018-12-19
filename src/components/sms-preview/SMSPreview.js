@@ -8,6 +8,10 @@ import template from './sms-preview.tpl.html';
 import angular from 'angular';
 import { escapeRegExp } from '../../common/bases/common';
 
+let defaultKeywordPrefix = 'œœ';
+let defaultKeywordSuffix = 'œœ';
+let defaultKeywordEnter = 'þ_enter_þ';
+
 export default {
 
 	restrict: 'E',
@@ -19,8 +23,17 @@ export default {
 	link(scope, element) {
 
 		const opts = scope.opts || (scope.opts = {});
-		const keywordPrefix = scope.opts.keywordPrefix || 'œœ';
-		const keywordSuffix = scope.opts.keywordSuffix || 'œœ';
+
+		if (!scope.opts.isMarketing) {
+			defaultKeywordPrefix = '$$';
+			defaultKeywordSuffix = '$$';
+			defaultKeywordEnter = '#_enter_#';
+		}
+
+		const keywordPrefix = scope.opts.keywordPrefix || defaultKeywordPrefix;
+		const keywordSuffix = scope.opts.keywordSuffix || defaultKeywordSuffix;
+		this.keywordEnter = defaultKeywordEnter;
+
 		const trimContent = angular.isDefined(opts.trimContent) ? opts.trimContent : true;
 		scope.smsPreviewStatText = trimContent ? '不含变量' : '含空格，不含变量';
 		scope.smsPreviewTipsText = trimContent ? '上图仅为操作预览，最终计数以实际发送为准，查看' : '上图仅为操作预览，变量无固定长度，最终计数以实际发送为准，建议先测试执行，查看';
@@ -39,12 +52,12 @@ export default {
 			// 字数统计
 			scope.totalChars = opts.totalCharts = text
 					.replace(varReg, '')
-					.replace(/þ_enter_þ/g, '').length +
+					.replace(new RegExp(this.keywordEnter, 'g'), '').length +
 				(gatewayType === 1 || gatewayType === 3 || gatewayType === 4 || gatewayType === 5 ? signature.length : 0) +
 				customSignature.length +
 				unsubscribeText.length;
 			// 换行统计
-			scope.newLineNum = opts.newLineNum = text.split('þ_enter_þ').length - 1;
+			scope.newLineNum = opts.newLineNum = text.split(this.keywordEnter).length - 1;
 
 			// 变量统计
 			const varMatch = text.match(varReg);
@@ -61,7 +74,7 @@ export default {
 	 3,4: 备案签名 +【自定义签名】+ 短信
 	 */
 	generateText(preview, unsubscribeText, signature, customSignature, gatewayType) {
-		const content = preview.split('þ_enter_þ');
+		const content = preview.split(this.keywordEnter);
 		const len = content.length;
 
 		switch (gatewayType) {
