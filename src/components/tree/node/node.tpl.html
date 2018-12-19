@@ -1,0 +1,56 @@
+<section>
+	<div class="cc-tree-node"
+		 ng-style="{'padding-left': $ctrl.paddingLeft}"
+		 ng-click="$ctrl.onChangeChecked()"
+		 ng-class="{ selected: $ctrl.node.checked, active: $ctrl.node.isActive}"
+		 cc-tree-right-click="$ctrl.onRightClick($event)"
+		 ng-hide="$ctrl.node.isEditing">
+		<icon ng-if="$ctrl.node.children.length"
+				ng-click="$ctrl.toggleExpandHandler($event)"
+				class="iconfont icon-nextpage"
+				ng-class="{ open: !$ctrl.node.isClosed }">
+		</icon>
+		<cc-checkbox
+			ng-if="$ctrl.nodeType === 'checkbox'"
+			indeterminate="$ctrl.node.checked === 'indeterminate'"
+			ng-model="$ctrl.node.checked">
+			<icon class="iconfont icon-folder"></icon>
+			<span class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
+		</cc-checkbox>
+
+		<div class="fake-radio"
+			ng-if="$ctrl.nodeType === 'radio'">
+			<div class="cc-radio" ng-class="{ 'checked': $ctrl.node.checked }">
+				<div class="radio-button-icon"></div>
+				<icon class="iconfont icon-folder"></icon>
+				<span class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
+			</div>
+		</div>
+
+		<div ng-if="$ctrl.nodeType === 'text'">
+			<icon class="iconfont icon-folder"></icon>
+			<span class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
+		</div>
+	</div>
+	<div ng-if="$ctrl.node.isEditing"
+		 class="cc-tree-node editing"
+		 ng-style="{'padding-left': $ctrl.paddingLeft}">
+		<icon class="iconfont icon-folder"></icon>
+		<input type="text" ng-model="$ctrl.name" ng-keypress="$ctrl.onInputChangeHandler($event)">
+		<icon class="iconfont icon-edit" ng-click="$ctrl.onEditorNode()"></icon>
+		<icon class="iconfont icon-close" ng-click="$ctrl.onExitIconClickHander()"></icon>
+	</div>
+	<div
+		ng-if="$ctrl.node.children && $ctrl.node.children.length"
+		ng-show="!$ctrl.node.isClosed">
+		<cc-tree-list
+			tree-map="$ctrl.treeMap"
+			nodes="$ctrl.node.children"
+			search-text="$ctrl.searchText"
+			support-checkbox="$ctrl.supportCheckbox"
+			is-radio-model="$ctrl.isRadioModel"
+			on-open-menu="$ctrl.onOpenMenu">
+		</cc-tree-list>
+	</div>
+</section>
+

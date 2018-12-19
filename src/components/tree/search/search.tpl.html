@@ -1,0 +1,9 @@
+<section class="cc-tree-search">
+	<input type="text" class="search-input"
+		   placeholder="{{$ctrl.searchPlaceholder || '请输入过滤词'}}"
+		   tree-map="$ctrl.treeMap"
+		   ng-keypress="$ctrl.onInputChangeHandler($event)"
+		   maxlength="{{$ctrl.searchMaxLen}}"
+		   ng-model="$ctrl.searchText"/>
+	<span class="search-icon icon iconfont icon-search" ng-click="$ctrl.onSearch()"></span>
+</section>
