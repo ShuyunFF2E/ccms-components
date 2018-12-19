@@ -14,7 +14,7 @@ const ShopSelectorService = {
 	 * @param areaUrl: 地址 api
 	 * @returns {*|Modal}
 	 */
-	shopSelector(tenantId, {hasFooter = true, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null, areaUrl = ''}) {
+	shopSelector(tenantId, {hasFooter = true, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null, areaUrl = `${ serverName }/shuyun-searchapi/1.0/area?platform=unification`}) {
 		if (!tenantId && tenantId !== 0) {
 			throw new Error('shopSelector 缺少 tenantId 参数');
 		}
@@ -24,6 +24,9 @@ const ShopSelectorService = {
 		}
 		if (isSupportedChannel && platform && !platform.length) {
 			throw new Error('您已配置支持平台，平台数组长度不能为0, 一个平台：platform.length === 1; n个平台：platform.length === n; 不限平台：platform === null');
+		}
+		if (!areaUrl) {
+			throw new Error('areaUrl 参数不能为空');
 		}
 		return ModalService.modal(
 			{

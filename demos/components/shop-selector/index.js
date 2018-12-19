@@ -12,15 +12,15 @@
 			let isSupportedChannel = true;
 			let singleSelectedShop = ['qiakr_6998868227']; // ['weixin_wxf8e64372a94529ac'] ['qiakr_6998868227'];
 			let multipleSelectedShop = ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l']; // ['weixin_wxf8e64372a94529ac', 'weixin_wxc724d28eef67468f'] ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
-			let areaUrl = ''; // http://qa-ual.shuyun.com/shuyun-searchapi/1.0/area?platform=top
+			let areaUrl = 'http://qa-ual.shuyun.com/shuyun-searchapi/1.0/area?platform=top';
 
 			let commonSingleOptions = {
 				hasFooter,
 				selectedShop: singleSelectedShop,
 				isSingleSelected: true,
 				serverName,
-				isSupportedChannel,
-				areaUrl
+				isSupportedChannel
+				// areaUrl
 			};
 
 			let commonMultipleOptions = {
@@ -28,8 +28,8 @@
 				selectedShop: multipleSelectedShop,
 				isSingleSelected: false,
 				serverName,
-				isSupportedChannel,
-				areaUrl
+				isSupportedChannel
+				// areaUrl
 			};
 
 			// 单选店铺选择器-用户传入多个平台

@@ -22,9 +22,8 @@ export default {
 	},
 
 	// 获取地区列表
-	getAreaData(serverName, areaUrl) {
-		let url = areaUrl || `${ serverName }/shuyun-searchapi/1.0/area?platform=unification`;
-		return genResource(url, null, null, {
+	getAreaData(areaUrl) {
+		return genResource(areaUrl, null, null, {
 			get: {
 				method: 'GET',
 				isArray: true
