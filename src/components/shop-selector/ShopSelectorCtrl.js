@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import cloneDeep from 'lodash.clonedeep';
-import { getGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg, maxSelectNum } from './Constant';
+import { getGridColumnDef, commonListFieldsMap, errorMsg, maxSelectNum, apiPrefix } from './Constant';
 import service from './service';
 import utils from './utils';
 
@@ -20,7 +20,7 @@ function findEntityById(collection, id) {
 	return collection.findIndex(item => angular.equals(item.id, id));
 }
 
-@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform', 'areaUrl')
+@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform', 'areaUrl', 'disabledItems')
 export default class ShopSelectorCtrl {
 	constructor() {
 		this.isSingleSelected = this._isSingleSelected; // 是否是单选
@@ -30,6 +30,7 @@ export default class ShopSelectorCtrl {
 		this.isSupportedChannel = this._isSupportedChannel; // 是否支持平台
 		this.platform = this._platform; // 用户传入的平台
 		this.areaUrl = this._areaUrl;
+		this.disabledItems = this._disabledItems; // 用户不可编辑的店铺
 
 		this.commonGridColumnDef = getGridColumnDef(this.isSupportedChannel);
 		this.selectedItems = [];
@@ -58,7 +59,15 @@ export default class ShopSelectorCtrl {
 		const { queryParams } = allShopGridOptions;
 		service.getShopListAll({ serverName, tenantId, queryParams, formModel }).get(res => {
 			const { list } = res;
-			list && list.length && (this.allGoodsList = list);
+			if (list && list.length) {
+				this.allGoodsList = list.filter(entity => {
+					if (findEntityById(this.disabledItems, entity.id) !== -1) {
+						entity.isDisabled = true;
+					}
+					return entity;
+				});
+				console.log(this.allGoodsList);
+			}
 			this.isSelectedAllPage = this.allGoodsList.length < maxSelectNum && this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
 			this.isShowMask = false;
 		}, () => {
@@ -70,7 +79,7 @@ export default class ShopSelectorCtrl {
 	// 是否所有商品都被选中
 	isAllEntitySelected(allGoodsList = [], selectedItems = []) {
 		return selectedItems.length && allGoodsList.every(entity => {
-			return findEntityById(selectedItems, entity.id) !== -1;
+			return findEntityById(selectedItems, entity.id) !== -1 || entity.isDisabled;
 		});
 	}
 
@@ -86,8 +95,6 @@ export default class ShopSelectorCtrl {
 			district: null, // 区
 			districtName: null
 		};
-		this.allShopFormModel = cloneDeep(this.formModel);
-		this.selectedShopFormModel = cloneDeep(this.formModel);
 
 		this.validators = {
 			maxLength: {
@@ -108,6 +115,9 @@ export default class ShopSelectorCtrl {
 				this.formModel.channel = channelList[0][this.commonListFieldsMap.valueField];
 				this.resData && this.resData.length && this.getNameByGridList(this.resData, this.channelList);
 				this.selectedItems.length && this.getNameByGridList(this.selectedItems, this.channelList);
+
+				this.allShopFormModel = cloneDeep(this.formModel);
+				this.selectedShopFormModel = cloneDeep(this.formModel);
 			});
 		}
 	}
@@ -139,23 +149,29 @@ export default class ShopSelectorCtrl {
 			selectedItems: this.selectedItems,
 			// 多选
 			switchSelectItem: entity => {
-				this.updateSelectedItems(entity);
-				this.isSelectedPage = this.isSelectedPageAll(this.resData);
-				if (entity.$selected) {
-					this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
-				} else {
-					this.isSelectedAllPage = false;
+				if (!entity.isDisabled) {
+					entity.$selected = !entity.$selected;
+					this.updateSelectedItems(entity);
+					this.isSelectedPage = this.isSelectedPageAll(this.resData);
+					if (entity.$selected) {
+						this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
+					} else {
+						this.isSelectedAllPage = false;
+					}
 				}
 			},
 			// 单选
 			switchSingleSelectItem: entity => {
-				this.allShopGridOptions.radio.value = entity.id;
-				this.selectedItems.splice(0, this.selectedItems.length, entity);
+				if (!entity.isDisabled) {
+					this.allShopGridOptions.radio.value = entity.id;
+					this.selectedItems.splice(0, this.selectedItems.length, entity);
+				}
 			},
 			transformer: res => {
-				this.resData = res.list || [];
-				res.list && res.list.length && this.getNameByGridList(res.list, this.channelList);
-				this.resListMerge(res.list, this.selectedItemsBuffer);
+				res.list = res.list || [];
+				this.resData = res.list;
+				this.getNameByGridList(res.list, this.channelList);
+				this.resListMerge(res.list, this.selectedItemsBuffer, this.disabledItems);
 				if (this.isSingleSelected) {
 					res.list.forEach(entity => {
 						this.allShopGridOptions.radio.setting.push(entity.id);
@@ -211,7 +227,7 @@ export default class ShopSelectorCtrl {
 				this.updateSelectedItems(entity);
 			});
 			if (this.resData && this.resData.length) {
-				this.resListMerge(this.resData, this.selectedItemsBuffer);
+				this.resListMerge(this.resData, this.selectedItemsBuffer, this.disabledItems);
 			}
 		}).catch(() => {
 			this._$ccTips.error(errorMsg);
@@ -242,21 +258,24 @@ export default class ShopSelectorCtrl {
 
 	// 已选店铺 tab 刷新表格
 	onRefresh(opts) {
-		const wrapGridData = (currentPage, pageSize, data) => {
-			this.selectedShopGridOptions.pager.pageNum = currentPage;
-			this.selectedShopGridOptions.pager.pageSize = pageSize;
-			this.selectedShopGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
-			this.selectedShopGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
+		const wrapGridData = (pageNum, pageSize, data) => {
+			Object.assign(this.selectedShopGridOptions, {
+				pager: {
+					pageNum,
+					pageSize,
+					totalPages: Math.ceil((data.length || 0) / pageSize)
+				},
+				externalData: data.slice(pageSize * (pageNum - 1), pageSize * pageNum)
+			});
 			return this.selectedShopGridOptions;
 		};
-		const currentPage = opts.pager.pageNum;
-		const pageSize = opts.pager.pageSize;
+		const { pageNum, pageSize } = opts.pager;
 		const data = this.selectedItems.filter(entity => {
 			if (!entity.isHide) {
 				return entity;
 			}
 		});
-		this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
+		this._$ccGrid.refresh(wrapGridData(pageNum, pageSize, data));
 	}
 
 	// 获取去重后的 selectedItems 并更新 selectedItemsBuffer
@@ -270,11 +289,18 @@ export default class ShopSelectorCtrl {
 		this.selectedItemsBuffer = cloneDeep(this.selectedItems);
 	}
 
-	resListMerge(resList = [], buffer = []) {
-		buffer.forEach(entity => {
-			let targetIndex = findEntityById(resList, entity.id);
+	// merge 数据，维持商品的状态（是否被选中 是否不可操作）
+	resListMerge(resList = [], buffer = [], disabledItems = []) {
+		resList.forEach((entity, index) => {
+			if (findEntityById(buffer, entity.id) !== -1) {
+				resList[index].$selected = true;
+			}
+			const targetIndex = findEntityById(disabledItems, entity.id);
 			if (targetIndex !== -1) {
-				resList[targetIndex].$selected = true;
+				Object.assign(resList[index], {
+					isDisabled: true,
+					tooltipText: disabledItems[targetIndex].tooltipText
+				});
 			}
 		});
 	}
@@ -283,8 +309,10 @@ export default class ShopSelectorCtrl {
 	switchSelectPage(isSelectedPage) {
 		const { data } = this.allShopGridOptions;
 		data && data.length && data.forEach(entity => {
-			entity.$selected = isSelectedPage;
-			this.updateSelectedItems(entity);
+			if (!entity.isDisabled) {
+				entity.$selected = isSelectedPage;
+				this.updateSelectedItems(entity);
+			}
 		});
 		if (isSelectedPage) {
 			this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
@@ -310,8 +338,10 @@ export default class ShopSelectorCtrl {
 		this.isSelectedPage = isSelectedAllPage;
 		this.updateCurrentItems(isSelectedAllPage);
 		this.allGoodsList.forEach(entity => {
-			entity.$selected = isSelectedAllPage;
-			this.updateSelectedItems(entity);
+			if (!entity.isDisabled) {
+				entity.$selected = isSelectedAllPage;
+				this.updateSelectedItems(entity);
+			}
 		});
 	}
 
@@ -319,7 +349,7 @@ export default class ShopSelectorCtrl {
 	updateCurrentItems(isSelectedAllPage) {
 		const { resData } = this;
 		resData && resData.length && resData.forEach(entity => {
-			entity.$selected = isSelectedAllPage;
+			!entity.isDisabled && (entity.$selected = isSelectedAllPage);
 		});
 	}
 
@@ -372,7 +402,7 @@ export default class ShopSelectorCtrl {
 	isSelectedPageAll(list = []) {
 		if (list.length) {
 			return list.every(item => {
-				return item.$selected;
+				return item.$selected || item.isDisabled;
 			});
 		}
 		return false;

@@ -106,6 +106,14 @@
 			}
 		  }
 		}
+		tr {
+		  &.disable-checked {
+			background: #eee;
+			&:hover {
+			  cursor: not-allowed;
+			}
+		  }
+		}
 		.cc-grid-footer {
 		  span {
 			&.total-items-count, &.reload {

@@ -12,9 +12,10 @@ const ShopSelectorService = {
 	 * @param isSupportedChannel: 是否支持平台选项，默认支持
 	 * @param platform: 平台
 	 * @param areaUrl: 地址 api
+	 * @param disabledItems: 用户不可编辑的店铺
 	 * @returns {*|Modal}
 	 */
-	shopSelector(tenantId, {hasFooter = true, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null, areaUrl = `${ serverName }/shuyun-searchapi/1.0/area?platform=unification`}) {
+	shopSelector(tenantId, {hasFooter = true, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null, areaUrl = `${ serverName }/shuyun-searchapi/1.0/area?platform=unification`, disabledItems = []}) {
 		if (!tenantId && tenantId !== 0) {
 			throw new Error('shopSelector 缺少 tenantId 参数');
 		}
@@ -42,7 +43,8 @@ const ShopSelectorService = {
 					serverName: serverName,
 					isSupportedChannel: isSupportedChannel,
 					platform,
-					areaUrl
+					areaUrl,
+					disabledItems
 				},
 				controller: ShopSelectorCtrl,
 				controllerAs: '$ctrl',

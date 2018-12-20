@@ -10,8 +10,8 @@
 			let tenantId = 'qiushi6';
 			let serverName = ''; // http://qa-ual.shuyun.com 或者 http://ual.shuyun.com
 			let isSupportedChannel = true;
-			let singleSelectedShop = ['qiakr_6998868227']; // ['weixin_wxf8e64372a94529ac'] ['qiakr_6998868227'];
-			let multipleSelectedShop = ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l']; // ['weixin_wxf8e64372a94529ac', 'weixin_wxc724d28eef67468f'] ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
+			let singleSelectedShop = ['qiakr_699886823271']; // ['weixin_wxf8e64372a94529ac'] ['qiakr_6998868227'];
+			let multipleSelectedShop = ['qiakr_699886823271', 'taobao_69988684534586', 'taobao_6956469886888l']; // ['weixin_wxf8e64372a94529ac', 'weixin_wxc724d28eef67468f'] ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
 			let areaUrl = 'http://qa-ual.shuyun.com/shuyun-searchapi/1.0/area?platform=top';
 
 			let commonSingleOptions = {
@@ -111,6 +111,40 @@
 			// 多选店铺选择器-用户不传平台(显示所有平台)
 			$scope.openMultipleShopSelector2 = function() {
 				$ccShopSelector.shopSelector(tenantId, commonMultipleOptions)
+					.open()
+					.result
+					.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('-----------ok-----------');
+					});
+			};
+			// 指定不可选店铺
+			$scope.openMultipleShopSelector3 = function() {
+				let multipleOptions = {
+					...commonMultipleOptions,
+					platform: ['taobao', 'offline'],
+					disabledItems: [
+						{
+							id: 'taobao_69988683345348',
+							tooltipText: '该店铺已关联会员卡'
+						},
+						{
+							id: 'qiakr_69983486873',
+							tooltipText: '该店铺已关联会员卡'
+						},
+						{
+							id: 'taobao_6456499886886j',
+							tooltipText: '该店铺已关联会员卡'
+						},
+						{
+							id: 'taobao_69wer23486888v',
+							tooltipText: '该店铺已关联会员卡'
+						}
+					]
+				};
+				$ccShopSelector.shopSelector(tenantId, multipleOptions)
 					.open()
 					.result
 					.then(function(response) {
