@@ -32,7 +32,7 @@
 		skusOuterId: '44444', // sku 商家编码
 		skusPropsVname: '55555', // sku 规格
 		startListTime: new Date(1530374400000), // 上架时间
-		status: '1' // 商品状态
+		status: 1 // 商品状态
 	};
 	var isSupportedSku = false; // 是否支持 sku
 	var isSingleSelect = true; // 是否是单选列表

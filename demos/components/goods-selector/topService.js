@@ -34,7 +34,7 @@
 		skusOuterId: '44444', // sku 商家编码
 		skusPropsVname: '55555', // sku 规格
 		startListTime: new Date(1530374400000), // 上架时间
-		status: '1', // 商品状态
+		status: 0, // 商品状态
 		tags: [
 			{
 				created: 1532344817277,

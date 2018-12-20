@@ -14,7 +14,7 @@ import formTpl from './tpls/form-template.tpl.html';
 
 import matchHelper from './MatchHelper';
 import sectionAddCtrl from './addSection/SectionAddCtrl';
-import { apiPrefix, uniApiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList,
+import { apiPrefix, uniApiPrefix, getExceedSelectedNumberMsg, onceMaxSelectedNumber, getNotFoundMsg, statusList, uniStatusList,
 	getFieldsMap, exceedSelectedAllNumberMsg, getFormConfig, errorMsg, getBatchImportMsg, fieldsetConfig } from './constant';
 import { utils } from './utils';
 import { getFormTemplateConfig } from './formItemConfigHelper';
@@ -79,7 +79,7 @@ export default class GoodsSelectorCtrl {
 		// 店铺列表
 		this.shopList = this.isShowShopList ? this.shopInfoData : [this.shopInfoData];
 		this.shopList.map(item => { item.shopId = String(item.shopId); return item; });
-		this.isTaobao = this.shopList[0].plat === 'top' || this.shopList[0].plat === 'uni_top';
+		this.isJos = this.shopList[0].plat === 'jos' || this.shopList[0].plat === 'uni_jos';
 		this.isQiake = this.shopList[0].plat === 'offline';
 		this.partner = this.shopList[0].partner; // 合作伙伴(全渠道线下的相关请求需要该参数)
 		this.plat = this.shopList[0].plat; // 平台
@@ -88,7 +88,7 @@ export default class GoodsSelectorCtrl {
 		this.selectedShopIdList = this.getSelectedShopIdList();
 
 		// 商品状态
-		this.statusList = statusList;
+		this.statusList = this.isTotalChannel ? uniStatusList : statusList;
 
 		const { shopListFieldsMap, categoriesFieldsMap, propsVidFieldsMap, statusListFieldsMap, brandsListFieldsMap } = getFieldsMap();
 		this.shopListFieldsMap = shopListFieldsMap;
@@ -259,7 +259,7 @@ export default class GoodsSelectorCtrl {
 			propsPid: c.propsPid || null, // props.pid 商品属性 ID
 			propsVid: c.propsVid || null, // props.vid 商品属性值 ID
 			propsVname: c.propsVid ? null : c.propsVname, // props.vname 商品属性值对应的属性名称
-			status: c.status ? String(c.status) : this.statusList[0].value, // 状态, 1 在架, 0 不在架， -1 不限
+			status: c.status || this.statusList[0].value, // 状态, 1 在架, 0 不在架， null 不限, 2 售罄
 			skusPropsVname: c.skusPropsVname || null, // skus.props.vname SKU属性值 模糊匹配
 			outerId: c.outerId || null, // 商品商家编码
 			skusOuterId: c.skusOuterId || null, // skus.outerId SKU 商家编码
@@ -360,7 +360,7 @@ export default class GoodsSelectorCtrl {
 			columnsDef: [
 				{
 					field: 'id',
-					displayName: !this.isSupportedSku ? '商品ID' : (this.isTaobao ? '商品ID/SKU ID' : '商品ID/商品编号'),
+					displayName: !this.isSupportedSku ? '商品ID' : (this.isJos ? '商品ID/商品编号' : '商品ID/SKU ID'),
 					align: 'left'
 				}
 			],
@@ -486,15 +486,17 @@ export default class GoodsSelectorCtrl {
 				this.selectedPagerGridOptions[key] = this.pagerGridOptions[key];
 			}
 		}
-		this.selectedPagerGridOptions.resource = null;
-		this.selectedPagerGridOptions.externalData = this.selectedItems;
-		this.selectedPagerGridOptions.transformer = null;
-		this.selectedPagerGridOptions.emptyTipTpl = selectedEmptyTpl;
-		this.selectedPagerGridOptions.pager = {
-			pageNum: 1,
-			pageSize: this.isQiake ? 50 : 15,
-			pageSizeList: [10, 15, 20, 25, 50]
-		};
+		Object.assign(this.selectedPagerGridOptions, {
+			resource: null,
+			externalData: this.selectedItems,
+			transformer: null,
+			emptyTipTpl: selectedEmptyTpl,
+			pager: {
+				pageNum: 1,
+				pageSize: this.isQiake ? 50 : 15,
+				pageSizeList: [10, 15, 20, 25, 50]
+			}
+		});
 
 		// 移除父亲: 从已选商品中删除父亲（包括 sku）。
 		this.selectedPagerGridOptions.removeTreeRootItem = entity => {
@@ -530,6 +532,7 @@ export default class GoodsSelectorCtrl {
 			}
 		};
 
+		// 单选移除操作
 		this.selectedPagerGridOptions.removeSingleTreeRootItem = () => {
 			this.radio.value = null;
 			this.selectedItems.splice(0, 1);
@@ -539,16 +542,19 @@ export default class GoodsSelectorCtrl {
 
 		// 表格数据来自于 externalData 时，分页操作
 		const wrapGridData = (currentPage, pageSize, data) => {
-			this.selectedPagerGridOptions.pager.pageNum = currentPage;
-			this.selectedPagerGridOptions.pager.pageSize = pageSize;
-			this.selectedPagerGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
-			this.selectedPagerGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
+			Object.assign(this.selectedPagerGridOptions, {
+				pager: {
+					pageNum: currentPage,
+					pageSize: pageSize,
+					totalPages: Math.ceil((data.length || 0) / pageSize)
+				},
+				externalData: data.slice(pageSize * (currentPage - 1), pageSize * currentPage)
+			});
 			return this.selectedPagerGridOptions;
 		};
 
 		this.selectedPagerGridOptions.onRefresh = opts => {
-			const currentPage = opts.pager.pageNum; // 当前页
-			const pageSize = opts.pager.pageSize; // 分页大小
+			const { pageNum, pageSize } = opts.pager;
 			let externalData = [];
 			this.selectedItems.forEach(entity => {
 				if (!entity.isHide) {
@@ -561,7 +567,7 @@ export default class GoodsSelectorCtrl {
 			});
 			this.isSelectedExtendAll = utils.isAllChildrenExtend(this.selectedItems);
 			// 刷新表格
-			this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, externalData)).then(() => { this.showLoading = false; });
+			this._$ccGrid.refresh(wrapGridData(pageNum, pageSize, externalData)).then(() => { this.showLoading = false; });
 		};
 	}
 
@@ -924,7 +930,7 @@ export default class GoodsSelectorCtrl {
 			this.selectedLabelsOfAll = [];
 		}
 		for (let attr in formModel) {
-			if (formModel.hasOwnProperty(attr) && attr !== 'platform' && attr !== 'shopId' && attr !== 'status') {
+			if (formModel.hasOwnProperty(attr) && attr !== 'platform' && attr !== 'shopId') {
 				if (Array.isArray(formModel[attr])) {
 					formModel[attr] = [];
 				} else {
@@ -933,7 +939,6 @@ export default class GoodsSelectorCtrl {
 			}
 		}
 		formModel.shopId = this.isSingleSelectShopList ? this.shopList[0].shopId : this.shopList.map(item => item.shopId);
-		formModel.status = '-1';
 		dateRange.start = dateRange.end = null;
 	};
 

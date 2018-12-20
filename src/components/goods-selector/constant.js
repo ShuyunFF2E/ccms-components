@@ -31,18 +31,37 @@ export const getNotFoundMsg = (currentTime, value) => {
 			</div>`;
 };
 
-export const statusList = [
+export const uniStatusList = [
 	{
 		'title': '不限',
-		'value': '-1'
+		'value': null
 	},
 	{
 		'title': '在架',
-		'value': '1'
+		'value': 1
 	},
 	{
 		'title': '下架',
-		'value': '0'
+		'value': 0
+	},
+	{
+		'title': '售罄',
+		'value': 2
+	}
+];
+
+export const statusList = [
+	{
+		'title': '不限',
+		'value': null
+	},
+	{
+		'title': '在架',
+		'value': 1
+	},
+	{
+		'title': '下架',
+		'value': 0
 	}
 ];
 
