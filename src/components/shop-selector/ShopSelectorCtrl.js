@@ -66,7 +66,6 @@ export default class ShopSelectorCtrl {
 					}
 					return entity;
 				});
-				console.log(this.allGoodsList);
 			}
 			this.isSelectedAllPage = this.allGoodsList.length < maxSelectNum && this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
 			this.isShowMask = false;

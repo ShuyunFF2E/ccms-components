@@ -11,7 +11,7 @@
 			let serverName = ''; // http://qa-ual.shuyun.com 或者 http://ual.shuyun.com
 			let isSupportedChannel = true;
 			let singleSelectedShop = ['qiakr_699886823271']; // ['weixin_wxf8e64372a94529ac'] ['qiakr_6998868227'];
-			let multipleSelectedShop = ['qiakr_699886823271', 'taobao_69988684534586', 'taobao_6956469886888l']; // ['weixin_wxf8e64372a94529ac', 'weixin_wxc724d28eef67468f'] ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
+			let multipleSelectedShop = ['taobao_100008795', 'offline_201809201488']; // ['weixin_wxf8e64372a94529ac', 'weixin_wxc724d28eef67468f'] ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
 			let areaUrl = 'http://qa-ual.shuyun.com/shuyun-searchapi/1.0/area?platform=top';
 
 			let commonSingleOptions = {
@@ -127,19 +127,19 @@
 					platform: ['taobao', 'offline'],
 					disabledItems: [
 						{
-							id: 'taobao_69988683345348',
+							id: 'taobao_100094062',
 							tooltipText: '该店铺已关联会员卡'
 						},
 						{
-							id: 'qiakr_69983486873',
+							id: 'taobao_101134152',
 							tooltipText: '该店铺已关联会员卡'
 						},
 						{
-							id: 'taobao_6456499886886j',
+							id: 'taobao_102417112',
 							tooltipText: '该店铺已关联会员卡'
 						},
 						{
-							id: 'taobao_69wer23486888v',
+							id: 'offline_201809201463',
 							tooltipText: '该店铺已关联会员卡'
 						}
 					]
