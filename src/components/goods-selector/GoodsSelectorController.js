@@ -739,26 +739,33 @@ export default class GoodsSelectorCtrl {
 	// 将时间转换成时间戳格式
 	transformDateParams() {
 		this.formModel.startListTime = this.dateRange.start ? Date.parse(this.dateRange.start) : null;
-		this.formModel.endListTime = this.dateRange.end ? Date.parse(this.dateRange.end) : null;
+		this.formModel.endListTime = this.dateRange.end ? Date.parse(this.dateRange.end) + 24 * 60 * 60 * 1000 - 1 : null;
 	}
 
 	// 前端搜索 -> 对已选商品列表进行处理
 	transformSelectedItems() {
 		this.selectedItems.forEach(item => {
-			item.isHide = false;
-			item.shopCategoriesId = this.getNewArray(item.shopCategories, 'id');
-			item.categoriesId = this.getNewArray(item.categories, 'id');
-			item.propsPid = this.getNewArray(item.props, 'pid');
-			item.propsVid = this.getNewArray(item.props, 'vid');
-			item.propsVname = this.getNewArray(item.props, 'vname');
-			item.maxPrice = item.minPrice = item.price;
-			item.startListTime = item.listTime;
-			item.endListTime = item.delistTime;
+			const { shopCategories, categories, props, price, listTime, delistTime } = item;
+			Object.assign(item, {
+				isHide: false,
+				shopCategoriesId: this.getNewArray(shopCategories, 'id'),
+				categoriesId: this.getNewArray(categories, 'id'),
+				propsPid: this.getNewArray(props, 'pid'),
+				propsVid: this.getNewArray(props, 'vid'),
+				propsVname: this.getNewArray(props, 'vname'),
+				maxPrice: price,
+				minPrice: price,
+				startListTime: listTime,
+				endListTime: delistTime
+			});
 			item.skus && item.skus.length && item.skus.forEach(sku => {
-				sku.isHide = false;
-				sku.skusOuterId = sku.outerId;
-				sku.skusId = sku.id;
-				sku.skusPropsVname = this.getNewArray(sku.props, 'vname');
+				const { outerId, id } = sku;
+				Object.assign(sku, {
+					isHide: false,
+					skusOuterId: outerId,
+					skusId: id,
+					skusPropsVname: this.getNewArray(sku.props, 'vname')
+				});
 			});
 			matchHelper.match(this.formModel, item.skus, this.skuFormConfig);
 			if (item.skus && item.skus.length) {

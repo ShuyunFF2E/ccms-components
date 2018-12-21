@@ -198,9 +198,6 @@ export const utils = {
 					case 'tagItemIds':
 						delete queryCollection[prop]; // 后端搜索使用 POST 请求，将 tagItemIds 放到 request body 中
 						break;
-					case 'status':
-						queryCollection[prop] = formModel[prop] === '-1' ? null : formModel[prop];
-						break;
 					default:
 						queryCollection[prop] = formModel[prop];
 				}
