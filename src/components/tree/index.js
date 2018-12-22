@@ -11,9 +11,17 @@ import treeNodeTemplate from './node/node.tpl.html';
 
 import ccCheckbox from '../checkbox';
 import ccRadio from '../radio';
-import treeMenu from './menu';
+import menuTemplate from './menu/menu.tpl.html';
 import treeSearch from './search';
 
+const menuDDO = {
+	template: menuTemplate,
+	bindings: {
+		cmStyle: '<',
+		activeNode: '<',
+		items: '<'
+	}
+};
 
 const treeDDO = {
 	controller: treeController,
@@ -21,12 +29,12 @@ const treeDDO = {
 	bindings: {
 		data: '<',
 		searchPlaceholder: '<?',
+		searchMaxLen: '<?',
 		maxLevel: '<?',
 		supportMenu: '<?',
 		supportSearch: '<?',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
-		onClickAction: '<?',
 		onSelectedAction: '<?',
 		onRemoveAction: '<?',
 		onAddAction: '<?',
@@ -62,9 +70,24 @@ const treeNodeDDO = {
 	}
 };
 
+const rightClickDirective = $parse => {
+	return {
+		link: (scope, element, attrs) => {
+			const fn = $parse(attrs.ccTreeRightClick);
+			element.bind('contextmenu', event => {
+				scope.$apply(() => {
+					event.preventDefault();
+					fn(scope, { $event: event });
+				});
+			});
+		}
+	};
+};
 
-export default angular.module('ccms.components.tree', [ccCheckbox, ccRadio, treeMenu, treeSearch])
+export default angular.module('ccms.components.tree', [ccCheckbox, ccRadio, treeSearch])
 	.component('ccTree', treeDDO)
 	.component('ccTreeList', treeListDDO)
 	.component('ccTreeNode', treeNodeDDO)
+	.component('ccTreeMenu', menuDDO)
+	.directive('ccTreeRightClick', ['$parse', rightClickDirective])
 	.name;

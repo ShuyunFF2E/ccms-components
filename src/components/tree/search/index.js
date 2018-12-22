@@ -8,6 +8,7 @@ const ddo = {
 	bindings: {
 		treeMap: '<',
 		searchPlaceholder: '<?',
+		searchMaxLen: '<?',
 		onDone: '&'
 	}
 };

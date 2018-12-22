@@ -18,6 +18,7 @@ var cssNanoCommonOpts = {
 };
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 var loaders = require('./webpack-common-loaders');
+const { version } = require('./package.json');
 
 loaders.push(
 	{
@@ -45,7 +46,8 @@ module.exports = {
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env': {
-				NODE_ENV: JSON.stringify('production')
+				NODE_ENV: JSON.stringify('production'),
+				VERSION: JSON.stringify(version)
 			}
 		}),
 		new CleanPlugin(['dist']),

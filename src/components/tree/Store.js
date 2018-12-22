@@ -24,8 +24,8 @@ class Store {
 	 * @param node
 	 */
 	updateActiveNode(node) {
-		this.activeNode && this.updateById(this.activeNode.id, { isSelected: false });
-		this.activeNode = this.updateById(node.id, { isSelected: true });
+		this.activeNode && this.updateById(this.activeNode.id, { isActive: false });
+		this.activeNode = this.updateById(node.id, { isActive: true });
 	}
 
 	/**
@@ -67,7 +67,7 @@ class Store {
 			}
 
 			if (!children || !children.length) {
-				return;
+				return node;
 			}
 			children.forEach(item => {
 				format(item, node.level + 1);

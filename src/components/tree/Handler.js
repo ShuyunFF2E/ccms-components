@@ -11,9 +11,6 @@ class Handler {
 	 * @param callback
 	 */
 	init(treeObject) {
-		// 节点点击事件
-		this.onClickAction = treeObject.onClickAction;
-
 		// 选中事件
 		this.onSelectedAction = treeObject.onSelectedAction;
 

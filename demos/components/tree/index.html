@@ -2,50 +2,61 @@
 <meta charset="UTF-8">
 <title>树</title>
 <link rel="import" href="../../common/layout.html">
-
+<style>
+.demo-tree{
+	width: 250px;
+	height: 200px;
+	padding: 10px;
+	border: 2px solid #f8f8f8;
+}
+</style>
 <main ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
 	<h2> 搜索、菜单、复选、最大可新增层级为3 </h2>
-	<cc-tree
-		data="ctrl.tree_one.data"
-		search-placeholder="ctrl.tree_one.searchPlaceholder"
-		max-level="ctrl.tree_one.maxLevel"
-		support-checkbox="ctrl.tree_one.supportCheckbox"
-		support-menu="ctrl.tree_one.supportMenu"
-		is-radio-model="ctrl.tree_one.isRadioModel"
-		support-search="ctrl.tree_one.supportSearch"
-		on-click-action="ctrl.tree_one.onClickAction"
-		on-add-action="ctrl.tree_one.onAddAction"
-		on-rename-action="ctrl.tree_one.onRenameAction"
-		on-remove-action="ctrl.tree_one.onRemoveAction"
-		on-selected-action="ctrl.tree_one.onSelectedAction">
-	</cc-tree>
+	<section class="demo-tree">
+		<cc-tree
+			data="ctrl.tree_one.data"
+			search-placeholder="ctrl.tree_one.searchPlaceholder"
+			search-max-len="ctrl.tree_one.searchMaxLen"
+			max-level="ctrl.tree_one.maxLevel"
+			support-checkbox="ctrl.tree_one.supportCheckbox"
+			support-menu="ctrl.tree_one.supportMenu"
+			is-radio-model="ctrl.tree_one.isRadioModel"
+			support-search="ctrl.tree_one.supportSearch"
+			on-add-action="ctrl.tree_one.onAddAction"
+			on-rename-action="ctrl.tree_one.onRenameAction"
+			on-remove-action="ctrl.tree_one.onRemoveAction"
+			on-selected-action="ctrl.tree_one.onSelectedAction">
+		</cc-tree>
+	</section>
 
 	<h2> 无搜索、无菜单、带单选 </h2>
-	<cc-tree
-		data="ctrl.tree_two.data"
-		support-checkbox="ctrl.tree_two.supportCheckbox"
-		is-radio-model="ctrl.tree_two.isRadioModel"
-		support-search="ctrl.tree_two.supportSearch"
-		on-click-action="ctrl.tree_two.onClickAction"
-		on-add-action="ctrl.tree_two.onAddAction"
-		on-rename-action="ctrl.tree_two.onRenameAction"
-		on-remove-action="ctrl.tree_two.onRemoveAction"
-		on-selected-action="ctrl.tree_two.onSelectedAction">
-	</cc-tree>
+	<section class="demo-tree">
+		<cc-tree
+			data="ctrl.tree_two.data"
+			support-checkbox="ctrl.tree_two.supportCheckbox"
+			is-radio-model="ctrl.tree_two.isRadioModel"
+			support-search="ctrl.tree_two.supportSearch"
+			on-add-action="ctrl.tree_two.onAddAction"
+			on-rename-action="ctrl.tree_two.onRenameAction"
+			on-remove-action="ctrl.tree_two.onRemoveAction"
+			on-selected-action="ctrl.tree_two.onSelectedAction">
+		</cc-tree>
+	</section>
 
 
 	<h2> 无搜索、无菜单、无选择 </h2>
-	<cc-tree
-		data="ctrl.tree_three.data"
-		support-checkbox="ctrl.tree_three.supportCheckbox"
-		is-radio-model="ctrl.tree_three.isRadioModel"
-		support-search="ctrl.tree_three.supportSearch"
-		on-click-action="ctrl.tree_three.onClickAction"
-		on-add-action="ctrl.tree_three.onAddAction"
-		on-rename-action="ctrl.tree_three.onRenameAction"
-		on-remove-action="ctrl.tree_three.onRemoveAction"
-		on-selected-action="ctrl.tree_three.onSelectedAction">
-	</cc-tree>
+	<section class="demo-tree">
+		<cc-tree
+			data="ctrl.tree_three.data"
+			support-checkbox="ctrl.tree_three.supportCheckbox"
+			is-radio-model="ctrl.tree_three.isRadioModel"
+			support-search="ctrl.tree_three.supportSearch"
+			on-add-action="ctrl.tree_three.onAddAction"
+			on-rename-action="ctrl.tree_three.onRenameAction"
+			on-remove-action="ctrl.tree_three.onRemoveAction"
+			on-selected-action="ctrl.tree_three.onSelectedAction">
+		</cc-tree>
+	</section>
 </main>
 
 <script src="/components.js"></script>
