@@ -60,9 +60,9 @@ function ddo($parse) {
 						element[0].releaseCapture();
 					}
 
-					let ccDragEnd = $parse(attrs.ccDragEnd) || angular.noop();
+					// 建议修改为 EventBus
+					scope.$broadcast('ccDragEnd', {left: L, top: T});
 
-					ccDragEnd({left: L, top: T});
 				};
 
 				document.addEventListener('mousemove', mousemoveListener, false);

@@ -22,8 +22,8 @@ export default {
 	},
 
 	// 获取地区列表
-	getAreaData(serverName) {
-		return genResource(`${ serverName }/shuyun-searchapi/1.0/area?platform=top`, null, null, {
+	getAreaData(areaUrl) {
+		return genResource(areaUrl, null, null, {
 			get: {
 				method: 'GET',
 				isArray: true
