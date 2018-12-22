@@ -20,7 +20,7 @@ function findEntityById(collection, id) {
 	return collection.findIndex(item => angular.equals(item.id, id));
 }
 
-@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform', 'areaUrl', 'disabledItems')
+@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform', 'areaUrl', 'decoratorItems', 'rowTemplate')
 export default class ShopSelectorCtrl {
 	constructor() {
 		this.isSingleSelected = this._isSingleSelected; // 是否是单选
@@ -30,7 +30,8 @@ export default class ShopSelectorCtrl {
 		this.isSupportedChannel = this._isSupportedChannel; // 是否支持平台
 		this.platform = this._platform; // 用户传入的平台
 		this.areaUrl = this._areaUrl;
-		this.disabledItems = this._disabledItems; // 用户不可编辑的店铺
+		this.decoratorItems = this._decoratorItems;
+		this.rowTemplate = this._rowTemplate; // 用户自定义行模板
 
 		this.commonGridColumnDef = getGridColumnDef(this.isSupportedChannel);
 		this.selectedItems = [];
@@ -61,8 +62,10 @@ export default class ShopSelectorCtrl {
 			const { list } = res;
 			if (list && list.length) {
 				this.allGoodsList = list.filter(entity => {
-					if (findEntityById(this.disabledItems, entity.id) !== -1) {
-						entity.isDisabled = true;
+					const targetIndex = findEntityById(this.decoratorItems, entity.id);
+					if (targetIndex !== -1) {
+						// 不可点击
+						entity.isDisableChecked = this.decoratorItems[targetIndex].isDisableChecked;
 					}
 					return entity;
 				});
@@ -78,7 +81,7 @@ export default class ShopSelectorCtrl {
 	// 是否所有商品都被选中
 	isAllEntitySelected(allGoodsList = [], selectedItems = []) {
 		return selectedItems.length && allGoodsList.every(entity => {
-			return findEntityById(selectedItems, entity.id) !== -1 || entity.isDisabled;
+			return findEntityById(selectedItems, entity.id) !== -1 || entity.isDisableChecked;
 		});
 	}
 
@@ -131,7 +134,7 @@ export default class ShopSelectorCtrl {
 				channel: this.platform ? this.platform.join(',') : null // 平台
 			},
 			columnsDef: this.commonGridColumnDef,
-			rowTpl: rowTemplate,
+			rowTpl: this.rowTemplate || rowTemplate,
 			rowCellTemplate: rowCellTemplate,
 			footerTpl: footerTemplate,
 			emptyTipTpl: emptyTemplate,
@@ -148,7 +151,7 @@ export default class ShopSelectorCtrl {
 			selectedItems: this.selectedItems,
 			// 多选
 			switchSelectItem: entity => {
-				if (!entity.isDisabled) {
+				if (!entity.isDisableChecked) {
 					entity.$selected = !entity.$selected;
 					this.updateSelectedItems(entity);
 					this.isSelectedPage = this.isSelectedPageAll(this.resData);
@@ -158,19 +161,21 @@ export default class ShopSelectorCtrl {
 						this.isSelectedAllPage = false;
 					}
 				}
+				entity.callback && entity.callback(entity);
 			},
 			// 单选
 			switchSingleSelectItem: entity => {
-				if (!entity.isDisabled) {
+				if (!entity.isDisableChecked) {
 					this.allShopGridOptions.radio.value = entity.id;
 					this.selectedItems.splice(0, this.selectedItems.length, entity);
 				}
+				entity.callback && entity.callback(entity);
 			},
 			transformer: res => {
 				res.list = res.list || [];
 				this.resData = res.list;
 				this.getNameByGridList(res.list, this.channelList);
-				this.resListMerge(res.list, this.selectedItemsBuffer, this.disabledItems);
+				this.resListMerge(res.list, this.selectedItemsBuffer, this.decoratorItems);
 				if (this.isSingleSelected) {
 					res.list.forEach(entity => {
 						this.allShopGridOptions.radio.setting.push(entity.id);
@@ -226,7 +231,7 @@ export default class ShopSelectorCtrl {
 				this.updateSelectedItems(entity);
 			});
 			if (this.resData && this.resData.length) {
-				this.resListMerge(this.resData, this.selectedItemsBuffer, this.disabledItems);
+				this.resListMerge(this.resData, this.selectedItemsBuffer, this.decoratorItems);
 			}
 		}).catch(() => {
 			this._$ccTips.error(errorMsg);
@@ -289,17 +294,14 @@ export default class ShopSelectorCtrl {
 	}
 
 	// merge 数据，维持商品的状态（是否被选中 是否不可操作）
-	resListMerge(resList = [], buffer = [], disabledItems = []) {
+	resListMerge(resList = [], buffer = [], decoratorItems = []) {
 		resList.forEach((entity, index) => {
 			if (findEntityById(buffer, entity.id) !== -1) {
 				resList[index].$selected = true;
 			}
-			const targetIndex = findEntityById(disabledItems, entity.id);
+			const targetIndex = findEntityById(decoratorItems, entity.id);
 			if (targetIndex !== -1) {
-				Object.assign(resList[index], {
-					isDisabled: true,
-					tooltipText: disabledItems[targetIndex].tooltipText
-				});
+				Object.assign(resList[index], this.decoratorItems[targetIndex]);
 			}
 		});
 	}
@@ -308,7 +310,7 @@ export default class ShopSelectorCtrl {
 	switchSelectPage(isSelectedPage) {
 		const { data } = this.allShopGridOptions;
 		data && data.length && data.forEach(entity => {
-			if (!entity.isDisabled) {
+			if (!entity.isDisableChecked) {
 				entity.$selected = isSelectedPage;
 				this.updateSelectedItems(entity);
 			}
@@ -337,7 +339,7 @@ export default class ShopSelectorCtrl {
 		this.isSelectedPage = isSelectedAllPage;
 		this.updateCurrentItems(isSelectedAllPage);
 		this.allGoodsList.forEach(entity => {
-			if (!entity.isDisabled) {
+			if (!entity.isDisableChecked) {
 				entity.$selected = isSelectedAllPage;
 				this.updateSelectedItems(entity);
 			}
@@ -348,7 +350,7 @@ export default class ShopSelectorCtrl {
 	updateCurrentItems(isSelectedAllPage) {
 		const { resData } = this;
 		resData && resData.length && resData.forEach(entity => {
-			!entity.isDisabled && (entity.$selected = isSelectedAllPage);
+			!entity.isDisableChecked && (entity.$selected = isSelectedAllPage);
 		});
 	}
 
@@ -401,7 +403,7 @@ export default class ShopSelectorCtrl {
 	isSelectedPageAll(list = []) {
 		if (list.length) {
 			return list.every(item => {
-				return item.$selected || item.isDisabled;
+				return item.$selected || item.isDisableChecked;
 			});
 		}
 		return false;

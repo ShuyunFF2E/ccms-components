@@ -8,7 +8,7 @@ export const getGridColumnDef = isSupportedPlatform => {
 			align: 'center'
 		},
 		{
-			cellTemplate: '<span class="grid-shop-name" ng-bind="entity.name" cc-tooltip="entity.isDisabled ? null : entity.name" tooltip-append-to-body="true"></span>',
+			cellTemplate: '<span class="grid-shop-name" ng-bind="entity.name" cc-tooltip="entity.name" tooltip-append-to-body="true"></span>',
 			displayName: '店铺名称',
 			align: 'center'
 		},
@@ -23,7 +23,7 @@ export const getGridColumnDef = isSupportedPlatform => {
 			align: 'center'
 		},
 		{
-			cellTemplate: '<span class="grid-shop-address" ng-bind="entity.address ? entity.address : \'---\'" cc-tooltip="entity.isDisabled ? null : entity.address" tooltip-append-to-body="true"></span>',
+			cellTemplate: '<span class="grid-shop-address" ng-bind="entity.address ? entity.address : \'---\'" cc-tooltip="entity.address" tooltip-append-to-body="true"></span>',
 			displayName: '店铺详细地址',
 			align: 'center'
 		}

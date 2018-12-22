@@ -120,29 +120,103 @@
 						console.log('-----------ok-----------');
 					});
 			};
+
 			// 指定不可选店铺
 			$scope.openMultipleShopSelector3 = function() {
 				let multipleOptions = {
 					...commonMultipleOptions,
 					platform: ['taobao', 'offline'],
-					disabledItems: [
+					decoratorItems: [
 						{
 							id: 'taobao_100094062',
-							tooltipText: '该店铺已关联会员卡'
+							tooltipText: '该店铺已关联会员卡1，不可点击',
+							style: {},
+							isDisableChecked: true
 						},
 						{
 							id: 'taobao_101134152',
-							tooltipText: '该店铺已关联会员卡'
-						},
-						{
-							id: 'taobao_102417112',
-							tooltipText: '该店铺已关联会员卡'
-						},
-						{
-							id: 'offline_201809201463',
-							tooltipText: '该店铺已关联会员卡'
+							tooltipText: '该店铺已关联会员卡3，不可点击',
+							style: {
+								background: 'rgba(122, 122, 125, 0.2)'
+							},
+							isDisableChecked: true
 						}
 					]
+				};
+				$ccShopSelector.shopSelector(tenantId, multipleOptions)
+					.open()
+					.result
+					.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('-----------ok-----------');
+					});
+			};
+
+			// 自定义表格行样式
+			$scope.openMultipleShopSelector4 = function() {
+				let multipleOptions = {
+					...commonMultipleOptions,
+					platform: ['taobao', 'offline'],
+					decoratorItems: [
+						{
+							id: 'taobao_100094062',
+							tooltipText: '自定义背景色和文字颜色',
+							style: {
+								background: '#e4ef89',
+								color: 'red'
+							}
+						},
+						{
+							id: 'taobao_101134152',
+							tooltipText: '自定义背景色',
+							style: {
+								background: '#8cef8c'
+							}
+						}
+					]
+				};
+				$ccShopSelector.shopSelector(tenantId, multipleOptions)
+					.open()
+					.result
+					.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('-----------ok-----------');
+					});
+			};
+
+			// 自定义表格行模板
+			$scope.openMultipleShopSelector5 = function() {
+				let multipleOptions = {
+					...commonMultipleOptions,
+					platform: ['taobao', 'offline'],
+					decoratorItems: [
+						{
+							id: 'taobao_100094062',
+							tooltipText: '自定义背景色，不可点击',
+							style: {
+								background: '#92e4dd'
+							},
+							isDisableChecked: true
+						},
+						{
+							id: 'taobao_101134152',
+							tooltipText: '自定义背景色',
+							style: {
+								background: 'yellow'
+							}
+						}
+					],
+					rowTemplate: `<tr ng-style="entity.style"
+									  ng-repeat="entity in $ctrl.opts.data track by $index"
+									  ng-class="{'row-selected': $ctrl.opts.radio.value === entity.id}"
+									  cc-tooltip="entity.tooltipText" tooltip-append-to-body="true" tooltip-placement="top-left"
+									  ng-click="$ctrl.opts.switchSelectItem(entity)"
+									  cc-bind-html="$ctrl.opts.rowCellTemplate">
+								  </tr>`
 				};
 				$ccShopSelector.shopSelector(tenantId, multipleOptions)
 					.open()

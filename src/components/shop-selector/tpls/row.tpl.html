@@ -1,15 +1,19 @@
-<!--自定义行模板-->
-<tr ng-if="!$ctrl.opts.isSingleSelected"
+<!--多选行模板-->
+<tr ng-style="entity.style"
+	ng-if="!$ctrl.opts.isSingleSelected"
 	ng-repeat="entity in $ctrl.opts.data track by $index"
-	ng-class="{'row-selected': entity.$selected, 'disable-checked': entity.isDisabled}"
-	cc-tooltip="entity.isDisabled ? entity.tooltipText : null" tooltip-append-to-body="true" tooltip-placement="top-right"
+	ng-class="{'row-selected': $ctrl.opts.radio.value === entity.id, 'disable-checked': entity.isDisableChecked}"
+	cc-tooltip="entity.tooltipText || null" tooltip-append-to-body="true" tooltip-placement="top-right"
 	ng-click="$ctrl.opts.switchSelectItem(entity)"
 	cc-bind-html="$ctrl.opts.rowCellTemplate">
 </tr>
-<tr ng-if="$ctrl.opts.isSingleSelected"
+
+<!--单选行模板-->
+<tr ng-style="entity.style"
+	ng-if="$ctrl.opts.isSingleSelected"
 	ng-repeat="entity in $ctrl.opts.data track by $index"
-	ng-class="{'row-selected': $ctrl.opts.radio.value === entity.id, 'disable-checked': entity.isDisabled}"
-	cc-tooltip="entity.isDisabled ? entity.tooltipText : null" tooltip-append-to-body="true" tooltip-placement="top-right"
+	ng-class="{'row-selected': $ctrl.opts.radio.value === entity.id, 'disable-checked': entity.isDisableChecked}"
+	cc-tooltip="entity.tooltipText || null" tooltip-append-to-body="true" tooltip-placement="top-right"
 	ng-click="$ctrl.opts.switchSingleSelectItem(entity)"
 	cc-bind-html="$ctrl.opts.rowCellTemplate">
 </tr>
