@@ -10,7 +10,7 @@ import browser from '../../common/utils/browser';
 
 const $ = window.NiceScroll.getjQuery();
 
-@Inject('$element')
+@Inject('$element', '$scope')
 class Controller {
 
 	$postLink() {
@@ -24,7 +24,7 @@ class Controller {
 
 			// 内容发生变更时重算滚动条
 			this._$element[0].addEventListener('DOMSubtreeModified', this.resize, false);
-
+			this._$scope.$on('ccDragEnd', this.resize);
 		}
 	}
 

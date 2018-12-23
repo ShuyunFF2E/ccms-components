@@ -2,122 +2,63 @@
 <meta charset="UTF-8">
 <title>树</title>
 <link rel="import" href="../../common/layout.html">
-
 <style>
-	.group {
-		display: flex;
-	}
-	.group + .group {
-		margin-top: 1em;
-	}
-	h1 {
-		margin-top: 0 !important;
-		padding-top: 20px;
-		padding-left: 20px;
-	}
-	.demo {
-		flex: 1;
-		margin: .5em;
-	}
-	[cc-dropdown-panel] {
-		width: 150px;
-		padding: .5em;
-		border: solid 1px #ccc;
-	}
+.demo-tree{
+	width: 250px;
+	height: 200px;
+	padding: 10px;
+	border: 2px solid #f8f8f8;
+}
 </style>
-
 <main ng-app="demoApp" ng-controller="DemoCtrl as ctrl">
-	<h2> Simple Tree </h2>
-	<cc-tree tree-data="ctrl.tree" on-selected="ctrl.select(item)" selected-ids="ctrl.selectedIds"></cc-tree>
-	<h2> Checkbox Tree </h2>
-	<cc-tree tree-data="ctrl.tree" on-selected="ctrl.select(item, checked)" selected-ids="ctrl.selectedIds" has-checkbox="true"></cc-tree>
+	<h2> 搜索、菜单、复选、最大可新增层级为3 </h2>
+	<section class="demo-tree">
+		<cc-tree
+			data="ctrl.tree_one.data"
+			search-placeholder="ctrl.tree_one.searchPlaceholder"
+			search-max-len="ctrl.tree_one.searchMaxLen"
+			max-level="ctrl.tree_one.maxLevel"
+			support-checkbox="ctrl.tree_one.supportCheckbox"
+			support-menu="ctrl.tree_one.supportMenu"
+			is-radio-model="ctrl.tree_one.isRadioModel"
+			support-search="ctrl.tree_one.supportSearch"
+			on-add-action="ctrl.tree_one.onAddAction"
+			on-rename-action="ctrl.tree_one.onRenameAction"
+			on-remove-action="ctrl.tree_one.onRemoveAction"
+			on-selected-action="ctrl.tree_one.onSelectedAction">
+		</cc-tree>
+	</section>
+
+	<h2> 无搜索、无菜单、带单选 </h2>
+	<section class="demo-tree">
+		<cc-tree
+			data="ctrl.tree_two.data"
+			support-checkbox="ctrl.tree_two.supportCheckbox"
+			is-radio-model="ctrl.tree_two.isRadioModel"
+			support-search="ctrl.tree_two.supportSearch"
+			on-add-action="ctrl.tree_two.onAddAction"
+			on-rename-action="ctrl.tree_two.onRenameAction"
+			on-remove-action="ctrl.tree_two.onRemoveAction"
+			on-selected-action="ctrl.tree_two.onSelectedAction">
+		</cc-tree>
+	</section>
+
+
+	<h2> 无搜索、无菜单、无选择 </h2>
+	<section class="demo-tree">
+		<cc-tree
+			data="ctrl.tree_three.data"
+			support-checkbox="ctrl.tree_three.supportCheckbox"
+			is-radio-model="ctrl.tree_three.isRadioModel"
+			support-search="ctrl.tree_three.supportSearch"
+			on-add-action="ctrl.tree_three.onAddAction"
+			on-rename-action="ctrl.tree_three.onRenameAction"
+			on-remove-action="ctrl.tree_three.onRemoveAction"
+			on-selected-action="ctrl.tree_three.onSelectedAction">
+		</cc-tree>
+	</section>
 </main>
 
 <script src="/components.js"></script>
-<script>
-	angular.module('demoApp', ['ccms.components'])
-			.controller('DemoCtrl', DemoCtrl);
-
-	DemoCtrl.$inject = [];
-	function DemoCtrl() {
-
-		this.selectedIds = [22, 23];
-
-		this.select = function(item, data) {
-			console.log(item);
-			console.log(data);
-		};
-
-		this.tree = [{
-			id: 1,
-			label: '所有工单类型',
-			children: [
-				{
-					id: 2,
-					label: '售前事务',
-					children: [
-						{
-							id: 21,
-							label: '催付工单'
-						},
-						{
-							id: 22,
-							label: '发货提醒工单',
-							children: [
-								{
-									id: 224,
-									label: '催付工单'
-								},
-								{
-									id: 225,
-									label: '发货提醒工单'
-								},
-								{
-									id: 226,
-									label: 'Test'
-								}
-							]
-						},
-						{
-							id: 23,
-							label: 'Test',
-							children: [
-								{
-									id: 234,
-									label: '催付工单'
-								},
-								{
-									id: 235,
-									label: '发货提醒工单'
-								},
-								{
-									id: 236,
-									label: 'Test'
-								}
-							]
-						}
-					]
-				},
-				{
-					id: 3,
-					label: '售中事务',
-					children: [
-						{
-							id: 4,
-							label: '催付工单'
-						},
-						{
-							id: 5,
-							label: '发货提醒工单'
-						},
-						{
-							id: 6,
-							label: 'Test'
-						}
-					]
-				}
-			]
-		}];
-	}
-</script>
+<script src="./index.js"></script>
 
