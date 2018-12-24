@@ -7,11 +7,9 @@
 import angular from 'angular';
 
 import altSrc from './alt-src';
-import areaSelector from './area-selector';
 import calendar from './calendar';
 import captureEvent from './capture-event';
 import checkbox from './checkbox';
-import customerProfileBoard from './customer-profile-board';
 import datePicker from './date-picker';
 import dateRange from './date-range';
 import dropdown from './dropdown';
@@ -40,11 +38,9 @@ import tree from './tree';
 export default angular
 	.module('ccms.components.ui', [
 		altSrc,
-		areaSelector,
 		calendar,
 		captureEvent,
 		checkbox,
-		customerProfileBoard,
 		datePicker,
 		dateRange,
 		dropdown,
