@@ -126,22 +126,19 @@
 				let multipleOptions = {
 					...commonMultipleOptions,
 					platform: ['taobao', 'offline'],
-					decoratorItems: [
+					customRowConfig: [
 						{
 							id: 'taobao_100094062',
 							tooltipText: '该店铺已关联会员卡1，不可点击',
-							style: {},
-							isDisableChecked: true
+							style: {}
 						},
 						{
 							id: 'taobao_101134152',
 							tooltipText: '该店铺已关联会员卡3，不可点击',
-							style: {
-								background: 'rgba(122, 122, 125, 0.2)'
-							},
-							isDisableChecked: true
+							style: {}
 						}
-					]
+					],
+					rowType: 'DISABLED_ROW'
 				};
 				$ccShopSelector.shopSelector(tenantId, multipleOptions)
 					.open()
@@ -154,69 +151,67 @@
 					});
 			};
 
-			// 自定义表格行样式
-			$scope.openMultipleShopSelector4 = function() {
-				let multipleOptions = {
-					...commonMultipleOptions,
-					platform: ['taobao', 'offline'],
-					decoratorItems: [
-						{
-							id: 'taobao_100094062',
-							tooltipText: '自定义背景色和文字颜色',
-							style: {
-								background: '#e4ef89',
-								color: 'red'
-							}
-						},
-						{
-							id: 'taobao_101134152',
-							tooltipText: '自定义背景色',
-							style: {
-								background: '#8cef8c'
-							}
-						}
-					]
-				};
-				$ccShopSelector.shopSelector(tenantId, multipleOptions)
-					.open()
-					.result
-					.then(function(response) {
-						console.log('-----------ok-----------');
-						console.log(response);
-					}, function() {
-						console.log('-----------ok-----------');
-					});
-			};
-
-			// 自定义表格行模板
+			// 指定高亮店铺
 			$scope.openMultipleShopSelector5 = function() {
 				let multipleOptions = {
 					...commonMultipleOptions,
 					platform: ['taobao', 'offline'],
-					decoratorItems: [
+					customRowConfig: [
 						{
 							id: 'taobao_100094062',
-							tooltipText: '自定义背景色，不可点击',
 							style: {
 								background: '#92e4dd'
 							},
+							tooltipText: '高亮，需指定背景色！'
+						},
+						{
+							id: 'taobao_101134152',
+							style: {
+								background: 'yellow'
+							},
+							tooltipText: '高亮，需指定背景色！'
+						}
+					],
+					rowType: 'HIGH_LIGHT_ROW'
+				};
+				$ccShopSelector.shopSelector(tenantId, multipleOptions)
+					.open()
+					.result
+					.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('-----------ok-----------');
+					});
+			};
+
+			// 自定义行模板
+			$scope.openMultipleShopSelector6 = function() {
+				let multipleOptions = {
+					...commonMultipleOptions,
+					platform: ['taobao', 'offline'],
+					customRowConfig: [
+						{
+							id: 'taobao_100094062',
+							tooltipText: '自定义行模板',
 							isDisableChecked: true
 						},
 						{
 							id: 'taobao_101134152',
-							tooltipText: '自定义背景色',
 							style: {
 								background: 'yellow'
-							}
+							},
+							tooltipText: '自定义行模板！',
+							isDisableChecked: false
 						}
 					],
-					rowTemplate: `<tr ng-style="entity.style"
-									  ng-repeat="entity in $ctrl.opts.data track by $index"
-									  ng-class="{'row-selected': $ctrl.opts.radio.value === entity.id}"
-									  cc-tooltip="entity.tooltipText" tooltip-append-to-body="true" tooltip-placement="top-left"
-									  ng-click="$ctrl.opts.switchSelectItem(entity)"
-									  cc-bind-html="$ctrl.opts.rowCellTemplate">
-								  </tr>`
+					customRowTemplate: `<tr ng-style="entity.style"
+											ng-repeat="entity in $ctrl.opts.data track by $index"
+											ng-class="{'row-selected': $ctrl.opts.radio.value === entity.id, 'disable-checked': entity.isDisableChecked}"
+											cc-tooltip="entity.tooltipText" tooltip-append-to-body="true" tooltip-placement="top-left"
+											ng-click="$ctrl.opts.switchSelectItem(entity)"
+											cc-bind-html="$ctrl.opts.rowCellTemplate">
+										</tr>`
 				};
 				$ccShopSelector.shopSelector(tenantId, multipleOptions)
 					.open()

@@ -12,11 +12,12 @@ const ShopSelectorService = {
 	 * @param isSupportedChannel: 是否支持平台选项，默认支持
 	 * @param platform: 平台
 	 * @param areaUrl: 地址 api
-	 * @param decoratorItems: 用户自定义行样式
-	 * @param rowTemplate: 用户自定义行模板
+	 * @param rowType: 表格行类型 指定行不可选--'DISABLED_ROW' 指定行高亮--‘HIGH_LIGHT_ROW’
+	 * @param customRowConfig: 用户自定义行样式
+	 * @param customRowTemplate: 用户自定义行模板
 	 * @returns {*|Modal}
 	 */
-	shopSelector(tenantId, {hasFooter = true, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null, areaUrl = `${ serverName }/shuyun-searchapi/1.0/area?platform=unification`, decoratorItems = [], rowTemplate}) {
+	shopSelector(tenantId, {hasFooter = true, isSingleSelected = false, selectedShop = [], serverName = '', isSupportedChannel = true, platform = null, areaUrl = `${ serverName }/shuyun-searchapi/1.0/area?platform=unification`, rowType = 'DEFAULT_ROW', customRowConfig = [], customRowTemplate = null}) {
 		if (!tenantId && tenantId !== 0) {
 			throw new Error('shopSelector 缺少 tenantId 参数');
 		}
@@ -45,8 +46,9 @@ const ShopSelectorService = {
 					isSupportedChannel: isSupportedChannel,
 					platform,
 					areaUrl,
-					decoratorItems,
-					rowTemplate
+					rowType,
+					customRowConfig,
+					customRowTemplate
 				},
 				controller: ShopSelectorCtrl,
 				controllerAs: '$ctrl',

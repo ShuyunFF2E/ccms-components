@@ -5,12 +5,12 @@ import { getGridColumnDef, commonListFieldsMap, errorMsg, maxSelectNum, apiPrefi
 import service from './service';
 import utils from './utils';
 
-import rowTemplate from './tpls/row.tpl.html';
 import rowCellTemplate from './tpls/row-cell.tpl.html';
 import footerTemplate from './tpls/grid-footer.tpl.html';
 import emptyTemplate from './tpls/empty.tpl.html';
 import selectedRowTemplate from './tpls/selected-row.tpl.html';
 import selectedRowCellTemplate from '../grid/tpls/default-row-cell.tpl.html';
+import rowTemplateConfig from './RowTemplateConfig';
 
 
 /**
@@ -20,7 +20,7 @@ function findEntityById(collection, id) {
 	return collection.findIndex(item => angular.equals(item.id, id));
 }
 
-@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform', 'areaUrl', 'decoratorItems', 'rowTemplate')
+@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform', 'areaUrl', 'rowType', 'customRowConfig', 'customRowTemplate')
 export default class ShopSelectorCtrl {
 	constructor() {
 		this.isSingleSelected = this._isSingleSelected; // 是否是单选
@@ -30,8 +30,9 @@ export default class ShopSelectorCtrl {
 		this.isSupportedChannel = this._isSupportedChannel; // 是否支持平台
 		this.platform = this._platform; // 用户传入的平台
 		this.areaUrl = this._areaUrl;
-		this.decoratorItems = this._decoratorItems;
-		this.rowTemplate = this._rowTemplate; // 用户自定义行模板
+		this.rowType = this._rowType;
+		this.customRowConfig = this._customRowConfig;
+		this.customRowTemplate = this._customRowTemplate; // 用户自定义行模板
 
 		this.commonGridColumnDef = getGridColumnDef(this.isSupportedChannel);
 		this.selectedItems = [];
@@ -62,10 +63,9 @@ export default class ShopSelectorCtrl {
 			const { list } = res;
 			if (list && list.length) {
 				this.allGoodsList = list.filter(entity => {
-					const targetIndex = findEntityById(this.decoratorItems, entity.id);
+					const targetIndex = findEntityById(this.customRowConfig, entity.id);
 					if (targetIndex !== -1) {
-						// 不可点击
-						entity.isDisableChecked = this.decoratorItems[targetIndex].isDisableChecked;
+						Object.assign(entity, { isDisableChecked: this.rowType === 'DISABLED_ROW' }, this.customRowConfig[targetIndex]);
 					}
 					return entity;
 				});
@@ -134,7 +134,8 @@ export default class ShopSelectorCtrl {
 				channel: this.platform ? this.platform.join(',') : null // 平台
 			},
 			columnsDef: this.commonGridColumnDef,
-			rowTpl: this.rowTemplate || rowTemplate,
+			rowType: this.rowType,
+			rowTpl: this.customRowTemplate || rowTemplateConfig[this.rowType],
 			rowCellTemplate: rowCellTemplate,
 			footerTpl: footerTemplate,
 			emptyTipTpl: emptyTemplate,
@@ -175,7 +176,7 @@ export default class ShopSelectorCtrl {
 				res.list = res.list || [];
 				this.resData = res.list;
 				this.getNameByGridList(res.list, this.channelList);
-				this.resListMerge(res.list, this.selectedItemsBuffer, this.decoratorItems);
+				this.resListMerge(res.list, this.selectedItemsBuffer, this.customRowConfig);
 				if (this.isSingleSelected) {
 					res.list.forEach(entity => {
 						this.allShopGridOptions.radio.setting.push(entity.id);
@@ -231,7 +232,7 @@ export default class ShopSelectorCtrl {
 				this.updateSelectedItems(entity);
 			});
 			if (this.resData && this.resData.length) {
-				this.resListMerge(this.resData, this.selectedItemsBuffer, this.decoratorItems);
+				this.resListMerge(this.resData, this.selectedItemsBuffer, this.customRowConfig);
 			}
 		}).catch(() => {
 			this._$ccTips.error(errorMsg);
@@ -294,14 +295,14 @@ export default class ShopSelectorCtrl {
 	}
 
 	// merge 数据，维持商品的状态（是否被选中 是否不可操作）
-	resListMerge(resList = [], buffer = [], decoratorItems = []) {
+	resListMerge(resList = [], buffer = [], customRowConfig = []) {
 		resList.forEach((entity, index) => {
 			if (findEntityById(buffer, entity.id) !== -1) {
 				resList[index].$selected = true;
 			}
-			const targetIndex = findEntityById(decoratorItems, entity.id);
+			const targetIndex = findEntityById(customRowConfig, entity.id);
 			if (targetIndex !== -1) {
-				Object.assign(resList[index], this.decoratorItems[targetIndex]);
+				Object.assign(resList[index], { isDisableChecked: this.rowType === 'DISABLED_ROW' }, this.customRowConfig[targetIndex]);
 			}
 		});
 	}
