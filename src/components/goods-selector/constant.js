@@ -37,7 +37,7 @@ export const uniStatusList = [
 		'value': null
 	},
 	{
-		'title': '在架',
+		'title': '上架',
 		'value': 1
 	},
 	{
