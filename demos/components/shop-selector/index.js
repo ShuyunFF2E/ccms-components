@@ -10,8 +10,8 @@
 			let tenantId = 'qiushi6';
 			let serverName = ''; // http://qa-ual.shuyun.com 或者 http://ual.shuyun.com
 			let isSupportedChannel = true;
-			let singleSelectedShop = ['qiakr_6998868227']; // ['weixin_wxf8e64372a94529ac'] ['qiakr_6998868227'];
-			let multipleSelectedShop = ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l']; // ['weixin_wxf8e64372a94529ac', 'weixin_wxc724d28eef67468f'] ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
+			let singleSelectedShop = ['qiakr_699886823271']; // ['weixin_wxf8e64372a94529ac'] ['qiakr_6998868227'];
+			let multipleSelectedShop = ['taobao_100008795', 'offline_201809201488']; // ['weixin_wxf8e64372a94529ac', 'weixin_wxc724d28eef67468f'] ['qiakr_6998868227', 'taobao_69988684534586', 'taobao_6956469886888l'];
 			let areaUrl = 'http://qa-ual.shuyun.com/shuyun-searchapi/1.0/area?platform=top';
 
 			let commonSingleOptions = {
@@ -111,6 +111,109 @@
 			// 多选店铺选择器-用户不传平台(显示所有平台)
 			$scope.openMultipleShopSelector2 = function() {
 				$ccShopSelector.shopSelector(tenantId, commonMultipleOptions)
+					.open()
+					.result
+					.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('-----------ok-----------');
+					});
+			};
+
+			// 指定不可选店铺
+			$scope.openMultipleShopSelector3 = function() {
+				let multipleOptions = {
+					...commonMultipleOptions,
+					platform: ['taobao', 'offline'],
+					customRowConfig: [
+						{
+							id: 'taobao_100094062',
+							tooltipText: '该店铺已关联会员卡1，不可点击',
+							style: {}
+						},
+						{
+							id: 'taobao_101134152',
+							tooltipText: '该店铺已关联会员卡3，不可点击',
+							style: {}
+						}
+					],
+					rowType: 'DISABLED_ROW'
+				};
+				$ccShopSelector.shopSelector(tenantId, multipleOptions)
+					.open()
+					.result
+					.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('-----------ok-----------');
+					});
+			};
+
+			// 指定高亮店铺
+			$scope.openMultipleShopSelector5 = function() {
+				let multipleOptions = {
+					...commonMultipleOptions,
+					platform: ['taobao', 'offline'],
+					customRowConfig: [
+						{
+							id: 'taobao_100094062',
+							style: {
+								background: '#92e4dd'
+							},
+							tooltipText: '高亮，需指定背景色！'
+						},
+						{
+							id: 'taobao_101134152',
+							style: {
+								background: 'yellow'
+							},
+							tooltipText: '高亮，需指定背景色！'
+						}
+					],
+					rowType: 'HIGH_LIGHT_ROW'
+				};
+				$ccShopSelector.shopSelector(tenantId, multipleOptions)
+					.open()
+					.result
+					.then(function(response) {
+						console.log('-----------ok-----------');
+						console.log(response);
+					}, function() {
+						console.log('-----------ok-----------');
+					});
+			};
+
+			// 自定义行模板
+			$scope.openMultipleShopSelector6 = function() {
+				let multipleOptions = {
+					...commonMultipleOptions,
+					platform: ['taobao', 'offline'],
+					customRowConfig: [
+						{
+							id: 'taobao_100094062',
+							tooltipText: '自定义行模板',
+							isDisableChecked: true
+						},
+						{
+							id: 'taobao_101134152',
+							style: {
+								background: 'yellow'
+							},
+							tooltipText: '自定义行模板！',
+							isDisableChecked: false
+						}
+					],
+					customRowTemplate: `<tr ng-style="entity.style"
+											ng-repeat="entity in $ctrl.opts.data track by $index"
+											ng-class="{'row-selected': $ctrl.opts.radio.value === entity.id, 'disable-checked': entity.isDisableChecked}"
+											cc-tooltip="entity.tooltipText" tooltip-append-to-body="true" tooltip-placement="top-left"
+											ng-click="$ctrl.opts.switchSelectItem(entity)"
+											cc-bind-html="$ctrl.opts.rowCellTemplate">
+										</tr>`
+				};
+				$ccShopSelector.shopSelector(tenantId, multipleOptions)
 					.open()
 					.result
 					.then(function(response) {

@@ -2,6 +2,11 @@
 <meta charset="UTF-8">
 <title>Shop Selector</title>
 <link rel="import" href="../../common/layout.html">
+<style>
+	.shop-selector .cc-grid-table .disable-checked:hover {
+		cursor: not-allowed;
+	}
+</style>
 
 <main ng-app="app" ng-controller="ctrl as Ctrl">
 	<h3>用户传入多个平台</h3>
@@ -13,6 +18,12 @@
 	<h3>用户不传平台</h3>
 	<button type="button" ng-click="openSingleShopSelector2()">Open Shop Selector(单选店铺选择器)</button>
 	<button type="button" ng-click="openMultipleShopSelector2()">Open Shop Selector(多选店铺选择器)</button>
+	<h3>指定不可选店铺（LP3）</h3>
+	<button type="button" ng-click="openMultipleShopSelector3()">Open Shop Selector(LP3)</button>
+	<h3>指定高亮店铺</h3>
+	<button type="button" ng-click="openMultipleShopSelector5()">Open Shop Selector(highLight shop)</button>
+	<h3>自定义行模板</h3>
+	<button type="button" ng-click="openMultipleShopSelector6()">Open Shop Selector(custom row template)</button>
 </main>
 
 <script src="/components.js"></script>

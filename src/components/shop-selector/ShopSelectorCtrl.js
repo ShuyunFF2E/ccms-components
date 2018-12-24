@@ -1,16 +1,16 @@
 import angular from 'angular';
 import { Inject } from 'angular-es-utils/decorators';
 import cloneDeep from 'lodash.clonedeep';
-import { getGridColumnDef, apiPrefix, commonListFieldsMap, errorMsg, maxSelectNum } from './Constant';
+import { getGridColumnDef, commonListFieldsMap, errorMsg, maxSelectNum, apiPrefix } from './Constant';
 import service from './service';
 import utils from './utils';
 
-import rowTemplate from './tpls/row.tpl.html';
 import rowCellTemplate from './tpls/row-cell.tpl.html';
 import footerTemplate from './tpls/grid-footer.tpl.html';
 import emptyTemplate from './tpls/empty.tpl.html';
 import selectedRowTemplate from './tpls/selected-row.tpl.html';
 import selectedRowCellTemplate from '../grid/tpls/default-row-cell.tpl.html';
+import rowTemplateConfig from './RowTemplateConfig';
 
 
 /**
@@ -20,7 +20,7 @@ function findEntityById(collection, id) {
 	return collection.findIndex(item => angular.equals(item.id, id));
 }
 
-@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform', 'areaUrl')
+@Inject('$resource', '$ccGrid', 'isSingleSelected', 'modalInstance', '$ccTips', 'tenantId', 'serverName', 'selectedShop', 'isSupportedChannel', 'platform', 'areaUrl', 'rowType', 'customRowConfig', 'customRowTemplate')
 export default class ShopSelectorCtrl {
 	constructor() {
 		this.isSingleSelected = this._isSingleSelected; // 是否是单选
@@ -30,6 +30,9 @@ export default class ShopSelectorCtrl {
 		this.isSupportedChannel = this._isSupportedChannel; // 是否支持平台
 		this.platform = this._platform; // 用户传入的平台
 		this.areaUrl = this._areaUrl;
+		this.rowType = this._rowType;
+		this.customRowConfig = this._customRowConfig;
+		this.customRowTemplate = this._customRowTemplate; // 用户自定义行模板
 
 		this.commonGridColumnDef = getGridColumnDef(this.isSupportedChannel);
 		this.selectedItems = [];
@@ -58,7 +61,15 @@ export default class ShopSelectorCtrl {
 		const { queryParams } = allShopGridOptions;
 		service.getShopListAll({ serverName, tenantId, queryParams, formModel }).get(res => {
 			const { list } = res;
-			list && list.length && (this.allGoodsList = list);
+			if (list && list.length) {
+				this.allGoodsList = list.filter(entity => {
+					const targetIndex = findEntityById(this.customRowConfig, entity.id);
+					if (targetIndex !== -1) {
+						Object.assign(entity, { isDisableChecked: this.rowType === 'DISABLED_ROW' }, this.customRowConfig[targetIndex]);
+					}
+					return entity;
+				});
+			}
 			this.isSelectedAllPage = this.allGoodsList.length < maxSelectNum && this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
 			this.isShowMask = false;
 		}, () => {
@@ -70,7 +81,7 @@ export default class ShopSelectorCtrl {
 	// 是否所有商品都被选中
 	isAllEntitySelected(allGoodsList = [], selectedItems = []) {
 		return selectedItems.length && allGoodsList.every(entity => {
-			return findEntityById(selectedItems, entity.id) !== -1;
+			return findEntityById(selectedItems, entity.id) !== -1 || entity.isDisableChecked;
 		});
 	}
 
@@ -86,8 +97,6 @@ export default class ShopSelectorCtrl {
 			district: null, // 区
 			districtName: null
 		};
-		this.allShopFormModel = cloneDeep(this.formModel);
-		this.selectedShopFormModel = cloneDeep(this.formModel);
 
 		this.validators = {
 			maxLength: {
@@ -108,6 +117,9 @@ export default class ShopSelectorCtrl {
 				this.formModel.channel = channelList[0][this.commonListFieldsMap.valueField];
 				this.resData && this.resData.length && this.getNameByGridList(this.resData, this.channelList);
 				this.selectedItems.length && this.getNameByGridList(this.selectedItems, this.channelList);
+
+				this.allShopFormModel = cloneDeep(this.formModel);
+				this.selectedShopFormModel = cloneDeep(this.formModel);
 			});
 		}
 	}
@@ -122,7 +134,8 @@ export default class ShopSelectorCtrl {
 				channel: this.platform ? this.platform.join(',') : null // 平台
 			},
 			columnsDef: this.commonGridColumnDef,
-			rowTpl: rowTemplate,
+			rowType: this.rowType,
+			rowTpl: this.customRowTemplate || rowTemplateConfig[this.rowType],
 			rowCellTemplate: rowCellTemplate,
 			footerTpl: footerTemplate,
 			emptyTipTpl: emptyTemplate,
@@ -139,23 +152,31 @@ export default class ShopSelectorCtrl {
 			selectedItems: this.selectedItems,
 			// 多选
 			switchSelectItem: entity => {
-				this.updateSelectedItems(entity);
-				this.isSelectedPage = this.isSelectedPageAll(this.resData);
-				if (entity.$selected) {
-					this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
-				} else {
-					this.isSelectedAllPage = false;
+				if (!entity.isDisableChecked) {
+					entity.$selected = !entity.$selected;
+					this.updateSelectedItems(entity);
+					this.isSelectedPage = this.isSelectedPageAll(this.resData);
+					if (entity.$selected) {
+						this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
+					} else {
+						this.isSelectedAllPage = false;
+					}
 				}
+				entity.callback && entity.callback(entity);
 			},
 			// 单选
 			switchSingleSelectItem: entity => {
-				this.allShopGridOptions.radio.value = entity.id;
-				this.selectedItems.splice(0, this.selectedItems.length, entity);
+				if (!entity.isDisableChecked) {
+					this.allShopGridOptions.radio.value = entity.id;
+					this.selectedItems.splice(0, this.selectedItems.length, entity);
+				}
+				entity.callback && entity.callback(entity);
 			},
 			transformer: res => {
-				this.resData = res.list || [];
-				res.list && res.list.length && this.getNameByGridList(res.list, this.channelList);
-				this.resListMerge(res.list, this.selectedItemsBuffer);
+				res.list = res.list || [];
+				this.resData = res.list;
+				this.getNameByGridList(res.list, this.channelList);
+				this.resListMerge(res.list, this.selectedItemsBuffer, this.customRowConfig);
 				if (this.isSingleSelected) {
 					res.list.forEach(entity => {
 						this.allShopGridOptions.radio.setting.push(entity.id);
@@ -211,7 +232,7 @@ export default class ShopSelectorCtrl {
 				this.updateSelectedItems(entity);
 			});
 			if (this.resData && this.resData.length) {
-				this.resListMerge(this.resData, this.selectedItemsBuffer);
+				this.resListMerge(this.resData, this.selectedItemsBuffer, this.customRowConfig);
 			}
 		}).catch(() => {
 			this._$ccTips.error(errorMsg);
@@ -242,21 +263,24 @@ export default class ShopSelectorCtrl {
 
 	// 已选店铺 tab 刷新表格
 	onRefresh(opts) {
-		const wrapGridData = (currentPage, pageSize, data) => {
-			this.selectedShopGridOptions.pager.pageNum = currentPage;
-			this.selectedShopGridOptions.pager.pageSize = pageSize;
-			this.selectedShopGridOptions.pager.totalPages = Math.ceil((data.length || 0) / pageSize);
-			this.selectedShopGridOptions.externalData = data.slice(pageSize * (currentPage - 1), pageSize * currentPage);
+		const wrapGridData = (pageNum, pageSize, data) => {
+			Object.assign(this.selectedShopGridOptions, {
+				pager: {
+					pageNum,
+					pageSize,
+					totalPages: Math.ceil((data.length || 0) / pageSize)
+				},
+				externalData: data.slice(pageSize * (pageNum - 1), pageSize * pageNum)
+			});
 			return this.selectedShopGridOptions;
 		};
-		const currentPage = opts.pager.pageNum;
-		const pageSize = opts.pager.pageSize;
+		const { pageNum, pageSize } = opts.pager;
 		const data = this.selectedItems.filter(entity => {
 			if (!entity.isHide) {
 				return entity;
 			}
 		});
-		this._$ccGrid.refresh(wrapGridData(currentPage, pageSize, data));
+		this._$ccGrid.refresh(wrapGridData(pageNum, pageSize, data));
 	}
 
 	// 获取去重后的 selectedItems 并更新 selectedItemsBuffer
@@ -270,11 +294,15 @@ export default class ShopSelectorCtrl {
 		this.selectedItemsBuffer = cloneDeep(this.selectedItems);
 	}
 
-	resListMerge(resList = [], buffer = []) {
-		buffer.forEach(entity => {
-			let targetIndex = findEntityById(resList, entity.id);
+	// merge 数据，维持商品的状态（是否被选中 是否不可操作）
+	resListMerge(resList = [], buffer = [], customRowConfig = []) {
+		resList.forEach((entity, index) => {
+			if (findEntityById(buffer, entity.id) !== -1) {
+				resList[index].$selected = true;
+			}
+			const targetIndex = findEntityById(customRowConfig, entity.id);
 			if (targetIndex !== -1) {
-				resList[targetIndex].$selected = true;
+				Object.assign(resList[index], { isDisableChecked: this.rowType === 'DISABLED_ROW' }, this.customRowConfig[targetIndex]);
 			}
 		});
 	}
@@ -283,8 +311,10 @@ export default class ShopSelectorCtrl {
 	switchSelectPage(isSelectedPage) {
 		const { data } = this.allShopGridOptions;
 		data && data.length && data.forEach(entity => {
-			entity.$selected = isSelectedPage;
-			this.updateSelectedItems(entity);
+			if (!entity.isDisableChecked) {
+				entity.$selected = isSelectedPage;
+				this.updateSelectedItems(entity);
+			}
 		});
 		if (isSelectedPage) {
 			this.isSelectedAllPage = this.isAllEntitySelected(this.allGoodsList, this.selectedItems);
@@ -310,8 +340,10 @@ export default class ShopSelectorCtrl {
 		this.isSelectedPage = isSelectedAllPage;
 		this.updateCurrentItems(isSelectedAllPage);
 		this.allGoodsList.forEach(entity => {
-			entity.$selected = isSelectedAllPage;
-			this.updateSelectedItems(entity);
+			if (!entity.isDisableChecked) {
+				entity.$selected = isSelectedAllPage;
+				this.updateSelectedItems(entity);
+			}
 		});
 	}
 
@@ -319,7 +351,7 @@ export default class ShopSelectorCtrl {
 	updateCurrentItems(isSelectedAllPage) {
 		const { resData } = this;
 		resData && resData.length && resData.forEach(entity => {
-			entity.$selected = isSelectedAllPage;
+			!entity.isDisableChecked && (entity.$selected = isSelectedAllPage);
 		});
 	}
 
@@ -372,7 +404,7 @@ export default class ShopSelectorCtrl {
 	isSelectedPageAll(list = []) {
 		if (list.length) {
 			return list.every(item => {
-				return item.$selected;
+				return item.$selected || item.isDisableChecked;
 			});
 		}
 		return false;

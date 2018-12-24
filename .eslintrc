@@ -3,7 +3,8 @@
     "ecmaVersion": 6,
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
-      "jsx": true
+      "jsx": true,
+      "legacyDecorators": true
     },
     "sourceType": "module"
   },
@@ -104,12 +105,20 @@
     "no-this-before-super": 2,
     "no-throw-literal": 2,
     "no-trailing-spaces": 2,
-    "no-undef": 2,
+    "no-undef": 0,
     "no-undef-init": 2,
     "no-unexpected-multiline": 2,
     "no-unneeded-ternary": [2, { "defaultAssignment": false }],
     "no-unreachable": 2,
-    "no-unused-vars": [2, { "vars": "all", "args": "none" }],
+    "no-unused-vars": [
+      0,
+      {
+        "args": "after-used",
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true,
+        "vars": "all"
+      }
+    ],
     "no-useless-call": 2,
     "no-with": 2,
 //    "one-var": [2, { "initialized": "never" }],
