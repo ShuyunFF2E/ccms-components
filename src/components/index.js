@@ -26,7 +26,6 @@ import ngEnter from './ng-enter';
 import niceScroll from './nice-scroll';
 import pagination from './pagination';
 import radio from './radio';
-import shopSelector from './shop-selector';
 import tabset from './tabset';
 import tips from './tips';
 import toggle from './toggle';
@@ -55,7 +54,6 @@ export default angular
 		niceScroll,
 		pagination,
 		radio,
-		shopSelector,
 		tabset,
 		tips,
 		toggle,
