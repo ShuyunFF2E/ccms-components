@@ -26,8 +26,6 @@ import ngEnter from './ng-enter';
 import niceScroll from './nice-scroll';
 import pagination from './pagination';
 import radio from './radio';
-import smsEditor from './sms-editor';
-import smsPreview from './sms-preview';
 import shopSelector from './shop-selector';
 import tabset from './tabset';
 import tips from './tips';
@@ -57,8 +55,6 @@ export default angular
 		niceScroll,
 		pagination,
 		radio,
-		smsEditor,
-		smsPreview,
 		shopSelector,
 		tabset,
 		tips,
