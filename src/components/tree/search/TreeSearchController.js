@@ -2,7 +2,6 @@ export default class TreeSearchController {
 	searchText = '';
 	constructor() {
 		this.searchMaxLen = this.searchMaxLen || 100;
-		console.log(this.searchMaxLen);
 	}
 
 	/**
