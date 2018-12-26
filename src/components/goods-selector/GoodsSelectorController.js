@@ -327,8 +327,8 @@ export default class GoodsSelectorCtrl {
 						this.radio.value = entity.id;
 					}
 				});
-				const { list } = this.resInfo;
-				if (list && list.length) {
+				if (this.hasResInfoList()) {
+					const { list } = this.resInfo;
 					this.dataMerge(list, this.selectedItemsBuffer);
 					this.currentPageChecked = utils.isAllChildrenSelected(list);
 				}
