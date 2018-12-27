@@ -1,6 +1,6 @@
 // export const apiPrefix = '/api';
 export const apiPrefix = '/tenant/v2';
-export const getGridColumnDef = isSupportedChannel => {
+export const getGridColumnDef = isSupportedPlatform => {
 	let column = [
 		{
 			field: 'id',
@@ -14,7 +14,7 @@ export const getGridColumnDef = isSupportedChannel => {
 		},
 		{
 			field: 'channelName',
-			displayName: '渠道',
+			displayName: '平台',
 			align: 'center'
 		},
 		{
@@ -28,7 +28,7 @@ export const getGridColumnDef = isSupportedChannel => {
 			align: 'center'
 		}
 	];
-	if (!isSupportedChannel) {
+	if (!isSupportedPlatform) {
 		column.splice(2, 2);
 	}
 	return column;
@@ -38,3 +38,5 @@ export const commonListFieldsMap = {
 	displayField: 'name'
 };
 export const errorMsg = '后台服务出错，请联系数云客服人员';
+// 全选允许最大值
+export const maxSelectNum = 500;

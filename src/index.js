@@ -3,12 +3,10 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-01-19
  */
-import 'babel-polyfill';
+import '@babel/polyfill'; // 参见 .babelrc useBuiltIns 参数
 import 'core-js/modules/es6.regexp.constructor.js';
 
 import angular from 'angular';
-
-import { version } from '../package.json';
 
 // 组件兼容服务
 import adaptor from './common/utils/adaptor';
@@ -22,7 +20,7 @@ const ccmsComponents = angular.module('ccms.components', [
 	LogicComponents
 ]);
 
-ccmsComponents.version = version;
+ccmsComponents.version = process.env.VERSION;
 
 export default ccmsComponents.name;
 

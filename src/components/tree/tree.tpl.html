@@ -1,3 +1,26 @@
-<ul class="tree" ng-click="$ctrl.clickTreeItem($event)">
-	<cc-tree-item data="treeItem" ng-repeat="treeItem in $ctrl.data track by $index"></cc-tree-item>
-</ul>
+<section class="cc-tree" ng-class="{'support-search': $ctrl.supportSearch}">
+	<cc-tree-search
+		tree-map="$ctrl.treeMap"
+		search-placeholder="$ctrl.searchPlaceholder"
+		search-max-len="$ctrl.searchMaxLen"
+		on-done="$ctrl.updateSearchText(searchText)"
+		ng-if="$ctrl.supportSearch"
+	></cc-tree-search>
+	<div class="cc-tree-list-area">
+		<cc-tree-list
+			tree-map="$ctrl.treeMap"
+			nodes="$ctrl.treeData"
+			search-text="$ctrl.searchText"
+			node-max-len="$ctrl.nodeMaxLen"
+			support-checkbox="$ctrl.supportCheckbox"
+			is-radio-model="$ctrl.isRadioModel"
+			on-open-menu="$ctrl.onOpenMenu"
+		></cc-tree-list>
+	</div>
+	<cc-tree-menu
+		tree-map="$ctrl.treeMap"
+		cm-style="$ctrl.contextMenuStyle"
+		active-node="$ctrl.activeNode"
+		items="$ctrl.contextMenuItems"
+		ng-if="$ctrl.supportMenu && $ctrl.contextMenuItems && $ctrl.contextMenuItems.length > 0"></cc-tree-menu>
+</section>
