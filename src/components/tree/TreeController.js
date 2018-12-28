@@ -100,6 +100,7 @@ export default class TreeCtrl {
 				this.treeMap.handler.onRemoveAction && this.treeMap.handler.onRemoveAction(node).then(() => {
 					this._$timeout(() => {
 						this.treeMap.store.removeChild(node);
+						this._$scope.$digest();
 					});
 				})
 				.catch(msg => {
