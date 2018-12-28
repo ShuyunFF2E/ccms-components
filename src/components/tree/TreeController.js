@@ -98,8 +98,8 @@ export default class TreeCtrl {
 				this._$ccTips.error('该目录含有子目录，无法删除！ ');
 			} else {
 				this.treeMap.handler.onRemoveAction && this.treeMap.handler.onRemoveAction(node).then(() => {
+					this.treeMap.store.removeChild(node);
 					this._$timeout(() => {
-						this.treeMap.store.removeChild(node);
 						this._$scope.$digest();
 					});
 				})
