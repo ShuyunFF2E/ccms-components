@@ -40,7 +40,7 @@ export default {
 			},
 			// 商品状态 status;
 			equalStatus: (formVal, val) => {
-				return formVal === '-1' || String(formVal).replace(/\s/g, '') === String(val);
+				return !formVal && formVal !== 0 || formVal === val;
 			},
 			// 大于等于某值
 			// 价格、时间

@@ -24,21 +24,26 @@
 		skusId: ['22342343'], // 商品编号
 		skusPropsVname: '55555', // sku 规格
 		startListTime: new Date(1530374400000), // 上架时间
-		status: '1',
+		status: 1,
 		brandId: '1111'
 	};
 	var isSingleSelectShopList = false; // 店铺选择（单选/多选）
+	var tenantId = 'sjyj';
 
 	// qiakr + sku 维度 + 店铺选择（单选）
-	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
-		var shopList = [{shopId: '72903', shopName: '恰客', plat: 'offline'}, {shopId: '72897', shopName: '恰客1', plat: 'offline'}];
+	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
+		var shopList = isTotalChannel
+			? [{shopId: '72903', shopName: '恰客', plat: 'uni_offline'}, {shopId: '72897', shopName: '恰客1', plat: 'uni_offline'}]
+			: [{shopId: '72903', shopName: '恰客', plat: 'offline'}, {shopId: '72897', shopName: '恰客1', plat: 'offline'}];
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,
 			serverName,
 			isSupportedAddCondition,
 			conditions,
-			isSupportedBatchAddition
+			isSupportedBatchAddition,
+			isTotalChannel,
+			tenantId
 		};
 		var selectedGoods = {
 			541920723552: ['3419076274289'],
@@ -57,14 +62,18 @@
 	}
 
 	// qiakr + sku 维度 + 店铺选择（多选）
-	function openQkMultipleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition) {
-		var shopList = [
-				{shopId: '72903', shopName: '恰客', plat: 'offline'},
+	function openQkMultipleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
+		var shopList = isTotalChannel
+			? [{shopId: '72903', shopName: '恰客', plat: 'uni_offline'},
+				{shopId: '72899', shopName: '恰客1', plat: 'uni_offline'},
+				{shopId: '64674', shopName: '恰客2', plat: 'uni_offline'},
+				{shopId: '72916', shopName: '恰客3', plat: 'uni_offline'},
+				{shopId: '72897', shopName: '恰客4', plat: 'uni_offline'}]
+			: [{shopId: '72903', shopName: '恰客', plat: 'offline'},
 				{shopId: '72899', shopName: '恰客1', plat: 'offline'},
 				{shopId: '64674', shopName: '恰客2', plat: 'offline'},
 				{shopId: '72916', shopName: '恰客3', plat: 'offline'},
-				{shopId: '72897', shopName: '恰客4', plat: 'offline'}
-		];
+				{shopId: '72897', shopName: '恰客4', plat: 'offline'}];
 		var options = {
 			isOnlyChecked,
 			maxSelectedNumber,
@@ -72,7 +81,9 @@
 			isSupportedAddCondition,
 			conditions,
 			isSingleSelectShopList,
-			isSupportedBatchAddition
+			isSupportedBatchAddition,
+			isTotalChannel,
+			tenantId
 		};
 		var selectedGoods = {
 			556820: null,
