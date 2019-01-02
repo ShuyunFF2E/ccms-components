@@ -7,6 +7,7 @@ import '@babel/polyfill'; // 参见 .babelrc useBuiltIns 参数
 import 'core-js/modules/es6.regexp.constructor.js';
 
 import angular from 'angular';
+import ngSanitize from 'angular-sanitize';
 
 // 组件兼容服务
 import adaptor from './common/utils/adaptor';
@@ -17,7 +18,8 @@ import UIComponents from './components';
 const ccmsComponents = angular.module('ccms.components', [
 	adaptor,
 	UIComponents,
-	LogicComponents
+	LogicComponents,
+	ngSanitize
 ]);
 
 ccmsComponents.version = process.env.VERSION;
