@@ -17,7 +17,6 @@ import dropdownMultiselect from './dropdown/dropdown-multiselect';
 import dropdownSelect from './dropdown/dropdown-select';
 import form from './form';
 import grid from './grid';
-import goodsSelector from './goods-selector';
 import instantSearch from './instant-search';
 import loading from './loading';
 import menuBar from './menus';
@@ -45,7 +44,6 @@ export default angular
 		dropdownSelect,
 		form,
 		grid,
-		goodsSelector,
 		instantSearch,
 		loading,
 		menuBar,
