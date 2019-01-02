@@ -31,6 +31,11 @@
 		<span ng-if="isSupportedBatchAddition">关闭批量添加功能</span>
 		<span ng-if="!isSupportedBatchAddition">开启批量添加功能</span>
 	</button>
+
+	<button ng-click="isTotalChannel = !isTotalChannel" class="btn-ok" style="display: block; margin-top: 20px;">
+		<span ng-if="isTotalChannel">非全渠道模式</span>
+		<span ng-if="!isTotalChannel">全渠道模式</span>
+	</button>
 </main>
 
 <script src="/components.js"></script>

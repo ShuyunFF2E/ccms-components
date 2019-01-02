@@ -1,7 +1,6 @@
 import angular from 'angular';
 import injector from 'angular-es-utils/injector';
 import genResource from 'angular-es-utils/rs-generator';
-import { apiPrefix, fieldsetConfig } from './constant';
 import cloneDeep from 'lodash.clonedeep';
 
 export const utils = {
@@ -12,12 +11,16 @@ export const utils = {
 	 * @param serverName
 	 * @returns {Promise<any>}
 	 */
-	transformGoodsData({shopId, plat, selectedGoods, serverName, isSupportedSku}) {
+	transformGoodsData({shopId, plat, selectedGoods, serverName, isSupportedSku, apiPrefix, tenantId, isTotalChannel}) {
 		const ids = Object.keys(selectedGoods);
 		const paramIdStr = ids.join('&id=');
 		const shopIdStr = shopId.join('&shopId=');
 		return new Promise((resolve, reject) => {
-			genResource(`${serverName}${apiPrefix}/items?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}`).save().$promise.then(res => {
+			let paramStr = `?platform=${plat}&shopId=${shopIdStr}&id=${paramIdStr}`;
+			if (isTotalChannel) {
+				paramStr = `${paramStr}&tenant=${ tenantId }`;
+			}
+			genResource(`${serverName}${apiPrefix}/items${paramStr}`).save().$promise.then(res => {
 				res['data'] = res['data'] || [];
 				let transformedData = res.data.map(d => {
 					if (isSupportedSku) {
@@ -196,7 +199,7 @@ export const utils = {
 						delete queryCollection[prop]; // 后端搜索使用 POST 请求，将 tagItemIds 放到 request body 中
 						break;
 					case 'status':
-						queryCollection[prop] = formModel[prop] === '-1' ? null : formModel[prop];
+						queryCollection[prop] = formModel[prop] === 0 ? String(formModel[prop]) : formModel[prop];
 						break;
 					default:
 						queryCollection[prop] = formModel[prop];
@@ -233,53 +236,17 @@ export const utils = {
 		return collection.findIndex(item => angular.equals(item.name, name));
 	},
 
-	// 获取表单模板配置
-	getFormTemplateConfig(originFormModel, isSupportedSku, isShowShopList, isSupportedAddCondition) {
-		let result = {};
-		const items = fieldsetConfig[originFormModel.platform];
-		for (let attr in originFormModel) {
-			if (originFormModel.hasOwnProperty(attr)) {
-				const itemsIndex = utils.findEntityByName(items, attr);
-				itemsIndex >= 0 && (result[`${attr}Title`] = items[itemsIndex].title);
-				if (isSupportedAddCondition) {
-					if (isSupportedSku) {
-						result[`show-${attr}`] = itemsIndex >= 0;
-					} else {
-						result[`show-${attr}`] = itemsIndex >= 0 && !items[itemsIndex].isSkuItem;
-					}
-					result['show-shopId'] = isShowShopList;
-				} else {
-					if (isSupportedSku) {
-						if (isShowShopList) {
-							result[`show-${attr}`] = itemsIndex >= 0;
-						} else {
-							result[`show-${attr}`] = itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem;
-						}
-					} else {
-						if (isShowShopList) {
-							result[`show-${attr}`] = itemsIndex >= 0 && !items[itemsIndex].isSkuItem;
-						} else {
-							result[`show-${attr}`] = itemsIndex >= 0 && items[itemsIndex].isSimpleSearchItem && !items[itemsIndex].isSkuItem;
-						}
-					}
-				}
-			}
-		}
-		return result;
-	},
-
 	// 处理表单项
-	resolveFormModel(originFormModel, platform, isSupportedSku) {
+	resolveFormModel(fieldsetConfigList, originFormModel, platform, isSupportedSku) {
 		let formModel = {};
-		const items = fieldsetConfig[platform];
 		for (let attr in originFormModel) {
 			if (originFormModel.hasOwnProperty(attr)) {
 				if (isSupportedSku) {
-					if (utils.findEntityByName(items, attr) >= 0) {
+					if (utils.findEntityByName(fieldsetConfigList, attr) >= 0) {
 						formModel[attr] = cloneDeep(originFormModel[attr]);
 					}
 				} else {
-					if (utils.findEntityByName(items, attr) >= 0 && !items[utils.findEntityByName(items, attr)].isSkuItem) {
+					if (utils.findEntityByName(fieldsetConfigList, attr) >= 0 && !fieldsetConfigList[utils.findEntityByName(fieldsetConfigList, attr)].isSkuItem) {
 						formModel[attr] = cloneDeep(originFormModel[attr]);
 					}
 				}

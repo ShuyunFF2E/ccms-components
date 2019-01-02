@@ -17,9 +17,21 @@ export default class TreeCtrl {
 	treeMap = {};
 
 	$onInit() {
+		this.setDefaultValue();
 		this.documentListener = document.addEventListener('click', () => {
 			this.hideContextMenu();
 		}, true);
+	}
+
+	/**
+	 * 设置默认值
+	 */
+	setDefaultValue() {
+		// 新节点添加后所在的位置，默认值为after
+		this.addToPosition = this.addToPosition || 'after';
+
+		// 最大节点长度
+		this.nodeMaxLen = this.nodeMaxLen || 20;
 	}
 
 	/**
@@ -79,11 +91,11 @@ export default class TreeCtrl {
 	 * @param node
 	 */
 	removeNode = node => {
-		const confirmModal = this._$ccModal.confirm('你确定删除此分类吗？');
+		const confirmModal = this._$ccModal.confirm('你确定删除此目录吗？');
 
 		confirmModal.open().result.then(() => {
 			if (node.children && node.children.length) {
-				this._$ccTips.error('该节点含有子节点，无法删除！');
+				this._$ccTips.error('该目录含有子目录，无法删除！ ');
 			} else {
 				this.treeMap.handler.onRemoveAction && this.treeMap.handler.onRemoveAction(node).then(() => {
 					this._$timeout(() => {
@@ -91,7 +103,7 @@ export default class TreeCtrl {
 					});
 				})
 				.catch(msg => {
-					this._$ccTips.error(msg || '节点删除失败');
+					this._$ccTips.error(msg || '删除失败');
 				});
 			}
 		});
@@ -109,11 +121,11 @@ export default class TreeCtrl {
 	 * 增加一个输入节点
 	 * @param parentNode: 父节点
 	 */
-	addBlankNode = parentNode => {
+	addBlankNode = (parentNode, addToPosition) => {
 		// 新增的节点，无id
 		const blankNode = {name: '', pId: parentNode.id, level: parentNode.level + 1, isEditing: true};
 
-		this.treeMap.store.addChild(parentNode.id, blankNode);
+		this.treeMap.store.addChild(parentNode.id, blankNode, addToPosition);
 	};
 
 	/**
@@ -125,7 +137,7 @@ export default class TreeCtrl {
 		this.treeMap.handler.onAddAction && menuList.push({
 			name: '新增',
 			click: node => {
-				this.addBlankNode(node);
+				this.addBlankNode(node, this.addToPosition);
 			},
 			disabled: node.disableAdd
 		});

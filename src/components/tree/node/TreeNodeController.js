@@ -187,16 +187,28 @@ export default class TreeNodeController {
 	}
 
 	/**
-	 * 检查是否存在同名节点
+	 * 检查节点名称是否可用
 	 * @param name
 	 * @param nowId: 仅在编辑时传入，存在时验证时增加条件 sameNameNode.id === nowId
 	 * @returns promise
 	 */
-	checkSameName(name, nowId) {
+	checkName(name, nowId) {
 		return new Promise((reslove, reject) => {
-			if (!name.trim()) {
+			name = name.trim();
+			if (!name) {
 				reject('名称不能为空!');
 			}
+
+			// 验证特殊字符
+			if (!/^[a-z0-9_\u4e00-\u9fa5]+$/.test(name)) {
+				reject('名称中存在特殊字符!');
+			}
+
+			// 验证长度
+			if (name.length > this.nodeMaxLen) {
+				reject(`名称的最大长度为${this.nodeMaxLen}!`);
+			}
+
 			const sameNameNode = this.treeMap.store.findNodeByParam('name', name);
 			if (!sameNameNode || sameNameNode.id === nowId) {
 				reslove();
@@ -212,7 +224,7 @@ export default class TreeNodeController {
 	 * @returns {*}
 	 */
 	insertHandler = name => {
-		return this.checkSameName(name).then(() => {
+		return this.checkName(name).then(() => {
 			const parentNode = this.treeMap.store.activeNode;
 			this.treeMap.handler.onAddAction && this.treeMap.handler.onAddAction(parentNode.id, name)
 				.then(({id}) => {
@@ -236,7 +248,7 @@ export default class TreeNodeController {
 	 */
 	updateHandler = newName => {
 		const { id } = this.node;
-		this.checkSameName(newName, id).then(() => {
+		this.checkName(newName, id).then(() => {
 			this.treeMap.handler.onRenameAction && this.treeMap.handler.onRenameAction(this.node, newName)
 				.then(() => {
 					// 更新成功后，清除正在编辑状态

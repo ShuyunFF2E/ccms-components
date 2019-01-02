@@ -1,4 +1,4 @@
-<section class="cc-tree">
+<section class="cc-tree" ng-class="{'support-search': $ctrl.supportSearch}">
 	<cc-tree-search
 		tree-map="$ctrl.treeMap"
 		search-placeholder="$ctrl.searchPlaceholder"
@@ -6,14 +6,17 @@
 		on-done="$ctrl.updateSearchText(searchText)"
 		ng-if="$ctrl.supportSearch"
 	></cc-tree-search>
-	<cc-tree-list
-		tree-map="$ctrl.treeMap"
-		nodes="$ctrl.treeData"
-		search-text="$ctrl.searchText"
-		support-checkbox="$ctrl.supportCheckbox"
-		is-radio-model="$ctrl.isRadioModel"
-		on-open-menu="$ctrl.onOpenMenu"
-	></cc-tree-list>
+	<div class="cc-tree-list-area">
+		<cc-tree-list
+			tree-map="$ctrl.treeMap"
+			nodes="$ctrl.treeData"
+			search-text="$ctrl.searchText"
+			node-max-len="$ctrl.nodeMaxLen"
+			support-checkbox="$ctrl.supportCheckbox"
+			is-radio-model="$ctrl.isRadioModel"
+			on-open-menu="$ctrl.onOpenMenu"
+		></cc-tree-list>
+	</div>
 	<cc-tree-menu
 		tree-map="$ctrl.treeMap"
 		cm-style="$ctrl.contextMenuStyle"
