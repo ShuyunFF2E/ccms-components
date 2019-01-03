@@ -200,7 +200,7 @@ export default class TreeNodeController {
 			}
 
 			// 验证特殊字符
-			if (!/^[a-z0-9_\u4e00-\u9fa5]+$/.test(name)) {
+			if (!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(name)) {
 				reject('名称中存在特殊字符!');
 			}
 
