@@ -243,7 +243,7 @@ export default class TreeNodeController {
 
 	/**
 	 * 更新节点
-	 * @param name
+	 * @param newName
 	 * @returns {*}
 	 */
 	updateHandler = newName => {
@@ -253,7 +253,7 @@ export default class TreeNodeController {
 				.then(() => {
 					// 更新成功后，清除正在编辑状态
 					this._$timeout(() => {
-						this.treeMap.store.updateByEditing({ newName, isEditing: false });
+						this.treeMap.store.updateByEditing({ name: newName, isEditing: false });
 					});
 				})
 				.catch(msg => {
