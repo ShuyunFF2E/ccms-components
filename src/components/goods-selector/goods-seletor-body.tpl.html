@@ -46,7 +46,7 @@
 					</cc-dropdown-multiselect>
 				</fieldset>
 				<!--商品标签-->
-				<fieldset class="goods-selector-label" ng-if="$ctrl.formTplConfig['show-tagItemIds'] && $ctrl.isSupportedTag">
+				<fieldset class="goods-selector-label" ng-if="$ctrl.formTplConfig['show-tagItemIds']">
 					<label class="goods-label">{{$ctrl.formTplConfig.tagItemIdsTitle}}：</label>
 					<div class="goods-label-btn"
 						 ng-click="$ctrl.openGoodsLabelModel()">
@@ -54,7 +54,7 @@
 					</div>
 				</fieldset>
 				<!--标准类目-->
-				<fieldset ng-if="$ctrl.formTplConfig['show-categoriesId']" ng-class="{'shop-categories': !$ctrl.isSimpleSearch || $ctrl.isSupportedAddCondition}">
+				<fieldset ng-if="$ctrl.formTplConfig['show-categoriesId']">
 					<label class="goods-label">{{$ctrl.formTplConfig.categoriesIdTitle}}：</label>
 					<cc-dropdown-select
 							placeholder="请选择"
@@ -112,7 +112,8 @@
 				</fieldset>
 				<!--商品编号/SKU ID-->
 				<fieldset ng-if="$ctrl.formTplConfig['show-skusId']">
-					<label class="goods-label">{{$ctrl.formTplConfig.skusIdTitle}}：</label>
+					<label class="goods-label" ng-if="$ctrl.isTotalChannel">{{$ctrl.formTplConfig.skusIdTitle[$ctrl.shopList[0].plat]}}：</label>
+					<label class="goods-label" ng-if="!$ctrl.isTotalChannel">{{$ctrl.formTplConfig.skusIdTitle}}：</label>
 					<input type="text" ng-model="$ctrl.formModel.skusId[0]" cc-validator='number' placeholder="">
 				</fieldset>
 				<!--价格-->

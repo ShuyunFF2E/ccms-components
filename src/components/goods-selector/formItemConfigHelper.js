@@ -1,3 +1,8 @@
+/**
+ * @author liyuan.meng
+ * form 表单项配置处理，不同平台表单项配置有差别
+ */
+
 import angular from 'angular';
 
 function findEntityByName(collection, name) {
