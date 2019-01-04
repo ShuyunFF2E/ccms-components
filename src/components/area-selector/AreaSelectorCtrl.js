@@ -10,7 +10,7 @@ import { COMMON_AREAS, localStorageKeys, MARKETING_COMMON_AREAS } from './Consta
 import unionBy from 'lodash.unionby';
 
 
-@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'valueFormat', 'platform', 'customAreas', 'marketingOnly')
+@Inject('$ccTips', '$element', 'modalInstance', 'selectedData', 'valueFormat', 'platform', 'customAreas', 'marketingOnly', 'haveCommonAreas')
 export default class AreaSelectorCtrl {
 	static ID_ONLY = 1;
 	static ID_NAME = 2;
@@ -19,9 +19,9 @@ export default class AreaSelectorCtrl {
 
 		// 外部调用参数初始化
 		this.valueFormat = this._valueFormat;
+		this.haveCommonAreas = this._haveCommonAreas;
 		this.platform = this._platform;
 		this.customAreas = this._customAreas;
-
 		// 辅助变量初始化以及初始化参数
 		this.selectedAreas = [];
 		this.errorMessages = [];
@@ -76,6 +76,11 @@ export default class AreaSelectorCtrl {
 			}
 			return angular.fromJson(localStorage.getItem(localStorageKeys[this.platform]));
 		} else if (this.platform === 'jd') {
+			if (!localStorage.getItem(localStorageKeys[this.platform])) {
+				return;
+			}
+			return angular.fromJson(localStorage.getItem(localStorageKeys[this.platform]));
+		} else if (this.platform === 'unification') {
 			if (!localStorage.getItem(localStorageKeys[this.platform])) {
 				return;
 			}
