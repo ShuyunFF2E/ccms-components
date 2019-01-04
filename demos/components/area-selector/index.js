@@ -128,7 +128,8 @@
 					.areaSelector({
 						areaSelectorData: [],
 						valueFormat: $ccAreaSelector.ID_ONLY,
-						platform: 'unification'
+						platform: 'unification',
+						haveCommonAreas: false
 					})
 
 					.open().result.then(function(response) {

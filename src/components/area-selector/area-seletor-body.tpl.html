@@ -19,7 +19,7 @@
 		</div>
 	</section>
 
-	<section class="common-areas" ng-if="$ctrl.platform !== 'unification' ">
+	<section class="common-areas" ng-if="$ctrl.haveCommonAreas">
 		常用区域：
 		<div class="common-area-content">
 			<div class="common-area" ng-repeat="commonArea in $ctrl.commonAreas | limitTo : 12 track by $index">
