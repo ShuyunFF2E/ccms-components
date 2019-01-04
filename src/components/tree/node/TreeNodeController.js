@@ -6,6 +6,9 @@ export default class TreeNodeController {
 	constructor() {
 		this.name = this.node.name;
 
+		// 正在与后端进行通迅(新增、修改中)
+		this.connecting = false;
+
 		// 节点类型
 		// 1.radio: 单选; 2.checkbox: 多选; 3.text 文本;
 		this.nodeType = this.supportCheckbox ? (this.isRadioModel ? 'radio' : 'checkbox') : 'text';
@@ -31,6 +34,15 @@ export default class TreeNodeController {
 		return searchText ? this.name.replace(searchText, `<span class="hot-text">${searchText}</span>`) : this.node.name;
 	}
 
+	/**
+	 * 更新正在通信状态
+	 * @param connecting
+	 */
+	updateConnecting(connecting) {
+		this._$timeout(() => {
+			this.connecting = connecting;
+		});
+	}
 	/**
 	 *  切换子节点折叠状态
 	 */
@@ -159,7 +171,7 @@ export default class TreeNodeController {
 		switch (event.keyCode) {
 			// enter
 			case 13:
-				this.onEditorNode();
+				!this.connecting && this.onEditorNode();
 				break;
 			// esc
 			case 27:
@@ -200,7 +212,7 @@ export default class TreeNodeController {
 			}
 
 			// 验证特殊字符
-			if (!/^[a-z0-9_\u4e00-\u9fa5]+$/.test(name)) {
+			if (!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(name)) {
 				reject('名称中存在特殊字符!');
 			}
 
@@ -225,16 +237,17 @@ export default class TreeNodeController {
 	 */
 	insertHandler = name => {
 		return this.checkName(name).then(() => {
+			this.updateConnecting(true);
 			const parentNode = this.treeMap.store.activeNode;
 			this.treeMap.handler.onAddAction && this.treeMap.handler.onAddAction(parentNode.id, name)
 				.then(({id}) => {
 					// 后端返回id后将id赋值给当前Node
-					this._$timeout(() => {
-						this.treeMap.store.updateByEditing({ id, name, isEditing: false });
-					});
+					this.treeMap.store.updateByEditing({ id, name, isEditing: false });
+					this.updateConnecting(false);
 				})
 				.catch(msg => {
 					this._$ccTips.error(msg || '新增失败，请重试');
+					this.updateConnecting(false);
 				});
 		}, msg => {
 			this._$ccTips.error(msg);
@@ -248,16 +261,17 @@ export default class TreeNodeController {
 	 */
 	updateHandler = newName => {
 		const { id } = this.node;
-		this.checkName(newName, id).then(() => {
+		return this.checkName(newName, id).then(() => {
+			this.updateConnecting(true);
 			this.treeMap.handler.onRenameAction && this.treeMap.handler.onRenameAction(this.node, newName)
 				.then(() => {
 					// 更新成功后，清除正在编辑状态
-					this._$timeout(() => {
-						this.treeMap.store.updateByEditing({ name: newName, isEditing: false });
-					});
+					this.treeMap.store.updateByEditing({ name: newName, isEditing: false });
+					this.updateConnecting(false);
 				})
 				.catch(msg => {
 					this._$ccTips.error(msg || '重命名失败，请重试');
+					this.updateConnecting(false);
 				});
 		}, msg => {
 			this._$ccTips.error(msg);

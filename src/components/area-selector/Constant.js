@@ -77,12 +77,14 @@ export const COMMON_AREAS = {
 
 export const platforms = {
 	'tb': 'top',
-	'jd': 'jos'
+	'jd': 'jos',
+	'unification': 'unification'
 };
 
 export const localStorageKeys = {
 	'tb': 'TB_CCMS_COMPONENTS_AREA_SELECTOR_DATA',
-	'jd': 'JD_CCMS_COMPONENTS_AREA_SELECTOR_DATA'
+	'jd': 'JD_CCMS_COMPONENTS_AREA_SELECTOR_DATA',
+	'unification': 'UNIFICATION_CCMS_COMPONENTS_AREA_SELECTOR_DATA'
 };
 
 export const MARKETING_COMMON_AREAS = [

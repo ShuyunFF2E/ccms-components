@@ -36,9 +36,10 @@
 		 class="cc-tree-node editing"
 		 ng-style="{'padding-left': $ctrl.paddingLeft}">
 		<icon class="iconfont icon-folder"></icon>
-		<input type="text" ng-model="$ctrl.name" ng-keypress="$ctrl.onInputChangeHandler($event)">
-		<icon class="iconfont icon-finish" ng-click="$ctrl.onEditorNode()"></icon>
-		<icon class="iconfont icon-close" ng-click="$ctrl.onExitIconClickHander()"></icon>
+		<input type="text" ng-model="$ctrl.name" ng-keypress="$ctrl.onInputChangeHandler($event)" ng-disabled="$ctrl.connecting">
+		<icon class="iconfont icon-finish" ng-if="!$ctrl.connecting" ng-click="$ctrl.onEditorNode()"></icon>
+		<icon class="iconfont icon-banyuan" ng-if="$ctrl.connecting"></icon>
+		<icon class="iconfont icon-close" ng-if="!$ctrl.connecting" ng-click="$ctrl.onExitIconClickHander()"></icon>
 	</div>
 	<div
 		ng-if="$ctrl.node.children && $ctrl.node.children.length"
