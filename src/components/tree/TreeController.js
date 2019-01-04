@@ -123,9 +123,14 @@ export default class TreeCtrl {
 	 * @param parentNode: 父节点
 	 */
 	addBlankNode = (parentNode, addToPosition) => {
+		const { maxLevel } = this;
 		// 新增的节点，无id
 		const blankNode = {name: '', pId: parentNode.id, level: parentNode.level + 1, isEditing: true};
 
+		// 超过最大层级的节点将不允许新增节点
+		if (maxLevel && blankNode.level >= maxLevel) {
+			blankNode.disableAdd = true;
+		}
 		this.treeMap.store.addChild(parentNode.id, blankNode, addToPosition);
 	};
 
