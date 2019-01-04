@@ -40,6 +40,7 @@
 		&.editing {
 			> * {
 				vertical-align: middle;
+				font-size: 12px;
 			}
 
 			> input {
@@ -51,12 +52,16 @@
 
 			> .icon-finish {
 				font-size: 0.8em;
-				margin-right: 8px;
+			}
+			> .icon-banyuan{
+				cursor: default;
+				animation: rotationMedia 2s ease-in-out infinite;
 			}
 			> .icon-close {
+				margin-left: 8px;
 				font-size: 0.8em;
 			}
-			> .iconfont:hover{
+			> .iconfont:not(.icon-banyuan):hover{
 				color: #0083BA;
 			}
 		}
@@ -167,5 +172,15 @@
 				color: #aacbe1;
 			}
 		}
+	}
+}
+
+/* 旋转动画特效 */
+@keyframes rotationMedia{
+	0%{
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
 	}
 }

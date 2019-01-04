@@ -37,6 +37,7 @@ const tree_one = {
 		console.info(`向后端发送了一条新增请求，参数为{pId:${pId}, name: ${name}}`);
 		return new Promise((resolve, reject) => {
 			resolve({id: Math.random()});
+			// reject('error');
 		});
 	},
 
