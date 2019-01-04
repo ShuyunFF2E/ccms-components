@@ -121,15 +121,24 @@ class Store {
 	 * 新增子节点数据
 	 * @param pId
 	 * @param newNode
+	 * @param addToPosition: 新节点添加后所在的位置
 	 */
-	addChild(pId, newNode) {
+	addChild(pId, newNode, addToPosition) {
 		// index = index || this.children.length;
 		// this.children.splice(index, 0, node);
 		const pNode = this.findNodeById(pId);
 		if (!pNode.children) {
 			pNode.children = [];
 		}
-		pNode.children.push(newNode);
+
+		if (addToPosition === 'before') {
+			pNode.children.unshift(newNode);
+			return;
+		}
+		if (addToPosition === 'after') {
+			pNode.children.push(newNode);
+			return;
+		}
 	}
 
 	/**
