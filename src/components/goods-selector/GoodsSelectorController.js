@@ -586,8 +586,12 @@ export default class GoodsSelectorCtrl {
 	clickSeniorSearch() {
 		for (let attr in this.formModel) {
 			if (this.formModel.hasOwnProperty(attr)) {
-				const index = this.findEntityByName(this.fieldsetConfigList, attr);
-				this.formTplConfig[`show-${attr}`] = index >= 0 && attr !== 'shopId' && attr !== 'platform';
+				if (attr !== 'tagItemIds') {
+					const index = this.findEntityByName(this.fieldsetConfigList, attr);
+					this.formTplConfig[`show-${attr}`] = index >= 0 && attr !== 'shopId' && attr !== 'platform';
+				} else {
+					this.formTplConfig[`show-${attr}`] = this.isSupportedTag;
+				}
 			}
 		}
 		this.wakeupScroll();

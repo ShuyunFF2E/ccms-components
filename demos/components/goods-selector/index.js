@@ -79,6 +79,16 @@
 			$scope.openJosSingleSelectWithoutShopList = function() {
 				josFactory.openJosSingleSelectWithoutShopList($scope, $ccGoodsSelector, $scope.isSupportedAddCondition, $scope.isSupportedBatchAddition, $scope.isTotalChannel);
 			};
+
+			// qiakr + 商品维度 + 店铺选择（单选）
+			$scope.openQkSingleSelectShopListWithoutSku = function() {
+				qkFactory.openQkSingleSelectShopListWithoutSku($scope, $ccGoodsSelector, $scope.isSupportedAddCondition, $scope.isSupportedBatchAddition, $scope.isTotalChannel);
+			};
+
+			// qiakr + 商品维度 + 店铺选择（多选）
+			$scope.openQkMultipleSelectShopListWithoutSku = function() {
+				qkFactory.openQkMultipleSelectShopListWithoutSku($scope, $ccGoodsSelector, $scope.isSupportedAddCondition, $scope.isSupportedBatchAddition, $scope.isTotalChannel);
+			};
 		});
 
 })(window.angular);
