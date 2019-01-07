@@ -48,9 +48,13 @@ export default class ShopSelectorCtrl {
 		this.initForm();
 		this.prepareAllShopGridOptions();
 		this.prepareSelectedShopGridOptions();
-		this.selectedShop.length && this.getSelectedShop().then(() => {
+		if (this.selectedShop.length) {
+			this.getSelectedShop().then(() => {
+				this.getAllGoodsList();
+			});
+		} else {
 			this.getAllGoodsList();
-		});
+		}
 	}
 
 	// 获取当前搜索条件下的全部商品, 每次进行搜索时更新全部商品
