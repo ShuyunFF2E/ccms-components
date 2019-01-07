@@ -5,7 +5,9 @@
 		.factory('qkFactory', function() {
 			return {
 				openQkSingleSelectShopList,
-				openQkMultipleSelectShopList
+				openQkMultipleSelectShopList,
+				openQkSingleSelectShopListWithoutSku,
+				openQkMultipleSelectShopListWithoutSku
 			};
 		});
 
@@ -29,6 +31,7 @@
 	};
 	var isSingleSelectShopList = false; // 店铺选择（单选/多选）
 	var tenantId = 'sjyj';
+	var isSupportedSku = false;
 
 	// qiakr + sku 维度 + 店铺选择（单选）
 	function openQkSingleSelectShopList($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
@@ -84,6 +87,76 @@
 			isSupportedBatchAddition,
 			isTotalChannel,
 			tenantId
+		};
+		var selectedGoods = {
+			556820: null,
+			550527: null
+		};
+		$ccGoodsSelector
+			.goodsSelector(shopList, options, selectedGoods)
+			.open().result.then(function(response) {
+				console.log('-----------ok-----------');
+				console.log(response);
+			}, function() {
+				console.log('----------cancel---------');
+			});
+	}
+	// qiakr + 商品维度 + 店铺选择（单选）
+	function openQkSingleSelectShopListWithoutSku($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
+		var shopList = isTotalChannel
+			? [{shopId: '72903', shopName: '恰客', plat: 'uni_offline'}, {shopId: '72897', shopName: '恰客1', plat: 'uni_offline'}]
+			: [{shopId: '72903', shopName: '恰客', plat: 'offline'}, {shopId: '72897', shopName: '恰客1', plat: 'offline'}];
+		var options = {
+			isOnlyChecked,
+			maxSelectedNumber,
+			serverName,
+			isSupportedAddCondition,
+			conditions,
+			isSupportedBatchAddition,
+			isTotalChannel,
+			tenantId,
+			isSupportedSku
+		};
+		var selectedGoods = {
+			541920723552: ['3419076274289'],
+			532988558193: null,
+			554208360201: ['3577205138168'],
+			562099525613: null
+		};
+		$ccGoodsSelector
+			.goodsSelector(shopList, options, selectedGoods)
+			.open().result.then(function(response) {
+				console.log('-----------ok-----------');
+				console.log(response);
+			}, function() {
+				console.log('----------cancel---------');
+			});
+	}
+
+	// qiakr + 商品维度 + 店铺选择（多选）
+	function openQkMultipleSelectShopListWithoutSku($scope, $ccGoodsSelector, isSupportedAddCondition, isSupportedBatchAddition, isTotalChannel) {
+		var shopList = isTotalChannel
+			? [{shopId: '72903', shopName: '恰客', plat: 'uni_offline'},
+				{shopId: '72899', shopName: '恰客1', plat: 'uni_offline'},
+				{shopId: '64674', shopName: '恰客2', plat: 'uni_offline'},
+				{shopId: '72916', shopName: '恰客3', plat: 'uni_offline'},
+				{shopId: '72897', shopName: '恰客4', plat: 'uni_offline'}]
+			: [{shopId: '72903', shopName: '恰客', plat: 'offline'},
+				{shopId: '72899', shopName: '恰客1', plat: 'offline'},
+				{shopId: '64674', shopName: '恰客2', plat: 'offline'},
+				{shopId: '72916', shopName: '恰客3', plat: 'offline'},
+				{shopId: '72897', shopName: '恰客4', plat: 'offline'}];
+		var options = {
+			isOnlyChecked,
+			maxSelectedNumber,
+			serverName,
+			isSupportedAddCondition,
+			conditions,
+			isSingleSelectShopList,
+			isSupportedBatchAddition,
+			isTotalChannel,
+			tenantId,
+			isSupportedSku
 		};
 		var selectedGoods = {
 			556820: null,
