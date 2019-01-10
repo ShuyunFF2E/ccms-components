@@ -202,15 +202,28 @@ export default class DropdownMultiselectCtrl {
 		return items;
 	}
 
-	toggleSelection(item) {
-		let index = this.selection.indexOf(item);
-		if (index > -1) {
-			this.selection.splice(index, 1);
-			this.selectAll = false;
-		} else {
-			this.selection.push(item);
-			this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
-		}
+	toggleSelection(item, event) {
+		const scope = this.getScope();
+		const onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
+		onBeforeSelectChange({ item }).then(() => {
+			scope.$evalAsync(() => {
+				let index = this.selection.indexOf(item);
+				if (index > -1) {
+					this.selection.splice(index, 1);
+					this.selectAll = false;
+				} else {
+					this.selection.push(item);
+					this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
+				}
+				if (!this.isOpen) {
+					this.model = this.selection.map(item => item[this.mapping.valueField]);
+				}
+			});
+		}).catch(() => {
+			scope.$evalAsync(() => {
+				event.target.checked = !event.target.checked;
+			});
+		});
 	}
 
 	_getEnabledItemFromDataList() {
