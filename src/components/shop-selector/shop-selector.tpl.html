@@ -13,6 +13,7 @@
 			<fieldset ng-if="$ctrl.isSupportedChannel">
 				<label>店铺类型：</label>
 				<cc-dropdown-select
+						disabled="!$ctrl.typeList.length"
 						model="$ctrl.formModel.type"
 						placeholder="请选择"
 						datalist="$ctrl.typeList"
@@ -26,9 +27,10 @@
 			<fieldset>
 				<label>省份：</label>
 				<cc-dropdown-select
+						disabled="!$ctrl.provinceList.length"
 						model="$ctrl.formModel.province"
 						placeholder="请选择"
-						searchable="true"
+						searchable="$ctrl.provinceList.length"
 						datalist="$ctrl.provinceList"
 						mapping="$ctrl.commonListFieldsMap"
 						on-select-change="$ctrl.provinceSelectChange(model, oldModel, itemIndex, item)">
@@ -37,9 +39,10 @@
 			<fieldset>
 				<label>地级市：</label>
 				<cc-dropdown-select
+						disabled="!$ctrl.cityList.length"
 						model="$ctrl.formModel.city"
 						placeholder="请选择"
-						searchable="true"
+						searchable="$ctrl.cityList.length"
 						datalist="$ctrl.cityList"
 						mapping="$ctrl.commonListFieldsMap"
 						on-select-change="$ctrl.citySelectChange(model, oldModel, itemIndex, item)">
@@ -48,9 +51,10 @@
 			<fieldset>
 				<label>市/县/区：</label>
 				<cc-dropdown-select
+						disabled="!$ctrl.districtList.length"
 						model="$ctrl.formModel.district"
 						placeholder="请选择"
-						searchable="true"
+						searchable="$ctrl.districtList.length"
 						datalist="$ctrl.districtList"
 						mapping="$ctrl.commonListFieldsMap"
 						on-select-change="$ctrl.districtSelectChange(model, oldModel, itemIndex, item)">

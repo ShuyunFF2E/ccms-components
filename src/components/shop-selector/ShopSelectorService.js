@@ -34,7 +34,7 @@ const ShopSelectorService = {
 		return ModalService.modal(
 			{
 				title: '请选择店铺',
-				style: {'width': '1025px', 'min-height': '510px'},
+				style: {'width': '1025px', 'min-height': '512px'},
 				fullscreen: false,
 				hasFooter: hasFooter,
 				__body: bodyTemplate,
