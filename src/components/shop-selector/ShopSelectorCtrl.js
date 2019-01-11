@@ -521,16 +521,6 @@ export default class ShopSelectorCtrl {
 
 	// 渠道 select 框 change
 	channelSelectChange(model, oldModel, itemIndex, item) {
-		if (itemIndex > 0) {
-			if (model !== oldModel) {
-				this.formModel.type = this.type || null;
-				this.type = null;
-				this.typeList = item.shopTypes && item.shopTypes.length ? this.resolveDataList(item.shopTypes) : [];
-			}
-		} else {
-			this.formModel.type = null;
-			this.typeList = [];
-		}
 		if (model === 'offline') {
 			if (this._provinceList) {
 				this.provinceList = this._provinceList;
@@ -542,6 +532,9 @@ export default class ShopSelectorCtrl {
 		} else {
 			this.provinceList = [];
 		}
+		this.formModel.type = this.type || null;
+		this.type = null;
+		this.typeList = item.shopTypes && item.shopTypes.length ? this.resolveDataList(item.shopTypes) : [];
 	}
 
 	// 省份 select 框 change
