@@ -286,7 +286,6 @@ export default class DropdownSelectCtrl {
 		callbackResult
 			.then(() => {
 				scope.$evalAsync(() => {
-					console.log(555);
 					this.title = item[this.mapping.displayField];
 					this.model = item[this.mapping.valueField];
 					this.icon = item[this.mapping.iconField];
