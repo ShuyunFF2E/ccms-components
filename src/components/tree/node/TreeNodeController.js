@@ -4,14 +4,19 @@ import Inject from 'angular-es-utils/decorators/Inject';
 @Inject('$ccTips', '$scope', '$timeout')
 export default class TreeNodeController {
 	constructor() {
-		this.name = this.node.name;
-
 		// 正在与后端进行通迅(新增、修改中)
 		this.connecting = false;
 
 		// 节点类型
 		// 1.radio: 单选; 2.checkbox: 多选; 3.text 文本;
 		this.nodeType = this.supportCheckbox ? (this.isRadioModel ? 'radio' : 'checkbox') : 'text';
+
+		// 当更改为编辑状态时，重置名称
+		this._$scope.$watch('$ctrl.node.isEditing', newVlaue => {
+			if (newVlaue) {
+				this.name = this.node.name;
+			}
+		});
 	}
 
 	/**
@@ -48,7 +53,7 @@ export default class TreeNodeController {
 	 */
 	toggleExpandHandler(e) {
 		e.stopPropagation();
-		this.updateStatus({ isClosed: !this.node.isClosed });
+		this.treeMap.store.updateById(this.node.id, { isClosed: !this.node.isClosed });
 	}
 
 	/**
@@ -158,7 +163,6 @@ export default class TreeNodeController {
 		if (!this.node.id) {
 			this.treeMap.store.removeChild(this.node);
 		} else {
-			this.name = this.node.name;
 			this.exitEditing();
 		}
 	}
@@ -189,13 +193,6 @@ export default class TreeNodeController {
 		const isNewNode = !this.node.id;
 		const enterHandler = isNewNode ? this.insertHandler : this.updateHandler;
 		enterHandler(this.name);
-	}
-
-	/**
-	 * 一系列内部方法
-	 */
-	updateStatus(status) {
-		return this.treeMap.store.updateById(this.node.id, status);
 	}
 
 	/**
@@ -278,7 +275,10 @@ export default class TreeNodeController {
 		});
 	};
 
-	exitEditing = () => {
-		this.updateStatus({ isEditing: false });
-	};
+	/**
+	 * 退出编辑状态
+	 */
+	exitEditing() {
+		this.treeMap.store.updateById(this.node.id, { isEditing: false });
+	}
 }

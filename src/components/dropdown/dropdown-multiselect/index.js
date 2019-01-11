@@ -27,7 +27,8 @@ const dropdownMultiselectDDO = {
 		searchFields: '=?',
 		onSelectChange: '&?',
 		onDropdownOpen: '&?',
-		onDropdownClose: '&?'
+		onDropdownClose: '&?',
+		onBeforeSelectChange: '&?'
 	},
 	bindToController: true
 };
