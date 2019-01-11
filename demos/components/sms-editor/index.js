@@ -126,7 +126,7 @@ angular.module('componentsApp', ['ccms.components'])
 				signature: '[通道签名 1]',
 				disabled: false,
 				isSupportImage: false,
-				smsChargeTips: '自定义短信规则提示, <br/> 哈哈哈 <br/> 心情好啊!'
+				smsChargeTips: '自定义短信规则提示, <span style="color: red;">哈哈哈</span> 心情好啊!'
 			},
 			{
 				name: 'GatewayType 1',

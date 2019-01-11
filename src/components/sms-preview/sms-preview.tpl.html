@@ -15,9 +15,8 @@
 			<span class="sms-preview-num">{{newLineNum}}</span>个换行符</span>)，
 		<span class="sms-preview-num">{{totalVars}}</span> 个变量
 	</div>
-	<div class="sms-preview-tips"><span ng-bind="smsPreviewTipsText"></span>
-		<a href="javascript:void(0);"
-			 tooltip-placement="top-right"
-			 cc-tooltip="smsPreviewTipsInTipsText">计费规则</a>
+	<div class="sms-preview-tips">
+		<p ng-bind-html="smsPreviewTipsInTipsText"></p>
+		<span ng-bind="smsPreviewTipsText"></span>
 	</div>
 </div>
