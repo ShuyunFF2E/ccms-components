@@ -525,12 +525,11 @@ export default class ShopSelectorCtrl {
 			if (model !== oldModel) {
 				this.formModel.type = this.type || null;
 				this.type = null;
-				this.typeList = item.shopTypes && item.shopTypes.length ? this.resolveDataList(item.shopTypes) : [];
 			}
 		} else {
 			this.formModel.type = null;
-			this.typeList = [];
 		}
+		this.typeList = item.shopTypes && item.shopTypes.length ? this.resolveDataList(item.shopTypes) : [];
 		if (model === 'offline') {
 			if (this._provinceList) {
 				this.provinceList = this._provinceList;
