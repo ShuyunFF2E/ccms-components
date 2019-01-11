@@ -2,7 +2,7 @@ import Inject from 'angular-es-utils/decorators/Inject';
 import Store from './Store';
 import Handler from './Handler';
 
-@Inject('$ccTips', '$ccModal', '$scope', '$timeout')
+@Inject('$ccTips', '$ccModal', '$scope', '$element', '$timeout')
 export default class TreeCtrl {
 	// 搜索词
 	searchText = '';
@@ -90,7 +90,7 @@ export default class TreeCtrl {
 	 * 删除节点
 	 * @param node
 	 */
-	removeNode = node => {
+	removeNode(node) {
 		const confirmModal = this._$ccModal.confirm('你确定删除此目录吗？');
 
 		confirmModal.open().result.then(() => {
@@ -108,22 +108,52 @@ export default class TreeCtrl {
 				});
 			}
 		});
-	};
+	}
+
+	/**
+	 * 清除全部节点的编辑状态
+	 */
+	clearAllEditingState() {
+		const editingNode = this.treeMap.store.findNodeByParam('isEditing', true);
+
+		// 清除新增节点
+		if (editingNode && !editingNode.id) {
+			this.treeMap.store.removeChild(editingNode);
+		}
+
+		// 清除编辑节点
+		if (editingNode && editingNode.id) {
+			this.treeMap.store.updateById(editingNode.id, { isEditing: false });
+		}
+	}
+
+	/**
+	 * 触焦正在编辑的节点
+	 */
+	focusEditingNode() {
+		setTimeout(() => {
+			this._$element[0].querySelector('.cc-tree-node.editing input').focus();
+		});
+	}
 
 	/**
 	 * 将节点变更为编辑状态
 	 * @param node
 	 */
-	upateNodeEditing = node => {
+	upateNodeEditing(node) {
+		this.clearAllEditingState();
 		this.treeMap.store.updateById(node.id, { isEditing: true });
-	};
+		this.focusEditingNode();
+	}
 
 	/**
 	 * 增加一个输入节点
 	 * @param parentNode: 父节点
 	 */
-	addBlankNode = (parentNode, addToPosition) => {
+	addBlankNode(parentNode, addToPosition) {
+		this.clearAllEditingState();
 		const { maxLevel } = this;
+
 		// 新增的节点，无id
 		const blankNode = {name: '', pId: parentNode.id, level: parentNode.level + 1, isEditing: true};
 
@@ -132,7 +162,8 @@ export default class TreeCtrl {
 			blankNode.disableAdd = true;
 		}
 		this.treeMap.store.addChild(parentNode.id, blankNode, addToPosition);
-	};
+		this.focusEditingNode();
+	}
 
 	/**
 	 * 获取菜单项
