@@ -36,6 +36,7 @@ describe('AreaSelectorCtrl', () => {
 			'platform': 'tb',
 			'marketingOnly': false,
 			'customAreas': [],
+			'haveCommonAreas': true,
 			'$ccTips': {
 				error: () => Promise.resolve()
 			},
