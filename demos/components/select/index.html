@@ -131,8 +131,10 @@
 					mapping="ctrl.fieldsMap">
 			</cc-dropdown-multiselect>
 		</div>
+	</div>
+	<div class="group">
 		<div class="demo">
-			<h3>多选(回调函数)</h3>
+			<h3>多选(回调函数——弹出框)</h3>
 			<span>当前值: <span ng-bind="ctrl.value8 | json"></span></span>
 			<cc-dropdown-multiselect
 					placeholder="快，快选我。。啊！"
@@ -140,6 +142,34 @@
 					datalist="ctrl.datalist1"
 					mapping="ctrl.fieldsMap"
 					on-before-select-change="ctrl.beforeMultipleChange(item)"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
+			</cc-dropdown-multiselect>
+		</div>
+		<div class="demo">
+			<h3>多选(回调函数——Promise)</h3>
+			<span>当前值: <span ng-bind="ctrl.value9 | json"></span></span>
+			<cc-dropdown-multiselect
+					placeholder="快，快选我。。啊！"
+					model="ctrl.value9"
+					datalist="ctrl.datalist1"
+					mapping="ctrl.fieldsMap"
+					on-before-select-change="ctrl.beforeMultipleChange1(item)"
+					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
+			</cc-dropdown-multiselect>
+		</div>
+		<div class="demo">
+			<h3>多选(回调函数——无返回值)</h3>
+			<span>当前值: <span ng-bind="ctrl.value12 | json"></span></span>
+			<cc-dropdown-multiselect
+					placeholder="快，快选我。。啊！"
+					model="ctrl.value12"
+					datalist="ctrl.datalist1"
+					mapping="ctrl.fieldsMap"
+					on-before-select-change="ctrl.beforeMultipleChange2(item)"
 					on-select-change="ctrl.multiSelectChange(model, oldModel, selection, oldSelection)"
 					on-dropdown-open="ctrl.dropdownOpen()"
 					on-dropdown-close="ctrl.dropdownClose()">
@@ -286,6 +316,8 @@
 			this.value44 = ['xa'];
 			this.value5 = '上海';
 			this.value8 = [];
+			this.value9 = [];
+			this.value12 = [];
 			this.value10 = 123789;
 			this.list10 = [
 				{title: '北京', value: 'bj'},
@@ -407,8 +439,21 @@
 			};
 
 			this.beforeMultipleChange = (item) => {
-				// return Promise.resolve();
 				return $ccModal.confirm(`title: ${item.title}; value: ${item.value}`).open().result;
+			};
+
+			this.beforeMultipleChange1 = (item) => {
+				// return Promise.resolve();
+				return new Promise(resolve => {
+					console.log('执行回调函数，这是个异步，需要1000ms');
+					setTimeout(() => {
+						resolve();
+					}, 1000);
+				})
+			};
+
+			this.beforeMultipleChange2 = (item) => {
+				console.log('执行回调函数');
 			};
 
 

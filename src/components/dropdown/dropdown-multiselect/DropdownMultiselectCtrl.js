@@ -1,6 +1,7 @@
 import angular from 'angular';
 import {Inject, Bind} from 'angular-es-utils';
 import {hasScrolled} from '../../../common/utils/style-helper';
+import { isPromiseLike } from 'angular-es-utils/type-auth';
 
 @Inject('$scope', '$element')
 export default class DropdownMultiselectCtrl {
@@ -204,8 +205,12 @@ export default class DropdownMultiselectCtrl {
 
 	toggleSelection(item, event) {
 		const scope = this.getScope();
-		const onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
-		onBeforeSelectChange({ item }).then(() => {
+		this.onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
+		let onBeforeSelectChange = this.onBeforeSelectChange({ item });
+		if (!isPromiseLike(onBeforeSelectChange)) {
+			onBeforeSelectChange = Promise.resolve(onBeforeSelectChange);
+		}
+		onBeforeSelectChange.then(() => {
 			scope.$evalAsync(() => {
 				let index = this.selection.indexOf(item);
 				if (index > -1) {
