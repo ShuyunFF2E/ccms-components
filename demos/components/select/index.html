@@ -74,6 +74,53 @@
 	</div>
 	<div class="group">
 		<div class="demo">
+			<h3>单选（回调函数——弹出框）</h3>
+			<span>当前值: <span ng-bind="ctrl.value13 | json"></span></span>
+			<cc-dropdown-select
+					placeholder="哈哈哈"
+					model="ctrl.value13"
+					is-open="ctrl.isOpen"
+					datalist="ctrl.datalist2"
+					mapping="ctrl.fieldsMap"
+					on-before-select-change="ctrl.beforeChange(item)"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
+			</cc-dropdown-select>
+		</div>
+		<div class="demo">
+			<h3>单选（回调函数——Promise）</h3>
+			<span>当前值: <span ng-bind="ctrl.value14 | json"></span></span>
+			<cc-dropdown-select
+					placeholder="哈哈哈"
+					model="ctrl.value14"
+					is-open="ctrl.isOpen"
+					datalist="ctrl.datalist2"
+					mapping="ctrl.fieldsMap"
+					on-before-select-change="ctrl.beforeChange1(item)"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
+			</cc-dropdown-select>
+		</div>
+		<div class="demo">
+			<h3>单选（带回调函数——无返回值或者返回值不为 Promise）</h3>
+			<span>当前值: <span ng-bind="ctrl.value15 | json"></span></span>
+			<cc-dropdown-select
+					placeholder="哈哈哈"
+					model="ctrl.value15"
+					is-open="ctrl.isOpen"
+					datalist="ctrl.datalist2"
+					mapping="ctrl.fieldsMap"
+					on-before-select-change="ctrl.beforeChange2(item)"
+					on-select-change="ctrl.selectChange(model, oldModel, itemIndex, item)"
+					on-dropdown-open="ctrl.dropdownOpen()"
+					on-dropdown-close="ctrl.dropdownClose()">
+			</cc-dropdown-select>
+		</div>
+	</div>
+	<div class="group">
+		<div class="demo">
 			<h3>多选</h3>
 			<span>当前值: <span ng-bind="ctrl.value3 | json"></span></span>
 			<cc-dropdown-multiselect
@@ -318,6 +365,9 @@
 			this.value8 = [];
 			this.value9 = [];
 			this.value12 = [];
+			this.value13 = null;
+			this.value14 = null;
+			this.value15 = null;
 			this.value10 = 123789;
 			this.list10 = [
 				{title: '北京', value: 'bj'},
@@ -434,8 +484,21 @@
 			};
 
 			this.beforeChange = (item) => {
-				// return Promise.resolve();
 				return $ccModal.confirm('是否选择').open().result;
+			};
+
+			this.beforeChange1 = (item) => {
+				return new Promise(resolve => {
+					console.log('这是一个回调函数，异步请求，需要等待1000ms');
+					setTimeout(() => {
+						resolve();
+					}, 1000);
+				});
+			};
+
+			this.beforeChange2 = (item) => {
+				console.log('执行回调函数');
+				return 12;
 			};
 
 			this.beforeMultipleChange = (item) => {

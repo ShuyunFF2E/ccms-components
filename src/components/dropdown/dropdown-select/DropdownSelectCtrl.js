@@ -1,6 +1,7 @@
 import angular from 'angular';
 import { Inject, Bind } from 'angular-es-utils';
 import {hasScrolled} from '../../../common/utils/style-helper';
+import { isPromiseLike } from 'angular-es-utils/type-auth';
 
 @Inject('$scope', '$element')
 export default class DropdownSelectCtrl {
@@ -276,11 +277,16 @@ export default class DropdownSelectCtrl {
 			return;
 		}
 
-		const onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
+		this.onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
+		let callbackResult = this.onBeforeSelectChange({ item });
+		if (!isPromiseLike(callbackResult)) {
+			callbackResult = Promise.resolve(callbackResult);
+		}
 
-		onBeforeSelectChange({ item })
+		callbackResult
 			.then(() => {
 				scope.$evalAsync(() => {
+					console.log(555);
 					this.title = item[this.mapping.displayField];
 					this.model = item[this.mapping.valueField];
 					this.icon = item[this.mapping.iconField];
