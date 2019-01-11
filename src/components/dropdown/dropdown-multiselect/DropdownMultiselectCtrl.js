@@ -206,11 +206,11 @@ export default class DropdownMultiselectCtrl {
 	toggleSelection(item, event) {
 		const scope = this.getScope();
 		this.onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
-		let onBeforeSelectChange = this.onBeforeSelectChange({ item });
-		if (!isPromiseLike(onBeforeSelectChange)) {
-			onBeforeSelectChange = Promise.resolve(onBeforeSelectChange);
+		let callbackResult = this.onBeforeSelectChange({ item });
+		if (!isPromiseLike(callbackResult)) {
+			callbackResult = Promise.resolve(callbackResult);
 		}
-		onBeforeSelectChange.then(() => {
+		callbackResult.then(() => {
 			scope.$evalAsync(() => {
 				let index = this.selection.indexOf(item);
 				if (index > -1) {
