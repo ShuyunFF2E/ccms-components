@@ -1,6 +1,7 @@
 import angular from 'angular';
 import {Inject, Bind} from 'angular-es-utils';
 import {hasScrolled} from '../../../common/utils/style-helper';
+import { isPromiseLike } from 'angular-es-utils/type-auth';
 
 @Inject('$scope', '$element')
 export default class DropdownMultiselectCtrl {
@@ -202,15 +203,32 @@ export default class DropdownMultiselectCtrl {
 		return items;
 	}
 
-	toggleSelection(item) {
-		let index = this.selection.indexOf(item);
-		if (index > -1) {
-			this.selection.splice(index, 1);
-			this.selectAll = false;
-		} else {
-			this.selection.push(item);
-			this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
+	toggleSelection(item, event) {
+		const scope = this.getScope();
+		this.onBeforeSelectChange = this.onBeforeSelectChange || (() => Promise.resolve());
+		let callbackResult = this.onBeforeSelectChange({ item });
+		if (!isPromiseLike(callbackResult)) {
+			callbackResult = Promise.resolve(callbackResult);
 		}
+		callbackResult.then(() => {
+			scope.$evalAsync(() => {
+				let index = this.selection.indexOf(item);
+				if (index > -1) {
+					this.selection.splice(index, 1);
+					this.selectAll = false;
+				} else {
+					this.selection.push(item);
+					this.selectAll = this.selection.length >= this._clampedEnabledDatalist.length;
+				}
+				if (!this.isOpen) {
+					this.model = this.selection.map(item => item[this.mapping.valueField]);
+				}
+			});
+		}).catch(() => {
+			scope.$evalAsync(() => {
+				event.target.checked = !event.target.checked;
+			});
+		});
 	}
 
 	_getEnabledItemFromDataList() {
