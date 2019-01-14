@@ -85,7 +85,7 @@
 				</div>
 				<cc-grid type="selectable" opts="$ctrl.allShopGridOptions"></cc-grid>
 				<div class="shop-selector-mask" ng-if="$ctrl.isShowMask">
-					<cc-loading></cc-loading>
+					<cc-loading ng-class="{'multiple-shop-select': !$ctrl.isSingleSelected}"></cc-loading>
 				</div>
 			</section>
 		</gs-panel>
