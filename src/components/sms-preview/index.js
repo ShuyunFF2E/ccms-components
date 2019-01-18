@@ -9,6 +9,6 @@ import ddo from './SMSPreview';
 
 
 export default angular
-	.module('ccms.components.SMSPreview', ['ccms.components.tooltip'])
+	.module('ccms.components.SMSPreview', [])
 	.directive('ccSmsPreview', () => ddo)
 	.name;
