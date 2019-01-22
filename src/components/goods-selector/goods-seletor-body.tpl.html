@@ -65,17 +65,6 @@
 							on-select-change="$ctrl.categorySelectChange(newValue, oldValue, itemIndex, item)">
 					</cc-dropdown-select>
 				</fieldset>
-				<!--品牌-->
-				<fieldset ng-if="$ctrl.formTplConfig['show-brandId']">
-					<label class="goods-label">{{$ctrl.formTplConfig.brandIdTitle}}：</label>
-					<cc-dropdown-select
-							placeholder="请选择"
-							model="$ctrl.formModel.brandId"
-							datalist="$ctrl.brandsList"
-							searchable="true"
-							mapping="$ctrl.brandsListFieldsMap">
-					</cc-dropdown-select>
-				</fieldset>
 				<!--商品属性-->
 				<fieldset ng-if="$ctrl.formTplConfig['show-propsPid']">
 					<label class="goods-label">{{$ctrl.formTplConfig.propsPidTitle}}：</label>

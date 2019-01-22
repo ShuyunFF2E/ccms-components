@@ -89,12 +89,11 @@ export default class GoodsSelectorCtrl {
 		// 商品状态
 		this.statusList = this.isTotalChannel ? uniStatusList : statusList;
 
-		const { shopListFieldsMap, categoriesFieldsMap, propsVidFieldsMap, statusListFieldsMap, brandsListFieldsMap } = getFieldsMap();
+		const { shopListFieldsMap, categoriesFieldsMap, propsVidFieldsMap, statusListFieldsMap } = getFieldsMap();
 		this.shopListFieldsMap = shopListFieldsMap;
 		this.shopCategoriesFieldsMap = this.categoriesFieldsMap = this.propsPidFieldsMap = categoriesFieldsMap;
 		this.propsVidFieldsMap = propsVidFieldsMap;
 		this.statusListFieldsMap = statusListFieldsMap;
-		this.brandsListFieldsMap = brandsListFieldsMap;
 
 		// form 区域价格校验
 		this.validators = {
@@ -164,8 +163,6 @@ export default class GoodsSelectorCtrl {
 		this.findEntityByName(fieldsetConfigList, 'tagItemIds') >= 0 && this.isSupportedAddCondition && asyncMethods.push(this.getTags());
 		// 商品自自定义类目数据
 		this.findEntityByName(fieldsetConfigList, 'shopCategoriesId') >= 0 && asyncMethods.push(this.getShopCategories());
-		// 获取商品品牌
-		this.findEntityByName(fieldsetConfigList, 'brandId') >= 0 && asyncMethods.push(this.getBrands());
 		// 商品标准类目列表
 		this.findEntityByName(fieldsetConfigList, 'categoriesId') >= 0 && asyncMethods.push(this.getCategories());
 
@@ -267,8 +264,7 @@ export default class GoodsSelectorCtrl {
 			endListTime: this.dateRange.end, // 上架时间结束值, Unix时间戳，毫秒
 			minPrice: c.minPrice || null, // 商品价格下限
 			maxPrice: c.maxPrice || null, // 商品价格下限,
-			tagItemIds: [], // 商品标签 数组
-			brandId: c.brandId || null // 品牌
+			tagItemIds: [] // 商品标签 数组
 		};
 		// 初始化 tagItemIds
 		if (c.tags && c.tags.length) {
@@ -652,23 +648,6 @@ export default class GoodsSelectorCtrl {
 		});
 	}
 
-	// 获取商品品牌
-	getBrands() {
-		const { serverName, apiPrefix, tenantId, formModel, isTotalChannel, plat } = this;
-		const { shopId } = formModel;
-		return service.getBrands({ serverName, platform: plat, shopId, apiPrefix, tenant: tenantId, isTotalChannel }).get().$promise.then(res => {
-			this.brandsList = res.data || [];
-			// 由于商品品牌数据是异步请求，所以需要在数据回来以后更新表单中 brandId 的值，更新后清空，保证数据只赋值一次
-			if (this.conditions.brandId) {
-				this.formModel.brandId = this.conditions.brandId;
-				this.conditions.brandId = null;
-			}
-			return this.brandsList;
-		}).catch(() => {
-			this._$ccTips.error(errorMsg);
-		});
-	}
-
 	// 获取商品标签，初始化的时候调用
 	getTags() {
 		const { serverName, apiPrefix, tenantId, plat, isTotalChannel } = this;
@@ -728,7 +707,6 @@ export default class GoodsSelectorCtrl {
 		const collection = this.fieldsetConfigList;
 		this.findEntityByName(collection, 'shopCategoriesId') >= 0 && this.getShopCategories();
 		this.findEntityByName(collection, 'categoriesId') && this.getCategories();
-		this.findEntityByName(collection, 'brandId') >= 0 && this.getBrands();
 	};
 
 	// 商品属性值 select 框 change
@@ -1559,16 +1537,6 @@ export default class GoodsSelectorCtrl {
 						dataList: this.selectedLabels,
 						titleName: 'name',
 						title: '商品标签'
-					}
-				},
-				brandId: {
-					method: 'queryTitleByValue',
-					params: {
-						dataList: this.brandsList,
-						valueName: 'brandId',
-						value: formModel.brandId,
-						titleName: 'brandName',
-						title: '品牌'
 					}
 				}
 			};
