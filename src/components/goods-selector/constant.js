@@ -402,13 +402,6 @@ export let fieldsetConfig = {
 			inputType: 'input'
 		},
 		{
-			name: 'brandId',
-			title: '品牌',
-			isSkuItem: false,
-			isSimpleSearchItem: false,
-			inputType: 'select'
-		},
-		{
 			name: 'categoriesId',
 			title: '商品类目',
 			isSkuItem: false,

@@ -8,7 +8,7 @@
 
 			$scope.isSupportedAddCondition = false;
 			$scope.isSupportedBatchAddition = false;
-			$scope.isTotalChannel = true;
+			$scope.isTotalChannel = false;
 
 			// top + sku 维度 + 店铺选择
 			$scope.openTopWithShopList = function() {
