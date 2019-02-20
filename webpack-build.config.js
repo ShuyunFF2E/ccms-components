@@ -5,10 +5,9 @@
  */
 var path = require('path');
 var webpack = require('webpack');
-var autoprefixer = require('autoprefixer');
 var CleanPlugin = require('clean-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var cssnano = require('cssnano');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 var cssNanoCommonOpts = {
 	discardComments: {removeAll: true},
 	discardDuplicates: true,
@@ -23,12 +22,29 @@ const { version } = require('./package.json');
 loaders.push(
 	{
 		test: /\.(sc|c)ss$/,
-		loader: ExtractTextPlugin.extract('style', 'css?-minimize!postcss!resolve-url!sass?sourceMap'),
+		use: [{
+			loader: MiniCssExtractPlugin.loader
+		}, {
+			loader: 'css-loader',
+			options: {
+				sourceMap: true
+			}
+		}, {
+			loader: 'postcss-loader'
+		}, {
+			loader: 'resolve-url-loader'
+		}, {
+			loader: 'sass-loader',
+			options: {
+				sourceMap: true
+			}
+		}],
 		exclude: /(node_modules|bower_components)/
 	}
 );
 
 module.exports = {
+	mode: 'production',
 	devtool: 'cheap-source-map',
 	entry: {
 		'ccms-components': './src/index.js',
@@ -43,6 +59,27 @@ module.exports = {
 		'angular-resource': '\'ngResource\'',
 		'angular-ui-router': '\'ui.router\''
 	},
+	optimization: {
+		minimizer: [
+			new UglifyJsPlugin({
+				cache: true,
+				parallel: true,
+				sourceMap: true
+			}),
+			// 处理extract出来的css
+			new OptimizeCssAssetsPlugin({
+				assetNameRegExp: /\.css$/g,
+				cssProcessor: require('cssnano'),
+				cssProcessorOptions: Object.assign({
+					core: false,
+					map: {
+						inline: false
+					}
+				}, cssNanoCommonOpts),
+				canPrint: true
+			})
+		]
+	},
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env': {
@@ -51,41 +88,15 @@ module.exports = {
 			}
 		}),
 		new CleanPlugin(['dist']),
-		new webpack.optimize.UglifyJsPlugin({
-			include: /\.min\.js$/,
-			minimize: true
-		}),
-		new ExtractTextPlugin('[name].css'),
-		// 处理extract出来的css
-		new OptimizeCssAssetsPlugin({
-			assetNameRegExp: /\.css$/g,
-			cssProcessor: cssnano({reduceIdents: false}),
-			cssProcessorOptions: Object.assign({
-				core: false
-			}, cssNanoCommonOpts),
-			canPrint: true
-		}),
-		new webpack.optimize.DedupePlugin(),
-		new webpack.NoErrorsPlugin()
+		new MiniCssExtractPlugin({
+			filename: '[name].css',
+			chunkFilename: '[id].css'
+		})
 	],
 	resolve: {
-		extensions: ['', '.js']
+		extensions: ['.js']
 	},
-	eslint: {
-		emitWarning: true,
-		emitError: true,
-		formatter: require('eslint-friendly-formatter')
-	},
-	postcss: [autoprefixer({browsers: ['Chrome > 35', 'Firefox > 30', 'Safari > 7']})],
 	module: {
-		preLoaders: [
-			{
-				test: /\.js?$/,
-				loader: 'eslint-loader',
-				exclude: /node_modules/,
-				include: path.join(__dirname, 'src')
-			}
-		],
-		loaders: loaders
+		rules: loaders
 	}
 };

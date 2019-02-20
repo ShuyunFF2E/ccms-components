@@ -6,18 +6,32 @@
 var path = require('path');
 var webpack = require('webpack');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-var autoprefixer = require('autoprefixer');
 var loaders = require('./webpack-common-loaders');
 const { version } = require('./package.json');
+
 loaders.push(
 	{
 		test: /\.(sc|c)ss$/,
-		loaders: ['style', 'css', 'postcss', 'resolve-url', 'sass?sourceMap'],
+		use: [{
+			loader: 'style-loader'
+		}, {
+			loader: 'css-loader'
+		}, {
+			loader: 'postcss-loader'
+		}, {
+			loader: 'resolve-url-loader'
+		}, {
+			loader: 'sass-loader',
+			options: {
+				sourceMap: true
+			}
+		}],
 		exclude: /(node_modules|bower_components)/
 	}
 );
 
 module.exports = {
+	mode: 'development',
 	devtool: 'source-map',
 	entry: {
 		components: ['webpack-hot-middleware/client?path=/__webpack_hmr&reload=true', './src/index.js']
@@ -33,29 +47,14 @@ module.exports = {
 				VERSION: JSON.stringify(version)
 			}
 		}),
-		new webpack.optimize.OccurenceOrderPlugin(),
+		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin(),
 		new BundleAnalyzerPlugin()
 	],
 	resolve: {
-		extensions: ['', '.js']
+		extensions: ['.js']
 	},
-	eslint: {
-		emitWarning: true,
-		emitError: true,
-		formatter: require('eslint-friendly-formatter')
-	},
-	postcss: [autoprefixer({browsers: ['Chrome > 35', 'Firefox > 30', 'Safari > 7']})],
 	module: {
-		preLoaders: [
-			{
-				test: /\.js$/,
-				loader: 'eslint-loader',
-				exclude: /node_modules/,
-				include: [path.join(__dirname, 'src')]
-			}
-		],
-		loaders: loaders
+		rules: loaders
 	}
 };
