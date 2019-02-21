@@ -47,7 +47,6 @@ module.exports = {
 				VERSION: JSON.stringify(version)
 			}
 		}),
-		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		new BundleAnalyzerPlugin()
 	],

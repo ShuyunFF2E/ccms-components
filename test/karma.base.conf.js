@@ -9,12 +9,25 @@ var loaders = require('../webpack-common-loaders');
 loaders.push(
 	{
 		test: /\.(sc|c)ss$/,
-		loaders: ['style', 'css', 'postcss', 'resolve-url', 'sass?sourceMap'],
+		use: [{
+			loader: 'style-loader'
+		}, {
+			loader: 'css-loader'
+		}, {
+			loader: 'postcss-loader'
+		}, {
+			loader: 'resolve-url-loader'
+		}, {
+			loader: 'sass-loader',
+			options: {
+				sourceMap: true
+			}
+		}],
 		exclude: /(node_modules|bower_components)/
 	},
 	{
 		test: /^((?!\.tpl).)*\.html$/,
-		loader: 'file?name=[path][name]-[hash:8].[ext]',
+		loader: 'file-loader?name=[path][name]-[hash:8].[ext]',
 		exclude: /(node_modules|bower_components)/,
 		include: /src(\/|\\).*(\/|\\)__tests__/
 	}
@@ -51,24 +64,18 @@ module.exports = {
 
 	// Webpack
 	webpack: {
+		mode: 'development',
 		devtool: 'eval',
-		output: {
-			pathinfo: true
+		entry: {
+			app: './src/index.js'
 		},
-		eslint: {
-			configFile: '.eslintrc',
-			emitWarning: true,
-			emitError: true,
-			formatter: require('eslint-friendly-formatter')
+		output: {
+			path: path.join(__dirname, 'build'),
+			filename: '[name].js',
+			publicPath: '/' // hot loader publish dir
 		},
 		module: {
-			preLoaders: [{
-				test: /\.js$/,
-				loader: 'eslint-loader',
-				exclude: /node_modules/,
-				include: [path.join(__dirname, '../src')]
-			}],
-			loaders: loaders
+			rules: loaders
 		}
 
 	},
@@ -98,20 +105,20 @@ module.exports = {
 
 	// start these browsers
 	// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['ChromeHeadlessNoSandbox'],
-        customLaunchers: {
-         ChromeHeadlessNoSandbox: {
-           base: 'Chrome',
-           flags: [
-             '--headless',
-             '--no-sandbox',
-             '--disable-gpu',
-             '--remote-debugging-address=0.0.0.0',
-             '--remote-debugging-port=9222',
-             '--user-data-dir=/data'
-           ]
-         }
-        },
+	browsers: ['ChromeHeadlessNoSandbox'],
+	customLaunchers: {
+		ChromeHeadlessNoSandbox: {
+			base: 'Chrome',
+			flags: [
+				'--headless',
+				'--no-sandbox',
+				'--disable-gpu',
+				'--remote-debugging-address=0.0.0.0',
+				'--remote-debugging-port=9222',
+				'--user-data-dir=/data'
+			]
+		}
+	},
 
 	// Continuous Integration mode
 	// if true, Karma captures browsers, runs the tests and exits

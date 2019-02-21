@@ -18,7 +18,7 @@ module.exports = [
 			options: {
 				emitWarning: true,
 				emitError: true,
-				formatter: require("eslint-friendly-formatter")
+				formatter: require('eslint-friendly-formatter')
 			}
 		}],
 		exclude: /node_modules/,

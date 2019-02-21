@@ -6,10 +6,10 @@
 
 var base = require('./karma.base.conf');
 
-module.exports = function (config) {
+module.exports = function(config) {
 
 	var opts = Object.assign(base, {
-		reporters: ['progress', 'coverage'],
+		reporters: ['progress', 'coverage-istanbul'],
 		coverageReporter: {
 			reporters: [
 				{type: 'lcov', dir: './coverage', subdir: '.'},
@@ -21,13 +21,15 @@ module.exports = function (config) {
 	opts.singleRun = true;
 	opts.files.unshift('../node_modules/babel-polyfill/browser.js');
 
-	opts.webpack.module.postLoaders = [
-		{
-			test: /\.js$/,
-			exclude: /node_modules|__tests__|test/,
-			loader: 'istanbul-instrumenter'
-		}
-	];
+	opts.webpack.module.rules.push({
+		test: /\.js$/,
+		enforce: 'post',
+		use: {
+			loader: 'istanbul-instrumenter-loader',
+			options: { esModules: true }
+		},
+		exclude: /node_modules|__tests__|test/
+	});
 
 	config.set(opts);
 };
