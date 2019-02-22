@@ -5,33 +5,8 @@
  */
 
 var path = require('path');
-var loaders = require('../webpack-common-loaders');
-loaders.push(
-	{
-		test: /\.(sc|c)ss$/,
-		use: [{
-			loader: 'style-loader'
-		}, {
-			loader: 'css-loader'
-		}, {
-			loader: 'postcss-loader'
-		}, {
-			loader: 'resolve-url-loader'
-		}, {
-			loader: 'sass-loader',
-			options: {
-				sourceMap: true
-			}
-		}],
-		exclude: /(node_modules|bower_components)/
-	},
-	{
-		test: /^((?!\.tpl).)*\.html$/,
-		loader: 'file-loader?name=[path][name]-[hash:8].[ext]',
-		exclude: /(node_modules|bower_components)/,
-		include: /src(\/|\\).*(\/|\\)__tests__/
-	}
-);
+var commonMoule = require('../webpack-common-loaders');
+var merge = require('webpack-merge');
 
 module.exports = {
 
@@ -63,7 +38,7 @@ module.exports = {
 	},
 
 	// Webpack
-	webpack: {
+	webpack: merge(commonMoule, {
 		mode: 'development',
 		devtool: 'eval',
 		entry: {
@@ -75,10 +50,32 @@ module.exports = {
 			publicPath: '/' // hot loader publish dir
 		},
 		module: {
-			rules: loaders
+			rules: [{
+				test: /\.(sc|c)ss$/,
+				use: [{
+					loader: 'style-loader'
+				}, {
+					loader: 'css-loader'
+				}, {
+					loader: 'postcss-loader'
+				}, {
+					loader: 'resolve-url-loader'
+				}, {
+					loader: 'sass-loader',
+					options: {
+						sourceMap: true
+					}
+				}],
+				exclude: /(node_modules|bower_components)/
+			},
+			{
+				test: /^((?!\.tpl).)*\.html$/,
+				loader: 'file-loader?name=[path][name]-[hash:8].[ext]',
+				exclude: /(node_modules|bower_components)/,
+				include: /src(\/|\\).*(\/|\\)__tests__/
+			}]
 		}
-
-	},
+	}),
 
 	// Webpack middleware
 	webpackMiddleware: {
