@@ -4,6 +4,9 @@ import Inject from 'angular-es-utils/decorators/Inject';
 @Inject('$ccTips', '$scope', '$timeout')
 export default class TreeNodeController {
 	constructor() {
+		// 将节点名称赋值至节点对像
+		this.name = this.node.name;
+
 		// 正在与后端进行通迅(新增、修改中)
 		this.connecting = false;
 
