@@ -3,6 +3,7 @@ dist/
 docs/_gh_pages/
 node_modules/
 test/coverage/
+coverage/
 npm-debug.log
 .idea/
 .DS_Store

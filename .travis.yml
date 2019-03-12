@@ -9,7 +9,7 @@ addons:
       - google-chrome-stable
 language: node_js
 node_js:
-  - 6.9.2
+  - 7.9.0
 cache:
   directories:
     - node_modules
