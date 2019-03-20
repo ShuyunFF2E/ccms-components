@@ -250,7 +250,7 @@ export default class TreeNodeController {
 					this.updateConnecting(false);
 				});
 		}, msg => {
-			this._$ccTips.error(msg);
+			this._$ccTips.error(msg, true);
 		});
 	};
 
@@ -274,7 +274,7 @@ export default class TreeNodeController {
 					this.updateConnecting(false);
 				});
 		}, msg => {
-			this._$ccTips.error(msg);
+			this._$ccTips.error(msg, true);
 		});
 	};
 

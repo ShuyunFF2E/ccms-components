@@ -45,7 +45,13 @@
 
 			$scope.showError = function() {
 				if (!tips || !tips.element) {
-					tips = $ccTips.error('<span style="color: red;">出错提示</span>出错提示出错提示出错提示出错提示出错提示出错提示出错提示出错提示' + Math.random());
+					tips = $ccTips.error('<span style="color: red;">出错提示</span>这个提示需要手动关闭' + Math.random());
+				}
+			};
+
+			$scope.showAutoCloseError = function() {
+				if (!tips || !tips.element) {
+					tips = $ccTips.error('<span style="color: red;">出错提示</span>这个提示3秒后将自动关闭' + Math.random(), true);
 				}
 			};
 
