@@ -3,7 +3,7 @@
 		 ng-style="{'padding-left': $ctrl.paddingLeft}"
 		 ng-click="$ctrl.onChangeChecked()"
 		 ng-class="{ selected: $ctrl.node.checked, active: $ctrl.node.isActive}"
-		 cc-tree-right-click="$ctrl.onRightClick($event)"
+		 cc-tree-right-click="$ctrl.onRightClick()"
 		 ng-hide="$ctrl.node.isEditing">
 		<icon ng-if="$ctrl.node.children.length"
 				ng-click="$ctrl.toggleExpandHandler($event)"

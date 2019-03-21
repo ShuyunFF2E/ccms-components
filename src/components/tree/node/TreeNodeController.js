@@ -154,8 +154,8 @@ export default class TreeNodeController {
 	 * 右键事件
 	 * @param $event
 	 */
-	onRightClick($event) {
-		this.onOpenMenu(this.node, $event);
+	onRightClick() {
+		this.onOpenMenu(this.node);
 	}
 
 	/**

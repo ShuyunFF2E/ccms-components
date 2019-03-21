@@ -9,17 +9,22 @@ import treeListController from './list/TreeListController.js';
 import treeNodeController from './node/TreeNodeController';
 import treeNodeTemplate from './node/node.tpl.html';
 
+import menuController from './menu/menuController';
+import menuTemplate from './menu/menu.tpl.html';
+
 import ccCheckbox from '../checkbox';
 import ccRadio from '../radio';
-import menuTemplate from './menu/menu.tpl.html';
+
 import treeSearch from './search';
 
 const menuDDO = {
+	controller: menuController,
 	template: menuTemplate,
 	bindings: {
-		cmStyle: '<',
-		activeNode: '<',
-		items: '<'
+		menuHash: '<',
+		treeMap: '<',
+		addToPosition: '<?',
+		activeNode: '<'
 	}
 };
 

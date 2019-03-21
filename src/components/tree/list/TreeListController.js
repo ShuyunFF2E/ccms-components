@@ -14,6 +14,7 @@ export default class TreeListCtrl {
 				return true;
 			}
 			if (node.children && node.children.length) {
+				node.isClosed = false;
 				return node.children.some(child => _filter(child));
 			}
 			return false;
