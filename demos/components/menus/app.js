@@ -143,6 +143,7 @@ angular
 				console.log('结果:', unfold);
 			},
 			menusResource: $resource('/api/menus'),
+			menuPlaceholder: '<div class="menu-goto-old"><a href="http://gridmanager.lovejavascript.com" target="_blank">切换旧版</a></div>',
 			shopsResource: $resource('/api/shops'),
 			shopItemTpl: './tpls/shop-item.html',
 			shopLogoStyle: {border: 'solid 1px #08bb08'},

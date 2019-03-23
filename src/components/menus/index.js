@@ -29,6 +29,7 @@ const menusBarDDO = {
 			expandMenus: '<?', // 初始化时, 是否展开所有菜单 (不包含, 含有 active 的子菜单) 默认值是 false
 			menuSource: '<',
 			shopSource: '<?',
+			menuPlaceholder: '<?', // 菜单占位符，可用于做一下自由化的插入功能
 			searchPlaceholder: '<?',
 			shopItemTpl: '<?', // 店铺模板
 			shopLogoStyle: '<?', // logo样式

@@ -2,6 +2,7 @@
 <meta charset="UTF-8">
 <title>菜单栏</title>
 <link rel="stylesheet" href="./tpls/shop-item.css">
+<link rel="stylesheet" href="./style.css">
 
 <main ng-app="componentsApp" ng-controller="ctrl as app">
     <div class="ccmsc-main-container" ng-class="{'contract-left':!app.menusOptions.unfold}">
@@ -12,6 +13,7 @@
 					expand-menus="app.menusOptions.expandMenus"
                     on-unfold="app.menusOptions.unfoldClick"
                     menu-source="app.menusOptions.menusResource"
+                    menu-placeholder="app.menusOptions.menuPlaceholder"
                     shop-source="app.menusOptions.shopsResource"
                     shop-item-tpl="app.menusOptions.shopItemTpl"
                     shop-logo-style="app.menusOptions.shopLogoStyle"
