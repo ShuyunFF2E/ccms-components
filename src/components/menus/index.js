@@ -30,6 +30,7 @@ const menusBarDDO = {
 			menuSource: '<',
 			shopSource: '<?',
 			menuPlaceholder: '<?', // 菜单占位符，可用于做一下自由化的插入功能
+			menuPlaceholderClick: '&?',
 			searchPlaceholder: '<?',
 			shopItemTpl: '<?', // 店铺模板
 			shopLogoStyle: '<?', // logo样式
