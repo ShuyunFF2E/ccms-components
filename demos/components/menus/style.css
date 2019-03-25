@@ -1,0 +1,16 @@
+.menu-goto-old{
+	height: 30px;
+	line-height: 30px;
+	background-color: #829abe;
+	cursor: pointer;
+}
+.menu-goto-old:hover{
+	 opacity: 0.9;
+ }
+.menu-goto-old span{
+	color: #fff;
+	font-size: 14px;
+}
+.menu-goto-old span:hover{
+	color: #fff;
+}

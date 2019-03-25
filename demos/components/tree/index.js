@@ -205,11 +205,45 @@ const tree_two = {
 	}]
 };
 
-// 无搜索、无选择、无菜单
+// 无搜索、无选择
 const tree_three = {
+	// 是否支持菜单
+	supportMenu: true,
+
 	// 节点选中回调
 	onSelectedAction: (node, selectedList) => {
 		console.log(node, selectedList);
+	},
+
+
+	// 右键菜单: 新增节点处理器
+	onAddAction: (pId, name) => {
+		// 这里需要模拟一条API请求
+		console.info(`向后端发送了一条新增请求，参数为{pId:${pId}, name: ${name}}`);
+		return new Promise((resolve, reject) => {
+			resolve({id: Math.random()});
+			// reject('error');
+		});
+	},
+
+	// 右键菜单: 重命名节点处理器
+	onRenameAction: (node, newName) => {
+		// 这里需要模拟一条API请求
+		console.info(`向后端发送了一条修改请求，参数为{id:${node.id}, name: ${newName}}`);
+		return new Promise((resolve, reject) => {
+			resolve();
+			// reject('重命名失败了');
+		});
+	},
+
+	// 右键菜单: 删除节点处理器
+	onRemoveAction: node => {
+		// 这里需要模拟一条API请求
+		console.info(`向后端发送了一条删除请求，参数为{id:${node.id}}`);
+		return new Promise((resolve, reject) => {
+			resolve();
+			// reject('该节点不允许删除');
+		});
 	},
 
 	data: [{

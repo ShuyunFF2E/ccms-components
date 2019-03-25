@@ -31,7 +31,7 @@ export default class TipsService {
 	}
 
 	// 在ui-view环境下容器引用会在路由切换情况下变化,必须重新获取容器引用
-	_create(type, msg, contextContainer = document.querySelector('ui-view ui-view') || document.body) {
+	_create(type, msg, contextContainer = document.querySelector('ui-view ui-view') || document.body, isAutoClose) {
 
 		// 性能考虑,模板只编译一次
 		if (!this._linkedTpl) {
@@ -61,7 +61,7 @@ export default class TipsService {
 		// 成功类型的tips在用户点击close按钮或者timeout完成时自动关闭
 		const closePromise = new Promise(resolve => scope.$close = resolve);
 		const timeOutPromise = new Promise(resolve => setTimeout(resolve, AUTO_CLOSE_DELAY));
-		const racePromises = (type === TIPS_TYPE.SUCCESS) ? [closePromise, timeOutPromise] : [closePromise];
+		const racePromises = isAutoClose ? [closePromise, timeOutPromise] : [closePromise];
 		Promise.race(racePromises).then(::tips.close);
 
 		// 根据上下文容器设置提示层位置
@@ -77,16 +77,22 @@ export default class TipsService {
 	 * @param {DOMElement} container
 	 */
 	success(msg, container) {
-		return this._create(TIPS_TYPE.SUCCESS, msg, container);
+		return this._create(TIPS_TYPE.SUCCESS, msg, container, true);
 	}
 
 	/**
 	 * popup error tip
 	 * @param {String} msg
 	 * @param {DOMElement} container
+	 * @param {Boolean} isAutoClose
 	 */
-	error(msg, container) {
-		return this._create(TIPS_TYPE.ERROR, msg, container);
+	error(msg, container, isAutoClose) {
+		if (typeof container === 'boolean') {
+			isAutoClose = container;
+			container = undefined;
+		}
+
+		return this._create(TIPS_TYPE.ERROR, msg, container, isAutoClose);
 	}
 
 }

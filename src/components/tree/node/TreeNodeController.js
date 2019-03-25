@@ -154,8 +154,8 @@ export default class TreeNodeController {
 	 * 右键事件
 	 * @param $event
 	 */
-	onRightClick($event) {
-		this.onOpenMenu(this.node, $event);
+	onRightClick() {
+		this.onOpenMenu(this.node);
 	}
 
 	/**
@@ -213,7 +213,7 @@ export default class TreeNodeController {
 
 			// 验证特殊字符
 			if (!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(name)) {
-				reject('名称中存在特殊字符!');
+				reject('名称仅支持中英文、数字和下划线!');
 			}
 
 			// 验证长度
@@ -250,7 +250,7 @@ export default class TreeNodeController {
 					this.updateConnecting(false);
 				});
 		}, msg => {
-			this._$ccTips.error(msg);
+			this._$ccTips.error(msg, true);
 		});
 	};
 
@@ -274,7 +274,7 @@ export default class TreeNodeController {
 					this.updateConnecting(false);
 				});
 		}, msg => {
-			this._$ccTips.error(msg);
+			this._$ccTips.error(msg, true);
 		});
 	};
 
