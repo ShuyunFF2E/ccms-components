@@ -7,7 +7,7 @@
 var path = require('path');
 var jsonServer = require('json-mock-kuitos');
 var webpack = require('webpack');
-var config = require('./webpack-dev.config');
+var config = require('./webpack.config')({production: false});
 
 var app = jsonServer.create();
 var compiler = webpack(config);

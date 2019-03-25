@@ -1,8 +1,0 @@
-<!--每条数据前的checkbox-->
-<td class="checkbox">
-	<cc-checkbox ng-if="!$ctrl.opts.isSingleSelected" ng-disabled="entity.isDisableChecked" ng-checked="entity.$selected"></cc-checkbox>
-	<cc-radio ng-if="$ctrl.opts.isSingleSelected" ng-disabled="entity.isDisableChecked" ng-model="$ctrl.opts.radio.value" value="{{entity.id}}"></cc-radio>
-</td>
-<!--引入默认的表格行元素 html-loader -->
-${require('../../grid/tpls/default-row-cell.tpl.html')}
-

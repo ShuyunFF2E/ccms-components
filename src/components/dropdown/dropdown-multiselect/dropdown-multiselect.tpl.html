@@ -36,7 +36,7 @@
 				<label ng-disabled="item.disabled">
 					<input type="checkbox"
 							ng-checked="$ctrl.selection.indexOf(item) > -1"
-							ng-click="$ctrl.toggleSelection(item)"
+							ng-click="$ctrl.toggleSelection(item, $event)"
 							ng-disabled="item.disabled">
 					<span ng-bind-html="$ctrl.highlight(item[$ctrl.mapping.displayField], item.hiText || $ctrl.title)" title="{{item[$ctrl.mapping.displayField]}}"></span>
 				</label>

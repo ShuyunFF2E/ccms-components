@@ -16,7 +16,7 @@ function build() {
 	npm install --registry=https://registry.npm.taobao.org
 
 	# webpack build
-	NODE_ENV=production webpack --config webpack-build.config.js
+	NODE_ENV=production webpack --env.production=true --config webpack.config.js
 
 	# copy files
 	cp package.json dist
