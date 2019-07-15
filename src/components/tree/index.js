@@ -23,6 +23,7 @@ const menuDDO = {
 	bindings: {
 		menuHash: '<',
 		treeMap: '<',
+		maxLevel: '<?',
 		addToPosition: '<?',
 		activeNode: '<'
 	}
