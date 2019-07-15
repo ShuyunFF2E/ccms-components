@@ -22,6 +22,7 @@ const menuDDO = {
 	template: menuTemplate,
 	bindings: {
 		menuHash: '<',
+		maxLevel: '<?',
 		treeMap: '<',
 		addToPosition: '<?',
 		activeNode: '<'
