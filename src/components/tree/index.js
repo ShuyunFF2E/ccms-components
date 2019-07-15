@@ -24,7 +24,6 @@ const menuDDO = {
 		menuHash: '<',
 		maxLevel: '<?',
 		treeMap: '<',
-		maxLevel: '<?',
 		addToPosition: '<?',
 		activeNode: '<'
 	}
