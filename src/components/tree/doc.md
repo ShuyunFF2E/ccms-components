@@ -24,6 +24,7 @@ const data = [
 - supportSearch: 是否支持搜索功能 `Boolean`
 - supportCheckbox: 是否支持选择功能 `Boolean`
 - isRadioModel: 是否为单选模试, 仅在supportCheckbox为true时生效 `Boolean`
+- hideRadioModel: 单选时是否隐藏单选icon `Boolean`
 - addToPosition: 新节点添加后所在的位置 `String` 1.`after`, 2.`before` 默认值`after`
 - nodeMaxLen: 节点名称最大长度 `String` 默认值`20`
 
