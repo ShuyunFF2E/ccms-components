@@ -42,6 +42,7 @@ const treeDDO = {
 		supportSearch: '<?',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
+		hideRadioModel: '<?',
 		addToPosition: '<?',
 		onSelectedAction: '<?',
 		onRemoveAction: '<?',
@@ -61,6 +62,7 @@ const treeListDDO = {
 		nodeMaxLen: '<',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
+		hideRadioModel: '<?',
 		onOpenMenu: '<?'
 	}
 };
@@ -76,6 +78,7 @@ const treeNodeDDO = {
 		nodeMaxLen: '<',
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
+		hideRadioModel: '<?',
 		onOpenMenu: '<?'
 	}
 };
