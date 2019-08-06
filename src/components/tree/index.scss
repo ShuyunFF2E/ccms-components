@@ -106,6 +106,9 @@
 		&.active{
 			background: #e7f3fc;
 		}
+		&.radio-type.selected{
+			background: #e7f3fc;
+		}
 		cc-checkbox{
 			width: 100%;
 			.cc-checkbox {

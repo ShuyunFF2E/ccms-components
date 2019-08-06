@@ -136,13 +136,14 @@ const tree_two = {
 
 	// 是否为单选模式
 	isRadioModel: true,
+	hideRadioModel: true,
 
 	// 是否支持搜索框
 	supportSearch: false,
 
 	// 节点选中回调
 	onSelectedAction: (node, selectedList) => {
-		console.log(node, selectedList);
+		console.log('onSelectedAction: ', node, selectedList);
 	},
 
 	data: [{
@@ -159,6 +160,7 @@ const tree_two = {
 						id: 111,
 						name: '2232322323223232232322323223232232322323',
 						pId: 11,
+						checked: true,
 						categoryType: 0
 					}
 				]
