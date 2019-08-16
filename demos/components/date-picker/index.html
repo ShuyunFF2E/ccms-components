@@ -242,6 +242,25 @@
 				display-format="YYYYMMDDhhmm"
 		></cc-date-picker>
 	</p>
+	<h1>DEMO: 12 控制年份范围 minYear maxYear </h1>
+    	<p>
+    		<cc-date-picker
+    				ng-model="app.dateConfig.model"
+    				required="true"
+    				disabled="false"
+    				disable-scroll-into-view="true"
+    				display-format="YYYYMMDDhhmm"
+    				min-date="app.dateConfig.minDate"
+                    max-date="app.dateConfig.maxDate"
+                    min-year="app.dateConfig.minYear"
+                    max-year="app.dateConfig.maxYear"
+    		></cc-date-picker>
+    		<button ng-click="app.changeMaxDate()">change range(minYear: 2019,maxYear: 2026,minDate: 2019.6.10,maxDate: 2025.6.10)</button>
+    		<button ng-click="app.changeMaxDate11()">change range(minYear: 2019,maxYear: 2024)</button>
+    		</br>
+    		<cc-date-range opts="app.dateRangeOpts"></cc-date-range>
+    		<button ng-click="app.changeMaxDate1()">change range(minYear:2019,maxYear:2025)</button>
+    	</p>
 </main>
 
 <script src="/components.js"></script>
@@ -368,6 +387,36 @@
 				required: false,
 				disableScrollIntoView: true,
 				disableYear: true
+			};
+
+			self.dateConfig = {
+				model: new Date(2009, 4, 19)
+			};
+			self.changeMaxDate = () => {
+				Object.assign(self.dateConfig, {
+					minYear: 2019,
+					maxYear: 2026,
+					minDate: new Date(2019, 5, 10),
+                    maxDate: new Date(2025, 5, 10)
+				});
+			};
+			self.changeMaxDate11 = () => {
+				Object.assign(self.dateConfig, {
+					// minYear: 2022,
+					maxYear: 2024,
+					// minDate: new Date(2023, 5, 10),
+                    // maxDate: new Date(2024, 5, 10)
+				});
+			};
+			self.dateRangeOpts = {};
+			self.changeMaxDate1 = () => {
+				Object.assign(self.dateRangeOpts, {
+					// start: new Date(2028, 5, 10),
+					minYear: 2019,
+					maxYear: 2025
+					// minDate: new Date(2022, 5, 10),
+                    // maxDate: new Date(2025, 5, 10)
+				});
 			};
 
 		});

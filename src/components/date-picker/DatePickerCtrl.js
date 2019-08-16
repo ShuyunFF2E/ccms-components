@@ -41,7 +41,7 @@ export default class DatePickerCtrl {
 		}
 
 		// 当开始和结束日期变化时, 清除过期的报错信息
-		$scope.$watchGroup(['ctrl.minDate', 'ctrl.maxDate'], () => {
+		$scope.$watchGroup(['ctrl.minDate', 'ctrl.maxDate', 'ctrl.minYear', 'ctrl.maxYear'], () => {
 			if (this._displayValue) {
 				this.checkValidity(this._displayValue);
 			}
@@ -91,13 +91,35 @@ export default class DatePickerCtrl {
 	checkValidity(dateValue) {
 		this.clearErrorMessage();
 
-		if (dateValue && this.minDate && (this.compareDateWithoutMilliseconds(this.minDate, dateValue))) {
+		let { minDate, maxDate, minYear, maxYear } = this;
+		const { minDate: min, maxDate: max, minYearDate, maxYearDate } = this.getMinMaxDate(minYear, maxYear, minDate, maxDate);
+
+		if (dateValue && min && (this.compareDateWithoutMilliseconds(min, dateValue))) {
 			this.ngModelCtrl.$setValidity('minDate', false);
-			this.createErrorTip(`时间不能早于 ${service.$filter('date')(this.minDate, 'yyyy-MM-dd HH:mm:ss')}`);
-		} else if (dateValue && this.maxDate && (this.compareDateWithoutMilliseconds(dateValue, this.maxDate))) {
+			this.createErrorTip(`时间不能早于 ${service.$filter('date')(min, 'yyyy-MM-dd HH:mm:ss')}`);
+		} else if (dateValue && max && (this.compareDateWithoutMilliseconds(dateValue, max))) {
 			this.ngModelCtrl.$setValidity('maxDate', false);
-			this.createErrorTip(`时间不能晚于 ${service.$filter('date')(this.maxDate, 'yyyy-MM-dd HH:mm:ss')}`);
+			this.createErrorTip(`时间不能晚于 ${service.$filter('date')(max, 'yyyy-MM-dd HH:mm:ss')}`);
+		} else if (dateValue && minYear && minYearDate && this.compareDateWithoutMilliseconds(minYearDate, dateValue)) {
+			this.ngModelCtrl.$setValidity('minDate', false);
+			this.createErrorTip(`时间不能早于 ${service.$filter('date')(minYearDate, 'yyyy-MM-dd HH:mm:ss')}`);
+		} else if (dateValue && maxYear && maxYearDate && this.compareDateWithoutMilliseconds(dateValue, maxYearDate)) {
+			this.ngModelCtrl.$setValidity('maxDate', false);
+			this.createErrorTip(`时间不能晚于 ${service.$filter('date')(maxYearDate, 'yyyy-MM-dd HH:mm:ss')}`);
 		}
+	}
+
+	getMinMaxDate(minYear, maxYear, minDate, maxDate) {
+
+		const minYearDate = minYear ? new Date(minYear, 0, 1, 0, 0, 0) : undefined;
+		if (minYear && (minDate && minYearDate >= minDate || !minDate)) {
+			minDate = minYearDate;
+		}
+		const maxYearDate = maxYear ? new Date(maxYear, 11, 31, 12, 59, 59) : undefined;
+		if (maxYear && (maxDate && maxYearDate <= maxDate || !maxDate)) {
+			maxDate = maxYearDate;
+		}
+		return { minDate, maxDate, minYearDate, maxYearDate };
 	}
 
 	/**

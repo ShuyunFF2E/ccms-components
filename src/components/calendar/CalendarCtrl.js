@@ -59,17 +59,6 @@ const MIN_YEAR = 1900;
 const MAX_YEAR = new Date().getFullYear() + 30;
 
 
-const yearList = (function() {
-	const result = [];
-
-	for (let i = MIN_YEAR; i <= MAX_YEAR; i += 1) {
-		result.push(i + '');
-	}
-
-	return result;
-}());
-
-
 @Inject('$scope', '$element')
 export default class DatePickerCtrl {
 
@@ -78,7 +67,7 @@ export default class DatePickerCtrl {
 		this.$element = $element;
 
 		this.DISPLAY_FORMAT = DISPLAY_FORMAT;
-		this.years = yearList;
+		this.years = this.getYearList();
 		this.months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 		this.customFestivals = this.customFestivals || {};
 		this.festivals = Object.assign({}, festivals, lunnarFestivals, this.customFestivals);
@@ -86,18 +75,43 @@ export default class DatePickerCtrl {
 		this.close = this.close.bind(this);
 
 		$scope.$watch('ctrl.value', dateValue => {
-			if (dateValue) {
+			if (dateValue instanceof Date && !isNaN(dateValue.getTime())) {
 				this.createTimeRange(dateValue);
 				this.parts = destructDate(dateValue, this.datePicker.dateOnly);
 				this.parts.month = this.parts.month.replace(/^0/, '') - 1 + '';
 			}
 		});
 
-		$scope.$watchGroup(['ctrl.datePicker.minDate', 'ctrl.datePicker.maxDate'], () => {
+		$scope.$watchGroup(['ctrl.datePicker.minDate', 'ctrl.datePicker.maxDate', 'ctrl.minYear', 'ctrl.maxYear'], ([ minDate, maxDate, minYear, maxYear ]) => {
 			if (this._realValue) {
 				this.createTimeRange(this._realValue);
 			}
+			if (minYear || maxYear) {
+
+				// 更新年份下拉列表
+				this.years = this.getYearList(minYear, maxYear);
+
+				// 更新当前默认年份
+				const { year } = this.parts || {};
+				const { minDate: min, maxDate: max } = this.datePicker.getMinMaxDate(minYear, maxYear, minDate, maxDate);
+				if (this.range && (min && year < min.getFullYear() || max && year > max.getFullYear())) {
+					this.parts.year = this.years[0];
+				}
+			}
 		});
+	}
+
+	getYearList(minYear, maxYear) {
+		const result = [];
+
+		minYear = minYear || MIN_YEAR;
+		maxYear = maxYear || MAX_YEAR;
+
+		for (let i = minYear; i <= maxYear; i += 1) {
+			result.push(i + '');
+		}
+
+		return result;
 	}
 
 	hideYear() {
@@ -140,6 +154,7 @@ export default class DatePickerCtrl {
 	 */
 	changeYear() {
 		this.setLGButtonStatus();
+		(this.minYear || this.maxYear) && !this.parts.year && (this.parts.year = this.years[0]);
 		this.value = new Date(new Date(this.value).setFullYear(this.parts.year));
 	}
 
@@ -181,8 +196,7 @@ export default class DatePickerCtrl {
 		const currentTime = new Date(new Date(dateValue).setHours(0, 0, 0, 0)),
 			monthStart = new Date(new Date(currentTime).setDate(1)).setHours(0, 0, 0, 0),
 
-			minDate = this.datePicker.minDate,
-			maxDate = this.datePicker.maxDate,
+			{ minDate, maxDate } = this.datePicker.getMinMaxDate(this.minYear, this.maxYear, this.datePicker.minDate, this.datePicker.maxDate),
 			start = this.datePicker.start,
 			end = this.datePicker.end,
 
@@ -228,8 +242,8 @@ export default class DatePickerCtrl {
 	 * 判断值是否合法
 	 */
 	isValid() {
-		const min = this.datePicker.minDate,
-			max = this.datePicker.maxDate;
+		const { datePicker: { minDate, maxDate }, minYear, maxYear } = this;
+		const { minDate: min, maxDate: max } = this.datePicker.getMinMaxDate(minYear, maxYear, minDate, maxDate);
 
 		return (!min || (min && this.value >= min)) && (!max || (max && this.value <= max));
 	}
@@ -252,7 +266,7 @@ export default class DatePickerCtrl {
 			this.setValue(datePicker.ngModelCtrl.$viewValue, true, false);
 		}
 
-		// 如果是 range 且为 rangeStart 时间设置为 23:59:59
+		// 如果是 range 且为 rangeEnd 时间设置为 23:59:59
 		if (this.range && this.datePicker.rangeEnd && !datePicker.ngModelCtrl.$viewValue) {
 			this.setValue(datePicker.ngModelCtrl.$viewValue, false, true);
 		}
@@ -260,6 +274,24 @@ export default class DatePickerCtrl {
 		// 如果是设置了默认显示的CalendarValue
 		if (!angular.isUndefined(this.defaultCalendarValue) && !datePicker.ngModelCtrl.$viewValue) {
 			this.setValue(this.defaultCalendarValue);
+		}
+
+		const { minYear, maxYear } = this;
+		if (minYear || maxYear) {
+			const { ngModelCtrl: { $viewValue }, rangeEnd, minDate, maxDate } = datePicker;
+
+			const { minDate: min, maxDate: max, minYearDate } = this.datePicker.getMinMaxDate(minYear, maxYear, minDate, maxDate);
+			const currentDate = new Date();
+
+			let value = $viewValue
+				? (min && min >= $viewValue || max && max <= $viewValue ? min : $viewValue)
+				: (max && currentDate <= max || min && currentDate >= min ? currentDate : min);
+
+			if (value && this.years.indexOf(value.getFullYear().toString()) === -1) {
+				value = minYearDate;
+			}
+
+			this.setValue(value, false, this.range && rangeEnd);
 		}
 
 		// 隐藏其余日历
