@@ -59,17 +59,6 @@ const MIN_YEAR = 1900;
 const MAX_YEAR = new Date().getFullYear() + 30;
 
 
-const yearList = (function() {
-	const result = [];
-
-	for (let i = MIN_YEAR; i <= MAX_YEAR; i += 1) {
-		result.push(i + '');
-	}
-
-	return result;
-}());
-
-
 @Inject('$scope', '$element')
 export default class DatePickerCtrl {
 
@@ -78,7 +67,7 @@ export default class DatePickerCtrl {
 		this.$element = $element;
 
 		this.DISPLAY_FORMAT = DISPLAY_FORMAT;
-		this.years = yearList;
+		this.years = this.getYearList();
 		this.months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 		this.customFestivals = this.customFestivals || {};
 		this.festivals = Object.assign({}, festivals, lunnarFestivals, this.customFestivals);
@@ -97,7 +86,22 @@ export default class DatePickerCtrl {
 			if (this._realValue) {
 				this.createTimeRange(this._realValue);
 			}
+			this.years = this.getYearList(this.datePicker.maxDate, this.datePicker.minDate);
 		});
+	}
+
+	getYearList(maxDate, minDate) {
+		const { isSetYearRange } = this;
+		const maxYear = isSetYearRange && maxDate ? new Date(maxDate).getFullYear() : MAX_YEAR;
+		const minYear = isSetYearRange && minDate ? new Date(minDate).getFullYear() : MIN_YEAR;
+
+		const result = [];
+
+		for (let i = minYear; i <= maxYear; i += 1) {
+			result.push(i + '');
+		}
+
+		return result;
 	}
 
 	hideYear() {
@@ -140,6 +144,9 @@ export default class DatePickerCtrl {
 	 */
 	changeYear() {
 		this.setLGButtonStatus();
+		if (this.isSetYearRange && this.range && this.datePicker.rangeEnd) {
+			this.parts.year = this.years[0];
+		}
 		this.value = new Date(new Date(this.value).setFullYear(this.parts.year));
 	}
 
@@ -252,7 +259,7 @@ export default class DatePickerCtrl {
 			this.setValue(datePicker.ngModelCtrl.$viewValue, true, false);
 		}
 
-		// 如果是 range 且为 rangeStart 时间设置为 23:59:59
+		// 如果是 range 且为 rangeEnd 时间设置为 23:59:59
 		if (this.range && this.datePicker.rangeEnd && !datePicker.ngModelCtrl.$viewValue) {
 			this.setValue(datePicker.ngModelCtrl.$viewValue, false, true);
 		}
@@ -260,6 +267,14 @@ export default class DatePickerCtrl {
 		// 如果是设置了默认显示的CalendarValue
 		if (!angular.isUndefined(this.defaultCalendarValue) && !datePicker.ngModelCtrl.$viewValue) {
 			this.setValue(this.defaultCalendarValue);
+		}
+
+		if (this.isSetYearRange) {
+			if (this.datePicker.rangeEnd && this.range) {
+				this.setValue(this.datePicker.minDate, false, true);
+			} else {
+				this.setValue(this.datePicker.minDate);
+			}
 		}
 
 		// 隐藏其余日历

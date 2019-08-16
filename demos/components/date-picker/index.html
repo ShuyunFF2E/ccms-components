@@ -242,6 +242,22 @@
 				display-format="YYYYMMDDhhmm"
 		></cc-date-picker>
 	</p>
+	<h1>DEMO: 12 控制年份范围 </h1>
+	<p>
+		<cc-date-picker
+				ng-model="app.dateConfig.model"
+				required="true"
+				disabled="false"
+				disable-scroll-into-view="true"
+				display-format="YYYYMMDDhhmm"
+				min-date="app.dateConfig.minDate"
+                max-date="app.dateConfig.maxDate"
+                is-set-year-range="app.dateConfig.isSetYearRange"
+		></cc-date-picker>
+		<button ng-click="app.changeMaxDate()">change maxDate</button>
+		</br>
+		<cc-date-range opts="app.dateRangeOpts"></cc-date-range>
+	</p>
 </main>
 
 <script src="/components.js"></script>
@@ -368,6 +384,19 @@
 				required: false,
 				disableScrollIntoView: true,
 				disableYear: true
+			};
+
+			self.dateConfig = {
+				model: null,
+				minDate: new Date(2020, 4, 19),
+				maxDate: new Date(2030, 5, 10),
+				isSetYearRange: true
+			};
+			self.changeMaxDate = () => {
+				self.dateConfig.maxDate = new Date(2025, 5, 10);
+			};
+			self.dateRangeOpts = {
+				isSetYearRange: true
 			};
 
 		});

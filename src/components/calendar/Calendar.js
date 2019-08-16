@@ -24,7 +24,8 @@ export default {
 		customFestivals: '<?',
 		disableYear: '<?',
 		disableMonth: '<?',
-		displayFormat: '@?'
+		displayFormat: '@?',
+		isSetYearRange: '<?'
 	},
 	template,
 
