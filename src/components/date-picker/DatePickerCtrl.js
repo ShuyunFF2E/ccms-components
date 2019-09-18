@@ -355,7 +355,7 @@ export default class DatePickerCtrl {
 		if (input.value.length === +input.maxLength) {
 			// 校验年的范围
 			if (input.name === 'year') {
-				if (input.value < 1900 || input.value > new Date().getFullYear() + 30) {
+				if (input.value < 1990 || input.value > new Date().getFullYear() + 30) {
 					this.parts[input.name] = '';
 					setTextWidth(input);
 					return;

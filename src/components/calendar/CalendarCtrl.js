@@ -49,14 +49,14 @@ const lunnarFestivals = {
 };
 
 const dateRange = {
-	preMinDate: new Date(1900, 1, 1),
+	preMinDate: new Date(1990, 1, 1),
 	preMaxDate: new Date((new Date()).getFullYear() + 30, 11, 1),
-	minDate: new Date(1900, 0, 1), // 闭
+	minDate: new Date(1990, 0, 1), // 闭
 	maxDate: new Date((new Date()).getFullYear() + 31, 0, 1) // 开
 };
 
-const MIN_YEAR = 1900;
-const MAX_YEAR = new Date().getFullYear() + 30;
+const MIN_YEAR = 1990;
+const MAX_YEAR = new Date().getFullYear() + 10;
 
 
 @Inject('$scope', '$element')
