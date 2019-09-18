@@ -36,7 +36,9 @@ export default {
 		disableScrollIntoView: '<?',
 		disableYear: '<?',
 		disableMonth: '<?',
-		displayFormat: '@?'
+		displayFormat: '@?',
+		minYear: '<?',
+		maxYear: '<?'
 	},
 	template,
 
