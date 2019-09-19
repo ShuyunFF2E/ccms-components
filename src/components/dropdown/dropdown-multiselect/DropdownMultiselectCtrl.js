@@ -275,6 +275,8 @@ export default class DropdownMultiselectCtrl {
 	}
 
 	onOpen() {
+		this.selectAll = this._clampedEnabledDatalist.length > 0 && this.selection.length >= this._clampedEnabledDatalist.length;
+
 		let scope = this.getScope();
 
 		const input = this.getInputElement();
