@@ -255,8 +255,8 @@
                     min-year="app.dateConfig.minYear"
                     max-year="app.dateConfig.maxYear"
     		></cc-date-picker>
-    		<button ng-click="app.changeMaxDate()">change range(minYear: 2019,maxYear: 2026,minDate: 2019.6.10,maxDate: 2025.6.10)</button>
-    		<button ng-click="app.changeMaxDate11()">change range(minYear: 2019,maxYear: 2024)</button>
+    		<button ng-click="app.changeMaxDate()">change range(minYear: 1921,maxYear: 2026,minDate: 1921.6.10,maxDate: 2040.6.10)</button>
+    		<button ng-click="app.changeMaxDate11()">change range(maxYear: 2024)</button>
     		</br>
     		<cc-date-range opts="app.dateRangeOpts"></cc-date-range>
     		<button ng-click="app.changeMaxDate1()">change range(minYear:2019,maxYear:2025)</button>
@@ -394,10 +394,10 @@
 			};
 			self.changeMaxDate = () => {
 				Object.assign(self.dateConfig, {
-					minYear: 2019,
-					maxYear: 2026,
-					minDate: new Date(2019, 5, 10),
-                    maxDate: new Date(2025, 5, 10)
+					minYear: 1921,
+					maxYear: 2040,
+					minDate: new Date(1921, 5, 10),
+                    maxDate: new Date(2040, 5, 10)
 				});
 			};
 			self.changeMaxDate11 = () => {

@@ -275,6 +275,10 @@ export default class DatePickerCtrl {
 		const input = $event.target,
 			parts = this.parts;
 
+		if (input.name === 'year' && input.value.length < 4) {
+			this.parts.year = '';
+		}
+
 		let dateValue = this.toDateValue(parts);
 
 		input.value = addZero(input.value);
@@ -355,7 +359,7 @@ export default class DatePickerCtrl {
 		if (input.value.length === +input.maxLength) {
 			// 校验年的范围
 			if (input.name === 'year') {
-				if (input.value < 1990 || input.value > new Date().getFullYear() + 30) {
+				if (input.value < (this.minYear || 1990) || input.value > (this.maxYear || new Date().getFullYear() + 10)) {
 					this.parts[input.name] = '';
 					setTextWidth(input);
 					return;
