@@ -50,9 +50,9 @@ const lunnarFestivals = {
 
 const dateRange = {
 	preMinDate: new Date(1990, 1, 1),
-	preMaxDate: new Date((new Date()).getFullYear() + 30, 11, 1),
+	preMaxDate: new Date((new Date()).getFullYear() + 10, 11, 1),
 	minDate: new Date(1990, 0, 1), // 闭
-	maxDate: new Date((new Date()).getFullYear() + 31, 0, 1) // 开
+	maxDate: new Date((new Date()).getFullYear() + 11, 0, 1) // 开
 };
 
 const MIN_YEAR = 1990;
@@ -127,13 +127,13 @@ export default class DatePickerCtrl {
 	}
 
 	setLGButtonStatus() {
-		if (this.parts.month === '0' && this.parts.year === MIN_YEAR + '') {
+		if (this.parts.month === '0' && this.parts.year === (this.minYear || MIN_YEAR) + '') {
 			this.disabledL = true;
 		} else {
 			this.disabledL = false;
 		}
 
-		if (this.parts.month === '11' && this.parts.year === MAX_YEAR + '') {
+		if (this.parts.month === '11' && this.parts.year === (this.maxYear || MAX_YEAR) + '') {
 			this.disabledG = true;
 		} else {
 			this.disabledG = false;
@@ -359,19 +359,24 @@ export default class DatePickerCtrl {
 		if (this.disableYear || this.disableMonth) return;
 		const newDate = new Date(new Date(this.value).setMonth(this.value.getMonth() + delta));
 
-		if (newDate < dateRange.preMinDate) {
+		const { minYear, maxYear } = this;
+
+		const minYearDate = minYear ? new Date(minYear, 1, 1) : undefined;
+		const maxYearDate = maxYear ? new Date(maxYear, 11, 1) : undefined;
+
+		if (newDate < (minYearDate || dateRange.preMinDate)) {
 			this.disabledL = true;
 		} else {
 			this.disabledL = false;
 		}
 
-		if (newDate >= dateRange.preMaxDate) {
+		if (newDate >= (maxYearDate || dateRange.preMaxDate)) {
 			this.disabledG = true;
 		} else {
 			this.disabledG = false;
 		}
 
-		if (newDate >= dateRange.minDate && newDate < dateRange.maxDate) {
+		if (newDate >= (minYear ? new Date(minYear, 0, 1) : dateRange.minDate) && newDate < (maxYear ? new Date(maxYear, 11, 31) : dateRange.maxDate)) {
 			this.value = newDate;
 		}
 	};
