@@ -107,7 +107,7 @@
     "ccms-icons": "0.0.6",
     "chinese-lunar": "^0.1.4",
     "core-js": "^2.5.3",
-    "jquery": "3.0.0",
+    "jquery": "3.4.0",
     "jquery.nicescroll": "^3.6.8",
     "lodash.clonedeep": "^4.5.0",
     "lodash.unionby": "^4.8.0",
