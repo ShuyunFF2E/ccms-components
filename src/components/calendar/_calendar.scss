@@ -130,7 +130,12 @@
 	text-align: left;
 }
 
+.calendar-button-cancel {
+	@extend %button;
+}
+
 .calendar-button-ok {
+	@extend %button;
 	@extend %btn-primary;
 	float: right;
 }
