@@ -1,8 +1,9 @@
-/**
- * @author Kuitos
- * @homepage https://github.com/kuitos/
- * @since 2016-07-14
+/*
+ * @Author: fang.yang
+ * @Date: 2019-12-18 09:47:13
+ * @Description: [只用于 karma 测试使用]
  */
+
 var path = require('path');
 module.exports = {
 	module: {
