@@ -331,7 +331,7 @@ angular.module('componentsApp', ['ccms.components', 'ngResource'])
 
 		this.gridOption4 = {
 
-			resource: $resource('/api/pages/10'),
+			resource: $resource('/api/pages/1'),
 			columnsDef: [
 				{
 					cellTemplate: '<span style="color:#145681" ng-bind="entity.name" ng-click="app.click()"></span>',

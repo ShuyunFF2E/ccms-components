@@ -1,4 +1,4 @@
-# CCMS Components 
+# CCMS Components
 [![Build Status](https://img.shields.io/travis/ShuyunFF2E/ccms-components/master.svg?style=flat-square)](https://travis-ci.org/ShuyunFF2E/ccms-components) 
 [![npm version](https://img.shields.io/npm/v/ccms-components.svg?style=flat-square)](https://www.npmjs.com/package/ccms-components)
 [![npm downloads](https://img.shields.io/npm/dt/ccms-components.svg?style=flat-square)](https://www.npmjs.com/package/ccms-components)
@@ -127,7 +127,7 @@ npm run release -- <version_category: major | minor | patch>
 npm run release -- <version_category: major | minor | patch> --branch <branch_name>
 ```
 
-以下是 release 脚本内部所执行的子任务，其中正式版本执行 [1, 2, 3, 4]，测试版本执行 [1, 2, 3]。当 release 脚本出错中断时，可以手动运行对应的脚本进行发布（需要注意参数）。
+以下是 release 脚本内部所执行的子任务，包含[1, 2, 3]。当 release 脚本出错中断时，可以手动运行对应的脚本进行发布（需要注意参数）。
 
 1. 处理分支，打标签
 
@@ -153,12 +153,3 @@ npm run release -- <version_category: major | minor | patch> --branch <branch_na
    # 将 dist/ 中 build 好的代码上传到 npm 仓库
    npm run publish:package
    ```
-
-4. 发布文档
-
-   ```bash
-   # 发布 gh-pages 文档
-   # 可以指定代码版本参数（如 v2.0.1），默认发布最新的代码版本
-   npm run publish:docs [-- <version_tag>]
-   ```
-
