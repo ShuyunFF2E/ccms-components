@@ -9,3 +9,5 @@ npm-debug.log
 .DS_Store
 
 cloud-angular-site/
+
+package-lock.json
