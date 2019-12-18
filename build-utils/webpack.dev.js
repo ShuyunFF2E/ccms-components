@@ -43,11 +43,6 @@ module.exports = () => ({
 			app.get('/shops', (req, res) => {
 				res.json(shopsData);
 			});
-		},
-		historyApiFallback: {
-			rewrites: [
-				{ from: /.*/, to: path.posix.join(publicPath, 'index.html') }
-			]
 		}
 	},
 	plugins: [

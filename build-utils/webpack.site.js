@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -36,13 +35,9 @@ module.exports = () => ({
 			filename: '[name].css',
 			chunkFilename: '[id].css'
 		}),
-		new HtmlWebpackPlugin({
-			filename: 'index.html',
-			template: 'demos/index.html',
-			favicon: 'demos/favicon.ico'
-		}),
 		new CopyWebpackPlugin([
 			{ from: path.join(__dirname, '../demos/**/*'), to: buildOutputDir, toType: 'dir' },
+			{ from: path.join(__dirname, '../demos/favicon.ico'), to: buildOutputDir, toType: 'dir' },
 		])
 	],
 	module: {
