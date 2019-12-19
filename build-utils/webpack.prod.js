@@ -57,7 +57,8 @@ All rights reserved.
 		new CopyWebpackPlugin([
 			{ from: path.join(__dirname, '../index.js'), to: buildOutputDir, toType: 'dir' },
 			{ from: path.join(__dirname, '../package.json'), to: buildOutputDir, toType: 'dir' },
-			{ from: path.join(__dirname, '../README.md'), to: buildOutputDir, toType: 'dir' }
+			{ from: path.join(__dirname, '../README.md'), to: buildOutputDir, toType: 'dir' },
+			{ from: path.join(__dirname, '../src/components/styles/'), to: `${buildOutputDir}/scss`, toType: 'dir' }
 		])
 	],
 	module: {
