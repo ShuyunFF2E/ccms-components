@@ -22,8 +22,7 @@ module.exports = () => ({
 	externals: {
 		'angular': 'angular',
 		'angular-resource': '\'ngResource\'',
-		'angular-ui-router': '\'ui.router\'',
-		'ccms-icon': 'ccms-icon'
+		'angular-ui-router': '\'ui.router\''
 	},
 	optimization: {
 		minimizer: [
