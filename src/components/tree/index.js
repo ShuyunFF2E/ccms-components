@@ -47,7 +47,8 @@ const treeDDO = {
 		onSelectedAction: '<?',
 		onRemoveAction: '<?',
 		onAddAction: '<?',
-		onRenameAction: '<?'
+		onRenameAction: '<?',
+		onDoubleClickAction: '<?'
 	}
 };
 
@@ -63,7 +64,8 @@ const treeListDDO = {
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
 		hideRadioModel: '<?',
-		onOpenMenu: '<?'
+		onOpenMenu: '<?',
+		onDoubleClickAction: '<?'
 	}
 };
 
@@ -79,7 +81,8 @@ const treeNodeDDO = {
 		supportCheckbox: '<?',
 		isRadioModel: '<?',
 		hideRadioModel: '<?',
-		onOpenMenu: '<?'
+		onOpenMenu: '<?',
+		onDoubleClickAction: '<?'
 	}
 };
 

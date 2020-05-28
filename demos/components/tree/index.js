@@ -31,6 +31,10 @@ const tree_one = {
 	// 新节点添加后所在的位置
 	addToPosition: 'before',
 
+	onDoubleClickAction: node => {
+		console.log('树demo 1 的双击事件:', node);
+	},
+
 	// 右键菜单: 新增节点处理器
 	onAddAction: (pId, name) => {
 		// 这里需要模拟一条API请求
@@ -63,7 +67,7 @@ const tree_one = {
 
 	// 节点选中回调
 	onSelectedAction: (node, selectedList) => {
-		console.log(node, selectedList);
+		console.log('节点选中回调:', node, selectedList);
 	},
 
 	data: [{
@@ -141,6 +145,9 @@ const tree_two = {
 	// 是否支持搜索框
 	supportSearch: false,
 
+	onDoubleClickAction: node => {
+		console.log('树demo 2 的双击事件', node);
+	},
 	// 节点选中回调
 	onSelectedAction: (node, selectedList) => {
 		console.log('onSelectedAction: ', node, selectedList);
@@ -212,6 +219,9 @@ const tree_three = {
 	// 是否支持菜单
 	supportMenu: true,
 
+	onDoubleClickAction: node => {
+		console.log('树demo 3 的双击事件', node);
+	},
 	// 节点选中回调
 	onSelectedAction: (node, selectedList) => {
 		console.log(node, selectedList);
