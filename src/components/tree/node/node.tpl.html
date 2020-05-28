@@ -15,11 +15,15 @@
 			indeterminate="$ctrl.node.checked === 'indeterminate'"
 			ng-model="$ctrl.node.checked">
 			<icon class="iconfont icon-folder"></icon>
-			<span class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
+			<span ng-if="!$ctrl.onDoubleClickAction" class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
 		</cc-checkbox>
+		<span ng-if="$ctrl.nodeType === 'checkbox' && $ctrl.onDoubleClickAction"
+			  ng-dblclick="$ctrl.onDoubleClickAction($ctrl.node)"
+			  class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
 
 		<div class="fake-radio"
-			ng-if="$ctrl.nodeType === 'radio'">
+			ng-if="$ctrl.nodeType === 'radio'"
+			ng-dblclick="$ctrl.onDoubleClickAction($ctrl.node)">
 			<div class="cc-radio" ng-class="{ 'checked': $ctrl.node.checked }">
 				<div class="radio-button-icon" ng-show="!$ctrl.hideRadioModel"></div>
 				<icon class="iconfont icon-folder"></icon>
@@ -27,7 +31,8 @@
 			</div>
 		</div>
 
-		<div ng-if="$ctrl.nodeType === 'text'">
+		<div ng-if="$ctrl.nodeType === 'text'"
+			 ng-dblclick="$ctrl.onDoubleClickAction($ctrl.node)">
 			<icon class="iconfont icon-folder"></icon>
 			<span class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
 		</div>
@@ -51,6 +56,7 @@
 			node-max-len="$ctrl.nodeMaxLen"
 			support-checkbox="$ctrl.supportCheckbox"
 			is-radio-model="$ctrl.isRadioModel"
+			on-double-click-action="$ctrl.onDoubleClickAction"
 			hide-radio-model="$ctrl.hideRadioModel"
 			on-open-menu="$ctrl.onOpenMenu">
 		</cc-tree-list>
