@@ -42,6 +42,17 @@ this.onSelectedAction = function(node, selectedList) {
 };
 ```
 
+- onDoubleClickAction: 节点双击事件 `Function` 
+```
+/**
+ * 节点双击事件
+ * @param node: 当前选择的节点对象
+ */
+this.onDoubleClickAction = function(node) {
+	console.log(node);
+};
+```
+
 - onAddAction: 新增节点事件, 需要返回promise `Function` `右键菜单事件`
 ```
 /**
