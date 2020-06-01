@@ -45,7 +45,7 @@ this.onSelectedAction = function(node, selectedList) {
 - onDoubleClickAction: 节点双击事件 `Function` 
 ```
 /**
- * 节点双击事件
+ * 节点双击事件: 配置该事件后，文本区域的单击选中效果将无效。
  * @param node: 当前选择的节点对象
  */
 this.onDoubleClickAction = function(node) {

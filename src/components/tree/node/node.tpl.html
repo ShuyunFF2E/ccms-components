@@ -1,7 +1,6 @@
 <section>
 	<div class="cc-tree-node"
 		 ng-style="{'padding-left': $ctrl.paddingLeft}"
-		 ng-click="$ctrl.onChangeChecked()"
 		 ng-class="{ selected: $ctrl.node.checked, active: $ctrl.node.isActive, 'radio-type': $ctrl.nodeType === 'radio'}"
 		 cc-tree-right-click="$ctrl.onRightClick()"
 		 ng-hide="$ctrl.node.isEditing">
@@ -12,6 +11,7 @@
 		</icon>
 		<cc-checkbox
 			ng-if="$ctrl.nodeType === 'checkbox'"
+			ng-click="$ctrl.onChangeChecked()"
 			indeterminate="$ctrl.node.checked === 'indeterminate'"
 			ng-model="$ctrl.node.checked">
 			<icon class="iconfont icon-folder"></icon>
@@ -23,6 +23,7 @@
 
 		<div class="fake-radio"
 			ng-if="$ctrl.nodeType === 'radio'"
+			 ng-click="$ctrl.onChangeChecked()"
 			ng-dblclick="$ctrl.onDoubleClickAction($ctrl.node)">
 			<div class="cc-radio" ng-class="{ 'checked': $ctrl.node.checked }">
 				<div class="radio-button-icon" ng-show="!$ctrl.hideRadioModel"></div>
@@ -32,6 +33,7 @@
 		</div>
 
 		<div ng-if="$ctrl.nodeType === 'text'"
+			 ng-click="$ctrl.onChangeChecked()"
 			 ng-dblclick="$ctrl.onDoubleClickAction($ctrl.node)">
 			<icon class="iconfont icon-folder"></icon>
 			<span class="tree-text" ng-bind-html="$ctrl.nodeText"></span>
