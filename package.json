@@ -91,12 +91,12 @@
     "yargs": "^15.0.2"
   },
   "peerDependencies": {
-    "angular": "1.5.8",
+    "angular": "1.8.0",
     "angular-resource": "1.5.8",
     "angular-ui-router": "0.2.18"
   },
   "dependencies": {
-    "angular": "1.5.8",
+    "angular": "1.8.0",
     "angular-es-utils": "^2.1.2",
     "angular-resource": "1.5.8",
     "angular-sanitize": "1.5.8",
