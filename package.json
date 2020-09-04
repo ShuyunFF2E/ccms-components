@@ -73,7 +73,7 @@
     "mini-css-extract-plugin": "^0.5.0",
     "mocha": "^2.5.3",
     "node-dir": "^0.1.17",
-    "node-sass": "4.13.0",
+    "node-sass": "4.14.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "resolve-url-loader": "^3.0.1",
